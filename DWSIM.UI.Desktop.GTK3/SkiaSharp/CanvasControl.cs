@@ -7,7 +7,7 @@ using DWSIM.UI.Controls;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 
-namespace DWSIM.UI.Desktop.GTK
+namespace DWSIM.UI.Desktop.GTK3
 {
     public class FlowsheetSurfaceControlHandler : Eto.GtkSharp.Forms.GtkControl<Gtk.EventBox, FlowsheetSurfaceControl, FlowsheetSurfaceControl.ICallback>, FlowsheetSurfaceControl.IFlowsheetSurface
     {
