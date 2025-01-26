@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.ML;
+using static Microsoft.ML.DataOperationsCatalog;
 
 namespace DWSIM.AI.ConvergenceHelper
 {
@@ -21,15 +22,14 @@ namespace DWSIM.AI.ConvergenceHelper
         {
 
             IDataView dataView = mlContext.Data.LoadFromEnumerable(data);
-         
-            var pipeline = mlContext.Transforms.CopyColumns(outputColumnName: "Label", inputColumnName: "FareAmount")
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "VendorIdEncoded", inputColumnName: "VendorId"))
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "RateCodeEncoded", inputColumnName: "RateCode"))
-                    .Append(mlContext.Transforms.Categorical.OneHotEncoding(outputColumnName: "PaymentTypeEncoded", inputColumnName: "PaymentType"))
-                    .Append(mlContext.Transforms.Concatenate("Features", "VendorIdEncoded", "RateCodeEncoded", "PassengerCount", "TripDistance", "PaymentTypeEncoded"))
-                    .Append(mlContext.Regression.Trainers.OnlineGradientDescent());
-     
-            var model = pipeline.Fit(dataView);
+
+            var sdcaEstimator = mlContext.Regression.Trainers.OnlineGradientDescent();
+
+            TrainTestData dataSplit = mlContext.Data.TrainTestSplit(dataView, testFraction: 0.2);
+
+            var model = sdcaEstimator.Fit(dataSplit.TrainSet);
+
+            Evaluate(mlContext, model, dataSplit.TestSet);
 
             return model;
         }
@@ -42,6 +42,21 @@ namespace DWSIM.AI.ConvergenceHelper
             var predictions = model.Transform(dataView);
             var metrics = mlContext.Regression.Evaluate(predictions, "Label", "Score");
          
+            Console.WriteLine();
+            Console.WriteLine($"*************************************************");
+            Console.WriteLine($"*       Model quality metrics evaluation         ");
+            Console.WriteLine($"*------------------------------------------------");
+            Console.WriteLine($"*       RSquared Score:      {metrics.RSquared:0.##}");
+            Console.WriteLine($"*       Root Mean Squared Error:      {metrics.RootMeanSquaredError:#.##}");
+            Console.WriteLine($"*************************************************");
+        }
+
+        public static void Evaluate(MLContext mlContext, ITransformer model, IDataView data)
+        {
+
+            var predictions = model.Transform(data);
+            var metrics = mlContext.Regression.Evaluate(predictions, "Label", "Score");
+
             Console.WriteLine();
             Console.WriteLine($"*************************************************");
             Console.WriteLine($"*       Model quality metrics evaluation         ");

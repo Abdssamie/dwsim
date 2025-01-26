@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DWSIM.Interfaces;
+using Microsoft.ML.Data;
 
 namespace DWSIM.AI.ConvergenceHelper
 {
@@ -50,6 +47,31 @@ namespace DWSIM.AI.ConvergenceHelper
             return Convert.ToBase64String(plainTextBytes);
         }
     }
+
+    public class ConvergenceHelperTrainingDataInput
+    {
+        public float Temperature { get; set; }
+        public float Pressure { get; set; }
+        public float MassEnthalpy { get; set; }
+        public float MassEntropy { get; set; }
+        [VectorType(50)] public float[] MixtureMolarFlows { get; set; }
+        public float VaporMolarFraction { get; set; }
+    }
+
+    public class ConvergenceHelperTrainingDataOutput
+    {
+        public float Temperature2 { get; set; }
+        public float Pressure2 { get; set; }
+        public float VaporMolarFraction2 { get; set; }
+        [VectorType(50)] public float[] MixtureMolarFlows2 { get; set; }
+        [VectorType(50)] public float[] VaporMolarFlows { get; set; }
+        [VectorType(50)] public float[] Liquid1MolarFlows { get; set; }
+        [VectorType(50)] public float[] Liquid2MolarFlows { get; set; }
+        [VectorType(50)] public float[] SolidMolarFlows { get; set; }
+        [VectorType(50)] public float[] KValuesVL1 { get; set; }
+        [VectorType(50)] public float[] KValuesVL2 { get; set; }
+    }
+
 
     public class ConvergenceHelperRequest : IConvergenceHelperRequest
     {
