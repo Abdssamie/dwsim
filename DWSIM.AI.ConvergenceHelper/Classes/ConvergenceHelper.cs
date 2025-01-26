@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DWSIM.Interfaces;
 using Microsoft.ML.Data;
 
@@ -21,6 +22,7 @@ namespace DWSIM.AI.ConvergenceHelper
     {
         public ConvergenceHelperRequestType RequestType { get; set; }
         public string ModelName { get; set; }
+        public List<IReaction> Reactions { get; set; }
         public string Hash { get; set; }
         public int NumberOfCompounds { get; set; }
         public string[] CompoundNames { get; set; }
@@ -38,6 +40,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public string[] SolidMolarFlows { get; set; }
         public string[] KValuesVL1 { get; set; }
         public string[] KValuesVL2 { get; set; }
+        public string[] ReactionExtents { get; set; }
 
         public string GetBase64StringHash()
         {
@@ -47,31 +50,6 @@ namespace DWSIM.AI.ConvergenceHelper
             return Convert.ToBase64String(plainTextBytes);
         }
     }
-
-    public class ConvergenceHelperTrainingDataInput
-    {
-        public float Temperature { get; set; }
-        public float Pressure { get; set; }
-        public float MassEnthalpy { get; set; }
-        public float MassEntropy { get; set; }
-        [VectorType(50)] public float[] MixtureMolarFlows { get; set; }
-        public float VaporMolarFraction { get; set; }
-    }
-
-    public class ConvergenceHelperTrainingDataOutput
-    {
-        public float Temperature2 { get; set; }
-        public float Pressure2 { get; set; }
-        public float VaporMolarFraction2 { get; set; }
-        [VectorType(50)] public float[] MixtureMolarFlows2 { get; set; }
-        [VectorType(50)] public float[] VaporMolarFlows { get; set; }
-        [VectorType(50)] public float[] Liquid1MolarFlows { get; set; }
-        [VectorType(50)] public float[] Liquid2MolarFlows { get; set; }
-        [VectorType(50)] public float[] SolidMolarFlows { get; set; }
-        [VectorType(50)] public float[] KValuesVL1 { get; set; }
-        [VectorType(50)] public float[] KValuesVL2 { get; set; }
-    }
-
 
     public class ConvergenceHelperRequest : IConvergenceHelperRequest
     {

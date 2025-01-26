@@ -13,6 +13,8 @@ Public Interface IConvergenceHelperTrainingData
 
     Property RequestType As ConvergenceHelperRequestType
 
+    Property Reactions As List(Of IReaction)
+
     Property ModelName As String
 
     Property NumberOfCompounds As Integer
@@ -46,6 +48,8 @@ Public Interface IConvergenceHelperTrainingData
     Property KValuesVL1 As String()
 
     Property KValuesVL2 As String()
+
+    Property ReactionExtents As String()
 
 End Interface
 

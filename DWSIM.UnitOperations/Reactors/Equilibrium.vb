@@ -1609,6 +1609,7 @@ Namespace Reactors
                     AI.ConvergenceHelper.Manager.StoreData(
                     New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
+                        .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
                         .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
@@ -1621,6 +1622,7 @@ Namespace Reactors
                     AI.ConvergenceHelper.Manager.StoreData(
                       New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
+                        .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
                         .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
