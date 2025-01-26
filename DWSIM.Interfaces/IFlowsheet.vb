@@ -265,7 +265,7 @@
     ''' <param name="reactionphase">Reaction phase ('Mixture', 'Vapor', 'Liquid' or 'Solid')</param>
     ''' <param name="basis">Reaction basis ('Activity', 'Fugacity', 'Molar Concentration', 'Molar Fraction', 'Mass Concentration', 'Mass Fraction' or 'Partial Pressure')</param>
     ''' <param name="amountunits">Amount units. See the list of <see cref="SharedClasses.SystemsOfUnits.Units.GetUnitSet()">supported units</see></param>
-    ''' <param name="rateunits">Rate units. See the list of <see cref="SharedClasses.SystemsOfUnits.Units.GetUnitSet()">supported units</see</param>
+    ''' <param name="rateunits">Rate units. See the list of <see cref="SharedClasses.SystemsOfUnits.Units.GetUnitSet()">supported units</see></param>
     ''' <param name="Aforward">Arrhenius forward reaction's A parameter. Ignored if Expr_forward is not empty.</param>
     ''' <param name="Eforward">Arrhenius forward reaction's E parameter. Ignored if Expr_forward is not empty.</param>
     ''' <param name="Areverse">Arrhenius reverse reaction's A parameter. Ignored if Expr_reverse is not empty.</param>
@@ -313,13 +313,13 @@
     ''' <summary>
     ''' Add a reaction to the flowsheet.
     ''' </summary>
-    ''' <param name="reactionSet">reaction object</param>
+    ''' <param name="reaction">reaction object</param>
     Sub AddReaction(reaction As IReaction)
 
     ''' <summary>
     ''' Add a reaction set to the flowsheet.
     ''' </summary>
-    ''' <param name="reaction">reaction set object</param>
+    ''' <param name="reactionSet">reaction set object</param>
     Sub AddReactionSet(reactionSet As IReactionSet)
 
     ''' <summary>
