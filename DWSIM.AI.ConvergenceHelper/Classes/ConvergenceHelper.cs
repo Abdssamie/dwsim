@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DWSIM.Interfaces;
 using Microsoft.ML.Data;
 
-namespace DWSIM.AI.ConvergenceHelper
+namespace DWSIM.AI.ConvergenceHelper.Classes
 {
     public class ConvergenceHelper : IConvergenceHelper
     {

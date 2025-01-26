@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Threading.Tasks;
 using DWSIM.FileStorage;
+using DWSIM.AI.ConvergenceHelper.Classes;
 
 namespace DWSIM.AI.ConvergenceHelper
 {
     public class Manager
     {
 
-        public static ConvergenceHelper Instance = new ConvergenceHelper();
+        public static Classes.ConvergenceHelper Instance = new Classes.ConvergenceHelper();
 
         public static FileDatabaseProvider Database = new FileDatabaseProvider();
 

@@ -1595,7 +1595,7 @@ Namespace Reactors
             If Settings.ConvergenceHelperEnabled Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     AI.ConvergenceHelper.Manager.StoreData(
-                    New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                    New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
                         .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
@@ -1606,7 +1606,7 @@ Namespace Reactors
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
                     AI.ConvergenceHelper.Manager.StoreData(
-                      New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                      New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
                         .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
@@ -2462,7 +2462,7 @@ Namespace Reactors
             If Settings.ConvergenceHelperEnabled Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     AI.ConvergenceHelper.Manager.StoreData(
-                    New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                    New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
@@ -2474,7 +2474,7 @@ Namespace Reactors
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
                     AI.ConvergenceHelper.Manager.StoreData(
-                      New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                      New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,

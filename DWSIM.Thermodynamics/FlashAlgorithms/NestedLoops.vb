@@ -357,7 +357,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             If Settings.ConvergenceHelperEnabled Then
                 AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
@@ -875,7 +875,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                 If Settings.ConvergenceHelperEnabled Then
                     AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
@@ -1195,7 +1195,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             If Settings.ConvergenceHelperEnabled Then
                 AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
@@ -1433,7 +1433,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             If Settings.ConvergenceHelperEnabled Then
                 AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
@@ -1718,7 +1718,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             If Settings.ConvergenceHelperEnabled Then
                 AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
@@ -2232,7 +2232,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             If Settings.ConvergenceHelperEnabled Then
                 AI.ConvergenceHelper.Manager.StoreData(
-                New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                     .CompoundNames = PP.RET_VNAMES(),
                     .ModelName = PP.ComponentName,
                     .NumberOfCompounds = Ki.Count,
@@ -2345,7 +2345,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                 If Settings.ConvergenceHelperEnabled Then
                     AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Vz.Count,
                         .Temperature = Convert.ToDouble(result(4)).ToString("N4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),

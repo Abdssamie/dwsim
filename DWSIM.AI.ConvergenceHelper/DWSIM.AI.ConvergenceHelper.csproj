@@ -135,7 +135,7 @@
     <Compile Include="Classes\ConvergenceHelper.cs" />
     <Compile Include="Classes\Manager.cs" />
     <Compile Include="Classes\Models.cs" />
-    <Compile Include="Classes\TrainModel.cs" />
+    <Compile Include="Classes\Trainer.cs" />
     <Compile Include="Forms\ManagerForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

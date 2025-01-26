@@ -1607,7 +1607,7 @@ Namespace Reactors
             If Settings.ConvergenceHelperEnabled Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     AI.ConvergenceHelper.Manager.StoreData(
-                    New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                    New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,
@@ -1620,7 +1620,7 @@ Namespace Reactors
                         .RequestType = Interfaces.ConvergenceHelperRequestType.EquilibriumReactorAdiabatic})
                 Else
                     AI.ConvergenceHelper.Manager.StoreData(
-                      New AI.ConvergenceHelper.ConvergenceHelperTrainingData With {
+                      New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,

@@ -5851,7 +5851,7 @@ Public Class FormFlowsheet
 
     Private Sub ConvergenceHelperSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConvergenceHelperSettingsToolStripMenuItem.Click
 
-        AI.ConvergenceHelper.Forms.ManagerForm.DisplayConfigForm()
+        AI.ConvergenceHelper.Editors.ManagerForm.DisplayConfigForm()
 
     End Sub
 

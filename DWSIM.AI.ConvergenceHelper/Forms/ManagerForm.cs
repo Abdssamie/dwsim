@@ -10,7 +10,7 @@ using DWSIM.ExtensionMethods.Eto;
 using ext = DWSIM.UI.Shared.Common;
 using DWSIM.UI.Shared;
 
-namespace DWSIM.AI.ConvergenceHelper.Forms
+namespace DWSIM.AI.ConvergenceHelper.Editors
 {
     public static class ManagerForm
     {
