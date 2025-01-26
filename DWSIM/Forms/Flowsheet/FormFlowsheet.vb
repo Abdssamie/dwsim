@@ -1464,7 +1464,7 @@ Public Class FormFlowsheet
         Me.FormSurface.Invalidate()
     End Sub
 
-    Private Sub AssistenteDeCriacaoDeSubstânciasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompoundCreatorWizardTSMI.Click
+    Private Sub AssistenteDeCriacaoDeSubstanciasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CompoundCreatorWizardTSMI.Click
 
         RaiseEvent ToolOpened("Compound Creator Wizard", New EventArgs())
 

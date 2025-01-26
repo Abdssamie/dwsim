@@ -128,7 +128,7 @@ Partial Class FormDataRegression
         Me.tbParam = New System.Windows.Forms.TextBox()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.ParâmetrosDeInteraçãoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ParametrosDeInteracaoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SalvarEmBancoDeDadosXMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -841,17 +841,17 @@ Partial Class FormDataRegression
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ParâmetrosDeInteraçãoToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ParametrosDeInteracaoToolStripMenuItem})
         resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.Name = "MenuStrip1"
         '
-        'ParâmetrosDeInteraçãoToolStripMenuItem
+        'ParametrosDeInteracaoToolStripMenuItem
         '
-        Me.ParâmetrosDeInteraçãoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SalvarEmBancoDeDadosXMLToolStripMenuItem})
-        Me.ParâmetrosDeInteraçãoToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
-        Me.ParâmetrosDeInteraçãoToolStripMenuItem.MergeIndex = 2
-        Me.ParâmetrosDeInteraçãoToolStripMenuItem.Name = "ParâmetrosDeInteraçãoToolStripMenuItem"
-        resources.ApplyResources(Me.ParâmetrosDeInteraçãoToolStripMenuItem, "ParâmetrosDeInteraçãoToolStripMenuItem")
+        Me.ParametrosDeInteracaoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SalvarEmBancoDeDadosXMLToolStripMenuItem})
+        Me.ParametrosDeInteracaoToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
+        Me.ParametrosDeInteracaoToolStripMenuItem.MergeIndex = 2
+        Me.ParametrosDeInteracaoToolStripMenuItem.Name = "ParametrosDeInteracaoToolStripMenuItem"
+        resources.ApplyResources(Me.ParametrosDeInteracaoToolStripMenuItem, "ParametrosDeInteracaoToolStripMenuItem")
         '
         'SalvarEmBancoDeDadosXMLToolStripMenuItem
         '
@@ -1029,7 +1029,7 @@ Partial Class FormDataRegression
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents tbParam As System.Windows.Forms.TextBox
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
-    Friend WithEvents ParâmetrosDeInteraçãoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ParametrosDeInteracaoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SalvarEmBancoDeDadosXMLToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btnTransfere As System.Windows.Forms.Button
     Friend WithEvents TabControl1 As TabControl

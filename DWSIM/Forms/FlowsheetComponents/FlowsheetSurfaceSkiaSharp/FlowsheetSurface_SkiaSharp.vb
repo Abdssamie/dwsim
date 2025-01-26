@@ -3706,7 +3706,7 @@ Public Class FlowsheetSurface_SkiaSharp
 
     End Sub
 
-    Private Sub EditarAparênciaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditAppearanceToolStripMenuItem.Click
+    Private Sub EditarAparenciaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditAppearanceToolStripMenuItem.Click
 
         Flowsheet.RegisterSnapshot(SnapshotType.ObjectLayout)
 

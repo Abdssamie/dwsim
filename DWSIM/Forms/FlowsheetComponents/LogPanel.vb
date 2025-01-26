@@ -101,7 +101,7 @@ Public Class LogPanel
 
     End Sub
 
-    Private Sub CopiarInformaçõesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopiarInformaçõesToolStripMenuItem.Click
+    Private Sub CopiarInformacoesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopiarInformacoesToolStripMenuItem.Click
 
         If Grid1.SelectedRows.Count > 0 Then
 
