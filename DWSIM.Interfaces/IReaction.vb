@@ -16,7 +16,8 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IReaction
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IReaction
 
     ReadOnly Property Components() As Dictionary(Of String, IReactionStoichBase)
 

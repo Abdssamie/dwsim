@@ -19,7 +19,8 @@
 ''' <summary>
 ''' This interface defines the basic properties of a compound in a phase.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface ICompound
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface ICompound
 
     Property ExtraProperties As Dynamic.ExpandoObject
 

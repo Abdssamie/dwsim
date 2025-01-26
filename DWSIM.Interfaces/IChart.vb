@@ -1,4 +1,5 @@
-﻿<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IChart
+﻿<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IChart
 
     Property ID As String
 

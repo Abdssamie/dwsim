@@ -21,7 +21,8 @@ Imports DWSIM.Interfaces.Enums.GraphicObjects
 ''' <summary>
 ''' This interface defines the basic properties for a graphical representation of an object in the flowsheet PFD.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IGraphicObject
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IGraphicObject
 
     Property DoubleClickAction As Action(Of Object)
 
@@ -115,7 +116,8 @@ Imports DWSIM.Interfaces.Enums.GraphicObjects
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IConnectionPoint
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IConnectionPoint
 
     Property X() As Integer
 
@@ -139,7 +141,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IConnectorGraphicObject
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IConnectorGraphicObject
 
     Property AttachedFromConnectorIndex() As Integer
 
@@ -161,7 +164,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IGraphicObjectExtension
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IGraphicObjectExtension
 
     Sub Draw(surface As Object)
 

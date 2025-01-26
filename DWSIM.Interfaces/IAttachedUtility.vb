@@ -19,7 +19,8 @@
 ''' <summary>
 ''' This interface defines the expected funcionality of a flowsheet utility attached to an object.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IAttachedUtility
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IAttachedUtility
 
     Property ID As Integer
 

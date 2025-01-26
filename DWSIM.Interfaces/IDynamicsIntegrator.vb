@@ -19,7 +19,8 @@
 ''' <summary>
 ''' This interface defines the basic properties of the Dynamic Mode Integrator.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IDynamicsIntegrator
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IDynamicsIntegrator
 
     Property ID As String
 
