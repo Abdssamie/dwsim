@@ -1612,11 +1612,11 @@ Namespace Reactors
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
-                        .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
-                        .Temperature2 = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MixtureMolarFlows = N0.Values.ToArray().ToString("N4"),
-                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("N4"),
+                        .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
+                        .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
+                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.EquilibriumReactorAdiabatic})
                 Else
                     AI.ConvergenceHelper.Manager.StoreData(
@@ -1625,11 +1625,11 @@ Namespace Reactors
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
-                        .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
-                        .Temperature2 = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MixtureMolarFlows = N0.Values.ToArray().ToString("N4"),
-                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("N4"),
+                        .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
+                        .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
+                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.EquilibriumReactorIsothermic})
                 End If
             End If

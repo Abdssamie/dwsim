@@ -111,6 +111,20 @@ Public Module General
     End Function
 
     <System.Runtime.CompilerServices.Extension()>
+    Public Function ToSingleArray(al As String(), size As Integer) As Single()
+
+        Dim list As New List(Of Single)
+        For Each item In al
+            list.Add(item.ToSingleFromInvariant())
+        Next
+        For i = list.Count To size
+            list.Add(0.0F)
+        Next
+        Return list.ToArray()
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToDoubleList(al As ArrayList) As List(Of Double)
 
         Dim list As New List(Of Double)

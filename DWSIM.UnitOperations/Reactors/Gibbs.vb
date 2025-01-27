@@ -1598,22 +1598,22 @@ Namespace Reactors
                     New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
-                        .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
-                        .Temperature2 = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MixtureMolarFlows = N0.Values.ToArray().ToString("N4"),
-                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("N4"),
+                        .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
+                        .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
+                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
                     AI.ConvergenceHelper.Manager.StoreData(
                       New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
-                        .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
-                        .Temperature2 = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MixtureMolarFlows = N0.Values.ToArray().ToString("N4"),
-                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("N4"),
+                        .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
+                        .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
+                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorIsothermic})
                 End If
             End If
@@ -2466,11 +2466,11 @@ Namespace Reactors
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
-                        .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
-                        .Temperature2 = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MixtureMolarFlows = N0.Values.ToArray().ToString("N4"),
-                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("N4"),
+                        .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
+                        .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
+                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
                     AI.ConvergenceHelper.Manager.StoreData(
@@ -2478,11 +2478,11 @@ Namespace Reactors
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
-                        .Temperature = T0.ToString("N4", CultureInfo.InvariantCulture),
-                        .Temperature2 = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MixtureMolarFlows = N0.Values.ToArray().ToString("N4"),
-                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("N4"),
+                        .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
+                        .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
+                        .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorIsothermic})
                 End If
             End If

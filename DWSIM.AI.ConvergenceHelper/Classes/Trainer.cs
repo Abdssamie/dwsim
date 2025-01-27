@@ -10,6 +10,8 @@ namespace DWSIM.AI.ConvergenceHelper.Training.Trainer
     public static class ModelTrainer
     {
 
+        public const int ARRAY_SIZE = 50;
+
         private static MLContext mlContext;
        
         public static void Initialize()

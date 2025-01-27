@@ -84,7 +84,7 @@ namespace DWSIM.AI.ConvergenceHelper
             var data = entries.Select(x => new PTFlash_ConvergenceHelperTrainingDataInput {
                   Pressure = x.Pressure.ToSingleFromInvariant(),
                 Temperature = x.Temperature.ToSingleFromInvariant(),  
-                MixtureMolarFlows = x.MixtureMolarFlows.ToSingleArray()
+                MixtureMolarFlows = x.MixtureMolarFlows.ToSingleArray(ModelTrainer.ARRAY_SIZE)
             }).ToList();
             ModelTrainer.PTFlash_Train(data);
         }

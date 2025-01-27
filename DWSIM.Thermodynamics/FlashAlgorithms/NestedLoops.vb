@@ -359,13 +359,13 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 AI.ConvergenceHelper.Manager.StoreData(
                         New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
-                        .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .VaporMolarFraction = V.ToString("N4", CultureInfo.InvariantCulture),
-                        .Liquid1MolarFlows = Vx.MultiplyConstY(L).ToString("N4"),
-                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("N4"),
-                        .KValuesVL1 = Ki.ToString("N4"),
-                        .MixtureMolarFlows = Vz.ToString("N4"),
+                        .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
+                        .Liquid1MolarFlows = Vx.MultiplyConstY(L).ToString("F4"),
+                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"),
+                        .KValuesVL1 = Ki.ToString("F4"),
+                        .MixtureMolarFlows = Vz.ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash})
             End If
 
@@ -877,14 +877,14 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     AI.ConvergenceHelper.Manager.StoreData(
                         New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
-                        .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MassEnthalpy = H.ToString("N4", CultureInfo.InvariantCulture),
-                        .VaporMolarFraction = V.ToString("N4", CultureInfo.InvariantCulture),
-                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("N4"),
-                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("N4"),
-                        .KValuesVL1 = Ki.ToString("N4"),
-                        .MixtureMolarFlows = Vz.ToString("N4"),
+                        .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MassEnthalpy = H.ToString("F4", CultureInfo.InvariantCulture),
+                        .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
+                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("F4"),
+                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"),
+                        .KValuesVL1 = Ki.ToString("F4"),
+                        .MixtureMolarFlows = Vz.ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.PHFlash})
                 End If
 
@@ -1197,14 +1197,14 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 AI.ConvergenceHelper.Manager.StoreData(
                         New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
-                        .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MassEnthalpy = H.ToString("N4", CultureInfo.InvariantCulture),
-                        .VaporMolarFraction = V.ToString("N4", CultureInfo.InvariantCulture),
-                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("N4"),
-                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("N4"),
-                        .KValuesVL1 = Ki.ToString("N4"),
-                        .MixtureMolarFlows = Vz.ToString("N4"),
+                        .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MassEnthalpy = H.ToString("F4", CultureInfo.InvariantCulture),
+                        .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
+                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("F4"),
+                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"),
+                        .KValuesVL1 = Ki.ToString("F4"),
+                        .MixtureMolarFlows = Vz.ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.PHFlash})
             End If
 
@@ -1435,14 +1435,14 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 AI.ConvergenceHelper.Manager.StoreData(
                         New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
-                        .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MassEntropy = S.ToString("N4", CultureInfo.InvariantCulture),
-                        .VaporMolarFraction = V.ToString("N4", CultureInfo.InvariantCulture),
-                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("N4"),
-                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("N4"),
-                        .KValuesVL1 = Ki.ToString("N4"),
-                        .MixtureMolarFlows = Vz.ToString("N4"),
+                        .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MassEntropy = S.ToString("F4", CultureInfo.InvariantCulture),
+                        .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
+                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("F4"),
+                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"),
+                        .KValuesVL1 = Ki.ToString("F4"),
+                        .MixtureMolarFlows = Vz.ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.PSFlash})
             End If
 
@@ -1720,14 +1720,14 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 AI.ConvergenceHelper.Manager.StoreData(
                         New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
-                        .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .MassEntropy = S.ToString("N4", CultureInfo.InvariantCulture),
-                        .VaporMolarFraction = V.ToString("N4", CultureInfo.InvariantCulture),
-                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("N4"),
-                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("N4"),
-                        .KValuesVL1 = Ki.ToString("N4"),
-                        .MixtureMolarFlows = Vz.ToString("N4"),
+                        .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .MassEntropy = S.ToString("F4", CultureInfo.InvariantCulture),
+                        .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
+                        .Liquid1MolarFlows = Vx1.MultiplyConstY(L1).ToString("F4"),
+                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"),
+                        .KValuesVL1 = Ki.ToString("F4"),
+                        .MixtureMolarFlows = Vz.ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.PSFlash})
             End If
 
@@ -2236,11 +2236,11 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     .CompoundNames = PP.RET_VNAMES(),
                     .ModelName = PP.ComponentName,
                     .NumberOfCompounds = Ki.Count,
-                    .Temperature = T.ToString("N4", CultureInfo.InvariantCulture),
-                    .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                    .VaporMolarFraction = V.ToString("N4", CultureInfo.InvariantCulture),
-                    .Liquid1MolarFlows = Vx.MultiplyConstY(L).ToString("N4"),
-                    .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("N4"), .KValuesVL1 = Ki.ToString("N4"), .MixtureMolarFlows = Vz.ToString("N4"),
+                    .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
+                    .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                    .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
+                    .Liquid1MolarFlows = Vx.MultiplyConstY(L).ToString("F4"),
+                    .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"), .KValuesVL1 = Ki.ToString("F4"), .MixtureMolarFlows = Vz.ToString("F4"),
                     .RequestType = Interfaces.ConvergenceHelperRequestType.TVFlash})
             End If
 
@@ -2347,12 +2347,12 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     AI.ConvergenceHelper.Manager.StoreData(
                         New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Vz.Count,
-                        .Temperature = Convert.ToDouble(result(4)).ToString("N4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("N4", CultureInfo.InvariantCulture),
-                        .VaporMolarFraction = Convert.ToDouble(result(1)).ToString("N4", CultureInfo.InvariantCulture),
-                        .Liquid1MolarFlows = DirectCast(result(2), Double()).MultiplyConstY(result(0)).ToString("N4"),
-                        .VaporMolarFlows = DirectCast(result(3), Double()).MultiplyConstY(result(1)).ToString("N4"),
-                        .KValuesVL1 = DirectCast(result(6), Double()).ToString("N4"), .MixtureMolarFlows = Vz.ToString("N4"),
+                        .Temperature = Convert.ToDouble(result(4)).ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .VaporMolarFraction = Convert.ToDouble(result(1)).ToString("F4", CultureInfo.InvariantCulture),
+                        .Liquid1MolarFlows = DirectCast(result(2), Double()).MultiplyConstY(result(0)).ToString("F4"),
+                        .VaporMolarFlows = DirectCast(result(3), Double()).MultiplyConstY(result(1)).ToString("F4"),
+                        .KValuesVL1 = DirectCast(result(6), Double()).ToString("F4"), .MixtureMolarFlows = Vz.ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.PVFlash})
                 End If
 
