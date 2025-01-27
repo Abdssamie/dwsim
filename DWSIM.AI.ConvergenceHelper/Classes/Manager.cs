@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DWSIM.FileStorage;
 using DWSIM.AI.ConvergenceHelper.Classes;
+using DWSIM.AI.ConvergenceHelper.Training.Trainer;
+using DWSIM.AI.ConvergenceHelper.Training.Data;
+using DWSIM.ExtensionMethods;
 
 namespace DWSIM.AI.ConvergenceHelper
 {
@@ -60,6 +63,8 @@ namespace DWSIM.AI.ConvergenceHelper
 
             FlowsheetSolver.FlowsheetSolver.FlowsheetCalculationFinished += FlowsheetSolver_FlowsheetCalculationFinished;
 
+            ModelTrainer.Initialize();
+
             Initialized = true;
 
         }
@@ -68,13 +73,20 @@ namespace DWSIM.AI.ConvergenceHelper
         {
             if (GlobalSettings.Settings.ConvergenceHelperEnabled) { 
                 Task.Run(() => SaveDatabaseToFile());
-                UpdateModels();
+                //UpdateModels();
             }
         }
 
-        private static void UpdateModels()
-        { 
-        
+        public static void UpdateModels()
+        {
+            var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var data = entries.Select(x => new PTFlash_ConvergenceHelperTrainingDataInput {
+                  Pressure = x.Pressure.ToSingleFromInvariant(),
+                Temperature = x.Temperature.ToSingleFromInvariant(),  
+                MixtureMolarFlows = x.MixtureMolarFlows.ToSingleArray()
+            }).ToList();
+            ModelTrainer.PTFlash_Train(data);
         }
 
         public static void StoreData(ConvergenceHelperTrainingData data)

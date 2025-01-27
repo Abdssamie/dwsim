@@ -17,7 +17,7 @@ namespace DWSIM.AI.ConvergenceHelper.Training.Trainer
             mlContext = new MLContext(seed: 0);
         }
 
-        public static ITransformer PTFlash_Train(MLContext mlContext, List<PTFlash_ConvergenceHelperTrainingDataInput> data)
+        public static ITransformer PTFlash_Train(List<PTFlash_ConvergenceHelperTrainingDataInput> data)
         {
 
             IDataView dataView = mlContext.Data.LoadFromEnumerable(data);
@@ -28,12 +28,12 @@ namespace DWSIM.AI.ConvergenceHelper.Training.Trainer
 
             var model = sdcaEstimator.Fit(dataSplit.TrainSet);
 
-            PTFlash_Evaluate(mlContext, model, dataSplit.TestSet);
+            PTFlash_Evaluate(model, dataSplit.TestSet);
 
             return model;
         }
 
-        public static void PTFlash_Evaluate(MLContext mlContext, ITransformer model, List<PTFlash_ConvergenceHelperTrainingDataInput> data)
+        public static void PTFlash_Evaluate(ITransformer model, List<PTFlash_ConvergenceHelperTrainingDataInput> data)
         {
 
             IDataView dataView = mlContext.Data.LoadFromEnumerable(data);
@@ -43,7 +43,7 @@ namespace DWSIM.AI.ConvergenceHelper.Training.Trainer
          
         }
 
-        public static void PTFlash_Evaluate(MLContext mlContext, ITransformer model, IDataView data)
+        public static void PTFlash_Evaluate(ITransformer model, IDataView data)
         {
 
             var predictions = model.Transform(data);
@@ -51,7 +51,7 @@ namespace DWSIM.AI.ConvergenceHelper.Training.Trainer
 
         }
 
-        public static void PTFlash_SinglePrediction(MLContext mlContext, ITransformer model, PTFlash_ConvergenceHelperTrainingDataInput sample)
+        public static void PTFlash_SinglePrediction(ITransformer model, PTFlash_ConvergenceHelperTrainingDataInput sample)
         {
             var predictionFunction = mlContext.Model.CreatePredictionEngine<PTFlash_ConvergenceHelperTrainingDataInput, PTFlash_ConvergenceHelperTrainingDataOutput>(model);
 

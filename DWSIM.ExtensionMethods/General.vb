@@ -89,6 +89,28 @@ Public Module General
     End Function
 
     <System.Runtime.CompilerServices.Extension()>
+    Public Function ToDoubleArray(al As String()) As Double()
+
+        Dim list As New List(Of Double)
+        For Each item In al
+            list.Add(item.ToDoubleFromInvariant())
+        Next
+        Return list.ToArray()
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function ToSingleArray(al As String()) As Single()
+
+        Dim list As New List(Of Single)
+        For Each item In al
+            list.Add(item.ToSingleFromInvariant())
+        Next
+        Return list.ToArray()
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToDoubleList(al As ArrayList) As List(Of Double)
 
         Dim list As New List(Of Double)
@@ -523,6 +545,15 @@ Public Module General
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         Return Double.Parse(s.Replace(",", "."), NumberStyles.Any - NumberStyles.AllowThousands, ci)
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function ToSingleFromInvariant(s As String) As Single
+
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+        Return Single.Parse(s.Replace(",", "."), NumberStyles.Any - NumberStyles.AllowThousands, ci)
 
     End Function
 

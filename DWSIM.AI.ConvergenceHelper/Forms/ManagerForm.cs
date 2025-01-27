@@ -35,6 +35,8 @@ namespace DWSIM.AI.ConvergenceHelper.Editors
             c2.Padding = new Padding(20);
             c2.Tag = "Models";
 
+            c2.CreateAndAddButtonRow("Train", null, (btn, e) => { Manager.UpdateModels(); });
+
             var c3 = ext.GetDefaultContainer();
             c3.Padding = new Padding(20);
             c3.Tag = "Data";
