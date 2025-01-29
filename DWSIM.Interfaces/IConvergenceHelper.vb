@@ -1,15 +1,4 @@
-﻿Public Interface IConvergenceHelper
-
-    Function GetEstimates(RequestType As ConvergenceHelperRequestType, ModelName As String, MixtureMolarFlows As Double(), Temperature As Double?, Pressure As Double?,
-                          VaporMolarFraction As Double?, MassEnthalpy As Double?, MassEntropy As Double?) As IConvergenceHelperResponse
-
-    Sub StoreResults(RequestType As ConvergenceHelperRequestType, ModelName As String, MixtureMolarFlows As Double(), Temperature As Double?, Pressure As Double?,
-                          VaporMolarFraction As Double?, MassEnthalpy As Double?, MassEntropy As Double?, VaporMolarFlows As Double(), Liquid1MolarFlows As Double(),
-                          Liquid2MolarFlows As Double(), SolidMolarFlows As Double(), KValuesVL1 As Double(), KValuesVL2 As Double())
-
-End Interface
-
-Public Interface IConvergenceHelperTrainingData
+﻿Public Interface IConvergenceHelperTrainingData
 
     Property RequestType As ConvergenceHelperRequestType
 

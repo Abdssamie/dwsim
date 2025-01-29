@@ -15,8 +15,6 @@ namespace DWSIM.AI.ConvergenceHelper
     public class Manager
     {
 
-        public static Classes.ConvergenceHelper Instance = new Classes.ConvergenceHelper();
-
         public static FileDatabaseProvider Database = new FileDatabaseProvider();
 
         public static string HomeDirectory = Path.Combine(GlobalSettings.Settings.GetConfigFileDir(), "ConvergenceHelper");
@@ -63,7 +61,7 @@ namespace DWSIM.AI.ConvergenceHelper
 
             FlowsheetSolver.FlowsheetSolver.FlowsheetCalculationFinished += FlowsheetSolver_FlowsheetCalculationFinished;
 
-            ModelTrainer.Initialize();
+            //ModelTrainer.Initialize();
 
             Initialized = true;
 
@@ -84,9 +82,14 @@ namespace DWSIM.AI.ConvergenceHelper
             var data = entries.Select(x => new PTFlash_ConvergenceHelperTrainingDataInput {
                   Pressure = x.Pressure.ToSingleFromInvariant(),
                 Temperature = x.Temperature.ToSingleFromInvariant(),  
-                MixtureMolarFlows = x.MixtureMolarFlows.ToSingleArray(ModelTrainer.ARRAY_SIZE)
+                MixtureMolarFlows = x.MixtureMolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
+                VaporMolarFlows = x.VaporMolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
+                Liquid1MolarFlows = x.Liquid1MolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
+                Liquid2MolarFlows = x.Liquid2MolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
+                SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE)
             }).ToList();
-            ModelTrainer.PTFlash_Train(data);
+            foreach (var d in data) d.PrepareData();
+           // ModelTrainer.PTFlash_Train(data);
         }
 
         public static void StoreData(ConvergenceHelperTrainingData data)
