@@ -207,7 +207,7 @@ Public Class FormMain
                 ZedGraph.Variables.IsDWSIMPro = True
                 ZedGraph.Variables.IsDWSIMPro = True
                 WhatsNewToolStripMenuItem.Visible = False
-
+                tsmiProUserGuide.Visible = True
             End If
 #End If
 
@@ -5159,6 +5159,16 @@ Label_00CC:
             tsbAutoSave.Image = My.Resources.cancel_30px
             tsbAutoSave.Text = "AutoSave Disabled"
         End If
+    End Sub
+
+    Private Sub tsmiProUserGuide_Click(sender As Object, e As EventArgs) Handles tsmiProUserGuide.Click
+
+        Dim fpath = Path.Combine(Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), "Documents", "DWSIM Pro User Guide.pdf")
+
+        Dim fb As New FormBrowser()
+        fb.Show()
+        fb.DisplayURL(fpath, "DWSIM Pro User's Guide")
+
     End Sub
 
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged
