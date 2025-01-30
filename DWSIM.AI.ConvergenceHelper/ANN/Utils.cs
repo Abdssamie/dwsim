@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Tensorflow;
 using static Tensorflow.Binding;
 
-namespace DWSIM.UnitOperations.NeuralNetwork.Classes
+namespace DWSIM.AI.ConvergenceHelper.ANN
 {
     class Utils
     {

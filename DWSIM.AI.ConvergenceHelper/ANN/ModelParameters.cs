@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DWSIM.UnitOperations.NeuralNetwork.Classes
+namespace DWSIM.AI.ConvergenceHelper.ANN
 {
     public class ModelParameters : ICustomXMLSerialization
     {

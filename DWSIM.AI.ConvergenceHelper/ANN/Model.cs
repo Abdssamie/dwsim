@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 using System.Linq;
 
 
-namespace DWSIM.UnitOperations.NeuralNetwork.Classes
+namespace DWSIM.AI.ConvergenceHelper.ANN
 {
     public class ANNModel : ICustomXMLSerialization, IDisposable
     {
@@ -140,7 +140,7 @@ namespace DWSIM.UnitOperations.NeuralNetwork.Classes
             {
                 for (var j = 0; j < Data[0].Count(); j++)
                 {
-                    transfdata[i][j] = Classes.Utils.Scale((float)transfdata[i][j],
+                    transfdata[i][j] = Utils.Scale((float)transfdata[i][j],
                         Parameters.MinValues[j],
                         Parameters.MaxValues[j],
                         Parameters.MinScale,
@@ -391,7 +391,7 @@ namespace DWSIM.UnitOperations.NeuralNetwork.Classes
                 {
                     for (var j = 0; j < x_test.shape[1]; j++)
                     {
-                        x_test_unscaled[i][j] = Classes.Utils.UnScale(x_test[i][j],
+                        x_test_unscaled[i][j] = Utils.UnScale(x_test[i][j],
                         Parameters.MinValues[j],
                         Parameters.MaxValues[j],
                         Parameters.MinScale,
@@ -403,7 +403,7 @@ namespace DWSIM.UnitOperations.NeuralNetwork.Classes
                 {
                     for (var j = 0; j < x_train.shape[1]; j++)
                     {
-                        x_train_unscaled[i][j] = Classes.Utils.UnScale(x_train[i][j],
+                        x_train_unscaled[i][j] = Utils.UnScale(x_train[i][j],
                         Parameters.MinValues[j],
                         Parameters.MaxValues[j],
                         Parameters.MinScale,
@@ -420,7 +420,7 @@ namespace DWSIM.UnitOperations.NeuralNetwork.Classes
                 {
                     for (var j = 0; j < y_test.shape[1]; j++)
                     {
-                        y_test_unscaled[i][j] = Classes.Utils.UnScale(y_test[i][j],
+                        y_test_unscaled[i][j] = Utils.UnScale(y_test[i][j],
                         Parameters.MinValues[idx + j],
                         Parameters.MaxValues[idx + j],
                         Parameters.MinScale,
@@ -432,7 +432,7 @@ namespace DWSIM.UnitOperations.NeuralNetwork.Classes
                 {
                     for (var j = 0; j < y_train.shape[1]; j++)
                     {
-                        y_train_unscaled[i][j] = Classes.Utils.UnScale(y_train[i][j],
+                        y_train_unscaled[i][j] = Utils.UnScale(y_train[i][j],
                         Parameters.MinValues[idx + j],
                         Parameters.MaxValues[idx + j],
                         Parameters.MinScale,
@@ -450,7 +450,7 @@ namespace DWSIM.UnitOperations.NeuralNetwork.Classes
                 {
                     for (var j = 0; j < yp_test.shape[1]; j++)
                     {
-                        yp_test_unscaled[i][j] = Classes.Utils.UnScale(yp_test[i][j],
+                        yp_test_unscaled[i][j] = Utils.UnScale(yp_test[i][j],
                         Parameters.MinValues[idx + j],
                         Parameters.MaxValues[idx + j],
                         Parameters.MinScale,
@@ -462,7 +462,7 @@ namespace DWSIM.UnitOperations.NeuralNetwork.Classes
                 {
                     for (var j = 0; j < yp_train.shape[1]; j++)
                     {
-                        yp_train_unscaled[i][j] = Classes.Utils.UnScale(yp_train[i][j],
+                        yp_train_unscaled[i][j] = Utils.UnScale(yp_train[i][j],
                         Parameters.MinValues[idx + j],
                         Parameters.MaxValues[idx + j],
                         Parameters.MinScale,
