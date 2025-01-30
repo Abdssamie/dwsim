@@ -206,6 +206,8 @@ Public Class FormMain
                 DatabaseManagerToolStripMenuItem.Visible = False
                 ZedGraph.Variables.IsDWSIMPro = True
                 ZedGraph.Variables.IsDWSIMPro = True
+                WhatsNewToolStripMenuItem.Visible = False
+
             End If
 #End If
 
