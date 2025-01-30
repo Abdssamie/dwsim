@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using DWSIM.FileStorage;
 using DWSIM.AI.ConvergenceHelper.Classes;
-using DWSIM.AI.ConvergenceHelper.Training.Trainer;
 using DWSIM.AI.ConvergenceHelper.Training.Data;
 using DWSIM.ExtensionMethods;
 
@@ -82,11 +81,11 @@ namespace DWSIM.AI.ConvergenceHelper
             var data = entries.Select(x => new PTFlash_ConvergenceHelperTrainingDataInput {
                   Pressure = x.Pressure.ToSingleFromInvariant(),
                 Temperature = x.Temperature.ToSingleFromInvariant(),  
-                MixtureMolarFlows = x.MixtureMolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
-                VaporMolarFlows = x.VaporMolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
-                Liquid1MolarFlows = x.Liquid1MolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
-                Liquid2MolarFlows = x.Liquid2MolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE),
-                SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray(ModelTrainer.ARRAY_SIZE)
+                MixtureMolarFlows = x.MixtureMolarFlows?.ToSingleArray(),
+                VaporMolarFlows = x.VaporMolarFlows?.ToSingleArray(),
+                Liquid1MolarFlows = x.Liquid1MolarFlows?.ToSingleArray(),
+                Liquid2MolarFlows = x.Liquid2MolarFlows?.ToSingleArray(),
+                SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
             foreach (var d in data) d.PrepareData();
            // ModelTrainer.PTFlash_Train(data);

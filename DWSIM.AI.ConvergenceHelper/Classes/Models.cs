@@ -5,17 +5,16 @@
     {
         public float Temperature { get; set; }
         public float Pressure { get; set; }
-        public float[] MixtureMolarFlows { get; set; } = new float[Trainer.ModelTrainer.ARRAY_SIZE];
-        public float[] VaporMolarFlows { get; set; } = new float[Trainer.ModelTrainer.ARRAY_SIZE];
-        public float[] Liquid1MolarFlows { get; set; } = new float[Trainer.ModelTrainer.ARRAY_SIZE];
-        public float[] Liquid2MolarFlows { get; set; } = new float[Trainer.ModelTrainer.ARRAY_SIZE];
-        public float[] SolidMolarFlows { get; set; } = new float[Trainer.ModelTrainer.ARRAY_SIZE];
+        public float[] MixtureMolarFlows { get; set; }
+        public float[] VaporMolarFlows { get; set; }
+        public float[] Liquid1MolarFlows { get; set; }
+        public float[] Liquid2MolarFlows { get; set; }
+        public float[] SolidMolarFlows { get; set; }
 
         public void PrepareData()
         {
-            if (Liquid2MolarFlows == null) Liquid2MolarFlows = new float[Trainer.ModelTrainer.ARRAY_SIZE];
-            if (SolidMolarFlows == null) SolidMolarFlows = new float[Trainer.ModelTrainer.ARRAY_SIZE];
-
+            if (Liquid2MolarFlows == null) Liquid2MolarFlows = new float[0];
+            if (SolidMolarFlows == null) SolidMolarFlows = new float[0];
         }
 
     }

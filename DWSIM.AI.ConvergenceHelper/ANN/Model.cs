@@ -25,7 +25,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
         public ModelParameters Parameters { get; set; } = new ModelParameters();
 
-        public List<List<double>> Data { get; set; } = new List<List<double>>();
+        public List<List<float>> Data { get; set; } = new List<List<float>>();
 
         public string DataSourcePath { get; set; } = "";
 
@@ -96,13 +96,13 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
         {
             XMLSerializer.XMLSerializer.Deserialize(this, data);
             var d1 = data.Where(x => x.Name == "Data").FirstOrDefault().Elements().ToList();
-            Data = new List<List<double>>();
+            Data = new List<List<float>>();
             foreach (var xel in d1)
             {
-                var list = new List<double>();
+                var list = new List<float>();
                 foreach (var el in xel.Elements())
                 {
-                    list.Add(el.Value.ToDoubleFromInvariant());
+                    list.Add(el.Value.ToSingleFromInvariant());
                 }
                 Data.Add(list);
             }
