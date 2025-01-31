@@ -17,17 +17,9 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
     public class ANNModel : ICustomXMLSerialization, IDisposable
     {
 
-        public enum ModelSourceType
-        {
-            FileSystem = 0,
-            Embedded = 1
-        }
-
         public ModelParameters Parameters { get; set; } = new ModelParameters();
 
         public List<List<float>> Data { get; set; } = new List<List<float>>();
-
-        public string DataSourcePath { get; set; } = "";
 
         public string ModelPath { get; set; } = "";
 
@@ -40,8 +32,6 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
         public string TensorName_Y { get; set; } = "Train/Y:0";
 
         public string TensorName_Output { get; set; } = "Train/out:0";
-
-        public ModelSourceType ModelSource { get; set; } = ModelSourceType.Embedded;
 
         // fields
 

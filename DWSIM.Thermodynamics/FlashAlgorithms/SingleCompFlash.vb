@@ -95,9 +95,17 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
             HfusL = PP.DW_CalcEnthalpy(Vz, Tfus, P, State.Liquid)
             HfusS = PP.DW_CalcEnthalpy(Vz, Tfus, P, State.Solid)
 
+            Dim names = PP.RET_VNAMES()
+
             Dim Hfus = PP.RET_HFUSM(Vz, Tfus)
 
-            If Tfus > Tsat Then
+            Dim CO2checkOK As Boolean = True
+
+            If names.Contains("Carbon dioxide") And Math.Abs(Tfus - Tsat) < 1.0 Then
+                CO2checkOK = False
+            End If
+
+            If Tfus > Tsat And CO2checkOK Then
 
                 'compound can't be liquid at current pressure
 
