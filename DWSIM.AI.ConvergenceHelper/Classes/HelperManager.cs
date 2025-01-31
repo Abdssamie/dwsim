@@ -88,7 +88,7 @@ namespace DWSIM.AI.ConvergenceHelper
                 SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
             foreach (var d in data) d.PrepareData();
-           // ModelTrainer.PTFlash_Train(data);
+           ModelTrainer.PTFlash_Train(data);
         }
 
         public static void StoreData(ConvergenceHelperTrainingData data)

@@ -10,6 +10,7 @@ using static Tensorflow.Binding;
 using OxyPlot;
 using System.Xml.Serialization;
 using System.Linq;
+using DWSIM.AI.ConvergenceHelper.Classes;
 
 
 namespace DWSIM.AI.ConvergenceHelper.ANN
@@ -19,11 +20,9 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
         public ModelParameters Parameters { get; set; } = new ModelParameters();
 
+        public ConvergenceHelperMetaData MetaData { get; set; } = new ConvergenceHelperMetaData();
+
         public List<List<float>> Data { get; set; } = new List<List<float>>();
-
-        public string ModelPath { get; set; } = "";
-
-        public string ModelName { get; set; } = "MyModel";
 
         public string SerializedModelData { get; set; } = "";
 
@@ -168,7 +167,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
         }
 
-        public void Train(IFlowsheet flowsheet, TextArea ta = null, Eto.OxyPlot.Plot plot = null)
+        public void Train(IFlowsheet flowsheet = null, TextArea ta = null, Eto.OxyPlot.Plot plot = null)
         {
 
             var nl = Environment.NewLine;
@@ -188,7 +187,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
                 {
                     flowsheet.ShowMessage("Training Started...", IFlowsheet.MessageType.Information);
                 }
-                else
+                else if (ta != null)
                 {
                     Application.Instance.Invoke(() =>
                     {
@@ -366,7 +365,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
                 {
                     flowsheet.ShowMessage("Training Finished!", IFlowsheet.MessageType.Information);
                 }
-                else
+                else if (ta != null)
                 {
                     Application.Instance.Invoke(() =>
                     {
@@ -472,7 +471,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
                     flowsheet.ShowMessage($"Testing Cost = {testing_cost}", IFlowsheet.MessageType.Information);
                     flowsheet.ShowMessage($"Absolute MSE = {diff}", IFlowsheet.MessageType.Information);
                 }
-                else
+                else if (ta != null)
                 {
                     Application.Instance.Invoke(() =>
                     {
