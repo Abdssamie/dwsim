@@ -19,7 +19,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
         public List<float> MaxValues { get; set; } = new List<float>();
 
-        public int NumberOfEpochs { get; set; } = 1000;
+        public int NumberOfEpochs { get; set; } = 2000;
 
         public float RelativeMSETolerance { get; set; } = 1E-3f;
 

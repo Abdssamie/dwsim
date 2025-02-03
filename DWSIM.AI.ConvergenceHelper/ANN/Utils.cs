@@ -21,7 +21,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
             session.graph.as_default();
 
-            tf.train.Saver().save(session, Path.Combine(tempdir, model.ModelName));
+            tf.train.Saver().save(session, Path.Combine(tempdir, model.MetaData.ModelName));
 
             if (zippath == null) zippath = Path.GetTempFileName();
 
@@ -40,7 +40,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
             session.graph.as_default();
 
-            tf.train.Saver().save(session, Path.Combine(tempdir, model.ModelName));
+            tf.train.Saver().save(session, Path.Combine(tempdir, model.MetaData.ModelName));
 
             var zippath = Path.GetTempFileName();
 

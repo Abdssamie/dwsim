@@ -8,6 +8,7 @@ using DWSIM.FileStorage;
 using DWSIM.AI.ConvergenceHelper.Classes;
 using DWSIM.AI.ConvergenceHelper.Training.Data;
 using DWSIM.ExtensionMethods;
+using Eto.Forms;
 
 namespace DWSIM.AI.ConvergenceHelper
 {
@@ -74,7 +75,7 @@ namespace DWSIM.AI.ConvergenceHelper
             }
         }
 
-        public static void UpdateModels()
+        public static void UpdateModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
             var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
@@ -88,7 +89,7 @@ namespace DWSIM.AI.ConvergenceHelper
                 SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
             foreach (var d in data) d.PrepareData();
-           ModelTrainer.PTFlash_Train(data);
+           ModelTrainer.PTFlash_Train(data, ta, plot);
         }
 
         public static void StoreData(ConvergenceHelperTrainingData data)

@@ -210,10 +210,12 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
                 var n_neurons_2 = n_neurons_1 / 2;
                 var n_neurons_3 = n_neurons_2 / 2;
                 var n_neurons_4 = n_neurons_3 / 2;
+                var n_neurons_5 = n_neurons_4 / 2;
+                var n_neurons_6 = n_neurons_5 / 2;
 
-                RefVariable W_hidden_1, W_hidden_2, W_hidden_3, W_hidden_4, W_out;
-                RefVariable bias_hidden_1, bias_hidden_2, bias_hidden_3, bias_hidden_4, bias_out;
-                Tensor hidden_1, hidden_2, hidden_3, hidden_4;
+                RefVariable W_hidden_1, W_hidden_2, W_hidden_3, W_hidden_4, W_hidden_5, W_hidden_6, W_out;
+                RefVariable bias_hidden_1, bias_hidden_2, bias_hidden_3, bias_hidden_4, bias_hidden_5, bias_hidden_6, bias_out;
+                Tensor hidden_1, hidden_2, hidden_3, hidden_4, hidden_5, hidden_6;
 
                 switch (Parameters.NumberOfLayers)
                 {
@@ -270,6 +272,57 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
                         hidden_4 = tf.nn.relu(tf.add(tf.matmul(hidden_3, W_hidden_4), bias_hidden_4), name: "h4");
                         // Output layer
                         outlayer = tf.add(tf.matmul(hidden_4, W_out), bias_out, name: "out");
+                        break;
+                    case 5:
+                        // Hidden weights
+                        W_hidden_1 = tf.Variable(weight_initializer.call(new int[] { n_x, n_neurons_1 }, dtype: TF_DataType.TF_FLOAT), name: "W1");
+                        bias_hidden_1 = tf.Variable(bias_initializer.call(n_neurons_1, dtype: TF_DataType.TF_FLOAT), name: "b1");
+                        W_hidden_2 = tf.Variable(weight_initializer.call(new int[] { n_neurons_1, n_neurons_2 }, dtype: TF_DataType.TF_FLOAT), name: "W2");
+                        bias_hidden_2 = tf.Variable(bias_initializer.call(n_neurons_2, dtype: TF_DataType.TF_FLOAT), name: "b2");
+                        W_hidden_3 = tf.Variable(weight_initializer.call(new int[] { n_neurons_2, n_neurons_3 }, dtype: TF_DataType.TF_FLOAT), name: "W3");
+                        bias_hidden_3 = tf.Variable(bias_initializer.call(n_neurons_3, dtype: TF_DataType.TF_FLOAT), name: "b3");
+                        W_hidden_4 = tf.Variable(weight_initializer.call(new int[] { n_neurons_3, n_neurons_4 }, dtype: TF_DataType.TF_FLOAT), name: "W4");
+                        bias_hidden_4 = tf.Variable(bias_initializer.call(n_neurons_4, dtype: TF_DataType.TF_FLOAT), name: "b4");
+                        W_hidden_5 = tf.Variable(weight_initializer.call(new int[] { n_neurons_4, n_neurons_5 }, dtype: TF_DataType.TF_FLOAT), name: "W5");
+                        bias_hidden_5 = tf.Variable(bias_initializer.call(n_neurons_5, dtype: TF_DataType.TF_FLOAT), name: "b5");
+                        // Output weights
+                        W_out = tf.Variable(weight_initializer.call(new int[] { n_neurons_5, n_y }, dtype: TF_DataType.TF_FLOAT), name: "Wout");
+                        bias_out = tf.Variable(bias_initializer.call(n_y, dtype: TF_DataType.TF_FLOAT), name: "bout");
+                        // Hidden layer
+                        hidden_1 = tf.nn.relu(tf.add(tf.matmul(X, W_hidden_1), bias_hidden_1), name: "h1");
+                        hidden_2 = tf.nn.relu(tf.add(tf.matmul(hidden_1, W_hidden_2), bias_hidden_2), name: "h2");
+                        hidden_3 = tf.nn.relu(tf.add(tf.matmul(hidden_2, W_hidden_3), bias_hidden_3), name: "h3");
+                        hidden_4 = tf.nn.relu(tf.add(tf.matmul(hidden_3, W_hidden_4), bias_hidden_4), name: "h4");
+                        hidden_5 = tf.nn.relu(tf.add(tf.matmul(hidden_4, W_hidden_5), bias_hidden_5), name: "h5");
+                        // Output layer
+                        outlayer = tf.add(tf.matmul(hidden_5, W_out), bias_out, name: "out");
+                        break;
+                    case 6:
+                        // Hidden weights
+                        W_hidden_1 = tf.Variable(weight_initializer.call(new int[] { n_x, n_neurons_1 }, dtype: TF_DataType.TF_FLOAT), name: "W1");
+                        bias_hidden_1 = tf.Variable(bias_initializer.call(n_neurons_1, dtype: TF_DataType.TF_FLOAT), name: "b1");
+                        W_hidden_2 = tf.Variable(weight_initializer.call(new int[] { n_neurons_1, n_neurons_2 }, dtype: TF_DataType.TF_FLOAT), name: "W2");
+                        bias_hidden_2 = tf.Variable(bias_initializer.call(n_neurons_2, dtype: TF_DataType.TF_FLOAT), name: "b2");
+                        W_hidden_3 = tf.Variable(weight_initializer.call(new int[] { n_neurons_2, n_neurons_3 }, dtype: TF_DataType.TF_FLOAT), name: "W3");
+                        bias_hidden_3 = tf.Variable(bias_initializer.call(n_neurons_3, dtype: TF_DataType.TF_FLOAT), name: "b3");
+                        W_hidden_4 = tf.Variable(weight_initializer.call(new int[] { n_neurons_3, n_neurons_4 }, dtype: TF_DataType.TF_FLOAT), name: "W4");
+                        bias_hidden_4 = tf.Variable(bias_initializer.call(n_neurons_4, dtype: TF_DataType.TF_FLOAT), name: "b4");
+                        W_hidden_5 = tf.Variable(weight_initializer.call(new int[] { n_neurons_4, n_neurons_5 }, dtype: TF_DataType.TF_FLOAT), name: "W5");
+                        bias_hidden_5 = tf.Variable(bias_initializer.call(n_neurons_5, dtype: TF_DataType.TF_FLOAT), name: "b5");
+                        W_hidden_6 = tf.Variable(weight_initializer.call(new int[] { n_neurons_5, n_neurons_6 }, dtype: TF_DataType.TF_FLOAT), name: "W6");
+                        bias_hidden_6 = tf.Variable(bias_initializer.call(n_neurons_6, dtype: TF_DataType.TF_FLOAT), name: "b6");
+                        // Output weights
+                        W_out = tf.Variable(weight_initializer.call(new int[] { n_neurons_6, n_y }, dtype: TF_DataType.TF_FLOAT), name: "Wout");
+                        bias_out = tf.Variable(bias_initializer.call(n_y, dtype: TF_DataType.TF_FLOAT), name: "bout");
+                        // Hidden layer
+                        hidden_1 = tf.nn.relu(tf.add(tf.matmul(X, W_hidden_1), bias_hidden_1), name: "h1");
+                        hidden_2 = tf.nn.relu(tf.add(tf.matmul(hidden_1, W_hidden_2), bias_hidden_2), name: "h2");
+                        hidden_3 = tf.nn.relu(tf.add(tf.matmul(hidden_2, W_hidden_3), bias_hidden_3), name: "h3");
+                        hidden_4 = tf.nn.relu(tf.add(tf.matmul(hidden_3, W_hidden_4), bias_hidden_4), name: "h4");
+                        hidden_5 = tf.nn.relu(tf.add(tf.matmul(hidden_4, W_hidden_5), bias_hidden_5), name: "h5");
+                        hidden_6 = tf.nn.relu(tf.add(tf.matmul(hidden_5, W_hidden_6), bias_hidden_6), name: "h6");
+                        // Output layer
+                        outlayer = tf.add(tf.matmul(hidden_6, W_out), bias_out, name: "out");
                         break;
                 }
 
@@ -342,9 +395,9 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
                                 flowsheet.ShowMessage("MSE (training): " + mse_train.Last().ToString(), IFlowsheet.MessageType.Information);
                                 flowsheet.ShowMessage("MSE (testing): " + mse_test.Last().ToString(), IFlowsheet.MessageType.Information);
                             }
-                            else
+                            else if (ta != null)
                             {
-                                Application.Instance.Invoke(() =>
+                                Application.Instance.AsyncInvoke(() =>
                                 {
                                     ta.Append("Epoch: " + e.ToString() + nl, true);
                                     ta.Append("MSE (training): " + mse_train.Last().ToString() + nl, true);
@@ -484,6 +537,73 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
             });
 
         }
+
+        public List<float> Predict(List<float> inputdata)
+        {
+
+            if (session == null)
+            {
+                using (var ms = Utils.Base64ToStream(SerializedModelData))
+                {
+                    session = Utils.LoadGraphFromStream(ms);
+                }
+            }
+
+            session.graph.as_default();
+
+            var outlayer = session.graph.get_tensor_by_name(Parameters.TensorName_Output);
+            var X = session.graph.get_tensor_by_name(Parameters.TensorName_X);
+            var Y = session.graph.get_tensor_by_name(Parameters.TensorName_Y);
+
+            var nt = Parameters.Labels.Count;
+            var no = Parameters.Labels_Outputs.Count;
+
+            var input = new NDArray(inputdata.ToArray());
+
+            input = input.reshape(1, nt - no);
+
+            var input_scaled = new NDArray(np.float32, input.shape);
+
+            for (var i = 0; i < input.shape[0]; i++)
+            {
+                for (var j = 0; j < input.shape[1]; j++)
+                {
+                    input_scaled[i][j] = Utils.Scale(input[i][j],
+                    Parameters.MinValues[j],
+                    Parameters.MaxValues[j],
+                    Parameters.MinScale,
+                    Parameters.MaxScale);
+                }
+            }
+
+            var pred_scaled = session.run(outlayer, (X, input_scaled));
+
+            var pred_unscaled = new NDArray(np.float32, pred_scaled.shape);
+
+            var idx = Parameters.Labels.IndexOf(Parameters.Labels_Outputs.First());
+
+            for (var i = 0; i < pred_scaled.shape[0]; i++)
+            {
+                for (var j = 0; j < pred_scaled.shape[1]; j++)
+                {
+                    pred_unscaled[i][j] = Utils.UnScale(pred_scaled[i][j],
+                    Parameters.MinValues[idx + j],
+                    Parameters.MaxValues[idx + j],
+                    Parameters.MinScale,
+                    Parameters.MaxScale);
+                }
+            }
+
+            var output = new List<float>();
+            for (var i = 0; i < pred_unscaled.shape[1]; i++)
+            {
+                output.Add(pred_unscaled[0][i]);
+            }
+
+            return output;
+
+        }
+
 
         bool disposedValue = false;
 

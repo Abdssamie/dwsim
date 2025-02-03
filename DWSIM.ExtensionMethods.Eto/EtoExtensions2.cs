@@ -219,7 +219,8 @@ namespace DWSIM.ExtensionMethods.Eto
                 if (control is DocumentControl) controls = ((DocumentControl)control).Pages.Cast<Control>();
                 if (control is Form) controls = ((Form)control).Children.Cast<Control>();
                 if (control is Layout) controls = ((Layout)control).Children.Cast<Control>();
-                if (control is DynamicLayout) controls = ((DynamicLayout)control).Content.VisualControls.Cast<Control>();
+                if (control is DynamicLayout && ((DynamicLayout)control).Content != null)
+                    controls = ((DynamicLayout)control).Content.VisualControls.Cast<Control>();
                 if (control is Scrollable) controls = ((Scrollable)control).Content.VisualControls.Cast<Control>();
             }
             catch { }

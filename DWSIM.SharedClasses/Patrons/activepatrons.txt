@@ -7,9 +7,11 @@
 🌟 Abishek Shrestha
 🌟 Adam Kovalovszki
 🌟 Alberto Marzi
+🌟 Balaji Ramarao
 🌟 Bernhard Seyfang
 🌟 Bryan Evans
 🌟 Casey Houston
+🌟 Chris Hart
 🌟 Christian Hornhofer
 🌟 Domenico Marchese
 🌟 George Brindle
@@ -73,6 +75,7 @@ Hep Ingham
 Hurudza
 John Eamon
 John Kossik
+Julio Ochoa
 Kenneth Troldal
 Leandro Favaretto
 Les Waymont
