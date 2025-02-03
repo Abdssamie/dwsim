@@ -5163,7 +5163,7 @@ Label_00CC:
 
     Private Sub tsmiProUserGuide_Click(sender As Object, e As EventArgs) Handles tsmiProUserGuide.Click
 
-        Dim fpath = Path.Combine(Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), "Documents", "DWSIM Pro User Guide.pdf")
+        Dim fpath = Path.Combine(Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), "docs", "Pro_User_Guide.pdf")
 
         Dim fb As New FormBrowser()
         fb.Show()

@@ -405,6 +405,7 @@ gt3:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
 
     Private Sub SetKijVal(id1 As String, id2 As String, newvalue As Double)
         If Loaded Then
+            _pp.AreModelParametersDirty = True
             If TypeOf _pp Is SRKPropertyPackage Then
                 Dim ppu As PropertyPackages.SRKPropertyPackage = _pp
                 If ppu.m_pr.InteractionParameters.ContainsKey(id1) Then
