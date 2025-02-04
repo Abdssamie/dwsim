@@ -29,6 +29,13 @@
         public float[] Liquid1MolarFlows { get; set; }
         public float[] Liquid2MolarFlows { get; set; }
         public float[] SolidMolarFlows { get; set; }
+
+        public void PrepareData()
+        {
+            if (Liquid2MolarFlows == null) Liquid2MolarFlows = new float[0];
+            if (SolidMolarFlows == null) SolidMolarFlows = new float[0];
+        }
+
     }
 
     public class TVFlash_ConvergenceHelperTrainingDataInput
@@ -41,6 +48,13 @@
         public float[] Liquid1MolarFlows { get; set; }
         public float[] Liquid2MolarFlows { get; set; }
         public float[] SolidMolarFlows { get; set; }
+
+        public void PrepareData()
+        {
+            if (Liquid2MolarFlows == null) Liquid2MolarFlows = new float[0];
+            if (SolidMolarFlows == null) SolidMolarFlows = new float[0];
+        }
+
     }
 
     public class PHFlash_ConvergenceHelperTrainingDataInput
@@ -53,6 +67,13 @@
         public float[] Liquid1MolarFlows { get; set; }
         public float[] Liquid2MolarFlows { get; set; }
         public float[] SolidMolarFlows { get; set; }
+
+        public void PrepareData()
+        {
+            if (Liquid2MolarFlows == null) Liquid2MolarFlows = new float[0];
+            if (SolidMolarFlows == null) SolidMolarFlows = new float[0];
+        }
+
     }
 
     public class PSFlash_ConvergenceHelperTrainingDataInput
@@ -65,6 +86,13 @@
         public float[] Liquid1MolarFlows { get; set; }
         public float[] Liquid2MolarFlows { get; set; }
         public float[] SolidMolarFlows { get; set; }
+
+        public void PrepareData()
+        {
+            if (Liquid2MolarFlows == null) Liquid2MolarFlows = new float[0];
+            if (SolidMolarFlows == null) SolidMolarFlows = new float[0];
+        }
+
     }
 
     public class GibbsIsothermic_ConvergenceHelperTrainingDataInput

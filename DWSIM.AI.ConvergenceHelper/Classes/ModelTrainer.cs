@@ -245,7 +245,7 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
 
         }
 
-        public static void PSFlash_Train(List<PHFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static void PSFlash_Train(List<PSFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -256,7 +256,7 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
                 if (d.Liquid2MolarFlows == null || d.Liquid2MolarFlows.Length == 0) d.Liquid2MolarFlows = new float[d.MixtureMolarFlows.Length];
                 var row = new List<float>();
                 row.Add(d.Pressure);
-                row.Add(d.MassEnthalpy);
+                row.Add(d.MassEntropy);
                 row.AddRange(d.MixtureMolarFlows);
                 row.Add(d.Temperature);
                 row.AddRange(d.VaporMolarFlows);
