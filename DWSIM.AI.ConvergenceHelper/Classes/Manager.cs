@@ -42,8 +42,9 @@ namespace DWSIM.AI.ConvergenceHelper
             }
             else
             {
-                ZipFile.ExtractToDirectory(dbfile, datadir);
                 var dbfile2 = Path.Combine(datadir, "data.db");
+                if (File.Exists(dbfile2)) File.Delete(dbfile2); 
+                ZipFile.ExtractToDirectory(dbfile, datadir);
                 Database.LoadDatabase(dbfile2);
                 File.Delete(dbfile2);
             }
@@ -61,8 +62,6 @@ namespace DWSIM.AI.ConvergenceHelper
 
             FlowsheetSolver.FlowsheetSolver.FlowsheetCalculationFinished += FlowsheetSolver_FlowsheetCalculationFinished;
 
-            //ModelTrainer.Initialize();
-
             Initialized = true;
 
         }
@@ -73,6 +72,13 @@ namespace DWSIM.AI.ConvergenceHelper
                 Task.Run(() => SaveDatabaseToFile());
                 //UpdateModels();
             }
+        }
+
+        public static void UpdateModels(TextArea ta = null, Eto.OxyPlot.Plot plot = null)
+        {
+            var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            UpdatePHModels(ta, plot);
         }
 
         public static void UpdatePTModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -95,7 +101,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdatePVModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PVFlash).ToList();
             var data = entries.Select(x => new PVFlash_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),
@@ -114,7 +120,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdateTVModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.TVFlash).ToList();
             var data = entries.Select(x => new TVFlash_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),
@@ -133,7 +139,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdatePHModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PHFlash).ToList();
             var data = entries.Select(x => new PHFlash_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),
@@ -152,7 +158,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdatePSModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PSFlash).ToList();
             var data = entries.Select(x => new PSFlash_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),
@@ -171,7 +177,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdateEIModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.EquilibriumReactorIsothermic).ToList();
             var data = entries.Select(x => new EquilibriumIsothermic_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),
@@ -185,7 +191,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdateEAModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.EquilibriumReactorAdiabatic).ToList();
             var data = entries.Select(x => new EquilibriumAdiabatic_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),
@@ -200,7 +206,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdateGIModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.GibbsReactorIsothermic).ToList();
             var data = entries.Select(x => new GibbsIsothermic_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),
@@ -214,7 +220,7 @@ namespace DWSIM.AI.ConvergenceHelper
         public static void UpdateGAModels(TextArea ta, Eto.OxyPlot.Plot plot)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic).ToList();
             var data = entries.Select(x => new GibbsAdiabatic_ConvergenceHelperTrainingDataInput
             {
                 Pressure = x.Pressure.ToSingleFromInvariant(),

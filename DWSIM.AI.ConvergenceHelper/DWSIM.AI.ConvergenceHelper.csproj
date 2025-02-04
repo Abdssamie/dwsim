@@ -132,7 +132,7 @@
     <Compile Include="ANN\ModelParameters.cs" />
     <Compile Include="ANN\Utils.cs" />
     <Compile Include="Classes\Implementation.cs" />
-    <Compile Include="Classes\HelperManager.cs" />
+    <Compile Include="Classes\Manager.cs" />
     <Compile Include="Classes\ModelTrainer.cs" />
     <Compile Include="Classes\TrainingDataObjects.cs" />
     <Compile Include="Forms\ManagerForm.cs" />
