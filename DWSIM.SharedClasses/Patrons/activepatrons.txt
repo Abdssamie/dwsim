@@ -56,7 +56,6 @@ Bruce Bishkin
 Camilo Gantiva
 Carlos Pantoja
 Christian Jordan
-Christian Pedersen
 CollectiveObjective
 Daniel Dornellas Athayde
 David Miller
