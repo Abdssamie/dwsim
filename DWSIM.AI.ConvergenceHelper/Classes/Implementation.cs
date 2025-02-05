@@ -76,14 +76,16 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
     public class ConvergenceHelperMetaData : IConvergenceHelperMetaData
     {
         public string ModelName { get; set; } = "";
+        public DateTime LastUpdatedOn { get; set; } = DateTime.MinValue;
         public int NumberOfCompounds { get; set; }
         public int NumberOfSamples { get; set; }
+        public int NumberOfReactions { get; set; }
         public string[] CompoundNames { get; set; }
-        public Tuple<double, double> TemperatureRange { get; set; }
-        public Tuple<double, double> PressureRange { get; set; }
-        public Tuple<double, double> MassEnthalpyRange { get; set; }
-        public Tuple<double, double> MassEntropyRange { get; set; }
-        public Tuple<double, double> VaporMolarFractionRange { get; set; }
-        public Tuple<double[], double[]> MolarCompositionRange { get; set; }
+        public float[] TemperatureRange { get; set; }
+        public float[] PressureRange { get; set; }
+        public float[] MassEnthalpyRange { get; set; }
+        public float[] MassEntropyRange { get; set; }
+        public float[] VaporMolarFractionRange { get; set; }
+        public List<float[]> MolarCompositionRange { get; set; }
     }
 }

@@ -110,23 +110,27 @@ Public Interface IConvergenceHelperMetaData
 
     Property ModelName As String
 
+    Property LastUpdatedOn As DateTime
+
     Property NumberOfSamples As Integer
 
     Property NumberOfCompounds As Integer
 
+    Property NumberOfReactions As Integer
+
     Property CompoundNames As String()
 
-    Property TemperatureRange As Tuple(Of Double, Double)
+    Property TemperatureRange As Single()
 
-    Property PressureRange As Tuple(Of Double, Double)
+    Property PressureRange As Single()
 
-    Property MassEnthalpyRange As Tuple(Of Double, Double)
+    Property MassEnthalpyRange As Single()
 
-    Property MassEntropyRange As Tuple(Of Double, Double)
+    Property MassEntropyRange As Single()
 
-    Property VaporMolarFractionRange As Tuple(Of Double, Double)
+    Property VaporMolarFractionRange As Single()
 
-    Property MolarCompositionRange As Tuple(Of Double(), Double())
+    Property MolarCompositionRange As List(Of Single())
 
 End Interface
 
