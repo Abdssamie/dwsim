@@ -23,7 +23,7 @@ namespace DWSIM.AI.ConvergenceHelper.Editors
             c1.Padding = new Padding(20);
             c1.Tag = "Settings";
 
-            c1.CreateAndAddCheckBoxRow("Enable AI Convergence Helper", GlobalSettings.Settings.ConvergenceHelperEnabled,
+            c1.CreateAndAddCheckBoxRow("Enable AI-Assisted Convergence", GlobalSettings.Settings.ConvergenceHelperEnabled,
                 (chk, e) => { 
                     GlobalSettings.Settings.ConvergenceHelperEnabled = chk.Checked.GetValueOrDefault();
                     if (!Manager.Initialized) Manager.Initialize();
@@ -91,7 +91,7 @@ namespace DWSIM.AI.ConvergenceHelper.Editors
             c3.Padding = new Padding(20);
             c3.Tag = "Data";
 
-            var form = Extensions2.GetTabbedForm("Convergence Helper Manager", 800, 600, new DynamicLayout[] { c1, c2, c3 });
+            var form = Extensions2.GetTabbedForm("AI-Assisted Convergence Manager", 800, 600, new DynamicLayout[] { c1, c2, c3 });
             form.SetFontAndPadding();
             form.Show();
             form.Center();

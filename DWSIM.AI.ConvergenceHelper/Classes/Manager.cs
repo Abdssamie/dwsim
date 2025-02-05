@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using DWSIM.FileStorage;
 using DWSIM.AI.ConvergenceHelper.Classes;
 using Eto.Forms;
+using System.Runtime.InteropServices.ComTypes;
+using DWSIM.AI.ConvergenceHelper.ANN;
 
 namespace DWSIM.AI.ConvergenceHelper
 {
@@ -151,6 +153,54 @@ namespace DWSIM.AI.ConvergenceHelper
 
         public static void SaveSettings()
         {
+
+        }
+
+        public static void SaveModelToFile(ANNModel model)
+        {
+            var modelsdir = Path.Combine(HomeDirectory, "models");
+            if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
+            
+            var zipfile = Path.Combine(modelsdir, model.MetaData.ModelName + ".zip");
+            var modelfile = Path.Combine(modelsdir, model.MetaData.ModelName + ".json");
+
+            using (var ms = new MemoryStream())
+            {
+                Utils.SaveGraphToZipStream(model.session, model, ms);
+                ms.Position = 0;
+                model.SerializedModelData = Utils.StreamToBase64(ms);
+            }
+
+            var contents = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            File.WriteAllText(modelfile, contents);
+            
+            using (var fstream = new FileStream(zipfile, FileMode.OpenOrCreate))
+            {
+                fstream.Position = 0;
+                using (var archive = new ZipArchive(fstream, ZipArchiveMode.Create))
+                    ZipFileExtensions.CreateEntryFromFile(archive, modelfile, modelfile, CompressionLevel.Optimal);
+            }
+
+            File.Delete(modelfile);
+        }
+
+
+        public static ANNModel LoadModelFromFile(string modelfilepath)
+        {
+            var modelsdir = Path.Combine(HomeDirectory, "models");
+            if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
+
+            if (File.Exists(modelfilepath))
+            {
+                var modelfile2 = Path.Combine(modelsdir, Path.ChangeExtension(modelfilepath,"json"));
+                if (File.Exists(modelfile2)) File.Delete(modelfile2);
+                ZipFile.ExtractToDirectory(modelsdir, modelsdir);
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<ANN.ANNModel>(modelfilepath);
+                File.Delete(modelfile2);
+                return model;
+            }
+
+            return null;
 
         }
 

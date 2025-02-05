@@ -54,7 +54,18 @@ namespace DWSIM.AI.ConvergenceHelper
                 SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
             foreach (var d in data) d.PrepareData();
-            ModelTrainer.PVFlash_Train(data, ta, plot);
+
+            var model = ModelTrainer.PVFlash_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.ModelName = string.Format("PVF_{0}_{1}c_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
+
         }
 
         public static void UpdateTVModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -73,7 +84,17 @@ namespace DWSIM.AI.ConvergenceHelper
                 SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
             foreach (var d in data) d.PrepareData();
-            ModelTrainer.TVFlash_Train(data, ta, plot);
+
+            var model = ModelTrainer.TVFlash_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.ModelName = string.Format("TVF_{0}_{1}c_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
         }
 
         public static void UpdatePHModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -92,7 +113,17 @@ namespace DWSIM.AI.ConvergenceHelper
                 SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
             foreach (var d in data) d.PrepareData();
-            ModelTrainer.PHFlash_Train(data, ta, plot);
+
+            var model = ModelTrainer.PHFlash_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.ModelName = string.Format("PHF_{0}_{1}c_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
         }
 
         public static void UpdatePSModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -111,7 +142,17 @@ namespace DWSIM.AI.ConvergenceHelper
                 SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
             foreach (var d in data) d.PrepareData();
-            ModelTrainer.PSFlash_Train(data, ta, plot);
+
+            var model = ModelTrainer.PSFlash_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.ModelName = string.Format("PSF_{0}_{1}c_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
         }
 
         public static void UpdateEIModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -125,7 +166,19 @@ namespace DWSIM.AI.ConvergenceHelper
                 MixtureMolarFlows = x.MixtureMolarFlows?.ToSingleArray(),
                 ReactionExtents = x.ReactionExtents?.ToSingleArray(),
             }).ToList();
-            ModelTrainer.EquilibriumReactorIsothermic_Train(data, ta, plot);
+
+            var model = ModelTrainer.EquilibriumReactorIsothermic_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.NumberOfReactions = entries[0].ReactionExtents.Count();
+            model.MetaData.ModelName = string.Format("EI_{0}_{1}c_{2}r_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.NumberOfReactions,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
         }
 
         public static void UpdateEAModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -140,7 +193,19 @@ namespace DWSIM.AI.ConvergenceHelper
                 MixtureMolarFlows = x.MixtureMolarFlows?.ToSingleArray(),
                 ReactionExtents = x.ReactionExtents?.ToSingleArray(),
             }).ToList();
-            ModelTrainer.EquilibriumReactorAdiabatic_Train(data, ta, plot);
+
+            var model = ModelTrainer.EquilibriumReactorAdiabatic_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.NumberOfReactions = entries[0].ReactionExtents.Count();
+            model.MetaData.ModelName = string.Format("EA_{0}_{1}c_{2}r_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.NumberOfReactions,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
         }
 
         public static void UpdateGIModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -154,7 +219,18 @@ namespace DWSIM.AI.ConvergenceHelper
                 MixtureMolarFlows = x.MixtureMolarFlows?.ToSingleArray(),
                 MixtureMolarFlows2 = x.MixtureMolarFlows2?.ToSingleArray(),
             }).ToList();
-            ModelTrainer.GibbsReactorIsothermic_Train(data, ta, plot);
+
+            var model = ModelTrainer.GibbsReactorIsothermic_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.ModelName = string.Format("GI_{0}_{1}c_{2}r_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.NumberOfReactions,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
         }
 
         public static void UpdateGAModels(TextArea ta, Eto.OxyPlot.Plot plot)
@@ -169,8 +245,20 @@ namespace DWSIM.AI.ConvergenceHelper
                 MixtureMolarFlows = x.MixtureMolarFlows?.ToSingleArray(),
                 MixtureMolarFlows2 = x.MixtureMolarFlows2?.ToSingleArray(),
             }).ToList();
-            ModelTrainer.GibbsReactorAdiabatic_Train(data, ta, plot);
+
+            var model = ModelTrainer.GibbsReactorAdiabatic_Train(data, ta, plot);
+
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.ModelName = string.Format("GA_{0}_{1}c_{2}r_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.NumberOfReactions,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
         }
+
 
     }
 }
