@@ -23,8 +23,18 @@ namespace DWSIM.AI.ConvergenceHelper
                 Liquid2MolarFlows = x.Liquid2MolarFlows?.ToSingleArray(),
                 SolidMolarFlows = x.SolidMolarFlows?.ToSingleArray()
             }).ToList();
+
             foreach (var d in data) d.PrepareData();
+
             var model = ModelTrainer.PTFlash_Train(data, ta, plot);
+            model.MetaData.CompoundNames = entries[0].CompoundNames;
+            model.MetaData.NumberOfCompounds = entries[0].NumberOfCompounds;
+            model.MetaData.PropertyPackageName = entries[0].ModelName;
+            model.MetaData.ModelName = string.Format("PTF_{0}_{1}c_LU_{2}",
+                model.MetaData.PropertyPackageName.Replace(' ', '_').Replace('-', '_').Replace('(', '_').Replace(')', '_'),
+                model.MetaData.NumberOfCompounds,
+                model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
+
             var output = ModelEvaluator.PTFlash_Evaluate(model, data.First());
         }
 

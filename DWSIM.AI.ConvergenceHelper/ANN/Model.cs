@@ -414,6 +414,9 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
                     }
                 }
 
+                MetaData.TrainingDataMSE = mse_train.Last();
+                MetaData.TestingDataMSE = mse_test.Last();
+
                 if (flowsheet != null)
                 {
                     flowsheet.ShowMessage("Training Finished!", IFlowsheet.MessageType.Information);

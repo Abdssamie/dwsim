@@ -110,6 +110,8 @@ Public Interface IConvergenceHelperMetaData
 
     Property ModelName As String
 
+    Property PropertyPackageName As String
+
     Property LastUpdatedOn As DateTime
 
     Property NumberOfSamples As Integer
@@ -131,6 +133,10 @@ Public Interface IConvergenceHelperMetaData
     Property VaporMolarFractionRange As Single()
 
     Property MolarCompositionRange As List(Of Single())
+
+    Property TrainingDataMSE As Single
+
+    Property TestingDataMSE As Single
 
 End Interface
 

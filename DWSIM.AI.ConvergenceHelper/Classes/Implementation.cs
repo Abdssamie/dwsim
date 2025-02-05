@@ -76,6 +76,7 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
     public class ConvergenceHelperMetaData : IConvergenceHelperMetaData
     {
         public string ModelName { get; set; } = "";
+        public string PropertyPackageName { get; set; } = "";
         public DateTime LastUpdatedOn { get; set; } = DateTime.MinValue;
         public int NumberOfCompounds { get; set; }
         public int NumberOfSamples { get; set; }
@@ -87,5 +88,7 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
         public float[] MassEntropyRange { get; set; }
         public float[] VaporMolarFractionRange { get; set; }
         public List<float[]> MolarCompositionRange { get; set; }
+        public float TrainingDataMSE { get; set; }
+        public float TestingDataMSE { get; set; }
     }
 }

@@ -66,6 +66,21 @@ namespace DWSIM.AI.ConvergenceHelper
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            model.MetaData.LastUpdatedOn = DateTime.Now;
+            model.MetaData.TemperatureRange = new float[] { data.Select(x => x.Temperature).Min(), data.Select(x => x.Temperature).Max() };
+            model.MetaData.PressureRange = new float[] { data.Select(x => x.Pressure).Min(), data.Select(x => x.Pressure).Max() };
+            model.MetaData.MolarCompositionRange = new List<float[]>();
+            for (int i = 0; i < data.First().MixtureMolarFlows.Count(); i++)
+            {
+                model.MetaData.MolarCompositionRange.Add(new float[] { data.Select(x => x.MixtureMolarFlows[i]).Min(), data.Select(x => x.MixtureMolarFlows[i]).Max() });
+            }
+
+            model.MetaData.NumberOfSamples = data.Count();
+
+            model.MetaData.VaporMolarFractionRange = new float[] { 0, 0 };
+            model.MetaData.MassEnthalpyRange = new float[] { 0, 0 };
+            model.MetaData.MassEntropyRange = new float[] { 0, 0 };
+
             return model;
 
         }
