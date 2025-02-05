@@ -675,6 +675,12 @@ Public Module General
     End Function
 
     <System.Runtime.CompilerServices.Extension()>
+    Public Function ToDouble(vector As Single()) As Double()
+
+        Return vector.Select(Function(d) Convert.ToDouble(d)).ToArray()
+
+    End Function
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToString(vector As Double(), numberformat As String) As String()
 
         Return vector.Select(Function(d) d.ToString(numberformat, CultureInfo.InvariantCulture)).ToArray()

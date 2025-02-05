@@ -71,6 +71,9 @@ namespace DWSIM.AI.ConvergenceAssistant.Classes
         public double[] SolidMolarFlows { get; set; }
         public double[] KValuesVL1 { get; set; }
         public double[] KValuesVL2 { get; set; }
+        public double[] MixtureMolarFlows2 { get; set; }
+        public double? Temperature2 { get; set; }
+        public double[] ReactionExtents { get; set; }
     }
 
     public class ConvergenceHelperMetaData : IConvergenceHelperMetaData

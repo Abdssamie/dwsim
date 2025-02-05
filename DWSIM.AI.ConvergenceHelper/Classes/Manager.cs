@@ -9,6 +9,7 @@ using DWSIM.AI.ConvergenceAssistant.Classes;
 using Eto.Forms;
 using System.Runtime.InteropServices.ComTypes;
 using DWSIM.AI.ConvergenceAssistant.ANN;
+using Tensorflow;
 
 namespace DWSIM.AI.ConvergenceAssistant
 {
@@ -201,7 +202,6 @@ namespace DWSIM.AI.ConvergenceAssistant
             File.Delete(modelfile);
         }
 
-
         public static ANNModel LoadModelFromFile(string modelfilepath)
         {
             var modelsdir = Path.Combine(HomeDirectory, "models");
@@ -219,6 +219,31 @@ namespace DWSIM.AI.ConvergenceAssistant
 
             return null;
 
+        }
+
+        public static ANNModel GetModel(ConvergenceHelperRequest request)
+        {
+                        
+            var comps = request.CompoundNames.OrderBy(x => x).ToList();
+            var comps0 = request.CompoundNames.ToList();
+            var mf1 = new List<double>();
+            foreach (var comp in comps)
+            {
+                mf1.Add(request.MixtureMolarFlows[comps0.IndexOf(comp)]);
+            }
+
+            var modeldata = ModelsSummary.Where(m => m.CompoundNames.Equals(mf1.ToArray()) && 
+                        m.PropertyPackageName.Equals(request.ModelName)).OrderBy(m => m.TestingDataMSE).FirstOrDefault();
+
+            if (modeldata == null) {return null;}
+
+            var modelsdir = Path.Combine(HomeDirectory, "models");
+            if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
+
+            var model = LoadModelFromFile(Path.Combine(modelsdir, modeldata.ModelName + ".zip"));
+            
+            return model;
+        
         }
 
     }

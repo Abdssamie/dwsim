@@ -82,6 +82,8 @@ Public Interface IConvergenceHelperResponse
 
     Property Temperature As Double?
 
+    Property Temperature2 As Double?
+
     Property Pressure As Double?
 
     Property MassEnthalpy As Double?
@@ -103,6 +105,10 @@ Public Interface IConvergenceHelperResponse
     Property KValuesVL1 As Double()
 
     Property KValuesVL2 As Double()
+
+    Property MixtureMolarFlows2 As Double()
+
+    Property ReactionExtents As Double()
 
 End Interface
 
