@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DWSIM.AI.ConvergenceHelper.Classes
+namespace DWSIM.AI.ConvergenceHelper
 {
     public class ModelTrainer
     {
 
-        public static void PTFlash_Train(List<PTFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel PTFlash_Train(List<PTFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -66,9 +66,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void PVFlash_Train(List<PVFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel PVFlash_Train(List<PVFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -90,8 +92,8 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
 
             var labels = new List<string>();
             var labels_output = new List<string>();
-            labels.Add("VaporPressure");
             labels.Add("Pressure");
+            labels.Add("VaporFraction");
             for (int i = 0; i < data.First().MixtureMolarFlows.Count(); i++)
             {
                 labels.Add("MixtureMolarFlow" + i.ToString());
@@ -125,9 +127,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void TVFlash_Train(List<TVFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel TVFlash_Train(List<TVFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -149,8 +153,8 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
 
             var labels = new List<string>();
             var labels_output = new List<string>();
-            labels.Add("VaporPressure");
             labels.Add("Temperature");
+            labels.Add("VaporFraction");
             for (int i = 0; i < data.First().MixtureMolarFlows.Count(); i++)
             {
                 labels.Add("MixtureMolarFlow" + i.ToString());
@@ -184,9 +188,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void PHFlash_Train(List<PHFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel PHFlash_Train(List<PHFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -243,9 +249,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void PSFlash_Train(List<PSFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel PSFlash_Train(List<PSFlash_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -302,9 +310,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void GibbsReactorIsothermic_Train(List<GibbsIsothermic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel GibbsReactorIsothermic_Train(List<GibbsIsothermic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -346,9 +356,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void GibbsReactorAdiabatic_Train(List<GibbsAdiabatic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel GibbsReactorAdiabatic_Train(List<GibbsAdiabatic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -393,9 +405,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void EquilibriumReactorIsothermic_Train(List<EquilibriumIsothermic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel EquilibriumReactorIsothermic_Train(List<EquilibriumIsothermic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -437,9 +451,11 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
             model.PrepareData();
             model.Train(null, ta, plot);
 
+            return model;
+
         }
 
-        public static void EquilibriumReactorAdiabatic_Train(List<EquilibriumAdiabatic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
+        public static ANN.ANNModel EquilibriumReactorAdiabatic_Train(List<EquilibriumAdiabatic_ConvergenceHelperTrainingDataInput> data, TextArea ta, Eto.OxyPlot.Plot plot)
         {
 
             var model = new ANN.ANNModel();
@@ -482,6 +498,8 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
 
             model.PrepareData();
             model.Train(null, ta, plot);
+
+            return model;
 
         }
 
