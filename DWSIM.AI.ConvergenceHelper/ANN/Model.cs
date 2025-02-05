@@ -22,6 +22,8 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
         public ConvergenceHelperMetaData MetaData { get; set; } = new ConvergenceHelperMetaData();
 
+        [XmlIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public List<List<float>> Data { get; set; } = new List<List<float>>();
 
         public string SerializedModelData { get; set; } = "";
@@ -52,7 +54,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
         public ANNModel()
         {
-
+            MetaData.CreatedOn = DateTime.Now;
         }
 
         public string Summary()

@@ -43,7 +43,7 @@ namespace DWSIM.AI.ConvergenceHelper
             else
             {
                 var dbfile2 = Path.Combine(datadir, "data.db");
-                if (File.Exists(dbfile2)) File.Delete(dbfile2); 
+                if (File.Exists(dbfile2)) File.Delete(dbfile2);
                 ZipFile.ExtractToDirectory(dbfile, datadir);
                 Database.LoadDatabase(dbfile2);
                 File.Delete(dbfile2);
@@ -52,7 +52,7 @@ namespace DWSIM.AI.ConvergenceHelper
             var msfile = Path.Combine(modelsdir, "summary.json");
             if (!File.Exists(msfile))
             {
-                var data = Newtonsoft.Json.JsonConvert.SerializeObject(ModelsSummary);
+                var data = Newtonsoft.Json.JsonConvert.SerializeObject(ModelsSummary, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(msfile, data);
             }
             else
@@ -68,7 +68,8 @@ namespace DWSIM.AI.ConvergenceHelper
 
         private static void FlowsheetSolver_FlowsheetCalculationFinished(object sender, EventArgs e, object extrainfo)
         {
-            if (GlobalSettings.Settings.ConvergenceHelperEnabled) { 
+            if (GlobalSettings.Settings.ConvergenceHelperEnabled)
+            {
                 Task.Run(() => SaveDatabaseToFile());
                 //UpdateModels();
             }
@@ -78,7 +79,9 @@ namespace DWSIM.AI.ConvergenceHelper
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
             var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
+
             ModelUpdater.UpdatePTModels(ta, plot);
+
         }
 
         public static void StoreData(ConvergenceHelperTrainingData data)
@@ -97,7 +100,8 @@ namespace DWSIM.AI.ConvergenceHelper
                     var sf = new List<string>();
                     var k1 = new List<string>();
                     var k2 = new List<string>();
-                    foreach (var comp in comps) {
+                    foreach (var comp in comps)
+                    {
                         mf1.Add(data.MixtureMolarFlows[comps0.IndexOf(comp)]);
                         if (data.MixtureMolarFlows2 != null) if (data.MixtureMolarFlows2 != null) mf2.Add(data.MixtureMolarFlows2[comps0.IndexOf(comp)]);
                         if (data.VaporMolarFlows != null) vf.Add(data.VaporMolarFlows[comps0.IndexOf(comp)]);
@@ -156,11 +160,22 @@ namespace DWSIM.AI.ConvergenceHelper
 
         }
 
+        public static void AddToSummary(ConvergenceHelperMetaData mdata)
+        {
+            var modelsdir = Path.Combine(HomeDirectory, "models");
+            if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
+
+            ModelsSummary.Add(mdata);
+            var msfile = Path.Combine(modelsdir, "summary.json");
+
+            File.WriteAllText(msfile, Newtonsoft.Json.JsonConvert.SerializeObject(ModelsSummary, Newtonsoft.Json.Formatting.Indented));
+        }
+
         public static void SaveModelToFile(ANNModel model)
         {
             var modelsdir = Path.Combine(HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
-            
+
             var zipfile = Path.Combine(modelsdir, model.MetaData.ModelName + ".zip");
             var modelfile = Path.Combine(modelsdir, model.MetaData.ModelName + ".json");
 
@@ -171,15 +186,17 @@ namespace DWSIM.AI.ConvergenceHelper
                 model.SerializedModelData = Utils.StreamToBase64(ms);
             }
 
-            var contents = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+            var contents = Newtonsoft.Json.JsonConvert.SerializeObject(model, Newtonsoft.Json.Formatting.Indented);
             File.WriteAllText(modelfile, contents);
-            
+
             using (var fstream = new FileStream(zipfile, FileMode.OpenOrCreate))
             {
                 fstream.Position = 0;
                 using (var archive = new ZipArchive(fstream, ZipArchiveMode.Create))
-                    ZipFileExtensions.CreateEntryFromFile(archive, modelfile, modelfile, CompressionLevel.Optimal);
+                    ZipFileExtensions.CreateEntryFromFile(archive, modelfile, Path.GetFileName(modelfile), CompressionLevel.Optimal);
             }
+
+            AddToSummary(model.MetaData);
 
             File.Delete(modelfile);
         }
@@ -192,7 +209,7 @@ namespace DWSIM.AI.ConvergenceHelper
 
             if (File.Exists(modelfilepath))
             {
-                var modelfile2 = Path.Combine(modelsdir, Path.ChangeExtension(modelfilepath,"json"));
+                var modelfile2 = Path.Combine(modelsdir, Path.ChangeExtension(modelfilepath, "json"));
                 if (File.Exists(modelfile2)) File.Delete(modelfile2);
                 ZipFile.ExtractToDirectory(modelsdir, modelsdir);
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<ANN.ANNModel>(modelfilepath);

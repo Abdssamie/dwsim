@@ -77,6 +77,7 @@ namespace DWSIM.AI.ConvergenceHelper.Classes
     {
         public string ModelName { get; set; } = "";
         public string PropertyPackageName { get; set; } = "";
+        public DateTime CreatedOn { get; set; } = DateTime.MinValue;
         public DateTime LastUpdatedOn { get; set; } = DateTime.MinValue;
         public int NumberOfCompounds { get; set; }
         public int NumberOfSamples { get; set; }

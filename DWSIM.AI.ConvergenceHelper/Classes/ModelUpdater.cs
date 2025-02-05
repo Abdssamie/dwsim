@@ -35,6 +35,8 @@ namespace DWSIM.AI.ConvergenceHelper
                 model.MetaData.NumberOfCompounds,
                 model.MetaData.LastUpdatedOn.ToUniversalTime().ToString("yyyyMMdd_HHmmss"));
 
+            Manager.SaveModelToFile(model);
+
             var output = ModelEvaluator.PTFlash_Evaluate(model, data.First());
         }
 

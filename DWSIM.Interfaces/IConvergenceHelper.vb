@@ -111,6 +111,7 @@ Public Interface IConvergenceHelperMetaData
     Property ModelName As String
 
     Property PropertyPackageName As String
+    Property CreatedOn As DateTime
 
     Property LastUpdatedOn As DateTime
 
