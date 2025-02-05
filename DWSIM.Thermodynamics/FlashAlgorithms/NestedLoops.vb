@@ -355,9 +355,9 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.ConvergenceHelperEnabled Then
-                AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+                AI.ConvergenceAssistant.Manager.StoreData(
+                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
@@ -873,9 +873,9 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 WriteDebugInfo("PH Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
                 IObj?.Paragraphs.Add("The algorithm converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
-                If Settings.ConvergenceHelperEnabled Then
-                    AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+                If Settings.AIAssistedConvergenceLevel > 0 Then
+                    AI.ConvergenceAssistant.Manager.StoreData(
+                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
@@ -1193,9 +1193,9 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.ConvergenceHelperEnabled Then
-                AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+                AI.ConvergenceAssistant.Manager.StoreData(
+                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
@@ -1431,9 +1431,9 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.ConvergenceHelperEnabled Then
-                AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+                AI.ConvergenceAssistant.Manager.StoreData(
+                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
@@ -1716,9 +1716,9 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.ConvergenceHelperEnabled Then
-                AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+                AI.ConvergenceAssistant.Manager.StoreData(
+                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
@@ -2230,9 +2230,9 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.ConvergenceHelperEnabled Then
-                AI.ConvergenceHelper.Manager.StoreData(
-                New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+                AI.ConvergenceAssistant.Manager.StoreData(
+                New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                     .CompoundNames = PP.RET_VNAMES(),
                     .ModelName = PP.ComponentName,
                     .NumberOfCompounds = Ki.Count,
@@ -2343,9 +2343,9 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                 'Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, deltaT}
 
-                If Settings.ConvergenceHelperEnabled Then
-                    AI.ConvergenceHelper.Manager.StoreData(
-                        New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+                If Settings.AIAssistedConvergenceLevel > 0 Then
+                    AI.ConvergenceAssistant.Manager.StoreData(
+                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Vz.Count,
                         .Temperature = Convert.ToDouble(result(4)).ToString("F4", CultureInfo.InvariantCulture),
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),

@@ -1,5 +1,5 @@
-﻿using DWSIM.AI.ConvergenceHelper.ANN;
-using DWSIM.AI.ConvergenceHelper.Training.Data;
+﻿using DWSIM.AI.ConvergenceAssistant.ANN;
+using DWSIM.AI.ConvergenceAssistant.Training.Data;
 using Eto.Forms;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DWSIM.AI.ConvergenceHelper
+namespace DWSIM.AI.ConvergenceAssistant
 {
     public class ModelEvaluator
     {

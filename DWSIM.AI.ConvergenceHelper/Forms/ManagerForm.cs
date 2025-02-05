@@ -11,7 +11,7 @@ using ext = DWSIM.UI.Shared.Common;
 using DWSIM.UI.Shared;
 using OxyPlot;
 
-namespace DWSIM.AI.ConvergenceHelper.Editors
+namespace DWSIM.AI.ConvergenceAssistant.Editors
 {
     public static class ManagerForm
     {
@@ -23,14 +23,13 @@ namespace DWSIM.AI.ConvergenceHelper.Editors
             c1.Padding = new Padding(20);
             c1.Tag = "Settings";
 
-            c1.CreateAndAddCheckBoxRow("Enable AI-Assisted Convergence", GlobalSettings.Settings.ConvergenceHelperEnabled,
-                (chk, e) => { 
-                    GlobalSettings.Settings.ConvergenceHelperEnabled = chk.Checked.GetValueOrDefault();
+            var options = new string[] {"Disabled", "Provide Estimates","Provide Estimates and Solutions" };
+
+            c1.CreateAndAddDropDownRow("AI-Assisted Convergence Level", options.ToList(), GlobalSettings.Settings.AIAssistedConvergenceLevel,
+                (dd, e) => { 
+                    GlobalSettings.Settings.AIAssistedConvergenceLevel = dd.SelectedIndex;
                     if (!Manager.Initialized) Manager.Initialize();
                 });
-
-            c1.CreateAndAddCheckBoxRow("Use ANN Model Outputs on Errors", GlobalSettings.Settings.ConvergenceHelperSolutionOnErrorEnabled,
-                (chk, e) => GlobalSettings.Settings.ConvergenceHelperSolutionOnErrorEnabled = chk.Checked.GetValueOrDefault());
 
             var c2 = ext.GetDefaultContainer();
             c2.Padding = new Padding(20);

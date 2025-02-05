@@ -1343,9 +1343,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DWSIM.AI.ConvergenceHelper\DWSIM.AI.ConvergenceHelper.csproj">
+    <ProjectReference Include="..\DWSIM.AI.ConvergenceHelper\DWSIM.AI.ConvergenceAssistant.csproj">
       <Project>{16f5e77b-eda0-45f2-969f-e70daf9b44f2}</Project>
-      <Name>DWSIM.AI.ConvergenceHelper</Name>
+      <Name>DWSIM.AI.ConvergenceAssistant</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\DWSIM.Drawing.SkiaSharp\DWSIM.DrawingTools.SkiaSharp.vbproj">

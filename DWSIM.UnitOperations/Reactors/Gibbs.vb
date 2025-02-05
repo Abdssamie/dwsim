@@ -1594,8 +1594,8 @@ Namespace Reactors
 
             If Settings.ConvergenceHelperEnabled Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
-                    AI.ConvergenceHelper.Manager.StoreData(
-                    New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+                    AI.ConvergenceAssistant.Manager.StoreData(
+                    New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
                         .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
@@ -1605,8 +1605,8 @@ Namespace Reactors
                         .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
-                    AI.ConvergenceHelper.Manager.StoreData(
-                      New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+                    AI.ConvergenceAssistant.Manager.StoreData(
+                      New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
                         .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
@@ -2461,8 +2461,8 @@ Namespace Reactors
 
             If Settings.ConvergenceHelperEnabled Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
-                    AI.ConvergenceHelper.Manager.StoreData(
-                    New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+                    AI.ConvergenceAssistant.Manager.StoreData(
+                    New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
@@ -2473,8 +2473,8 @@ Namespace Reactors
                         .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
-                    AI.ConvergenceHelper.Manager.StoreData(
-                      New AI.ConvergenceHelper.Classes.ConvergenceHelperTrainingData With {
+                    AI.ConvergenceAssistant.Manager.StoreData(
+                      New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,

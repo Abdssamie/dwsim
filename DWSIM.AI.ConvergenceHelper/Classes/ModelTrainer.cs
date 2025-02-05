@@ -1,4 +1,4 @@
-﻿using DWSIM.AI.ConvergenceHelper.Training.Data;
+﻿using DWSIM.AI.ConvergenceAssistant.Training.Data;
 using Eto.Forms;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DWSIM.AI.ConvergenceHelper
+namespace DWSIM.AI.ConvergenceAssistant
 {
     public class ModelTrainer
     {
@@ -62,6 +62,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -138,6 +139,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -199,6 +201,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -260,6 +263,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -321,6 +325,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -367,6 +372,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -416,6 +422,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -462,6 +469,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);
@@ -510,6 +518,7 @@ namespace DWSIM.AI.ConvergenceHelper
             model.Parameters.NumberOfLayers = 2;
             model.Parameters.NumberOfNeuronsOnFirstLayer = 100;
             model.Parameters.NumberOfEpochs = 10000;
+            model.Parameters.SplitFactor = 0.7f;
 
             model.PrepareData();
             model.Train(null, ta, plot);

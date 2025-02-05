@@ -235,7 +235,7 @@
     <value>303, 22</value>
   </data>
   <data name="ConvergenceHelperSettingsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Convergence Helper Settings (Beta)</value>
+    <value>AI-Assisted Convergence Settings</value>
   </data>
   <data name="ConvergenceHelperSettingsToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>

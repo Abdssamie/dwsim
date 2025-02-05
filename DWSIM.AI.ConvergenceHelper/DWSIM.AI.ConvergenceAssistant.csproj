@@ -8,8 +8,8 @@
     <ProjectGuid>{16F5E77B-EDA0-45F2-969F-E70DAF9B44F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DWSIM.AI.ConvergenceHelper</RootNamespace>
-    <AssemblyName>DWSIM.AI.ConvergenceHelper</AssemblyName>
+    <RootNamespace>DWSIM.AI.ConvergenceAssistant</RootNamespace>
+    <AssemblyName>DWSIM.AI.ConvergenceAssistant</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

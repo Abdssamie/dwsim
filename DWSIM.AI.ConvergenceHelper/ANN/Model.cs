@@ -10,10 +10,10 @@ using static Tensorflow.Binding;
 using OxyPlot;
 using System.Xml.Serialization;
 using System.Linq;
-using DWSIM.AI.ConvergenceHelper.Classes;
+using DWSIM.AI.ConvergenceAssistant.Classes;
 
 
-namespace DWSIM.AI.ConvergenceHelper.ANN
+namespace DWSIM.AI.ConvergenceAssistant.ANN
 {
     public class ANNModel : ICustomXMLSerialization, IDisposable
     {
@@ -384,7 +384,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
                         // Show progress
                         var divrem = 0;
-                        Math.DivRem(e, 5, out divrem);
+                        Math.DivRem(e, 100, out divrem);
 
                         if (divrem == 0)
                         {
@@ -525,7 +525,7 @@ namespace DWSIM.AI.ConvergenceHelper.ANN
 
                 if (flowsheet != null)
                 {
-                    flowsheet.ShowMessage($"Training Cost = {testing_cost}", IFlowsheet.MessageType.Information);
+                    flowsheet.ShowMessage($"Training Cost = {training_cost}", IFlowsheet.MessageType.Information);
                     flowsheet.ShowMessage($"Testing Cost = {testing_cost}", IFlowsheet.MessageType.Information);
                     flowsheet.ShowMessage($"Absolute MSE = {diff}", IFlowsheet.MessageType.Information);
                 }

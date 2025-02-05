@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("DWSIM AI Convergence Helper")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DWSIM.AI.ConvergenceHelper")]
+[assembly: AssemblyProduct("DWSIM.AI.ConvergenceAssistant")]
 [assembly: AssemblyCopyright("Copyright © 2025 Daniel Wagner Oliveira de Medeiros")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -194,10 +194,7 @@ Public Class Settings
 
     Public Shared IsGTKRenderer As Boolean = False
 
-    Public Shared ConvergenceHelperEnabled As Boolean = False
-
-    Public Shared ConvergenceHelperSolutionOnErrorEnabled As Boolean = True
-
+    Public Shared AIAssistedConvergenceLevel As Integer = 0
 
     <DllImport("kernel32.dll", SetLastError:=True)> Public Shared Function AddDllDirectory(lpPathName As String) As Boolean
 

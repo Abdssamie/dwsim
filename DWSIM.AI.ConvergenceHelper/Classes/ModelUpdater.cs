@@ -1,10 +1,10 @@
-﻿using DWSIM.AI.ConvergenceHelper.Training.Data;
+﻿using DWSIM.AI.ConvergenceAssistant.Training.Data;
 using Eto.Forms;
 using System.Linq;
 using DWSIM.ExtensionMethods;
-using DWSIM.AI.ConvergenceHelper.Classes;
+using DWSIM.AI.ConvergenceAssistant.Classes;
 
-namespace DWSIM.AI.ConvergenceHelper
+namespace DWSIM.AI.ConvergenceAssistant
 {
     public class ModelUpdater
     {

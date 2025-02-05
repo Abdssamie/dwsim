@@ -5,12 +5,12 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using DWSIM.FileStorage;
-using DWSIM.AI.ConvergenceHelper.Classes;
+using DWSIM.AI.ConvergenceAssistant.Classes;
 using Eto.Forms;
 using System.Runtime.InteropServices.ComTypes;
-using DWSIM.AI.ConvergenceHelper.ANN;
+using DWSIM.AI.ConvergenceAssistant.ANN;
 
-namespace DWSIM.AI.ConvergenceHelper
+namespace DWSIM.AI.ConvergenceAssistant
 {
     public class Manager
     {
@@ -68,7 +68,7 @@ namespace DWSIM.AI.ConvergenceHelper
 
         private static void FlowsheetSolver_FlowsheetCalculationFinished(object sender, EventArgs e, object extrainfo)
         {
-            if (GlobalSettings.Settings.ConvergenceHelperEnabled)
+            if (GlobalSettings.Settings.AIAssistedConvergenceLevel > 0)
             {
                 Task.Run(() => SaveDatabaseToFile());
                 //UpdateModels();

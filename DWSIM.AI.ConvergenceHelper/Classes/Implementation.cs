@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using DWSIM.Interfaces;
 
-namespace DWSIM.AI.ConvergenceHelper.Classes
+namespace DWSIM.AI.ConvergenceAssistant.Classes
 {
     public class ConvergenceHelperTrainingData : IConvergenceHelperTrainingData
     {

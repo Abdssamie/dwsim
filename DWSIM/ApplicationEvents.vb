@@ -100,7 +100,7 @@ Namespace My
 
             DWSIM.App.InitializeSettings()
 
-            If GlobalSettings.Settings.ConvergenceHelperEnabled Then AI.ConvergenceHelper.Manager.Initialize()
+            If GlobalSettings.Settings.AIAssistedConvergenceLevel > 0 Then AI.ConvergenceAssistant.Manager.Initialize()
 
             If e.Cancel Then
 

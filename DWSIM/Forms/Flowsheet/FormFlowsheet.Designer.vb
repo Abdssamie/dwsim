@@ -912,7 +912,7 @@ Partial Class FormFlowsheet
         Me.pbSolver.AutoIncrementFrequency = 50.0R
         resources.ApplyResources(Me.pbSolver, "pbSolver")
         Me.pbSolver.Name = "pbSolver"
-        Me.pbSolver.TransistionSegment = 11
+        Me.pbSolver.TransistionSegment = 3
         Me.pbSolver.TransistionSegmentColour = System.Drawing.Color.LightSkyBlue
         '
         'lblTotalMessages

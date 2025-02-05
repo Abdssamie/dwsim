@@ -1,4 +1,4 @@
-﻿namespace DWSIM.AI.ConvergenceHelper.Training.Data
+﻿namespace DWSIM.AI.ConvergenceAssistant.Training.Data
 {
 
     public class PTFlash_ConvergenceHelperTrainingDataInput
