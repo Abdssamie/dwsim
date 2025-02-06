@@ -2262,12 +2262,24 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="Vz">Vector of molar fractions</param>
+        ''' <param name="P">Pressure in Pa</param>
+        ''' <param name="V">Vapor Molar Fraction (V = 0 - bubble point, V = 1 - dew point)</param>
+        ''' <param name="Tref">Initial estimate for temperature</param>
+        ''' <param name="PP">Property Package object</param>
+        ''' <param name="ReuseKI">true to use previous K-values</param>
+        ''' <param name="PrevKi">Previous K-values</param>
+        ''' <returns></returns>
         Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim result As Object()
             Dim Kvals As Double()
             Dim trivial As Boolean = False
 
+            'this didn't work well
             'result = Flash_PV_Saturated_Newton(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
 
             result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
