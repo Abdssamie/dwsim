@@ -518,7 +518,7 @@ namespace DWSIM.UI.Shared
             }
             else
             {
-                label = new Label { Text = text, Wrap = WrapMode.Word };
+                label = new Label { Text = text, Wrap = WrapMode.Word,  };
                 label.Font = new Font(SystemFont.Default, GetEditorFontSize() - 1);
                 label.TextColor = Color.FromArgb(SystemColors.ControlText.Rb, SystemColors.ControlText.Gb, SystemColors.ControlText.Bb, 180);
                 container.AddRow(new TableRow(label));

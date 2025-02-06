@@ -23,17 +23,27 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
             c1.Padding = new Padding(20);
             c1.Tag = "Settings";
 
+            c1.CreateAndAddLabelRow("AI-Assisted Convergence Options");
+
             var options = new string[] {"Disabled", "Provide Initial Estimates", "Provide Initial Estimates (2-pass)", "Provide Estimates and Solutions", "Provide Solutions" };
 
             c1.CreateAndAddDropDownRow("AI-Assisted Convergence Level", options.ToList(), GlobalSettings.Settings.AIAssistedConvergenceLevel,
                 (dd, e) => { 
                     GlobalSettings.Settings.AIAssistedConvergenceLevel = dd.SelectedIndex;
                     if (!Manager.Initialized) Manager.Initialize();
-                });
+                }, 200);
+
+            c1.CreateAndAddDescriptionRow("Provide Initial Estimates: initial estimates for converging the algorithms to the solution will be provided.", true);
+
+            c1.CreateAndAddDescriptionRow("Provide Initial Estimates (2-pass): initial estimates for converging the algorithms to the solution will be provided for a second try only\nif the default behavior results in convergence errors.", true);
+
+            c1.CreateAndAddDescriptionRow("Provide Estimates and Solutions: initial estimates for converging the algorithms to the solution will be provided and also solutions will\nbe given for non-converging cases.", true);
+
+            c1.CreateAndAddDescriptionRow("Provide Solutions: Solutions will be given for non-converging cases.",true);
 
             var c2 = ext.GetDefaultContainer();
             c2.Padding = new Padding(20);
-            c2.Tag = "Models";
+            c2.Tag = "Model Creation and Training";
 
             var sf = GlobalSettings.Settings.DpiScale;
 
@@ -88,7 +98,25 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
 
             var c3 = ext.GetDefaultContainer();
             c3.Padding = new Padding(20);
-            c3.Tag = "Data";
+            c3.Tag = "Model Explorer";
+
+            var p1 = ext.GetDefaultContainer();
+            var list = new ListBox {Height = (int)(440 * sf) };
+            p1.CreateAndAddLabelRow("Model List");
+            p1.Add(list);
+            p1.CreateAndAddButtonRow("Import Model", null, null);
+            p1.CreateAndAddButtonRow("Delete Selected Model", null, null);
+
+            var p2 = ext.GetDefaultContainer();
+            p2.CreateAndAddLabelRow("Selected Model Details");
+            var ta = new TextArea {ReadOnly = true };
+            p2.Add(ta);
+
+            var split = new Splitter {Panel1 = p1, Panel2 = p2, 
+                Panel1MinimumSize = (int)(250 * sf), Position =  (int)(250 * sf),
+                Height = (int)(540 * sf) };
+
+            c3.Add(split);
 
             var form = Extensions2.GetTabbedForm("AI-Assisted Convergence Manager", 800, 600, new DynamicLayout[] { c1, c2, c3 });
             form.SetFontAndPadding();
