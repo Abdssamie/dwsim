@@ -395,9 +395,9 @@ Namespace UnitOperations
                 es = args(2)
             End If
 
-            Dim Tin, Pin, Tout, Pout, Tout_ant, Pout_ant, Pout_ant2, Toutj, Text, Win, Qin, Qvin, Qlin, Qsin, eta_phi, eta_r, TinP, PinP,
+            Dim Tin, Pin, Tout, Pout, Tout_ant, Pout_ant, Pout_ant2, Text, Win, Qin, Qvin, Qlin, Qsin, eta_phi, eta_r, TinP, PinP,
                 rho_l, rho_v, Cp_l, Cp_v, Cp_m, K_l, K_v, eta_l, eta_v, tens, Hin, Hout, HinP,
-                fT, fP, fP_ant, fP_ant2, w_v, w_l, w, z, z2, dzdT, dText_dL, phi, eta_lh, eta_ll As Double
+                fT, fP, fP_ant, fP_ant2, w_v, w_l, w, z, dText_dL As Double
             Dim cntP, cntT As Integer
 
             If Me.Specification = Specmode.OutletTemperature Then
@@ -406,13 +406,13 @@ Namespace UnitOperations
             End If
 
             'Calcular DP
-            Dim Tpe, Ppe, Tspec, Pspec As Double
-            Dim resv, resf As Object
+            Dim Tpe, Tspec, Pspec As Double
+            Dim resv As Object, resf As Double()
             Dim equilibrio As Object = Nothing
             Dim tmp As Object = Nothing
             Dim tipofluxo As String
             Dim first As Boolean = True
-            Dim holdup, dpf, dph, dpt, DQ, DQmax, U, A, eta, fx, fx0, x, x0, fx00, x00, p0, t0 As Double
+            Dim holdup, dpf, dph, dpt, DQ, DQmax, U, A, fx, fx0, x, x0, fx00, x00, p0, t0 As Double
             Dim f_mix, mu_mix, rho_mix, vel_mix, Re_mix As Double
             Dim nseg As Double
             Dim segmento As New PipeSection
@@ -632,7 +632,7 @@ Namespace UnitOperations
                                             segmento.Incrementos = 1 'only one increment
                                             segmento.Elevacao = 0
                                             resf = Me.Kfit(segmento.TipoSegmento)
-                                            If resf(1) Then
+                                            If resf(1) = 1.0 Then
                                                 Dim L_eq As Double
                                                 L_eq = resf(0) * 0.0254 * .DI
                                                 resv = fpp.CalculateDeltaP(.DI * 0.0254, L_eq, 0, Me.GetRugosity(.Material, segmento), Qvin * 24 * 3600, Qlin * 24 * 3600, eta_v * 1000, eta_l * 1000, rho_v, rho_l, tens)
@@ -1209,7 +1209,7 @@ Namespace UnitOperations
             End If
             'Contracao Rapida d/D = 3/4;1,11;0;
             If name = 16 Then
-                tmp(0) = 11
+                tmp(0) = 1.11
                 tmp(1) = 0
             End If
             'Entrada Borda;0,25;0;
