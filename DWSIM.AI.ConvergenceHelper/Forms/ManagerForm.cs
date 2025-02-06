@@ -23,7 +23,7 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
             c1.Padding = new Padding(20);
             c1.Tag = "Settings";
 
-            var options = new string[] {"Disabled", "Provide Estimates","Provide Estimates and Solutions" };
+            var options = new string[] {"Disabled", "Provide Initial Estimates", "Provide Initial Estimates (2-pass)", "Provide Estimates and Solutions", "Provide Solutions" };
 
             c1.CreateAndAddDropDownRow("AI-Assisted Convergence Level", options.ToList(), GlobalSettings.Settings.AIAssistedConvergenceLevel,
                 (dd, e) => { 
