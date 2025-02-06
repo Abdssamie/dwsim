@@ -44,10 +44,12 @@ Public Class FormFileExplorer
 
     Private Sub UpdateSize()
 
-        Try
-            lblSize.Text = String.Format(Flowsheet.GetTranslatedString1("DBSize"), Flowsheet.FileDatabaseProvider.GetSizeinKB())
-        Catch ex As Exception
-        End Try
+        If Flowsheet.FileDatabaseProvider IsNot Nothing Then
+            Try
+                lblSize.Text = String.Format(Flowsheet.GetTranslatedString1("DBSize"), Flowsheet.FileDatabaseProvider.GetSizeinKB())
+            Catch ex As Exception
+            End Try
+        End If
 
     End Sub
 
