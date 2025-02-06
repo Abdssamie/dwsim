@@ -2279,15 +2279,18 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             Dim Kvals As Double()
             Dim trivial As Boolean = False
 
-            'this didn't work well
-            'result = Flash_PV_Saturated_Newton(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+            'result = Flash_PV_Saturated_Newton(Vz, P, V, Tref, PP, ReuseKI, PrevKi) 'this didn't work well
 
             result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+
             'check if solution is valid.
+
             Dim deltaT As Double = 100
+
             If result.Count > 1 Then
                 deltaT = result(11)
             End If
+
             If Math.Abs(deltaT) > 0.01 And (V = 0 Or V = 1) Then
                 'solution is not valid. try a poly approximation
                 Dim Tlist, Plist As New List(Of Double)
@@ -2318,11 +2321,14 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     End If
                 End If
             End If
+
             'check if converged to the trivial solution.
+
             If result.Count > 1 Then
                 Kvals = result(6)
                 If PP.AUX_CheckTrivial(Kvals, 0.21) Then trivial = True
             End If
+
             If result.Count = 1 Or trivial Then
                 result = Flash_PV_1(Vz, P, V, 0.0, PP, False, Nothing)
                 If result.Count > 1 Then
@@ -2330,6 +2336,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     If PP.AUX_CheckTrivial(Kvals, 0.2) Then trivial = True
                 End If
             End If
+
             If result.Count = 1 And P > 101325 * 5 Or trivial Then
                 'Try quadratic extrapolation For initial T
                 Dim Tlist, Plist As New List(Of Double)
@@ -2362,6 +2369,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     End If
                 End Using
             End If
+
             If result.Count = 1 Then
                 Throw New Exception(String.Format("{0}: Unable to calculate PV Flash with P = {1} and VF = {2}, molar fractions = {3}",
                                     PP.ComponentName, P, V, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
