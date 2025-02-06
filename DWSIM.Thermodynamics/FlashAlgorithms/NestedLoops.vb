@@ -355,20 +355,6 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
-                AI.ConvergenceAssistant.Manager.StoreData(
-                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
-                        .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
-                        .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
-                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
-                        .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
-                        .Liquid1MolarFlows = Vx.MultiplyConstY(L).ToString("F4"),
-                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"),
-                        .KValuesVL1 = Ki.ToString("F4"),
-                        .MixtureMolarFlows = Vz.ToString("F4"),
-                        .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash})
-            End If
-
             Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, Ki}
 
         End Function

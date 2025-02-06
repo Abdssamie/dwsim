@@ -1592,7 +1592,7 @@ Namespace Reactors
 
             OutletTemperature = T
 
-            If Settings.ConvergenceHelperEnabled Then
+            If Settings.AIAssistedConvergenceLevel > 0 Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     AI.ConvergenceAssistant.Manager.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
@@ -2459,7 +2459,7 @@ Namespace Reactors
 
             IObj?.SetCurrent
 
-            If Settings.ConvergenceHelperEnabled Then
+            If Settings.AIAssistedConvergenceLevel > 0 Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     AI.ConvergenceAssistant.Manager.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
