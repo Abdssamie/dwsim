@@ -83,6 +83,20 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+                Dim request = New AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                    .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash,
+                    .CompoundNames = PP.RET_VNAMES(),
+                    .NumberOfCompounds = Vz.Length,
+                    .ModelName = PP.ComponentName,
+                    .Pressure = P,
+                    .Temperature = T,
+                    .MixtureMolarFlows = Vz
+                }
+                Dim solution = AI.ConvergenceAssistant.SolutionProvider.GetSolutionEstimate(request)
+                Console.WriteLine(solution?.ModelName)
+            End If
+
             Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
             Inspector.Host.CheckAndAdd(IObj, "", "Flash_PT", Name & " (PT Flash)", "Pressure-Temperature Flash Algorithm Routine", True)
@@ -354,6 +368,20 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             IObj?.Paragraphs.Add(String.Format("Final converged values for K: {0}", Ki.ToMathArrayString))
 
             IObj?.Close()
+
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+                AI.ConvergenceAssistant.Manager.StoreData(
+                        New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
+                        .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
+                        .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
+                        .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
+                        .VaporMolarFraction = V.ToString("F4", CultureInfo.InvariantCulture),
+                        .Liquid1MolarFlows = Vx.MultiplyConstY(L).ToString("F4"),
+                        .VaporMolarFlows = Vy.MultiplyConstY(V).ToString("F4"),
+                        .KValuesVL1 = Ki.ToString("F4"),
+                        .MixtureMolarFlows = Vz.ToString("F4"),
+                        .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash})
+            End If
 
             Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, Ki}
 

@@ -24,6 +24,8 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static bool Initialized = false;
 
+        public static Dictionary<string, ANNModel> LoadedModels = new Dictionary<string, ANNModel>();
+
         public static void Initialize()
         {
             if (!Directory.Exists(HomeDirectory)) { Directory.CreateDirectory(HomeDirectory); }
@@ -211,8 +213,8 @@ namespace DWSIM.AI.ConvergenceAssistant
             {
                 var modelfile2 = Path.Combine(modelsdir, Path.ChangeExtension(modelfilepath, "json"));
                 if (File.Exists(modelfile2)) File.Delete(modelfile2);
-                ZipFile.ExtractToDirectory(modelsdir, modelsdir);
-                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<ANN.ANNModel>(modelfilepath);
+                ZipFile.ExtractToDirectory(modelfilepath, modelsdir);
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<ANN.ANNModel>(File.ReadAllText(modelfile2));
                 File.Delete(modelfile2);
                 return model;
             }
@@ -232,16 +234,21 @@ namespace DWSIM.AI.ConvergenceAssistant
                 mf1.Add(request.MixtureMolarFlows[comps0.IndexOf(comp)]);
             }
 
-            var modeldata = ModelsSummary.Where(m => m.CompoundNames.Equals(mf1.ToArray()) && 
-                        m.PropertyPackageName.Equals(request.ModelName)).OrderBy(m => m.TestingDataMSE).FirstOrDefault();
+            var modeldata = ModelsSummary.Where(m => m.CompoundNames.SequenceEqual(comps) && 
+                        m.PropertyPackageName == request.ModelName && 
+                        !Double.IsNaN(m.TrainingDataMSE)).OrderBy(m => m.TestingDataMSE).FirstOrDefault();
 
             if (modeldata == null) {return null;}
+
+            if (LoadedModels.ContainsKey(modeldata.ModelName)) return LoadedModels[modeldata.ModelName];    
 
             var modelsdir = Path.Combine(HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
 
             var model = LoadModelFromFile(Path.Combine(modelsdir, modeldata.ModelName + ".zip"));
             
+            if (!LoadedModels.ContainsKey(model.MetaData.ModelName)) LoadedModels.Add(model.MetaData.ModelName, model);
+
             return model;
         
         }
