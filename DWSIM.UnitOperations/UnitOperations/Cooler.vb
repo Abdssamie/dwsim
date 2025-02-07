@@ -54,6 +54,18 @@ Namespace UnitOperations
             End Get
         End Property
 
+        Public Overrides Sub CreateDimensionsList()
+
+            Dimensions = New List(Of IDimension)
+            Dimensions.Add(New Dimension With {.Name = DimensionName.Area, .IsUserDefined = True})
+
+        End Sub
+
+        Public Overrides Sub UpdateDimensionsList()
+
+
+        End Sub
+
         Public Enum CalculationMode
             HeatRemoved = 0
             OutletTemperature = 1

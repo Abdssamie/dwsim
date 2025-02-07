@@ -44,6 +44,19 @@ Namespace UnitOperations
             End Get
         End Property
 
+        Public Overrides Sub CreateDimensionsList()
+
+            Dimensions = New List(Of IDimension)
+            Dimensions.Add(New Dimension With {.Name = DimensionName.Power, .IsUserDefined = False})
+
+        End Sub
+
+        Public Overrides Sub UpdateDimensionsList()
+
+            Dimensions(0).Value = Math.Abs(DeltaQ.GetValueOrDefault())
+
+        End Sub
+
         Public Enum CalculationMode
             HeatAdded = 0
             OutletTemperature = 1
