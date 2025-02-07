@@ -518,7 +518,7 @@ namespace DWSIM.UI.Shared
             }
             else
             {
-                label = new Label { Text = text, Wrap = WrapMode.Word,  };
+                label = new Label { Text = text, Wrap = WrapMode.Word, };
                 label.Font = new Font(SystemFont.Default, GetEditorFontSize() - 1);
                 label.TextColor = Color.FromArgb(SystemColors.ControlText.Rb, SystemColors.ControlText.Gb, SystemColors.ControlText.Bb, 180);
                 container.AddRow(new TableRow(label));
@@ -814,6 +814,28 @@ namespace DWSIM.UI.Shared
             container.CreateAndAddEmptySpace();
 
             return edittext2;
+
+        }
+
+        public static TextBox[] CreateAndAddDoubleTextBoxRow2(this DynamicLayout container, String numberformat, String text, Double currval1, Double currval2, Action<TextBox, EventArgs> command, Action<TextBox, EventArgs> command2)
+        {
+
+            var txt = new Label { Text = text, VerticalAlignment = VerticalAlignment.Center };
+            txt.Font = new Font(SystemFont.Default, GetEditorFontSize());
+            var edittext = new TextBox { Text = currval1.ToString(numberformat), Width = (int)(sf * 100) };
+            var edittext2 = new TextBox { Text = currval2.ToString(numberformat), Width = (int)(sf * 100) };
+            edittext.Font = new Font(SystemFont.Default, GetEditorFontSize());
+            edittext2.Font = new Font(SystemFont.Default, GetEditorFontSize());
+
+            if (command != null) edittext.TextChanged += (sender, e) => command.Invoke((TextBox)sender, e);
+            if (command2 != null) edittext2.TextChanged += (sender, e) => command2.Invoke((TextBox)sender, e);
+
+            var tr = new TableRow(txt, null, edittext, edittext2);
+
+            container.AddRow(tr);
+            container.CreateAndAddEmptySpace();
+
+            return new[] { edittext, edittext2 };
 
         }
 
