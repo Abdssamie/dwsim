@@ -53,7 +53,7 @@ Namespace UnitOperations
 
         Public Overrides Sub UpdateDimensionsList()
 
-            Dimensions(0).Value = GetInletMaterialStream(0).GetVolumetricFlow() * 15850.323140625 / Kv * 10.67 * 0.0254 'meters
+            Dimensions(0).Value = GetInletMaterialStream(0).GetVolumetricFlow() * 15850.323140625 / Kv * 10.67 * 0.0254 'm
 
         End Sub
 

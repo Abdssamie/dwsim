@@ -43,7 +43,7 @@ Namespace UnitOperations
         Public Overrides Sub UpdateDimensionsList()
 
             Dimensions(0).Value = GeneratedPower
-            Dimensions(1).Value = RotorDiameter
+            Dimensions(1).Value = RotorDiameter * 1000.0
 
         End Sub
 
