@@ -395,7 +395,7 @@ namespace DWSIM.AI.ConvergenceAssistant.ANN
                             {
                                 flowsheet.ShowMessage("Epoch: " + e.ToString(), IFlowsheet.MessageType.Information);
                                 flowsheet.ShowMessage("MSE (training): " + mse_train.Last().ToString(), IFlowsheet.MessageType.Information);
-                                flowsheet.ShowMessage("MSE (testing): " + mse_test.Last().ToString(), IFlowsheet.MessageType.Information);
+                                flowsheet.ShowMessage("MSE (validation): " + mse_test.Last().ToString(), IFlowsheet.MessageType.Information);
                             }
                             else if (ta != null)
                             {
@@ -403,7 +403,7 @@ namespace DWSIM.AI.ConvergenceAssistant.ANN
                                 {
                                     ta.Append("Epoch: " + e.ToString() + nl, true);
                                     ta.Append("MSE (training): " + mse_train.Last().ToString() + nl, true);
-                                    ta.Append("MSE (testing): " + mse_test.Last().ToString() + nl, true);
+                                    ta.Append("MSE (validation): " + mse_test.Last().ToString() + nl, true);
                                     (plot.Model.Series[0] as OxyPlot.Series.LineSeries).Points.Add(new DataPoint(e, mse_train.Last()));
                                     (plot.Model.Series[1] as OxyPlot.Series.LineSeries).Points.Add(new DataPoint(e, mse_test.Last()));
                                     plot.Model.InvalidatePlot(true);

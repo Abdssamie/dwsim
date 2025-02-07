@@ -10,13 +10,14 @@ using DWSIM.ExtensionMethods.Eto;
 using ext = DWSIM.UI.Shared.Common;
 using DWSIM.UI.Shared;
 using OxyPlot;
+using DWSIM.Interfaces;
 
 namespace DWSIM.AI.ConvergenceAssistant.Editors
 {
     public static class ManagerForm
     {
 
-        public static void DisplayConfigForm()
+        public static void DisplayConfigForm(IFlowsheet Flowsheet)
         {
 
             var c1 = ext.GetDefaultContainer();
@@ -46,6 +47,35 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
             c2.Tag = "Model Creation and Training";
 
             var sf = GlobalSettings.Settings.DpiScale;
+
+            c2.CreateAndAddLabelRow("Training Data Generation");
+
+            var fsname = Flowsheet.FlowsheetOptions.SimulationName;
+            if (fsname == "")
+            { 
+                if (System.IO.File.Exists(Flowsheet.FlowsheetOptions.FilePath))
+                    fsname = System.IO.Path.GetFileNameWithoutExtension(Flowsheet.FlowsheetOptions.FilePath);
+            }
+
+            c2.CreateAndAddDescriptionRow("Current Flowsheet: " + fsname, true);
+
+            var mslist = Flowsheet.GraphicObjects.Values.Where((x) => x.ObjectType == Interfaces.Enums.GraphicObjects.ObjectType.MaterialStream).Select((m) => m.Tag).ToList();
+            mslist.Insert(0, "");
+
+            var selectedStreamTag = "";
+
+            c2.CreateAndAddDropDownRow("Select Feed Material Stream", mslist, 0,
+                (dd, e) => {
+                    selectedStreamTag = dd.SelectedValue.ToString();
+                }, 200);
+
+            c2.CreateAndAddButtonRow("Generate Data for Training", null, (btn, e) => {
+
+            });
+
+            c2.CreateAndAddLabelRow("Training and Validation Details");
+
+            c2.CreateAndAddDescriptionRow("Current Model: ", true);
 
             TextArea tb = new TextArea
             {
@@ -82,15 +112,15 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
             plot.Model.LegendPosition = OxyPlot.LegendPosition.BottomCenter;
             plot.Model.TitleHorizontalAlignment = OxyPlot.TitleHorizontalAlignment.CenteredWithinView;
             plot.Model.AddLineSeries(new double[] { }, new double[] { }, OxyColors.Red, "Training");
-            plot.Model.AddLineSeries(new double[] { }, new double[] { }, OxyColors.Blue, "Testing");
+            plot.Model.AddLineSeries(new double[] { }, new double[] { }, OxyColors.Blue, "Validation");
             plot.Model.Title = "Model Training Results";
 
-            var tl = new TableLayout(new TableRow(tb, plot)) { Spacing = new Size(10, 10), Height = (int)(500 * sf) };
+            var tl = new TableLayout(new TableRow(tb, plot)) { Spacing = new Size(10, 10), Height = (int)(310 * sf) };
 
             c2.CreateAndAddButtonRow("Train", null, (btn, e) => {
                 plot.Model.Series.Clear();
                 plot.Model.AddLineSeries(new double[] { }, new double[] { }, OxyColors.Red, "Training");
-                plot.Model.AddLineSeries(new double[] { }, new double[] { }, OxyColors.Blue, "Testing");
+                plot.Model.AddLineSeries(new double[] { }, new double[] { }, OxyColors.Blue, "Validation");
                 Task.Run(() => Manager.UpdateModels(tb, plot)); 
             });
 
