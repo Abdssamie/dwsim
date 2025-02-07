@@ -138,7 +138,8 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
             TextArea tb = new TextArea
             {
                 Width = (int)(350 * sf),
-                Font = new Font(FontFamilies.Monospace, 10.0f)
+                Font = new Font(FontFamilies.Monospace, 8.0f),
+                ReadOnly = true
             };
 
             var plot = new Eto.OxyPlot.Plot();
@@ -173,7 +174,7 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
             plot.Model.AddLineSeries(new double[] { }, new double[] { }, OxyColors.Blue, "Validation");
             plot.Model.Title = "Model Training Results";
 
-            var tl = new TableLayout(new TableRow(tb, plot)) { Spacing = new Size(10, 10), Height = (int)(310 * sf) };
+            var tl = new TableLayout(new TableRow(tb, plot)) { Spacing = new Size(10, 10), Height = (int)(220 * sf) };
 
             c2.CreateAndAddButtonRow("Train", null, (btn, e) =>
             {
