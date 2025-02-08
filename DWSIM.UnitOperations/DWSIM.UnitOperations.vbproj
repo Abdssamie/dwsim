@@ -1343,11 +1343,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DWSIM.AI.ConvergenceHelper\DWSIM.AI.ConvergenceAssistant.csproj">
-      <Project>{16f5e77b-eda0-45f2-969f-e70daf9b44f2}</Project>
-      <Name>DWSIM.AI.ConvergenceAssistant</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\DWSIM.Drawing.SkiaSharp\DWSIM.DrawingTools.SkiaSharp.vbproj">
       <Project>{77040ecc-07b9-4b21-8b1f-7e45764e35f0}</Project>
       <Name>DWSIM.DrawingTools.SkiaSharp</Name>

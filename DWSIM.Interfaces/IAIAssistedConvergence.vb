@@ -162,3 +162,35 @@ Public Enum ConvergenceHelperRequestType
     EquilibriumReactorAdiabatic = 9
 
 End Enum
+
+Public Interface IAIAssistedConvergenceManager
+
+    Sub DisplayEditor(Flowsheet As IFlowsheet)
+
+    Sub AddToSummary(ByVal mdata As IConvergenceHelperMetaData)
+
+    Function GetModel(ByVal request As IConvergenceHelperRequest) As IANNModel
+
+    Sub Initialize()
+
+    Function LoadModelFromFile(ByVal modelfilepath As String) As IANNModel
+
+    Sub LoadSettings()
+
+    Sub SaveDatabaseToFile()
+
+    Sub SaveModelToFile(ByVal model As IANNModel)
+
+    Sub SaveSettings()
+
+    Sub StoreData(ByVal data As IConvergenceHelperTrainingData)
+
+    Sub UpdateModels()
+
+End Interface
+
+Public Interface IAIAssistedSolutionProvider
+
+    Function GetSolutionEstimate(ByVal request As IConvergenceHelperRequest) As IConvergenceHelperResponse
+
+End Interface

@@ -1594,7 +1594,7 @@ Namespace Reactors
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
@@ -1605,7 +1605,7 @@ Namespace Reactors
                         .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                       New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
@@ -2461,7 +2461,7 @@ Namespace Reactors
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,
@@ -2473,7 +2473,7 @@ Namespace Reactors
                         .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.GibbsReactorAdiabatic})
                 Else
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                       New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .ModelName = pp.ComponentName,

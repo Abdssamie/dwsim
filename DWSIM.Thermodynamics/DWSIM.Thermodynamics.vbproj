@@ -725,10 +725,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DWSIM.AI.ConvergenceHelper\DWSIM.AI.ConvergenceAssistant.csproj">
-      <Project>{16f5e77b-eda0-45f2-969f-e70daf9b44f2}</Project>
-      <Name>DWSIM.AI.ConvergenceAssistant</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DWSIM.DrawingTools.Point\DWSIM.DrawingTools.Point.vbproj">
       <Project>{0F6737EB-DB5A-4872-BEF8-5EF10B4F1C1C}</Project>
       <Name>DWSIM.DrawingTools.Point</Name>

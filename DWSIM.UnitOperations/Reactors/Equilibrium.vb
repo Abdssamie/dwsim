@@ -1606,7 +1606,7 @@ Namespace Reactors
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
@@ -1619,7 +1619,7 @@ Namespace Reactors
                         .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.EquilibriumReactorAdiabatic})
                 Else
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                       New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = pp.RET_VNAMES(),
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),

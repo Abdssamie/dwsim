@@ -99,11 +99,12 @@
     <Compile Include="FilePicker\IFilePickerAllowedType.vb" />
     <Compile Include="IAdditionalSolidPhaseProperties.vb" />
     <Compile Include="IAnalyticsProvider.vb" />
+    <Compile Include="IANNModel.vb" />
     <Compile Include="IAttachedUtility.vb" />
     <Compile Include="IBidirectionalSolver.vb" />
     <Compile Include="IChart.vb" />
     <Compile Include="IConnectionPortInfo.vb" />
-    <Compile Include="IConvergenceHelper.vb" />
+    <Compile Include="IAIAssistedConvergence.vb" />
     <Compile Include="IDimension.vb" />
     <Compile Include="IEnergyStream.vb" />
     <Compile Include="IFlowsheetResults.vb" />

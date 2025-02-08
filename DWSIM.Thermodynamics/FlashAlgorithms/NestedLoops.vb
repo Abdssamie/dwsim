@@ -18,13 +18,9 @@
 
 Imports System.Globalization
 Imports System.Math
-Imports System.Numerics
-Imports DotNumerics.Optimization
 Imports DWSIM.MathOps.MathEx
 Imports DWSIM.MathOps.MathEx.BrentOpt
-Imports DWSIM.MathOps.MathEx.Interpolation
 Imports DWSIM.SharedClasses
-Imports Eto.Forms
 Imports IronPython.Runtime.Operations
 Imports MathNet.Numerics
 
@@ -93,7 +89,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                     .Temperature = T,
                     .MixtureMolarFlows = Vz
                 }
-                Dim solution = AI.ConvergenceAssistant.SolutionProvider.GetSolutionEstimate(request)
+                Dim solution = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(request)
                 Console.WriteLine(solution?.ModelName)
             End If
 
@@ -370,7 +366,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             IObj?.Close()
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
-                AI.ConvergenceAssistant.Manager.StoreData(
+                SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
@@ -888,7 +884,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 IObj?.Paragraphs.Add("The algorithm converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
                 If Settings.AIAssistedConvergenceLevel > 0 Then
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
@@ -1208,7 +1204,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             IObj?.Close()
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
-                AI.ConvergenceAssistant.Manager.StoreData(
+                DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
@@ -1446,7 +1442,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             IObj?.Close()
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
-                AI.ConvergenceAssistant.Manager.StoreData(
+                DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
@@ -1731,7 +1727,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             IObj?.Close()
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
-                AI.ConvergenceAssistant.Manager.StoreData(
+                DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
                         .Temperature = T.ToString("F4", CultureInfo.InvariantCulture),
@@ -2245,7 +2241,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             IObj?.Close()
 
             If Settings.AIAssistedConvergenceLevel > 0 Then
-                AI.ConvergenceAssistant.Manager.StoreData(
+                DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                 New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                     .CompoundNames = PP.RET_VNAMES(),
                     .ModelName = PP.ComponentName,
@@ -2378,7 +2374,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 'Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, deltaT}
 
                 If Settings.AIAssistedConvergenceLevel > 0 Then
-                    AI.ConvergenceAssistant.Manager.StoreData(
+                    DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Vz.Count,
                         .Temperature = Convert.ToDouble(result(4)).ToString("F4", CultureInfo.InvariantCulture),

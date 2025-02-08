@@ -245,6 +245,12 @@ Public Class FormFlowsheet
             tsmiDetailedReport.Visible = False
         End If
 
+        If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
+            ConvergenceHelperSettingsToolStripMenuItem.Visible = True
+        Else
+            ConvergenceHelperSettingsToolStripMenuItem.Visible = False
+        End If
+
 #If DEBUG Then
         ConvergenceHelperSettingsToolStripMenuItem.Visible = True
 #End If
@@ -5851,7 +5857,7 @@ Public Class FormFlowsheet
 
     Private Sub ConvergenceHelperSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConvergenceHelperSettingsToolStripMenuItem.Click
 
-        AI.ConvergenceAssistant.Editors.ManagerForm.DisplayConfigForm(Me)
+        SharedClasses.AI.ConvergenceAssistant.Manager?.DisplayEditor(Me)
 
     End Sub
 

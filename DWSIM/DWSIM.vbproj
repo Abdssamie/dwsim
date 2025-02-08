@@ -2379,10 +2379,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DWSIM.AI.ConvergenceHelper\DWSIM.AI.ConvergenceAssistant.csproj">
-      <Project>{16f5e77b-eda0-45f2-969f-e70daf9b44f2}</Project>
-      <Name>DWSIM.AI.ConvergenceAssistant</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DWSIM.Controls.DockPanel\WinFormsUI\DWSIM.Controls.DockPanel.csproj">
       <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
       <Name>DWSIM.Controls.DockPanel</Name>
