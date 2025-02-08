@@ -14,6 +14,8 @@
 
     Property TensorName_Y As String
 
+    Property session As Object
+
     Sub Dispose()
 
     Function LoadData(ByVal data As List(Of XElement)) As Boolean

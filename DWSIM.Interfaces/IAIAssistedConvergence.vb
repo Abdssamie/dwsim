@@ -40,6 +40,10 @@
 
     Property ReactionExtents As String()
 
+    Property Hash As String
+
+    Function GetBase64StringHash() As String
+
 End Interface
 
 Public Interface IConvergenceHelperRequest
@@ -165,6 +169,10 @@ End Enum
 
 Public Interface IAIAssistedConvergenceManager
 
+    Property Database As IFileDatabaseProvider
+
+    Property Settings As IManagerSettings
+
     Sub DisplayEditor(Flowsheet As IFlowsheet)
 
     Sub AddToSummary(ByVal mdata As IConvergenceHelperMetaData)
@@ -187,10 +195,42 @@ Public Interface IAIAssistedConvergenceManager
 
     Sub UpdateModels()
 
+    Property Initialized As Boolean
+
 End Interface
 
 Public Interface IAIAssistedSolutionProvider
 
     Function GetSolutionEstimate(ByVal request As IConvergenceHelperRequest) As IConvergenceHelperResponse
+
+End Interface
+
+Public Interface IManagerSettings
+
+    Property AutoUpdateEnabled As Boolean
+
+    Property DatabaseSaveThreshold As Integer
+
+    Property EATrainThreshold As Integer
+
+    Property EITrainThreshold As Integer
+
+    Property GATrainThreshold As Integer
+
+    Property GITrainThreshold As Integer
+
+    Property PHFlashTrainThreshold As Integer
+
+    Property PSFlashTrainThreshold As Integer
+
+    Property PTFlashTrainThreshold As Integer
+
+    Property PVFlashTrainThreshold As Integer
+
+    Property TVFlashTrainThreshold As Integer
+
+    Property HomeDirectory As String
+
+    Property UpdateTimerInterval As Integer
 
 End Interface

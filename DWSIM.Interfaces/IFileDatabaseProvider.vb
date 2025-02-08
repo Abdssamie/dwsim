@@ -1,6 +1,10 @@
-﻿Public Interface IFileDatabaseProvider
+﻿Imports LiteDB
+
+Public Interface IFileDatabaseProvider
 
     ReadOnly Property IsDatabaseLoaded As Boolean
+
+    Function GetDatabaseObject() As LiteDatabase
 
     Sub PutFile(filepath As String)
 
