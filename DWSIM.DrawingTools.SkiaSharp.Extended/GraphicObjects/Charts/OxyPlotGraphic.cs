@@ -129,7 +129,7 @@ namespace DWSIM.Drawing.SkiaSharp.GraphicObjects.Charts
                         }
                         catch
                         {
-                            PaintInstructions(canvas, "Chart model not found.");
+                            PaintInstructions(canvas, "Chart not ready, please solve the flowsheet");
                             return;
                         }
                     }
@@ -143,7 +143,7 @@ namespace DWSIM.Drawing.SkiaSharp.GraphicObjects.Charts
                         }
                         catch
                         {
-                            PaintInstructions(canvas, "Chart model not found.");
+                            PaintInstructions(canvas, "Chart not ready, please solve the flowsheet");
                             return;
                         }
                     }
@@ -157,7 +157,7 @@ namespace DWSIM.Drawing.SkiaSharp.GraphicObjects.Charts
                         }
                         catch
                         {
-                            PaintInstructions(canvas, "Chart model not found.");
+                            PaintInstructions(canvas, "Chart not ready, please solve the flowsheet");
                             return;
                         }
                     }
@@ -197,7 +197,7 @@ namespace DWSIM.Drawing.SkiaSharp.GraphicObjects.Charts
                     }
                     else
                     {
-                        PaintInstructions(canvas, "Chart model not found.");
+                        PaintInstructions(canvas, "Chart not ready, please solve the flowsheet");
                         return;
                     }
 
