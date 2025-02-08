@@ -39,6 +39,14 @@ Public Class Settings
         OpenGL = 1
     End Enum
 
+    Public Enum AIAssistedConvergenceMode
+        Disabled = 0
+        Provide_Initial_Estimates = 1
+        Provide_Initial_Estimates_2Pass = 2
+        Provide_Initial_Estimates_and_Solutions = 3
+        Provide_Solutions = 4
+    End Enum
+
     Public Shared Property WindowsRenderer As WindowsPlatformRenderer = WindowsPlatformRenderer.WinForms
 
     Public Shared Property LinuxRenderer As LinuxPlatformRenderer = LinuxPlatformRenderer.Gtk3
@@ -194,14 +202,7 @@ Public Class Settings
 
     Public Shared IsGTKRenderer As Boolean = False
 
-    ''' <summary>
-    ''' 0 - disabled
-    ''' 1 - provide initial estimates only
-    ''' 2 - provides initial estimates to try again in case of error, but don't override errors
-    ''' 3 - provide initial estimates + solutions in case of error
-    ''' 4 - provide solution in case of error
-    ''' </summary>
-    Public Shared AIAssistedConvergenceLevel As Integer = 0
+    Public Shared AIAssistedConvergenceLevel As AIAssistedConvergenceMode = AIAssistedConvergenceMode.Disabled
 
     <DllImport("kernel32.dll", SetLastError:=True)> Public Shared Function AddDllDirectory(lpPathName As String) As Boolean
 
