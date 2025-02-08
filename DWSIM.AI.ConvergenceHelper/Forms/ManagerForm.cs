@@ -31,10 +31,10 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
 
             var options = new string[] { "Disabled", "Provide Initial Estimates", "Provide Initial Estimates (2-pass)", "Provide Estimates and Solutions", "Provide Solutions" };
 
-            c1.CreateAndAddDropDownRow("AI-Assisted Convergence Level", options.ToList(), GlobalSettings.Settings.AIAssistedConvergenceLevel,
+            c1.CreateAndAddDropDownRow("AI-Assisted Convergence Level", options.ToList(), (int)GlobalSettings.Settings.AIAssistedConvergenceLevel,
                 (dd, e) =>
                 {
-                    GlobalSettings.Settings.AIAssistedConvergenceLevel = dd.SelectedIndex;
+                    GlobalSettings.Settings.AIAssistedConvergenceLevel = dd.SelectedIndex.ToEnum<GlobalSettings.Settings.AIAssistedConvergenceMode>();
                     if (!Manager.Initialized) Manager.Initialize();
                 }, 200);
 
