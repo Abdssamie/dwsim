@@ -136,7 +136,7 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
 
             c2.CreateAndAddButtonRow("Generate Data for Training", null, (btn, e) =>
             {
-                Manager.AutoUpdateEnabled = false;
+                Manager.Settings.AutoUpdateEnabled = false;
                 var currstate = Flowsheet.GetSnapshot(Interfaces.Enums.SnapshotType.ObjectData);
                 var delta = Math.Round(Math.Pow(intervals, 0.3333));
                 var T1 = tt1.Text.ToDoubleFromCurrent().ConvertToSI(su.temperature);
@@ -174,7 +174,7 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
                             }
                         }
                         Flowsheet.RestoreSnapshot(currstate, Interfaces.Enums.SnapshotType.ObjectData);
-                        Manager.AutoUpdateEnabled = true;
+                        Manager.Settings.AutoUpdateEnabled = true;
                     });
                 }
             });

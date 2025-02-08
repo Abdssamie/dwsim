@@ -20,12 +20,42 @@ namespace DWSIM.AI.ConvergenceAssistant
         public string Text { get; } // readonly
     }
 
+    public class ManagerSettings
+    {
+        public bool AutoUpdateEnabled { get; set; } = true;
+
+        public int DatabaseSaveThreshold { get; set; } = 1000;
+
+        public int PTFlashTrainThreshold { get; set; } = 1000;
+
+        public int PVFlashTrainThreshold { get; set; } = 1000;
+
+        public int TVFlashTrainThreshold { get; set; } = 1000;
+
+        public int PHFlashTrainThreshold { get; set; } = 1000;
+
+        public int PSFlashTrainThreshold { get; set; } = 1000;
+
+        public int GITrainThreshold { get; set; } = 100;
+
+        public int GATrainThreshold { get; set; } = 100;
+
+        public int EITrainThreshold { get; set; } = 100;
+
+        public int EATrainThreshold { get; set; } = 100;
+
+        public string HomeDirectory = Path.Combine(GlobalSettings.Settings.GetConfigFileDir(), "ConvergenceHelper");
+
+        public int UpdateTimerInterval = 60;
+
+    }
+
     public class Manager
     {
 
-        public static FileDatabaseProvider Database = new FileDatabaseProvider();
+        public static ManagerSettings Settings = new ManagerSettings();
 
-        public static string HomeDirectory = Path.Combine(GlobalSettings.Settings.GetConfigFileDir(), "ConvergenceHelper");
+        public static FileDatabaseProvider Database = new FileDatabaseProvider();
 
         public static List<ConvergenceHelperMetaData> ModelsSummary = new List<ConvergenceHelperMetaData>();
 
@@ -42,17 +72,15 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static Timer UpdateTimer;
 
-        public static bool AutoUpdateEnabled = true;
-
         public static void Initialize()
         {
 
-            if (!Directory.Exists(HomeDirectory)) { Directory.CreateDirectory(HomeDirectory); }
-            var datadir = Path.Combine(HomeDirectory, "data");
+            if (!Directory.Exists(Settings.HomeDirectory)) { Directory.CreateDirectory(Settings.HomeDirectory); }
+            var datadir = Path.Combine(Settings.HomeDirectory, "data");
             if (!Directory.Exists(datadir)) { Directory.CreateDirectory(datadir); }
-            var modelsdir = Path.Combine(HomeDirectory, "models");
+            var modelsdir = Path.Combine(Settings.HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
-            var configdir = Path.Combine(HomeDirectory, "config");
+            var configdir = Path.Combine(Settings.HomeDirectory, "config");
             if (!Directory.Exists(configdir)) { Directory.CreateDirectory(configdir); }
             LoadSettings();
 
@@ -85,10 +113,11 @@ namespace DWSIM.AI.ConvergenceAssistant
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
             LastTrainDataCount = col.Query().Count();
 
-            UpdateTimer = new Timer(60000);
+            UpdateTimer = new Timer(Settings.UpdateTimerInterval * 1000);
             UpdateTimer.Elapsed += (s, e) =>
             {
-                if (AutoUpdateEnabled) UpdateModels();
+                if (Settings.AutoUpdateEnabled) UpdateModels();
+                SaveSettings();
             };
             UpdateTimer.Start();
 
@@ -100,7 +129,7 @@ namespace DWSIM.AI.ConvergenceAssistant
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
             var newcount = col.Query().Count();
-            if (newcount - LastTrainDataCount > 1000)
+            if (newcount - LastTrainDataCount > Settings.DatabaseSaveThreshold)
             {
                 Task.Run(() =>
                 {
@@ -162,7 +191,7 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static void SaveDatabaseToFile()
         {
-            var datadir = Path.Combine(HomeDirectory, "data");
+            var datadir = Path.Combine(Settings.HomeDirectory, "data");
             var zipfile = Path.Combine(datadir, "data.db.zip");
             var dbfile = Path.Combine(datadir, "data.db");
             Database.ExportDatabase(dbfile);
@@ -177,21 +206,22 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static void LoadSettings()
         {
-            var configfile = Path.Combine(HomeDirectory, "config", "settings.json");
+            var configfile = Path.Combine(Settings.HomeDirectory, "config", "settings.json");
             if (File.Exists(configfile))
             {
-
+                Settings = Newtonsoft.Json.JsonConvert.DeserializeObject<ManagerSettings>(File.ReadAllText(configfile));
             }
         }
 
         public static void SaveSettings()
         {
-
+            var configfile = Path.Combine(Settings.HomeDirectory, "config", "settings.json");
+            File.WriteAllText(configfile, Newtonsoft.Json.JsonConvert.SerializeObject(Settings, Newtonsoft.Json.Formatting.Indented));
         }
 
         public static void AddToSummary(ConvergenceHelperMetaData mdata)
         {
-            var modelsdir = Path.Combine(HomeDirectory, "models");
+            var modelsdir = Path.Combine(Settings.HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
 
             ModelsSummary.Add(mdata);
@@ -202,7 +232,7 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static void SaveModelToFile(ANNModel model)
         {
-            var modelsdir = Path.Combine(HomeDirectory, "models");
+            var modelsdir = Path.Combine(Settings.HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
 
             var zipfile = Path.Combine(modelsdir, model.MetaData.ModelName + ".zip");
@@ -232,7 +262,7 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static ANNModel LoadModelFromFile(string modelfilepath)
         {
-            var modelsdir = Path.Combine(HomeDirectory, "models");
+            var modelsdir = Path.Combine(Settings.HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
 
             if (File.Exists(modelfilepath))
@@ -268,7 +298,7 @@ namespace DWSIM.AI.ConvergenceAssistant
 
             if (LoadedModels.ContainsKey(modeldata.ModelName)) return LoadedModels[modeldata.ModelName];
 
-            var modelsdir = Path.Combine(HomeDirectory, "models");
+            var modelsdir = Path.Combine(Settings.HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
 
             var model = LoadModelFromFile(Path.Combine(modelsdir, modeldata.ModelName + ".zip"));

@@ -31,7 +31,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             var grouped = entries.GroupBy(e => e.CompoundNames).ToList();
             foreach (var entry in grouped) { 
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 1000) return;
+                if (grouped2.Count < Manager.Settings.PTFlashTrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
 
@@ -72,7 +72,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 1000) return;
+                if (grouped2.Count < Manager.Settings.PVFlashTrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new PVFlash_ConvergenceHelperTrainingDataInput
@@ -112,7 +112,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 1000) return;
+                if (grouped2.Count < Manager.Settings.TVFlashTrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new TVFlash_ConvergenceHelperTrainingDataInput
@@ -152,7 +152,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 1000) return;
+                if (grouped2.Count < Manager.Settings.PHFlashTrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new PHFlash_ConvergenceHelperTrainingDataInput
@@ -192,7 +192,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 1000) return;
+                if (grouped2.Count < Manager.Settings.PSFlashTrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new PSFlash_ConvergenceHelperTrainingDataInput
@@ -232,7 +232,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 100) return;
+                if (grouped2.Count < Manager.Settings.EITrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new EquilibriumIsothermic_ConvergenceHelperTrainingDataInput
@@ -269,7 +269,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 100) return;
+                if (grouped2.Count < Manager.Settings.EATrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new EquilibriumAdiabatic_ConvergenceHelperTrainingDataInput
@@ -307,7 +307,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 100) return;
+                if (grouped2.Count < Manager.Settings.GITrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new GibbsIsothermic_ConvergenceHelperTrainingDataInput
@@ -343,7 +343,7 @@ namespace DWSIM.AI.ConvergenceAssistant
             foreach (var entry in grouped)
             {
                 var grouped2 = entry.GroupBy(e => e.ModelName).ToList();
-                if (grouped2.Count < 100) return;
+                if (grouped2.Count < Manager.Settings.GATrainThreshold) return;
                 foreach (var entry2 in grouped2)
                 {
                     var data = entries.Select(x => new GibbsAdiabatic_ConvergenceHelperTrainingDataInput
