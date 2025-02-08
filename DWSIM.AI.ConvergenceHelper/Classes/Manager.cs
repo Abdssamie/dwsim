@@ -10,9 +10,16 @@ using Eto.Forms;
 using System.Runtime.InteropServices.ComTypes;
 using DWSIM.AI.ConvergenceAssistant.ANN;
 using Tensorflow;
+using System.Timers;
 
 namespace DWSIM.AI.ConvergenceAssistant
 {
+    public class ActivityUpdateEventArgs
+    {
+        public ActivityUpdateEventArgs(string text) { Text = text; }
+        public string Text { get; } // readonly
+    }
+
     public class Manager
     {
 
@@ -26,8 +33,20 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static Dictionary<string, ANNModel> LoadedModels = new Dictionary<string, ANNModel>();
 
+        // Declare the delegate (if using non-generic pattern).
+        public delegate void ActivityUpdateEventHandler(object sender, ActivityUpdateEventArgs e);
+
+        public static event ActivityUpdateEventHandler ActivityUpdate;
+
+        private static int LastTrainDataCount = 0;
+
+        public static Timer UpdateTimer;
+
+        public static bool AutoUpdateEnabled = true;
+
         public static void Initialize()
         {
+
             if (!Directory.Exists(HomeDirectory)) { Directory.CreateDirectory(HomeDirectory); }
             var datadir = Path.Combine(HomeDirectory, "data");
             if (!Directory.Exists(datadir)) { Directory.CreateDirectory(datadir); }
@@ -63,28 +82,35 @@ namespace DWSIM.AI.ConvergenceAssistant
                 ModelsSummary = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ConvergenceHelperMetaData>>(File.ReadAllText(msfile));
             }
 
-            FlowsheetSolver.FlowsheetSolver.FlowsheetCalculationFinished += FlowsheetSolver_FlowsheetCalculationFinished;
+            var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
+            LastTrainDataCount = col.Query().Count();
+
+            UpdateTimer = new Timer(60000);
+            UpdateTimer.Elapsed += (s, e) =>
+            {
+                if (AutoUpdateEnabled) UpdateModels();
+            };
+            UpdateTimer.Start();
 
             Initialized = true;
 
         }
 
-        private static void FlowsheetSolver_FlowsheetCalculationFinished(object sender, EventArgs e, object extrainfo)
-        {
-            if (GlobalSettings.Settings.AIAssistedConvergenceLevel > 0)
-            {
-                Task.Run(() => SaveDatabaseToFile());
-                //UpdateModels();
-            }
-        }
-
         public static void UpdateModels(TextArea ta = null, Eto.OxyPlot.Plot plot = null)
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
-            var entries = col.Query().Where(x => x.RequestType == Interfaces.ConvergenceHelperRequestType.PTFlash).ToList();
-
-            ModelUpdater.UpdatePTModels(ta, plot);
-
+            var newcount = col.Query().Count();
+            if (newcount - LastTrainDataCount > 5000)
+            {
+                Task.Run(() =>
+                {
+                    ModelUpdater.UpdateAll(ta, plot);
+                    LastTrainDataCount = newcount;
+                }).ContinueWith(t =>
+                {
+                    if (t.Exception == null) SaveDatabaseToFile();
+                });
+            }
         }
 
         public static void StoreData(ConvergenceHelperTrainingData data)
@@ -225,7 +251,7 @@ namespace DWSIM.AI.ConvergenceAssistant
 
         public static ANNModel GetModel(ConvergenceHelperRequest request)
         {
-                        
+
             var comps = request.CompoundNames.OrderBy(x => x).ToList();
             var comps0 = request.CompoundNames.ToList();
             var mf1 = new List<double>();
@@ -234,23 +260,23 @@ namespace DWSIM.AI.ConvergenceAssistant
                 mf1.Add(request.MixtureMolarFlows[comps0.IndexOf(comp)]);
             }
 
-            var modeldata = ModelsSummary.Where(m => m.CompoundNames.SequenceEqual(comps) && 
-                        m.PropertyPackageName == request.ModelName && 
+            var modeldata = ModelsSummary.Where(m => m.CompoundNames.SequenceEqual(comps) &&
+                        m.PropertyPackageName == request.ModelName &&
                         !Double.IsNaN(m.TrainingDataMSE)).OrderBy(m => m.TestingDataMSE).FirstOrDefault();
 
-            if (modeldata == null) {return null;}
+            if (modeldata == null) { return null; }
 
-            if (LoadedModels.ContainsKey(modeldata.ModelName)) return LoadedModels[modeldata.ModelName];    
+            if (LoadedModels.ContainsKey(modeldata.ModelName)) return LoadedModels[modeldata.ModelName];
 
             var modelsdir = Path.Combine(HomeDirectory, "models");
             if (!Directory.Exists(modelsdir)) { Directory.CreateDirectory(modelsdir); }
 
             var model = LoadModelFromFile(Path.Combine(modelsdir, modeldata.ModelName + ".zip"));
-            
+
             if (!LoadedModels.ContainsKey(model.MetaData.ModelName)) LoadedModels.Add(model.MetaData.ModelName, model);
 
             return model;
-        
+
         }
 
     }
