@@ -126,9 +126,57 @@ namespace DWSIM.AI.ConvergenceAssistant.Editors
             tm1 = tbs3[0];
             tm2 = tbs3[1];
 
+            var intervals = 27;
+
+            c2.CreateAndAddNumericEditorRow("Number of solver runs", intervals, 8, 270, 0,
+                (nup, e) =>
+                {
+                    intervals = (int)nup.Value;
+                });
+
             c2.CreateAndAddButtonRow("Generate Data for Training", null, (btn, e) =>
             {
-
+                Manager.AutoUpdateEnabled = false;
+                var currstate = Flowsheet.GetSnapshot(Interfaces.Enums.SnapshotType.ObjectData);
+                var delta = Math.Round(Math.Pow(intervals, 0.3333));
+                var T1 = tt1.Text.ToDoubleFromCurrent().ConvertToSI(su.temperature);
+                var T2 = tt2.Text.ToDoubleFromCurrent().ConvertToSI(su.temperature);
+                var P1 = tp1.Text.ToDoubleFromCurrent().ConvertToSI(su.pressure);
+                var P2 = tp2.Text.ToDoubleFromCurrent().ConvertToSI(su.pressure);
+                var W1 = tm1.Text.ToDoubleFromCurrent().ConvertToSI(su.massflow);
+                var W2 = tm2.Text.ToDoubleFromCurrent().ConvertToSI(su.massflow);
+                var DT = (T2-T1)/delta;
+                var DP = (P2-P1)/delta;
+                var DW = (W2-W1)/delta;
+                var ms = (IMaterialStream)Flowsheet.GetFlowsheetSimulationObject(selectedStreamTag);
+                if (ms != null)
+                {
+                    Task.Run(() =>
+                    {
+                        for (int i = 0; i < delta; i++)
+                        {
+                            for (int j = 0; j < delta; j++)
+                            {
+                                for (int k = 0; k < delta; k++)
+                                {
+                                    var T = T1 + i * DT;
+                                    var P = P1 + j * DP;
+                                    var W = W1 + k * DW;
+                                    try
+                                    {
+                                        ms.SetTemperature(T);
+                                        ms.SetPressure(P);
+                                        ms.SetMassFlow(W);
+                                        Flowsheet.RequestCalculationAndWait();
+                                    }
+                                    catch (Exception) { Flowsheet.RestoreSnapshot(currstate, Interfaces.Enums.SnapshotType.ObjectData); }
+                                }
+                            }
+                        }
+                        Flowsheet.RestoreSnapshot(currstate, Interfaces.Enums.SnapshotType.ObjectData);
+                        Manager.AutoUpdateEnabled = true;
+                    });
+                }
             });
 
             c2.CreateAndAddLabelRow("Training and Validation Details");

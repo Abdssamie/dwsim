@@ -100,7 +100,7 @@ namespace DWSIM.AI.ConvergenceAssistant
         {
             var col = Database.GetDatabaseObject().GetCollection<ConvergenceHelperTrainingData>("TrainingData");
             var newcount = col.Query().Count();
-            if (newcount - LastTrainDataCount > 5000)
+            if (newcount - LastTrainDataCount > 1000)
             {
                 Task.Run(() =>
                 {
