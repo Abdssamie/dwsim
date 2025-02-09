@@ -1325,10 +1325,6 @@ Public Delegate Sub CustomEvent2(ByVal objinfo As CalculationArgs)
                 rechess(i, i) = 1
             Next
 
-            'initialize GPU if option enabled
-
-            If Settings.EnableGPUProcessing Then Settings.gpu.EnableMultithreading()
-
             Dim maintask As Task
 
             Select Case mode
@@ -1654,13 +1650,6 @@ Public Delegate Sub CustomEvent2(ByVal objinfo As CalculationArgs)
             'clears any calculation stop request.
 
             Settings.CalculatorStopRequested = False
-
-            'Frees GPU memory if enabled.
-
-            If Settings.EnableGPUProcessing Then
-                Settings.gpu.DisableMultithreading()
-                Settings.gpu.FreeAll()
-            End If
 
             'updates the display status of all objects in the calculation list.
 

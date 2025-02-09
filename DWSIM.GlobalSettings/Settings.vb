@@ -55,10 +55,6 @@ Public Class Settings
 
     Public Shared Property FlowsheetRenderer As SkiaCanvasRenderer = SkiaCanvasRenderer.CPU
 
-    Public Shared Property gpu As Cudafy.Host.GPGPU
-    Public Shared Property gpumod As CudafyModule
-    Public Shared Property prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
-
     Private Shared _tcks As CancellationTokenSource
     Public Shared Property TaskCancellationTokenSource As CancellationTokenSource
         Get

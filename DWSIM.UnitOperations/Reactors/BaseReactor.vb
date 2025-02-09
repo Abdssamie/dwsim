@@ -190,6 +190,16 @@ Namespace Reactors
 
         Function ProcessAdvancedKineticReactionRate(scriptTItle As String, rc As Reactor, rxn As Reaction, T As Double, P As Double, amounts As Dictionary(Of String, Double), amounts2 As Dictionary(Of String, Double)) As Double
 
+            If scope Is Nothing Then
+                Dim opts As New Dictionary(Of String, Object)()
+                opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
+                engine = IronPython.Hosting.Python.CreateEngine(opts)
+                engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
+                engine.Runtime.LoadAssembly(GetType(Thermodynamics.BaseClasses.ConstantProperties).Assembly)
+                engine.Runtime.LoadAssembly(GetType(Drawing.SkiaSharp.GraphicsSurface).Assembly)
+                scope = engine.CreateScope()
+            End If
+
             Dim script = FlowSheet.Scripts.Values.Where(Function(x) x.Title = scriptTItle).FirstOrDefault()
 
             If script Is Nothing Then Throw New Exception("Associated Python Script for Kinetics not found.")
@@ -231,14 +241,6 @@ Namespace Reactors
             Me.m_reactions = New List(Of String)
             Me.m_conversions = New Dictionary(Of String, Double)
             Me.m_componentconversions = New Dictionary(Of String, Double)
-
-            Dim opts As New Dictionary(Of String, Object)()
-            opts("Frames") = Microsoft.Scripting.Runtime.ScriptingRuntimeHelpers.True
-            engine = IronPython.Hosting.Python.CreateEngine(opts)
-            engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
-            engine.Runtime.LoadAssembly(GetType(Thermodynamics.BaseClasses.ConstantProperties).Assembly)
-            engine.Runtime.LoadAssembly(GetType(Drawing.SkiaSharp.GraphicsSurface).Assembly)
-            scope = engine.CreateScope()
 
         End Sub
 

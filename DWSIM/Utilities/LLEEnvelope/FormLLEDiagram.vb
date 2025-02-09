@@ -271,22 +271,12 @@ Public Class FormLLEDiagram
         mat.Phases(0).Compounds(Names(cbComp2.SelectedIndex)).MoleFraction = Pt.Y
         mat.Phases(0).Compounds(Names(cbComp3.SelectedIndex)).MoleFraction = 1 - Pt.X - Pt.Y
 
-        If My.Settings.EnableGPUProcessing Then
-            Calculator.InitComputeDevice()
-            Settings.gpu.EnableMultithreading()
-        End If
-
         Try
             mat.CalcEquilibrium("tp", Nothing)
         Catch ex As Exception
             Dim euid As String = Guid.NewGuid().ToString()
             SharedClasses.ExceptionProcessing.ExceptionList.Exceptions.Add(euid, ex)
             mat.FlowSheet.ShowMessage(ex.Message.ToString, Interfaces.IFlowsheet.MessageType.GeneralError, euid)
-        Finally
-            If My.Settings.EnableGPUProcessing Then
-                Settings.gpu.DisableMultithreading()
-                Settings.gpu.FreeAll()
-            End If
         End Try
 
 

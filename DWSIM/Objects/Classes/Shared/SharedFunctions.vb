@@ -43,10 +43,6 @@ Namespace DWSIM
             GlobalSettings.Settings.CultureInfo = My.Settings.CultureInfo
             GlobalSettings.Settings.CurrentCulture = My.Settings.CultureInfo
 
-            'set CUDA params
-            CudafyModes.Compiler = eGPUCompiler.All
-            CudafyModes.Target = My.Settings.CudafyTarget
-
             'set global settings
             GlobalSettings.Settings.SolverMode = My.Settings.SolverMode
             GlobalSettings.Settings.SolverTimeoutSeconds = My.Settings.SolverTimeoutSeconds

@@ -159,11 +159,6 @@ Public Class CAPEOPENManager
 
             _params = New ParameterCollection()
 
-            'set CUDA params
-
-            CudafyModes.Compiler = eGPUCompiler.All
-            CudafyModes.Target = GlobalSettings.Settings.CudafyTarget
-
             'load settings
 
             Try

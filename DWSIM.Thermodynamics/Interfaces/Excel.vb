@@ -911,18 +911,8 @@ Namespace ExcelAddIn
                 ms.SetPropertyPackageInstance(pp)
                 pp.SetMaterial(ms)
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 If prop.ToLower <> "molecularweight" Then
                     pp.CalcSinglePhaseProp(New Object() {prop}, phaselabel)
-                End If
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
                 End If
 
                 Dim results As Double() = Nothing
@@ -1038,20 +1028,10 @@ Namespace ExcelAddIn
                 ms.SetPropertyPackageInstance(pp)
                 pp.SetMaterial(ms)
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.LoadData(Newtonsoft.Json.JsonConvert.DeserializeObject(Of List(Of XElement))(ppdata))
 
                 If prop.ToLower <> "molecularweight" Then
                     pp.CalcSinglePhaseProp(New Object() {prop}, phaselabel)
-                End If
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
                 End If
 
                 Dim results As Double() = Nothing
@@ -1267,17 +1247,7 @@ Namespace ExcelAddIn
                 Next
                 pp.FlashAlgorithm.FlashSettings(Interfaces.Enums.FlashSetting.ThreePhaseFlashStabTestCompIds) = comps.ToArrayString
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1531,17 +1501,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1709,17 +1669,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1887,17 +1837,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2065,17 +2005,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.pressure = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2194,17 +2124,7 @@ Namespace ExcelAddIn
 
                 pp.LoadData(Newtonsoft.Json.JsonConvert.DeserializeObject(Of List(Of XElement))(ppdata))
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2320,17 +2240,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2448,17 +2358,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2576,17 +2476,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2704,17 +2594,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.pressure = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2857,17 +2737,7 @@ Namespace ExcelAddIn
                 Next
                 pp.FlashAlgorithm.FlashSettings(Interfaces.Enums.FlashSetting.ThreePhaseFlashStabTestCompIds) = comps.ToArrayString
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -3007,17 +2877,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -3159,17 +3019,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -3311,17 +3161,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.temperature = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -3463,17 +3303,7 @@ Namespace ExcelAddIn
 
                 ms.Phases(0).Properties.pressure = InitialEstimate
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -4050,17 +3880,7 @@ Namespace ExcelAddIn
                     k += 1
                 Next
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -4182,17 +4002,7 @@ Namespace ExcelAddIn
                     k += 1
                 Next
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -4316,17 +4126,7 @@ Namespace ExcelAddIn
                     k += 1
                 Next
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -4450,17 +4250,7 @@ Namespace ExcelAddIn
                     k += 1
                 Next
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -4584,17 +4374,7 @@ Namespace ExcelAddIn
                     k += 1
                 Next
 
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Calculator.InitComputeDevice()
-                    Settings.gpu.EnableMultithreading()
-                End If
-
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
-
-                If GlobalSettings.Settings.EnableGPUProcessing Then
-                    Settings.gpu.DisableMultithreading()
-                    Settings.gpu.FreeAll()
-                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing

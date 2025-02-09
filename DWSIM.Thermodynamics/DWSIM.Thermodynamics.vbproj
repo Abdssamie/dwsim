@@ -94,10 +94,6 @@
       <HintPath>..\DWSIM\References\Ciloci.Flee.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Cudafy.NET">
-      <HintPath>..\DWSIM\References\Cudafy.NET.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Cureos.Numerics">
       <HintPath>..\DWSIM\References\Cureos.Numerics.dll</HintPath>
     </Reference>

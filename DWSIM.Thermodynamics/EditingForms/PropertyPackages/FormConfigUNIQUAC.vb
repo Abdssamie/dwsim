@@ -369,7 +369,6 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         Try
 
             If GlobalSettings.Settings.EnableParallelProcessing Then
-                If GlobalSettings.Settings.EnableGPUProcessing Then GlobalSettings.Settings.gpu.EnableMultithreading()
                 Try
                     Dim task1 As Task = TaskHelper.Run(Sub()
                                                            a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
@@ -383,11 +382,6 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                     Task.WaitAll(task1, task2, task3)
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
-                Finally
-                    If GlobalSettings.Settings.EnableGPUProcessing Then
-                        GlobalSettings.Settings.gpu.DisableMultithreading()
-                        GlobalSettings.Settings.gpu.FreeAll()
-                    End If
                 End Try
             Else
                 a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)

@@ -187,11 +187,6 @@ exec:       With Me.GraphControl.GraphPane.Legend
             Me.hydratecalc = chkhyd.Checked
             Me.Button1.Enabled = False
 
-            If My.Settings.EnableGPUProcessing Then
-                Calculator.InitComputeDevice()
-                Settings.gpu.EnableMultithreading()
-            End If
-
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.tbQuality.Value, Me.chkQualityLine.Checked, Me.chkStabCurve.Checked, Me.chkpip.Checked, Me.chkhyd.Checked, Me.chkHydVapOnly.Checked, chkImmiscibleWater.Checked})
 
             Me.bw = Me.BackgroundWorker1
@@ -1186,11 +1181,6 @@ exec:       With Me.GraphControl.GraphPane.Legend
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
-
-        If My.Settings.EnableGPUProcessing Then
-            Settings.gpu.DisableMultithreading()
-            Settings.gpu.FreeAll()
-        End If
 
         Me.Button1.Enabled = True
 
