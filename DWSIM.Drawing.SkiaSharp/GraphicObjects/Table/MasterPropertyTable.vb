@@ -28,6 +28,8 @@ Namespace GraphicObjects.Tables
 
         Inherits ShapeGraphic
 
+        Implements IDisposable
+
         Protected m_objectfamily As Enums.GraphicObjects.ObjectType = Enums.GraphicObjects.ObjectType.MaterialStream
 
         Protected m_objectlist As Dictionary(Of String, Boolean)
@@ -79,14 +81,14 @@ Namespace GraphicObjects.Tables
 
                 For Each kvp As KeyValuePair(Of String, Boolean) In m_objectlist
                     name = XmlConvert.EncodeLocalName(kvp.Key)
-                    elements(elements.Count - 1).Add(New XElement(Name, kvp.Value))
+                    elements(elements.Count - 1).Add(New XElement(name, kvp.Value))
                 Next
 
                 .Add(New XElement("Properties"))
 
                 For Each kvp As KeyValuePair(Of String, Boolean) In m_propertylist
                     name = XmlConvert.EncodeLocalName(kvp.Key)
-                    elements(elements.Count - 1).Add(New XElement(Name, kvp.Value))
+                    elements(elements.Count - 1).Add(New XElement(name, kvp.Value))
                 Next
 
                 .Add(New XElement("SortableItems"))
@@ -400,12 +402,17 @@ Namespace GraphicObjects.Tables
 
         End Sub
 
+
+        Dim tpaint, tpaint2, bpaint As SKPaint
+        Private disposedValue As Boolean
+
         Public Overrides Sub Draw(ByVal g As Object)
 
             Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
 
-            Dim tpaint, tpaint2 As New SKPaint()
-            Dim bpaint As New SKPaint()
+            If tpaint Is Nothing Then tpaint = New SKPaint()
+            If tpaint2 Is Nothing Then tpaint2 = New SKPaint()
+            If bpaint Is Nothing Then bpaint = New SKPaint()
 
             If DrawMode = 0 Then
 
@@ -420,6 +427,8 @@ Namespace GraphicObjects.Tables
                     .IsStroke = False
                     .Typeface = GetFont()
                     .FakeBoldText = True
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
 
                 With tpaint2
@@ -432,6 +441,8 @@ Namespace GraphicObjects.Tables
                     End If
                     .IsStroke = False
                     .Typeface = GetFont()
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
 
                 With bpaint
@@ -443,6 +454,8 @@ Namespace GraphicObjects.Tables
                     End If
                     .IsStroke = True
                     .StrokeWidth = LineWidth
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
 
             Else
@@ -454,6 +467,8 @@ Namespace GraphicObjects.Tables
                     .IsStroke = False
                     .Typeface = GetFont()
                     .FakeBoldText = True
+                    .HintingLevel = SKPaintHinting.Full
+                    .SubpixelText = True
                 End With
 
                 With tpaint2
@@ -462,6 +477,8 @@ Namespace GraphicObjects.Tables
                     .Color = SKColors.Black
                     .IsStroke = False
                     .Typeface = GetFont()
+                    .HintingLevel = SKPaintHinting.Full
+                    .SubpixelText = True
                 End With
 
                 With bpaint
@@ -469,6 +486,8 @@ Namespace GraphicObjects.Tables
                     .Color = SKColors.Black
                     .IsStroke = True
                     .StrokeWidth = LineWidth
+                    .HintingLevel = SKPaintHinting.Full
+                    .SubpixelText = True
                 End With
 
             End If
@@ -676,14 +695,6 @@ Namespace GraphicObjects.Tables
 
             End If
 
-            tpaint.Dispose()
-            tpaint2.Dispose()
-            bpaint.Dispose()
-
-            tpaint = Nothing
-            tpaint2 = Nothing
-            bpaint = Nothing
-
         End Sub
 
         Public Sub SetClipboardData()
@@ -715,7 +726,19 @@ Namespace GraphicObjects.Tables
 
         End Sub
 
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                tpaint?.Dispose()
+                tpaint2?.Dispose()
+                bpaint?.Dispose()
+                disposedValue = True
+            End If
+        End Sub
 
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 
 End Namespace

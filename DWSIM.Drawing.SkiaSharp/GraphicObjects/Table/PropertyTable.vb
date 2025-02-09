@@ -25,6 +25,8 @@ Namespace GraphicObjects.Tables
 
         Inherits ShapeGraphic
 
+        Implements IDisposable
+
         Public Enum SortMode
             AsAdded = 0
             NameAsc = 1
@@ -105,12 +107,16 @@ Namespace GraphicObjects.Tables
             Me.New(New SKPoint(posX, posY))
         End Sub
 
+        Dim tpaint, tpaint2, bpaint As SKPaint
+        Private disposedValue As Boolean
+
         Public Overrides Sub Draw(ByVal g As Object)
 
             Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
 
-            Dim tpaint, tpaint2 As New SKPaint()
-            Dim bpaint As New SKPaint()
+            If tpaint Is Nothing Then tpaint = New SKPaint()
+            If tpaint2 Is Nothing Then tpaint2 = New SKPaint()
+            If bpaint Is Nothing Then bpaint = New SKPaint()
 
             If DrawMode = 0 Then
 
@@ -125,6 +131,8 @@ Namespace GraphicObjects.Tables
                     .IsStroke = False
                     .Typeface = GetFont()
                     .FakeBoldText = True
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
 
                 With tpaint2
@@ -137,6 +145,8 @@ Namespace GraphicObjects.Tables
                     End If
                     .IsStroke = False
                     .Typeface = GetFont()
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
 
                 With bpaint
@@ -148,6 +158,8 @@ Namespace GraphicObjects.Tables
                     End If
                     .IsStroke = True
                     .StrokeWidth = 1
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
             Else
 
@@ -158,6 +170,8 @@ Namespace GraphicObjects.Tables
                     .IsStroke = False
                     .Typeface = GetFont()
                     .FakeBoldText = True
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
 
                 With tpaint2
@@ -166,6 +180,8 @@ Namespace GraphicObjects.Tables
                     .Color = SKColors.Black
                     .IsStroke = False
                     .Typeface = GetFont()
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
 
                 With bpaint
@@ -173,6 +189,8 @@ Namespace GraphicObjects.Tables
                     .Color = SKColors.Black
                     .IsStroke = True
                     .StrokeWidth = 1
+                    .HintingLevel = SKPaintHinting.Normal
+                    .SubpixelText = True
                 End With
             End If
 
@@ -356,14 +374,20 @@ Namespace GraphicObjects.Tables
 
             End If
 
-            tpaint.Dispose()
-            tpaint2.Dispose()
-            bpaint.Dispose()
+        End Sub
 
-            tpaint = Nothing
-            tpaint2 = Nothing
-            bpaint = Nothing
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                tpaint?.Dispose()
+                tpaint2?.Dispose()
+                bpaint?.Dispose()
+                disposedValue = True
+            End If
+        End Sub
 
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
         End Sub
 
     End Class
