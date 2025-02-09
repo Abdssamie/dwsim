@@ -9,7 +9,7 @@ Namespace GraphicObjects
 
     Public MustInherit Class GraphicObject
 
-        Implements IGraphicObject, ICustomXMLSerialization
+        Implements IGraphicObject, ICustomXMLSerialization, IDisposable
 
         Private Shared _rtp, _btp, _itp, _bitp, _ttp As SKTypeface
 
@@ -79,6 +79,7 @@ Namespace GraphicObjects
         Friend EmbeddedResourceIconName As String = ""
 
         Friend Image As SKImage
+        Private disposedValue As Boolean
 
         Public Function GetFont() As SKTypeface
 
@@ -589,6 +590,30 @@ Namespace GraphicObjects
 
         End Sub
 
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 
 End Namespace

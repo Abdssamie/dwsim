@@ -67,9 +67,20 @@ Namespace GraphicObjects
 
         End Sub
 
+        Protected Overrides Sub Dispose(disposing As Boolean)
+
+            ImagePaint?.Dispose()
+            MyBase.Dispose(disposing)
+
+        End Sub
+
+        Private ImagePaint As SKPaint
+
         Friend Sub DrawIcon(canvas As SKCanvas)
 
             If Image Is Nothing Then
+
+                ImagePaint = New SKPaint With {.IsAntialias = False, .FilterQuality = SKFilterQuality.High}
 
                 Using streamBG = GetIconAsStream()
                     Using bitmap = SKBitmap.Decode(streamBG)
@@ -79,9 +90,7 @@ Namespace GraphicObjects
 
             End If
 
-            Using p As New SKPaint With {.IsAntialias = False, .FilterQuality = SKFilterQuality.High}
-                canvas.DrawImage(Image, New SKRect(X, Y, X + Width, Y + Height), p)
-            End Using
+            canvas.DrawImage(Image, New SKRect(X, Y, X + Width, Y + Height), ImagePaint)
 
             If Not Calculated Then
                 Using p As New SKPaint With {.IsAntialias = False, .FilterQuality = SKFilterQuality.None}
