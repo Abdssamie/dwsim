@@ -980,7 +980,7 @@ Namespace UnitOperations
         End Sub
 
         ' This code added by Visual Basic to correctly implement the disposable pattern.
-        Public Sub Dispose() Implements IDisposable.Dispose
+        Public Overridable Sub Dispose() Implements IDisposable.Dispose
 
             ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
             Dispose(True)
