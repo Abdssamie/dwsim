@@ -574,6 +574,9 @@ Namespace GraphicObjects
                     End If
                 End If
 
+                tpaint.Dispose()
+                bpaint.Dispose()
+
             End If
 
         End Sub
@@ -670,6 +673,8 @@ Namespace GraphicObjects
                     g.DrawRect(rect3, gradPen)
                     g.DrawRect(rect4, gradPen)
 
+                    gradPen.Dispose()
+
                 End If
 
                 g.DrawRoundRect(New SKRect(X + 0.25 * Width, Y, X + 0.75 * Width, Y + Height), 5, 5, myPen)
@@ -703,6 +708,9 @@ Namespace GraphicObjects
                 g.DrawPoints(SKPointMode.Polygon, New SKPoint() {New SKPoint(X + 0.25 * Width, Y + 0.7 * Height), New SKPoint(X + 0.75 * Width, Me.Y + 0.3 * Height)}, myPen)
 
             End If
+
+            tPen.Dispose()
+            myPen.Dispose()
 
         End Sub
 
