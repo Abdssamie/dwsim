@@ -202,9 +202,6 @@
   <data name="Widgets Alt Badge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Widgets Alt Badge.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="wizardbg1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\wizardbg1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="page_white_acrobat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_white_acrobat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -240,9 +237,6 @@
   </data>
   <data name="book_go" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\book_go.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DWSIM_splash_v7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM_splash_v7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Excel 2013" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Excel 2013.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -378,9 +372,6 @@
   </data>
   <data name="plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DWSIM-branco" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM-branco.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="input_80px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\input_80px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -535,9 +526,6 @@
   <data name="zoom_extend" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoom_extend.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="209x48-doar-azul-assina" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\209x48-doar-azul-assina.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\copy.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -670,9 +658,6 @@
   <data name="arrows_4_way" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrows_4_way.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DWSIM_splash_limpo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM_splash_limpo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="book_open1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\book_open1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -691,9 +676,6 @@
   <data name="Icon1281" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon1281.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DWSIM_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="bullet_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bullet_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -702,9 +684,6 @@
   </data>
   <data name="icons8-save_as" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-save_as.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="splashScreen2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\splashScreen2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="r_equil" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\r_equil.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -751,9 +730,6 @@
   <data name="DWSIM_Icon_41" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DWSIM_Icon_4.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="splashWelcome_Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\splashWelcome_Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="col_dc_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\col_dc_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -799,9 +775,6 @@
   <data name="icons8-scatter_plot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-scatter_plot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="En-play-badge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\En-play-badge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="turn_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\turn_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -825,9 +798,6 @@
   </data>
   <data name="page_white_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_white_text.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DWSIM4 icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM4 icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="lo_enrecy_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lo_enrecy_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -955,9 +925,6 @@
   <data name="object_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\object_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DWSIM_splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM_splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="fossee" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fossee.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -1062,9 +1029,6 @@
   </data>
   <data name="double_left_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\double_left_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DWSIM_ico_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM_ico_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="error" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\error.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1191,9 +1155,6 @@
   </data>
   <data name="uo_filter_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\uo_filter_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DWSIM_icon_256" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM_icon_256.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8_sankey" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-sankey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1489,9 +1450,6 @@
   <data name="steamedsidestripper" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\steamedsidestripper.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DownloadFromAppStore" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DownloadFromAppStore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="vb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vb.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -1597,9 +1555,6 @@
   <data name="bullet_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bullet_delete.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="about" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\about.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="disk_multiple" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\disk_multiple.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -1626,9 +1581,6 @@
   </data>
   <data name="icons8-file1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-file1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DWSIM_Icon_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DWSIM_Icon_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="test_tube_80px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\test_tube_80px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

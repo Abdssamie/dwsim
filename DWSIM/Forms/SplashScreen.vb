@@ -43,16 +43,25 @@ Public NotInheritable Class SplashScreen
 
         lblPatrons.Text += SharedClasses.Patrons.GetList()
 
+        bg = My.Resources.DWSIM_splash_v8
+
     End Sub
 
     Protected Overrides Sub OnPaint(ByVal e As System.Windows.Forms.PaintEventArgs)
-        ' Do nothing here!
+
     End Sub
+
+    Private bg As Image
 
     Protected Overrides Sub OnPaintBackground(ByVal pevent As System.Windows.Forms.PaintEventArgs)
 
-        pevent.Graphics.DrawImage(My.Resources.DWSIM_splash_v8, New Rectangle(0, 0, Me.Width, Me.Height))
+        pevent.Graphics.DrawImage(bg, New Rectangle(0, 0, Me.Width, Me.Height))
 
     End Sub
 
+    Private Sub SplashScreen_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+
+        bg.Dispose()
+
+    End Sub
 End Class

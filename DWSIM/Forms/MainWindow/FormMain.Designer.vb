@@ -429,7 +429,7 @@ Partial Class FormMain
         '
         'AboutToolStripMenuItem
         '
-        Me.AboutToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.DWSIM_ico_64
+        Me.AboutToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.DWSIM_Icon_Vector_2
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
         resources.ApplyResources(Me.AboutToolStripMenuItem, "AboutToolStripMenuItem")
         '
