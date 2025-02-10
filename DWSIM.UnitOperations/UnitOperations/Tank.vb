@@ -179,8 +179,20 @@ Namespace UnitOperations
                                           .Text = Me.GraphicObject.Tag + ": " + FlowSheet.GetTranslatedString("AccumulationStream")}
                                           FlowSheet.DisplayForm(fms)
                                       End Sub
+            Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("Fill With Inlet Stream"),
+              .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
+            AddHandler button2.Click, Sub(s, e)
+                                          Dim Height As Double = GetDynamicProperty("Height")
+                                          Dim LiquidHeight As Double = GetDynamicProperty("Liquid Level")
+                                          AccumulationStream.SetFlowsheet(FlowSheet)
+                                          AccumulationStream.AssignFromPhase(PhaseLabel.Mixture, GetInletMaterialStream(0), False)
+                                          AccumulationStream.SetVolumetricFlow(LiquidHeight / Height * Volume)
+                                          AccumulationStream.Calculate()
+                                          FlowSheet.ShowMessage("Tank contents successfully defined from inlet stream.", IFlowsheet.MessageType.Information)
+                                      End Sub
 
             table.Controls.Add(button1)
+            table.Controls.Add(button2)
             table.Controls.Add(New Panel())
 
         End Sub

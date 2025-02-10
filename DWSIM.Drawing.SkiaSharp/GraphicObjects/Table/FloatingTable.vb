@@ -63,193 +63,195 @@ Namespace GraphicObjects.Tables
 
         Public Overrides Sub Draw(ByVal g As Object)
 
-            Dim sf = s.UIScalingFactor
+            Try
 
-            If s.OldUI Then sf = 1.0
+                Dim sf = s.UIScalingFactor
 
-            Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
+                If s.OldUI Then sf = 1.0
 
-            FontSize = 11.0
+                Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
 
-            FontSize *= s.DpiScale * sf
+                FontSize = 11.0
 
-            Dim zoom As Single = AdditionalInfo
+                FontSize *= s.DpiScale * sf
 
-            If zoom = 0.0 Then Exit Sub
+                Dim zoom As Single = AdditionalInfo
 
-            Padding = 3.0 / zoom * s.DpiScale * sf
+                If zoom = 0.0 Then Exit Sub
 
-            Dim tpaint As New SKPaint()
-            Dim bpaint, bpaint2 As New SKPaint()
-            Dim spaint As New SKPaint()
-            Dim tbpaint As New SKPaint()
+                Padding = 3.0 / zoom * s.DpiScale * sf
 
-            If DrawMode = 0 Then
+                Dim tpaint As New SKPaint()
+                Dim bpaint, bpaint2 As New SKPaint()
+                Dim spaint As New SKPaint()
+                Dim tbpaint As New SKPaint()
 
-                With tpaint
-                    .TextSize = FontSize / zoom
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = If(GlobalSettings.Settings.DarkMode, SKColors.WhiteSmoke, SKColors.SteelBlue)
-                    .IsStroke = False
-                    .Typeface = RegularTypeFace
-                End With
+                If DrawMode = 0 Then
 
-                With tbpaint
-                    .TextSize = FontSize / zoom
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = If(GlobalSettings.Settings.DarkMode, SKColors.WhiteSmoke, SKColors.SteelBlue)
-                    .IsStroke = False
-                    .Typeface = BoldTypeFace
-                End With
+                    With tpaint
+                        .TextSize = FontSize / zoom
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = If(GlobalSettings.Settings.DarkMode, SKColors.WhiteSmoke, SKColors.SteelBlue)
+                        .IsStroke = False
+                        .Typeface = RegularTypeFace
+                    End With
 
-                With bpaint
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.White.WithAlpha(240)
-                    .IsStroke = False
-                    .StrokeWidth = LineWidth / zoom
-                End With
+                    With tbpaint
+                        .TextSize = FontSize / zoom
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = If(GlobalSettings.Settings.DarkMode, SKColors.WhiteSmoke, SKColors.SteelBlue)
+                        .IsStroke = False
+                        .Typeface = BoldTypeFace
+                    End With
 
-                With bpaint2
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = If(GlobalSettings.Settings.DarkMode, SKColors.WhiteSmoke, SKColors.SteelBlue)
-                    .IsStroke = True
-                    .StrokeWidth = LineWidth / zoom
-                End With
+                    With bpaint
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.White.WithAlpha(240)
+                        .IsStroke = False
+                        .StrokeWidth = LineWidth / zoom
+                    End With
 
-                With spaint
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.LightGray.WithAlpha(100)
-                    .IsStroke = False
-                End With
+                    With bpaint2
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = If(GlobalSettings.Settings.DarkMode, SKColors.WhiteSmoke, SKColors.SteelBlue)
+                        .IsStroke = True
+                        .StrokeWidth = LineWidth / zoom
+                    End With
 
-            ElseIf DrawMode = 1 Then
+                    With spaint
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.LightGray.WithAlpha(100)
+                        .IsStroke = False
+                    End With
 
-                With tpaint
-                    .TextSize = FontSize / zoom
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.Black
-                    .IsStroke = False
-                    .Typeface = RegularTypeFace
-                End With
+                ElseIf DrawMode = 1 Then
 
-                With tbpaint
-                    .TextSize = FontSize / zoom
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.Black
-                    .IsStroke = False
-                    .Typeface = BoldTypeFace
-                End With
+                    With tpaint
+                        .TextSize = FontSize / zoom
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.Black
+                        .IsStroke = False
+                        .Typeface = RegularTypeFace
+                    End With
 
-                With bpaint
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.White.WithAlpha(240)
-                    .IsStroke = False
-                    .StrokeWidth = LineWidth / zoom
-                End With
+                    With tbpaint
+                        .TextSize = FontSize / zoom
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.Black
+                        .IsStroke = False
+                        .Typeface = BoldTypeFace
+                    End With
 
-                With bpaint2
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.Black
-                    .IsStroke = True
-                    .StrokeWidth = LineWidth / zoom
-                End With
+                    With bpaint
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.White.WithAlpha(240)
+                        .IsStroke = False
+                        .StrokeWidth = LineWidth / zoom
+                    End With
 
-                With spaint
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.LightGray.WithAlpha(100)
-                    .IsStroke = False
-                End With
+                    With bpaint2
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.Black
+                        .IsStroke = True
+                        .StrokeWidth = LineWidth / zoom
+                    End With
 
-            Else
+                    With spaint
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.LightGray.WithAlpha(100)
+                        .IsStroke = False
+                    End With
 
-                With tpaint
-                    .TextSize = FontSize / zoom
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = New SKColor(35, 109, 149, 255)
-                    .IsStroke = False
-                    .Typeface = RegularTypeFace
-                End With
+                Else
 
-                With tbpaint
-                    .TextSize = FontSize / zoom
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = New SKColor(35, 109, 149, 255)
-                    .IsStroke = False
-                    .Typeface = BoldTypeFace
-                End With
+                    With tpaint
+                        .TextSize = FontSize / zoom
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = New SKColor(35, 109, 149, 255)
+                        .IsStroke = False
+                        .Typeface = RegularTypeFace
+                    End With
 
-                Dim GradientColors = {New SKColor(220, 240, 255, 230), New SKColor(140, 255, 190, 255), New SKColor(255, 92, 119, 255), New SKColor(0, 0, 0, 255)}
-                Dim GradientWeights = {0.0F, 0.2044351F * Width, 0.5359721F * Width, 0.9662447F * Width}
-                Dim Gradient = SKShader.CreateSweepGradient(New SKPoint(X, Y), GradientColors, GradientWeights)
+                    With tbpaint
+                        .TextSize = FontSize / zoom
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = New SKColor(35, 109, 149, 255)
+                        .IsStroke = False
+                        .Typeface = BoldTypeFace
+                    End With
 
-                With bpaint
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Shader = Gradient
-                    .IsStroke = False
-                    .StrokeWidth = LineWidth / zoom
-                End With
+                    Dim GradientColors = {New SKColor(220, 240, 255, 230), New SKColor(140, 255, 190, 255), New SKColor(255, 92, 119, 255), New SKColor(0, 0, 0, 255)}
+                    Dim GradientWeights = {0.0F, 0.2044351F * Width, 0.5359721F * Width, 0.9662447F * Width}
+                    Dim Gradient = SKShader.CreateSweepGradient(New SKPoint(X, Y), GradientColors, GradientWeights)
 
-                With bpaint2
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = New SKColor(35, 109, 149, 230)
-                    .IsStroke = True
-                    .StrokeWidth = LineWidth / zoom
-                End With
+                    With bpaint
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Shader = Gradient
+                        .IsStroke = False
+                        .StrokeWidth = LineWidth / zoom
+                    End With
 
-                With spaint
-                    .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    .Color = SKColors.LightGray.WithAlpha(100)
-                    .IsStroke = False
-                End With
+                    With bpaint2
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = New SKColor(35, 109, 149, 230)
+                        .IsStroke = True
+                        .StrokeWidth = LineWidth / zoom
+                    End With
 
-            End If
+                    With spaint
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                        .Color = SKColors.LightGray.WithAlpha(100)
+                        .IsStroke = False
+                    End With
 
-            If Not Me.Owner Is Nothing Then
+                End If
 
-                If Me.Owner.GetFlowsheet IsNot Nothing Then
+                If Not Me.Owner Is Nothing Then
 
-                    Dim XD, YD As Single
+                    If Me.Owner.GetFlowsheet IsNot Nothing Then
 
-                    XD = X
-                    YD = Y
+                        Dim XD, YD As Single
 
-                    Dim SW = Owner.GetFlowsheet().GetFlowsheetSurfaceWidth() / zoom
-                    Dim SH = Owner.GetFlowsheet().GetFlowsheetSurfaceHeight() / zoom
+                        XD = X
+                        YD = Y
 
-                    'determinar comprimento das colunas e altura das linhas
+                        Dim SW = Owner.GetFlowsheet().GetFlowsheetSurfaceWidth() / zoom
+                        Dim SH = Owner.GetFlowsheet().GetFlowsheetSurfaceHeight() / zoom
 
-                    Dim heading1size, heading2size As SKSize
+                        'determinar comprimento das colunas e altura das linhas
 
-                    heading1size = MeasureString(Owner.GraphicObject.Tag.ToUpper, tpaint)
-                    heading2size = MeasureString(Owner.GetDisplayName(), tpaint)
+                        Dim heading1size, heading2size As SKSize
 
-                    Dim fs = Owner.GetFlowsheet
-                    Dim props As New List(Of String)
-                    Try
-                        If Owner.GetFlowsheet().DynamicMode Then
-                            props = New List(Of String)(fs.FlowsheetOptions.VisibleProperties(Owner.GetType.Name))
-                        Else
-                            props = New List(Of String)(fs.FlowsheetOptions.VisibleProperties(Owner.GetType.Name))
-                            props = props.Where(Function(p) Not Owner.IsDynamicProperty(p)).ToList()
-                        End If
-                    Catch ex As Exception
+                        heading1size = MeasureString(Owner.GraphicObject.Tag.ToUpper, tpaint)
+                        heading2size = MeasureString(Owner.GetDisplayName(), tpaint)
 
-                    End Try
+                        Dim fs = Owner.GetFlowsheet
+                        Dim props As New List(Of String)
+                        Try
+                            If Owner.GetFlowsheet().DynamicMode Then
+                                props = New List(Of String)(fs.FlowsheetOptions.VisibleProperties(Owner.GetType.Name))
+                            Else
+                                props = New List(Of String)(fs.FlowsheetOptions.VisibleProperties(Owner.GetType.Name))
+                                props = props.Where(Function(p) Not Owner.IsDynamicProperty(p)).ToList()
+                            End If
+                        Catch ex As Exception
 
-                    Dim col1 = DirectCast(Owner.ExtraProperties, IDictionary(Of String, Object))
-                    Dim col2 = DirectCast(Owner.ExtraPropertiesDescriptions, IDictionary(Of String, Object))
-                    Dim col3 = DirectCast(Owner.ExtraPropertiesUnitTypes, IDictionary(Of String, Object))
+                        End Try
 
-                    For Each p In col1
-                        If col2.ContainsKey(p.Key) And col3.ContainsKey(p.Key) Then
-                            If Flowsheet IsNot Nothing AndAlso Flowsheet.DynamicMode Then props.Add(p.Key)
-                        Else
-                            props.Add(p.Key)
-                        End If
-                    Next
+                        Dim col1 = DirectCast(Owner.ExtraProperties, IDictionary(Of String, Object))
+                        Dim col2 = DirectCast(Owner.ExtraPropertiesDescriptions, IDictionary(Of String, Object))
+                        Dim col3 = DirectCast(Owner.ExtraPropertiesUnitTypes, IDictionary(Of String, Object))
 
-                    If Owner.GraphicObject.ObjectType = Enums.GraphicObjects.ObjectType.CapeOpenUO Or
-                        Owner.GraphicObject.ObjectType = Enums.GraphicObjects.ObjectType.External Then
+                        For Each p In col1
+                            If col2.ContainsKey(p.Key) And col3.ContainsKey(p.Key) Then
+                                If Flowsheet IsNot Nothing AndAlso Flowsheet.DynamicMode Then props.Add(p.Key)
+                            Else
+                                props.Add(p.Key)
+                            End If
+                        Next
+
+                        If Owner.GraphicObject.ObjectType = Enums.GraphicObjects.ObjectType.CapeOpenUO Or
+                            Owner.GraphicObject.ObjectType = Enums.GraphicObjects.ObjectType.External Then
                             props = Owner.GetProperties(PropertyType.ALL).ToList()
                         End If
 
@@ -858,17 +860,21 @@ Namespace GraphicObjects.Tables
 
                 End If
 
-            tpaint.Dispose()
-            bpaint.Dispose()
-            bpaint2.Dispose()
-            spaint.Dispose()
-            tbpaint.Dispose()
+                tpaint.Dispose()
+                bpaint.Dispose()
+                bpaint2.Dispose()
+                spaint.Dispose()
+                tbpaint.Dispose()
 
-            tpaint = Nothing
-            bpaint = Nothing
-            bpaint2 = Nothing
-            spaint = Nothing
-            tbpaint = Nothing
+                tpaint = Nothing
+                bpaint = Nothing
+                bpaint2 = Nothing
+                spaint = Nothing
+                tbpaint = Nothing
+
+            Catch ex As Exception
+
+            End Try
 
 
         End Sub
