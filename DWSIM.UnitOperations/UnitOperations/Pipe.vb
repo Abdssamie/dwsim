@@ -628,29 +628,44 @@ Namespace UnitOperations
                                         If segmento.TipoSegmento = "Tubulaosimples" Or segmento.TipoSegmento = "" Or segmento.TipoSegmento = "Straight Tube Section" Or segmento.TipoSegmento = "Straight Tube" Or segmento.TipoSegmento = "Tubulação Simples" Then
                                             resv = fpp.CalculateDeltaP(.DI * 0.0254, .Comprimento / .Incrementos, .Elevacao / .Incrementos, Me.GetRugosity(.Material, segmento), Qvin * 24 * 3600, Qlin * 24 * 3600, eta_v * 1000, eta_l * 1000, rho_v, rho_l, tens)
                                         Else
-                                            segmento.Comprimento = 0.1 '10 cm default
-                                            segmento.Incrementos = 1 'only one increment
-                                            segmento.Elevacao = 0
-                                            resf = Me.Kfit(segmento.TipoSegmento)
-                                            If resf(1) = 1.0 Then
-                                                Dim L_eq As Double
-                                                L_eq = resf(0) * 0.0254 * .DI
-                                                resv = fpp.CalculateDeltaP(.DI * 0.0254, L_eq, 0, Me.GetRugosity(.Material, segmento), Qvin * 24 * 3600, Qlin * 24 * 3600, eta_v * 1000, eta_l * 1000, rho_v, rho_l, tens)
-                                            Else
-                                                mu_mix = (Qlin + Qsin) / (Qvin + Qlin + Qsin) * eta_l + Qvin / (Qvin + Qlin + Qsin) * eta_v
-                                                rho_mix = (Qlin + Qsin) / (Qvin + Qlin + Qsin) * rho_l + Qvin / (Qvin + Qlin + Qsin) * rho_v
-                                                vel_mix = (Qlin + Qvin) / ((.DI * 0.0254) ^ 2 * Math.PI / 4)
-                                                Re_mix = fpp.NRe(rho_mix, vel_mix, .DI * 0.0254, mu_mix)
-                                                Dim k = Me.GetRugosity(.Material, segmento)
-                                                f_mix = fpp.FrictionFactor(Re_mix, .DI * 0.0254, k)
+                                            If segmento.TipoSegmento.Contains("[27]") Then
+                                                'fixed deltaP
+                                                segmento.Comprimento = 0.1 '10 cm default
+                                                segmento.Incrementos = 1 'only one increment
+                                                segmento.Elevacao = 0
                                                 dph = 0
-                                                dpf = resf(0) * ((Qlin + Qsin) / (Qvin + Qlin + Qsin) * rho_l + Qvin / (Qvin + Qlin + Qsin) * rho_v) * (results.LiqVel.GetValueOrDefault + results.VapVel.GetValueOrDefault) ^ 2 / 2
+                                                dpf = segmento.DI.ConvertToSI(FlowSheet.FlowsheetOptions.SelectedUnitSystem.deltaP)
                                                 dpt = dpf
                                                 resv(0) = ""
                                                 resv(1) = (Qlin + Qsin) / (Qvin + Qlin + Qsin)
                                                 resv(2) = dpf
                                                 resv(3) = 0
                                                 resv(4) = dpt
+                                            Else
+                                                segmento.Comprimento = 0.1 '10 cm default
+                                                segmento.Incrementos = 1 'only one increment
+                                                segmento.Elevacao = 0
+                                                resf = Me.Kfit(segmento.TipoSegmento)
+                                                If resf(1) = 1.0 Then
+                                                    Dim L_eq As Double
+                                                    L_eq = resf(0) * 0.0254 * .DI
+                                                    resv = fpp.CalculateDeltaP(.DI * 0.0254, L_eq, 0, Me.GetRugosity(.Material, segmento), Qvin * 24 * 3600, Qlin * 24 * 3600, eta_v * 1000, eta_l * 1000, rho_v, rho_l, tens)
+                                                Else
+                                                    mu_mix = (Qlin + Qsin) / (Qvin + Qlin + Qsin) * eta_l + Qvin / (Qvin + Qlin + Qsin) * eta_v
+                                                    rho_mix = (Qlin + Qsin) / (Qvin + Qlin + Qsin) * rho_l + Qvin / (Qvin + Qlin + Qsin) * rho_v
+                                                    vel_mix = (Qlin + Qvin) / ((.DI * 0.0254) ^ 2 * Math.PI / 4)
+                                                    Re_mix = fpp.NRe(rho_mix, vel_mix, .DI * 0.0254, mu_mix)
+                                                    Dim k = Me.GetRugosity(.Material, segmento)
+                                                    f_mix = fpp.FrictionFactor(Re_mix, .DI * 0.0254, k)
+                                                    dph = 0
+                                                    dpf = resf(0) * ((Qlin + Qsin) / (Qvin + Qlin + Qsin) * rho_l + Qvin / (Qvin + Qlin + Qsin) * rho_v) * (results.LiqVel.GetValueOrDefault + results.VapVel.GetValueOrDefault) ^ 2 / 2
+                                                    dpt = dpf
+                                                    resv(0) = ""
+                                                    resv(1) = (Qlin + Qsin) / (Qvin + Qlin + Qsin)
+                                                    resv(2) = dpf
+                                                    resv(3) = 0
+                                                    resv(4) = dpt
+                                                End If
                                             End If
                                         End If
 
@@ -1129,7 +1144,7 @@ Namespace UnitOperations
 
             'Curva Normal 90°;30,00;1;
             If name = 0 Then
-                tmp(0) = 30
+                tmp(0) = 14
                 tmp(1) = 1
             End If
             'Curva Normal 45°;16,00;1;
@@ -1261,6 +1276,11 @@ Namespace UnitOperations
             If name = 26 Then
                 tmp(0) = 1
                 tmp(1) = 0
+            End If
+            'Threaded/Screwed 90° Elbow
+            If name = 28 Then
+                tmp(0) = 30
+                tmp(1) = 1
             End If
 
             Kfit = tmp

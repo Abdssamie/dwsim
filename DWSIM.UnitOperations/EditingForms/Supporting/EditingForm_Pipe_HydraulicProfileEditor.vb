@@ -46,7 +46,7 @@ Imports System.Drawing
     Dim l As Integer
     Dim linha_atual As String() = New String() {}
 
-    Public Shared ACD(27, 2) As String
+    Public Shared ACD(28, 2) As String
     Dim DNom(218, 6) As String
 
     Dim ThisExe As Reflection.Assembly = Reflection.Assembly.GetExecutingAssembly
@@ -1123,8 +1123,10 @@ Imports System.Drawing
                     v7 = 0.0
                     v8 = 0.0
                 End If
-                v9 = Me.GridMalha.Rows(10).Cells(column.Name).Value.ToString.ParseExpressionToDouble
-                Dim ps As New PipeSection(v1, v2, v3, v4, v5, cv.Convert(Me.Units.distance, "m", v6), cv.Convert(Me.Units.distance, "m", v7), cv.Convert(Me.Units.diameter, "in", v8), cv.Convert(Me.Units.diameter, "in", v9))
+                v9 = Me.GridMalha.Rows(10).Cells(column.Name).Value.ToString.ParseExpressionToDouble()
+                Dim v9c = If(v2.ToString().Contains("[27]"), cv.ConvertToSI(Units.deltaP, v9), cv.Convert(Me.Units.diameter, "in", v9))
+                Dim ps As New PipeSection(v1, v2, v3, v4, v5, cv.Convert(Me.Units.distance, "m", v6), cv.Convert(Me.Units.distance, "m", v7), cv.Convert(Me.Units.diameter, "in", v8), v9c)
+
                 If ps.Material = "UserDefined" Then
                     ps.PipeWallRugosity = cv.ConvertToSI(Units.distance, Me.GridMalha.Rows(5).Cells(column.Name).Value.ToString.ParseExpressionToDouble())
                     ps.PipeWallThermalConductivityExpression = Me.GridMalha.Rows(6).Cells(column.Name).Value
@@ -1243,7 +1245,11 @@ Imports System.Drawing
             Me.GridMalha.Rows(7).Cells(psec.Indice - 1).Value = Format(cv.Convert("m", Me.Units.distance, psec.Comprimento), NumberFormat)
             Me.GridMalha.Rows(8).Cells(psec.Indice - 1).Value = Format(cv.Convert("m", Me.Units.distance, psec.Elevacao), NumberFormat)
             Me.GridMalha.Rows(9).Cells(psec.Indice - 1).Value = Format(cv.Convert("in", Me.Units.diameter, psec.DE), NumberFormat)
-            Me.GridMalha.Rows(10).Cells(psec.Indice - 1).Value = Format(cv.Convert("in", Me.Units.diameter, psec.DI), NumberFormat)
+            If psec.TipoSegmento.Contains("[27]") Then
+                Me.GridMalha.Rows(10).Cells(psec.Indice - 1).Value = Format(psec.DI.ConvertFromSI(Units.deltaP), NumberFormat)
+            Else
+                Me.GridMalha.Rows(10).Cells(psec.Indice - 1).Value = Format(cv.Convert("in", Me.Units.diameter, psec.DI), NumberFormat)
+            End If
             Me.GridMalha.Rows(9).Cells(psec.Indice - 1).ToolTipText = PipeOp.FlowSheet.GetTranslatedString("StandardPipeSizes")
             Me.GridMalha.Rows(10).Cells(psec.Indice - 1).ToolTipText = PipeOp.FlowSheet.GetTranslatedString("StandardPipeSizes")
             If psec.TipoSegmento <> "Tubulaosimples" Then
@@ -1431,7 +1437,12 @@ Imports System.Drawing
                 ToolStripLabel2.ForeColor = Color.DarkOrange
 
                 If e.RowIndex = 4 Or e.RowIndex = 1 Then
-                    If e.RowIndex = 1 Then GridMalha_CurrentCellChanged(sender, e)
+                    If e.RowIndex = 1 Then
+                        GridMalha_CurrentCellChanged(sender, e)
+                        If loaded And GridMalha.CurrentCell.Value.ToString().Contains("[27]") Then
+                            MessageBox.Show(String.Format("Fixed pressure drops must be entered in the internal diameter field using the current units ({0}).", Units.deltaP), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+                    End If
                     Dim material = GridMalha.Rows(4).Cells(e.ColumnIndex).Value.ToString()
                     If material IsNot Nothing Then
                         If material.Contains("User") Or material.Contains("Usu") Then
