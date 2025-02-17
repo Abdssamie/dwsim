@@ -2863,7 +2863,7 @@ Imports DWSIM.ExtensionMethods
     Sub AddGraphicObjects(data As List(Of XElement), excs As Concurrent.ConcurrentBag(Of Exception),
                       Optional ByVal pkey As String = "", Optional ByVal shift As Integer = 0, Optional ByVal reconnectinlets As Boolean = False)
 
-        Dim objcount As Integer, searchtext As String
+        Dim objcount As Integer
 
         For Each xel As XElement In data
             Try
@@ -2889,9 +2889,8 @@ Imports DWSIM.ExtensionMethods
                     obj.X += shift
                     obj.Y += shift
                     If pkey <> "" Then
-                        searchtext = obj.Tag.Split("("c)(0).Trim()
                         objcount = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Select go Where go.Tag.Equals(obj.Tag)).Count
-                        If objcount > 0 Then obj.Tag = searchtext & " (" & (objcount + 1).ToString & ")"
+                        If objcount > 0 Then obj.Tag += "_copy"
                     End If
                     If TypeOf obj Is TableGraphic Then
                         DirectCast(obj, TableGraphic).Flowsheet = Me
