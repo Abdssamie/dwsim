@@ -61,7 +61,7 @@ Public Class MaterialStreamPanel
             .SetCols(2 + nms)
             .SetRows(props.Count + 1)
             .SetScale(Settings.DpiScale)
-            .SetColumnsWidth(2, .ColumnCount, 100)
+            .SetColumnsWidth(2, .ColumnCount, 150)
             .SetRangeStyles(0, 1, .RowCount, .ColumnCount, New WorksheetRangeStyle With {
                 .Flag = PlainStyleFlag.HorizontalAlign,
                 .HAlign = ReoGridHorAlign.Center
@@ -99,12 +99,12 @@ Public Class MaterialStreamPanel
             })
             .Cells(0, 0).Data = "Property / Streams"
             .Cells(0, 1).Data = "Units"
-            .SetRangeDataFormat(1, 2, .RowCount - 1, .ColumnCount, CellDataFormatFlag.Number,
-            New NumberDataFormatter.NumberFormatArgs With {
-                .DecimalPlaces = 4,
-                .UseSeparator = True,
-                .NegativeStyle = NumberDataFormatter.NumberNegativeStyle.Minus
-            })
+            '.SetRangeDataFormat(1, 2, .RowCount - 1, .ColumnCount, CellDataFormatFlag.Number,
+            'New NumberDataFormatter.NumberFormatArgs With {
+            '    .DecimalPlaces = 4,
+            '    .UseSeparator = True,
+            '    .NegativeStyle = NumberDataFormatter.NumberNegativeStyle.Minus
+            '})
             .SetRangeStyles(0, 1, 1, .ColumnCount, New WorksheetRangeStyle With {
                 .Flag = PlainStyleFlag.HorizontalAlign,
                 .HAlign = ReoGridHorAlign.Center
