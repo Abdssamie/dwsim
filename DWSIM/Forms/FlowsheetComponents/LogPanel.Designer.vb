@@ -33,7 +33,7 @@ Partial Class LogPanel
         Me.Info = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.LimparListaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CopiarInformaçõesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CopiarInformacoesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.dckMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.FloatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockLeftToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -138,7 +138,7 @@ Partial Class LogPanel
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LimparListaToolStripMenuItem, Me.CopiarInformaçõesToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LimparListaToolStripMenuItem, Me.CopiarInformacoesToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
         '
@@ -148,11 +148,11 @@ Partial Class LogPanel
         Me.LimparListaToolStripMenuItem.Name = "LimparListaToolStripMenuItem"
         resources.ApplyResources(Me.LimparListaToolStripMenuItem, "LimparListaToolStripMenuItem")
         '
-        'CopiarInformaçõesToolStripMenuItem
+        'CopiarInformacoesToolStripMenuItem
         '
-        Me.CopiarInformaçõesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.copy
-        Me.CopiarInformaçõesToolStripMenuItem.Name = "CopiarInformaçõesToolStripMenuItem"
-        resources.ApplyResources(Me.CopiarInformaçõesToolStripMenuItem, "CopiarInformaçõesToolStripMenuItem")
+        Me.CopiarInformacoesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.copy
+        Me.CopiarInformacoesToolStripMenuItem.Name = "CopiarInformacoesToolStripMenuItem"
+        resources.ApplyResources(Me.CopiarInformacoesToolStripMenuItem, "CopiarInformacoesToolStripMenuItem")
         '
         'dckMenu
         '
@@ -245,5 +245,5 @@ Partial Class LogPanel
     Friend WithEvents Tipo As DataGridViewTextBoxColumn
     Friend WithEvents Mensagem As DataGridViewTextBoxColumn
     Friend WithEvents Info As DataGridViewButtonColumn
-    Friend WithEvents CopiarInformaçõesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CopiarInformacoesToolStripMenuItem As ToolStripMenuItem
 End Class
