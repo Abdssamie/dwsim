@@ -43,7 +43,7 @@ namespace DWSIM.UI.Forms.Forms
             Minimizable = false;
 
             int w = (int)(sf * 400);
-            int h = (int)(sf * 160);
+            int h = (int)(sf * 200);
 
             Size = new Size(w, h);
 
