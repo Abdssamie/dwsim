@@ -245,8 +245,7 @@ Namespace Reactors
                 End Select
             End If
 
-            j = 0
-            For Each s As String In N00.Keys
+            For Each s As String In C0.Keys
                 If y(j) < 0.0 Then
                     C(s) = 0.0
                 Else
@@ -946,10 +945,39 @@ Namespace Reactors
                 Rxi.Clear()
 
                 'loop through reactions
+
                 For Each ar In Me.ReactionsSequence
+
+                    T = ims.Phases(0).Properties.temperature.GetValueOrDefault
+                    P = ims.Phases(0).Properties.pressure.GetValueOrDefault
+
+                    Q = ims.Phases(0).Properties.volumetric_flow.GetValueOrDefault
+
+                    If Me.Reactions.Count > 0 Then
+                        Select Case FlowSheet.Reactions(Me.Reactions(0)).ReactionPhase
+                            Case ReactionPhase.Vapor
+                                Qf = ims.Phases(2).Properties.volumetric_flow.GetValueOrDefault()
+                            Case ReactionPhase.Liquid
+                                Qf = ims.Phases(1).Properties.volumetric_flow.GetValueOrDefault()
+                            Case ReactionPhase.Mixture
+                                Qf = ims.Phases(0).Properties.volumetric_flow.GetValueOrDefault()
+                            Case ReactionPhase.Vapor_Solid
+                                Qf = ims.Phases(2).Properties.volumetric_flow.GetValueOrDefault() +
+                                ims.Phases(7).Properties.volumetric_flow.GetValueOrDefault()
+                            Case ReactionPhase.Liquid_Solid
+                                Qf = ims.Phases(1).Properties.volumetric_flow.GetValueOrDefault() +
+                                ims.Phases(7).Properties.volumetric_flow.GetValueOrDefault()
+                        End Select
+                    End If
 
                     i = 0
                     DHr = 0
+
+                    N0.Clear()
+                    N.Clear()
+                    Nnr.Clear()
+                    C.Clear()
+                    C0.Clear()
 
                     Do
 
@@ -983,14 +1011,19 @@ Namespace Reactors
                             If Not N0.ContainsKey(sb.CompName) Then
                                 N0.Add(sb.CompName, m0)
                                 Nnr.Add(sb.CompName, m0nr)
-                                N00.Add(sb.CompName, N0(sb.CompName))
                                 N.Add(sb.CompName, N0(sb.CompName))
                                 C0.Add(sb.CompName, N0(sb.CompName) / Qf)
+                                C.Add(sb.CompName, N0(sb.CompName) / Qf)
                             Else
                                 N0(sb.CompName) = m0
                                 Nnr(sb.CompName) = m0nr
                                 N(sb.CompName) = N0(sb.CompName)
                                 C0(sb.CompName) = N0(sb.CompName) / Qf
+                                C(sb.CompName) = N0(sb.CompName) / Qf
+                            End If
+
+                            If Not N00.ContainsKey(sb.CompName) Then
+                                N00.Add(sb.CompName, N0(sb.CompName))
                             End If
 
                         Next
@@ -1184,7 +1217,7 @@ Namespace Reactors
                         Loop Until i = ar.Count
 
                         i = 0
-                        For Each sb As String In Me.ComponentConversions.Keys
+                        For Each sb As String In C.Keys
                             N(sb) = vc(i)
                             i += 1
                         Next
@@ -1458,6 +1491,8 @@ Namespace Reactors
                 DHRi.Clear()
                 DHr = 0.0#
 
+                Dim feed = GetInletMaterialStream(0)
+
                 For Each ar In Me.ReactionsSequence
 
                     i = 0
@@ -1476,7 +1511,9 @@ Namespace Reactors
                         Dim f = Abs(Rxi(rxn.ID)) / totalrxi
                         If Double.IsNaN(f) Or Double.IsInfinity(f) Then f = 1.0#
 
-                        RxiT.Add(rxn.ID, (N(rxn.BaseReactant) - N00(rxn.BaseReactant)) / rxn.Components(rxn.BaseReactant).StoichCoeff / 1000 * f)
+                        RxiT.Add(rxn.ID, (ims.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault() -
+                                 feed.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault()) /
+                                 rxn.Components(rxn.BaseReactant).StoichCoeff / 1000 * f)
                         DHRi.Add(rxn.ID, rxn.ReactionHeat * RxiT(rxn.ID))
 
                         i += 1
@@ -1534,8 +1571,11 @@ Namespace Reactors
 
                 ' comp. conversions
                 For Each sb As Compound In ims.Phases(0).Compounds.Values
-                    If Me.ComponentConversions.ContainsKey(sb.Name) AndAlso N00(sb.Name) > 0.0000000001 Then
-                        Me.ComponentConversions(sb.Name) = Abs(N00(sb.Name) - N(sb.Name)) / N00(sb.Name)
+                    If Me.ComponentConversions.ContainsKey(sb.Name) AndAlso
+                        feed.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault() > 0.0000000001 Then
+                        Me.ComponentConversions(sb.Name) = Abs(feed.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault() -
+                                                               ims.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault()) /
+                                                               feed.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault()
                     End If
                 Next
 
