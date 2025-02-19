@@ -760,6 +760,15 @@ Public Class FormMain
                     Me.FileTSMI.DropDownItems.Insert(tsindex, tsmi)
                     Me.dropdownlist.Add(Me.FileTSMI.DropDownItems.Count - 2)
                     AddHandler tsmi.Click, AddressOf Me.OpenRecent_click
+                ElseIf str.StartsWith("//Simulate 365 Dashboard") Then
+                    Dim tsmi As New ToolStripMenuItem
+                    With tsmi
+                        .Text = Path.GetFileName(str)
+                        .Tag = str
+                        .DisplayStyle = ToolStripItemDisplayStyle.Text
+                    End With
+                    Me.FileTSMI.DropDownItems.Insert(tsindex, tsmi)
+                    Me.dropdownlist.Add(Me.FileTSMI.DropDownItems.Count - 2)
                 Else
                     toremove.Add(str)
                 End If
@@ -2870,7 +2879,12 @@ Public Class FormMain
             Me.Invalidate()
             Application.DoEvents()
 
-            If TypeOf handler Is SharedClassesCSharp.FilePicker.Windows.WindowsFile Then
+            If simulationfilename.StartsWith("//Simulate 365 Dashboard") Then
+                If Not My.Settings.MostRecentFiles.Contains(simulationfilename) And Path.GetExtension(simulationfilename).ToLower <> ".dwbcs" Then
+                    My.Settings.MostRecentFiles.Add(simulationfilename)
+                    Me.UpdateMRUList()
+                End If
+            ElseIf TypeOf handler Is WindowsFile Then
                 Dim mypath As String = simulationfilename
                 If mypath = "" Then mypath = handler.FullPath
                 If Not My.Settings.MostRecentFiles.Contains(mypath) And IO.Path.GetExtension(mypath).ToLower <> ".dwbcs" Then
@@ -3951,7 +3965,7 @@ Public Class FormMain
         End Using
     End Function
 
-    Function LoadAndExtractXMLZIP(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
+    Function LoadAndExtractXMLZIP(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal forcommandline As Boolean = False, Optional fullpath As String = "") As Interfaces.IFlowsheet
 
         Dim pathtosave As String = Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, Guid.NewGuid().ToString())
 
@@ -4003,8 +4017,8 @@ Label_00CC:
                     Loop
                 End Using
             End Using
-            Dim fs As Interfaces.IFlowsheet
-            fs = LoadXML(New SharedClassesCSharp.FilePicker.Windows.WindowsFile(fullname), ProgressFeedBack, handler.FullPath, forcommandline)
+            Dim fs As IFlowsheet
+            fs = LoadXML(New WindowsFile(fullname), ProgressFeedBack, If(fullpath <> "", fullpath, handler.FullPath), forcommandline)
             fs.FlowsheetOptions.VirtualFile = handler
             fs.FilePath = handler.FullPath
             fs.Options.FilePath = handler.FullPath
@@ -4135,7 +4149,7 @@ Label_00CC:
 
     End Sub
 
-    Sub LoadFile(handler As IVirtualFile)
+    Sub LoadFile(handler As IVirtualFile, Optional fullpath As String = "")
 
         Me.WelcomePanel.Visible = False
         PainelDeBoasvindasToolStripMenuItem.Checked = False
@@ -4144,7 +4158,11 @@ Label_00CC:
 
         Dim floading As New FormLoadingSimulation
 
-        floading.Text = DWSIM.App.GetLocalString("Loading") + " '" + Path.GetFileNameWithoutExtension(handler.FullPath) + "'..."
+        If fullpath <> "" Then
+            floading.Text = DWSIM.App.GetLocalString("Loading") + " '" + Path.GetFileNameWithoutExtension(fullpath) + "', please wait..."
+        Else
+            floading.Text = DWSIM.App.GetLocalString("Loading") + " '" + Path.GetFileNameWithoutExtension(handler.FullPath) + "', please wait..."
+        End If
         floading.Show()
 
         Application.DoEvents()
@@ -4167,7 +4185,7 @@ Label_00CC:
             Case ".dwxmz"
                 Me.LoadAndExtractXMLZIP(handler, Sub(x)
                                                      Me.Invoke(Sub() floading.ProgressBar1.Value = x)
-                                                 End Sub, False)
+                                                 End Sub, False, fullpath)
             Case ".xml"
                 Me.LoadMobileXML(handler)
             Case ".dwcsd"
