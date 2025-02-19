@@ -19,7 +19,8 @@
 ''' <summary>
 ''' This interface defines the basic properties of a flash algorithm, including an instance of the class which contains its current settings.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IFlashAlgorithm
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IFlashAlgorithm
 
     Property FlashSettings As Dictionary(Of Enums.FlashSetting, String)
 
@@ -46,7 +47,8 @@ End Interface
 ''' <summary>
 ''' This interface defines the parameters of a flash calculation result.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IFlashCalculationResult
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IFlashCalculationResult
 
     Property BaseMoleAmount As Double
     Property Kvalues As List(Of Double)

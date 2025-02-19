@@ -21,7 +21,8 @@ Imports DWSIM.Interfaces.Enums
 ''' <summary>
 ''' This interface defines the basic properties of Simulation Objects (Unit Operations, Material Streams and Energy Streams)
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface ISimulationObject
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface ISimulationObject
 
     Property DynamicsSpec As Enums.Dynamics.DynamicsSpecType
 

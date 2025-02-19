@@ -16,7 +16,8 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IPhaseProperties
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IPhaseProperties
 
     Property osmoticCoefficient As Nullable(Of Double)
     Property freezingPointDepression As Nullable(Of Double)

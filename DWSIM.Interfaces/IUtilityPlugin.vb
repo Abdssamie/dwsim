@@ -20,7 +20,8 @@
 '27/09/2010 - added new property - Display Mode 
 '20/08/2010 - initial release
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IUtilityPlugin
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IUtilityPlugin
 
     ReadOnly Property Name() As String
     ReadOnly Property Description() As String
@@ -44,7 +45,8 @@
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IUtilityPlugin2
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IUtilityPlugin2
 
     Inherits IUtilityPlugin
 
@@ -52,7 +54,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IUtilityPlugin5
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IUtilityPlugin5
 
     ReadOnly Property Name() As String
     ReadOnly Property Description() As String
@@ -77,7 +80,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IUtilityPlugin6
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IUtilityPlugin6
 
     Inherits IUtilityPlugin5
 

@@ -19,7 +19,8 @@
 ''' <summary>
 ''' This is the interface which defines the basic properties of a Material Stream.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IMaterialStream
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IMaterialStream
 
     Property ForcePhase As Enums.ForcedPhase
 

@@ -20,7 +20,8 @@
 ''' This interface defines the basic Property Package funcionality to be exposed for communication between the various DWSIM components.
 ''' The actual Property Package class exposes much more funcionality through the implementation of other interfaces, including CAPE-OPEN ones.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IPropertyPackage
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IPropertyPackage
 
     Property UniqueID As String
 
@@ -79,7 +80,8 @@
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IPhaseEnvelopeOptions
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IPhaseEnvelopeOptions
 
     Property QualityLine As Boolean
     Property QualityValue As Double

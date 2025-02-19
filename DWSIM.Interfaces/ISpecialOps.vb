@@ -18,7 +18,8 @@
 
 Imports DWSIM.Interfaces.Enums
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IRecycle
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IRecycle
 
     ReadOnly Property Errors As Dictionary(Of String, Double)
     ReadOnly Property Values As Dictionary(Of String, Double)
@@ -29,7 +30,8 @@ Imports DWSIM.Interfaces.Enums
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IRecycleConvergenceHistory
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IRecycleConvergenceHistory
 
     Property Temperatura As Double
     Property Pressao As Double
@@ -55,7 +57,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface ISpec
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface ISpec
 
     Property SpecCalculationMode As SpecCalcMode2
 
@@ -63,7 +66,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IAdjust
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IAdjust
 
     Property Tolerance As Double
 
@@ -81,7 +85,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface ISpecialOpObjectInfo
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface ISpecialOpObjectInfo
 
     Property Type As String
     Property Name As String
@@ -92,7 +97,8 @@ End Interface
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IControllableObject
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IControllableObject
 
     Property ControlPanel As Object
 

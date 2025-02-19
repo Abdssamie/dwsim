@@ -21,7 +21,8 @@ Imports DWSIM.Interfaces.Enums.GraphicObjects
 ''' <summary>
 ''' This interface defines the basic properties for a graphical representation of an object in the flowsheet PFD.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IExternalUnitOperation
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IExternalUnitOperation
 
     Function ReturnInstance(typename As String) As Object
 

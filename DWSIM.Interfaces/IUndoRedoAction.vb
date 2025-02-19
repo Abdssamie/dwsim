@@ -16,7 +16,8 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IUndoRedoAction
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IUndoRedoAction
 
 Property ID As String
     Property Name As String

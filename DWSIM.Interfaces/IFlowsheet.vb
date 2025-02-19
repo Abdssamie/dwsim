@@ -20,7 +20,8 @@
 ''' The IFlowsheet interface is the main interface which should be implemented by the Flowsheet class. 
 ''' It provides direct access to the various flowsheet components and helper functions to manipulate objects.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IFlowsheet
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IFlowsheet
 
     Enum MessageType
         Information
@@ -411,7 +412,8 @@ End Interface
 ''' <summary>
 ''' This is an interface which provides direct access to collections of flowsheet objects.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IFlowsheetBag
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IFlowsheetBag
 
     Property SimulationObjects As Dictionary(Of String, ISimulationObject)
 
@@ -450,7 +452,8 @@ End Interface
 ''' <summary>
 ''' This is an interface which defines helper functions to a Flowsheet GUI implementation.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IFlowsheetGUI
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IFlowsheetGUI
 
     Sub ShowMessage(ByVal text As String, ByVal mtype As IFlowsheet.MessageType, Optional ByVal exceptionID As String = "")
 
@@ -473,13 +476,15 @@ End Interface
 ''' <summary>
 ''' This interface defines the calculation queue to be used by the flowsheet solver.
 ''' </summary>
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface IFlowsheetCalculationQueue
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface IFlowsheetCalculationQueue
 
     Property CalculationQueue As Queue(Of ICalculationArgs)
 
 End Interface
 
-<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)> Public Interface ICalculationArgs
+<InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
+Public Interface ICalculationArgs
 
     Property Sender As String
     Property Calculated As Boolean
