@@ -4020,8 +4020,13 @@ Label_00CC:
             Dim fs As IFlowsheet
             fs = LoadXML(New WindowsFile(fullname), ProgressFeedBack, If(fullpath <> "", fullpath, handler.FullPath), forcommandline)
             fs.FlowsheetOptions.VirtualFile = handler
-            fs.FilePath = handler.FullPath
-            fs.Options.FilePath = handler.FullPath
+            If fullpath <> "" Then
+                fs.FilePath = fullpath
+                fs.Options.FilePath = fullpath
+            Else
+                fs.FilePath = handler.FullPath
+                fs.Options.FilePath = handler.FullPath
+            End If
             DirectCast(fs, FormFlowsheet).UpdateFormText()
             If File.Exists(dbfile) Then
                 Try
