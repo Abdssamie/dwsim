@@ -10,9 +10,7 @@ Public Class GraphicObjectControlPanelModeEditors
     Private Shared Function CreateInputForm() As Dialog
 
         Dim tb As New TextBox With {.Width = 100}
-        Dim f As New Dialog
-        f.Content = tb
-        f.AutoSize = True
+        Dim f = CreateDialog(tb, "", 200, 60)
         Return f
 
     End Function
