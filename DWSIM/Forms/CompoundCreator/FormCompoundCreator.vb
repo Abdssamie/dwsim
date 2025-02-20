@@ -1828,7 +1828,9 @@ Public Class FormCompoundCreator
     End Sub
 
 
-    Private Sub GridExpData_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpDataRoS.KeyDown, GridExpDataCpS.KeyDown, GridExpDataPVAP.KeyDown, GridExpDataLIQVISC.KeyDown, GridExpDataLIQDENS.KeyDown, GridExpDataCPLiquid.KeyDown, GridExpDataCPIG.KeyDown
+    Private Sub GridExpData_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpDataRoS.KeyDown,
+        GridExpDataCpS.KeyDown, GridExpDataPVAP.KeyDown, GridExpDataLIQVISC.KeyDown, GridExpDataLIQDENS.KeyDown,
+        GridExpDataCPLiquid.KeyDown, GridExpDataCPIG.KeyDown, GridExpDataTCLiquid.KeyDown
 
         If e.KeyCode = Keys.Delete And e.Modifiers = Keys.Shift Then
             Dim toremove As New ArrayList
@@ -2895,7 +2897,8 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub GridExpData_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridExpDataPVAP.CellValueChanged,
-                GridExpDataLIQVISC.CellValueChanged, GridExpDataLIQDENS.CellValueChanged, GridExpDataRoS.CellValueChanged, GridExpDataCpS.CellValueChanged, GridExpDataCPLiquid.CellValueChanged, GridExpDataCPIG.CellValueChanged
+                GridExpDataLIQVISC.CellValueChanged, GridExpDataLIQDENS.CellValueChanged, GridExpDataRoS.CellValueChanged, GridExpDataCpS.CellValueChanged, GridExpDataCPLiquid.CellValueChanged,
+                GridExpDataCPIG.CellValueChanged, GridExpDataTCLiquid.CellValueChanged
         If loaded Then
             Try
                 StoreCPIGData()
@@ -2905,6 +2908,7 @@ Public Class FormCompoundCreator
                 StorePVAPData()
                 StoreSolidCpData()
                 StoreSolidDensData()
+                StoreLiqTCData()
                 CheckDataStatus()
             Catch ex As Exception
             End Try
@@ -3514,6 +3518,10 @@ Public Class FormCompoundCreator
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub GridExpDataTCLiquid_CellValidating(sender As Object, e As DataGridViewCellValidatingEventArgs) Handles GridExpDataTCLiquid.CellValidating
+        DirectCast(sender, DataGridView).ValidateCellForDouble(e)
     End Sub
 
 End Class
