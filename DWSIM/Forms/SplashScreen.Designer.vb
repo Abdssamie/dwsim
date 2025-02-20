@@ -49,7 +49,7 @@ Partial Class SplashScreen
         '
         resources.ApplyResources(Me.lblCopyright, "lblCopyright")
         Me.lblCopyright.BackColor = System.Drawing.Color.Transparent
-        Me.lblCopyright.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(166, Byte), Integer))
+        Me.lblCopyright.ForeColor = System.Drawing.Color.White
         Me.lblCopyright.Name = "lblCopyright"
         '
         'lblPatrons
@@ -63,7 +63,7 @@ Partial Class SplashScreen
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(166, Byte), Integer))
+        Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Name = "Label1"
         '
         'SplashScreen

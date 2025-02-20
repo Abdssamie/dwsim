@@ -43,7 +43,7 @@ Public NotInheritable Class SplashScreen
 
         lblPatrons.Text += SharedClasses.Patrons.GetList()
 
-        bg = My.Resources.DWSIM_splash_v8
+        bg = My.Resources.DWSIM_splash_v9
 
     End Sub
 
