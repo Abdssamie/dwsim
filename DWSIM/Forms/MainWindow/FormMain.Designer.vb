@@ -49,6 +49,7 @@ Partial Class FormMain
         Me.tsmiSamples = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsFileSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.PreferenciasDoDWSIMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolsTSMI = New System.Windows.Forms.ToolStripMenuItem()
@@ -79,6 +80,7 @@ Partial Class FormMain
         Me.DIscordChannelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmiFreeProTrial = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiProUserGuide = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.NewToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -121,7 +123,6 @@ Partial Class FormMain
         Me.tsbdonate2 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsbQuickQuestion = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.tsmiProUserGuide = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SettingsPanel.SuspendLayout()
@@ -141,7 +142,7 @@ Partial Class FormMain
         '
         'FileTSMI
         '
-        Me.FileTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.tsmiNewCompoundCreatorStudy, Me.tsmiNewCompoundWizard, Me.NovoEstudoDeRegressaoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.AbrirDoDashboardToolStripMenuItem, Me.toolStripSeparator, Me.SaveToDashboardTSMI, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.tsmiFOSSEE, Me.tsmiSamples, Me.tsFileSeparator, Me.ExitToolStripMenuItem})
+        Me.FileTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.tsmiNewCompoundCreatorStudy, Me.tsmiNewCompoundWizard, Me.NovoEstudoDeRegressaoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.AbrirDoDashboardToolStripMenuItem, Me.toolStripSeparator, Me.SaveToDashboardTSMI, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.tsmiFOSSEE, Me.tsmiSamples, Me.tsFileSeparator, Me.ToolStripMenuItem1, Me.ExitToolStripMenuItem})
         Me.FileTSMI.Name = "FileTSMI"
         Me.FileTSMI.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         resources.ApplyResources(Me.FileTSMI, "FileTSMI")
@@ -249,6 +250,12 @@ Partial Class FormMain
         Me.ExitToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.undo_16
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
         resources.ApplyResources(Me.ExitToolStripMenuItem, "ExitToolStripMenuItem")
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.home_30px
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
         '
         'EditTSMI
         '
@@ -439,6 +446,12 @@ Partial Class FormMain
         Me.tsmiFreeProTrial.Image = Global.DWSIM.My.Resources.Resources.Icon1281
         Me.tsmiFreeProTrial.Name = "tsmiFreeProTrial"
         resources.ApplyResources(Me.tsmiFreeProTrial, "tsmiFreeProTrial")
+        '
+        'tsmiProUserGuide
+        '
+        Me.tsmiProUserGuide.Image = Global.DWSIM.My.Resources.Resources.user_manual_80px
+        Me.tsmiProUserGuide.Name = "tsmiProUserGuide"
+        resources.ApplyResources(Me.tsmiProUserGuide, "tsmiProUserGuide")
         '
         'ToolStrip1
         '
@@ -694,12 +707,6 @@ Partial Class FormMain
         resources.ApplyResources(Me.tsbQuickQuestion, "tsbQuickQuestion")
         Me.tsbQuickQuestion.Name = "tsbQuickQuestion"
         Me.tsbQuickQuestion.ShowDropDownArrow = False
-        '
-        'tsmiProUserGuide
-        '
-        Me.tsmiProUserGuide.Image = Global.DWSIM.My.Resources.Resources.user_manual_80px
-        Me.tsmiProUserGuide.Name = "tsmiProUserGuide"
-        resources.ApplyResources(Me.tsmiProUserGuide, "tsmiProUserGuide")
         '
         'FormMain
         '
@@ -1006,4 +1013,5 @@ Partial Class FormMain
     Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
     Public WithEvents tsbAutoSave As ToolStripButton
     Friend WithEvents tsmiProUserGuide As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
 End Class

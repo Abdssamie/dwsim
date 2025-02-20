@@ -565,25 +565,29 @@ Public Class FormCompoundCreator
 
             populating = True
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                If .cp.UNIFACGroups(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups(r.Cells(1).Value) 'old file format - Subgroup name
-                If .cp.UNIFACGroups(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
-
-                If r.Cells(2).Value > 0 Then
-                    r.Cells(2).Style.BackColor = Color.PaleGreen
-                Else
-                    r.Cells(2).Style.BackColor = Color.White
-                End If
-
+                Try
+                    If .cp.UNIFACGroups(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups(r.Cells(1).Value) 'old file format - Subgroup name
+                    If .cp.UNIFACGroups(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+                    If r.Cells(2).Value > 0 Then
+                        r.Cells(2).Style.BackColor = Color.PaleGreen
+                    Else
+                        r.Cells(2).Style.BackColor = Color.White
+                    End If
+                Catch ex As Exception
+                End Try
             Next
             For Each r As DataGridViewRow In Me.GridMODFAC.Rows
-                If .cp.MODFACGroups(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.MODFACGroups(r.Cells(1).Value) 'old file format - Subgroup name
-                If .cp.MODFACGroups(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.MODFACGroups(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+                Try
+                    If .cp.MODFACGroups(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.MODFACGroups(r.Cells(1).Value) 'old file format - Subgroup name
+                    If .cp.MODFACGroups(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.MODFACGroups(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
 
-                If r.Cells(2).Value > 0 Then
-                    r.Cells(2).Style.BackColor = Color.PaleGreen
-                Else
-                    r.Cells(2).Style.BackColor = Color.White
-                End If
+                    If r.Cells(2).Value > 0 Then
+                        r.Cells(2).Style.BackColor = Color.PaleGreen
+                    Else
+                        r.Cells(2).Style.BackColor = Color.White
+                    End If
+                Catch ex As Exception
+                End Try
             Next
 
             If .cp.NISTMODFACGroups Is Nothing Then
@@ -591,14 +595,16 @@ Public Class FormCompoundCreator
             End If
 
             For Each r As DataGridViewRow In Me.GridNISTMODFAC.Rows
-                If .cp.NISTMODFACGroups(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups(r.Cells(1).Value) 'old file format - Subgroup name
-                If .cp.NISTMODFACGroups(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
-
-                If r.Cells(2).Value > 0 Then
-                    r.Cells(2).Style.BackColor = Color.PaleGreen
-                Else
-                    r.Cells(2).Style.BackColor = Color.White
-                End If
+                Try
+                    If .cp.NISTMODFACGroups(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups(r.Cells(1).Value) 'old file format - Subgroup name
+                    If .cp.NISTMODFACGroups(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+                    If r.Cells(2).Value > 0 Then
+                        r.Cells(2).Style.BackColor = Color.PaleGreen
+                    Else
+                        r.Cells(2).Style.BackColor = Color.White
+                    End If
+                Catch ex As Exception
+                End Try
             Next
 
             FillUnifacSubGroups()

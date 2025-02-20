@@ -4140,9 +4140,10 @@ Label_00CC:
 
         Dim openedFile As IVirtualFile = filePickerForm.ShowOpenDialog(
             New List(Of SharedClassesCSharp.FilePicker.FilePickerAllowedType) From
-            {New SharedClassesCSharp.FilePicker.FilePickerAllowedType("All Supported Files", New String() {"*.dwxmz", "*.dwxml", "*.xml", "*.pfdx", "*.dwcsd", "*.dwcsd2", "*.dwrsd", "*.dwrsd2", "*.dwruf"}),
+            {New SharedClassesCSharp.FilePicker.FilePickerAllowedType("All Supported Files", New String() {"*.dwxmz", "*.dwxml", "*.xml", "*.pfdx", "*.dwcsd", "*.dwcsd2", "*.dwrsd", "*.dwrsd2", "*.dwruf", "*.json"}),
             New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Simulation File", New String() {"*.dwxmz", "*.dwxml", "*.xml", "*.pfdx"}),
             New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Compound Creator Study", New String() {"*.dwcsd", "*.dwcsd2"}),
+            New SharedClassesCSharp.FilePicker.FilePickerAllowedType("JSON Compound File", New String() {"*.json"}),
             New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Data Regression Study", New String() {"*.dwrsd", "*.dwrsd2"}),
             New SharedClassesCSharp.FilePicker.FilePickerAllowedType("UNIFAC Parameter Regression Study", "*.dwruf")})
 
@@ -4173,6 +4174,33 @@ Label_00CC:
         Application.DoEvents()
 
         Select Case handler.GetExtension().ToLower()
+            Case ".json"
+                Application.DoEvents()
+                Dim NewMDIChild As New FormCompoundCreator()
+                NewMDIChild.MdiParent = Me
+                NewMDIChild.Show()
+                Dim jsondata = handler.ReadAllText()
+                Try
+                    Dim comp = Newtonsoft.Json.JsonConvert.DeserializeObject(Of BaseClasses.ConstantProperties)(jsondata)
+                    NewMDIChild.StoreData()
+                    NewMDIChild.mycase.cp = comp
+                    NewMDIChild.mycase.CalcMW = False
+                    NewMDIChild.mycase.CalcNBP = False
+                    NewMDIChild.mycase.CalcAF = False
+                    NewMDIChild.mycase.CalcCSSP = False
+                    NewMDIChild.mycase.CalcTC = False
+                    NewMDIChild.mycase.CalcPC = False
+                    NewMDIChild.mycase.CalcZC = False
+                    NewMDIChild.mycase.CalcZRA = False
+                    NewMDIChild.mycase.CalcHF = False
+                    NewMDIChild.mycase.CalcGF = False
+                    NewMDIChild.loaded = False
+                    NewMDIChild.WriteData()
+                    NewMDIChild.loaded = True
+                Catch ex As Exception
+                    MessageBox.Show(DWSIM.App.GetLocalString("Erro") + ": " + ex.Message.ToString, "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+                NewMDIChild.Activate()
             Case ".pfdx"
                 Me.LoadJSON(handler, Sub(x)
                                          Me.Invoke(Sub()
@@ -5191,6 +5219,10 @@ Label_00CC:
         fb.Show()
         fb.DisplayURL(fpath, "DWSIM Pro User's Guide")
 
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click_1(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        WelcomePanel.Visible = True
     End Sub
 
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged
