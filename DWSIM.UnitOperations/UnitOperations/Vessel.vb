@@ -270,7 +270,7 @@ Namespace UnitOperations
 
             Dim Vol As Double = GetDynamicProperty("Volume")
             Dim Height As Double = GetDynamicProperty("Height")
-            Dim Pressure As Double
+            Dim Pressure, Enthalpy As Double
             Dim Pmin = GetDynamicProperty("Minimum Pressure")
             Dim Orientation As Integer = GetDynamicProperty("Vessel Orientation")
             Dim InitializeFromInlet As Boolean = GetDynamicProperty("Initialize using Inlet Stream")
@@ -356,7 +356,7 @@ Namespace UnitOperations
 
             Dim Temperature = AccumulationStream.GetTemperature
 
-            Pressure = AccumulationStream.GetPressure
+            Pressure = AccumulationStream.GetPressure()
 
             'm3/mol
 
@@ -377,6 +377,11 @@ Namespace UnitOperations
                     result = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature, currentM, Temperature, Pressure)
 
                     Pressure = result.CalculatedPressure
+                    Enthalpy = result.CalculatedEnthalpy
+
+                    AccumulationStream.SetMassEnthalpy(Enthalpy)
+
+                    AccumulationStream.SpecType = StreamSpec.Pressure_and_Enthalpy
 
                     LiquidVolume = AccumulationStream.Phases(3).Properties.volumetric_flow.GetValueOrDefault
 
@@ -387,6 +392,8 @@ Namespace UnitOperations
                 Else
 
                     Pressure = currentM / prevM * Pressure
+
+                    AccumulationStream.SpecType = StreamSpec.Temperature_and_Pressure
 
                 End If
 
@@ -400,10 +407,11 @@ Namespace UnitOperations
 
                 SetDynamicProperty("Liquid Level", RelativeLevel * Height)
 
+                AccumulationStream.SpecType = StreamSpec.Temperature_and_Pressure
+
             End If
 
             AccumulationStream.SetPressure(Pressure)
-            AccumulationStream.SpecType = StreamSpec.Temperature_and_Pressure
 
             AccumulationStream.PropertyPackage = PropertyPackage
             AccumulationStream.PropertyPackage.CurrentMaterialStream = AccumulationStream
