@@ -172,7 +172,7 @@ namespace DWSIM.UI.Desktop.Editors.Dynamics
                 list.Add(vnew);
             }
 
-            integrator.MonitoredVariableValues.Add(tstep, list);
+            integrator.MonitoredVariableValues.Add(tstamp.Ticks, list);
         }
 
         public static void ProcessEvents(Interfaces.IFlowsheet Flowsheet, string eventsetID, DateTime currentposition, TimeSpan interval)

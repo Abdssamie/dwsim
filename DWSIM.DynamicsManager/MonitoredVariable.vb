@@ -37,6 +37,10 @@ Public Class MonitoredVariable
 
     Public Property PropertyUnits As String = "" Implements IDynamicsMonitoredVariable.PropertyUnits
 
+    Public Property MinimumChartAxisValue As Double Implements IDynamicsMonitoredVariable.MinimumChartAxisValue
+
+    Public Property MaximumChartAxisValue As Double Implements IDynamicsMonitoredVariable.MaximumChartAxisValue
+
     Public Function SaveData() As List(Of XElement) Implements ICustomXMLSerialization.SaveData
         Return XMLSerializer.XMLSerializer.Serialize(Me)
     End Function

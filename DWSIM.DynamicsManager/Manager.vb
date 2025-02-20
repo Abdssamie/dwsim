@@ -137,7 +137,7 @@ Public Class Manager
 
         i = 0
         For Each item In integrator.MonitoredVariables
-            model.Axes.Add(New LinearAxis() With {
+            Dim axis As New LinearAxis() With {
                 .MajorGridlineStyle = LineStyle.Dash,
                 .MinorGridlineStyle = LineStyle.Dot,
                 .Position = AxisPosition.Left,
@@ -146,7 +146,12 @@ Public Class Manager
                 .Title = integrator.MonitoredVariables(i).Description + If(item.PropertyUnits <> "", " (" + item.PropertyUnits + ")", ""),
                 .PositionTier = i,
                 .AxislineStyle = LineStyle.Solid
-            })
+            }
+            If item.MinimumChartAxisValue <> 0.0 Or item.MaximumChartAxisValue <> 0.0 Then
+                axis.Minimum = item.MinimumChartAxisValue
+                axis.Maximum = item.MaximumChartAxisValue
+            End If
+            model.Axes.Add(axis)
             i += 1
         Next
 

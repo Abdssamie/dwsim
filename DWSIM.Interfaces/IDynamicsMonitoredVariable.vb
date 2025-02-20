@@ -14,4 +14,8 @@
 
     Property PropertyUnits As String
 
+    Property MinimumChartAxisValue As Double
+
+    Property MaximumChartAxisValue As Double
+
 End Interface

@@ -119,11 +119,6 @@ Partial Class FormDynamicsManager
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.gridMonitoredVariables = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewComboBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.DataGridViewComboBoxColumn5 = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.DataGridViewTextBoxColumn18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ToolStrip7 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
@@ -178,6 +173,13 @@ Partial Class FormDynamicsManager
         Me.Button1 = New System.Windows.Forms.Button()
         Me.lblStatus = New System.Windows.Forms.Label()
         Me.chkDynamics = New System.Windows.Forms.CheckBox()
+        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewComboBoxColumn1 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.DataGridViewComboBoxColumn5 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Column13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -839,47 +841,10 @@ Partial Class FormDynamicsManager
         DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         Me.gridMonitoredVariables.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.gridMonitoredVariables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn13, Me.Column9, Me.DataGridViewComboBoxColumn1, Me.DataGridViewComboBoxColumn5, Me.DataGridViewTextBoxColumn18})
+        Me.gridMonitoredVariables.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn13, Me.Column9, Me.DataGridViewComboBoxColumn1, Me.DataGridViewComboBoxColumn5, Me.Column13, Me.Column14, Me.DataGridViewTextBoxColumn18})
         Me.gridMonitoredVariables.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.gridMonitoredVariables.Name = "gridMonitoredVariables"
         Me.gridMonitoredVariables.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        '
-        'DataGridViewTextBoxColumn13
-        '
-        Me.DataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.DataGridViewTextBoxColumn13.FillWeight = 5.0!
-        resources.ApplyResources(Me.DataGridViewTextBoxColumn13, "DataGridViewTextBoxColumn13")
-        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
-        Me.DataGridViewTextBoxColumn13.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column9
-        '
-        Me.Column9.FillWeight = 40.0!
-        resources.ApplyResources(Me.Column9, "Column9")
-        Me.Column9.Name = "Column9"
-        '
-        'DataGridViewComboBoxColumn1
-        '
-        Me.DataGridViewComboBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.DataGridViewComboBoxColumn1.FillWeight = 30.0!
-        resources.ApplyResources(Me.DataGridViewComboBoxColumn1, "DataGridViewComboBoxColumn1")
-        Me.DataGridViewComboBoxColumn1.Name = "DataGridViewComboBoxColumn1"
-        Me.DataGridViewComboBoxColumn1.Sorted = True
-        '
-        'DataGridViewComboBoxColumn5
-        '
-        Me.DataGridViewComboBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.DataGridViewComboBoxColumn5.FillWeight = 60.0!
-        resources.ApplyResources(Me.DataGridViewComboBoxColumn5, "DataGridViewComboBoxColumn5")
-        Me.DataGridViewComboBoxColumn5.Name = "DataGridViewComboBoxColumn5"
-        '
-        'DataGridViewTextBoxColumn18
-        '
-        Me.DataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.DataGridViewTextBoxColumn18.FillWeight = 20.0!
-        resources.ApplyResources(Me.DataGridViewTextBoxColumn18, "DataGridViewTextBoxColumn18")
-        Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
-        Me.DataGridViewTextBoxColumn18.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'ToolStrip7
         '
@@ -1289,6 +1254,55 @@ Partial Class FormDynamicsManager
         Me.chkDynamics.Name = "chkDynamics"
         Me.chkDynamics.UseVisualStyleBackColor = False
         '
+        'DataGridViewTextBoxColumn13
+        '
+        Me.DataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewTextBoxColumn13.FillWeight = 5.0!
+        resources.ApplyResources(Me.DataGridViewTextBoxColumn13, "DataGridViewTextBoxColumn13")
+        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
+        Me.DataGridViewTextBoxColumn13.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column9
+        '
+        Me.Column9.FillWeight = 40.0!
+        resources.ApplyResources(Me.Column9, "Column9")
+        Me.Column9.Name = "Column9"
+        '
+        'DataGridViewComboBoxColumn1
+        '
+        Me.DataGridViewComboBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewComboBoxColumn1.FillWeight = 30.0!
+        resources.ApplyResources(Me.DataGridViewComboBoxColumn1, "DataGridViewComboBoxColumn1")
+        Me.DataGridViewComboBoxColumn1.Name = "DataGridViewComboBoxColumn1"
+        Me.DataGridViewComboBoxColumn1.Sorted = True
+        '
+        'DataGridViewComboBoxColumn5
+        '
+        Me.DataGridViewComboBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewComboBoxColumn5.FillWeight = 60.0!
+        resources.ApplyResources(Me.DataGridViewComboBoxColumn5, "DataGridViewComboBoxColumn5")
+        Me.DataGridViewComboBoxColumn5.Name = "DataGridViewComboBoxColumn5"
+        '
+        'Column13
+        '
+        Me.Column13.FillWeight = 60.0!
+        resources.ApplyResources(Me.Column13, "Column13")
+        Me.Column13.Name = "Column13"
+        '
+        'Column14
+        '
+        Me.Column14.FillWeight = 60.0!
+        resources.ApplyResources(Me.Column14, "Column14")
+        Me.Column14.Name = "Column14"
+        '
+        'DataGridViewTextBoxColumn18
+        '
+        Me.DataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DataGridViewTextBoxColumn18.FillWeight = 20.0!
+        resources.ApplyResources(Me.DataGridViewTextBoxColumn18, "DataGridViewTextBoxColumn18")
+        Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
+        Me.DataGridViewTextBoxColumn18.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
         'FormDynamicsManager
         '
         resources.ApplyResources(Me, "$this")
@@ -1471,11 +1485,6 @@ Partial Class FormDynamicsManager
     Public WithEvents ToolStrip7 As ToolStrip
     Public WithEvents ToolStripButton1 As ToolStripButton
     Public WithEvents ToolStripButton2 As ToolStripButton
-    Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
-    Friend WithEvents Column9 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewComboBoxColumn1 As DataGridViewComboBoxColumn
-    Friend WithEvents DataGridViewComboBoxColumn5 As DataGridViewComboBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn18 As DataGridViewTextBoxColumn
     Friend WithEvents Label14 As Label
     Friend WithEvents nupRTStep As NumericUpDown
     Friend WithEvents chkResetAll As CheckBox
@@ -1513,4 +1522,11 @@ Partial Class FormDynamicsManager
     Friend WithEvents DataGridViewComboBoxColumn3 As DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
+    Friend WithEvents Column9 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn1 As DataGridViewComboBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn5 As DataGridViewComboBoxColumn
+    Friend WithEvents Column13 As DataGridViewTextBoxColumn
+    Friend WithEvents Column14 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn18 As DataGridViewTextBoxColumn
 End Class

@@ -918,6 +918,18 @@ namespace DWSIM.UI.Desktop.Editors.Dynamics
                     if (s.SelectedIndex >= 0) mv.PropertyID = propids[s.SelectedIndex];
                 });
 
+            layout.CreateAndAddTextBoxRow("G","Minimum Chart Axis Value",
+                mv.MinimumChartAxisValue, (s, e) =>
+                {
+                    mv.MinimumChartAxisValue = s.Text.ToDoubleFromCurrent();
+                });
+
+            layout.CreateAndAddTextBoxRow("G", "Maximum Chart Axis Value",
+                mv.MaximumChartAxisValue, (s, e) =>
+                {
+                    mv.MaximumChartAxisValue = s.Text.ToDoubleFromCurrent();
+                });
+
             layout.CreateAndAddStringEditorRow("Units",
                 mv.PropertyUnits, (s, e) =>
                 {

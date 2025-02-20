@@ -707,7 +707,7 @@ Public Class FormDynamicsManager
         For Each cei In i1.MonitoredVariables
             With cei
                 Dim obj, prop As String
-                gridMonitoredVariables.Rows.Add(New Object() { .ID, .Description, "", "", .PropertyUnits})
+                gridMonitoredVariables.Rows.Add(New Object() { .ID, .Description, "", "", .MinimumChartAxisValue, .MaximumChartAxisValue, .PropertyUnits})
                 Dim addedrow = gridMonitoredVariables.Rows(gridMonitoredVariables.Rows.Count - 1)
                 If Flowsheet.SimulationObjects.ContainsKey(.ObjectID) Then
                     obj = Flowsheet.SimulationObjects(.ObjectID).GraphicObject.Tag
@@ -1112,6 +1112,14 @@ Public Class FormDynamicsManager
                         v1.PropertyID = props(cbcell.Items.IndexOf(value) - 1)
                     End If
                 Case 4
+                    If value IsNot Nothing AndAlso value.ToString().IsValidDouble() Then
+                        v1.MinimumChartAxisValue = value
+                    End If
+                Case 5
+                    If value IsNot Nothing AndAlso value.ToString().IsValidDouble() Then
+                        v1.MaximumChartAxisValue = value
+                    End If
+                Case 6
                     v1.PropertyUnits = value
             End Select
         Catch ex As Exception
