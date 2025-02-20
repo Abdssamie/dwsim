@@ -28,8 +28,6 @@ Partial Class FormWelcome
         Me.lvlatest = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.lvlatestfolders = New System.Windows.Forms.ListView()
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -43,7 +41,6 @@ Partial Class FormWelcome
         Me.Button4 = New System.Windows.Forms.Button()
         Me.FOSSEEList = New System.Windows.Forms.ListView()
         Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -90,14 +87,11 @@ Partial Class FormWelcome
         Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
-        Me.TabPage6 = New System.Windows.Forms.TabPage()
-        Me.NewsViewer = New Microsoft.Web.WebView2.WinForms.WebView2()
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabPage5.SuspendLayout()
-        Me.TabPage3.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.FlowLayoutPanel1.SuspendLayout()
@@ -115,8 +109,6 @@ Partial Class FormWelcome
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
         Me.TabPage4.SuspendLayout()
-        Me.TabPage6.SuspendLayout()
-        CType(Me.NewsViewer, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lvlatest
@@ -152,37 +144,12 @@ Partial Class FormWelcome
         Me.ImageList1.Images.SetKeyName(2, "dataregression.png")
         Me.ImageList1.Images.SetKeyName(3, "")
         '
-        'lvlatestfolders
-        '
-        resources.ApplyResources(Me.lvlatestfolders, "lvlatestfolders")
-        Me.lvlatestfolders.Activation = System.Windows.Forms.ItemActivation.OneClick
-        Me.lvlatestfolders.AutoArrange = False
-        Me.lvlatestfolders.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.lvlatestfolders.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader3})
-        Me.lvlatestfolders.FullRowSelect = True
-        Me.lvlatestfolders.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
-        Me.lvlatestfolders.HideSelection = False
-        Me.lvlatestfolders.HoverSelection = True
-        Me.lvlatestfolders.LargeImageList = Me.ImageList1
-        Me.lvlatestfolders.MultiSelect = False
-        Me.lvlatestfolders.Name = "lvlatestfolders"
-        Me.lvlatestfolders.ShowGroups = False
-        Me.lvlatestfolders.SmallImageList = Me.ImageList1
-        Me.lvlatestfolders.TileSize = New System.Drawing.Size(320, 20)
-        Me.lvlatestfolders.UseCompatibleStateImageBehavior = False
-        Me.lvlatestfolders.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader3
-        '
-        resources.ApplyResources(Me.ColumnHeader3, "ColumnHeader3")
-        '
         'TabControl1
         '
         resources.ApplyResources(Me.TabControl1, "TabControl1")
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage5)
-        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         '
@@ -293,13 +260,6 @@ Partial Class FormWelcome
         'ColumnHeader4
         '
         resources.ApplyResources(Me.ColumnHeader4, "ColumnHeader4")
-        '
-        'TabPage3
-        '
-        resources.ApplyResources(Me.TabPage3, "TabPage3")
-        Me.TabPage3.Controls.Add(Me.lvlatestfolders)
-        Me.TabPage3.Name = "TabPage3"
-        Me.TabPage3.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -655,7 +615,6 @@ Partial Class FormWelcome
         '
         resources.ApplyResources(Me.TabControl2, "TabControl2")
         Me.TabControl2.Controls.Add(Me.TabPage4)
-        Me.TabControl2.Controls.Add(Me.TabPage6)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
         '
@@ -670,22 +629,6 @@ Partial Class FormWelcome
         Me.TabPage4.Controls.Add(Me.Panel5)
         Me.TabPage4.Controls.Add(Me.Panel4)
         Me.TabPage4.Name = "TabPage4"
-        '
-        'TabPage6
-        '
-        resources.ApplyResources(Me.TabPage6, "TabPage6")
-        Me.TabPage6.Controls.Add(Me.NewsViewer)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.UseVisualStyleBackColor = True
-        '
-        'NewsViewer
-        '
-        resources.ApplyResources(Me.NewsViewer, "NewsViewer")
-        Me.NewsViewer.AllowExternalDrop = True
-        Me.NewsViewer.CreationProperties = Nothing
-        Me.NewsViewer.DefaultBackgroundColor = System.Drawing.Color.White
-        Me.NewsViewer.Name = "NewsViewer"
-        Me.NewsViewer.ZoomFactor = 1.0R
         '
         'ImageList2
         '
@@ -711,7 +654,6 @@ Partial Class FormWelcome
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage5.ResumeLayout(False)
         Me.TabPage5.PerformLayout()
-        Me.TabPage3.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -738,21 +680,16 @@ Partial Class FormWelcome
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage4.ResumeLayout(False)
-        Me.TabPage6.ResumeLayout(False)
-        CType(Me.NewsViewer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents lvlatestfolders As System.Windows.Forms.ListView
     Friend WithEvents ImageList1 As System.Windows.Forms.ImageList
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage5 As TabPage
     Friend WithEvents FOSSEEList As ListView
     Friend WithEvents ColumnHeader4 As ColumnHeader
@@ -805,8 +742,6 @@ Partial Class FormWelcome
     Friend WithEvents LinkLabel9 As LinkLabel
     Friend WithEvents TabControl2 As TabControl
     Friend WithEvents TabPage4 As TabPage
-    Friend WithEvents TabPage6 As TabPage
-    Friend WithEvents NewsViewer As Microsoft.Web.WebView2.WinForms.WebView2
     Friend WithEvents ImageList2 As ImageList
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
     Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel

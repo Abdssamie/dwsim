@@ -34,7 +34,7 @@ Partial Class SplashScreen
         '
         resources.ApplyResources(Me.lblVersion, "lblVersion")
         Me.lblVersion.BackColor = System.Drawing.Color.Transparent
-        Me.lblVersion.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(166, Byte), Integer))
+        Me.lblVersion.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(84, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.lblVersion.Name = "lblVersion"
         '
         'LabelLicense
@@ -42,28 +42,28 @@ Partial Class SplashScreen
         resources.ApplyResources(Me.LabelLicense, "LabelLicense")
         Me.LabelLicense.BackColor = System.Drawing.Color.Transparent
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.LabelLicense.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(166, Byte), Integer))
+        Me.LabelLicense.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(84, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.LabelLicense.Name = "LabelLicense"
         '
         'lblCopyright
         '
         resources.ApplyResources(Me.lblCopyright, "lblCopyright")
         Me.lblCopyright.BackColor = System.Drawing.Color.Transparent
-        Me.lblCopyright.ForeColor = System.Drawing.Color.White
+        Me.lblCopyright.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(84, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.lblCopyright.Name = "lblCopyright"
         '
         'lblPatrons
         '
         resources.ApplyResources(Me.lblPatrons, "lblPatrons")
         Me.lblPatrons.BackColor = System.Drawing.Color.Transparent
-        Me.lblPatrons.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(114, Byte), Integer), CType(CType(166, Byte), Integer))
+        Me.lblPatrons.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(84, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.lblPatrons.Name = "lblPatrons"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(13, Byte), Integer), CType(CType(84, Byte), Integer), CType(CType(126, Byte), Integer))
         Me.Label1.Name = "Label1"
         '
         'SplashScreen
