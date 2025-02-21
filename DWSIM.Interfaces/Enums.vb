@@ -742,6 +742,9 @@ Namespace Enums.GraphicObjects
 
         Dummy
 
+        SolidOps
+
+
     End Enum
 
     Public Enum ShapeIcon
