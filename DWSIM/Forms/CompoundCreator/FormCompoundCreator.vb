@@ -742,6 +742,7 @@ Public Class FormCompoundCreator
             .cp.SMILES = TextBoxSMILES.Text
             .cp.TemperatureOfFusion = SystemsOfUnits.Converter.ConvertToSI(su.temperature, CheckEmptyTextBox(TextBoxMeltingTemp))
             .cp.EnthalpyOfFusionAtTf = SystemsOfUnits.Converter.ConvertToSI(su.enthalpy, CheckEmptyTextBox(TextBoxEnthOfFusion))
+            .cp.Critical_Volume = 8314 * .cp.Critical_Compressibility * .cp.Critical_Temperature / .cp.Critical_Pressure
 
             .RegressPVAP = rbRegressPVAP.Checked
             .RegressCPIG = rbRegressCPIG.Checked
