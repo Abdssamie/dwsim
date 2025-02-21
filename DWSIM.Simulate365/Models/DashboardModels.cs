@@ -60,5 +60,12 @@ namespace DWSIM.Simulate365.Models
         public Guid FileUniqueIdentifier { get; set; }
         public string SimulatePath { get; set; }
     }
-
+    public class FileExistsByPathPostModel
+    {
+        public string FilePath { get; set; }
+    }
+    public class FileExistsResponseModel
+    {
+        public bool Exists { get; set; }
+    }
 }
