@@ -22,7 +22,6 @@ Partial Class AboutBox
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AboutBox))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
@@ -37,27 +36,19 @@ Partial Class AboutBox
         Me.LblOSInfo = New System.Windows.Forms.Label()
         Me.LblCLRInfo = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.Lblcpuinfo = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Lblmem = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
-        Me.AssemblyInfoListView = New System.Windows.Forms.ListView()
-        Me.colAssemblyName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.colAssemblyVersion = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.colAssemblyBuilt = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.colAssemblyCodeBase = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.FaTabStripItem7 = New FarsiLibrary.Win.FATabStripItem()
-        Me.tbAcknowledgements = New System.Windows.Forms.TextBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.FaTabStrip1.SuspendLayout()
-        Me.FaTabStripItem1.SuspendLayout()
-        Me.FaTabStripItem3.SuspendLayout()
-        Me.FaTabStripItem7.SuspendLayout()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.tbAcknowledgements = New System.Windows.Forms.TextBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -142,36 +133,6 @@ Partial Class AboutBox
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.Name = "Label4"
         '
-        'FaTabStrip1
-        '
-        Me.FaTabStrip1.AlwaysShowClose = False
-        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem7})
-        Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        '
-        'FaTabStripItem1
-        '
-        Me.FaTabStripItem1.CanClose = False
-        Me.FaTabStripItem1.Controls.Add(Me.TextBox1)
-        Me.FaTabStripItem1.Controls.Add(Me.Lblcpuinfo)
-        Me.FaTabStripItem1.Controls.Add(Me.Label12)
-        Me.FaTabStripItem1.Controls.Add(Me.Lblmem)
-        Me.FaTabStripItem1.Controls.Add(Me.Label11)
-        Me.FaTabStripItem1.Controls.Add(Me.LinkLabel1)
-        Me.FaTabStripItem1.Controls.Add(Me.Label2)
-        Me.FaTabStripItem1.Controls.Add(Me.LinkLabel2)
-        Me.FaTabStripItem1.Controls.Add(Me.LblCLRInfo)
-        Me.FaTabStripItem1.Controls.Add(Me.Label4)
-        Me.FaTabStripItem1.Controls.Add(Me.LabelLicense)
-        Me.FaTabStripItem1.Controls.Add(Me.LblOSInfo)
-        Me.FaTabStripItem1.Controls.Add(Me.Label7)
-        Me.FaTabStripItem1.IsDrawn = True
-        Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
-        '
         'Lblcpuinfo
         '
         resources.ApplyResources(Me.Lblcpuinfo, "Lblcpuinfo")
@@ -196,49 +157,46 @@ Partial Class AboutBox
         Me.Label11.BackColor = System.Drawing.Color.Transparent
         Me.Label11.Name = "Label11"
         '
-        'FaTabStripItem3
+        'PictureBox1
         '
-        Me.FaTabStripItem3.CanClose = False
-        Me.FaTabStripItem3.Controls.Add(Me.AssemblyInfoListView)
-        Me.FaTabStripItem3.IsDrawn = True
-        Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
+        Me.PictureBox1.Image = Global.DWSIM.My.Resources.Resources.DWSIM_Icon_Vector_2
+        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.TabStop = False
         '
-        'AssemblyInfoListView
+        'TabControl1
         '
-        Me.AssemblyInfoListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colAssemblyName, Me.colAssemblyVersion, Me.colAssemblyBuilt, Me.colAssemblyCodeBase})
-        resources.ApplyResources(Me.AssemblyInfoListView, "AssemblyInfoListView")
-        Me.AssemblyInfoListView.FullRowSelect = True
-        Me.AssemblyInfoListView.HideSelection = False
-        Me.AssemblyInfoListView.MultiSelect = False
-        Me.AssemblyInfoListView.Name = "AssemblyInfoListView"
-        Me.AssemblyInfoListView.Sorting = System.Windows.Forms.SortOrder.Ascending
-        Me.AssemblyInfoListView.UseCompatibleStateImageBehavior = False
-        Me.AssemblyInfoListView.View = System.Windows.Forms.View.Details
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        resources.ApplyResources(Me.TabControl1, "TabControl1")
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
         '
-        'colAssemblyName
+        'TabPage1
         '
-        resources.ApplyResources(Me.colAssemblyName, "colAssemblyName")
+        Me.TabPage1.Controls.Add(Me.TextBox1)
+        Me.TabPage1.Controls.Add(Me.Label2)
+        Me.TabPage1.Controls.Add(Me.Lblcpuinfo)
+        Me.TabPage1.Controls.Add(Me.Label7)
+        Me.TabPage1.Controls.Add(Me.Label12)
+        Me.TabPage1.Controls.Add(Me.LblOSInfo)
+        Me.TabPage1.Controls.Add(Me.Lblmem)
+        Me.TabPage1.Controls.Add(Me.LabelLicense)
+        Me.TabPage1.Controls.Add(Me.Label11)
+        Me.TabPage1.Controls.Add(Me.Label4)
+        Me.TabPage1.Controls.Add(Me.LinkLabel1)
+        Me.TabPage1.Controls.Add(Me.LblCLRInfo)
+        Me.TabPage1.Controls.Add(Me.LinkLabel2)
+        resources.ApplyResources(Me.TabPage1, "TabPage1")
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.UseVisualStyleBackColor = True
         '
-        'colAssemblyVersion
+        'TabPage2
         '
-        resources.ApplyResources(Me.colAssemblyVersion, "colAssemblyVersion")
-        '
-        'colAssemblyBuilt
-        '
-        resources.ApplyResources(Me.colAssemblyBuilt, "colAssemblyBuilt")
-        '
-        'colAssemblyCodeBase
-        '
-        resources.ApplyResources(Me.colAssemblyCodeBase, "colAssemblyCodeBase")
-        '
-        'FaTabStripItem7
-        '
-        Me.FaTabStripItem7.CanClose = False
-        Me.FaTabStripItem7.Controls.Add(Me.tbAcknowledgements)
-        Me.FaTabStripItem7.IsDrawn = True
-        Me.FaTabStripItem7.Name = "FaTabStripItem7"
-        resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
+        Me.TabPage2.Controls.Add(Me.tbAcknowledgements)
+        resources.ApplyResources(Me.TabPage2, "TabPage2")
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'tbAcknowledgements
         '
@@ -247,22 +205,15 @@ Partial Class AboutBox
         Me.tbAcknowledgements.Name = "tbAcknowledgements"
         Me.tbAcknowledgements.ReadOnly = True
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.DWSIM.My.Resources.Resources.DWSIM_Icon_Vector_2
-        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.TabStop = False
-        '
         'AboutBox
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.White
         Me.ControlBox = False
+        Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Copyright)
-        Me.Controls.Add(Me.FaTabStrip1)
         Me.Controls.Add(Me.Version)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label1)
@@ -271,14 +222,12 @@ Partial Class AboutBox
         Me.Name = "AboutBox"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
-        CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.FaTabStrip1.ResumeLayout(False)
-        Me.FaTabStripItem1.ResumeLayout(False)
-        Me.FaTabStripItem1.PerformLayout()
-        Me.FaTabStripItem3.ResumeLayout(False)
-        Me.FaTabStripItem7.ResumeLayout(False)
-        Me.FaTabStripItem7.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -296,19 +245,13 @@ Partial Class AboutBox
     Public WithEvents LblOSInfo As System.Windows.Forms.Label
     Public WithEvents LblCLRInfo As System.Windows.Forms.Label
     Public WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents FaTabStrip1 As FarsiLibrary.Win.FATabStrip
-    Friend WithEvents FaTabStripItem1 As FarsiLibrary.Win.FATabStripItem
-    Friend WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
-    Friend WithEvents AssemblyInfoListView As System.Windows.Forms.ListView
-    Friend WithEvents colAssemblyName As System.Windows.Forms.ColumnHeader
-    Friend WithEvents colAssemblyVersion As System.Windows.Forms.ColumnHeader
-    Friend WithEvents colAssemblyBuilt As System.Windows.Forms.ColumnHeader
-    Friend WithEvents colAssemblyCodeBase As System.Windows.Forms.ColumnHeader
     Public WithEvents Lblmem As System.Windows.Forms.Label
     Public WithEvents Label11 As System.Windows.Forms.Label
     Public WithEvents Lblcpuinfo As System.Windows.Forms.Label
     Public WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
-    Friend WithEvents FaTabStripItem7 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents TabPage2 As TabPage
     Public WithEvents tbAcknowledgements As TextBox
 End Class

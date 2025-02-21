@@ -160,10 +160,10 @@
     <value>NoControl</value>
   </data>
   <data name="LinkLabel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 14</value>
+    <value>135, 12</value>
   </data>
   <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 13</value>
+    <value>90, 13</value>
   </data>
   <data name="LinkLabel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -178,16 +178,16 @@
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LinkLabel1.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;LinkLabel1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>10</value>
   </data>
   <data name="Button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>722, 592</value>
+    <value>722, 595</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -274,7 +274,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;Copyright.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -283,10 +283,10 @@
     <value>NoControl</value>
   </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 14</value>
+    <value>14, 12</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
+    <value>54, 13</value>
   </data>
   <data name="Label2.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -301,10 +301,10 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>1</value>
   </data>
   <data name="LinkLabel2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -313,10 +313,10 @@
     <value>NoControl</value>
   </data>
   <data name="LinkLabel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>290, 14</value>
+    <value>291, 12</value>
   </data>
   <data name="LinkLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 13</value>
+    <value>220, 13</value>
   </data>
   <data name="LinkLabel2.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -331,10 +331,10 @@
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LinkLabel2.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;LinkLabel2.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>12</value>
   </data>
   <data name="LabelLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -346,7 +346,7 @@
     <value>NoControl</value>
   </data>
   <data name="LabelLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 134</value>
+    <value>14, 132</value>
   </data>
   <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
     <value>422, 13</value>
@@ -364,10 +364,10 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LabelLicense.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>7</value>
   </data>
   <data name="TextBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -376,7 +376,7 @@
     <value>Consolas, 9pt</value>
   </data>
   <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 162</value>
+    <value>17, 160</value>
   </data>
   <data name="TextBox1.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -385,7 +385,7 @@
     <value>Vertical</value>
   </data>
   <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>759, 294</value>
+    <value>743, 281</value>
   </data>
   <data name="TextBox1.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -1073,7 +1073,7 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TextBox1.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;TextBox1.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1085,10 +1085,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 38</value>
+    <value>14, 36</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 13</value>
+    <value>46, 13</value>
   </data>
   <data name="Label7.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -1103,10 +1103,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Label7.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>3</value>
   </data>
   <data name="LblOSInfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1115,10 +1115,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="LblOSInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 38</value>
+    <value>135, 36</value>
   </data>
   <data name="LblOSInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
+    <value>41, 13</value>
   </data>
   <data name="LblOSInfo.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1133,10 +1133,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LblOSInfo.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;LblOSInfo.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>5</value>
   </data>
   <data name="LblCLRInfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1145,10 +1145,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="LblCLRInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 62</value>
+    <value>135, 60</value>
   </data>
   <data name="LblCLRInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
+    <value>41, 13</value>
   </data>
   <data name="LblCLRInfo.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -1163,10 +1163,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LblCLRInfo.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;LblCLRInfo.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="Label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1175,10 +1175,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 62</value>
+    <value>14, 60</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 13</value>
+    <value>52, 13</value>
   </data>
   <data name="Label4.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -1193,13 +1193,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
     <value>9</value>
-  </data>
-  <data name="FaTabStrip1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt</value>
   </data>
   <data name="Lblcpuinfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1208,10 +1205,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="Lblcpuinfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 110</value>
+    <value>135, 108</value>
   </data>
   <data name="Lblcpuinfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
+    <value>52, 13</value>
   </data>
   <data name="Lblcpuinfo.TabIndex" type="System.Int32, mscorlib">
     <value>26</value>
@@ -1226,10 +1223,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Lblcpuinfo.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Lblcpuinfo.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="Label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1238,10 +1235,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 110</value>
+    <value>14, 108</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>54, 13</value>
+    <value>53, 13</value>
   </data>
   <data name="Label12.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -1256,10 +1253,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Label12.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label12.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="Lblmem.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1268,10 +1265,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="Lblmem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 86</value>
+    <value>135, 84</value>
   </data>
   <data name="Lblmem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
+    <value>52, 13</value>
   </data>
   <data name="Lblmem.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
@@ -1286,10 +1283,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Lblmem.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Lblmem.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="Label11.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1298,10 +1295,10 @@ Public License instead of this License.  But first, please read
     <value>NoControl</value>
   </data>
   <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 86</value>
+    <value>14, 84</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 13</value>
+    <value>81, 13</value>
   </data>
   <data name="Label11.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -1316,196 +1313,10 @@ Public License instead of this License.  But first, please read
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Label11.Parent" xml:space="preserve">
-    <value>FaTabStripItem1</value>
+    <value>TabPage1</value>
   </data>
   <data name="&gt;&gt;Label11.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>795, 459</value>
-  </data>
-  <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>General Info</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.Name" xml:space="preserve">
-    <value>FaTabStripItem1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.Parent" xml:space="preserve">
-    <value>FaTabStrip1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="colAssemblyName.Text" xml:space="preserve">
-    <value>Assembly</value>
-  </data>
-  <data name="colAssemblyName.Width" type="System.Int32, mscorlib">
-    <value>123</value>
-  </data>
-  <data name="colAssemblyVersion.Text" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="colAssemblyVersion.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="colAssemblyBuilt.Text" xml:space="preserve">
-    <value>Build Date</value>
-  </data>
-  <data name="colAssemblyBuilt.Width" type="System.Int32, mscorlib">
-    <value>130</value>
-  </data>
-  <data name="colAssemblyCodeBase.Text" xml:space="preserve">
-    <value>CodeBase</value>
-  </data>
-  <data name="colAssemblyCodeBase.Width" type="System.Int32, mscorlib">
-    <value>750</value>
-  </data>
-  <data name="AssemblyInfoListView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="AssemblyInfoListView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="AssemblyInfoListView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>795, 459</value>
-  </data>
-  <data name="AssemblyInfoListView.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="&gt;&gt;AssemblyInfoListView.Name" xml:space="preserve">
-    <value>AssemblyInfoListView</value>
-  </data>
-  <data name="&gt;&gt;AssemblyInfoListView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AssemblyInfoListView.Parent" xml:space="preserve">
-    <value>FaTabStripItem3</value>
-  </data>
-  <data name="&gt;&gt;AssemblyInfoListView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>795, 459</value>
-  </data>
-  <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Loaded Assemblies</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.Name" xml:space="preserve">
-    <value>FaTabStripItem3</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.Parent" xml:space="preserve">
-    <value>FaTabStrip1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="tbAcknowledgements.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tbAcknowledgements.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Consolas, 9pt</value>
-  </data>
-  <data name="tbAcknowledgements.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tbAcknowledgements.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="tbAcknowledgements.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="tbAcknowledgements.Size" type="System.Drawing.Size, System.Drawing">
-    <value>795, 459</value>
-  </data>
-  <data name="tbAcknowledgements.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="tbAcknowledgements.Text" xml:space="preserve">
-    <value>Some icons by Icons8. https://icons8.com/
-
-Some icons created by Freepik -  https://www.flaticon.com/authors/freepik, https://www.flaticon.com/free-icons.
-
-Some images from Freepik - https://br.freepik.com/fotos-gratis/pesquisadores-em-busca-de-fontes-alternativas-de-energia_23668250.htm
-
-Reaktoro Gibbs Reactor icons created by Nhor Phai - Flaticon (https://www.flaticon.com/free-icons/reactor).
-
-DWSIM uses thermo and chemicals libraries as one of the sources of pure compound data. thermo and chemicals are Copyright (c) Caleb Bell and Contributors (2016-2021). Thermo: Chemical properties component of Chemical Engineering Design Library (ChEDL) - https://github.com/CalebBell/thermo.
-
-DWSIM uses OPEM library for PEM Fuel Cells. Haghighi et al., (2018). OPEM : Open Source PEM Cell Simulation Tool .
-Journal of Open Source Software, 3(27), 676, https://doi.org/10.21105/joss.00676
-
-Reaktoro Gibbs Reactor is based on Reaktoro v1. https://reaktoro.org/v1/ © Copyright 2021, Allan Leal and Reaktoro contributors
- 
-Weather conditions are provided by Azure Maps Weather Service.</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.Name" xml:space="preserve">
-    <value>tbAcknowledgements</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.Parent" xml:space="preserve">
-    <value>FaTabStripItem7</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="FaTabStripItem7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>795, 459</value>
-  </data>
-  <data name="FaTabStripItem7.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Acknowledgements</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.Name" xml:space="preserve">
-    <value>FaTabStripItem7</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.Parent" xml:space="preserve">
-    <value>FaTabStrip1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem7.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="FaTabStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 101</value>
-  </data>
-  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>797, 485</value>
-  </data>
-  <data name="FaTabStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
-  </data>
-  <data name="FaTabStrip1.Text" xml:space="preserve">
-    <value>FaTabStrip1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip1.Name" xml:space="preserve">
-    <value>FaTabStrip1</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip1.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip1.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>8</value>
   </data>
   <data name="PictureBox1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1532,6 +1343,144 @@ Weather conditions are provided by Azure Maps Weather Service.</value>
     <value>$this</value>
   </data>
   <data name="&gt;&gt;PictureBox1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TabPage1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="TabPage1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>777, 459</value>
+  </data>
+  <data name="TabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>General Info</value>
+  </data>
+  <data name="&gt;&gt;TabPage1.Name" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
+  <data name="&gt;&gt;TabPage1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabPage1.Parent" xml:space="preserve">
+    <value>TabControl1</value>
+  </data>
+  <data name="&gt;&gt;TabPage1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.Name" xml:space="preserve">
+    <value>tbAcknowledgements</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.Parent" xml:space="preserve">
+    <value>TabPage2</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TabPage2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="TabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>781, 459</value>
+  </data>
+  <data name="TabPage2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="TabPage2.Text" xml:space="preserve">
+    <value>Acknowledgements</value>
+  </data>
+  <data name="&gt;&gt;TabPage2.Name" xml:space="preserve">
+    <value>TabPage2</value>
+  </data>
+  <data name="&gt;&gt;TabPage2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabPage2.Parent" xml:space="preserve">
+    <value>TabControl1</value>
+  </data>
+  <data name="&gt;&gt;TabPage2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="TabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 101</value>
+  </data>
+  <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>785, 485</value>
+  </data>
+  <data name="TabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.Name" xml:space="preserve">
+    <value>TabControl1</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TabControl1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tbAcknowledgements.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tbAcknowledgements.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Consolas, 9pt</value>
+  </data>
+  <data name="tbAcknowledgements.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="tbAcknowledgements.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tbAcknowledgements.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="tbAcknowledgements.Size" type="System.Drawing.Size, System.Drawing">
+    <value>775, 453</value>
+  </data>
+  <data name="tbAcknowledgements.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="tbAcknowledgements.Text" xml:space="preserve">
+    <value>Some icons by Icons8. https://icons8.com/
+
+Some icons created by Freepik -  https://www.flaticon.com/authors/freepik, https://www.flaticon.com/free-icons.
+
+Some images from Freepik - https://br.freepik.com/fotos-gratis/pesquisadores-em-busca-de-fontes-alternativas-de-energia_23668250.htm
+
+Reaktoro Gibbs Reactor icons created by Nhor Phai - Flaticon (https://www.flaticon.com/free-icons/reactor).
+
+DWSIM uses thermo and chemicals libraries as one of the sources of pure compound data. thermo and chemicals are Copyright (c) Caleb Bell and Contributors (2016-2021). Thermo: Chemical properties component of Chemical Engineering Design Library (ChEDL) - https://github.com/CalebBell/thermo.
+
+DWSIM uses OPEM library for PEM Fuel Cells. Haghighi et al., (2018). OPEM : Open Source PEM Cell Simulation Tool .
+Journal of Open Source Software, 3(27), 676, https://doi.org/10.21105/joss.00676
+
+Reaktoro Gibbs Reactor is based on Reaktoro v1. https://reaktoro.org/v1/ © Copyright 2021, Allan Leal and Reaktoro contributors
+ 
+Weather conditions are provided by Azure Maps Weather Service.</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.Name" xml:space="preserve">
+    <value>tbAcknowledgements</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.Parent" xml:space="preserve">
+    <value>TabPage2</value>
+  </data>
+  <data name="&gt;&gt;tbAcknowledgements.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -1551,30 +1500,6 @@ Weather conditions are provided by Azure Maps Weather Service.</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>About DWSIM</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyName.Name" xml:space="preserve">
-    <value>colAssemblyName</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyVersion.Name" xml:space="preserve">
-    <value>colAssemblyVersion</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyBuilt.Name" xml:space="preserve">
-    <value>colAssemblyBuilt</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyBuilt.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyCodeBase.Name" xml:space="preserve">
-    <value>colAssemblyCodeBase</value>
-  </data>
-  <data name="&gt;&gt;colAssemblyCodeBase.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>AboutBox</value>
