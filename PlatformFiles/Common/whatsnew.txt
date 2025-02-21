@@ -1,9 +1,26 @@
-Version 8.9.0
+Version 9.0.0
 
-- Cross-Platform UI overhaul + added GTK 3 and .NET 8 support for Linux
-- Fixed a bug in Nested Loops flash
-- Recycle Op now defaults to legacy mode solving
-- Fixed solver busy message
-- Reworked Rigorous Column initial estimates editor controls (Classic UI)
-- Fixed zedgraph file saving
-- Fixed rigorous column stage naming
+- New: Cross-Platform UI overhaul + GTK 3 and .NET 8 support for Linux
+- New: Pipe Segment model updates: added wall and insulation temperatures, absorbed radiation
+- New: Import json compounds from File load items
+- New: Implemented fixed chart limits for dynamic integrators (#697)
+- New: Added CPUI editor for PID Controller #715
+- New: Added CPUI editor for Input objects #715
+- Changed: Optimized memory consumption
+- Changed: Reworked Rigorous Column initial estimates editor controls (Classic UI)
+- Changed: Removed KDB Cheric compound database source (not available anymore)
+- Changed: Removed KDB Cheric button from data regression utility (not available anymore)
+- Changed: Recycle Op now defaults to legacy mode solving
+- Bugfix: Nested Loops flash
+- Bugfix: Rigorous Column stage naming
+- Bugfix: Solver busy message
+- Bugfix: Zedgraph file saving
+- Bugfix: Thermal conductivity does not accept copy paste from excel #695
+- Bugfix: Fixed issue with CO2 equilibrium calculations
+- Bugfix: Fixed chemeo error message
+- Bugfix: Mass Flow Rates Mismatch in PFR -Inlet and Outlet Mass Flow Rates are Different #726
+- Bugfix: Copying Element in the flowsheet #698
+- Bugfix: Fitting Loss for Elbows/Bends #708
+- Bugfix: Carbon Dioxide Bug and JT data #717
+- Bugfix: Compound separator produces negative molar flow #713
+- Bugfix: Excel Add-In: Can't select a Flash Algorithm / Can't configure flash algorithms settings #700
