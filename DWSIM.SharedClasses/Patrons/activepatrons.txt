@@ -2,7 +2,6 @@
 🥇 Yoshihide Watabe
 🥈 Alexander Semenyak
 🥈 Macaw Energies
-🥈 Pedro Sabóia
 🥈 Sukin Oh
 🌟 Abishek Shrestha
 🌟 Adam Kovalovszki
@@ -29,7 +28,6 @@
 🌟 Justin Parrot
 🌟 Leonard Seed
 🌟 Marcos Guimarães
-🌟 Martin Heiser
 🌟 Matt Hogg
 🌟 Michael Papantoniou
 🌟 Michael Saucier
