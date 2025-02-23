@@ -3114,6 +3114,9 @@ Imports DWSIM.ExtensionMethods
         AddSystemsOfUnits()
         'AddDefaultProperties()
 
+        Dim calculatorassembly = System.Reflection.Assembly.Load("DWSIM.Thermodynamics")
+        Dim unitopassembly = System.Reflection.Assembly.Load("DWSIM.UnitOperations")
+
         If Not SupressDataLoading Then
 
             AddPropPacks()

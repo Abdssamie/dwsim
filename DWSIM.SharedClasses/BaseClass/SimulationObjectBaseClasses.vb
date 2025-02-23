@@ -307,7 +307,8 @@ Namespace UnitOperations
 
         Protected Function GetBytesFromResource(resourcename As String) As Byte()
 
-            Using stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourcename)
+            Dim assembly1 = Assembly.GetCallingAssembly()
+            Using stream = assembly1.GetManifestResourceStream(resourcename)
                 Dim streamLength As Integer = Convert.ToInt32(stream.Length)
                 Dim fileData As Byte() = New Byte(streamLength) {}
                 ' Read the file into a byte array
