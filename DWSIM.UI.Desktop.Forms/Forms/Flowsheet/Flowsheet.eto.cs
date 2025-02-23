@@ -993,8 +993,12 @@ namespace DWSIM.UI.Forms
                     var pitem = new FlowsheetObjectPanelItem();
                     if (!(Application.Instance.Platform.IsGtk && s.RunningPlatform() == s.Platform.Mac))
                     {
-                        var bmp = new Bitmap(obj.GetIconBitmapBytes());
-                        pitem.imgIcon.Image = bmp;
+                        var imgdata = obj.GetIconBitmapBytes();
+                        if (imgdata.Length > 0)
+                        {
+                            var bmp = new Bitmap(imgdata);
+                            pitem.imgIcon.Image = bmp;
+                        }
                     }
                     pitem.txtName.Text = obj.GetDisplayName();
                     pitem.MouseDown += (sender, e) =>
@@ -1002,9 +1006,16 @@ namespace DWSIM.UI.Forms
                         var dobj = new DataObject();
                         dobj.SetString(obj.GetDisplayName(), "ObjectName");
                         dobj.Text = obj.GetDisplayName();
-                        using (var img = new Bitmap(pitem.imgIcon.Image, 40, 40, ImageInterpolation.High))
-                            pitem.DoDragDrop(dobj, DragEffects.Copy, img, new PointF(20, 20));
-                        e.Handled = true;
+                        if (pitem.imgIcon.Image != null)
+                        {
+                            using (var img = new Bitmap(pitem.imgIcon.Image, 40, 40, ImageInterpolation.High))
+                                pitem.DoDragDrop(dobj, DragEffects.Copy, img, new PointF(20, 20));
+                            e.Handled = true;
+                        }
+                        else {
+                            pitem.DoDragDrop(dobj, DragEffects.Copy);
+                            e.Handled = true;
+                        }
                     };
                     switch (obj.ObjectClass)
                     {

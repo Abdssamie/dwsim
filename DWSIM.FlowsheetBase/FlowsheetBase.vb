@@ -3096,6 +3096,9 @@ Imports DWSIM.ExtensionMethods
 
     Public Sub Initialize() Implements IFlowsheet.Initialize
 
+        Dim calculatorassembly = System.Reflection.Assembly.Load("DWSIM.Thermodynamics")
+        Dim unitopassembly = System.Reflection.Assembly.Load("DWSIM.UnitOperations")
+
         AddHandler AppDomain.CurrentDomain.AssemblyResolve, New ResolveEventHandler(AddressOf LoadFromExtensionsFolder)
 
         FileDatabaseProvider.CreateDatabase()
@@ -3113,9 +3116,6 @@ Imports DWSIM.ExtensionMethods
         AddExternalUOs()
         AddSystemsOfUnits()
         'AddDefaultProperties()
-
-        Dim calculatorassembly = System.Reflection.Assembly.Load("DWSIM.Thermodynamics")
-        Dim unitopassembly = System.Reflection.Assembly.Load("DWSIM.UnitOperations")
 
         If Not SupressDataLoading Then
 
