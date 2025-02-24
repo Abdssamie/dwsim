@@ -3030,23 +3030,26 @@ Public Class FormCompoundCreator
             Dim t0 As Integer = mycase.cp.Normal_Boiling_Point * 0.3
             Dim t1 As Integer = mycase.cp.Normal_Boiling_Point
             Dim stp As Integer = (t1 - t0) / 50
-            For T = t0 To t1 Step stp
-                x = SystemsOfUnits.Converter.ConvertFromSI(su.temperature, T)
-                px.Add(x)
-                y1 = SystemsOfUnits.Converter.ConvertFromSI(su.thermalConductivity, PROPS.condl_latini(T, mycase.cp.Normal_Boiling_Point,
+            If stp > 0 Then
+                For T = t0 To t1 Step stp
+                    x = SystemsOfUnits.Converter.ConvertFromSI(su.temperature, T)
+                    px.Add(x)
+                    y1 = SystemsOfUnits.Converter.ConvertFromSI(su.thermalConductivity, PROPS.condl_latini(T, mycase.cp.Normal_Boiling_Point,
                                                                                                        mycase.cp.Critical_Temperature,
                                                                                                         mycase.cp.Molar_Weight, "X"))
-                py1.Add(y1)
-                mytext.AppendLine(FormatNumber(x, 2) & vbTab & FormatNumber(y1, 2))
-            Next
-
-            With frc
-                .px = px
-                .py1 = py1
-                .ycurvetypes = New ArrayList(New Integer() {3})
-                .y1ctitle = "Regressed/Input Equation"
-                .title = "Liquid Thermal Conductivity"
-            End With
+                    py1.Add(y1)
+                    mytext.AppendLine(FormatNumber(x, 2) & vbTab & FormatNumber(y1, 2))
+                Next
+                With frc
+                    .px = px
+                    .py1 = py1
+                    .ycurvetypes = New ArrayList(New Integer() {3})
+                    .y1ctitle = "Regressed/Input Equation"
+                    .title = "Liquid Thermal Conductivity"
+                End With
+            Else
+                MessageBox.Show("Please enter the Normal Boiling Point of the compound.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         Else
             mytext.AppendLine("T" & vbTab & "yEXP" & vbTab & vbTab & "yCALC")
             mytext.AppendLine("[" & su.temperature & "]" & vbTab & "[" & su.thermalConductivity & "]" & vbTab & "[" & su.thermalConductivity & "]")
