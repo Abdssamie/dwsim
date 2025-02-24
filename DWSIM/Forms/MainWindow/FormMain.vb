@@ -150,10 +150,7 @@ Public Class FormMain
 
         MostRecentFiles = My.Settings.MostRecentFiles
 
-        ' Set default file picker
-        ' SharedClassesCSharp.FilePicker.FilePickerService.GetInstance().SetFilePickerFactory(Function() New Simulate365.FormFactories.S365FilePickerForm())
-
-        If GlobalSettings.Settings.OldUI Then
+        If Settings.OldUI Then
 
             calculatorassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
             unitopassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations")).FirstOrDefault

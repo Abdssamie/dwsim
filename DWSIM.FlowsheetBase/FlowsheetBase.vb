@@ -35,6 +35,8 @@ Imports DWSIM.ExtensionMethods
 
     Implements IFlowsheet, IFlowsheetCalculationQueue
 
+    Private Shared ObjectList As New Dictionary(Of String, Interfaces.ISimulationObject)
+
     Public Property SupressDataLoading As Boolean = False
 
     Public Property WeatherProvider As IWeatherProvider = New SharedClasses.WeatherProvider() Implements IFlowsheet.WeatherProvider
@@ -72,6 +74,8 @@ Imports DWSIM.ExtensionMethods
     Public Property AvailableSystemsOfUnits As New List(Of IUnitsOfMeasure) Implements IFlowsheet.AvailableSystemsOfUnits
 
     Public Property ExternalUnitOperations As New Dictionary(Of String, IExternalUnitOperation)
+
+    Public Property InternalUnitOperations As New Dictionary(Of String, IUnitOperation)
 
     Public Property GHGEmissionCompositions As Dictionary(Of String, IGHGComposition) = New Dictionary(Of String, IGHGComposition) Implements IFlowsheet.GHGEmissionCompositions
 
@@ -3117,6 +3121,30 @@ Imports DWSIM.ExtensionMethods
         AddSystemsOfUnits()
         'AddDefaultProperties()
 
+        calculatorassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
+        unitopassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations")).FirstOrDefault
+
+        If ObjectList.Count = 0 Then
+
+            Dim aTypeList As New List(Of Type)
+
+            aTypeList.AddRange(calculatorassembly.GetTypes().Where(Function(x) If(x.GetInterface("DWSIM.Interfaces.ISimulationObject") IsNot Nothing, True, False)))
+            aTypeList.AddRange(unitopassembly.GetTypes().Where(Function(x) If(x.GetInterface("DWSIM.Interfaces.ISimulationObject") IsNot Nothing And
+                                                                   Not x.IsAbstract And x.GetInterface("DWSIM.Interfaces.IExternalUnitOperation") Is Nothing, True, False)))
+
+            For Each item In aTypeList.OrderBy(Function(x) x.Name)
+                If Not item.IsAbstract Then
+                    Dim obj = DirectCast(Activator.CreateInstance(item), Interfaces.ISimulationObject)
+                    ObjectList.Add(obj.GetDisplayName(), obj)
+                End If
+            Next
+
+            For Each item In ExternalUnitOperations.Values.OrderBy(Function(x) x.Name)
+                ObjectList.Add(item.Name, item)
+            Next
+
+        End If
+
         If Not SupressDataLoading Then
 
             AddPropPacks()
@@ -3989,6 +4017,15 @@ Label_00CC:
         End Get
         Set(value As Dictionary(Of String, IExternalUnitOperation))
             ExternalUnitOperations = value
+        End Set
+    End Property
+
+    Public Property AvailableSimulationObjects As Dictionary(Of String, ISimulationObject) Implements IFlowsheet.AvailableSimulationObjects
+        Get
+            Return ObjectList
+        End Get
+        Set(value As Dictionary(Of String, ISimulationObject))
+            ObjectList = value
         End Set
     End Property
 

@@ -3823,6 +3823,15 @@ Public Class FormFlowsheet
         End Set
     End Property
 
+    Public Property AvailableSimulationObjects As Dictionary(Of String, ISimulationObject) Implements IFlowsheet.AvailableSimulationObjects
+        Get
+            Return My.Application.MainWindowForm.ObjectList
+        End Get
+        Set(value As Dictionary(Of String, ISimulationObject))
+            My.Application.MainWindowForm.ObjectList = value
+        End Set
+    End Property
+
     Public Property Scripts As Dictionary(Of String, IScript) Implements IFlowsheet.Scripts
         Get
             Return ScriptCollection
