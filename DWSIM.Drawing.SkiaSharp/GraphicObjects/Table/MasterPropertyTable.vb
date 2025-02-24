@@ -210,6 +210,8 @@ Namespace GraphicObjects.Tables
             End Set
         End Property
 
+        Public Property ObjectClass As String = ""
+
         Public Property HeaderText() As String = ""
 
 #End Region
