@@ -760,7 +760,7 @@ Public Class FormFlowsheet
         Catch ex As Exception
         End Try
 
-        If GlobalSettings.Settings.OldUI Then
+        If Settings.OldUI Then
 
             Dim path As String = My.Settings.BackupFolder + System.IO.Path.DirectorySeparatorChar + Me.Options.BackupFileName
 
@@ -870,12 +870,7 @@ Public Class FormFlowsheet
         Catch ex As Exception
         End Try
 
-        Dim fields = Me.GetType().GetProperties()
-
-        Try
-            UnloadExtenders()
-        Catch ex As Exception
-        End Try
+        UnloadExtenders()
 
         Try
             For Each item As ToolStripMenuItem In CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.DropDownItems
@@ -945,11 +940,14 @@ Public Class FormFlowsheet
         Catch ex As Exception
         End Try
 
-        Options.SelectedComponents = Nothing
-        Options.NotSelectedComponents = Nothing
-        Options.SelectedUnitSystem = Nothing
-        Options.SelectedUnitSystem1 = Nothing
-        Options = Nothing
+        Try
+            Options.SelectedComponents = Nothing
+            Options.NotSelectedComponents = Nothing
+            Options.SelectedUnitSystem = Nothing
+            Options.SelectedUnitSystem1 = Nothing
+            Options = Nothing
+        Catch ex As Exception
+        End Try
 
     End Sub
 
