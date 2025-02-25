@@ -72,8 +72,6 @@ Version 9.0.0
 - New: Added CPUI editor for Input objects #715
 - Changed: Optimized memory consumption
 - Changed: Reworked Rigorous Column initial estimates editor controls (Classic UI)
-- Changed: Removed KDB Cheric compound database source (not available anymore)
-- Changed: Removed KDB Cheric button from data regression utility (not available anymore)
 - Changed: Recycle Op now defaults to legacy mode solving
 - Bugfix: Nested Loops flash
 - Bugfix: Rigorous Column stage naming
