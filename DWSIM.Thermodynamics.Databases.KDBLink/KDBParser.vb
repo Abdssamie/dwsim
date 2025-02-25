@@ -11,7 +11,7 @@ Public Class KDBParser
 
         Dim ci As System.Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
 
-        Dim website As String = "https://www.cheric.org/research/kdb/hcprop/listcmp.php?componentsearch=" + HttpUtility.UrlEncode(searchstring)
+        Dim website As String = "https://14.52.99.236/research/kdb/hcprop/listcmp.php?componentsearch=" + HttpUtility.UrlEncode(searchstring)
 
         Dim siteUri As Uri = New Uri(website)
         Dim proxyUri As Uri = Net.WebRequest.GetSystemWebProxy.GetProxy(siteUri)
@@ -79,7 +79,7 @@ Public Class KDBParser
 
         Dim ci As System.Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
 
-        Dim website As String = "http://www.cheric.org/research/kdb/hcprop/showprop.php?cmpid=" + cid.ToString
+        Dim website As String = "https://14.52.99.236/research/kdb/hcprop/showprop.php?cmpid=" + cid.ToString
 
         Dim siteUri As Uri = New Uri(website)
         Dim proxyUri As Uri = Net.WebRequest.GetSystemWebProxy.GetProxy(siteUri)
@@ -225,7 +225,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=PVP&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=PVP&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -276,7 +276,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=CPG&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=CPG&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -319,7 +319,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=CPL&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=CPL&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -370,7 +370,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=VSG&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=VSG&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -421,7 +421,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=VSL&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=VSL&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -464,7 +464,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=THG&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=THG&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -507,7 +507,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=THL&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=THL&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -550,7 +550,7 @@ Public Class KDBParser
 
         If element.InnerText.Contains("Coeff.s Available") Then
 
-            website = "http://www.cheric.org/research/kdb/hcprop/showcoef.php?prop=THL&cmpid=" + cid.ToString
+            website = "https://14.52.99.236/research/kdb/hcprop/showcoef.php?prop=THL&cmpid=" + cid.ToString
 
             response = http.GetByteArrayAsync(website)
             response.Wait()
@@ -633,7 +633,7 @@ Public Class KDBParser
 
     Shared Function GetVLEData(vleid As Integer) As KDBVLEDataSet
 
-        Dim website = "http://www.cheric.org/research/kdb/hcvle/showvle.php?vleid=" + vleid.ToString
+        Dim website = "https://14.52.99.236/research/kdb/hcvle/showvle.php?vleid=" + vleid.ToString
 
         Dim ci As System.Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
 
@@ -692,7 +692,7 @@ Public Class KDBParser
 
         Dim ci As System.Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
 
-        Dim website As String = "http://www.cheric.org/research/kdb/hcvle/listvle.php?cno1=" + cid1.ToString + "&cno2=" + cid2.ToString
+        Dim website As String = "https://14.52.99.236/research/kdb/hcvle/listvle.php?cno1=" + cid1.ToString + "&cno2=" + cid2.ToString
 
         Dim siteUri As Uri = New Uri(website)
         Dim proxyUri As Uri = Net.WebRequest.GetSystemWebProxy.GetProxy(siteUri)

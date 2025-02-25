@@ -25,11 +25,11 @@ Partial Class FormDataRegression
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormDataRegression))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.graph = New ZedGraph.ZedGraphControl()
         Me.graph2 = New ZedGraph.ZedGraphControl()
         Me.gridstats = New System.Windows.Forms.DataGridView()
@@ -73,6 +73,15 @@ Partial Class FormDataRegression
         Me.btnDoReg = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.GridExpData = New System.Windows.Forms.DataGridView()
+        Me.check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coltl = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colts = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnTransfere = New System.Windows.Forms.Button()
         Me.btnSearchKDB = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -104,15 +113,6 @@ Partial Class FormDataRegression
         Me.cbCompound1 = New System.Windows.Forms.ComboBox()
         Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.GridExpData = New System.Windows.Forms.DataGridView()
-        Me.check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colx2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.coltl = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colts = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.cbCompound2 = New System.Windows.Forms.ComboBox()
         Me.cbDataType = New System.Windows.Forms.ComboBox()
         Me.cbModel = New System.Windows.Forms.ComboBox()
@@ -141,8 +141,8 @@ Partial Class FormDataRegression
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.Panel1.SuspendLayout()
-        CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
@@ -469,6 +469,67 @@ Partial Class FormDataRegression
         Me.Panel1.Controls.Add(Me.LabelWithDivider2)
         Me.Panel1.Name = "Panel1"
         '
+        'GridExpData
+        '
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.coltl, Me.colts, Me.colP})
+        Me.GridExpData.ContextMenuStrip = Me.ContextMenuStrip1
+        resources.ApplyResources(Me.GridExpData, "GridExpData")
+        Me.GridExpData.Name = "GridExpData"
+        Me.GridExpData.RowHeadersVisible = False
+        '
+        'check
+        '
+        Me.check.DefaultCellStyle = DataGridViewCellStyle3
+        Me.check.FillWeight = 60.9137!
+        resources.ApplyResources(Me.check, "check")
+        Me.check.Name = "check"
+        Me.check.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.check.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'colx1
+        '
+        Me.colx1.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colx1, "colx1")
+        Me.colx1.Name = "colx1"
+        '
+        'colx2
+        '
+        Me.colx2.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colx2, "colx2")
+        Me.colx2.Name = "colx2"
+        '
+        'coly1
+        '
+        Me.coly1.FillWeight = 107.8173!
+        resources.ApplyResources(Me.coly1, "coly1")
+        Me.coly1.Name = "coly1"
+        '
+        'colT
+        '
+        Me.colT.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colT, "colT")
+        Me.colT.Name = "colT"
+        '
+        'coltl
+        '
+        resources.ApplyResources(Me.coltl, "coltl")
+        Me.coltl.Name = "coltl"
+        '
+        'colts
+        '
+        resources.ApplyResources(Me.colts, "colts")
+        Me.colts.Name = "colts"
+        '
+        'colP
+        '
+        Me.colP.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colP, "colP")
+        Me.colP.Name = "colP"
+        '
         'btnTransfere
         '
         resources.ApplyResources(Me.btnTransfere, "btnTransfere")
@@ -688,67 +749,6 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.Label4, "Label4")
         Me.Label4.Name = "Label4"
         '
-        'GridExpData
-        '
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
-        Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.coltl, Me.colts, Me.colP})
-        Me.GridExpData.ContextMenuStrip = Me.ContextMenuStrip1
-        resources.ApplyResources(Me.GridExpData, "GridExpData")
-        Me.GridExpData.Name = "GridExpData"
-        Me.GridExpData.RowHeadersVisible = False
-        '
-        'check
-        '
-        Me.check.DefaultCellStyle = DataGridViewCellStyle3
-        Me.check.FillWeight = 60.9137!
-        resources.ApplyResources(Me.check, "check")
-        Me.check.Name = "check"
-        Me.check.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.check.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'colx1
-        '
-        Me.colx1.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colx1, "colx1")
-        Me.colx1.Name = "colx1"
-        '
-        'colx2
-        '
-        Me.colx2.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colx2, "colx2")
-        Me.colx2.Name = "colx2"
-        '
-        'coly1
-        '
-        Me.coly1.FillWeight = 107.8173!
-        resources.ApplyResources(Me.coly1, "coly1")
-        Me.coly1.Name = "coly1"
-        '
-        'colT
-        '
-        Me.colT.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colT, "colT")
-        Me.colT.Name = "colT"
-        '
-        'coltl
-        '
-        resources.ApplyResources(Me.coltl, "coltl")
-        Me.coltl.Name = "coltl"
-        '
-        'colts
-        '
-        resources.ApplyResources(Me.colts, "colts")
-        Me.colts.Name = "colts"
-        '
-        'colP
-        '
-        Me.colP.FillWeight = 107.8173!
-        resources.ApplyResources(Me.colP, "colP")
-        Me.colP.Name = "colP"
-        '
         'cbCompound2
         '
         Me.cbCompound2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
@@ -916,8 +916,8 @@ Partial Class FormDataRegression
         Me.GroupBox2.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.gridInEst, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
