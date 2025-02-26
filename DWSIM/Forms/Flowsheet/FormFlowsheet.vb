@@ -717,11 +717,17 @@ Public Class FormFlowsheet
         Catch ex As Exception
         End Try
 
-        Me.ProcessScripts(Enums.Scripts.EventType.SimulationClosed, Enums.Scripts.ObjectType.Simulation, "")
+        Try
+            Me.ProcessScripts(Enums.Scripts.EventType.SimulationClosed, Enums.Scripts.ObjectType.Simulation, "")
+        Catch ex As Exception
+        End Try
 
-        If My.Application.ActiveSimulation Is Me Then
-            My.Application.ActiveSimulation = Nothing
-        End If
+        Try
+            If My.Application.ActiveSimulation Is Me Then
+                My.Application.ActiveSimulation = Nothing
+            End If
+        Catch ex As Exception
+        End Try
 
         'dispose objects
 
@@ -761,25 +767,23 @@ Public Class FormFlowsheet
         End Try
 
         If Settings.OldUI Then
-
-            Dim path As String = My.Settings.BackupFolder + System.IO.Path.DirectorySeparatorChar + Me.Options.BackupFileName
-
-            If My.Settings.BackupFiles.Contains(path) Then
-                My.Settings.BackupFiles.Remove(path)
-                If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
-                Try
-                    If File.Exists(path) Then File.Delete(path)
-                Catch ex As Exception
-                End Try
-            End If
-
+            Try
+                Dim path As String = My.Settings.BackupFolder + System.IO.Path.DirectorySeparatorChar + Me.Options.BackupFileName
+                If My.Settings.BackupFiles.Contains(path) Then
+                    My.Settings.BackupFiles.Remove(path)
+                    If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
+                    Try
+                        If File.Exists(path) Then File.Delete(path)
+                    Catch ex As Exception
+                    End Try
+                End If
+            Catch ex As Exception
+            End Try
         End If
 
         Try
             Dim cnt As Integer = My.Application.MainWindowForm.MdiChildren.Length
-
             If cnt = 0 Then
-
                 My.Application.MainWindowForm.ToolStripButton1.Enabled = False
                 My.Application.MainWindowForm.SaveFileS365.Enabled = False
                 My.Application.MainWindowForm.SaveToolStripButton.Enabled = False
@@ -787,9 +791,7 @@ Public Class FormFlowsheet
                 My.Application.MainWindowForm.SaveToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.SaveAsToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.ToolStripButton1.Enabled = False
-
             Else
-
                 My.Application.MainWindowForm.ToolStripButton1.Enabled = True
                 My.Application.MainWindowForm.SaveFileS365.Enabled = True
                 My.Application.MainWindowForm.SaveToolStripButton.Enabled = True
