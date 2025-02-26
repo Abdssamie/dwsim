@@ -6,7 +6,6 @@ namespace DWSIM.Logging
 {
     public class Logger
     {
-
         private enum Platform
         {
             Windows,
@@ -18,23 +17,39 @@ namespace DWSIM.Logging
 
         private static bool initialized = false;
 
-        private static void Initialize()
+        static Logger()
         {
+            Initialize(InitializeFilesystemLogs);
+        }
 
-            if (initialized) return;
-
-            var logfiledir = "";
-            if (RunningPlatform() == Platform.Mac)
-            {
-                logfiledir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Documents", "DWSIM Application Data");
-            }
-            else
-            {
-                logfiledir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "DWSIM Application Data");
-            }
-            if (!Directory.Exists(logfiledir)) Directory.CreateDirectory(logfiledir);
+        public static void Initialize(Action<NLog.Config.LoggingConfiguration> configFactory, bool overrideExisting = false)
+        {
+            if (initialized && !overrideExisting) 
+                return;
 
             var config = new NLog.Config.LoggingConfiguration();
+
+            configFactory(config);
+
+            // Apply config           
+            NLog.LogManager.Configuration = config;
+
+            logger = NLog.LogManager.GetCurrentClassLogger();
+
+            initialized = true;
+        }
+
+        private static void InitializeFilesystemLogs(NLog.Config.LoggingConfiguration config)
+        {
+            var logfiledir = "";
+
+            if (RunningPlatform() == Platform.Mac)
+                logfiledir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Documents", "DWSIM Application Data");
+            else
+                logfiledir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "DWSIM Application Data");
+
+            if (!Directory.Exists(logfiledir))
+                Directory.CreateDirectory(logfiledir);
 
             // Targets where to log to: File and Console
             var logfile = new NLog.Targets.FileTarget("logfile") { FileName = Path.Combine(logfiledir, "errors.log") };
@@ -43,37 +58,25 @@ namespace DWSIM.Logging
 
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
-
-            // Apply config           
-            NLog.LogManager.Configuration = config;
-
-            logger = NLog.LogManager.GetCurrentClassLogger();
-
-            initialized = true;
-
         }
 
         public static void LogError(string message, Exception ex)
         {
-            Initialize();
             logger.Error(ex, message);
         }
 
         public static void LogUnhandled(string message, Exception ex)
         {
-            Initialize();
             logger.Fatal(ex, message);
         }
 
         public static void LogWarning(string message, Exception ex)
         {
-            Initialize();
             logger.Warn(ex, message);
         }
 
         public static void LogInfo(string message)
         {
-            Initialize();
             logger.Info(message);
         }
 
