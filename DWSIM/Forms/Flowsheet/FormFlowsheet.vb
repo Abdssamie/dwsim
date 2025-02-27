@@ -263,11 +263,6 @@ Public Class FormFlowsheet
         Me.COObjTSMI.Checked = Me.Options.FlowsheetShowCOReportsWindow
         Me.varpaneltsmi.Checked = Me.Options.FlowsheetShowWatchWindow
 
-        Dim rand As New Random
-        Dim str As String = rand.Next(10000000, 99999999)
-
-        Me.Options.BackupFileName = str & ".dwbcs"
-
         Me.FormSurface.TSTBZoom.Text = Format(Me.FormSurface.FlowsheetSurface.Zoom, "#%")
 
         If GlobalSettings.Settings.CalculatorActivated Then
@@ -803,7 +798,7 @@ Public Class FormFlowsheet
                 Dim path As String = My.Settings.BackupFolder + System.IO.Path.DirectorySeparatorChar + Me.Options.BackupFileName
                 If My.Settings.BackupFiles.Contains(path) Then
                     My.Settings.BackupFiles.Remove(path)
-                    If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
+                    My.Settings.Save()
                     Try
                         If File.Exists(path) Then File.Delete(path)
                     Catch ex As Exception

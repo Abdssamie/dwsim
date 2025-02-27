@@ -137,14 +137,14 @@ namespace DWSIM.UI.Desktop.Editors
                 if (GlobalSettings.Settings.OldUI)
                 {
                     IFilePicker filePickerForm = FilePickerService.GetInstance().GetFilePicker();
-                    IVirtualFile handler = filePickerForm.ShowOpenDialog(new List<FilePickerAllowedType> { new FilePickerAllowedType("JSON File", "*.json")});
+                    IVirtualFile handler = filePickerForm.ShowOpenDialog(new List<FilePickerAllowedType> { new FilePickerAllowedType("JSON File", "*.json") });
                     if (handler != null)
                     {
                         try
                         {
                             comp = Newtonsoft.Json.JsonConvert.DeserializeObject<DWSIM.Thermodynamics.BaseClasses.ConstantProperties>(handler.ReadAllText());
                             estimatefromunifac = false;
-                           MessageBox.Show("Data successfully loaded from JSON file.", "Information", MessageBoxButtons.OK, MessageBoxType.Information, MessageBoxDefaultButton.OK);
+                            MessageBox.Show("Data successfully loaded from JSON file.", "Information", MessageBoxButtons.OK, MessageBoxType.Information, MessageBoxDefaultButton.OK);
                         }
                         catch (Exception ex)
                         {
@@ -176,11 +176,8 @@ namespace DWSIM.UI.Desktop.Editors
 
             page1.ContentContainer.Content = dl;
             page1.SetFontAndPadding();
-            if (GlobalSettings.Settings.OldUI)
-            {
-                page1.Width = Width;
-                page1.Height = Height;
-            };
+            page1.Width = Width;
+            page1.Height = Height;
             page1.Show();
             c.Center(page1);
 
@@ -274,6 +271,8 @@ namespace DWSIM.UI.Desktop.Editors
 
             page2.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
             page2.SetFontAndPadding();
+            page2.Width = Width;
+            page2.Height = Height;
             page2.Show();
             c.Center(page2);
 
@@ -450,6 +449,8 @@ namespace DWSIM.UI.Desktop.Editors
 
             page2.ContentContainer.Content =new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
             page2.SetFontAndPadding();
+            page2.Width = Width;
+            page2.Height = Height;
             page2.Show();
             c.Center(page2);
 
@@ -482,7 +483,7 @@ namespace DWSIM.UI.Desktop.Editors
             page.Title = "Compound Creator Wizard";
             page.HeaderTitle = "Step 3 - UNIFAC Structure";
             page.HeaderDescription = "Enter UNIFAC structure information, if available.";
-            page.FooterText = "";            
+            page.FooterText = "";
 
             page.Init(Width, Height);
 
@@ -505,6 +506,8 @@ namespace DWSIM.UI.Desktop.Editors
 
             page.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
             page.SetFontAndPadding();
+            page.Width = Width;
+            page.Height = Height;
             page.Show();
             c.Center(page);
 
@@ -632,6 +635,8 @@ namespace DWSIM.UI.Desktop.Editors
 
             page.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
             page.SetFontAndPadding();
+            page.Width = Width;
+            page.Height = Height;
             page.Show();
             c.Center(page);
 
@@ -833,6 +838,8 @@ namespace DWSIM.UI.Desktop.Editors
 
             page.ContentContainer.Content = dl;
             page.SetFontAndPadding();
+            page.Width = Width;
+            page.Height = Height;
             page.Show();
             c.Center(page);
 
@@ -993,6 +1000,8 @@ namespace DWSIM.UI.Desktop.Editors
 
             page.ContentContainer.Content = dl;
             page.SetFontAndPadding();
+            page.Width = Width;
+            page.Height = Height;
             page.Show();
             c.Center(page);
 

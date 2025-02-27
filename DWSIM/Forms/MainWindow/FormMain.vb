@@ -5008,11 +5008,18 @@ Label_00CC:
             Dim path As String = ""
             For Each form0 As Form In Me.MdiChildren
                 If TypeOf form0 Is FormFlowsheet Then
-                    path = folder + IO.Path.DirectorySeparatorChar + CType(form0, FormFlowsheet).Options.BackupFileName
-                    Me.SaveXMLZIP(New SharedClassesCSharp.FilePicker.Windows.WindowsFile(path), form0)
+                    Dim fs = DirectCast(form0, FormFlowsheet)
+                    Dim oldname = fs.Options.BackupFileName
+                    Dim oldpath = folder + IO.Path.DirectorySeparatorChar + fs.Options.BackupFileName
+                    fs.Options.BackupFileName = IO.Path.GetFileNameWithoutExtension(fs.Options.FilePath) + Date.Now.ToString("_backup_yyyyMMdd_HHmmss") + ".dwbcs"
+                    path = folder + IO.Path.DirectorySeparatorChar + fs.Options.BackupFileName
+                    Me.SaveXMLZIP(New WindowsFile(path), form0)
+                    If My.Settings.BackupFiles.Contains(oldpath) Then
+                        My.Settings.BackupFiles.Remove(oldpath)
+                    End If
                     If Not My.Settings.BackupFiles.Contains(path) Then
                         My.Settings.BackupFiles.Add(path)
-                        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
+                        My.Settings.Save()
                     End If
                 End If
             Next
