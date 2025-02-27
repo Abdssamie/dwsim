@@ -774,8 +774,9 @@ Namespace UnitOperations
                                                 Else
                                                     SR = ThermalProfile.SolarRadiationAbsorptionEfficiency * ThermalProfile.SolarRadiationValue_kWh_m2
                                                 End If
+                                                Dim Asec = Math.PI * .Comprimento / .Incrementos * .DE * 0.0254
                                                 Dim tflux = (Math.PI * (.DE * 0.0254) ^ 2 / 4) * .Comprimento / .Incrementos / ims.GetVolumetricFlow()
-                                                Qrad = SR / tflux * A
+                                                Qrad = SR / tflux * Asec
                                                 DQ += Qrad
                                                 DQmax += Qrad
                                                 results.Absorbed_Radiation = Qrad

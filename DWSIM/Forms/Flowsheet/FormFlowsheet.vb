@@ -467,7 +467,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        FileTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            FileTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            FileTSMI.DropDownItems.Add(exttsmi)
+                                        End Try
                                     Else
                                         FileTSMI.DropDownItems.Add(exttsmi)
                                     End If
@@ -475,7 +479,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        EditTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            EditTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            EditTSMI.DropDownItems.Add(exttsmi)
+                                        End Try
                                     Else
                                         EditTSMI.DropDownItems.Add(exttsmi)
                                     End If
@@ -483,7 +491,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        ToolsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            ToolsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            ToolsTSMI.DropDownItems.Add(exttsmi)
+                                        End Try
                                     Else
                                         ToolsTSMI.DropDownItems.Add(exttsmi)
                                     End If
@@ -491,7 +503,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        DynamicsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            DynamicsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            DynamicsTSMI.DropDownItems.Add(exttsmi)
+                                        End Try
                                     Else
                                         DynamicsTSMI.DropDownItems.Add(exttsmi)
                                     End If
@@ -499,7 +515,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        OptimizationTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            OptimizationTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            OptimizationTSMI.DropDownItems.Add(exttsmi)
+                                        End Try
                                     Else
                                         OptimizationTSMI.DropDownItems.Add(exttsmi)
                                     End If
@@ -507,7 +527,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        ResultsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            ResultsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            ResultsTSMI.DropDownItems.Add(exttsmi)
+                                        End Try
                                     Else
                                         ResultsTSMI.DropDownItems.Add(exttsmi)
                                     End If
@@ -515,7 +539,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        UtilitiesTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            UtilitiesTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            UtilitiesTSMI.DropDownItems.Add(exttsmi)
+                                        End Try
                                     Else
                                         UtilitiesTSMI.DropDownItems.Add(exttsmi)
                                     End If
@@ -525,7 +553,11 @@ Public Class FormFlowsheet
                                     If item.InsertAtPosition >= 0 Then
                                         exttsmi.MergeAction = MergeAction.Insert
                                         exttsmi.MergeIndex = item.InsertAtPosition
-                                        ToolStrip1.Items.Insert(item.InsertAtPosition, exttsmi)
+                                        Try
+                                            ToolStrip1.Items.Insert(item.InsertAtPosition, exttsmi)
+                                        Catch ex As Exception
+                                            ToolStrip1.Items.Add(exttsmi)
+                                        End Try
                                     Else
                                         ToolStrip1.Items.Add(exttsmi)
                                     End If
