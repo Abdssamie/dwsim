@@ -283,7 +283,7 @@ Public Class FormMain
                                 newmenuitem.Text = extender.DisplayText
                                 newmenuitem.DisplayStyle = ToolStripItemDisplayStyle.Text
                                 If TypeOf extender Is IExtenderCollection2 Then
-                                    DirectCast(extender, IExtenderCollection2).SetMenuItem(extender)
+                                    DirectCast(extender, IExtenderCollection2).SetMenuItem(newmenuitem)
                                 End If
                             End If
                         End If
