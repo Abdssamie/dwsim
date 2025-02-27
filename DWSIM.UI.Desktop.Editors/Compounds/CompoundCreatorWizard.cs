@@ -42,7 +42,7 @@ namespace DWSIM.UI.Desktop.Editors
         private bool estimatefromunifac = true;
         private bool searchonline = false;
 
-        private bool foundchemeo = false;
+        private bool foundkdb = false, foundchemeo = false, foundddb = false;
 
         private string nf = "";
         private IUnitsOfMeasure su;
@@ -174,10 +174,21 @@ namespace DWSIM.UI.Desktop.Editors
                 }
             });
 
-            page1.ContentContainer.Content = dl;
-            page1.SetFontAndPadding();
-            page1.Width = Width;
-            page1.Height = Height;
+            if (GlobalSettings.Settings.OldUI)
+            {
+                page1.Width = Width;
+                page1.Height = Height;
+            };
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page1.SuspendLayout();
+                page1.ContentContainer.Add(dl);
+                page1.ResumeLayout();
+            }
+            else {
+                page1.ContentContainer.Content = dl;
+                page1.SetFontAndPadding();
+            }
             page1.Show();
             c.Center(page1);
 
@@ -266,13 +277,21 @@ namespace DWSIM.UI.Desktop.Editors
                 dl.CreateAndAddEmptySpace();
                 dl.CreateAndAddEmptySpace();
                 dl.CreateAndAddCheckBoxRow("Search Online Databases for Compound Data", searchonline, (sender, e) => searchonline = sender.Checked.GetValueOrDefault());
-                dl.CreateAndAddLabelRow2("This will search selected online thermodynamic databases (Cheméo) for compound data according to its name and/or CAS ID.");
+                dl.CreateAndAddLabelRow2("This will search selected online thermodynamic databases (KDB and Cheméo) for compound data according to its name and/or CAS ID.");
             }
 
-            page2.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
-            page2.SetFontAndPadding();
-            page2.Width = Width;
-            page2.Height = Height;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page2.SuspendLayout();
+                page2.ContentContainer.Add(new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width });
+                page2.ResumeLayout();
+            }
+            else
+            {
+                page2.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
+                page2.SetFontAndPadding();
+            }
+
             page2.Show();
             c.Center(page2);
 
@@ -308,7 +327,11 @@ namespace DWSIM.UI.Desktop.Editors
             page2.Title = "Compound Creator Wizard";
             page2.HeaderTitle = "Step 3 - Compound Properties";
             page2.HeaderDescription = "Define the basic properties of the compound.";
-            if (foundchemeo)
+            if (foundkdb)
+            {
+                page2.FooterText = "DWSIM found compound data at KDB Online Database, check non-empty/non-zeroed fields.";
+            }
+            else if (foundchemeo)
             {
                 page2.FooterText = "DWSIM found compound data at Cheméo Online Database, check non-empty/non-zeroed fields.";
             }
@@ -447,10 +470,18 @@ namespace DWSIM.UI.Desktop.Editors
                     break;
             }
 
-            page2.ContentContainer.Content =new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
-            page2.SetFontAndPadding();
-            page2.Width = Width;
-            page2.Height = Height;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page2.SuspendLayout();
+                page2.ContentContainer.Add(new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width });
+                page2.ResumeLayout();
+            }
+            else
+            {
+                page2.ContentContainer.Content =new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
+                page2.SetFontAndPadding();
+            }
+
             page2.Show();
             c.Center(page2);
 
@@ -504,10 +535,18 @@ namespace DWSIM.UI.Desktop.Editors
                 });
             }
 
-            page.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
-            page.SetFontAndPadding();
-            page.Width = Width;
-            page.Height = Height;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page.SuspendLayout();
+                page.ContentContainer.Add(new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width });
+                page.ResumeLayout();
+            }
+            else
+            {
+                page.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
+                page.SetFontAndPadding();
+            }
+
             page.Show();
             c.Center(page);
 
@@ -540,7 +579,11 @@ namespace DWSIM.UI.Desktop.Editors
             page.Title = "Compound Creator Wizard";
             page.HeaderTitle = "Step 4 - Constant Properties";
             page.HeaderDescription = "Enter the required information.";
-            if (!estimatefromunifac && foundchemeo)
+            if (!estimatefromunifac && foundkdb)
+            {
+                page.FooterText = "DWSIM found compound data at KDB Online Database, check non-empty/non-zeroed fields.";
+            }
+            else if (!estimatefromunifac && foundchemeo)
             {
                 page.FooterText = "DWSIM found compound data at Cheméo Online Database, check non-empty/non-zeroed fields.";
             }
@@ -633,10 +676,18 @@ namespace DWSIM.UI.Desktop.Editors
                 if (c.IsValidDouble(arg1.Text)) comp.EnthalpyOfFusionAtTf = arg1.Text.ToDoubleFromCurrent();
             });
 
-            page.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
-            page.SetFontAndPadding();
-            page.Width = Width;
-            page.Height = Height;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page.SuspendLayout();
+                page.ContentContainer.Add(new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width });
+                page.ResumeLayout();
+            }
+            else
+            {
+                page.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
+                page.SetFontAndPadding();
+            }
+
             page.Show();
             c.Center(page);
 
@@ -836,10 +887,18 @@ namespace DWSIM.UI.Desktop.Editors
             escp.Visible = false;
             escp.PlaceholderText = "T in K, Cp in kJ/[kg.K]";
 
-            page.ContentContainer.Content = dl;
-            page.SetFontAndPadding();
-            page.Width = Width;
-            page.Height = Height;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page.SuspendLayout();
+                page.ContentContainer.Add(dl);
+                page.ResumeLayout();
+            }
+            else
+            {
+                page.ContentContainer.Content = dl;
+                page.SetFontAndPadding();
+            }
+
             page.Show();
             c.Center(page);
 
@@ -998,10 +1057,18 @@ namespace DWSIM.UI.Desktop.Editors
                 dl.CreateAndAddLabelRow2("Adds the compound to the current simulation.");
             }
 
-            page.ContentContainer.Content = dl;
-            page.SetFontAndPadding();
-            page.Width = Width;
-            page.Height = Height;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page.SuspendLayout();
+                page.ContentContainer.Add(dl);
+                page.ResumeLayout();
+            }
+            else
+            {
+                page.ContentContainer.Content = dl;
+                page.SetFontAndPadding();
+            }
+
             page.Show();
             c.Center(page);
 
@@ -1046,10 +1113,23 @@ namespace DWSIM.UI.Desktop.Editors
             facdata = null;
 
             foundchemeo = false;
+            foundkdb = false;
 
             string searchterm = "";
 
             if (comp.CAS_Number != "") searchterm = comp.CAS_Number; else searchterm = comp.Name;
+
+            var t1 = Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    var cids = Thermodynamics.Databases.KDBLink.KDBParser.GetCompoundIDs(searchterm, false);
+                    kdbc = Thermodynamics.Databases.KDBLink.KDBParser.GetCompoundData(int.Parse(cids[0][0]));
+                }
+                catch (Exception ex){
+                    Console.WriteLine(ex.ToString());
+                }
+            });
 
             var t2 = Task.Factory.StartNew(async () =>
             {
@@ -1058,12 +1138,38 @@ namespace DWSIM.UI.Desktop.Editors
                     var cids = await Thermodynamics.Databases.ChemeoLink.ChemeoParser.GetCompoundIDs(comp.Name, false);
                     chemeoc = Thermodynamics.Databases.ChemeoLink.ChemeoParser.GetCompoundData(cids[0][0]);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             });
 
-            Task.WaitAll(new[] { t2 }, 20000);
+            Task.WaitAll(new[] { t1, t2 }, 20000);
 
-            if (chemeoc != null)
+            Task.WaitAll(new[] { t1, t2 }, 20000);
+
+            if (kdbc != null && chemeoc == null)
+            {
+                if (comp.Formula == "") comp.Formula = kdbc.Formula;
+                if (comp.CAS_Number == "") comp.CAS_Number = kdbc.CAS_Number;
+                comp.Molar_Weight = kdbc.Molar_Weight;
+                comp.Normal_Boiling_Point = kdbc.Normal_Boiling_Point;
+                comp.NBP = kdbc.NBP;
+                comp.TemperatureOfFusion = kdbc.TemperatureOfFusion;
+                comp.Critical_Temperature = kdbc.Critical_Temperature;
+                comp.Critical_Pressure = kdbc.Critical_Pressure;
+                comp.Critical_Volume = kdbc.Critical_Volume;
+                comp.Critical_Compressibility = kdbc.Critical_Compressibility;
+                comp.Acentric_Factor = kdbc.Acentric_Factor;
+                comp.Z_Rackett = kdbc.Z_Rackett;
+                comp.IG_Enthalpy_of_Formation_25C = kdbc.IG_Enthalpy_of_Formation_25C;
+                comp.IG_Entropy_of_Formation_25C = kdbc.IG_Entropy_of_Formation_25C;
+                comp.IG_Gibbs_Energy_of_Formation_25C = kdbc.IG_Gibbs_Energy_of_Formation_25C;
+                comp.UNIQUAC_Q = kdbc.UNIQUAC_Q;
+                comp.UNIQUAC_R = kdbc.UNIQUAC_R;
+                foundkdb = true;
+            }
+            else if (chemeoc != null)
             {
                 if (comp.Formula == "") comp.Formula = chemeoc.Formula;
                 if (comp.CAS_Number == "") comp.CAS_Number = chemeoc.CAS_Number;

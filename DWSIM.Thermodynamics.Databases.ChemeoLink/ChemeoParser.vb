@@ -1,24 +1,17 @@
-﻿Imports HtmlAgilityPack
-Imports System.Net.Http
+﻿Imports System.Net.Http
 Imports System.Net
-Imports System.Text
-Imports System.Web
 Imports System.Threading.Tasks
-Imports System.Web.Script.Serialization
-Imports System.Globalization
 
 Public Class ChemeoParser
 
     Shared Async Function GetCompoundIDs(searchstring As String, exact As Boolean) As Task(Of List(Of String()))
 
-        Dim url As String = "https://www.chemeo.com/api/v1/search?q=" & HttpUtility.UrlEncode(searchstring)
+        Dim url As String = "https://www.chemeo.com/api/v1/search?q=" & WebUtility.UrlEncode(searchstring)
 
         Dim response As HttpResponseMessage = Await GetResponse(url)
         If response.IsSuccessStatusCode Then
-            Dim jss As New JavaScriptSerializer()
-            jss.MaxJsonLength = 10 * 1024 * 1024
             Dim json As String = Await response.Content.ReadAsStringAsync()
-            Dim result = jss.Deserialize(Of SearchResponse)(json)
+            Dim result = Newtonsoft.Json.JsonConvert.DeserializeObject(Of SearchResponse)(json)
             Dim resultFilter = If(exact,
                 Function(x As Compound) String.Equals(x.Compound, searchstring, StringComparison.OrdinalIgnoreCase),
                 Function(x As Compound) True)
@@ -36,16 +29,14 @@ Public Class ChemeoParser
 
     Shared Function GetCompoundData2(cid As String) As BaseClasses.ConstantProperties
 
-        Dim url As String = "https://www.chemeo.com/api/v1/cid/" & HttpUtility.UrlEncode(cid)
+        Dim url As String = "https://www.chemeo.com/api/v1/cid/" & WebUtility.UrlEncode(cid)
 
         Dim cdata As CompoundData
 
         Dim response As HttpResponseMessage = GetResponse(url).GetAwaiter().GetResult()
         If response.IsSuccessStatusCode Then
-            Dim jss As New JavaScriptSerializer()
-            jss.MaxJsonLength = 10 * 1024 * 1024
             Dim json As String = response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-            cdata = jss.Deserialize(Of CompoundData)(json)
+            cdata = Newtonsoft.Json.JsonConvert.DeserializeObject(Of CompoundData)(json)
         Else
             Throw New Exception("unable to parse output")
         End If

@@ -19,6 +19,7 @@ using DWSIM.UI.Shared;
 using DWSIM.ExtensionMethods;
 using System.IO;
 using DWSIM.Thermodynamics.PropertyPackages;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DWSIM.UI.Desktop.Editors
 {
@@ -76,7 +77,17 @@ namespace DWSIM.UI.Desktop.Editors
             dl.CreateAndAddLabelRow2("You can close this wizard at your will. Many other (advanced) settings can be configured by using the appropriate editors, which can be found in the 'Setup' menu item.");
             dl.CreateAndAddLabelRow2("Click 'Next' to continue.");
 
-            page1.ContentContainer.Content = dl;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page1.SuspendLayout();
+                page1.ContentContainer.Add(dl);
+                page1.ResumeLayout();
+            }
+            else
+            {
+                page1.ContentContainer.Content = dl;
+            }
+
             page1.Show();
             page1.Center();
 
@@ -107,7 +118,17 @@ namespace DWSIM.UI.Desktop.Editors
 
             new Compounds(flowsheet, tl);
 
-            page1.ContentContainer.Content = tl;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page1.SuspendLayout();
+                page1.ContentContainer.Add(tl);
+                page1.ResumeLayout();
+            }
+            else
+            {
+                page1.ContentContainer.Content = tl;
+            }
+
             page1.Show();
             page1.Center();
 
@@ -256,7 +277,16 @@ namespace DWSIM.UI.Desktop.Editors
             {
                 dl.Height = Height;
                 dl.Width = Width;
-                page.ContentContainer.Content = dl;
+                if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+                {
+                    page.SuspendLayout();
+                    page.ContentContainer.Add(dl);
+                    page.ResumeLayout();
+                }
+                else
+                {
+                    page.ContentContainer.Content = dl;
+                }
             }
             page.Show();
             page.Center();
@@ -323,7 +353,17 @@ namespace DWSIM.UI.Desktop.Editors
 
             c.CreateAndAddDescriptionRow(dl, "Select the formatting scheme for compound amounts in Material Stream reports.");
 
-            page.ContentContainer.Content = dl;
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Mac)
+            {
+                page.SuspendLayout();
+                page.ContentContainer.Add(dl);
+                page.ResumeLayout();
+            }
+            else
+            {
+                page.ContentContainer.Content = dl;
+            }
+
             page.Show();
             page.Center();
 

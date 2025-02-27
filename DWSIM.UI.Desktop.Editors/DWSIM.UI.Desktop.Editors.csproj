@@ -262,6 +262,10 @@
       <Project>{edb0b095-ff87-4b07-a06f-e314c45d73d4}</Project>
       <Name>DWSIM.Thermodynamics.Databases.ChemeoLink</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DWSIM.Thermodynamics.Databases.KDBLink\DWSIM.Thermodynamics.Databases.KDBLink.vbproj">
+      <Project>{fea05ae3-5ee2-4a7b-88b3-1a4f9000ea08}</Project>
+      <Name>DWSIM.Thermodynamics.Databases.KDBLink</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DWSIM.Thermodynamics.ThermoC\DWSIM.Thermodynamics.ThermoC.csproj">
       <Project>{da169354-7c6f-437a-8c32-1a2cb84eab5a}</Project>
       <Name>DWSIM.Thermodynamics.ThermoC</Name>
