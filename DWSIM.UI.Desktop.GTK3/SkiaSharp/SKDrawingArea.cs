@@ -93,7 +93,7 @@ namespace DWSIM.UI.Desktop.GTK3.SkiaSharp
             if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Windows)
                 dpi = 1.0f/Display.PrimaryMonitor.ScaleFactor;
             else
-                dpi = 1.0f/((float)Gdk.Screen.Default.Resolution / 72f);
+                dpi = 1.0f/((float)Gdk.Screen.Default.Resolution / 96f);
             cr.Scale(dpi, dpi);
             cr.SetSourceSurface(pix, 0, 0);
             cr.Paint();
@@ -150,7 +150,7 @@ namespace DWSIM.UI.Desktop.GTK3.SkiaSharp
             if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Windows)
                 dpi = Display.PrimaryMonitor.ScaleFactor;
             else
-                dpi = (float)Gdk.Screen.Default.Resolution / 72f;
+                dpi = (float)Gdk.Screen.Default.Resolution / 96f;
             Gdk.Rectangle allocation = base.Allocation;
             int width = (int)(allocation.Width * dpi);
             int height = (int)(allocation.Height * dpi);

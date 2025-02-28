@@ -1070,7 +1070,7 @@ namespace DWSIM.UI.Forms
                 }
             }
 
-            if (Application.Instance.Platform.IsWpf)
+            if (Application.Instance.Platform.IsWpf || Application.Instance.Platform.IsGtk)
             {
                 FlowsheetControl.DragEnter += (s, e) =>
                 {
@@ -1854,7 +1854,7 @@ namespace DWSIM.UI.Forms
 
                 Task.Delay(2000).ContinueWith((t) =>
                 {
-                    if (!called1) Application.Instance.Invoke(() => { FlowsheetObject.SetGTKDragDest.Invoke(); called1 = true; });
+                    if (!called1) Application.Instance.Invoke(() => { FlowsheetObject.SetGTKDragDest?.Invoke(); called1 = true; });
                 });
             }
             else

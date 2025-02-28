@@ -271,7 +271,7 @@ namespace DWSIM.UI.Desktop.Editors
 
             if (Application.Instance.Platform.IsGtk)
             {
-                page.ContentContainer.Add(new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width });
+                page.ContentContainer.Content = new Scrollable { Content = dl, Border = BorderType.None, Height = Height, Width = Width };
             }
             else
             {

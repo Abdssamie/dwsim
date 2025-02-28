@@ -29,24 +29,24 @@ namespace DWSIM.UI.Desktop.GTK3
             base.OnLoadComplete(e);
             nativecontrol.fbase = this.Widget.FlowsheetObject;
             nativecontrol.fsurface = this.Widget.FlowsheetSurface;
-            nativecontrol.DragDataGet += (sender, e2) =>
-            {
-                Console.WriteLine(e2.SelectionData.Target.Name);
-            };
-            nativecontrol.DragEnd += (sender, e2) =>
-            {
-                foreach (var item in e2.Args)
-                {
-                    Console.WriteLine(item.ToString());
-                }
-            };
-            nativecontrol.DragFailed += (sender, e2) =>
-            {
-                foreach (var item in e2.Args)
-                {
-                    Console.WriteLine(item.ToString());
-                }
-            };
+            //nativecontrol.DragDataGet += (sender, e2) =>
+            //{
+            //    Console.WriteLine(e2.SelectionData.Target.Name);
+            //};
+            //nativecontrol.DragEnd += (sender, e2) =>
+            //{
+            //    foreach (var item in e2.Args)
+            //    {
+            //        Console.WriteLine(item.ToString());
+            //    }
+            //};
+            //nativecontrol.DragFailed += (sender, e2) =>
+            //{
+            //    foreach (var item in e2.Args)
+            //    {
+            //        Console.WriteLine(item.ToString());
+            //    }
+            //};
         }
 
         public override Eto.Drawing.Color BackgroundColor
@@ -96,7 +96,7 @@ namespace DWSIM.UI.Desktop.GTK3
         private float _lastTouchX;
         private float _lastTouchY;
 
-        private float dpi;
+        private float dpi = 1.0f;
 
         public FlowsheetSurface_GTK()
         {
@@ -104,11 +104,8 @@ namespace DWSIM.UI.Desktop.GTK3
             if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Windows)
             {
                 dpi = Screen.Display.PrimaryMonitor.ScaleFactor;
+                GlobalSettings.Settings.DpiScale = dpi;
             }
-            else {
-                dpi = 1.0f;
-            }
-            GlobalSettings.Settings.DpiScale = dpi;
 
             this.AddEvents((int)Gdk.EventMask.PointerMotionMask);
             this.AddEvents((int)Gdk.EventMask.ScrollMask);
@@ -117,6 +114,13 @@ namespace DWSIM.UI.Desktop.GTK3
             this.MotionNotifyEvent += FlowsheetSurface_GTK_MotionNotifyEvent;
             this.ScrollEvent += FlowsheetSurface_GTK_ScrollEvent;
 
+            if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Linux)
+            {
+                var targets = new List<Gtk.TargetEntry>();
+                targets.Add(new Gtk.TargetEntry("ObjectName", 0, 1));
+                Gtk.Drag.DestSet(this, Gtk.DestDefaults.Highlight | Gtk.DestDefaults.Motion, targets.ToArray(), Gdk.DragAction.Copy | Gdk.DragAction.Link | Gdk.DragAction.Move);
+            }
+
         }
 
 
@@ -124,8 +128,10 @@ namespace DWSIM.UI.Desktop.GTK3
         {
             base.OnPaintSurface(e);
             fsurface?.UpdateCanvas(e.Surface.Canvas);
-            if (fbase != null && fbase.SetGTKDragDest == null) {
-                fbase.SetGTKDragDest = () => {
+            if (fbase != null && fbase.SetGTKDragDest == null && GlobalSettings.Settings.RunningPlatform() != GlobalSettings.Settings.Platform.Linux)
+            {
+                fbase.SetGTKDragDest = () =>
+                {
                     var targets = new List<Gtk.TargetEntry>();
                     targets.Add(new Gtk.TargetEntry("ObjectName", 0, 1));
                     Gtk.Drag.DestSet(this, Gtk.DestDefaults.Highlight | Gtk.DestDefaults.Motion, targets.ToArray(), Gdk.DragAction.Copy | Gdk.DragAction.Link | Gdk.DragAction.Move);

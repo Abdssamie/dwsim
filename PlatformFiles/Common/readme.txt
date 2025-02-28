@@ -28,13 +28,13 @@ SYSTEM REQUIREMENTS
 OS:             
 
 Windows: 32/64-bit 7/8/10
-Linux: 32/64-bit Wine-supported (https://www.winehq.org)
+Linux: 64-bit Debian distro or equivalent
 macOS: 10.7 (OS X Lion) or newer
 
 Software:
 
 Microsoft .NET Framework 4.6.2 or newer (Windows) 
-Wine 3.0.3 or newer (Linux)
+Microsoft .NET 8 and IPOPT (Linux)
 
 CPU:			
 
