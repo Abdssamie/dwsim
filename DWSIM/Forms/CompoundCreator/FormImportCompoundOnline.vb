@@ -162,63 +162,31 @@ Public Class FormImportCompoundOnline
                                           casid = t0.Result
                                           t1.Start()
                                           t2.Start()
-                                          't3.Start()
                                           Task.WaitAll(t1, t2)
-                                      End Sub).ContinueWith(Sub(tsk)
-                                                                If tsk.Exception IsNot Nothing Then
-                                                                    UIThread(Sub()
-                                                                                 fsearch.Close()
-                                                                                 If DWSIM.App.IsRunningOnMono Then
-                                                                                     fsearch.Hide()
-                                                                                     fsearch.Close()
-                                                                                 End If
-                                                                                 Me.Enabled = True
-                                                                                 btnNext.Enabled = False
-                                                                                 Dim msg = ExceptionProcessing.ExceptionParser.GetFirstException(tsk.Exception).Message
-                                                                                 If msg.Length > 1000 Then
-                                                                                     MessageBox.Show(msg.Substring(0, 1000), DWSIM.App.GetLocalString("Erro"))
-                                                                                 Else
-                                                                                     MessageBox.Show(msg, DWSIM.App.GetLocalString("Erro"))
-                                                                                 End If
-                                                                             End Sub)
-                                                                Else
-                                                                    UIThread(Sub()
-                                                                                 fsearch.Close()
-                                                                                 If DWSIM.App.IsRunningOnMono Then
-                                                                                     fsearch.Hide()
-                                                                                     fsearch.Close()
-                                                                                 End If
-                                                                                 Me.Enabled = True
-                                                                                 Focus()
-                                                                                 If Not t1.Status = TaskStatus.WaitingToRun AndAlso t1.Exception Is Nothing Then
-                                                                                     compoundk = t1.Result
-                                                                                 End If
-                                                                                 If Not t2.Status = TaskStatus.WaitingToRun AndAlso t2.Exception Is Nothing Then
-                                                                                     compoundc = t2.Result
-                                                                                 End If
-                                                                                 AddPropertiesToGrid()
-                                                                                 btnNext.Enabled = compoundc IsNot Nothing
-                                                                                 If dgResults.Rows.Count = 0 Then btnNext.Enabled = False
-                                                                                 If Not compoundk Is Nothing Then
-                                                                                     If compoundk.Molar_Weight > 0.0# And
-                                                                                         compoundk.Critical_Temperature > 0.0# And
-                                                                                         compoundk.Critical_Pressure > 0.0# And
-                                                                                         compoundk.Acentric_Factor > 0.0# And
-                                                                                         compoundk.IdealgasCpEquation <> "" Then
-                                                                                         btnNext.Enabled = True
-                                                                                         btnExportJSON.Enabled = True
-                                                                                     Else
-                                                                                         btnNext.Enabled = False
-                                                                                         btnExportJSON.Enabled = False
-                                                                                         MessageBox.Show("Could not find data for this compound in KDB Korean Thermo Database.", DWSIM.App.GetLocalString("Erro"))
-                                                                                     End If
-                                                                                 Else
-                                                                                     btnExportJSON.Enabled = False
-                                                                                     MessageBox.Show("Could not find data for this compound in KDB Korean Thermo Database.", DWSIM.App.GetLocalString("Erro"))
-                                                                                 End If
-                                                                             End Sub)
-                                                                End If
-                                                            End Sub)
+                                      End Sub).ContinueWith(
+                                      Sub(tsk)
+                                          UIThread(Sub()
+                                                       fsearch.Close()
+                                                       If DWSIM.App.IsRunningOnMono Then
+                                                           fsearch.Hide()
+                                                           fsearch.Close()
+                                                       End If
+                                                       Me.Enabled = True
+                                                       Focus()
+                                                       If Not t1.Status = TaskStatus.WaitingToRun AndAlso t1.Exception Is Nothing Then
+                                                           compoundk = t1.Result
+                                                       End If
+                                                       If Not t2.Status = TaskStatus.WaitingToRun AndAlso t2.Exception Is Nothing Then
+                                                           compoundc = t2.Result
+                                                       End If
+                                                       AddPropertiesToGrid()
+                                                       btnNext.Enabled = compoundc IsNot Nothing Or compoundk IsNot Nothing
+                                                       If dgResults.Rows.Count = 0 Then btnNext.Enabled = False
+                                                       btnExportJSON.Enabled = btnNext.Enabled
+                                                       If compoundk Is Nothing Then MessageBox.Show("Could not find data for this compound in KDB Korean Thermo Database.", DWSIM.App.GetLocalString("Erro"))
+                                                       If compoundc Is Nothing Then MessageBox.Show("Could not find data for this compound in KDB Korean Thermo Database.", DWSIM.App.GetLocalString("Erro"))
+                                                   End Sub)
+                                      End Sub)
 
                 AddHandler fsearch.btnCancel.Click, Sub()
                                                         fsearch.Close()
@@ -273,6 +241,55 @@ Public Class FormImportCompoundOnline
         If Not compoundk Is Nothing Then
 
             With compoundk
+
+                Me.dgResults.Rows.Add(New Object() {If(.Molar_Weight <> 0.0#, okimg, noimg), "Molecular Weight"})
+                Me.dgResults.Rows.Add(New Object() {If(.Normal_Boiling_Point <> 0.0#, okimg, noimg), "Normal Boiling Point"})
+                Me.dgResults.Rows.Add(New Object() {If(.TemperatureOfFusion <> 0.0#, okimg, noimg), "Fusion Temperature"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Critical_Temperature <> 0.0#, okimg, noimg), "Critical Temperature"})
+                Me.dgResults.Rows.Add(New Object() {If(.Critical_Pressure <> 0.0#, okimg, noimg), "Critical Pressure"})
+                Me.dgResults.Rows.Add(New Object() {If(.Critical_Volume <> 0.0#, okimg, noimg), "Critical Volume"})
+                Me.dgResults.Rows.Add(New Object() {If(.Critical_Compressibility <> 0.0#, okimg, noimg), "Critical Compressibility"})
+                Me.dgResults.Rows.Add(New Object() {If(.Acentric_Factor <> 0.0#, okimg, noimg), "Acentric Factor"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Z_Rackett <> 0.0#, okimg, noimg), "Rackett Compressibility Factor"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.IG_Enthalpy_of_Formation_25C <> 0.0#, okimg, noimg), "Enthalpy of Formation (IG)"})
+                Me.dgResults.Rows.Add(New Object() {If(.IG_Entropy_of_Formation_25C <> 0.0#, okimg, noimg), "Entropy of Formation (IG)"})
+                Me.dgResults.Rows.Add(New Object() {If(.IG_Gibbs_Energy_of_Formation_25C <> 0.0#, okimg, noimg), "Gibbs Energy of Formation (IG)"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.UNIQUAC_Q <> 0.0#, okimg, noimg), "UNIQUAC Q Parameter"})
+                Me.dgResults.Rows.Add(New Object() {If(.UNIQUAC_R <> 0.0#, okimg, noimg), "UNIQUAC R Parameter"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Dipole_Moment <> 0.0#, okimg, noimg), "Dipole Moment"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Chao_Seader_Solubility_Parameter <> 0.0#, okimg, noimg), "Chao Seader Solubility Parameter"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Vapor_Pressure_Constant_A <> 0.0#, okimg, noimg), "Vapor Pressure Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Ideal_Gas_Heat_Capacity_Const_A <> 0.0#, okimg, noimg), "Ideal Gas Heat Capacity Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Liquid_Heat_Capacity_Const_A <> 0.0#, okimg, noimg), "Liquid Phase Heat Capacity Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Vapor_Viscosity_Const_A <> 0.0#, okimg, noimg), "Vapor Phase Viscosity Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Liquid_Viscosity_Const_A <> 0.0#, okimg, noimg), "Liquid Phase Viscosity Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Vapor_Thermal_Conductivity_Const_A <> 0.0#, okimg, noimg), "Vapor Phase Thermal Conductivity Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Liquid_Thermal_Conductivity_Const_A <> 0.0#, okimg, noimg), "Liquid Phase Thermal Conductivity Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Surface_Tension_Const_A <> 0.0#, okimg, noimg), "Surface Tension Curve Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.Liquid_Density_Const_A <> 0.0#, okimg, noimg), "Liquid Density Data"})
+
+                Me.dgResults.Rows.Add(New Object() {If(.HVap_A <> 0.0#, okimg, noimg), "Heat of Vaporization Data"})
+
+            End With
+
+        ElseIf compoundk Is Nothing And compoundc IsNot Nothing Then
+
+            With compoundc
 
                 Me.dgResults.Rows.Add(New Object() {If(.Molar_Weight <> 0.0#, okimg, noimg), "Molecular Weight"})
                 Me.dgResults.Rows.Add(New Object() {If(.Normal_Boiling_Point <> 0.0#, okimg, noimg), "Normal Boiling Point"})
