@@ -1370,33 +1370,11 @@ Namespace UnitOperations
                 End If
                 drw?.AppendLine("Date: " + Date.Now.ToString())
                 drw?.AppendLine()
-                drw?.AppendLine("Application & System Info: ")
-                drw?.AppendLine()
-
-                Dim version = Assembly.GetExecutingAssembly().GetName().Version.ToString() & " (" &
-                    IO.File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location).ToString() + ")"
-
-                drw?.AppendLine(String.Format("Unit Operations Library Version: {0}", version))
-                drw?.AppendLine(String.Format("OS Version: {0}", My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"))
-                drw?.AppendLine(String.Format("Runtime Version: {0}", SharedClasses.Utility.GetRuntimeVersion()))
-
-                Try
-                    Dim scrh As New System.Management.ManagementObjectSearcher("select * from Win32_Processor")
-                    Dim cpu As String = System.Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER")
-                    For Each qinfo In scrh.Get()
-                        cpu += " / " & qinfo.Properties("Name").Value.ToString
-                    Next
-                    drw?.AppendLine(String.Format("CPU Info: {0}", cpu))
-                Catch ex As Exception
-                End Try
-
                 drw?.AppendLine()
                 drw?.AppendLine("Solver Settings: ")
                 drw?.AppendLine()
                 drw?.AppendLine(String.Format("Solver Option: {0}", GlobalSettings.Settings.SolverMode))
                 drw?.AppendLine(String.Format("Use Parallel CPU Acceleration: {0}", GlobalSettings.Settings.EnableParallelProcessing))
-                drw?.AppendLine(String.Format("Use Parallel GPU Acceleration: {0}", GlobalSettings.Settings.EnableGPUProcessing))
-                drw?.AppendLine(String.Format("Use CPU SIMD Extensions: {0}", GlobalSettings.Settings.UseSIMDExtensions))
                 drw?.AppendLine()
                 drw?.AppendLine("Calculation Report: ")
                 drw?.AppendLine()

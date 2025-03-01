@@ -61,17 +61,14 @@ namespace DWSIM.UI.Forms.Forms
                     }
                     break;
                 case Settings.Platform.Linux:
-                    renderers.AddRange(new[] { "Windows Forms", "GTK 3" });
+                    renderers.AddRange(new[] { "GTK 3" });
                     switch (Settings.LinuxRenderer)
                     {
-                        case Settings.LinuxPlatformRenderer.WinForms:
+                        case Settings.LinuxPlatformRenderer.Gtk3:
                             currentrenderer = 0;
                             break;
-                        case Settings.LinuxPlatformRenderer.Gtk3:
-                            currentrenderer = 1;
-                            break;
                         default:
-                            currentrenderer = 1;
+                            currentrenderer = 0;
                             break;
                     }
                     break;
@@ -114,9 +111,6 @@ namespace DWSIM.UI.Forms.Forms
                         switch (sender.SelectedIndex)
                         {
                             case 0:
-                                Settings.LinuxRenderer = Settings.LinuxPlatformRenderer.WinForms;
-                                break;
-                            case 1:
                                 Settings.LinuxRenderer = Settings.LinuxPlatformRenderer.Gtk3;
                                 break;
                         }
@@ -137,6 +131,11 @@ namespace DWSIM.UI.Forms.Forms
 
             tab1.CreateAndAddDescriptionRow("This sets the GUI Renderer for the current platform. Recommended renderers for each platform are:\nWindows: WPF (Windows Presentation Foundation)\nLinux: GTK\nmacOS: Cocoa");
             tab1.CreateAndAddDescriptionRow("Changes to this setting will have effect upon application restart.");
+
+            if (Settings.RunningPlatform() == Settings.Platform.Linux)
+            {
+                tab1.CreateAndAddNumericEditorRow2("Display DPI (Linux)", Settings.LinuxDisplayDPI, 72, 500, 0, (sender, e) => Settings.LinuxDisplayDPI = sender.Text.ToDoubleFromCurrent());
+            }
 
             if (Settings.RunningPlatform() == Settings.Platform.Mac)
             {

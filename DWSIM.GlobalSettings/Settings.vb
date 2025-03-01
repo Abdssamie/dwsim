@@ -198,6 +198,8 @@ Public Class Settings
 
     Public Shared IsGTKRenderer As Boolean = False
 
+    Public Shared LinuxDisplayDPI As Double = 96.0
+
     Public Shared AIAssistedConvergenceLevel As AIAssistedConvergenceMode = AIAssistedConvergenceMode.Disabled
 
     <DllImport("kernel32.dll", SetLastError:=True)> Public Shared Function AddDllDirectory(lpPathName As String) As Boolean
@@ -573,6 +575,8 @@ Public Class Settings
 
         UIScalingFactor = source.Configs("Misc").GetDouble("UIScalingFactor", 1.0)
 
+        LinuxDisplayDPI = source.Configs("Misc").GetDouble("LinuxDisplayDPI", 96.0)
+
         ObjectEditor = source.Configs("Misc").GetInt("ObjectEditor", 0)
 
         EnableCustomTouchBar = source.Configs("Misc").GetBoolean("EnableCustomTouchBar", True)
@@ -695,6 +699,8 @@ Public Class Settings
         source.Configs("Misc").Set("CallSolverOnEditorPropertyChanged", CallSolverOnEditorPropertyChanged)
 
         source.Configs("Misc").Set("UIScalingFactor", UIScalingFactor)
+
+        source.Configs("Misc").Set("LinuxDisplayDPI", LinuxDisplayDPI)
 
         source.Configs("Misc").Set("ObjectEditor", ObjectEditor)
 

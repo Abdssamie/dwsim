@@ -96,7 +96,7 @@ namespace DWSIM.UI.Desktop.GTK3
         private float _lastTouchX;
         private float _lastTouchY;
 
-        private float dpi = 1.0f;
+        private double dpi = 1.0;
 
         public FlowsheetSurface_GTK()
         {
@@ -104,8 +104,12 @@ namespace DWSIM.UI.Desktop.GTK3
             if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Windows)
             {
                 dpi = Screen.Display.PrimaryMonitor.ScaleFactor;
-                GlobalSettings.Settings.DpiScale = dpi;
             }
+            else if (GlobalSettings.Settings.RunningPlatform() == GlobalSettings.Settings.Platform.Linux)
+            {
+                dpi = GlobalSettings.Settings.LinuxDisplayDPI / 96.0;
+            }
+            GlobalSettings.Settings.DpiScale = dpi;
 
             this.AddEvents((int)Gdk.EventMask.PointerMotionMask);
             this.AddEvents((int)Gdk.EventMask.ScrollMask);
@@ -122,7 +126,6 @@ namespace DWSIM.UI.Desktop.GTK3
             }
 
         }
-
 
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
         {
@@ -147,11 +150,11 @@ namespace DWSIM.UI.Desktop.GTK3
 
             if (args.Event.Direction == Gdk.ScrollDirection.Down)
             {
-                fsurface.Zoom += -5 * dpi / 100f;
+                fsurface.Zoom += -5 * (float)dpi / 100f;
             }
             else
             {
-                fsurface.Zoom += 5 * dpi / 100f;
+                fsurface.Zoom += 5 * (float)dpi / 100f;
             }
             if (fsurface.Zoom < 0.05) fsurface.Zoom = 0.05f;
 
