@@ -51,7 +51,7 @@ namespace DWSIM.UI.Desktop
             }
 
             Eto.Platform platform = null;
-            
+
             try
             {
                 if (Settings.RunningPlatform() == Settings.Platform.Windows)
@@ -95,26 +95,26 @@ namespace DWSIM.UI.Desktop
                 else if (Settings.RunningPlatform() == Settings.Platform.Linux)
                 {
                     var renderer = GlobalSettings.Settings.LinuxRenderer;
-                    if (GlobalSettings.Settings.AutomationMode) renderer = Settings.LinuxPlatformRenderer.WinForms;
-                    switch (renderer)
-                    {
-                        case Settings.LinuxPlatformRenderer.Gtk2:
-                        case Settings.LinuxPlatformRenderer.Gtk3:
-                            GlobalSettings.Settings.IsGTKRenderer = true;
-                            DWSIM.UI.Desktop.GTK3.StyleSetter.SetStyles();
-                            platform = new Eto.GtkSharp.Platform();
-                            platform.Add<FlowsheetSurfaceControl.IFlowsheetSurface>(() => new GTK3.FlowsheetSurfaceControlHandler());
-                            platform.Add<Eto.OxyPlot.Plot.IHandler>(() => new Eto.OxyPlot.Gtk3.PlotHandler());
-                            platform.Add<Eto.Forms.Controls.Scintilla.Shared.ScintillaControl.IScintillaControl>(() => new Eto.Forms.Controls.Scintilla.GTK3.ScintillaControlHandler());
-                            break;
-                        case Settings.LinuxPlatformRenderer.WinForms:
-                            DWSIM.UI.Desktop.WinForms.StyleSetter.SetStyles();
-                            platform = new Eto.WinForms.Platform();
-                            platform.Add<FlowsheetSurfaceControl.IFlowsheetSurface>(() => new WinForms.FlowsheetSurfaceControlHandler());
-                            platform.Add<Eto.OxyPlot.Plot.IHandler>(() => new Eto.OxyPlot.WinForms.PlotHandler());
-                            platform.Add<Eto.Forms.Controls.Scintilla.Shared.ScintillaControl.IScintillaControl>(() => new Eto.Forms.Controls.Scintilla.WinForms.ScintillaControlHandler());
-                            break;
-                    }
+                    //if (GlobalSettings.Settings.AutomationMode) renderer = Settings.LinuxPlatformRenderer.WinForms;
+                    //switch (renderer)
+                    //{
+                    //    case Settings.LinuxPlatformRenderer.Gtk2:
+                    //    case Settings.LinuxPlatformRenderer.Gtk3:
+                    GlobalSettings.Settings.IsGTKRenderer = true;
+                    DWSIM.UI.Desktop.GTK3.StyleSetter.SetStyles();
+                    platform = new Eto.GtkSharp.Platform();
+                    platform.Add<FlowsheetSurfaceControl.IFlowsheetSurface>(() => new GTK3.FlowsheetSurfaceControlHandler());
+                    platform.Add<Eto.OxyPlot.Plot.IHandler>(() => new Eto.OxyPlot.Gtk3.PlotHandler());
+                    platform.Add<Eto.Forms.Controls.Scintilla.Shared.ScintillaControl.IScintillaControl>(() => new Eto.Forms.Controls.Scintilla.GTK3.ScintillaControlHandler());
+                    //    break;
+                    //case Settings.LinuxPlatformRenderer.WinForms:
+                    //    DWSIM.UI.Desktop.WinForms.StyleSetter.SetStyles();
+                    //    platform = new Eto.WinForms.Platform();
+                    //    platform.Add<FlowsheetSurfaceControl.IFlowsheetSurface>(() => new WinForms.FlowsheetSurfaceControlHandler());
+                    //    platform.Add<Eto.OxyPlot.Plot.IHandler>(() => new Eto.OxyPlot.WinForms.PlotHandler());
+                    //    platform.Add<Eto.Forms.Controls.Scintilla.Shared.ScintillaControl.IScintillaControl>(() => new Eto.Forms.Controls.Scintilla.WinForms.ScintillaControlHandler());
+                    //    break;
+                    //}
                     if (!GlobalSettings.Settings.AutomationMode)
                     {
                         new Application(platform).Run(new MainForm());
