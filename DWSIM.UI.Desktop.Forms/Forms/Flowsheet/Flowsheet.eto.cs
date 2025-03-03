@@ -79,7 +79,7 @@ namespace DWSIM.UI.Forms
 
         private CheckMenuItem chkDynamics;
 
-        private DropDown ddstates;
+        private DropDown ddstates, cbBoldFont, cbRegularFont, cbItalicFont, cbBoldItalicFont;
 
         private Timer BackupTimer;
 
@@ -1274,19 +1274,19 @@ namespace DWSIM.UI.Forms
             var lblItalicFont = new Label { Text = "Italic Font" };
             var lblBoldItalicFont = new Label { Text = "Bold/Italic Font" };
 
-            var cbRegularFont = new DropDown { Width = 170 };
+            cbRegularFont = new DropDown { Width = 170 };
             cbRegularFont.Items.AddRange(DWSIM.Drawing.SkiaSharp.GraphicsSurface.RegularFonts.Select(f => new ListItem { Text = f, Key = f }));
             cbRegularFont.SelectedKey = FlowsheetObject.Options.RegularFontName;
 
-            var cbBoldFont = new DropDown { Width = 170 };
+            cbBoldFont = new DropDown { Width = 170 };
             cbBoldFont.Items.AddRange(DWSIM.Drawing.SkiaSharp.GraphicsSurface.BoldFonts.Select(f => new ListItem { Text = f, Key = f }));
             cbBoldFont.SelectedKey = FlowsheetObject.Options.BoldFontName;
 
-            var cbItalicFont = new DropDown { Width = 170 };
+            cbItalicFont = new DropDown { Width = 170 };
             cbItalicFont.Items.AddRange(DWSIM.Drawing.SkiaSharp.GraphicsSurface.ItalicFonts.Select(f => new ListItem { Text = f, Key = f }));
             cbItalicFont.SelectedKey = FlowsheetObject.Options.ItalicFontName;
 
-            var cbBoldItalicFont = new DropDown { Width = 170 };
+            cbBoldItalicFont = new DropDown { Width = 170 };
             cbBoldItalicFont.Items.AddRange(DWSIM.Drawing.SkiaSharp.GraphicsSurface.BoldItalicFonts.Select(f => new ListItem { Text = f, Key = f }));
             cbBoldItalicFont.SelectedKey = FlowsheetObject.Options.BoldItalicFontName;
 
@@ -1842,6 +1842,11 @@ namespace DWSIM.UI.Forms
             btnmDrawGrid.Checked = FlowsheetObject.Options.FlowsheetDisplayGrid;
             btnmSnapToGrid.Checked = FlowsheetObject.Options.FlowsheetSnapToGrid;
             btnmMultiSelect.Checked = FlowsheetObject.Options.FlowsheetMultiSelectMode;
+
+            cbRegularFont.SelectedKey = FlowsheetObject.Options.RegularFontName;
+            cbBoldFont.SelectedKey = FlowsheetObject.Options.BoldFontName;
+            cbItalicFont.SelectedKey = FlowsheetObject.Options.ItalicFontName;
+            cbBoldItalicFont.SelectedKey = FlowsheetObject.Options.BoldItalicFontName;
 
             var surface = (DWSIM.Drawing.SkiaSharp.GraphicsSurface)FlowsheetObject.GetSurface();
 
