@@ -349,7 +349,7 @@ namespace DWSIM.UI
                     FOSSEEList.Items.Clear();
                     if (t.Exception != null)
                     {
-                        FOSSEEList.Items.Add(new ListItem { Text = "Error loading flowsheet list. Check your internet connection.", Key = "" });
+                        FOSSEEList.Items.Add(new ListItem { Text = "Error loading flowsheet list: " + t.Exception.InnerException?.Message, Key = "" });
                         DWSIM.Logging.Logger.LogError("FOSSEE Flowsheets loading error", t.Exception);
                         Console.WriteLine(t.Exception.ToString());
                         foreach (var iex in t.Exception.InnerExceptions)

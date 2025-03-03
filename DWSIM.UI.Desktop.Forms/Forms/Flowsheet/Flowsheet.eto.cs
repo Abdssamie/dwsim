@@ -2257,149 +2257,70 @@ namespace DWSIM.UI.Forms
 
             var obj = FlowsheetObject.GetSelectedFlowsheetSimulationObject(null);
 
-            var item0 = new ButtonMenuItem { Text = obj.GraphicObject.Tag, Enabled = false };
-
-            var item1 = new CheckMenuItem { Text = "Toggle Active/Inactive", Checked = obj.GraphicObject.Active };
-
-            item1.CheckedChanged += (sender, e) =>
+            if (obj != null)
             {
-                obj.GraphicObject.Active = item1.Checked;
-                obj.GraphicObject.Status = item1.Checked ? Interfaces.Enums.GraphicObjects.Status.Idle : Interfaces.Enums.GraphicObjects.Status.Inactive;
-            };
 
-            var item1a = new CheckMenuItem { Text = "Toggle Show/Hide Label", Checked = obj.GraphicObject.Active };
+                var item0 = new ButtonMenuItem { Text = obj.GraphicObject.Tag, Enabled = false };
 
-            item1a.CheckedChanged += (sender, e) =>
-            {
-                obj.GraphicObject.DrawLabel = !obj.GraphicObject.DrawLabel;
-            };
+                var item1 = new CheckMenuItem { Text = "Toggle Active/Inactive", Checked = obj.GraphicObject.Active };
 
-
-            var item3 = new ButtonMenuItem { Text = "Calculate", Image = new Bitmap(bitmapprefix + "icons8-play.png") };
-            item3.Click += (sender, e) => FlowsheetObject.RequestCalculation3(obj, false);
-
-            var item4 = new ButtonMenuItem { Text = "Debug", Image = new Bitmap(bitmapprefix + "Console_96px.png") };
-            item4.Click += (sender, e) =>
-            {
-                DebugObject();
-            };
-
-            var selobj = FlowsheetControl.FlowsheetSurface.SelectedObject;
-
-            var menuitem0 = new ButtonMenuItem { Text = "Edit/View", Image = new Bitmap(bitmapprefix + "EditProperty_96px.png") };
-            menuitem0.Click += (sender, e) =>
-            {
-                var simobj = FlowsheetObject.GetSelectedFlowsheetSimulationObject(null);
-                if (simobj == null) return;
-                EditObject_New(simobj);
-            };
-
-            var item5 = new ButtonMenuItem { Text = "Clone", Image = new Bitmap(bitmapprefix + "Copy_96px.png") };
-            item5.Click += (sender, e) =>
-            {
-                Interfaces.ISimulationObject isobj;
-                if (obj is Interfaces.IExternalUnitOperation)
+                item1.CheckedChanged += (sender, e) =>
                 {
-                    isobj = (Interfaces.ISimulationObject)obj.CloneXML();
-                    FlowsheetObject.AddObjectToSurface(obj.GraphicObject.ObjectType,
-                        (int)obj.GraphicObject.X + 50,
-                        (int)obj.GraphicObject.Y + 50,
-                        obj.GraphicObject.Tag + "_CLONE", "",
-                        (Interfaces.IExternalUnitOperation)isobj);
-                }
-                else
+                    obj.GraphicObject.Active = item1.Checked;
+                    obj.GraphicObject.Status = item1.Checked ? Interfaces.Enums.GraphicObjects.Status.Idle : Interfaces.Enums.GraphicObjects.Status.Inactive;
+                };
+
+                var item1a = new CheckMenuItem { Text = "Toggle Show/Hide Label", Checked = obj.GraphicObject.Active };
+
+                item1a.CheckedChanged += (sender, e) =>
                 {
-                    isobj = FlowsheetObject.AddObject(obj.GraphicObject.ObjectType, (int)obj.GraphicObject.X + 50, (int)obj.GraphicObject.Y + 50, obj.GraphicObject.Tag + "_CLONE");
-                }
-                var id = isobj.Name;
-                ((Interfaces.ICustomXMLSerialization)isobj).LoadData(((Interfaces.ICustomXMLSerialization)obj).SaveData());
-                isobj.Name = id;
-                if (obj.GraphicObject.ObjectType == Interfaces.Enums.GraphicObjects.ObjectType.MaterialStream)
+                    obj.GraphicObject.DrawLabel = !obj.GraphicObject.DrawLabel;
+                };
+
+                var item3 = new ButtonMenuItem { Text = "Calculate", Image = new Bitmap(bitmapprefix + "icons8-play.png") };
+                item3.Click += (sender, e) => FlowsheetObject.RequestCalculation3(obj, false);
+
+                var item4 = new ButtonMenuItem { Text = "Debug", Image = new Bitmap(bitmapprefix + "Console_96px.png") };
+            
+                item4.Click += (sender, e) =>
                 {
-                    foreach (var phase in ((DWSIM.Thermodynamics.Streams.MaterialStream)isobj).Phases.Values)
+                    DebugObject();
+                };
+
+                var selobj = FlowsheetControl.FlowsheetSurface.SelectedObject;
+
+                var menuitem0 = new ButtonMenuItem { Text = "Edit/View", Image = new Bitmap(bitmapprefix + "EditProperty_96px.png") };
+               
+                menuitem0.Click += (sender, e) =>
+                {
+                    var simobj = FlowsheetObject.GetSelectedFlowsheetSimulationObject(null);
+                    if (simobj == null) return;
+                    EditObject_New(simobj);
+                };
+
+                var item5 = new ButtonMenuItem { Text = "Clone", Image = new Bitmap(bitmapprefix + "Copy_96px.png") };
+          
+                item5.Click += (sender, e) =>
+                {
+                    Interfaces.ISimulationObject isobj;
+                    if (obj is Interfaces.IExternalUnitOperation)
                     {
-                        foreach (var comp in FlowsheetObject.SelectedCompounds.Values)
-                        {
-                            phase.Compounds[comp.Name].ConstantProperties = comp;
-                        }
-                    }
-                }
-            };
-
-            var item6 = new ButtonMenuItem { Text = "Delete", Image = new Bitmap(bitmapprefix + "Delete_96px.png") };
-
-            item6.Click += (sender, e) =>
-            {
-                DeleteObject();
-            };
-
-            var item7 = new ButtonMenuItem { Text = "Copy Data to Clipboard", Image = new Bitmap(bitmapprefix + "icons8-copy_2_filled.png") };
-
-            item7.Click += (sender, e) =>
-            {
-                //copy all simulation properties from the selected object to clipboard
-                try
-                {
-                    var sobj = FlowsheetControl.FlowsheetSurface.SelectedObject;
-                    ((SharedClasses.UnitOperations.BaseClass)FlowsheetObject.SimulationObjects[sobj.Name]).CopyDataToClipboard((DWSIM.SharedClasses.SystemsOfUnits.Units)FlowsheetObject.FlowsheetOptions.SelectedUnitSystem, FlowsheetObject.FlowsheetOptions.NumberFormat);
-                }
-                catch (Exception ex)
-                {
-                    FlowsheetObject.ShowMessage("Error copying data to clipboard: " + ex.ToString(), Interfaces.IFlowsheet.MessageType.GeneralError);
-                }
-            };
-
-            selctxmenu.Items.AddRange(new MenuItem[] { item0, item1, item1a, new SeparatorMenuItem(), menuitem0, item7, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), item5, item6 });
-
-            if (obj.GraphicObject.ObjectType == Interfaces.Enums.GraphicObjects.ObjectType.MaterialStream)
-            {
-                bool cancopy;
-                if (!obj.GraphicObject.InputConnectors[0].IsAttached)
-                {
-                    cancopy = true;
-                }
-                else
-                {
-                    if (obj.GraphicObject.InputConnectors[0].AttachedConnector.AttachedFrom.ObjectType == Interfaces.Enums.GraphicObjects.ObjectType.OT_Recycle)
-                    {
-                        cancopy = true;
+                        isobj = (Interfaces.ISimulationObject)obj.CloneXML();
+                        FlowsheetObject.AddObjectToSurface(obj.GraphicObject.ObjectType,
+                            (int)obj.GraphicObject.X + 50,
+                            (int)obj.GraphicObject.Y + 50,
+                            obj.GraphicObject.Tag + "_CLONE", "",
+                            (Interfaces.IExternalUnitOperation)isobj);
                     }
                     else
                     {
-                        cancopy = false;
+                        isobj = FlowsheetObject.AddObject(obj.GraphicObject.ObjectType, (int)obj.GraphicObject.X + 50, (int)obj.GraphicObject.Y + 50, obj.GraphicObject.Tag + "_CLONE");
                     }
-                }
-                if (cancopy)
-                {
-                    var aitem1 = new ButtonMenuItem { Text = "Copy Data From...", Image = new Bitmap(bitmapprefix + "Copy_96px.png") };
-                    foreach (var mstr in FlowsheetObject.SimulationObjects.Values.Where((x) => x is Thermodynamics.Streams.MaterialStream))
+                    var id = isobj.Name;
+                    ((Interfaces.ICustomXMLSerialization)isobj).LoadData(((Interfaces.ICustomXMLSerialization)obj).SaveData());
+                    isobj.Name = id;
+                    if (obj.GraphicObject.ObjectType == Interfaces.Enums.GraphicObjects.ObjectType.MaterialStream)
                     {
-                        if (mstr.GraphicObject.Tag != obj.GraphicObject.Tag)
-                        {
-                            var newtsmi = new ButtonMenuItem { Text = mstr.GraphicObject.Tag };
-                            newtsmi.Click += (sender, e) =>
-                            {
-                                var obj1 = FlowsheetObject.SimulationObjects[obj.Name];
-                                var obj2 = FlowsheetObject.GetSelectedFlowsheetSimulationObject(newtsmi.Text);
-                                ((Thermodynamics.Streams.MaterialStream)obj1).Assign((Thermodynamics.Streams.MaterialStream)obj2);
-                                SolveFlowsheet(false);
-                            };
-                            if (mstr.GraphicObject.Calculated) aitem1.Items.Add(newtsmi);
-                        }
-                    }
-                    selctxmenu.Items.Insert(5, aitem1);
-                }
-                var aitem2 = new ButtonMenuItem { Text = "Split Stream", Image = new Bitmap(bitmapprefix + "icons8-line_spliting_filled.png") };
-                aitem2.Click += (sender, e) =>
-                {
-                    try
-                    {
-
-                        var stream = FlowsheetControl.FlowsheetSurface.SelectedObject;
-                        var isobj = FlowsheetObject.AddObject(obj.GraphicObject.ObjectType, (int)obj.GraphicObject.X + 20, (int)obj.GraphicObject.Y, obj.GraphicObject.Tag + "_CLONE");
-                        var id = isobj.Name;
-                        ((Interfaces.ICustomXMLSerialization)isobj).LoadData(((Interfaces.ICustomXMLSerialization)obj).SaveData());
-                        isobj.Name = id;
                         foreach (var phase in ((DWSIM.Thermodynamics.Streams.MaterialStream)isobj).Phases.Values)
                         {
                             foreach (var comp in FlowsheetObject.SelectedCompounds.Values)
@@ -2407,25 +2328,110 @@ namespace DWSIM.UI.Forms
                                 phase.Compounds[comp.Name].ConstantProperties = comp;
                             }
                         }
-                        isobj.GraphicObject.Status = stream.Status;
-                        Interfaces.IGraphicObject objfrom;
-                        int fromidx;
-                        if (stream.InputConnectors[0].IsAttached)
-                        {
-                            objfrom = stream.InputConnectors[0].AttachedConnector.AttachedFrom;
-                            fromidx = stream.InputConnectors[0].AttachedConnector.AttachedFromConnectorIndex;
-                            FlowsheetObject.DisconnectObjects(objfrom, stream);
-                            FlowsheetObject.ConnectObjects(objfrom, isobj.GraphicObject, fromidx, 0);
-                        }
+                    }
+                };
+
+                var item6 = new ButtonMenuItem { Text = "Delete", Image = new Bitmap(bitmapprefix + "Delete_96px.png") };
+
+                item6.Click += (sender, e) =>
+                {
+                    DeleteObject();
+                };
+
+                var item7 = new ButtonMenuItem { Text = "Copy Data to Clipboard", Image = new Bitmap(bitmapprefix + "icons8-copy_2_filled.png") };
+
+                item7.Click += (sender, e) =>
+                {
+                    //copy all simulation properties from the selected object to clipboard
+                    try
+                    {
+                        var sobj = FlowsheetControl.FlowsheetSurface.SelectedObject;
+                        ((SharedClasses.UnitOperations.BaseClass)FlowsheetObject.SimulationObjects[sobj.Name]).CopyDataToClipboard((DWSIM.SharedClasses.SystemsOfUnits.Units)FlowsheetObject.FlowsheetOptions.SelectedUnitSystem, FlowsheetObject.FlowsheetOptions.NumberFormat);
                     }
                     catch (Exception ex)
                     {
-                        FlowsheetObject.ShowMessage("Error splitting Material Stream: " + ex.ToString(), Interfaces.IFlowsheet.MessageType.GeneralError);
+                        FlowsheetObject.ShowMessage("Error copying data to clipboard: " + ex.ToString(), Interfaces.IFlowsheet.MessageType.GeneralError);
                     }
                 };
-                selctxmenu.Items.Insert(5, aitem2);
-            }
 
+                selctxmenu.Items.AddRange(new MenuItem[] { item0, item1, item1a, new SeparatorMenuItem(), menuitem0, item7, new SeparatorMenuItem(), item3, item4, new SeparatorMenuItem(), item5, item6 });
+
+                if (obj.GraphicObject.ObjectType == Interfaces.Enums.GraphicObjects.ObjectType.MaterialStream)
+                {
+                    bool cancopy;
+                    if (!obj.GraphicObject.InputConnectors[0].IsAttached)
+                    {
+                        cancopy = true;
+                    }
+                    else
+                    {
+                        if (obj.GraphicObject.InputConnectors[0].AttachedConnector.AttachedFrom.ObjectType == Interfaces.Enums.GraphicObjects.ObjectType.OT_Recycle)
+                        {
+                            cancopy = true;
+                        }
+                        else
+                        {
+                            cancopy = false;
+                        }
+                    }
+                    if (cancopy)
+                    {
+                        var aitem1 = new ButtonMenuItem { Text = "Copy Data From...", Image = new Bitmap(bitmapprefix + "Copy_96px.png") };
+                        foreach (var mstr in FlowsheetObject.SimulationObjects.Values.Where((x) => x is Thermodynamics.Streams.MaterialStream))
+                        {
+                            if (mstr.GraphicObject.Tag != obj.GraphicObject.Tag)
+                            {
+                                var newtsmi = new ButtonMenuItem { Text = mstr.GraphicObject.Tag };
+                                newtsmi.Click += (sender, e) =>
+                                {
+                                    var obj1 = FlowsheetObject.SimulationObjects[obj.Name];
+                                    var obj2 = FlowsheetObject.GetSelectedFlowsheetSimulationObject(newtsmi.Text);
+                                    ((Thermodynamics.Streams.MaterialStream)obj1).Assign((Thermodynamics.Streams.MaterialStream)obj2);
+                                    SolveFlowsheet(false);
+                                };
+                                if (mstr.GraphicObject.Calculated) aitem1.Items.Add(newtsmi);
+                            }
+                        }
+                        selctxmenu.Items.Insert(5, aitem1);
+                    }
+                    var aitem2 = new ButtonMenuItem { Text = "Split Stream", Image = new Bitmap(bitmapprefix + "icons8-line_spliting_filled.png") };
+                    aitem2.Click += (sender, e) =>
+                    {
+                        try
+                        {
+
+                            var stream = FlowsheetControl.FlowsheetSurface.SelectedObject;
+                            var isobj = FlowsheetObject.AddObject(obj.GraphicObject.ObjectType, (int)obj.GraphicObject.X + 20, (int)obj.GraphicObject.Y, obj.GraphicObject.Tag + "_CLONE");
+                            var id = isobj.Name;
+                            ((Interfaces.ICustomXMLSerialization)isobj).LoadData(((Interfaces.ICustomXMLSerialization)obj).SaveData());
+                            isobj.Name = id;
+                            foreach (var phase in ((DWSIM.Thermodynamics.Streams.MaterialStream)isobj).Phases.Values)
+                            {
+                                foreach (var comp in FlowsheetObject.SelectedCompounds.Values)
+                                {
+                                    phase.Compounds[comp.Name].ConstantProperties = comp;
+                                }
+                            }
+                            isobj.GraphicObject.Status = stream.Status;
+                            Interfaces.IGraphicObject objfrom;
+                            int fromidx;
+                            if (stream.InputConnectors[0].IsAttached)
+                            {
+                                objfrom = stream.InputConnectors[0].AttachedConnector.AttachedFrom;
+                                fromidx = stream.InputConnectors[0].AttachedConnector.AttachedFromConnectorIndex;
+                                FlowsheetObject.DisconnectObjects(objfrom, stream);
+                                FlowsheetObject.ConnectObjects(objfrom, isobj.GraphicObject, fromidx, 0);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            FlowsheetObject.ShowMessage("Error splitting Material Stream: " + ex.ToString(), Interfaces.IFlowsheet.MessageType.GeneralError);
+                        }
+                    };
+                    selctxmenu.Items.Insert(5, aitem2);
+                }
+            
+            }
             return;
 
         }
