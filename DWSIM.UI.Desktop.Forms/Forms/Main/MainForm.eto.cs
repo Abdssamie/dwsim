@@ -401,17 +401,10 @@ namespace DWSIM.UI
 
             SampleList.SelectedIndexChanged += (sender, e) =>
             {
-                if (Application.Instance.Platform.IsGtk)
-                {
-                    if (SampleList.SelectedIndex >= 0 && c1 > 0)
-                        LoadSimulation(SampleList.SelectedKey);
-                    c1+=1;
-                }
-                else
-                {
-                    if (SampleList.SelectedIndex >= 0)
-                        LoadSimulation(SampleList.SelectedKey);
-                }
+                if (!Application.Instance.Platform.IsGtk) c1+=1;
+                if (SampleList.SelectedIndex >= 0 && c1 > 0)
+                    LoadSimulation(SampleList.SelectedKey);
+                c1+=1;
             };
 
             FOSSEEList.SelectedIndexChanged += (sender, e) =>
@@ -539,7 +532,7 @@ namespace DWSIM.UI
             var hitem4 = new ButtonMenuItem { Text = "Go to DWSIM Website".Localize(), Image = new Bitmap(Eto.Drawing.Bitmap.FromResource(imgprefix + "help_browser.png")) };
             hitem4.Click += (sender, e) =>
             {
-                "http://dwsim.inforside.com.br".OpenURL();
+                "https://dwsim.org".OpenURL();
             };
 
             // create menu
