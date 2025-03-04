@@ -202,7 +202,12 @@ namespace DWSIM.UI
                 var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 try
                 {
-                    Process.Start(basepath + Path.DirectorySeparatorChar + "docs" + Path.DirectorySeparatorChar + "user_guide.pdf");
+                    var ug1 = basepath + Path.DirectorySeparatorChar + "docs" + Path.DirectorySeparatorChar + "user_guide.pdf";
+                    var ug2 = basepath + Path.DirectorySeparatorChar + "docs" + Path.DirectorySeparatorChar + "User_Guide.pdf";
+                    if (File.Exists(ug1))
+                        Process.Start(ug1);
+                    else if (File.Exists(ug2))
+                        Process.Start(ug2);
                 }
                 catch (Exception ex)
                 {
