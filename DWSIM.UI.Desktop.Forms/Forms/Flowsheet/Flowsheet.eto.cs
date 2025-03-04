@@ -1006,17 +1006,22 @@ namespace DWSIM.UI.Forms
                         var dobj = new DataObject();
                         dobj.SetString(obj.GetDisplayName(), "ObjectName");
                         dobj.Text = obj.GetDisplayName();
-                        //if (pitem.imgIcon.Image != null)
-                        //{
-                        //    using (var img = new Bitmap(pitem.imgIcon.Image, 40, 40, ImageInterpolation.High))
-                        //        pitem.DoDragDrop(dobj, DragEffects.Copy, img, new PointF(20, 20));
-                        //    e.Handled = true;
-                        //}
-                        //else
-                        //{
+#if MAC
                         pitem.DoDragDrop(dobj, DragEffects.Copy);
                         e.Handled = true;
-                        //}
+#else
+                        if (pitem.imgIcon.Image != null)
+                        {
+                            using (var img = new Bitmap(pitem.imgIcon.Image, 40, 40, ImageInterpolation.High))
+                                pitem.DoDragDrop(dobj, DragEffects.Copy, img, new PointF(20, 20));
+                            e.Handled = true;
+                        }
+                        else
+                        {
+                        pitem.DoDragDrop(dobj, DragEffects.Copy);
+                        e.Handled = true;
+                        }
+#endif
                     };
                     switch (obj.ObjectClass)
                     {
