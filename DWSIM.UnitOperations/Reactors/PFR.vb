@@ -1572,10 +1572,10 @@ Namespace Reactors
                 ' comp. conversions
                 For Each sb As Compound In ims.Phases(0).Compounds.Values
                     If Me.ComponentConversions.ContainsKey(sb.Name) AndAlso
-                        feed.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault() > 0.0000000001 Then
-                        Me.ComponentConversions(sb.Name) = Abs(feed.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault() -
-                                                               ims.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault()) /
-                                                               feed.GetPhase("Mixture").Compounds(rxn.BaseReactant).MolarFlow.GetValueOrDefault()
+                        feed.GetPhase("Mixture").Compounds(sb.Name).MolarFlow.GetValueOrDefault() > 0.0000000001 Then
+                        Me.ComponentConversions(sb.Name) = Abs(feed.GetPhase("Mixture").Compounds(sb.Name).MolarFlow.GetValueOrDefault() -
+                                                               ims.GetPhase("Mixture").Compounds(sb.Name).MolarFlow.GetValueOrDefault()) /
+                                                               feed.GetPhase("Mixture").Compounds(sb.Name).MolarFlow.GetValueOrDefault()
                     End If
                 Next
 
