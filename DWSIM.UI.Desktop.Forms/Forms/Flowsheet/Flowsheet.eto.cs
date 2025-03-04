@@ -2787,6 +2787,7 @@ namespace DWSIM.UI.Forms
                     }
                     var savefile = Path.Combine(backupdir, backupfilename);
                     SaveSimulation(savefile, true);
+                    FlowsheetObject.ShowMessage(String.Format("Saved a backup copy of this flowsheet at '{0}'.", savefile), Interfaces.IFlowsheet.MessageType.Information);
                 }
             }
             catch (Exception ex)
