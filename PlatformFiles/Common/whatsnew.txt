@@ -1,24 +1,12 @@
-Version 9.0.0
+Version 9.0.1
 
-- New: Cross-Platform UI overhaul + GTK 3 and .NET 8 support for Linux
-- New: Pipe Segment model updates: added wall and insulation temperatures, absorbed radiation
-- New: Import json compounds from File load items
-- New: Implemented fixed chart limits for dynamic integrators (#697)
-- New: Added CPUI editor for PID Controller #715
-- New: Added CPUI editor for Input objects #715
-- Changed: Optimized memory consumption
-- Changed: Reworked Rigorous Column initial estimates editor controls (Classic UI)
-- Changed: Recycle Op now defaults to legacy mode solving
-- Bugfix: Nested Loops flash
-- Bugfix: Rigorous Column stage naming
-- Bugfix: Solver busy message
-- Bugfix: Zedgraph file saving
-- Bugfix: Thermal conductivity does not accept copy paste from excel #695
-- Bugfix: Fixed issue with CO2 equilibrium calculations
-- Bugfix: Fixed chemeo error message
-- Bugfix: Mass Flow Rates Mismatch in PFR -Inlet and Outlet Mass Flow Rates are Different #726
-- Bugfix: Copying Element in the flowsheet #698
-- Bugfix: Fitting Loss for Elbows/Bends #708
-- Bugfix: Carbon Dioxide Bug and JT data #717
-- Bugfix: Compound separator produces negative molar flow #713
-- Bugfix: Excel Add-In: Can't select a Flash Algorithm / Can't configure flash algorithms settings #700
+- Bugfix: Crash then NRTL added as second properties package #751
+- Bugfix: New floating windows placement on multi-monitor setup #747
+- Bugfix: No conversion table after running the simulation  #746
+- Bugfix: Crash the application when you click Help #745
+- Bugfix: App crash right click on rectangle #742
+- Bugfix: Can't select and open last opened file from recent list #741
+- Bugfix: No cyrrilic fonts available #740
+- Bugfix: Crash on Click Object Pallette Apple Silicon #739
+- Bugfix: WPF rendering should be disabled in linux builds #737
+- Bugfix: Cannot select an objects on flowchart #736

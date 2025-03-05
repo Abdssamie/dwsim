@@ -1,6 +1,6 @@
 ﻿==================================================
 DWSIM - Open Source Process Simulator
-Version 9.0.0
+Version 9.0.1
 Copyright (c) 2017-2025 Daniel Wagner and contributors
 Copyright (c) 2008-2016 Daniel Wagner, Gregor Reichert, Gustavo Leon
 ==================================================
@@ -27,7 +27,7 @@ SYSTEM REQUIREMENTS
 
 OS:             
 
-Windows: 32/64-bit 7/8/10
+Windows: 64-bit 7/8/10
 Linux: 64-bit Debian distro or equivalent
 macOS: 10.7 (OS X Lion) or newer
 
@@ -61,6 +61,19 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog including souce code changes can be viewed at https://github.com/DanWBR/dwsim/commits/windows
+
+Version 9.0.1
+
+- Bugfix: Crash then NRTL added as second properties package #751
+- Bugfix: New floating windows placement on multi-monitor setup #747
+- Bugfix: No conversion table after running the simulation  #746
+- Bugfix: Crash the application when you click Help #745
+- Bugfix: App crash right click on rectangle #742
+- Bugfix: Can't select and open last opened file from recent list #741
+- Bugfix: No cyrrilic fonts available #740
+- Bugfix: Crash on Click Object Pallette Apple Silicon #739
+- Bugfix: WPF rendering should be disabled in linux builds #737
+- Bugfix: Cannot select an objects on flowchart #736
 
 Version 9.0.0
 

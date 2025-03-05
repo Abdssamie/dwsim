@@ -394,15 +394,30 @@ namespace DWSIM.UI
                 c3+=1;
             };
 
-            MostRecentList.SelectedItemChanged += (sender, e) =>
+            if (s.RunningPlatform() == s.Platform.Linux)
             {
-                if (MostRecentList.SelectedItem != null)
+                MostRecentList.CellClick += (sender, e) =>
                 {
-                    var si = (TreeGridItem)MostRecentList.SelectedItem;
-                    var data = (Dictionary<string, string>)si.Tag;
-                    LoadSimulation(data["Path"]);
+                    if (e.Row >= 0)
+                    {
+                        var si = (TreeGridItem)tgc[e.Row];
+                        var data = (Dictionary<string, string>)si.Tag;
+                        LoadSimulation(data["Path"]);
+                    };
                 };
-            };
+            }
+            else
+            {
+                MostRecentList.SelectedItemChanged += (sender, e) =>
+                {
+                    if (MostRecentList.SelectedItem != null)
+                    {
+                        var si = (TreeGridItem)MostRecentList.SelectedItem;
+                        var data = (Dictionary<string, string>)si.Tag;
+                        LoadSimulation(data["Path"]);
+                    };
+                };
+            }
 
             SampleList.SelectedIndexChanged += (sender, e) =>
             {
