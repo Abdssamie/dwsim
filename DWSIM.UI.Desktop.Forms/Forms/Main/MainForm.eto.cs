@@ -534,7 +534,19 @@ namespace DWSIM.UI
             hitem1.Click += (sender, e) =>
             {
                 var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                Process.Start(basepath + Path.DirectorySeparatorChar + "docs" + Path.DirectorySeparatorChar + "user_guide.pdf");
+                try
+                {
+                    var ug1 = basepath + Path.DirectorySeparatorChar + "docs" + Path.DirectorySeparatorChar + "user_guide.pdf";
+                    var ug2 = basepath + Path.DirectorySeparatorChar + "docs" + Path.DirectorySeparatorChar + "User_Guide.pdf";
+                    if (File.Exists(ug1))
+                        Process.Start(ug1);
+                    else if (File.Exists(ug2))
+                        Process.Start(ug2);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error opening User Guide", MessageBoxButtons.OK, MessageBoxType.Error, MessageBoxDefaultButton.OK);
+                }
             };
 
             var hitem2 = new ButtonMenuItem { Text = "Support".Localize(), Image = new Bitmap(Eto.Drawing.Bitmap.FromResource(imgprefix + "help_browser.png")) };
