@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using DWSIM.Interfaces;
-using DWSIM.Interfaces.Enums.GraphicObjects;
-
 using Eto.Forms;
 using Eto.Drawing;
-
-using DWSIM.ExtensionMethods;
 using DWSIM.UI.Shared;
-using s = DWSIM.UI.Shared.Common;
 using DWSIM.Drawing.SkiaSharp.GraphicObjects.Tables;
 using DWSIM.Interfaces.Enums;
 
@@ -22,9 +12,11 @@ namespace DWSIM.UI.Desktop.Editors.Tables
     {
 
         public TableGraphic Table;
-        
+
+
         public Button btnOK;
-        public ListBox lvObjects, lvProps, lvSelect;
+        public ListBox lvObjects;
+        public TreeGridView lvProperties;
 
         public PropertyTableEditor()
         {
@@ -50,9 +42,16 @@ namespace DWSIM.UI.Desktop.Editors.Tables
             var centercontainer = new TableLayout();
             var bottomcontainer = new TableLayout();
 
-            lvObjects = new ListBox { Height = 300, Width = 250 };
-            lvProps = new ListBox { Height = 300, Width = 250 };
-            lvSelect = new ListBox { Height = 300, Width = 250 };
+            lvObjects = new ListBox { Height = 300, Width = 200 };
+
+            lvProperties = new TreeGridView { AllowMultipleSelection = false, Height = 300, Width = 350 };
+
+            lvProperties.AllowMultipleSelection = false;
+            lvProperties.ShowHeader = false;
+            lvProperties.Columns.Clear();
+            lvProperties.Columns.Add(new GridColumn { DataCell = new TextBoxCell(0), Visible = false});
+            lvProperties.Columns.Add(new GridColumn { DataCell = new CheckBoxCell(1), Sortable = true, Editable = true });
+            lvProperties.Columns.Add(new GridColumn { DataCell = new TextBoxCell(2), Sortable = true, Editable = false });
 
             btnOK = new Button { Text = "Close", Enabled = true };
 
@@ -71,8 +70,8 @@ namespace DWSIM.UI.Desktop.Editors.Tables
             topcontainer.Padding = new Padding(5, 5, 5, 5);
             topcontainer.Spacing = new Size(10, 10);
 
-            centercontainer.Rows.Add(new TableRow(new Label { Text = "Object / Property / Show", VerticalAlignment = VerticalAlignment.Center }));
-            centercontainer.Rows.Add(new TableRow(lvObjects, lvProps, lvSelect));
+            centercontainer.Rows.Add(new TableRow(new Label { Text = "Object / Property", VerticalAlignment = VerticalAlignment.Center }));
+            centercontainer.Rows.Add(new TableRow(lvObjects, lvProperties));
             centercontainer.Padding = new Padding(5, 5, 5, 5);
             centercontainer.Spacing = new Size(10, 10);
 
@@ -89,71 +88,52 @@ namespace DWSIM.UI.Desktop.Editors.Tables
 
             Content = container;
 
+            var tgc = new TreeGridItemCollection();
+
             lvObjects.SelectedIndexChanged += (sender, e) =>
             {
                 if (lvObjects.SelectedIndex < 0) return;
                 if (lvObjects.SelectedValue != null)
                 {
-                    lvProps.Items.Clear();
+                    tgc = new TreeGridItemCollection();
                     foreach (var item in Table.Flowsheet.SimulationObjects[lvObjects.SelectedKey].GetProperties(PropertyType.ALL))
                     {
-                        lvProps.Items.Add(Table.Flowsheet.GetTranslatedString(item), item);
+                        var li = new TreeGridItem();
+                        li.Values = new object[] { item, Table.VisibleProperties.ContainsKey(lvObjects.SelectedKey) ?
+                            Table.VisibleProperties[lvObjects.SelectedKey].Contains(item) : 
+                            false, Table.Flowsheet.GetTranslatedString(item) };
+                        tgc.Add(li);
                     }
+                    lvProperties.DataStore = tgc;
                 }
             };
 
-            bool adding = false;
-
-            lvProps.SelectedIndexChanged += (sender, e) =>
+            lvProperties.CellEdited += (sender, e) =>
             {
-                if (lvProps.SelectedIndex < 0) return;
-                if (lvProps.SelectedValue != null)
+                if (e.Row >= 0 && e.Column == 1)
                 {
+                    var tgitem = (TreeGridItem)tgc[e.Row];
                     if (!Table.VisibleProperties.ContainsKey(lvObjects.SelectedKey))
                     {
                         Table.VisibleProperties.Add(lvObjects.SelectedKey, new List<string>());
                     }
-                    adding = true;
-                    lvSelect.Items.Clear();
-                    lvSelect.Items.Add("Show");
-                    lvSelect.Items.Add("Hide");
-                    adding = false;
-                    if (Table.VisibleProperties.ContainsKey(lvObjects.SelectedKey))
+                    if ((bool)tgitem.Values[1] == true)
                     {
-                        if (Table.VisibleProperties[lvObjects.SelectedKey].Contains(lvProps.SelectedKey))
+                        if (!Table.VisibleProperties[lvObjects.SelectedKey].Contains(tgitem.Values[0].ToString()))
                         {
-                            lvSelect.SelectedIndex = 0;
-                        }
-                        else
-                        {
-                            lvSelect.SelectedIndex = 1;
+                            Table.VisibleProperties[lvObjects.SelectedKey].Add(tgitem.Values[0].ToString());
                         }
                     }
+                    else
+                    {
+                        if (Table.VisibleProperties[lvObjects.SelectedKey].Contains(tgitem.Values[0].ToString()))
+                        {
+                            Table.VisibleProperties[lvObjects.SelectedKey].Remove(tgitem.Values[0].ToString());
+                        }
+                    }
+
                 }
             };
-
-            lvSelect.SelectedIndexChanged += (sender, e) =>
-            {
-                if (lvSelect.SelectedIndex < 0) return;
-                if (!adding)
-                {
-                    if (lvSelect.SelectedIndex == 0)
-                    {
-                        if (!Table.VisibleProperties[lvObjects.SelectedKey].Contains(lvProps.SelectedKey))
-                        {
-                            Table.VisibleProperties[lvObjects.SelectedKey].Add(lvProps.SelectedKey);
-                        }
-                    }
-                    else if (lvSelect.SelectedIndex == 1)
-                    {
-                        if (Table.VisibleProperties[lvObjects.SelectedKey].Contains(lvProps.SelectedKey))
-                        {
-                            Table.VisibleProperties[lvObjects.SelectedKey].Remove(lvProps.SelectedKey);
-                        }
-                    }
-                }
-            };
-
 
             Load += (sender, e) =>
             {
@@ -165,6 +145,8 @@ namespace DWSIM.UI.Desktop.Editors.Tables
                 }
 
             };
+
+            this.Center();
             
         }
 

@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using DWSIM.Interfaces;
 using DWSIM.Interfaces.Enums.GraphicObjects;
-
 using Eto.Forms;
 using Eto.Drawing;
-
-using DWSIM.ExtensionMethods;
-using DWSIM.UI.Shared;
-using s = DWSIM.UI.Shared.Common;
 using DWSIM.Drawing.SkiaSharp.GraphicObjects.Tables;
 using DWSIM.Interfaces.Enums;
+using DWSIM.UI.Shared;
 
 namespace DWSIM.UI.Desktop.Editors.Tables
 {
@@ -24,9 +16,11 @@ namespace DWSIM.UI.Desktop.Editors.Tables
         public MasterTableGraphic Table;
 
         public Button btnOK, btnOrderDown, btnOrderUp;
-        public ListBox lvObjects, lvProps, lvSelectObj, lvSelectProp;
+        public TreeGridView lvObjects, lvProps;
         public DropDown cbObjectType, cbOrderBy;
         public NumericStepper nsNumberOfLines;
+
+        TreeGridItemCollection tgc, tgc2;
 
         public MasterPropertyTableEditor()
         {
@@ -62,10 +56,21 @@ namespace DWSIM.UI.Desktop.Editors.Tables
             tableleft.Rows.Add(null);
             tableleft.Rows.Add(new TableRow(new Label { Text = "Order objects", VerticalAlignment = VerticalAlignment.Center }, null, btnOrderUp, btnOrderDown));
 
-            lvObjects = new ListBox { Height = 300, Width = 150 };
-            lvProps = new ListBox { Height = 300, Width = 150 };
-            lvSelectObj = new ListBox { Height = 300, Width = 75 };
-            lvSelectProp = new ListBox { Height = 300, Width = 75 };
+            lvObjects = new TreeGridView { AllowMultipleSelection = false, Height = 300, Width = 200 };
+
+            lvObjects.ShowHeader = false;
+            lvObjects.Columns.Clear();
+            lvObjects.Columns.Add(new GridColumn { DataCell = new TextBoxCell(0), Visible = false });
+            lvObjects.Columns.Add(new GridColumn { DataCell = new CheckBoxCell(1), Sortable = true, Editable = true });
+            lvObjects.Columns.Add(new GridColumn { DataCell = new TextBoxCell(2), Sortable = true, Editable = false });
+
+            lvProps = new TreeGridView { AllowMultipleSelection = false, Height = 300, Width = 300 };
+
+            lvProps.ShowHeader = false;
+            lvProps.Columns.Clear();
+            lvProps.Columns.Add(new GridColumn { DataCell = new TextBoxCell(0), Visible = false });
+            lvProps.Columns.Add(new GridColumn { DataCell = new CheckBoxCell(1), Sortable = true, Editable = true });
+            lvProps.Columns.Add(new GridColumn { DataCell = new TextBoxCell(2), Sortable = true, Editable = false });
 
             btnOK = new Button { Text = "Close", Enabled = true };
 
@@ -93,8 +98,7 @@ namespace DWSIM.UI.Desktop.Editors.Tables
             topcontainer.Padding = new Padding(5, 5, 5, 5);
             topcontainer.Spacing = new Size(10, 10);
 
-            centercontainer.Rows.Add(new TableRow(tableleft, lvObjects, lvSelectObj, lvProps, lvSelectProp));
-            centercontainer.Rows.Last().Cells[3].ScaleWidth = true;
+            centercontainer.Rows.Add(new TableRow(tableleft, lvObjects, lvProps));
             centercontainer.Padding = new Padding(5, 5, 5, 5);
             centercontainer.Spacing = new Size(10, 10);
 
@@ -116,7 +120,7 @@ namespace DWSIM.UI.Desktop.Editors.Tables
             {
                 if (Loaded)
                 {
-                    Table.ObjectFamily = (Interfaces.Enums.GraphicObjects.ObjectType)Enum.Parse(Table.ObjectType.GetType(), cbObjectType.SelectedValue.ToString());
+                    Table.ObjectFamily = (ObjectType)Enum.Parse(Table.ObjectType.GetType(), cbObjectType.SelectedValue.ToString());
                     Table.ObjectList.Clear();
                     Table.SortedList.Clear();
                     Table.PropertyList.Clear();
@@ -141,94 +145,54 @@ namespace DWSIM.UI.Desktop.Editors.Tables
                 Populate();
             };
 
-            bool adding = false;
-
-            lvObjects.SelectedIndexChanged += (sender, e) =>
+            lvObjects.CellEdited += (sender, e) =>
             {
-                if (lvObjects.SelectedIndex < 0) return;
-                if (lvObjects.SelectedValue != null)
+                if (e.Row >= 0 && e.Column == 1)
                 {
-                    adding = true;
-                    lvSelectObj.Items.Clear();
-                    lvSelectObj.Items.Add("Show");
-                    lvSelectObj.Items.Add("Hide");
-                    adding = false;
-                    if (Table.ObjectList.ContainsKey(lvObjects.SelectedValue.ToString()))
+                    var tgitem = (TreeGridItem)tgc[e.Row];
+                    var key = tgitem.Values[2].ToString();
+                    if (!Table.ObjectList.ContainsKey(key))
                     {
-                        if (Table.ObjectList[lvObjects.SelectedValue.ToString()])
-                        {
-                            lvSelectObj.SelectedIndex = 0;
-                        }
-                        else
-                        {
-                            lvSelectObj.SelectedIndex = 1;
-                        }
+                        Table.ObjectList.Add(key, (bool)tgitem.Values[1]);
                     }
+                    else
+                    {
+                        Table.ObjectList[key] = (bool)tgitem.Values[1];
+                    }
+                    PopulateProps();
                 }
             };
 
-
-            lvProps.SelectedIndexChanged += (sender, e) =>
+            lvProps.CellEdited += (sender, e) =>
             {
-                if (lvProps.SelectedIndex < 0) return;
-                if (lvProps.SelectedValue != null)
+                if (e.Row >= 0 && e.Column == 1)
                 {
-                    adding = true;
-                    lvSelectProp.Items.Clear();
-                    lvSelectProp.Items.Add("Show");
-                    lvSelectProp.Items.Add("Hide");
-                    adding = false;
-                    if (Table.PropertyList.ContainsKey(lvProps.SelectedKey))
+                    var tgitem = (TreeGridItem)tgc2[e.Row];
+                    var key = tgitem.Values[0].ToString();
+                    if (!Table.PropertyList.ContainsKey(key))
                     {
-                        if (Table.PropertyList[lvProps.SelectedKey])
-                        {
-                            lvSelectProp.SelectedIndex = 0;
-                        }
-                        else
-                        {
-                            lvSelectProp.SelectedIndex = 1;
-                        }
+                        Table.PropertyList.Add(key, (bool)tgitem.Values[1]);
+                    }
+                    else
+                    {
+                        Table.PropertyList[key] = (bool)tgitem.Values[1];
                     }
                 }
             };
-
-            lvSelectObj.SelectedIndexChanged += (sender, e) =>
-            {
-                if (lvSelectObj.SelectedIndex < 0) return;
-                if (!adding)
-                {
-                    if (Table.ObjectList.ContainsKey(lvObjects.SelectedValue.ToString()))
-                    {
-                        Table.ObjectList[lvObjects.SelectedValue.ToString()] = lvSelectObj.SelectedIndex == 0 ? true : false;
-                    }
-                }
-            };
-
-            lvSelectProp.SelectedIndexChanged += (sender, e) =>
-            {
-                if (lvSelectProp.SelectedIndex < 0) return;
-                if (!adding)
-                {
-                    if (Table.PropertyList.ContainsKey(lvProps.SelectedKey))
-                    {
-                        Table.PropertyList[lvProps.SelectedKey] = lvSelectProp.SelectedIndex == 0 ? true : false;
-                    }
-                }
-            };
-
 
             btnOrderUp.Click += (sender, e) =>
             {
                 int index = 0;
-                if (this.lvObjects.SelectedValue != null)
+                if (lvObjects.SelectedItem != null)
                 {
-                    index = this.lvObjects.SelectedIndex;
+                    index = lvObjects.SelectedRow;
                     if (index != 0)
                     {
-                        ListItem lvi = new ListItem { Text = lvObjects.SelectedValue.ToString(), Key = lvObjects.SelectedKey };
-                        this.lvObjects.Items.RemoveAt(index);
-                        this.lvObjects.Items.Insert(index - 1, lvi);
-                        this.lvObjects.SelectedIndex = index - 1;
+                        var item = tgc[index];
+                        tgc.RemoveAt(index);
+                        tgc.Insert(index - 1, item);
+                        lvObjects.ReloadData();
+                        lvObjects.SelectedRow = index - 1;
                     }
                 }
             };
@@ -236,15 +200,16 @@ namespace DWSIM.UI.Desktop.Editors.Tables
             btnOrderDown.Click += (sender, e) =>
             {
                 int index = 0;
-                if (this.lvObjects.SelectedValue != null)
+                if (lvObjects.SelectedItem != null)
                 {
-                    index = this.lvObjects.SelectedIndex;
-                    if (index != lvObjects.Items.Count - 1)
+                    index = this.lvObjects.SelectedRow;
+                    if (index != tgc.Count - 1)
                     {
-                        ListItem lvi = new ListItem { Text = lvObjects.SelectedValue.ToString(), Key = lvObjects.SelectedKey };
-                        this.lvObjects.Items.RemoveAt(index);
-                        this.lvObjects.Items.Insert(index + 1, lvi);
-                        this.lvObjects.SelectedIndex = index + 1;
+                        var item = tgc[index];
+                        tgc.RemoveAt(index);
+                        tgc.Insert(index + 1, item);
+                        lvObjects.ReloadData();
+                        lvObjects.SelectedRow = index + 1;
                     }
                 }
             };
@@ -270,66 +235,60 @@ namespace DWSIM.UI.Desktop.Editors.Tables
 
                 nsNumberOfLines.Value = Table.NumberOfLines;
 
+                Populate();
+
+                this.Center();
             };
 
             Closed += (sender, e) =>
             {
-
+                Table.SortedList.Clear();
                 List<string> list = new List<string>();
-                foreach (ListItem lvi in this.lvObjects.Items)
+                foreach (TreeGridItem lvi in tgc)
                 {
-                    list.Add(lvi.Text);
+                    list.Add(lvi.Values[2].ToString());
                 }
                 Table.SortedList = list;
-
             };
 
         }
 
         public void Populate()
         {
-            lvObjects.Items.Clear();
 
-            if (Table.SortBy == "Custom")
+            tgc = new TreeGridItemCollection();
+
+            foreach (var item in Table.SortedList)
             {
-                foreach (var item in Table.SortedList)
+                var obj = Table.Flowsheet.GetFlowsheetSimulationObject(item);
+                if (obj != null)
                 {
-                    if (Table.Flowsheet.GetFlowsheetSimulationObject(item) != null)
-                    {
-                        ListItem lvi = new ListItem { Text = item, Key = item };
-                        lvObjects.Items.Add(lvi);
-                    }
-                }
-                foreach (var obj in Table.Flowsheet.SimulationObjects.Values)
-                {
-                    if (obj.GraphicObject.ObjectType == Table.ObjectFamily & !Table.SortedList.Contains(obj.GraphicObject.Tag))
-                    {
-                        if (!Table.ObjectList.ContainsKey(obj.GraphicObject.Tag))
-                            Table.ObjectList.Add(obj.GraphicObject.Tag, false);
-                        ListItem lvi = new ListItem { Text = obj.GraphicObject.Tag };
-                        lvi.Key = "Object|" + obj.Name;
-                        lvObjects.Items.Add(lvi);
-                    }
+                    var li = new TreeGridItem();
+                    li.Values = new object[] { obj.Name, Table.ObjectList.ContainsKey(obj.GraphicObject.Tag), obj.GraphicObject.Tag };
+                    tgc.Add(li);
                 }
             }
-            else
+            foreach (var obj in Table.Flowsheet.SimulationObjects.Values)
             {
-                foreach (var obj in Table.Flowsheet.SimulationObjects.Values)
+                if (obj.GraphicObject.ObjectType == Table.ObjectFamily & !Table.SortedList.Contains(obj.GraphicObject.Tag))
                 {
-                    if (obj.GraphicObject.ObjectType == Table.ObjectFamily)
-                    {
-                        if (!Table.ObjectList.ContainsKey(obj.GraphicObject.Tag))
-                            Table.ObjectList.Add(obj.GraphicObject.Tag, false);
-                        ListItem lvi = new ListItem { Text = obj.GraphicObject.Tag };
-                        lvi.Key = "Object|" + obj.Name;
-                        lvObjects.Items.Add(lvi);
-                    }
+                    var li = new TreeGridItem();
+                    li.Values = new object[] { obj.Name, Table.ObjectList.ContainsKey(obj.GraphicObject.Tag), obj.GraphicObject.Tag };
+                    tgc.Add(li);
                 }
             }
+            lvObjects.DataStore = tgc;
+
+            PopulateProps();
+        }
+
+        private void PopulateProps()
+        {
 
             string[] props = null;
 
-            lvProps.Items.Clear();
+            tgc2 = new TreeGridItemCollection();
+
             if (Table.ObjectList.Count > 0)
             {
                 foreach (string s in Table.ObjectList.Keys)
@@ -341,10 +300,11 @@ namespace DWSIM.UI.Desktop.Editors.Tables
                 {
                     if (!Table.PropertyList.ContainsKey(p))
                         Table.PropertyList.Add(p, false);
-                    ListItem lvi = new ListItem { Text = Table.Flowsheet.GetTranslatedString(p) };
-                    lvi.Key = p;
-                    lvProps.Items.Add(lvi);
+                    var li = new TreeGridItem();
+                    li.Values = new object[] { p, Table.PropertyList[p], Table.Flowsheet.GetTranslatedString(p) };
+                    tgc2.Add(li);
                 }
+                lvProps.DataStore = tgc2;
             }
 
         }
