@@ -1747,6 +1747,73 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
         Public Overrides Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
+            Dim result As Object()
+
+            Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
+
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                   New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                   .CompoundNames = PP.RET_VNAMES(),
+                   .NumberOfCompounds = Vz.Count,
+                   .MixtureMolarFlows = Vz,
+                   .ModelName = PP.ComponentName,
+                   .Pressure = Pref,
+                   .VaporMolarFraction = V,
+                   .Temperature = T,
+                   .RequestType = Interfaces.ConvergenceHelperRequestType.TVFlash
+               })
+
+            End If
+
+            Try
+
+                If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
+
+                    result = Flash_TV_1(Vz, T, V, estimate.Pressure, PP, True, estimate.KValuesVL1)
+
+                Else
+
+                    result = Flash_TV_1(Vz, T, V, Pref, PP, ReuseKI, PrevKi)
+
+                End If
+
+                Return result
+
+            Catch ex As Exception
+
+                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+
+                    If estimate IsNot Nothing Then
+
+                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                            estimate.VaporMolarFlows.Sum,
+                            estimate.Liquid1MolarFlows.NormalizeY(),
+                            estimate.VaporMolarFlows.NormalizeY(),
+                            estimate.Pressure,
+                            0, estimate.KValuesVL1,
+                            0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+
+                    Else
+
+                        Throw New Exception(String.Format("{0}: Unable to calculate TV Flash with T = {1} and VF = {2}, molar fractions = {3}",
+                                    PP.ComponentName, T, V, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
+
+                    End If
+
+                End If
+
+            End Try
+
+            Return Nothing
+
+        End Function
+
+        Public Function Flash_TV_1(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
             Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
             Inspector.Host.CheckAndAdd(IObj, "", "Flash_TV", Name & " (TV Flash)", "Temperature/Vapor Fraction Flash Algorithm Routine", True)
@@ -2275,47 +2342,85 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             Dim Kvals As Double()
             Dim trivial As Boolean = False
 
-            'result = Flash_PV_Saturated_Newton(Vz, P, V, Tref, PP, ReuseKI, PrevKi) 'this didn't work well
+            Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
 
-            result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                   New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                   .CompoundNames = PP.RET_VNAMES(),
+                   .NumberOfCompounds = Vz.Count,
+                   .MixtureMolarFlows = Vz,
+                   .ModelName = PP.ComponentName,
+                   .Pressure = P,
+                   .VaporMolarFraction = V,
+                   .Temperature = Tref,
+                   .RequestType = Interfaces.ConvergenceHelperRequestType.PVFlash
+               })
+
+            End If
+
+            If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
+
+                result = Flash_PV_1(Vz, P, V, estimate.Temperature, PP, True, estimate.KValuesVL1)
+
+            Else
+
+                result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+
+            End If
 
             'check if solution is valid.
 
             Dim deltaT As Double = 100
 
             If result.Count > 1 Then
+
                 deltaT = result(11)
+
             End If
 
             If Math.Abs(deltaT) > 0.01 And (V = 0 Or V = 1) Then
-                'solution is not valid. try a poly approximation
-                Dim Tlist, Plist As New List(Of Double)
-                Dim Pl As Double = 101325
-                Dim deltaPl = (P / 2 - 101325) / 10
-                Dim Tl As Double = 0.0
-                For i = 0 To 10
-                    result = Flash_PV_1(Vz, Pl, V, Tl, PP, ReuseKI, PrevKi)
-                    If result.Count = 1 Then Exit For
-                    Tl = result(4)
-                    Kvals = result(6)
-                    Tlist.Add(Tl)
-                    Plist.Add(Pl)
-                    Pl += 101325
-                Next
-                If result.Count > 1 Then
-                    'extrapolate Tl
-                    Tl = Interpolate.RationalWithPoles(Plist, Tlist).Interpolate(P)
-                    result = Flash_PV_1(Vz, P, V, Tl, PP, True, Kvals)
+
+                'solution is not valid. 
+
+                If estimate IsNot Nothing And Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_2Pass Then
+
+                    result = Flash_PV_1(Vz, P, V, estimate.Temperature, PP, True, estimate.KValuesVL1)
+
+                Else
+
+                    Dim Tlist, Plist As New List(Of Double)
+                    Dim Pl As Double = 101325
+                    Dim deltaPl = (P / 2 - 101325) / 10
+                    Dim Tl As Double = 0.0
+                    For i = 0 To 10
+                        result = Flash_PV_1(Vz, Pl, V, Tl, PP, ReuseKI, PrevKi)
+                        If result.Count = 1 Then Exit For
+                        Tl = result(4)
+                        Kvals = result(6)
+                        Tlist.Add(Tl)
+                        Plist.Add(Pl)
+                        Pl += 101325
+                    Next
                     If result.Count > 1 Then
-                        deltaT = result(11)
-                    Else
-                        deltaT = 100
+                        'extrapolate Tl
+                        Tl = Interpolate.RationalWithPoles(Plist, Tlist).Interpolate(P)
+                        result = Flash_PV_1(Vz, P, V, Tl, PP, True, Kvals)
+                        If result.Count > 1 Then
+                            deltaT = result(11)
+                        Else
+                            deltaT = 100
+                        End If
+                        If Math.Abs(deltaT) > 0.01 Then
+                            'try previous calculation mode
+                            result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+                        End If
                     End If
-                    If Math.Abs(deltaT) > 0.01 Then
-                        'try previous calculation mode
-                        result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
-                    End If
+
                 End If
+
             End If
 
             'check if converged to the trivial solution.
@@ -2367,8 +2472,29 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             End If
 
             If result.Count = 1 Then
-                Throw New Exception(String.Format("{0}: Unable to calculate PV Flash with P = {1} and VF = {2}, molar fractions = {3}",
+
+                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+
+                    If estimate IsNot Nothing Then
+
+                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                            estimate.VaporMolarFlows.Sum,
+                            estimate.Liquid1MolarFlows.NormalizeY(),
+                            estimate.VaporMolarFlows.NormalizeY(),
+                            estimate.Temperature,
+                            0, estimate.KValuesVL1,
+                            0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, deltaT}
+
+                    Else
+
+                        Throw New Exception(String.Format("{0}: Unable to calculate PV Flash with P = {1} and VF = {2}, molar fractions = {3}",
                                     PP.ComponentName, P, V, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
+
+                    End If
+
+                End If
+
             Else
 
                 'Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, deltaT}
