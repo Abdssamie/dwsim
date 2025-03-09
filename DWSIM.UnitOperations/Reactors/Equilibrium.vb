@@ -1227,6 +1227,39 @@ Namespace Reactors
                 Next
             End If
 
+
+            Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
+
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                   New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                   .CompoundNames = N.Keys.ToArray(),
+                   .NumberOfCompounds = N.Count,
+                   .MixtureMolarFlows = N.Values.ToArray(),
+                   .ModelName = pp.ComponentName,
+                   .Pressure = P,
+                   .Temperature = T,
+                   .RequestType = If(ReactorOperationMode = OperationMode.Isothermic,
+                                    Interfaces.ConvergenceHelperRequestType.EquilibriumReactorIsothermic,
+                                    Interfaces.ConvergenceHelperRequestType.EquilibriumReactorAdiabatic)
+               })
+
+                If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
+
+                    If ReactorOperationMode = OperationMode.Adiabatic Then
+                        T = estimate.Temperature2
+                        ims.SetTemperature(T)
+                        tms.SetTemperature(T)
+                    End If
+
+                    REx = estimate.ReactionExtents
+
+                End If
+
+            End If
+
             IObj?.Paragraphs.Add(String.Format("Initial Estimates for Reaction Extents: {0}", REx.ToMathArrayString))
 
             Dim g0, g1 As Double
@@ -1277,97 +1310,128 @@ Namespace Reactors
             niter = 0
             NoPenVal = False
 
-            Do
+            Try
 
-                IObj2?.SetCurrent
+                Do
 
-                Dim IObj3 As InspectorItem = Host.GetNewInspectorItem()
+                    IObj2?.SetCurrent
 
-                Inspector.Host.CheckAndAdd(IObj3, "", "Calculate", "Equilibrium Reactor Reaction Extents Convergence Loop Iteration #" & niter, "", True)
+                    Dim IObj3 As InspectorItem = Host.GetNewInspectorItem()
 
-                IObj3?.SetCurrent
+                    Inspector.Host.CheckAndAdd(IObj3, "", "Calculate", "Equilibrium Reactor Reaction Extents Convergence Loop Iteration #" & niter, "", True)
 
-                IObj3?.Paragraphs.Add(String.Format("Tentative Reaction Extents: {0}", x.ToMathArrayString()))
+                    IObj3?.SetCurrent
 
-                DRW?.AppendLine(String.Format("[Internal Iteration {0}] Tentative Reaction Extents: {1}", niter, x.ToArrayString()))
+                    IObj3?.Paragraphs.Add(String.Format("Tentative Reaction Extents: {0}", x.ToMathArrayString()))
 
-                Dim xs As Double
+                    DRW?.AppendLine(String.Format("[Internal Iteration {0}] Tentative Reaction Extents: {1}", niter, x.ToArrayString()))
 
-                Dim variables As New List(Of Double)
-                For i = 0 To r
-                    xs = Scaler.Scale(x(i), MinVal, MaxVal, 0.0, 1.0)
-                    variables.Add(Math.Log(xs))
-                Next
+                    Dim xs As Double
 
-                If ReactorOperationMode = OperationMode.Adiabatic Then
-                    variables.Add(T / 1000.0)
-                End If
+                    Dim variables As New List(Of Double)
+                    For i = 0 To r
+                        xs = Scaler.Scale(x(i), MinVal, MaxVal, 0.0, 1.0)
+                        variables.Add(Math.Log(xs))
+                    Next
 
-                Dim solver3 As New Optimization.NewtonSolver
-                solver3.MaxIterations = InternalLoopMaximumIterations
-                solver3.Tolerance = InternalLoopTolerance
-                solver3.EnableDamping = True
+                    If ReactorOperationMode = OperationMode.Adiabatic Then
+                        variables.Add(T / 1000.0)
+                    End If
 
-                Dim esolv As IExternalNonLinearSystemSolver = Nothing
-                If FlowSheet.ExternalSolvers.ContainsKey(ExternalSolverID) Then
-                    esolv = FlowSheet.ExternalSolvers(ExternalSolverID)
-                End If
+                    Dim solver3 As New Optimization.NewtonSolver
+                    solver3.MaxIterations = InternalLoopMaximumIterations
+                    solver3.Tolerance = InternalLoopTolerance
+                    solver3.EnableDamping = True
 
-                errval = 0.0
+                    Dim esolv As IExternalNonLinearSystemSolver = Nothing
+                    If FlowSheet.ExternalSolvers.ContainsKey(ExternalSolverID) Then
+                        esolv = FlowSheet.ExternalSolvers(ExternalSolverID)
+                    End If
 
-                Dim fval As Double()
+                    errval = 0.0
 
-                If esolv IsNot Nothing Then
-                    Dim iit As Integer = 0
-                    newx = esolv.Solve(Function(x1)
-                                           FlowSheet.CheckStatus()
-                                           fval = FunctionValue2N(x1, False, IObj3)
-                                           IObj3?.Paragraphs.Add(String.Format("[Iteration {0}] Absolute Sum of Squared Error Functions: {1}", iit, fval.AbsSqrSumY()))
-                                           iit += 1
-                                           Return fval
-                                       End Function, Nothing, Nothing, variables.ToArray(),
+                    Dim fval As Double()
+
+                    If esolv IsNot Nothing Then
+                        Dim iit As Integer = 0
+                        newx = esolv.Solve(Function(x1)
+                                               FlowSheet.CheckStatus()
+                                               fval = FunctionValue2N(x1, False, IObj3)
+                                               IObj3?.Paragraphs.Add(String.Format("[Iteration {0}] Absolute Sum of Squared Error Functions: {1}", iit, fval.AbsSqrSumY()))
+                                               iit += 1
+                                               Return fval
+                                           End Function, Nothing, Nothing, variables.ToArray(),
                                                 InternalLoopMaximumIterations, InternalLoopTolerance)
-                Else
-                    Try
+                    Else
+                        Try
+                            newx = solver3.Solve(Function(x1)
+                                                     FlowSheet.CheckStatus()
+                                                     fval = FunctionValue2N(x1, True, IObj3)
+                                                     IObj3?.Paragraphs.Add(String.Format("[Iteration {0} - Ideal] Absolute Sum of Squared Error Functions: {1}", solver3.Iterations, fval.AbsSqrSumY()))
+                                                     Return fval
+                                                 End Function, variables.ToArray())
+                        Catch ex As Exception
+                            newx = variables.ToArray()
+                        End Try
                         newx = solver3.Solve(Function(x1)
                                                  FlowSheet.CheckStatus()
-                                                 fval = FunctionValue2N(x1, True, IObj3)
-                                                 IObj3?.Paragraphs.Add(String.Format("[Iteration {0} - Ideal] Absolute Sum of Squared Error Functions: {1}", solver3.Iterations, fval.AbsSqrSumY()))
+                                                 fval = FunctionValue2N(x1, False, IObj3)
+                                                 IObj3?.Paragraphs.Add(String.Format("[Iteration {0}] Absolute Sum of Squared Error Functions: {1}", solver3.Iterations, fval.AbsSqrSumY()))
                                                  Return fval
-                                             End Function, variables.ToArray())
-                    Catch ex As Exception
-                        newx = variables.ToArray()
-                    End Try
-                    newx = solver3.Solve(Function(x1)
-                                             FlowSheet.CheckStatus()
-                                             fval = FunctionValue2N(x1, False, IObj3)
-                                             IObj3?.Paragraphs.Add(String.Format("[Iteration {0}] Absolute Sum of Squared Error Functions: {1}", solver3.Iterations, fval.AbsSqrSumY()))
-                                             Return fval
-                                         End Function, newx)
+                                             End Function, newx)
+                    End If
+
+                    FlowSheet.CheckStatus()
+
+                    errval = FunctionValue2N(newx, False, IObj3).AbsSqrSumY()
+
+                    If ReactorOperationMode = OperationMode.Adiabatic Then
+                        T = newx.Last() * 1000.0
+                        Tab = T
+                    End If
+
+                    newx = newx.Select(Function(xi) Scaler.UnScale(Math.Exp(xi), MinVal, MaxVal, 0.0, 1.0)).ToArray
+
+                    x = newx
+
+                    IObj3?.Paragraphs.Add(String.Format("Updated Reaction Extents: {0}", newx.ToMathArrayString))
+
+                    DRW?.AppendLine(String.Format("[Internal Iteration {0}] Error: {1}, Updated Reaction Extents: {2}", niter, errval, newx.ToArrayString()))
+
+                    niter += 1
+
+                    IObj3?.Close()
+
+                Loop Until errval < InternalLoopTolerance Or niter >= InternalLoopMaximumIterations
+
+            Catch ex As Exception
+
+                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+
+                    If estimate IsNot Nothing Then
+
+                        newx = estimate.ReactionExtents
+                        newx = newx.Select(Function(xe) Scaler.Scale(xe, MinVal, MaxVal, 0.0, 1.0)).ToArray()
+
+                        FlowSheet.CheckStatus()
+
+                        errval = FunctionValue2N(newx, False, Nothing).AbsSqrSumY()
+
+                        If ReactorOperationMode = OperationMode.Adiabatic Then
+                            T = estimate.Temperature2
+                            Tab = T
+                        End If
+
+                    Else
+
+                        Throw ex
+
+                    End If
+
                 End If
 
-                FlowSheet.CheckStatus()
-
-                errval = FunctionValue2N(newx, False, IObj3).AbsSqrSumY()
-
-                If ReactorOperationMode = OperationMode.Adiabatic Then
-                    T = newx.Last() * 1000.0
-                    Tab = T
-                End If
-
-                newx = newx.Select(Function(xi) Scaler.UnScale(Math.Exp(xi), MinVal, MaxVal, 0.0, 1.0)).ToArray
-
-                x = newx
-
-                IObj3?.Paragraphs.Add(String.Format("Updated Reaction Extents: {0}", newx.ToMathArrayString))
-
-                DRW?.AppendLine(String.Format("[Internal Iteration {0}] Error: {1}, Updated Reaction Extents: {2}", niter, errval, newx.ToArrayString()))
-
-                niter += 1
-
-                IObj3?.Close()
-
-            Loop Until errval < InternalLoopTolerance Or niter >= InternalLoopMaximumIterations
+            End Try
 
             If niter >= InternalLoopMaximumIterations Then Throw New Exception(FlowSheet.GetTranslatedString("Nmeromximodeiteraesa3"))
 

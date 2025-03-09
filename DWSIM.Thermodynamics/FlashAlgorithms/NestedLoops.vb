@@ -79,19 +79,69 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
+            Dim result As Object()
+
+            Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
+
             If Settings.AIAssistedConvergenceLevel > 0 Then
-                Dim request = New AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
-                    .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash,
-                    .CompoundNames = PP.RET_VNAMES(),
-                    .NumberOfCompounds = Vz.Length,
-                    .ModelName = PP.ComponentName,
-                    .Pressure = P,
-                    .Temperature = T,
-                    .MixtureMolarFlows = Vz
-                }
-                Dim solution = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(request)
-                Console.WriteLine(solution?.ModelName)
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                   New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                   .CompoundNames = PP.RET_VNAMES(),
+                   .NumberOfCompounds = Vz.Count,
+                   .MixtureMolarFlows = Vz,
+                   .ModelName = PP.ComponentName,
+                   .Pressure = P,
+                   .Temperature = T,
+                   .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash
+               })
+
             End If
+
+            Try
+
+                If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
+
+                    result = Flash_PT_1(Vz, P, T, PP, True, estimate.KValuesVL1)
+
+                Else
+
+                    result = Flash_PT_1(Vz, P, T, PP, ReuseKI, PrevKi)
+
+                End If
+
+                Return Result
+
+            Catch ex As Exception
+
+                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+
+                    If estimate IsNot Nothing Then
+
+                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                            estimate.VaporMolarFlows.Sum,
+                            estimate.Liquid1MolarFlows.NormalizeY(),
+                            estimate.VaporMolarFlows.NormalizeY(),
+                            0, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, estimate.KValuesVL1}
+
+                    Else
+
+                        Throw New Exception(String.Format("{0}: Unable to calculate PT Flash with P = {1} and T = {2}, molar fractions = {3}",
+                                    PP.ComponentName, P, T, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
+
+                    End If
+
+                End If
+
+            End Try
+
+            Return Nothing
+
+        End Function
+
+        Public Function Flash_PT_1(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
@@ -571,6 +621,73 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
+            Dim result As Object()
+
+            Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
+
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                   New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                   .CompoundNames = PP.RET_VNAMES(),
+                   .NumberOfCompounds = Vz.Count,
+                   .MixtureMolarFlows = Vz,
+                   .ModelName = PP.ComponentName,
+                   .Pressure = P,
+                   .MassEnthalpy = H,
+                   .Temperature = Tref,
+                   .RequestType = Interfaces.ConvergenceHelperRequestType.PHFlash
+               })
+
+            End If
+
+            Try
+
+                If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
+
+
+                    result = Flash_PH_0(Vz, P, H, estimate.Temperature, PP, True, estimate.KValuesVL1)
+
+                Else
+
+                    result = Flash_PH_0(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
+
+                End If
+
+                Return result
+
+            Catch ex As Exception
+
+                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+
+                    If estimate IsNot Nothing Then
+
+                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                            estimate.VaporMolarFlows.Sum,
+                            estimate.Liquid1MolarFlows.NormalizeY(),
+                            estimate.VaporMolarFlows.NormalizeY(),
+                            estimate.Temperature, 0, estimate.KValuesVL1,
+                            0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+
+                    Else
+
+                        Throw New Exception(String.Format("{0}: Unable to calculate PH Flash with P = {1} and H = {2}, molar fractions = {3}",
+                                    PP.ComponentName, P, H, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
+
+                    End If
+
+                End If
+
+            End Try
+
+            Return Nothing
+
+        End Function
+
+        Public Function Flash_PH_0(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
             Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
             Inspector.Host.CheckAndAdd(IObj, "", "Flash_PH", Name & " (PH Flash)", "Pressure-Enthalpy Flash Algorithm Routine")
@@ -617,6 +734,73 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
         End Function
 
         Public Overrides Function Flash_PS(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            Dim result As Object()
+
+            Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
+
+            If Settings.AIAssistedConvergenceLevel > 0 Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                   New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                   .CompoundNames = PP.RET_VNAMES(),
+                   .NumberOfCompounds = Vz.Count,
+                   .MixtureMolarFlows = Vz,
+                   .ModelName = PP.ComponentName,
+                   .Pressure = P,
+                   .MassEntropy = S,
+                   .Temperature = Tref,
+                   .RequestType = Interfaces.ConvergenceHelperRequestType.PSFlash
+               })
+
+            End If
+
+            Try
+
+                If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
+
+
+                    result = Flash_PS_0(Vz, P, S, estimate.Temperature, PP, True, estimate.KValuesVL1)
+
+                Else
+
+                    result = Flash_PS_0(Vz, P, S, Tref, PP, ReuseKI, PrevKi)
+
+                End If
+
+                Return result
+
+            Catch ex As Exception
+
+                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+
+                    If estimate IsNot Nothing Then
+
+                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                            estimate.VaporMolarFlows.Sum,
+                            estimate.Liquid1MolarFlows.NormalizeY(),
+                            estimate.VaporMolarFlows.NormalizeY(),
+                            estimate.Temperature, 0, estimate.KValuesVL1,
+                            0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+
+                    Else
+
+                        Throw New Exception(String.Format("{0}: Unable to calculate PS Flash with P = {1} and S = {2}, molar fractions = {3}",
+                                    PP.ComponentName, P, S, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
+
+                    End If
+
+                End If
+
+            End Try
+
+            Return Nothing
+
+        End Function
+
+        Public Function Flash_PS_0(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
