@@ -21,9 +21,9 @@ Partial Class FormFlowsheet
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormFlowsheet))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -302,7 +302,7 @@ Partial Class FormFlowsheet
         '
         Me.InsertTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BlocoDeSimulacaoToolStripMenuItem, Me.TabelaDePropriedadesToolStripMenuItem, Me.TabelaDePropriedatesMestraToolStripMenuItem, Me.TabelaDePropriedadesPlanilhaToolStripMenuItem, Me.FiguraToolStripMenuItem, Me.tsmiRichText, Me.TextoToolStripMenuItem, Me.RectangleToolStripMenuItem, Me.GraficoToolStripMenuItem, Me.BotaoToolStripMenuItem})
         Me.InsertTSMI.MergeAction = System.Windows.Forms.MergeAction.Insert
-        Me.InsertTSMI.MergeIndex = 2
+        Me.InsertTSMI.MergeIndex = 3
         Me.InsertTSMI.Name = "InsertTSMI"
         resources.ApplyResources(Me.InsertTSMI, "InsertTSMI")
         '
@@ -370,7 +370,7 @@ Partial Class FormFlowsheet
         '
         Me.ToolsTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StreamDataImporterTSMI, Me.tsmiSolidsManager2, Me.CompoundCreatorWizardTSMI, Me.CriadorDeComponentesSolidosToolStripMenuItem, Me.CaracterizacaoDePetroleosFracoesC7ToolStripMenuItem, Me.CaracterizacaoDePetroleosCurvasDeDestilacaoToolStripMenuItem, Me.CriarPseudocomponentesEmBateladaToolStripMenuItem, Me.GerenciadorDeAmostrasDePetroleoToolStripMenuItem, Me.PropriedadesDasSubstanciasToolStripMenuItem, Me.InspectorTSMI, Me.ToolStripSeparator15})
         Me.ToolsTSMI.MergeAction = System.Windows.Forms.MergeAction.MatchOnly
-        Me.ToolsTSMI.MergeIndex = 3
+        Me.ToolsTSMI.MergeIndex = 4
         Me.ToolsTSMI.Name = "ToolsTSMI"
         resources.ApplyResources(Me.ToolsTSMI, "ToolsTSMI")
         '
@@ -465,7 +465,7 @@ Partial Class FormFlowsheet
         '
         Me.DynamicsTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ModoDinamicoAtivoToolStripMenuItem, Me.GerenciadorDoModoDinamicoToolStripMenuItem, Me.ControlesDoIntegradorToolStripMenuItem, Me.FerramentaParaSintoniaDeControladoresPIDToolStripMenuItem})
         Me.DynamicsTSMI.MergeAction = System.Windows.Forms.MergeAction.Insert
-        Me.DynamicsTSMI.MergeIndex = 4
+        Me.DynamicsTSMI.MergeIndex = 5
         Me.DynamicsTSMI.Name = "DynamicsTSMI"
         resources.ApplyResources(Me.DynamicsTSMI, "DynamicsTSMI")
         '
@@ -495,7 +495,7 @@ Partial Class FormFlowsheet
         '
         Me.UtilitiesTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIAddUtility})
         Me.UtilitiesTSMI.MergeAction = System.Windows.Forms.MergeAction.Insert
-        Me.UtilitiesTSMI.MergeIndex = 5
+        Me.UtilitiesTSMI.MergeIndex = 6
         Me.UtilitiesTSMI.Name = "UtilitiesTSMI"
         resources.ApplyResources(Me.UtilitiesTSMI, "UtilitiesTSMI")
         '
@@ -509,7 +509,7 @@ Partial Class FormFlowsheet
         '
         Me.OptimizationTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnaliseDeSensibilidadeToolStripMenuItem, Me.MultivariateOptimizerToolStripMenuItem, Me.SumarioToolStripMenuItem})
         Me.OptimizationTSMI.MergeAction = System.Windows.Forms.MergeAction.Insert
-        Me.OptimizationTSMI.MergeIndex = 6
+        Me.OptimizationTSMI.MergeIndex = 7
         Me.OptimizationTSMI.Name = "OptimizationTSMI"
         resources.ApplyResources(Me.OptimizationTSMI, "OptimizationTSMI")
         '
@@ -535,7 +535,7 @@ Partial Class FormFlowsheet
         '
         Me.ResultsTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GerarRelatorioToolStripMenuItem, Me.tsmiDetailedReport, Me.ExcelReportsToolStripMenuItem, Me.ProcessFlowsheetDiagramToolStripMenuItem})
         Me.ResultsTSMI.MergeAction = System.Windows.Forms.MergeAction.Insert
-        Me.ResultsTSMI.MergeIndex = 7
+        Me.ResultsTSMI.MergeIndex = 8
         Me.ResultsTSMI.Name = "ResultsTSMI"
         resources.ApplyResources(Me.ResultsTSMI, "ResultsTSMI")
         '
@@ -567,7 +567,7 @@ Partial Class FormFlowsheet
         '
         Me.PluginsTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem})
         Me.PluginsTSMI.MergeAction = System.Windows.Forms.MergeAction.Insert
-        Me.PluginsTSMI.MergeIndex = 8
+        Me.PluginsTSMI.MergeIndex = 9
         Me.PluginsTSMI.Name = "PluginsTSMI"
         resources.ApplyResources(Me.PluginsTSMI, "PluginsTSMI")
         '
@@ -832,33 +832,33 @@ Partial Class FormFlowsheet
         '
         'DataGridView1
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle2
         resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.Name = "DataGridView1"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         '
         'TSTable
         '
@@ -913,7 +913,7 @@ Partial Class FormFlowsheet
         Me.pbSolver.BehindTransistionSegmentIsActive = False
         resources.ApplyResources(Me.pbSolver, "pbSolver")
         Me.pbSolver.Name = "pbSolver"
-        Me.pbSolver.TransistionSegment = 2
+        Me.pbSolver.TransistionSegment = 9
         Me.pbSolver.TransistionSegmentColour = System.Drawing.Color.LightSkyBlue
         '
         'lblTotalMessages
