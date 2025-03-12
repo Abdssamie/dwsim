@@ -235,7 +235,7 @@
     <value>303, 22</value>
   </data>
   <data name="ConvergenceHelperSettingsToolStripMenuItem.Text" xml:space="preserve">
-    <value>AI-Assisted Convergence Settings</value>
+    <value>AI-Assisted Convergence Enhancer Settings</value>
   </data>
   <data name="ConvergenceHelperSettingsToolStripMenuItem.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -462,7 +462,7 @@
     <value>&amp;Modo Dinâmico</value>
   </data>
   <data name="TSMIAddUtility.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>173, 22</value>
   </data>
   <data name="TSMIAddUtility.Text" xml:space="preserve">
     <value>Adicionar Utilitário</value>
