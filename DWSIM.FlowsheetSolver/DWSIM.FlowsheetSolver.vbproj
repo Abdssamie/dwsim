@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FlowsheetSolver.vb" />
+    <Compile Include="FlowsheetSolver2.vb" />
     <Compile Include="Task Schedulers\LimitedConcurrencyLevelTaskScheduler.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
