@@ -1,5 +1,5 @@
 ﻿'    DWSIM Flowsheet Solver & Auxiliary Functions
-'    Copyright 2008-2022 Daniel Wagner O. de Medeiros
+'    Copyright 2025 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
