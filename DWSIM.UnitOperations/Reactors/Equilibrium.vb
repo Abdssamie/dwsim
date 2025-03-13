@@ -1672,7 +1672,7 @@ Namespace Reactors
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
-                        .CompoundNames = pp.RET_VNAMES(),
+                        .CompoundNames = N.Keys.ToArray(),
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,
@@ -1685,7 +1685,7 @@ Namespace Reactors
                 Else
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                       New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
-                        .CompoundNames = pp.RET_VNAMES(),
+                        .CompoundNames = N.Keys.ToArray(),
                         .Reactions = Me.Reactions.Select(Function(r) FlowSheet.Reactions(r)).ToList(),
                         .ModelName = pp.ComponentName,
                         .NumberOfCompounds = N.Count,

@@ -1648,7 +1648,7 @@ Namespace Reactors
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
-                        .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
+                        .CompoundNames = keys, .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
                         .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
                         .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
@@ -1659,7 +1659,7 @@ Namespace Reactors
                 Else
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                       New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
-                        .CompoundNames = pp.RET_VNAMES(), .ModelName = pp.ComponentName,
+                        .CompoundNames = keys, .ModelName = pp.ComponentName,
                         .NumberOfCompounds = Ki.Count,
                         .Temperature = T0.ToString("F4", CultureInfo.InvariantCulture),
                         .Temperature2 = T.ToString("F4", CultureInfo.InvariantCulture),
@@ -2511,6 +2511,8 @@ Namespace Reactors
 
             IObj?.SetCurrent
 
+            pp.CurrentMaterialStream = ims
+
             If Settings.AIAssistedConvergenceLevel > 0 Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
@@ -2540,8 +2542,6 @@ Namespace Reactors
             End If
 
             Dim W As Double = ims.Phases(0).Properties.massflow.GetValueOrDefault
-
-            pp.CurrentMaterialStream = ims
 
             'do a flash calc (calculate final temperature/enthalpy)
             tmp = pp.CalculateEquilibrium2(FlashCalculationType.PressureTemperature, ims.Phases(0).Properties.pressure.GetValueOrDefault, ims.Phases(0).Properties.temperature.GetValueOrDefault, 0)

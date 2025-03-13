@@ -3967,6 +3967,218 @@ Public Class FormMain
 
     End Sub
 
+    Public Shared Function SaveXML2(form As FormFlowsheet) As XDocument
+
+        Dim xdoc As New XDocument()
+        Dim xel As XElement
+
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+        xdoc.Add(New XElement("DWSIM_Simulation_Data"))
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GeneralInfo"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GeneralInfo")
+
+        xel.Add(New XElement("BuildVersion", My.Application.Info.Version.ToString))
+        xel.Add(New XElement("BuildDate", CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)))
+        xel.Add(New XElement("OSInfo", My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"))
+        xel.Add(New XElement("SavedOn", Date.Now))
+        xel.Add(New XElement("SavedFromClassicUI", True))
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SimulationObjects"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
+
+        For Each so As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
+            so.SetFlowsheet(form)
+            xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
+        Next
+
+        'update the flowsheet key for usage in server solution storage. 
+
+        'if the key doesn't change, it means that the flowsheet data wasn't modified 
+        'and a previous solution stored in the server may be returned instead of recalculating 
+        'the entire flowsheet, saving time and resources.
+
+        Dim hash As String = ""
+        Using sha1 As System.Security.Cryptography.SHA1CryptoServiceProvider = System.Security.Cryptography.SHA1CryptoServiceProvider.Create()
+            hash = BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(xel.ToString)))
+        End Using
+
+        form.Options.Key = hash.Replace("-", "")
+
+        'save settings 
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Settings"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Settings")
+
+        xel.Add(form.Options.SaveData().ToArray())
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("DynamicProperties"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("DynamicProperties")
+
+        Dim extraprops = DirectCast(form.ExtraProperties, IDictionary(Of String, Object))
+        For Each item In extraprops
+            Try
+                xel.Add(New XElement("Property", {New XElement("Name", item.Key),
+                                                                       New XElement("PropertyType", item.Value.GetType.ToString),
+                                                                       New XElement("Data", Newtonsoft.Json.JsonConvert.SerializeObject(item.Value))}))
+            Catch ex As Exception
+            End Try
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
+
+        For Each go As GraphicObject In form.FormSurface.FlowsheetSurface.DrawingObjects
+            If Not go.IsConnector And Not go.ObjectType = ObjectType.GO_FloatingTable Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PropertyPackages"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages")
+
+        For Each pp In form.Options.PropertyPackages
+            Dim createdms As Boolean = False
+            If pp.Value.CurrentMaterialStream Is Nothing Then
+                Dim ms As New Streams.MaterialStream("", "", form, pp.Value)
+                form.AddComponentsRows(ms)
+                pp.Value.CurrentMaterialStream = ms
+                createdms = True
+            End If
+            xel.Add(New XElement("PropertyPackage", {New XElement("ID", pp.Key),
+                                                     DirectCast(pp.Value, Interfaces.ICustomXMLSerialization).SaveData().ToArray()}))
+            If createdms Then pp.Value.CurrentMaterialStream = Nothing
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Compounds"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds")
+
+        For Each cp As ConstantProperties In form.Options.SelectedComponents.Values
+            xel.Add(New XElement("Compound", cp.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("ReactionSets"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("ReactionSets")
+
+        For Each pp As KeyValuePair(Of String, Interfaces.IReactionSet) In form.Options.ReactionSets
+            xel.Add(New XElement("ReactionSet", DirectCast(pp.Value, Interfaces.ICustomXMLSerialization).SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Reactions"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Reactions")
+
+        For Each pp As KeyValuePair(Of String, Interfaces.IReaction) In form.Options.Reactions
+            xel.Add(New XElement("Reaction", {DirectCast(pp.Value, Interfaces.ICustomXMLSerialization).SaveData().ToArray()}))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("StoredSolutions"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("StoredSolutions")
+
+        For Each pp As KeyValuePair(Of String, List(Of XElement)) In form.StoredSolutions
+            xel.Add(New XElement("Solution", New XAttribute("ID", pp.Key), pp.Value))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("DynamicsManager"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("DynamicsManager")
+
+        xel.Add(DirectCast(form.DynamicsManager, ICustomXMLSerialization).SaveData().ToArray())
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("OptimizationCases"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases")
+
+        For Each pp As OptimizationCase In form.Collections.OPT_OptimizationCollection
+            xel.Add(New XElement("OptimizationCase", {pp.SaveData().ToArray()}))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SensitivityAnalysis"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis")
+
+        For Each pp As SensitivityAnalysisCase In form.Collections.OPT_SensAnalysisCollection
+            xel.Add(New XElement("SensitivityAnalysisCase", {pp.SaveData().ToArray()}))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PetroleumAssays"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays")
+
+        If form.Options.PetroleumAssays Is Nothing Then form.Options.PetroleumAssays = New Dictionary(Of String, Utilities.PetroleumCharacterization.Assay.Assay)
+
+        For Each pp As KeyValuePair(Of String, Utilities.PetroleumCharacterization.Assay.Assay) In form.Options.PetroleumAssays
+            xel.Add(New XElement("Assay", pp.Value.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("WatchItems"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems")
+
+        For Each wi As WatchItem In form.WatchItems
+            xel.Add(New XElement("WatchItem", wi.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("ScriptItems"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems")
+
+        For Each scr As Script In form.ScriptCollection.Values
+            xel.Add(New XElement("ScriptItem", scr.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("ChartItems"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("ChartItems")
+
+        For Each ch As SharedClasses.Charts.Chart In form.ChartCollection.Values
+            xel.Add(New XElement("ChartItem", ch.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("ParticleSizeDistributions"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("ParticleSizeDistributions")
+
+        For Each psd In form.ParticleSizeDistributions
+            xel.Add(New XElement("ParticleSizeDistribution", DirectCast(psd, ICustomXMLSerialization).SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Spreadsheet"))
+        xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Add(New XElement("RGFData"))
+        Dim sdict As New Dictionary(Of String, String)
+        For Each sheet In form.FormSpreadsheet.Spreadsheet.Worksheets
+            Dim tmpfile = SharedClasses.Utility.GetTempFileName()
+            sheet.SaveRGF(tmpfile)
+            Dim xmldoc = New XmlDocument()
+            xmldoc.Load(tmpfile)
+            sdict.Add(sheet.Name, Newtonsoft.Json.JsonConvert.SerializeXmlNode(xmldoc))
+            File.Delete(tmpfile)
+        Next
+        xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("RGFData").Value = Newtonsoft.Json.JsonConvert.SerializeObject(sdict)
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PanelLayout"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("PanelLayout")
+
+        Dim myfile As String = SharedClasses.Utility.GetTempFileName()
+        form.dckPanel.SaveAsXml(myfile, Encoding.UTF8)
+        xel.Add(File.ReadAllText(myfile).ToString)
+        File.Delete(myfile)
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("MessagesLog"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("MessagesLog")
+
+        If form.Options.SaveFlowsheetMessagesInFile Then
+            Dim inner_elements As New List(Of XElement)
+            For Each item In form.MessagesLog
+                inner_elements.Add(New XElement("Message", item))
+            Next
+            xel.Add(inner_elements)
+        End If
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Results"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
+        xel.Add(DirectCast(form.Results, ICustomXMLSerialization).SaveData().ToArray())
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
+
+        For Each ghgcomp In form.GHGEmissionCompositions.Values
+            xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
+        Next
+
+        Return xdoc
+
+    End Function
+
     Shared Function IsZipFilePasswordProtected(ByVal ZipFile As Stream) As Boolean
         Using zipInStream As New ZipInputStream(ZipFile)
             Dim zEntry As ZipEntry = zipInStream.GetNextEntry()

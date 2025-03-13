@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -428,7 +429,7 @@ namespace DWSIM.Automation
 
         }
 
-        public List<Exception> SolveFlowsheet3()
+        public List<Exception> SolveFlowsheet3(CancellationToken token)
         {
             if (PropertyPackages.Count == 0)
             {
@@ -445,16 +446,9 @@ namespace DWSIM.Automation
             Task<List<Exception>> st = new Task<List<Exception>>(() =>
             {
                 var solver = new FlowsheetSolver.FlowsheetSolver2 {
-                    ThisCancellationToken = new System.Threading.CancellationToken(), 
+                    ThisCancellationToken = token, 
                     SolverTimeoutSeconds = Settings.SolverTimeoutSeconds };
                 return solver.SolveFlowsheet(this);
-            });
-
-            st.ContinueWith((t) =>
-            {
-                Settings.CalculatorStopRequested = false;
-                Settings.CalculatorBusy = false;
-                Settings.TaskCancellationTokenSource = new System.Threading.CancellationTokenSource();
             });
 
             try

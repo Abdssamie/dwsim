@@ -4561,7 +4561,7 @@ Public Class FormFlowsheet
     End Sub
 
     Public Function SaveToXML1() As XDocument Implements IFlowsheet.SaveToXML
-        Throw New NotImplementedException()
+        Return FormMain.SaveXML2(Me)
     End Function
 
     Public Function GetProcessData() As List(Of XElement) Implements IFlowsheet.GetProcessData

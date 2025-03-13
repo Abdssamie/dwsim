@@ -565,11 +565,6 @@ Imports DWSIM.SharedClasses
 
         Dim fs As IFlowsheet = TryCast(fobj, IFlowsheet)
 
-        If fs.MasterFlowsheet Is Nothing And Not Adjusting Then
-            FinishAny?.Invoke()
-            Return New List(Of Exception)
-        End If
-
         Inspector.Host.CurrentSolutionID = Date.Now.ToBinary
 
         Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
@@ -592,13 +587,6 @@ Imports DWSIM.SharedClasses
             el.Add(New Exception(fs.GetTranslatedString("NoCompoundsAdded")))
             fs.ShowMessage(fs.GetTranslatedString("NoCompoundsAdded"), IFlowsheet.MessageType.GeneralError)
             Return el
-        End If
-
-        If Not fs Is Nothing Then
-            If fs.MasterFlowsheet Is Nothing And Not Adjusting Then
-                FinishAny?.Invoke()
-                Return New List(Of Exception)
-            End If
         End If
 
         Dim fgui As IFlowsheet = TryCast(fobj, IFlowsheet)
