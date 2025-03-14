@@ -1681,6 +1681,7 @@ Namespace Reactors
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
                         .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
                         .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
+                        .ReactionExtents = REx.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.EquilibriumReactorAdiabatic})
                 Else
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
@@ -1694,6 +1695,7 @@ Namespace Reactors
                         .Pressure = P.ToString("F4", CultureInfo.InvariantCulture),
                         .MixtureMolarFlows = N0.Values.ToArray().ToString("F4"),
                         .MixtureMolarFlows2 = N.Values.ToArray().ToString("F4"),
+                        .ReactionExtents = REx.ToArray().ToString("F4"),
                         .RequestType = Interfaces.ConvergenceHelperRequestType.EquilibriumReactorIsothermic})
                 End If
             End If
