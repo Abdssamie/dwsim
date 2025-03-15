@@ -78,6 +78,7 @@ namespace DWSIM.AI.ConvergenceAssistant.Classes
 
     public class ConvergenceHelperMetaData : IConvergenceHelperMetaData
     {
+        public ConvergenceHelperRequestType RequestType { get; set; } = ConvergenceHelperRequestType.PVFlash;
         public string ModelName { get; set; } = "";
         public string PropertyPackageName { get; set; } = "";
         public DateTime CreatedOn { get; set; } = DateTime.MinValue;

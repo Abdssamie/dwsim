@@ -118,9 +118,12 @@ End Interface
 
 Public Interface IConvergenceHelperMetaData
 
+    Property RequestType As ConvergenceHelperRequestType
+
     Property ModelName As String
 
     Property PropertyPackageName As String
+
     Property CreatedOn As DateTime
 
     Property LastUpdatedOn As DateTime
