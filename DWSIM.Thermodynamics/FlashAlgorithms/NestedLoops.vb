@@ -103,7 +103,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                 If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
                     Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
 
-                    result = Flash_PT_1(Vz, P, T, PP, True, estimate.KValuesVL1)
+                    result = Flash_PT_1(Vz, P, T, PP, ReuseKI, PrevKi, estimate.VaporMolarFlows.Sum())
 
                 Else
 
@@ -141,7 +141,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Public Function Flash_PT_1(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+        Public Function Flash_PT_1(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing, Optional ByVal Vest As Double = -1) As Object
 
             Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
@@ -292,7 +292,11 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
             If Vmax = 0.0# Then Vmax = 1.0#
             If Vmax > 1.0# Then Vmax = 1.0#
 
-            V = (Vmin + Vmax) / 2
+            If Vest >= 0 Then
+                V = Vest
+            Else
+                V = (Vmin + Vmax) / 2
+            End If
 
             g = 0.0#
             For i = 0 To n
