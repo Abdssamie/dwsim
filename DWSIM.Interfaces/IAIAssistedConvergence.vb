@@ -210,6 +210,8 @@ End Interface
 
 Public Interface IManagerSettings
 
+    Property AssistanceLevel As Integer
+
     Property AutoUpdateEnabled As Boolean
 
     Property DatabaseSaveThreshold As Integer
