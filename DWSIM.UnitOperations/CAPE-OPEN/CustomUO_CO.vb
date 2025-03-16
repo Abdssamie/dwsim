@@ -63,6 +63,8 @@ Namespace UnitOperations.CAPEOPENWrappers
         <System.NonSerialized()> Public scope As Microsoft.Scripting.Hosting.ScriptScope
         <System.NonSerialized()> Public engine As Microsoft.Scripting.Hosting.ScriptEngine
 
+        Private Shared Lock As New Object
+
         Public Overrides Sub Initialize()
 
             MyBase.Initialize()
@@ -251,52 +253,11 @@ Namespace UnitOperations.CAPEOPENWrappers
 
             Else
 
-                Try
-
-                    GlobalSettings.Settings.InitializePythonEnvironment()
-
-                Catch ex As Exception
-
-                    _lastrun = "Error executing script: " & ex.ToString()
-                    MessageBox.Show(_lastrun, Me.ComponentName)
-                    Throw New CapeOpen.CapeSolvingErrorException(_lastrun, ex)
-
-                End Try
-
-                Using Py.GIL
+                SyncLock Lock
 
                     Try
 
-                        Dim locals As New PyDict()
-
-                        Dim sys As Object = Py.Import("sys")
-
-                        Dim codeToRedirectOutput As String = "import sys" & vbCrLf + "from io import BytesIO as StringIO" & vbCrLf + "sys.stdout = mystdout = StringIO()" & vbCrLf + "sys.stdout.flush()" & vbCrLf + "sys.stderr = mystderr = StringIO()" & vbCrLf + "sys.stderr.flush()"
-                        PythonEngine.RunSimpleString(codeToRedirectOutput)
-
-                        locals.SetItem("pme", TryCast(_sctxt, ICapeSimulationContext).ToPython())
-                        locals.SetItem("this", Me.ToPython())
-                        Dim ocount As Integer = 0
-                        For i As Integer = 1 To _inletmaterialports
-                            locals.SetItem("ims" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeThermoMaterialObject).ToPython())
-                            ocount += 1
-                        Next
-                        For i As Integer = 1 To _inletenergyports
-                            locals.SetItem("ies" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeCollection).ToPython())
-                            ocount += 1
-                        Next
-                        For i As Integer = 1 To _outletmaterialports
-                            locals.SetItem("oms" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeThermoMaterialObject).ToPython())
-                            ocount += 1
-                        Next
-                        For i As Integer = 1 To _outletenergyports
-                            locals.SetItem("oes" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeCollection).ToPython())
-                            ocount += 1
-                        Next
-
-                        Dim txtcode As String = ""
-                        txtcode += DirectCast(Me.Parameters(0), OptionParameter).Value
-                        PythonEngine.Exec(txtcode, Nothing, locals)
+                        GlobalSettings.Settings.InitializePythonEnvironment()
 
                     Catch ex As Exception
 
@@ -304,15 +265,59 @@ Namespace UnitOperations.CAPEOPENWrappers
                         MessageBox.Show(_lastrun, Me.ComponentName)
                         Throw New CapeOpen.CapeSolvingErrorException(_lastrun, ex)
 
-                    Finally
-
-                        TryCast(_sctxt, IDisposable)?.Dispose()
-                        _sctxt = Nothing
-
                     End Try
 
-                End Using
+                    Using Py.GIL
 
+                        Try
+
+                            Dim locals As New PyDict()
+
+                            Dim sys As Object = Py.Import("sys")
+
+                            Dim codeToRedirectOutput As String = "import sys" & vbCrLf + "from io import BytesIO as StringIO" & vbCrLf + "sys.stdout = mystdout = StringIO()" & vbCrLf + "sys.stdout.flush()" & vbCrLf + "sys.stderr = mystderr = StringIO()" & vbCrLf + "sys.stderr.flush()"
+                            PythonEngine.RunSimpleString(codeToRedirectOutput)
+
+                            locals.SetItem("pme", TryCast(_sctxt, ICapeSimulationContext).ToPython())
+                            locals.SetItem("this", Me.ToPython())
+                            Dim ocount As Integer = 0
+                            For i As Integer = 1 To _inletmaterialports
+                                locals.SetItem("ims" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeThermoMaterialObject).ToPython())
+                                ocount += 1
+                            Next
+                            For i As Integer = 1 To _inletenergyports
+                                locals.SetItem("ies" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeCollection).ToPython())
+                                ocount += 1
+                            Next
+                            For i As Integer = 1 To _outletmaterialports
+                                locals.SetItem("oms" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeThermoMaterialObject).ToPython())
+                                ocount += 1
+                            Next
+                            For i As Integer = 1 To _outletenergyports
+                                locals.SetItem("oes" & i, TryCast(Me.Ports(ocount).connectedObject, ICapeCollection).ToPython())
+                                ocount += 1
+                            Next
+
+                            Dim txtcode As String = ""
+                            txtcode += DirectCast(Me.Parameters(0), OptionParameter).Value
+                            PythonEngine.Exec(txtcode, Nothing, locals)
+
+                        Catch ex As Exception
+
+                            _lastrun = "Error executing script: " & ex.ToString()
+                            MessageBox.Show(_lastrun, Me.ComponentName)
+                            Throw New CapeOpen.CapeSolvingErrorException(_lastrun, ex)
+
+                        Finally
+
+                            TryCast(_sctxt, IDisposable)?.Dispose()
+                            _sctxt = Nothing
+
+                        End Try
+
+                    End Using
+
+                End SyncLock
 
             End If
 

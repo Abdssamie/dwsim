@@ -66,6 +66,8 @@ Namespace UnitOperations
         Private _fontname As String = "Consolas"
         Private _fontsize As Integer = 10
 
+        Private Shared Lock As New Object
+
         Public Property HighlightSpaces As Boolean = False
         Public Property HighlightTabs As Boolean = False
 
@@ -309,81 +311,85 @@ Namespace UnitOperations
 
             Else
 
-                Settings.InitializePythonEnvironment()
+                SyncLock Lock
 
-                Using Py.GIL
+                    Settings.InitializePythonEnvironment()
 
-                    Try
+                    Using Py.GIL
 
-                        Dim sys As Object = Py.Import("sys")
-                        Dim codeToRedirectOutput As String = "import sys" & vbCrLf + "from io import BytesIO as StringIO" & vbCrLf + "sys.stdout = mystdout = StringIO()" & vbCrLf + "sys.stdout.flush()" & vbCrLf + "sys.stderr = mystderr = StringIO()" & vbCrLf + "sys.stderr.flush()"
-                        PythonEngine.RunSimpleString(codeToRedirectOutput)
+                        Try
 
-                        Me.ErrorMessage = ""
+                            Dim sys As Object = Py.Import("sys")
+                            Dim codeToRedirectOutput As String = "import sys" & vbCrLf + "from io import BytesIO as StringIO" & vbCrLf + "sys.stdout = mystdout = StringIO()" & vbCrLf + "sys.stdout.flush()" & vbCrLf + "sys.stderr = mystderr = StringIO()" & vbCrLf + "sys.stderr.flush()"
+                            PythonEngine.RunSimpleString(codeToRedirectOutput)
 
-                        Dim locals As New PyDict()
+                            Me.ErrorMessage = ""
 
-                        locals.SetItem("Flowsheet", FlowSheet.ToPython)
-                        locals.SetItem("Me", Me.ToPython)
-                        locals.SetItem("This", Me.ToPython)
-                        locals.SetItem("flowsheet", FlowSheet.ToPython)
-                        locals.SetItem("me", Me.ToPython)
-                        locals.SetItem("this", Me.ToPython)
+                            Dim locals As New PyDict()
 
-                        Dim arg1 As Python.Runtime.PyObject = Nothing
+                            locals.SetItem("Flowsheet", FlowSheet.ToPython)
+                            locals.SetItem("Me", Me.ToPython)
+                            locals.SetItem("This", Me.ToPython)
+                            locals.SetItem("flowsheet", FlowSheet.ToPython)
+                            locals.SetItem("me", Me.ToPython)
+                            locals.SetItem("this", Me.ToPython)
 
-                        For Each variable In InputStringVariables
-                            locals.SetItem(variable.Key, variable.Value.ToPython)
-                        Next
+                            Dim arg1 As Python.Runtime.PyObject = Nothing
 
-                        For Each variable In InputVariables
-                            locals.SetItem(variable.Key, variable.Value.ToPython)
-                        Next
+                            For Each variable In InputStringVariables
+                                locals.SetItem(variable.Key, variable.Value.ToPython)
+                            Next
 
-                        If Not ims1 Is Nothing Then locals.SetItem("ims1", ims1.ToPython)
-                        If Not ims2 Is Nothing Then locals.SetItem("ims2", ims2.ToPython)
-                        If Not ims3 Is Nothing Then locals.SetItem("ims3", ims3.ToPython)
-                        If Not ims4 Is Nothing Then locals.SetItem("ims4", ims4.ToPython)
-                        If Not ims5 Is Nothing Then locals.SetItem("ims5", ims5.ToPython)
-                        If Not ims6 Is Nothing Then locals.SetItem("ims6", ims6.ToPython)
-                        If Not oms1 Is Nothing Then locals.SetItem("oms1", oms1.ToPython)
-                        If Not oms2 Is Nothing Then locals.SetItem("oms2", oms2.ToPython)
-                        If Not oms3 Is Nothing Then locals.SetItem("oms3", oms3.ToPython)
-                        If Not oms4 Is Nothing Then locals.SetItem("oms4", oms4.ToPython)
-                        If Not oms5 Is Nothing Then locals.SetItem("oms5", oms5.ToPython)
-                        If Not oms6 Is Nothing Then locals.SetItem("oms6", oms6.ToPython)
-                        If Not ies1 Is Nothing Then locals.SetItem("ies1", ies1.ToPython)
-                        If Not oes1 Is Nothing Then locals.SetItem("oes1", oes1.ToPython)
+                            For Each variable In InputVariables
+                                locals.SetItem(variable.Key, variable.Value.ToPython)
+                            Next
 
-                        PythonEngine.Exec(txtcode, Nothing, locals)
+                            If Not ims1 Is Nothing Then locals.SetItem("ims1", ims1.ToPython)
+                            If Not ims2 Is Nothing Then locals.SetItem("ims2", ims2.ToPython)
+                            If Not ims3 Is Nothing Then locals.SetItem("ims3", ims3.ToPython)
+                            If Not ims4 Is Nothing Then locals.SetItem("ims4", ims4.ToPython)
+                            If Not ims5 Is Nothing Then locals.SetItem("ims5", ims5.ToPython)
+                            If Not ims6 Is Nothing Then locals.SetItem("ims6", ims6.ToPython)
+                            If Not oms1 Is Nothing Then locals.SetItem("oms1", oms1.ToPython)
+                            If Not oms2 Is Nothing Then locals.SetItem("oms2", oms2.ToPython)
+                            If Not oms3 Is Nothing Then locals.SetItem("oms3", oms3.ToPython)
+                            If Not oms4 Is Nothing Then locals.SetItem("oms4", oms4.ToPython)
+                            If Not oms5 Is Nothing Then locals.SetItem("oms5", oms5.ToPython)
+                            If Not oms6 Is Nothing Then locals.SetItem("oms6", oms6.ToPython)
+                            If Not ies1 Is Nothing Then locals.SetItem("ies1", ies1.ToPython)
+                            If Not oes1 Is Nothing Then locals.SetItem("oes1", oes1.ToPython)
 
-                        If Not GlobalSettings.Settings.IsRunningOnMono() Then
-                            FlowSheet.ShowMessage(sys.stdout.getvalue().ToString(), IFlowsheet.MessageType.Information)
-                        End If
+                            PythonEngine.Exec(txtcode, Nothing, locals)
 
-                        OutputVariables.Clear()
-                        Dim i As Integer = 0
-                        For Each variable As PyObject In locals.Items
-                            Dim val = locals.Values(i).ToString
-                            If Double.TryParse(val, Globalization.NumberStyles.Any, Globalization.CultureInfo.InvariantCulture, New Double) Then
-                                OutputVariables.Add(locals.Keys(i).ToString, val.ToDoubleFromInvariant)
+                            If Not GlobalSettings.Settings.IsRunningOnMono() Then
+                                FlowSheet.ShowMessage(sys.stdout.getvalue().ToString(), IFlowsheet.MessageType.Information)
                             End If
-                            i += 1
-                        Next
 
-                    Catch ex As Exception
+                            OutputVariables.Clear()
+                            Dim i As Integer = 0
+                            For Each variable As PyObject In locals.Items
+                                Dim val = locals.Values(i).ToString
+                                If Double.TryParse(val, Globalization.NumberStyles.Any, Globalization.CultureInfo.InvariantCulture, New Double) Then
+                                    OutputVariables.Add(locals.Keys(i).ToString, val.ToDoubleFromInvariant)
+                                End If
+                                i += 1
+                            Next
 
-                        Me.ErrorMessage = ex.Message
+                        Catch ex As Exception
 
-                        Me.DeCalculate()
+                            Me.ErrorMessage = ex.Message
 
-                        Throw New Exception(ex.Message & vbCrLf & ex.StackTrace.Replace("\n", vbCrLf), ex)
+                            Me.DeCalculate()
 
-                    Finally
+                            Throw New Exception(ex.Message & vbCrLf & ex.StackTrace.Replace("\n", vbCrLf), ex)
 
-                    End Try
+                        Finally
 
-                End Using
+                        End Try
+
+                    End Using
+
+                End SyncLock
 
             End If
 

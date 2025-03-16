@@ -70,6 +70,8 @@ Namespace UnitOperations
 
         Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = False
 
+        Private Shared Lock As New Object
+
         Public Sub New()
             MyBase.New()
             _ports = New List(Of ICapeUnitPort)
@@ -1003,7 +1005,7 @@ Namespace UnitOperations
 
         Public Overrides Sub Calculate(Optional ByVal args As Object = Nothing)
 
-            If Not Calculator.IsRunningOnMono Then
+            SyncLock Lock
 
                 Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
@@ -1111,7 +1113,7 @@ Namespace UnitOperations
 
                 IObj?.Close()
 
-            End If
+            End SyncLock
 
         End Sub
 
