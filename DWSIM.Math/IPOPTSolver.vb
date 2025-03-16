@@ -41,6 +41,8 @@ Namespace MathEx.Optimization
 
         Private FunctionValues As List(Of Double)
 
+        Private Shared Lock As New Object
+
         Public ReadOnly Property Iterations As Integer
             Get
                 Return _Iterations
@@ -99,36 +101,38 @@ Namespace MathEx.Optimization
                 Next
             End If
 
-            Using problem As New Ipopt(vars.Length, lbounds, ubounds, 0, Nothing, Nothing,
-                       0, 0, AddressOf eval_f, AddressOf eval_g,
-                       AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                problem.AddOption("tol", Tolerance)
-                problem.AddOption("print_level", 0)
-                problem.AddOption("max_iter", MaxIterations)
-                problem.AddOption("mu_strategy", "adaptive")
-                problem.AddOption("hessian_approximation", "limited-memory")
-                'problem.AddOption("expect_infeasible_problem", "yes")
-                problem.SetIntermediateCallback(AddressOf intermediate)
-                status = problem.SolveProblem(vars, obj, Nothing, Nothing, Nothing, Nothing)
-                Select Case status
-                    Case IpoptReturnCode.Solve_Succeeded,
-                            IpoptReturnCode.Solved_To_Acceptable_Level,
-                            IpoptReturnCode.Restoration_Failed,
-                            IpoptReturnCode.Feasible_Point_Found,
-                            IpoptReturnCode.Search_Direction_Becomes_Too_Small,
-                            IpoptReturnCode.Infeasible_Problem_Detected,
-                            IpoptReturnCode.Maximum_Iterations_Exceeded,
-                            IpoptReturnCode.User_Requested_Stop
-                        If ReturnLowestObjFuncValue Then
-                            'get solution with lowest function value
-                            Return Solutions(FunctionValues.IndexOf(FunctionValues.Min))
-                        Else
-                            Return vars
-                        End If
-                    Case Else
-                        Throw New ArithmeticException("IPOPT failed to converge.")
-                End Select
-            End Using
+            SyncLock Lock
+                Using problem As New Ipopt(vars.Length, lbounds, ubounds, 0, Nothing, Nothing,
+                               0, 0, AddressOf eval_f, AddressOf eval_g,
+                               AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
+                    problem.AddOption("tol", Tolerance)
+                    problem.AddOption("print_level", 0)
+                    problem.AddOption("max_iter", MaxIterations)
+                    problem.AddOption("mu_strategy", "adaptive")
+                    problem.AddOption("hessian_approximation", "limited-memory")
+                    'problem.AddOption("expect_infeasible_problem", "yes")
+                    problem.SetIntermediateCallback(AddressOf intermediate)
+                    status = problem.SolveProblem(vars, obj, Nothing, Nothing, Nothing, Nothing)
+                    Select Case status
+                        Case IpoptReturnCode.Solve_Succeeded,
+                                    IpoptReturnCode.Solved_To_Acceptable_Level,
+                                    IpoptReturnCode.Restoration_Failed,
+                                    IpoptReturnCode.Feasible_Point_Found,
+                                    IpoptReturnCode.Search_Direction_Becomes_Too_Small,
+                                    IpoptReturnCode.Infeasible_Problem_Detected,
+                                    IpoptReturnCode.Maximum_Iterations_Exceeded,
+                                    IpoptReturnCode.User_Requested_Stop
+                            If ReturnLowestObjFuncValue Then
+                                'get solution with lowest function value
+                                Return Solutions(FunctionValues.IndexOf(FunctionValues.Min))
+                            Else
+                                Return vars
+                            End If
+                        Case Else
+                            Throw New ArithmeticException("IPOPT failed to converge.")
+                    End Select
+                End Using
+            End SyncLock
 
         End Function
 
