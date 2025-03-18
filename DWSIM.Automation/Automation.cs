@@ -658,20 +658,6 @@ namespace DWSIM.Automation
             return f;
         }
 
-        [DispId(11)]
-        public void CalculateFlowsheet5(IFlowsheet flowsheet, int timeout_seconds)
-        {
-            Settings.SolverTimeoutSeconds = timeout_seconds;
-            ((Flowsheet2)flowsheet).SolveFlowsheet3(new System.Threading.CancellationToken());
-        }
-
-        [DispId(12)]
-        public List<Exception> CalculateFlowsheet6(IFlowsheet flowsheet)
-        {
-            return ((Flowsheet2)flowsheet).SolveFlowsheet3(new System.Threading.CancellationToken());
-        }
-
-
         public object GetMainWindow()
         {
             throw new NotImplementedException();
