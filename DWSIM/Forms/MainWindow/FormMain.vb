@@ -4346,9 +4346,9 @@ Label_00CC:
                                       My.Settings.MostRecentFiles.Add(handler.FullPath)
                                       If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
                                   End If
+                                  form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & handler.FullPath & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, MessageType.Information)
                               End If
                           End Sub)
-            form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & handler.FullPath & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, MessageType.Information)
         End If
 
     End Sub
