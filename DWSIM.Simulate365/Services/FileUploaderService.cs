@@ -1,13 +1,16 @@
 ﻿using DWSIM.Simulate365.Models;
 using DWSIM.UI.Web.Settings;
 using Microsoft.Graph;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,8 +19,63 @@ namespace DWSIM.Simulate365.Services
 
 
 
-    public class FileUploaderService
+    public static class FileUploaderService
     {
+        public static ConcurrentDictionary<string, Func<Task<UploadNotAllowedEventArgs>>> Validators = new ConcurrentDictionary<string, Func<Task<UploadNotAllowedEventArgs>>>();
+
+        public static event EventHandler<UploadNotAllowedEventArgs> OnFileNotAllowedToBeSaved;
+
+
+        private static async Task<bool> CanUploadFileAsync()
+        {
+            if (!Validators.Any())
+                return true;
+
+            try
+            {
+                // Execute all validators concurrently
+                var validatorTasks = Validators.Values;
+
+                var canUploadResults = new List<UploadNotAllowedEventArgs>();
+                // Wait for all tasks to complete
+
+                foreach (var validatorTask in validatorTasks)
+                {
+                    var result = Task.Run(validatorTask).Result;
+
+                    if (result != null)
+                        canUploadResults.Add(result);
+                }
+
+
+                // Check the results
+                foreach (var result in canUploadResults)
+                {
+                    if (result != null)
+                    {
+                        // Raise event for each validation result
+                        OnFileNotAllowedToBeSaved?.Invoke(null, result);
+                    }
+                }
+
+                // If any validator result is not null, return false
+                if (canUploadResults.Any(x => x != null))
+                {
+                    var reason = canUploadResults.First().Reason;
+                    throw new Exception(reason);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                // Handle exception if necessary
+                throw;
+            }
+
+            return true;
+        }
+
         public static S365File UploadFile(string fileUniqueIdentifier, string parentUniqueIdentifier, string filePath, string filename, string simulatePath, UploadConflictAction? conflictAction)
         {
             using (var fileStream = System.IO.File.OpenRead(filePath))
@@ -26,8 +84,10 @@ namespace DWSIM.Simulate365.Services
 
         public static S365File UploadFileByFilePath(string simulatePath, Stream fileStream, UploadConflictAction? conflictAction)
         {
+            var canUpload = CanUploadFileAsync().Result;
             try
             {
+
                 if (simulatePath.StartsWith("//Simulate 365 Dashboard/"))
                     simulatePath = simulatePath.Substring(24);
 
@@ -42,7 +102,7 @@ namespace DWSIM.Simulate365.Services
                 var client = GetDashboardClient(token);
                 var parentUniqueIdentifier = fileWithBreadCrumbs.BreadcrumbItems?.LastOrDefault()?.UniqueIdentifier.ToString();
 
-                var filename= Path.GetFileName(simulatePath) ?? string.Empty;   
+                var filename = Path.GetFileName(simulatePath) ?? string.Empty;
 
                 var fileResp = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, conflictAction)).Result;
 
@@ -65,6 +125,7 @@ namespace DWSIM.Simulate365.Services
 
         public static S365File UploadFile(string fileUniqueIdentifier, string parentUniqueIdentifier, Stream fileStream, string filename, string simulatePath, UploadConflictAction? conflictAction)
         {
+            var canUpload = CanUploadFileAsync().Result;
             try
             {
                 fileStream.Seek(0, SeekOrigin.Begin);
@@ -91,7 +152,7 @@ namespace DWSIM.Simulate365.Services
             }
         }
 
-        public static async Task<UploadFileResponseModel> UploadDocumentAsync(string parentUniqueIdentifier, string filename, Stream fileStream, UploadConflictAction? conflictAction)
+        private static async Task<UploadFileResponseModel> UploadDocumentAsync(string parentUniqueIdentifier, string filename, Stream fileStream, UploadConflictAction? conflictAction)
         {
 
 
@@ -160,5 +221,10 @@ namespace DWSIM.Simulate365.Services
 
         }
 
+    }
+    public class UploadNotAllowedEventArgs : EventArgs
+    {
+        public string EventKey { get; set; }
+        public string Reason { get; set; }
     }
 }
