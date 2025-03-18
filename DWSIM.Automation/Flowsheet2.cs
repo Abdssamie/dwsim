@@ -429,54 +429,6 @@ namespace DWSIM.Automation
 
         }
 
-        public List<Exception> SolveFlowsheet3(CancellationToken token)
-        {
-            if (PropertyPackages.Count == 0)
-            {
-                ShowMessage("Please select a Property Package before solving the flowsheet.", IFlowsheet.MessageType.GeneralError);
-                return new List<Exception>();
-            }
-
-            if (SelectedCompounds.Count == 0)
-            {
-                ShowMessage("Please select a Compound before solving the flowsheet.", IFlowsheet.MessageType.GeneralError);
-                return new List<Exception>();
-            }
-
-            Task<List<Exception>> st = new Task<List<Exception>>(() =>
-            {
-                var solver = new FlowsheetSolver.FlowsheetSolver2 {
-                    ThisCancellationToken = token, 
-                    SolverTimeoutSeconds = Settings.SolverTimeoutSeconds };
-                return solver.SolveFlowsheet(this);
-            });
-
-            try
-            {
-                st.Start(TaskScheduler.Default);
-                st.Wait();
-                return st.Result;
-            }
-            catch (AggregateException aex)
-            {
-                foreach (Exception ex2 in aex.InnerExceptions)
-                {
-                    ShowMessage(ex2.ToString(), IFlowsheet.MessageType.GeneralError);
-                }
-                Settings.CalculatorBusy = false;
-                Settings.TaskCancellationTokenSource = new System.Threading.CancellationTokenSource();
-                return new List<Exception>(aex.InnerExceptions);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage(ex.ToString(), IFlowsheet.MessageType.GeneralError);
-                Settings.CalculatorBusy = false;
-                Settings.TaskCancellationTokenSource = new System.Threading.CancellationTokenSource();
-                return new List<Exception> { ex };
-            }
-
-        }
-
         public override void SetMessageListener(Action<string, IFlowsheet.MessageType> act)
         {
             listeningaction = act;

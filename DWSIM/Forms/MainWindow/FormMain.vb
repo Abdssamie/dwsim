@@ -3942,7 +3942,7 @@ Public Class FormMain
         If simulationfilename = "" Then simulationfilename = handler.FullPath
         Dim fileExtension As String = IO.Path.GetExtension(simulationfilename).ToLower
 
-        If (fileExtension.Contains("dwxml") Or fileExtension.Contains("dwxmz")) Then
+        If fileExtension.Contains("dwxml") Then
             If Visible Then
                 Dim mypath As String = simulationfilename
                 If mypath = "" Then mypath = handler.FullPath
@@ -4282,7 +4282,7 @@ Label_00CC:
 
         Dim xmlfile As String = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), "xml")
 
-        Me.SaveXML(New SharedClassesCSharp.FilePicker.Windows.WindowsFile(xmlfile), form, handler.FullPath)
+        SaveXML(New WindowsFile(xmlfile), form, handler.FullPath)
 
         Dim i_Files As ArrayList = New ArrayList()
         If File.Exists(xmlfile) Then i_Files.Add(xmlfile)
@@ -4334,18 +4334,22 @@ Label_00CC:
 
         End Using
 
-        Try
-            If Path.GetExtension(handler.FullPath).ToLower() <> ".dwbcs" Then
-                form.Options.FilePath = handler.FullPath
-            End If
-        Catch ex As Exception
-        End Try
-
-        form.UpdateFormText()
-
         File.Delete(xmlfile)
-
         File.Delete(dbfile)
+
+        If Visible Then
+            form.UIThread(Sub()
+                              If Path.GetExtension(handler.FullPath).ToLower() <> ".dwbcs" Then
+                                  If Not My.Settings.MostRecentFiles.Contains(handler.FullPath) Then
+                                      form.Options.FilePath = handler.FullPath
+                                      form.UpdateFormText()
+                                      My.Settings.MostRecentFiles.Add(handler.FullPath)
+                                      If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
+                                  End If
+                              End If
+                          End Sub)
+            form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & handler.FullPath & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, MessageType.Information)
+        End If
 
     End Sub
 

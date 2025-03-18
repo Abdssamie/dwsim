@@ -238,4 +238,10 @@ Public Interface IManagerSettings
 
     Property UpdateTimerInterval As Integer
 
+    Property ProcessDataDeltaPercentage As Integer
+
+    Property ProcessDataNumberOfPoints As Integer
+
+    Property ModelTrainingIterations As Integer
+
 End Interface

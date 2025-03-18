@@ -14,6 +14,8 @@ Public Class MaterialStreamPanel
     Protected Flowsheet As FormFlowsheet
     Protected RowsCreated As Boolean = False
 
+    Private props As String()
+
     Private Sub frmMatList_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         ExtensionMethods.ChangeDefaultFont(Me)
@@ -53,7 +55,7 @@ Public Class MaterialStreamPanel
         Flowsheet.AddComponentsRows(ms)
         Dim nms = Flowsheet.Collections.FlowsheetObjectCollection.Values.Where(Function(x) TypeOf x Is Streams.MaterialStream).Count
 
-        Dim props = ms.GetProperties(PropertyType.ALL)
+        props = ms.GetProperties(PropertyType.ALL)
 
         grid1.Readonly = True
 
@@ -127,7 +129,6 @@ Public Class MaterialStreamPanel
             Dim mslist = Flowsheet.Collections.FlowsheetObjectCollection.Values.Where(Function(x) TypeOf x Is Streams.MaterialStream).OrderBy(Function(s) s.GraphicObject.Tag)
             For Each ms In mslist
                 grid1.Worksheets(0).Cells(0, i).Data = ms.GraphicObject.Tag
-                Dim props = ms.GetProperties(PropertyType.ALL)
                 j = 1
                 For Each p In props
                     Dim val = ms.GetPropertyValue(p, Flowsheet.Options.SelectedUnitSystem1)
