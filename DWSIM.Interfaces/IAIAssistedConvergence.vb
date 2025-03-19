@@ -178,23 +178,23 @@ Public Interface IAIAssistedConvergenceManager
 
     Sub DisplayEditor(Flowsheet As IFlowsheet)
 
-    Sub AddToSummary(ByVal mdata As IConvergenceHelperMetaData)
+    Sub AddToSummary(mdata As IConvergenceHelperMetaData)
 
-    Function GetModel(ByVal request As IConvergenceHelperRequest) As IANNModel
+    Function GetModel(request As IConvergenceHelperRequest) As IANNModel
 
     Sub Initialize()
 
-    Function LoadModelFromFile(ByVal modelfilepath As String) As IANNModel
+    Function LoadModelFromFile(modelfilepath As String) As IANNModel
 
     Sub LoadSettings()
 
     Sub SaveDatabaseToFile()
 
-    Sub SaveModelToFile(ByVal model As IANNModel)
+    Sub SaveModelToFile(model As IANNModel)
 
     Sub SaveSettings()
 
-    Sub StoreData(ByVal data As IConvergenceHelperTrainingData)
+    Sub StoreData(data As IConvergenceHelperTrainingData)
 
     Sub UpdateModels()
 
@@ -204,7 +204,9 @@ End Interface
 
 Public Interface IAIAssistedSolutionProvider
 
-    Function GetSolutionEstimate(ByVal request As IConvergenceHelperRequest) As IConvergenceHelperResponse
+    Function GetSolutionEstimate(request As IConvergenceHelperRequest) As IConvergenceHelperResponse
+
+    Function GetPhaseEnvelope(request As IPhaseEnvelopeRequest) As IPhaseEnvelopeResult
 
 End Interface
 
@@ -243,5 +245,31 @@ Public Interface IManagerSettings
     Property ProcessDataNumberOfPoints As Integer
 
     Property ModelTrainingIterations As Integer
+
+End Interface
+
+Public Interface IPhaseEnvelopeResult
+
+    Property BubbleTemperatures As Double()
+
+    Property BubblePressures As Double()
+
+    Property DewTemperatures As Double()
+
+    Property DewPressures As Double()
+
+    Property CriticalPoints As List(Of Double())
+
+End Interface
+
+Public Interface IPhaseEnvelopeRequest
+
+    Property CompoundNames As String()
+
+    Property MolarComposition As Double()
+
+    Property ModelName As String
+
+    Property ModelParameters As List(Of Tuple(Of String, String, Double()))
 
 End Interface
