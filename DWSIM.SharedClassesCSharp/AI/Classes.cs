@@ -96,4 +96,22 @@ namespace DWSIM.AI.ConvergenceAssistant.Classes
         public float TrainingDataMSE { get; set; }
         public float TestingDataMSE { get; set; }
     }
+
+    public class PhaseEnvelopeRequest : IPhaseEnvelopeRequest
+    {
+        public string[] CompoundNames { get; set; }
+        public double[] MolarComposition { get; set; }
+        public string ModelName { get; set; }
+        public List<Tuple<string, string, double[]>> ModelParameters { get; set; }
+    }
+
+    public class PhaseEnvelopeResult : IPhaseEnvelopeResult
+    {
+        public double[] BubbleTemperatures { get; set; }
+        public double[] BubblePressures { get; set; }
+        public double[] DewTemperatures { get; set; }
+        public double[] DewPressures { get; set; }
+        public List<double[]> CriticalPoints { get; set; }
+    }
+
 }
