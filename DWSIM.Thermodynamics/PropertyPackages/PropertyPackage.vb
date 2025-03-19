@@ -3733,11 +3733,9 @@ redirect2:                  IObj?.SetCurrent()
                 .MolarComposition = Vz
             }
 
-            Dim eresult = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider.GetPhaseEnvelope(erequest)
+            Dim eresult = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetPhaseEnvelope(erequest)
 
             If eresult IsNot Nothing Then
-
-                CP.Add(New Object() {eresult.CriticalPoints(0)(0), eresult.CriticalPoints(0)(1), eresult.CriticalPoints(0)(2)})
 
                 For i = 0 To eresult.BubbleTemperatures.Count - 1
                     TVB.Add(eresult.BubbleTemperatures(i))
@@ -3754,6 +3752,81 @@ redirect2:                  IObj?.SetCurrent()
                     SO.Add(Me.DW_CalcEntropy(Vz, TVD.Last(), PO.Last(), State.Liquid))
                     VO.Add(1 / Me.AUX_LIQDENS(TVB.Last(), Vz, PO.Last(), PO.Last()) * Me.AUX_MMM(Phase.Mixture))
                 Next
+
+                If eresult.CriticalPoints IsNot Nothing Then
+
+                    CP.Add(New Object() {eresult.CriticalPoints(0)(0), eresult.CriticalPoints(0)(1), eresult.CriticalPoints(0)(2)})
+
+                Else
+
+                    If TypeOf Me Is PengRobinsonPropertyPackage Then
+                        If n > 0 Then
+                            CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                            If CP.Count = 0 Then CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
+                            If CP.Count > 0 Then
+                                Dim cp0 = CP(0)
+                                TCR = cp0(0)
+                                PCR = cp0(1)
+                                VCR = cp0(2)
+                                stopAtCP = True
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                recalcCP = True
+                            End If
+                        Else
+                            TCR = Me.AUX_TCM(Phase.Mixture)
+                            PCR = Me.AUX_PCM(Phase.Mixture)
+                            VCR = Me.AUX_VCM(Phase.Mixture)
+                            CP.Add(New Object() {TCR, PCR, VCR})
+                        End If
+                    ElseIf TypeOf Me Is SRKPropertyPackage Then
+                        If n > 0 Then
+                            CP = New Utilities.TCP.Methods_SRK().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                            If CP.Count = 0 Then CP = New Utilities.TCP.Methods_SRK().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
+                            If CP.Count > 0 Then
+                                Dim cp0 = CP(0)
+                                TCR = cp0(0)
+                                PCR = cp0(1)
+                                VCR = cp0(2)
+                                stopAtCP = True
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                recalcCP = True
+                            End If
+                        Else
+                            TCR = Me.AUX_TCM(Phase.Mixture)
+                            PCR = Me.AUX_PCM(Phase.Mixture)
+                            VCR = Me.AUX_VCM(Phase.Mixture)
+                            CP.Add(New Object() {TCR, PCR, VCR})
+                        End If
+                    Else
+                        If n > 0 Then
+                            CP = New ArrayList(DW_CalculateCriticalPoints())
+                            If CP.Count > 0 Then
+                                Dim cp0 = CP(0)
+                                TCR = cp0(0)
+                                PCR = cp0(1)
+                                VCR = cp0(2)
+                                stopAtCP = True
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                recalcCP = True
+                            End If
+                        Else
+                            TCR = Me.AUX_TCM(Phase.Mixture)
+                            PCR = Me.AUX_PCM(Phase.Mixture)
+                            VCR = Me.AUX_VCM(Phase.Mixture)
+                            CP.Add(New Object() {TCR, PCR, VCR})
+                        End If
+                    End If
+
+                End If
 
                 Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, TOWF, POWF, HOWF, SOWF, VOWF, TVB1, PB1, HB1, SB1, VB1, TVB2, PB2, HB2, SB2, VB2}
 
