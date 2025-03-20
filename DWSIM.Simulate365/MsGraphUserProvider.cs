@@ -24,7 +24,7 @@ namespace DWSIM.Simulate365
         public async Task<UserDetailsModel> GetUserDetailsAsync(string accessToken)
         {
             var graphClient = GraphClientFactory.CreateClient(accessToken);
-            var user = await graphClient.Me.Request().GetAsync();
+            var user = await graphClient.Me.Request().Select("displayName,givenName,surname,id,userPrincipalName,otherMails").GetAsync();
 
             var currentUser = new UserDetailsModel
             {
@@ -32,7 +32,8 @@ namespace DWSIM.Simulate365
                 FirstName = user.GivenName,
                 LastName = user.Surname,
                 Id = user.Id,
-                UserPrincipalName = user.UserPrincipalName
+                UserPrincipalName = user.UserPrincipalName,
+                Email = user.OtherMails?.First()
             };
             return currentUser;
         }
