@@ -129,14 +129,8 @@
     <value>NoControl</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkDisplayCompWarning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 212</value>
-  </data>
   <data name="chkDisplayCompWarning.Size" type="System.Drawing.Size, System.Drawing">
     <value>266, 17</value>
-  </data>
-  <data name="chkDisplayCompWarning.TabIndex" type="System.Int32, mscorlib">
-    <value>52</value>
   </data>
   <data name="chkDisplayCompWarning.Text" xml:space="preserve">
     <value>Display Warning for Missing Compound Parameters</value>
@@ -173,6 +167,24 @@
   </data>
   <data name="gpNL.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
+  </data>
+  <data name="chkPVstencil.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkPVstencil.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopLeft</value>
+  </data>
+  <data name="chkPVstencil.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkPVstencil.Size" type="System.Drawing.Size, System.Drawing">
+    <value>210, 17</value>
+  </data>
+  <data name="chkPVstencil.Text" xml:space="preserve">
+    <value>PV Flash - Five-point stencil derivatives</value>
+  </data>
+  <data name="chkPVstencil.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopLeft</value>
   </data>
   <data name="chkIdealPVFlash.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 133</value>
@@ -220,7 +232,7 @@
     <value>371, 12</value>
   </data>
   <data name="gpNL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>226, 180</value>
+    <value>226, 200</value>
   </data>
   <data name="gpNL.Text" xml:space="preserve">
     <value>Nested Loops Options</value>

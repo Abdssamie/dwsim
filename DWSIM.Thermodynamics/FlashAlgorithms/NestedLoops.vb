@@ -2737,6 +2737,8 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             df = Me.FlashSettings(Interfaces.Enums.FlashSetting.PVFlash_FixedDampingFactor).ToDoubleFromInvariant
             maxdT = Me.FlashSettings(Interfaces.Enums.FlashSetting.PVFlash_MaximumTemperatureChange).ToDoubleFromInvariant
 
+            Dim fpstencil As Boolean = FlashSettings(Interfaces.Enums.FlashSetting.PVFlash_FivePointStencilNumericalDerivative)
+
             n = Vz2.Length - 1
 
             PP = PP
@@ -2870,7 +2872,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             Dim marcador3, marcador2, marcador As Integer
             Dim stmp4_ant, stmp4, Tant, fval, fval_ant As Double
 
-            Dim K1(n), K2(n), dKdT(n) As Double
+            Dim K1(n), K2(n), K3(n), K4(n), dKdT(n) As Double
 
             Dim xvals, fvals As New List(Of Double)
 
@@ -2920,8 +2922,6 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                             Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
                         End If
 
-                        'Ki = PP.DW_CheckKvaluesConsistency(Vz, Ki, T, P)
-
                         marcador = 0
                         If Math.Abs(stmp4_ant) > 1.0E-20 Then marcador = 1
 
@@ -2935,10 +2935,10 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                         If V = 0.0 Then
                             Vy_ant = Vy.Clone
-                            Vy = Ki.MultiplyY(Vx).MultiplyConstY(1 / stmp4)
+                            Vy = Ki.MultiplyY(Vx).MultiplyConstY(1.0 / stmp4)
                         Else
                             Vx_ant = Vx.Clone
-                            Vx = Vy.DivideY(Ki).MultiplyConstY(1 / stmp4)
+                            Vx = Vy.DivideY(Ki).MultiplyConstY(1.0 / stmp4)
                         End If
 
                         marcador2 = 0
@@ -2970,21 +2970,55 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                         dKdT = PP.DW_CalcdKdT(Vx, Vy, T, P)
                     Else
                         If Settings.EnableParallelProcessing Then
-                            Dim task1 = TaskHelper.Run(Sub()
-                                                           If PP.ShouldUseKvalueMethod2 Then
-                                                               K1 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - epsilon, P)
-                                                           Else
-                                                               K1 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
-                                                           End If
-                                                       End Sub, Settings.TaskCancellationTokenSource.Token)
-                            Dim task2 = TaskHelper.Run(Sub()
-                                                           If PP.ShouldUseKvalueMethod2 Then
-                                                               K2 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + epsilon, P)
-                                                           Else
-                                                               K2 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
-                                                           End If
-                                                       End Sub, Settings.TaskCancellationTokenSource.Token)
-                            Task.WaitAll(task1, task2)
+                            If fpstencil Then
+                                Dim task1 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K1 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - 2 * epsilon, P)
+                                                               Else
+                                                                   K1 = PP.DW_CalcKvalue(Vx, Vy, T - 2 * epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task2 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K2 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - epsilon, P)
+                                                               Else
+                                                                   K2 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task3 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K3 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + epsilon, P)
+                                                               Else
+                                                                   K3 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task4 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K4 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + 2 * epsilon, P)
+                                                               Else
+                                                                   K4 = PP.DW_CalcKvalue(Vx, Vy, T + 2 * epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Task.WaitAll(task1, task2, task3, task4)
+                                dKdT = K1.AddY(K2.MultiplyConstY(-8)).AddY(K3.MultiplyConstY(8).AddY(K4.MultiplyConstY(-1))).MultiplyConstY(1 / (12 * epsilon))
+                            Else
+                                Dim task1 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K1 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - epsilon, P)
+                                                               Else
+                                                                   K1 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task2 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K2 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + epsilon, P)
+                                                               Else
+                                                                   K2 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Task.WaitAll(task1, task2)
+                                dKdT = K2.SubtractY(K1).MultiplyConstY(1 / (2 * epsilon))
+                            End If
                         Else
                             IObj?.SetCurrent
                             If PP.ShouldUseKvalueMethod2 Then
@@ -2998,10 +3032,8 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                             Else
                                 K2 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
                             End If
+                            dKdT = K2.SubtractY(K1).MultiplyConstY(1 / (2 * epsilon))
                         End If
-                        'K1 = PP.DW_CheckKvaluesConsistency(Vz, K1, T - epsilon, P)
-                        'K2 = PP.DW_CheckKvaluesConsistency(Vz, K2, T + epsilon, P)
-                        dKdT = K2.SubtractY(K1).MultiplyConstY(1 / (2 * epsilon))
                     End If
 
                     IObj2?.Paragraphs.Add(String.Format("K: {0}", Ki.ToMathArrayString))
@@ -3107,8 +3139,6 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                     WriteDebugInfo("PV Flash [NL]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
-                    'If Not PP.CurrentMaterialStream.Flowsheet Is Nothing Then PP.CurrentMaterialStream.Flowsheet.CheckStatus()
-
                     IObj2?.Close()
 
                     If T < 0 Then
@@ -3174,33 +3204,89 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                         stmp4 = Ki.MultiplyY(Vx).SumY
 
-                        IObj2?.SetCurrent
+                    Else
 
-                        K1 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
+                        stmp4 = Vy.DivideY(Ki).SumY
 
-                        IObj2?.SetCurrent
+                    End If
 
-                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
+                    If PP.ImplementsAnalyticalDerivatives Then
+                        dKdT = PP.DW_CalcdKdT(Vx, Vy, T, P)
+                    Else
+                        If Settings.EnableParallelProcessing Then
+                            If fpstencil Then
+                                Dim task1 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K1 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - 2 * epsilon, P)
+                                                               Else
+                                                                   K1 = PP.DW_CalcKvalue(Vx, Vy, T - 2 * epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task2 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K2 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - epsilon, P)
+                                                               Else
+                                                                   K2 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task3 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K3 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + epsilon, P)
+                                                               Else
+                                                                   K3 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task4 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K4 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + 2 * epsilon, P)
+                                                               Else
+                                                                   K4 = PP.DW_CalcKvalue(Vx, Vy, T + 2 * epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Task.WaitAll(task1, task2, task3, task4)
+                                dKdT = K1.AddY(K2.MultiplyConstY(-8)).AddY(K3.MultiplyConstY(8).AddY(K4.MultiplyConstY(-1))).MultiplyConstY(1 / (12 * epsilon))
+                            Else
+                                Dim task1 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K1 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - epsilon, P)
+                                                               Else
+                                                                   K1 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Dim task2 = TaskHelper.Run(Sub()
+                                                               If PP.ShouldUseKvalueMethod2 Then
+                                                                   K2 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + epsilon, P)
+                                                               Else
+                                                                   K2 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
+                                                               End If
+                                                           End Sub, Settings.TaskCancellationTokenSource.Token)
+                                Task.WaitAll(task1, task2)
+                                dKdT = K2.SubtractY(K1).MultiplyConstY(1 / (2 * epsilon))
+                            End If
+                        Else
+                            IObj?.SetCurrent
+                            If PP.ShouldUseKvalueMethod2 Then
+                                K1 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T - epsilon, P)
+                            Else
+                                K1 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
+                            End If
+                            IObj?.SetCurrent
+                            If PP.ShouldUseKvalueMethod2 Then
+                                K2 = PP.DW_CalcKvalue(Vx.MultiplyConstY(L).AddY(Vy.MultiplyConstY(V)), T + epsilon, P)
+                            Else
+                                K2 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
+                            End If
+                            dKdT = K2.SubtractY(K1).MultiplyConstY(1 / (2 * epsilon))
+                        End If
+                    End If
 
-                        dKdT = K2.SubtractY(K1).MultiplyConstY(1 / (2 * epsilon))
+                    If V <= 0.5 Then
 
                         dFdT = Vx.MultiplyY(dKdT).SumY
 
                         IObj2?.Paragraphs.Add(String.Format("dK/dT: {0}", dKdT.ToMathArrayString))
 
                     Else
-
-                        stmp4 = Vy.DivideY(Ki).SumY
-
-                        IObj2?.SetCurrent
-
-                        K1 = PP.DW_CalcKvalue(Vx, Vy, T - epsilon, P)
-
-                        IObj2?.SetCurrent
-
-                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + epsilon, P)
-
-                        dKdT = K2.SubtractY(K1).MultiplyConstY(1 / (2 * epsilon))
 
                         dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
 

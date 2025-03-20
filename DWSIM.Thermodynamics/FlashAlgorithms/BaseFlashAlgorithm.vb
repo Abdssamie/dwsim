@@ -143,6 +143,8 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             settings(Interfaces.Enums.FlashSetting.FailSafeCalculationMode) = 1
 
+            settings(Interfaces.Enums.FlashSetting.PVFlash_FivePointStencilNumericalDerivative) = False
+
             Return settings
 
         End Function
@@ -1612,6 +1614,9 @@ will converge to this solution.")
                 End If
                 If Not FlashSettings.ContainsKey(Interfaces.Enums.FlashSetting.FailSafeCalculationMode) Then
                     FlashSettings.Add(Interfaces.Enums.FlashSetting.FailSafeCalculationMode, 1)
+                End If
+                If Not FlashSettings.ContainsKey(Interfaces.Enums.FlashSetting.FailSafeCalculationMode) Then
+                    FlashSettings.Add(Interfaces.Enums.FlashSetting.PVFlash_FivePointStencilNumericalDerivative, False)
                 End If
             End If
 

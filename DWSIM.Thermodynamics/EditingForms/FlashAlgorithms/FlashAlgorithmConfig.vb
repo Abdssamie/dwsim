@@ -65,6 +65,8 @@ Public Class FlashAlgorithmConfig
 
         chkIdealPVFlash.Checked = Settings(Interfaces.Enums.FlashSetting.PVFlash_TryIdealCalcOnFailure)
 
+        chkPVstencil.Checked = Settings(Interfaces.Enums.FlashSetting.PVFlash_FivePointStencilNumericalDerivative)
+
         chkDisplayCompWarning.Checked = PropPack?.DisplayMissingCompoundPropertiesWarning
 
         Select Case Settings(Interfaces.Enums.FlashSetting.ForceEquilibriumCalculationType)
@@ -189,6 +191,8 @@ Public Class FlashAlgorithmConfig
             Settings(Interfaces.Enums.FlashSetting.PHFlash_Use_Interpolated_Result_In_Oscillating_Temperature_Cases) = CheckBoxInterpTempPHFlash.Checked
 
             Settings(Interfaces.Enums.FlashSetting.PVFlash_TryIdealCalcOnFailure) = chkIdealPVFlash.Checked
+
+            Settings(Interfaces.Enums.FlashSetting.PVFlash_FivePointStencilNumericalDerivative) = chkPVstencil.Checked
 
             If PropPack IsNot Nothing Then
 

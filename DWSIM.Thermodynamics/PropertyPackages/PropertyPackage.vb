@@ -13008,6 +13008,9 @@ Final3:
                 If Not FlashSettings.ContainsKey(Interfaces.Enums.FlashSetting.FailSafeCalculationMode) Then
                     FlashSettings.Add(Interfaces.Enums.FlashSetting.FailSafeCalculationMode, 1)
                 End If
+                If Not FlashSettings.ContainsKey(Interfaces.Enums.FlashSetting.PVFlash_FivePointStencilNumericalDerivative) Then
+                    FlashSettings.Add(Interfaces.Enums.FlashSetting.PVFlash_FivePointStencilNumericalDerivative, False)
+                End If
             End If
 
         End Function
