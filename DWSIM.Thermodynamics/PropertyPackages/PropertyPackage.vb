@@ -3727,6 +3727,45 @@ redirect2:                  IObj?.SetCurrent()
 
             Dim CP As New ArrayList, recalcCP As Boolean = False, stopAtCP As Boolean = False
 
+
+            Dim beta As Double = 10.0#
+
+            Dim tmp2 As Object
+            Dim result As IFlashCalculationResult = Nothing
+            Dim KI(n) As Double
+
+            Dim tpflash As New NestedLoops3PV3() With {.FlashSettings = Me.FlashBase.FlashSettings}
+            tpflash.FlashSettings(Enums.FlashSetting.ThreePhaseFlashStabTestSeverity) = 2
+
+            j = 0
+            Do
+                KI(j) = 0
+                j = j + 1
+            Loop Until j = n + 1
+
+            If peoptions.ImmiscibleWater And Vn.Contains("Water") Then
+
+                Dim Twx As Double = 273.15
+                Dim Pwx As Double = 0.0
+                Dim st As New Auxiliary.IAPWS_IF97
+
+                For i = 0 To 10000
+
+                    TOWF.Add(Twx)
+                    Pwx = AUX_PVAPi("Water", Twx)
+                    POWF.Add(Pwx)
+                    HOWF.Add(st.enthalpySatVapTW(Twx))
+                    SOWF.Add(st.entropySatVapTW(Twx))
+                    VOWF.Add(1 / st.densSatVapTW(Twx) * Me.AUX_MMM(Phase.Mixture))
+
+                    Twx += 5.0
+
+                    If Pwx > 217.7 * 101325 Then Exit For
+
+                Next
+
+            End If
+
             Dim erequest As New AI.ConvergenceAssistant.Classes.PhaseEnvelopeRequest With {
                 .CompoundNames = Vn.ToArray(),
                 .ModelName = ComponentName,
@@ -3763,6 +3802,28 @@ redirect2:                  IObj?.SetCurrent()
                         If n > 0 Then
                             CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
                             If CP.Count = 0 Then CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
+                            If CP.Count > 0 Then
+                                Dim cp0 = CP(0)
+                                TCR = cp0(0)
+                                PCR = cp0(1)
+                                VCR = cp0(2)
+                                stopAtCP = True
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                recalcCP = True
+                            End If
+                        Else
+                            TCR = Me.AUX_TCM(Phase.Mixture)
+                            PCR = Me.AUX_PCM(Phase.Mixture)
+                            VCR = Me.AUX_VCM(Phase.Mixture)
+                            CP.Add(New Object() {TCR, PCR, VCR})
+                        End If
+                    ElseIf TypeOf Me Is PengRobinson1978PropertyPackage Then
+                        If n > 0 Then
+                            CP = New Utilities.TCP.Methods_PR78().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                            If CP.Count = 0 Then CP = New Utilities.TCP.Methods_SRK().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
                             If CP.Count > 0 Then
                                 Dim cp0 = CP(0)
                                 TCR = cp0(0)
@@ -3828,14 +3889,34 @@ redirect2:                  IObj?.SetCurrent()
 
                 End If
 
-                Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, TOWF, POWF, HOWF, SOWF, VOWF, TVB1, PB1, HB1, SB1, VB1, TVB2, PB2, HB2, SB2, VB2}
-
             Else
 
                 If TypeOf Me Is PengRobinsonPropertyPackage Then
                     If n > 0 Then
                         CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
                         If CP.Count = 0 Then CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
+                        If CP.Count > 0 Then
+                            Dim cp0 = CP(0)
+                            TCR = cp0(0)
+                            PCR = cp0(1)
+                            VCR = cp0(2)
+                            stopAtCP = True
+                        Else
+                            TCR = Me.AUX_TCM(Phase.Mixture)
+                            PCR = Me.AUX_PCM(Phase.Mixture)
+                            VCR = Me.AUX_VCM(Phase.Mixture)
+                            recalcCP = True
+                        End If
+                    Else
+                        TCR = Me.AUX_TCM(Phase.Mixture)
+                        PCR = Me.AUX_PCM(Phase.Mixture)
+                        VCR = Me.AUX_VCM(Phase.Mixture)
+                        CP.Add(New Object() {TCR, PCR, VCR})
+                    End If
+                ElseIf TypeOf Me Is PengRobinson1978PropertyPackage Then
+                    If n > 0 Then
+                        CP = New Utilities.TCP.Methods_PR78().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                        If CP.Count = 0 Then CP = New Utilities.TCP.Methods_SRK().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
                         If CP.Count > 0 Then
                             Dim cp0 = CP(0)
                             TCR = cp0(0)
@@ -3897,44 +3978,6 @@ redirect2:                  IObj?.SetCurrent()
                         VCR = Me.AUX_VCM(Phase.Mixture)
                         CP.Add(New Object() {TCR, PCR, VCR})
                     End If
-                End If
-
-                Dim beta As Double = 10.0#
-
-                Dim tmp2 As Object
-                Dim result As IFlashCalculationResult = Nothing
-                Dim KI(n) As Double
-
-                Dim tpflash As New NestedLoops3PV3() With {.FlashSettings = Me.FlashBase.FlashSettings}
-                tpflash.FlashSettings(Enums.FlashSetting.ThreePhaseFlashStabTestSeverity) = 2
-
-                j = 0
-                Do
-                    KI(j) = 0
-                    j = j + 1
-                Loop Until j = n + 1
-
-                If peoptions.ImmiscibleWater And Vn.Contains("Water") Then
-
-                    Dim Twx As Double = 273.15
-                    Dim Pwx As Double = 0.0
-                    Dim st As New Auxiliary.IAPWS_IF97
-
-                    For i = 0 To 10000
-
-                        TOWF.Add(Twx)
-                        Pwx = AUX_PVAPi("Water", Twx)
-                        POWF.Add(Pwx)
-                        HOWF.Add(st.enthalpySatVapTW(Twx))
-                        SOWF.Add(st.entropySatVapTW(Twx))
-                        VOWF.Add(1 / st.densSatVapTW(Twx) * Me.AUX_MMM(Phase.Mixture))
-
-                        Twx += 5.0
-
-                        If Pwx > 217.7 * 101325 Then Exit For
-
-                    Next
-
                 End If
 
                 i = 0
@@ -4245,7 +4288,7 @@ redirect2:                  IObj?.SetCurrent()
                 Loop Until i >= options.DewCurveMaximumPoints Or PO(PO.Count - 1) = 0 Or PO(PO.Count - 1) < 0 Or TVD(TVD.Count - 1) < 0 Or
                         Double.IsNaN(PO(PO.Count - 1)) = True Or Double.IsNaN(TVD(TVD.Count - 1)) = True Or T >= options.DewCurveMaximumTemperature
 
-                If recalcCP OrElse (Not TypeOf Me Is PengRobinsonPropertyPackage And Not TypeOf Me Is SRKPropertyPackage) Then
+                If recalcCP OrElse (Not TypeOf Me Is PengRobinsonPropertyPackage And Not TypeOf Me Is PengRobinson1978PropertyPackage And Not TypeOf Me Is SRKPropertyPackage) Then
 
                     'calculate intersection point, if any
 
@@ -4408,210 +4451,218 @@ redirect2:                  IObj?.SetCurrent()
 
                 'End If
 
-                'calculate quality curve
+                If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
+                If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
+                If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
+                If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
+                If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
+                If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
+                If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
+                If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
+                If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
+                If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
 
-                beta = 10
+                If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
+                If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
+                If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
+                If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
+                If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
+                If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
+                If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
+                If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
+                If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
+                If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
 
-                If options.QualityLine Then
+            End If
 
-                    Dim npoints As Integer
-                    If options.QualityValue < 0.5 Then
-                        npoints = options.BubbleCurveMaximumPoints
+            'calculate quality curve
+
+            beta = 10
+
+            If options.QualityLine Then
+
+                Dim npoints As Integer
+                If options.QualityValue < 0.5 Then
+                    npoints = options.BubbleCurveMaximumPoints
+                Else
+                    npoints = options.DewCurveMaximumPoints
+                End If
+
+                j = 0
+                Do
+                    KI(j) = 0
+                    j = j + 1
+                Loop Until j = n + 1
+
+                i = 0
+                If options.QualityValue < 0.5 Then
+                    P = options.BubbleCurveInitialPressure
+                    T = options.BubbleCurveInitialTemperature
+                Else
+                    P = options.DewCurveInitialPressure
+                    T = options.DewCurveInitialTemperature
+                End If
+                Do
+                    If i < 2 Then
+                        Try
+                            tmp2 = Me.FlashBase.Flash_PV(Vz, P, options.QualityValue, 0, Me, False, KI)
+                            TQ.Add(tmp2(4))
+                            PQ.Add(P)
+                            T = TQ(TQ.Count - 1)
+                            KI = tmp2(6)
+                        Catch ex As Exception
+                        Finally
+                            If options.QualityValue < 0.5 Then
+                                P = P + options.BubbleCurveDeltaP
+                            Else
+                                P = P + options.DewCurveDeltaP
+                            End If
+                        End Try
                     Else
-                        npoints = options.DewCurveMaximumPoints
-                    End If
-
-                    j = 0
-                    Do
-                        KI(j) = 0
-                        j = j + 1
-                    Loop Until j = n + 1
-
-                    i = 0
-                    If options.QualityValue < 0.5 Then
-                        P = options.BubbleCurveInitialPressure
-                        T = options.BubbleCurveInitialTemperature
-                    Else
-                        P = options.DewCurveInitialPressure
-                        T = options.DewCurveInitialTemperature
-                    End If
-                    Do
-                        If i < 2 Then
+                        If beta < 2 Then
                             Try
-                                tmp2 = Me.FlashBase.Flash_PV(Vz, P, options.QualityValue, 0, Me, False, KI)
+                                tmp2 = Me.FlashBase.Flash_TV(Vz, T, options.QualityValue, PQ(PQ.Count - 1), Me, True, KI)
+                                TQ.Add(T)
+                                PQ.Add(tmp2(4))
+                                P = PQ(PQ.Count - 1)
+                                KI = tmp2(6)
+                                beta = (Math.Log(PQ(PQ.Count - 1) / 101325) - Math.Log(PQ(PQ.Count - 2) / 101325)) / (Math.Log(TQ(TQ.Count - 1)) - Math.Log(TQ(TQ.Count - 2)))
+                            Catch ex As Exception
+                            Finally
+                                If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.2 Then
+                                    If options.QualityValue < 0.5 Then
+                                        T = T + options.BubbleCurveDeltaT * 0.25
+                                    Else
+                                        T = T + options.DewCurveDeltaT * 0.25
+                                    End If
+                                Else
+                                    If options.QualityValue < 0.5 Then
+                                        T = T + options.BubbleCurveDeltaT
+                                    Else
+                                        T = T + options.DewCurveDeltaT
+                                    End If
+                                End If
+                            End Try
+                        Else
+                            Try
+                                tmp2 = Me.FlashBase.Flash_PV(Vz, P, options.QualityValue, TQ(TQ.Count - 1), Me, True, KI)
                                 TQ.Add(tmp2(4))
                                 PQ.Add(P)
                                 T = TQ(TQ.Count - 1)
                                 KI = tmp2(6)
+                                beta = (Math.Log(PQ(PQ.Count - 1) / 101325) - Math.Log(PQ(PQ.Count - 2) / 101325)) / (Math.Log(TQ(TQ.Count - 1)) - Math.Log(TQ(TQ.Count - 2)))
                             Catch ex As Exception
                             Finally
-                                If options.QualityValue < 0.5 Then
-                                    P = P + options.BubbleCurveDeltaP
+                                If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.1 Then
+                                    If options.QualityValue < 0.5 Then
+                                        P = P + options.BubbleCurveDeltaP * 0.1
+                                    Else
+                                        P = P + options.DewCurveDeltaP * 0.1
+                                    End If
                                 Else
-                                    P = P + options.DewCurveDeltaP
+                                    If options.QualityValue < 0.5 Then
+                                        P = P + options.BubbleCurveDeltaP
+                                    Else
+                                        P = P + options.DewCurveDeltaP
+                                    End If
                                 End If
                             End Try
-                        Else
-                            If beta < 2 Then
-                                Try
-                                    tmp2 = Me.FlashBase.Flash_TV(Vz, T, options.QualityValue, PQ(PQ.Count - 1), Me, True, KI)
-                                    TQ.Add(T)
-                                    PQ.Add(tmp2(4))
-                                    P = PQ(PQ.Count - 1)
-                                    KI = tmp2(6)
-                                    beta = (Math.Log(PQ(PQ.Count - 1) / 101325) - Math.Log(PQ(PQ.Count - 2) / 101325)) / (Math.Log(TQ(TQ.Count - 1)) - Math.Log(TQ(TQ.Count - 2)))
-                                Catch ex As Exception
-                                Finally
-                                    If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.2 Then
-                                        If options.QualityValue < 0.5 Then
-                                            T = T + options.BubbleCurveDeltaT * 0.25
-                                        Else
-                                            T = T + options.DewCurveDeltaT * 0.25
-                                        End If
-                                    Else
-                                        If options.QualityValue < 0.5 Then
-                                            T = T + options.BubbleCurveDeltaT
-                                        Else
-                                            T = T + options.DewCurveDeltaT
-                                        End If
-                                    End If
-                                End Try
-                            Else
-                                Try
-                                    tmp2 = Me.FlashBase.Flash_PV(Vz, P, options.QualityValue, TQ(TQ.Count - 1), Me, True, KI)
-                                    TQ.Add(tmp2(4))
-                                    PQ.Add(P)
-                                    T = TQ(TQ.Count - 1)
-                                    KI = tmp2(6)
-                                    beta = (Math.Log(PQ(PQ.Count - 1) / 101325) - Math.Log(PQ(PQ.Count - 2) / 101325)) / (Math.Log(TQ(TQ.Count - 1)) - Math.Log(TQ(TQ.Count - 2)))
-                                Catch ex As Exception
-                                Finally
-                                    If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.1 Then
-                                        If options.QualityValue < 0.5 Then
-                                            P = P + options.BubbleCurveDeltaP * 0.1
-                                        Else
-                                            P = P + options.DewCurveDeltaP * 0.1
-                                        End If
-                                    Else
-                                        If options.QualityValue < 0.5 Then
-                                            P = P + options.BubbleCurveDeltaP
-                                        Else
-                                            P = P + options.DewCurveDeltaP
-                                        End If
-                                    End If
-                                End Try
-                            End If
                         End If
+                    End If
 
-                        If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line... " & ((i + 1) / npoints * 100).ToString("N1") & "%")
+                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line... " & ((i + 1) / npoints * 100).ToString("N1") & "%")
 
-                        i = i + 1
-                        If i > 2 Then
-                            If PQ(PQ.Count - 1) = PQ(PQ.Count - 2) Or TQ(TQ.Count - 1) = TQ(TQ.Count - 2) Then Exit Do
-                        End If
+                    i = i + 1
+                    If i > 2 Then
+                        If PQ(PQ.Count - 1) = PQ(PQ.Count - 2) Or TQ(TQ.Count - 1) = TQ(TQ.Count - 2) Then Exit Do
+                    End If
 
-                    Loop Until i >= npoints Or PQ(PQ.Count - 1) = 0 Or PQ(PQ.Count - 1) < 0 Or TQ(TQ.Count - 1) < 0 Or
+                Loop Until i >= npoints Or PQ(PQ.Count - 1) = 0 Or PQ(PQ.Count - 1) < 0 Or TQ(TQ.Count - 1) < 0 Or
                             Double.IsNaN(PQ(PQ.Count - 1)) = True Or Double.IsNaN(TQ(TQ.Count - 1)) = True Or
                             Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
 
-                Else
+            Else
 
-                    TQ.Add(0)
-                    PQ.Add(0)
+                TQ.Add(0)
+                PQ.Add(0)
 
-                End If
+            End If
 
-                If n > 0 And options.StabilityCurve Then
-                    If TypeOf Me Is PengRobinsonPropertyPackage Then
-                        If bw IsNot Nothing Then bw.ReportProgress(0, "Stability Line")
-                        Dim res As ArrayList = New Utilities.TCP.Methods().STABILITY_CURVE(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
-                        i = 0
-                        Do
-                            TE.Add(res(i)(0))
-                            PE.Add(res(i)(1))
-                            i += 1
-                        Loop Until i = res.Count
-                    ElseIf TypeOf Me Is SRKPropertyPackage Then
-                        If bw IsNot Nothing Then bw.ReportProgress(0, "Stability Line")
-                        Dim res As ArrayList = New Utilities.TCP.Methods_SRK().STABILITY_CURVE(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
-                        i = 0
-                        Do
-                            TE.Add(res(i)(0))
-                            PE.Add(res(i)(1))
-                            i += 1
-                        Loop Until i = res.Count
-                    Else
-                        TE.Add(0)
-                        PE.Add(0)
-                    End If
+            If n > 0 And options.StabilityCurve Then
+                If TypeOf Me Is PengRobinsonPropertyPackage Then
+                    If bw IsNot Nothing Then bw.ReportProgress(0, "Stability Line")
+                    Dim res As ArrayList = New Utilities.TCP.Methods().STABILITY_CURVE(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                    i = 0
+                    Do
+                        TE.Add(res(i)(0))
+                        PE.Add(res(i)(1))
+                        i += 1
+                    Loop Until i = res.Count
+                ElseIf TypeOf Me Is PengRobinson1978PropertyPackage Then
+                    If bw IsNot Nothing Then bw.ReportProgress(0, "Stability Line")
+                    Dim res As ArrayList = New Utilities.TCP.Methods_PR78().STABILITY_CURVE(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                    i = 0
+                    Do
+                        TE.Add(res(i)(0))
+                        PE.Add(res(i)(1))
+                        i += 1
+                    Loop Until i = res.Count
+                ElseIf TypeOf Me Is SRKPropertyPackage Then
+                    If bw IsNot Nothing Then bw.ReportProgress(0, "Stability Line")
+                    Dim res As ArrayList = New Utilities.TCP.Methods_SRK().STABILITY_CURVE(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                    i = 0
+                    Do
+                        TE.Add(res(i)(0))
+                        PE.Add(res(i)(1))
+                        i += 1
+                    Loop Until i = res.Count
                 Else
                     TE.Add(0)
                     PE.Add(0)
                 End If
+            Else
+                TE.Add(0)
+                PE.Add(0)
+            End If
 
-                Dim Pest, Tmax As Double, eos As String
+            Dim Pest, Tmax As Double, eos As String
 
-                If TypeOf Me Is PengRobinsonPropertyPackage Then eos = "PR" Else eos = "SRK"
+            If TypeOf Me Is PengRobinsonPropertyPackage Or TypeOf Me Is PengRobinson1978PropertyPackage Then eos = "PR" Else eos = "SRK"
 
-                Pest = PCR * 10
-                Dim Tmin As Double = MathEx.Common.Max(Me.RET_VTF)
-                If Tmin = 0.0# Then Tmin = MathEx.Common.Min(Me.RET_VTB) * 0.4
-                Tmax = TCR * 1.4
+            Pest = PCR * 10
+            Dim Tmin As Double = MathEx.Common.Max(Me.RET_VTF)
+            If Tmin = 0.0# Then Tmin = MathEx.Common.Min(Me.RET_VTB) * 0.4
+            Tmax = TCR * 1.4
 
-                If options.PhaseIdentificationCurve Then
-                    If bw IsNot Nothing Then bw.ReportProgress(0, "Phase Identification Parameter")
-                    If TypeOf Me Is PengRobinsonPropertyPackage Or TypeOf Me Is SRKPropertyPackage Then
-                        For T = Tmin To Tmax Step 5
-                            TI.Add(T)
-                            PI.Add(Auxiliary.FlashAlgorithms.FlashAlgorithm.CalcPIPressure(Vz, Pest, T, Me, eos))
-                            'Pest = PI(PI.Count - 1)
-                        Next
-                    Else
-                        TI.Add(0)
-                        PI.Add(0)
-                    End If
+            If options.PhaseIdentificationCurve Then
+                If bw IsNot Nothing Then bw.ReportProgress(0, "Phase Identification Parameter")
+                If TypeOf Me Is PengRobinsonPropertyPackage Or TypeOf Me Is PengRobinson1978PropertyPackage Or TypeOf Me Is SRKPropertyPackage Then
+                    For T = Tmin To Tmax Step 5
+                        TI.Add(T)
+                        PI.Add(Auxiliary.FlashAlgorithms.FlashAlgorithm.CalcPIPressure(Vz, Pest, T, Me, eos))
+                        'Pest = PI(PI.Count - 1)
+                    Next
                 Else
                     TI.Add(0)
                     PI.Add(0)
                 End If
-
-                If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
-                If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
-                If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
-                If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
-                If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
-                If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
-                If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)
-                If HB.Count > 1 Then HB.RemoveAt(HB.Count - 1)
-                If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
-                If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
-
-                If TOWF.Count > 1 Then TOWF.RemoveAt(TOWF.Count - 1)
-                If POWF.Count > 1 Then POWF.RemoveAt(POWF.Count - 1)
-                If HOWF.Count > 1 Then HOWF.RemoveAt(HOWF.Count - 1)
-                If SOWF.Count > 1 Then SOWF.RemoveAt(SOWF.Count - 1)
-                If VOWF.Count > 1 Then VOWF.RemoveAt(VOWF.Count - 1)
-
-                If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
-                If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
-                If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
-                If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
-                If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
-
-                If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
-                If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
-                If HO.Count > 1 Then HO.RemoveAt(HO.Count - 1)
-                If SO.Count > 1 Then SO.RemoveAt(SO.Count - 1)
-                If VO.Count > 1 Then VO.RemoveAt(VO.Count - 1)
-
-                If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
-                If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
-                If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
-                If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
-
-                Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, TOWF, POWF, HOWF, SOWF, VOWF, TVB1, PB1, HB1, SB1, VB1, TVB2, PB2, HB2, SB2, VB2}
-
+            Else
+                TI.Add(0)
+                PI.Add(0)
             End If
+
+            If TOWF.Count > 1 Then TOWF.RemoveAt(TOWF.Count - 1)
+            If POWF.Count > 1 Then POWF.RemoveAt(POWF.Count - 1)
+            If HOWF.Count > 1 Then HOWF.RemoveAt(HOWF.Count - 1)
+            If SOWF.Count > 1 Then SOWF.RemoveAt(SOWF.Count - 1)
+            If VOWF.Count > 1 Then VOWF.RemoveAt(VOWF.Count - 1)
+
+            If TQ.Count > 1 Then TQ.RemoveAt(TQ.Count - 1)
+            If PQ.Count > 1 Then PQ.RemoveAt(PQ.Count - 1)
+            If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
+            If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
+
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, TOWF, POWF, HOWF, SOWF, VOWF, TVB1, PB1, HB1, SB1, VB1, TVB2, PB2, HB2, SB2, VB2}
 
         End Function
 
