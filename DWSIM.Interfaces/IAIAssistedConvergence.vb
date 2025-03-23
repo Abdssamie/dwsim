@@ -198,6 +198,8 @@ Public Interface IAIAssistedConvergenceManager
 
     Sub UpdateModels()
 
+    Sub UpdateModelList()
+
     Property Initialized As Boolean
 
 End Interface
