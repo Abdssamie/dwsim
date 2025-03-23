@@ -248,6 +248,16 @@ Public Interface IManagerSettings
 
     Property ModelTrainingIterations As Integer
 
+    Property EnableSolutionProvider1 As Boolean
+
+    Property EnableSolutionProvider2 As Boolean
+
+    Property EnableSolutionProvider3 As Boolean
+
+    Property EnableSolutionProvider4 As Boolean
+
+    Property EnableSolutionProvider5 As Boolean
+
 End Interface
 
 Public Interface IPhaseEnvelopeResult
