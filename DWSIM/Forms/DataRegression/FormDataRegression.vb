@@ -4290,7 +4290,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                                             End If
                                         Else
                                             fresult.Close()
-                                            MessageBox.Show(ExceptionProcessing.ExceptionParser.GetFirstException(t.Exception).Message, DWSIM.App.GetLocalString("Erro"))
+                                            MessageBox.Show("Sorry, we could not retrieve data correctly. KDB Cheric website may be down.", "Error retrieving data", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                         End If
                                     End Sub)
                        End Sub)
