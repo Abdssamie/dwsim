@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using DWSIM.Interfaces;
 
 namespace DWSIM.AI.ConvergenceAssistant.Classes
@@ -78,22 +79,74 @@ namespace DWSIM.AI.ConvergenceAssistant.Classes
 
     public class ConvergenceHelperMetaData : IConvergenceHelperMetaData
     {
+        [ReadOnly(true)]
+        [Category("General")]
         public ConvergenceHelperRequestType RequestType { get; set; } = ConvergenceHelperRequestType.PVFlash;
+        [ReadOnly(true)]
+        [Category("General")]
         public string ModelName { get; set; } = "";
+        [ReadOnly(true)]
+        [Category("Data")]
         public string PropertyPackageName { get; set; } = "";
+        [ReadOnly(true)]
+        [Category("General")]
         public DateTime CreatedOn { get; set; } = DateTime.MinValue;
+        [ReadOnly(true)]
+        [Category("General")]
         public DateTime LastUpdatedOn { get; set; } = DateTime.MinValue;
+        [ReadOnly(true)]
+        [Category("Data")]
         public int NumberOfCompounds { get; set; }
+        [ReadOnly(true)]
+        [Category("Data")]
         public int NumberOfSamples { get; set; }
+        [ReadOnly(true)]
+        [Category("Data")]
         public int NumberOfReactions { get; set; }
+        [ReadOnly(true)]
+        [Category("Data")]
         public string[] CompoundNames { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Details")]
         public float[] TemperatureRange { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Details")]
         public float[] PressureRange { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Details")]
         public float[] MassEnthalpyRange { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Details")]
         public float[] MassEntropyRange { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Details")]
         public float[] VaporMolarFractionRange { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Details")]
         public List<float[]> MolarCompositionRange { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Accuracy")]
         public float TrainingDataMSE { get; set; }
+        [ReadOnly(true)]
+        [Category("Model Accuracy")]
         public float TestingDataMSE { get; set; }
     }
+
+    public class PhaseEnvelopeRequest : IPhaseEnvelopeRequest
+    {
+        public string[] CompoundNames { get; set; }
+        public double[] MolarComposition { get; set; }
+        public string ModelName { get; set; }
+        public List<Tuple<string, string, double[]>> ModelParameters { get; set; }
+    }
+
+    public class PhaseEnvelopeResult : IPhaseEnvelopeResult
+    {
+        public double[] BubbleTemperatures { get; set; }
+        public double[] BubblePressures { get; set; }
+        public double[] DewTemperatures { get; set; }
+        public double[] DewPressures { get; set; }
+        public List<double[]> CriticalPoints { get; set; }
+    }
+
 }

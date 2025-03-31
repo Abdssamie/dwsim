@@ -330,6 +330,8 @@ Namespace Enums
         '0 = Rigorous VLE, 1 = Ideal VLE, 2 = NoFlash, 3 = throw error
         FailSafeCalculationMode = 33
 
+        PVFlash_FivePointStencilNumericalDerivative = 34
+
     End Enum
 
     Public Enum FlashCalculationType

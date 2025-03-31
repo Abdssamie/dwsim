@@ -383,7 +383,7 @@ Namespace UnitOperations
 
         Public Overrides Sub CreateDynamicProperties()
 
-            AddDynamicProperty("Cold Fluid Flow Conductance", "Flow Conductance (inverse of Resistance).", 1, UnitOfMeasure.conductance, 1.0.GetType())
+            AddDynamicProperty("Cold Fluid Flow Conductance", "Flow Conductance (inverse of Resistance) for the Cold Fluid.", 1, UnitOfMeasure.conductance, 1.0.GetType())
             AddDynamicProperty("Hot Fluid Flow Conductance", "Flow Conductance (inverse of Resistance) for the Hot Fluid.", 1, UnitOfMeasure.conductance, 1.0.GetType())
             AddDynamicProperty("Volume for Cold Fluid", "Available Volume for Cold Fluid", 1, UnitOfMeasure.volume, 1.0.GetType())
             AddDynamicProperty("Volume for Hot Fluid", "Available Volume for Cold Fluid", 1, UnitOfMeasure.volume, 1.0.GetType())
@@ -405,7 +405,7 @@ Namespace UnitOperations
             If integrator.RealTime Then timestep = Convert.ToDouble(integrator.RealTimeStepMs) / 1000.0
 
             Dim KrCold As Double = GetDynamicProperty("Cold Fluid Flow Conductance")
-            Dim KrHot As Double = GetDynamicProperty("Cold Fluid Flow Conductance")
+            Dim KrHot As Double = GetDynamicProperty("Hot Fluid Flow Conductance")
 
             Dim VolumeCold As Double = GetDynamicProperty("Volume for Cold Fluid")
             Dim VolumeHot As Double = GetDynamicProperty("Volume for Hot Fluid")
