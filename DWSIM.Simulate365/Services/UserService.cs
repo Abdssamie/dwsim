@@ -142,10 +142,14 @@ namespace DWSIM.Simulate365.Services
 
         }
 
+        /// <summary>
+        /// Returns authenticaiton token or null if it doesn't exist.
+        /// </summary>
         public string GetUserToken()
         {
             return this._accessToken;
         }
+
         public void SetAccessToken(AccessTokenType accessTokenType, string accessToken, string refreshToken, DateTime expiresAt)
         {
             _accessToken = accessToken;
