@@ -158,6 +158,8 @@ Namespace GraphicObjects.Shapes
                     'Temperature/Pressure Gradients
             End Select
 
+            If Owner IsNot Nothing Then DirectCast(Owner, IMaterialStream).UpdateStreamType()
+
         End Sub
 
         Public Overrides Function GetPointValue(type As PointValueType, X As Integer, Y As Integer, args As List(Of Object)) As Double

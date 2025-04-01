@@ -38,78 +38,81 @@ Partial Class MaterialStreamPanel
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-        Me.grid1 = New unvell.ReoGrid.ReoGridControl()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.grid1 = New unvell.ReoGrid.ReoGridControl()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.cbOrderBy = New System.Windows.Forms.ToolStripComboBox()
         Me.dckMenu.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'dckMenu
         '
-        resources.ApplyResources(Me.dckMenu, "dckMenu")
         Me.dckMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockLeftToolStripMenuItem, Me.DockRightToolStripMenuItem, Me.DockTopToolStripMenuItem, Me.DockBottomToolStripMenuItem, Me.DockLeftAutoHideToolStripMenuItem, Me.DockRightAutoHideToolStripMenuItem, Me.DockTopAutoHideToolStripMenuItem, Me.DockBottomAutoHideToolStripMenuItem, Me.DocumentToolStripMenuItem})
         Me.dckMenu.Name = "dckMenu"
+        resources.ApplyResources(Me.dckMenu, "dckMenu")
         '
         'FloatToolStripMenuItem
         '
-        resources.ApplyResources(Me.FloatToolStripMenuItem, "FloatToolStripMenuItem")
         Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
+        resources.ApplyResources(Me.FloatToolStripMenuItem, "FloatToolStripMenuItem")
         '
         'DockLeftToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockLeftToolStripMenuItem, "DockLeftToolStripMenuItem")
         Me.DockLeftToolStripMenuItem.Name = "DockLeftToolStripMenuItem"
+        resources.ApplyResources(Me.DockLeftToolStripMenuItem, "DockLeftToolStripMenuItem")
         '
         'DockRightToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockRightToolStripMenuItem, "DockRightToolStripMenuItem")
         Me.DockRightToolStripMenuItem.Name = "DockRightToolStripMenuItem"
+        resources.ApplyResources(Me.DockRightToolStripMenuItem, "DockRightToolStripMenuItem")
         '
         'DockTopToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockTopToolStripMenuItem, "DockTopToolStripMenuItem")
         Me.DockTopToolStripMenuItem.Name = "DockTopToolStripMenuItem"
+        resources.ApplyResources(Me.DockTopToolStripMenuItem, "DockTopToolStripMenuItem")
         '
         'DockBottomToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockBottomToolStripMenuItem, "DockBottomToolStripMenuItem")
         Me.DockBottomToolStripMenuItem.Name = "DockBottomToolStripMenuItem"
+        resources.ApplyResources(Me.DockBottomToolStripMenuItem, "DockBottomToolStripMenuItem")
         '
         'DockLeftAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockLeftAutoHideToolStripMenuItem, "DockLeftAutoHideToolStripMenuItem")
         Me.DockLeftAutoHideToolStripMenuItem.Name = "DockLeftAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockLeftAutoHideToolStripMenuItem, "DockLeftAutoHideToolStripMenuItem")
         '
         'DockRightAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockRightAutoHideToolStripMenuItem, "DockRightAutoHideToolStripMenuItem")
         Me.DockRightAutoHideToolStripMenuItem.Name = "DockRightAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockRightAutoHideToolStripMenuItem, "DockRightAutoHideToolStripMenuItem")
         '
         'DockTopAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockTopAutoHideToolStripMenuItem, "DockTopAutoHideToolStripMenuItem")
         Me.DockTopAutoHideToolStripMenuItem.Name = "DockTopAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockTopAutoHideToolStripMenuItem, "DockTopAutoHideToolStripMenuItem")
         '
         'DockBottomAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockBottomAutoHideToolStripMenuItem, "DockBottomAutoHideToolStripMenuItem")
         Me.DockBottomAutoHideToolStripMenuItem.Name = "DockBottomAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockBottomAutoHideToolStripMenuItem, "DockBottomAutoHideToolStripMenuItem")
         '
         'DocumentToolStripMenuItem
         '
-        resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
         Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
+        resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
         '
         'ToolStrip1
         '
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.cbOrderBy, Me.ToolStripButton1, Me.ToolStripSeparator1, Me.ToolStripButton2, Me.ToolStripButton3})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'ToolStripButton1
         '
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.arrow_refresh
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
@@ -118,12 +121,18 @@ Partial Class MaterialStreamPanel
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.page_copy
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.Excel_copy1
+        Me.ToolStripButton3.Name = "ToolStripButton3"
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
+        '
         'grid1
         '
-        resources.ApplyResources(Me.grid1, "grid1")
         Me.grid1.BackColor = System.Drawing.Color.White
         Me.grid1.ColumnHeaderContextMenuStrip = Nothing
         Me.grid1.LeadHeaderContextMenuStrip = Nothing
+        resources.ApplyResources(Me.grid1, "grid1")
         Me.grid1.Name = "grid1"
         Me.grid1.RowHeaderContextMenuStrip = Nothing
         Me.grid1.Script = Nothing
@@ -133,11 +142,22 @@ Partial Class MaterialStreamPanel
         Me.grid1.SheetTabWidth = 60
         Me.grid1.ShowScrollEndSpacing = True
         '
-        'ToolStripButton3
+        'ToolStripSeparator1
         '
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
-        Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.Excel_copy1
-        Me.ToolStripButton3.Name = "ToolStripButton3"
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
+        '
+        'ToolStripLabel1
+        '
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        resources.ApplyResources(Me.ToolStripLabel1, "ToolStripLabel1")
+        '
+        'cbOrderBy
+        '
+        Me.cbOrderBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbOrderBy.Items.AddRange(New Object() {resources.GetString("cbOrderBy.Items"), resources.GetString("cbOrderBy.Items1"), resources.GetString("cbOrderBy.Items2"), resources.GetString("cbOrderBy.Items3"), resources.GetString("cbOrderBy.Items4"), resources.GetString("cbOrderBy.Items5"), resources.GetString("cbOrderBy.Items6"), resources.GetString("cbOrderBy.Items7"), resources.GetString("cbOrderBy.Items8"), resources.GetString("cbOrderBy.Items9"), resources.GetString("cbOrderBy.Items10")})
+        Me.cbOrderBy.Name = "cbOrderBy"
+        resources.ApplyResources(Me.cbOrderBy, "cbOrderBy")
         '
         'MaterialStreamPanel
         '
@@ -175,4 +195,7 @@ Partial Class MaterialStreamPanel
     Friend WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
     Friend WithEvents grid1 As unvell.ReoGrid.ReoGridControl
     Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents cbOrderBy As ToolStripComboBox
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
 End Class

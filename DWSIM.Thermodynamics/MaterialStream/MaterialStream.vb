@@ -474,6 +474,7 @@ Namespace Streams
         End Sub
 
         Public Overrides Sub Calculate(Optional ByVal args As Object = Nothing)
+            UpdateStreamType()
             If FlowSheet IsNot Nothing Then
                 If AtEquilibrium And Not FlowSheet.DynamicMode And
                     FlowSheet.FlowsheetOptions.SkipEquilibriumCalculationOnDefinedStreams And
@@ -6759,6 +6760,34 @@ Namespace Streams
         Public Property SolidParticleData As ISolidParticleData Implements IMaterialStream.SolidParticleData
 
         Public Property AdditionalSolidPhaseProperties As IAdditionalSolidPhaseProperties Implements IMaterialStream.AdditionalSolidPhaseProperties
+
+        Public Property StreamType As StreamType = StreamType.Undefined Implements IMaterialStream.StreamType
+
+        Public Sub UpdateStreamType() Implements IMaterialStream.UpdateStreamType
+
+            If GraphicObject IsNot Nothing Then
+
+                With GraphicObject
+
+                    If .InputConnectors(0).IsAttached And Not .OutputConnectors(0).IsAttached Then
+                        StreamType = StreamType.Product
+                    ElseIf Not .InputConnectors(0).IsAttached And .OutputConnectors(0).IsAttached Then
+                        StreamType = StreamType.Feed
+                    ElseIf .InputConnectors(0).IsAttached And .OutputConnectors(0).IsAttached Then
+                        If .InputConnectors(0).AttachedConnector.AttachedFrom.ObjectType = ObjectType.OT_Recycle Then
+                            StreamType = StreamType.Recycle_Out
+                        ElseIf .OutputConnectors(0).AttachedConnector.AttachedTo.ObjectType = ObjectType.OT_Recycle Then
+                            StreamType = StreamType.Recycle_In
+                        Else
+                            StreamType = StreamType.Inner
+                        End If
+                    End If
+
+                End With
+
+            End If
+
+        End Sub
 
         Public Overrides Function GetReport(su As IUnitsOfMeasure, ci As Globalization.CultureInfo, numberformat As String) As String
 

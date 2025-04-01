@@ -2,6 +2,7 @@
 Imports System.Linq
 Imports DWSIM.Interfaces
 Imports DWSIM.SharedClassesCSharp.FilePicker
+Imports DWSIM.Thermodynamics.Streams
 Imports unvell.ReoGrid
 Imports unvell.ReoGrid.DataFormat
 
@@ -37,6 +38,8 @@ Public Class MaterialStreamPanel
 
         grid1.Worksheets(0).SetScale(Settings.DpiScale)
 
+        cbOrderBy.SelectedIndex = 0
+
     End Sub
 
     Public Function ReturnForm(ByVal str As String) As WeifenLuo.WinFormsUI.Docking.IDockContent
@@ -61,14 +64,14 @@ Public Class MaterialStreamPanel
 
         With grid1.Worksheets(0)
             .SetCols(2 + nms)
-            .SetRows(props.Count + 1)
+            .SetRows(props.Count + 2)
             .SetScale(Settings.DpiScale)
             .SetColumnsWidth(2, .ColumnCount, 150)
-            .SetRangeStyles(0, 1, .RowCount, .ColumnCount, New WorksheetRangeStyle With {
+            .SetRangeStyles(0, 2, .RowCount, .ColumnCount, New WorksheetRangeStyle With {
                 .Flag = PlainStyleFlag.HorizontalAlign,
                 .HAlign = ReoGridHorAlign.Center
             })
-            .SetRangeStyles(0, 2, .RowCount, .ColumnCount, New WorksheetRangeStyle With {
+            .SetRangeStyles(0, 0, .RowCount, .ColumnCount, New WorksheetRangeStyle With {
                 .Flag = PlainStyleFlag.VerticalAlign,
                 .VAlign = ReoGridVerAlign.Middle
             })
@@ -77,9 +80,9 @@ Public Class MaterialStreamPanel
                 .FontName = System.Drawing.SystemFonts.MessageBoxFont.Name,
                 .FontSize = System.Drawing.SystemFonts.MessageBoxFont.SizeInPoints
             })
-            For i = 1 To props.Count
-                .Cells(i, 0).Data = Flowsheet.GetTranslatedString1(props(i - 1))
-                .Cells(i, 1).Data = ms.GetPropertyUnit(props(i - 1), Flowsheet.Options.SelectedUnitSystem1)
+            For i = 2 To props.Count
+                .Cells(i, 0).Data = Flowsheet.GetTranslatedString1(props(i - 2))
+                .Cells(i, 1).Data = ms.GetPropertyUnit(props(i - 2), Flowsheet.Options.SelectedUnitSystem1)
             Next
             .SetRangeStyles(0, 0, .RowCount, 2, New WorksheetRangeStyle With {
                 .Flag = PlainStyleFlag.HorizontalAlign,
@@ -100,6 +103,7 @@ Public Class MaterialStreamPanel
                 .Bold = True
             })
             .Cells(0, 0).Data = "Property / Streams"
+            .Cells(1, 0).Data = "Type"
             .Cells(0, 1).Data = "Units"
             '.SetRangeDataFormat(1, 2, .RowCount - 1, .ColumnCount, CellDataFormatFlag.Number,
             'New NumberDataFormatter.NumberFormatArgs With {
@@ -107,7 +111,7 @@ Public Class MaterialStreamPanel
             '    .UseSeparator = True,
             '    .NegativeStyle = NumberDataFormatter.NumberNegativeStyle.Minus
             '})
-            .SetRangeStyles(0, 1, 1, .ColumnCount, New WorksheetRangeStyle With {
+            .SetRangeStyles(0, 2, 2, .ColumnCount, New WorksheetRangeStyle With {
                 .Flag = PlainStyleFlag.HorizontalAlign,
                 .HAlign = ReoGridHorAlign.Center
             })
@@ -126,10 +130,37 @@ Public Class MaterialStreamPanel
             RowsCreated = False
             Dim i, j As Integer
             i = 2
-            Dim mslist = Flowsheet.Collections.FlowsheetObjectCollection.Values.Where(Function(x) TypeOf x Is Streams.MaterialStream).OrderBy(Function(s) s.GraphicObject.Tag)
+            Dim mslist = Flowsheet.Collections.FlowsheetObjectCollection.Values.Where(Function(x) TypeOf x Is Streams.MaterialStream)
+
+            Select Case cbOrderBy.SelectedIndex
+                Case 0 'name asc
+                    mslist = mslist.OrderBy(Function(m) m.GraphicObject.Tag)
+                Case 1 'name desc
+                    mslist = mslist.OrderByDescending(Function(m) m.GraphicObject.Tag)
+                Case 2 'type
+                    mslist = mslist.OrderBy(Function(m) DirectCast(m, MaterialStream).StreamType)
+                Case 3 'temp asc
+                    mslist = mslist.OrderBy(Function(m) DirectCast(m, MaterialStream).GetTemperature())
+                Case 4 'temp desc
+                    mslist = mslist.OrderByDescending(Function(m) DirectCast(m, MaterialStream).GetTemperature())
+                Case 5 'press asc
+                    mslist = mslist.OrderBy(Function(m) DirectCast(m, MaterialStream).GetPressure())
+                Case 6 'press desc
+                    mslist = mslist.OrderByDescending(Function(m) DirectCast(m, MaterialStream).GetPressure())
+                Case 7 'mf asc
+                    mslist = mslist.OrderBy(Function(m) DirectCast(m, MaterialStream).GetMassFlow())
+                Case 8 'mf desc
+                    mslist = mslist.OrderByDescending(Function(m) DirectCast(m, MaterialStream).GetMassFlow())
+                Case 9 'density asc
+                    mslist = mslist.OrderBy(Function(m) DirectCast(m, MaterialStream).Phases(0).Properties.density.GetValueOrDefault())
+                Case 10 'density desc
+                    mslist = mslist.OrderByDescending(Function(m) DirectCast(m, MaterialStream).Phases(0).Properties.density.GetValueOrDefault())
+            End Select
+
             For Each ms In mslist
                 grid1.Worksheets(0).Cells(0, i).Data = ms.GraphicObject.Tag
-                j = 1
+                grid1.Worksheets(0).Cells(1, i).Data = ms.StreamType.ToString()
+                j = 2
                 For Each p In props
                     Dim val = ms.GetPropertyValue(p, Flowsheet.Options.SelectedUnitSystem1)
                     If Double.TryParse(val, New Double) Then
