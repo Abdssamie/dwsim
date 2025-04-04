@@ -252,6 +252,8 @@ Public Class FormMain
 
     Private Sub LoadExtenders()
 
+        Console.WriteLine(String.Format("[{0}] Started loading extensions", Date.Now))
+
         ' On user details loaded
         AddHandler UserService.GetInstance().UserDetailsLoaded, AddressOf UserService_UserDetailsLoaded
         AddHandler UserService.GetInstance().AutoLoginInProgressChanged, AddressOf UserService_AutoLoginInProgress
@@ -263,9 +265,13 @@ Public Class FormMain
 
         'load extenders
 
+        Dim sw As New StringBuilder()
+
         Dim extlist As List(Of IExtenderCollection) = GetExtenders(LoadExtenderDLLs())
 
         For Each extender In extlist
+            Dim d0 = Date.Now
+            sw.AppendLine(String.Format("[{0}] Loading {1}", Date.Now, extender.GetType().Assembly.GetName().Name))
             Extenders.Add(extender.ID, extender)
             Try
                 If extender.Level = ExtenderLevel.MainWindow Then
@@ -365,7 +371,11 @@ Public Class FormMain
             Catch ex As Exception
                 Logging.Logger.LogError("Extender Initialization", ex)
             End Try
+            Dim d1 = Date.Now
+            sw.AppendLine(String.Format("[{0}] Loaded {1} (took {2} seconds)", Date.Now, extender.GetType().Assembly.GetName().Name, (d1 - d0).TotalSeconds))
         Next
+
+        Console.WriteLine(sw.ToString())
 
 #End If
 
@@ -728,9 +738,23 @@ Public Class FormMain
 
         'extenders
 
+        Console.WriteLine(String.Format("[{0}] Started converting extension types", Date.Now))
+
+        Dim sw As New StringBuilder()
+
         Dim extList As List(Of Type) = availableTypes.FindAll(Function(t) t.GetInterfaces().Contains(GetType(Interfaces.IExtenderCollection)))
 
-        Return extList.ConvertAll(Of IExtenderCollection)(Function(t As Type) TryCast(Activator.CreateInstance(t), IExtenderCollection))
+        Dim col As New List(Of IExtenderCollection)
+        For Each ext In extList
+            Dim d0 = Date.Now
+            col.Add(TryCast(Activator.CreateInstance(ext), IExtenderCollection))
+            Dim d1 = Date.Now
+            sw.AppendLine(String.Format("[{0}] Loaded {1} from {2} (took {3} seconds)", Date.Now, ext.Name, ext.Assembly.GetName().Name, (d1 - d0).TotalSeconds))
+        Next
+
+        Console.WriteLine(sw.ToString())
+
+        Return col
 
     End Function
 
