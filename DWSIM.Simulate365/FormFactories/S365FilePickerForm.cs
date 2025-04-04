@@ -21,13 +21,17 @@ namespace DWSIM.Simulate365.FormFactories
 
         public string SuggestedDirectory { get; set; }
         public string SuggestedFilename { get; set; }
+
         private readonly UserService _userService;
 
 
         #region Public events
 
         public static event EventHandler FileOpenedFromDashboard;
-       
+
+        public static event EventHandler<BeforeShowDialogEventArgs> BeforeShowSaveDialog;
+
+        public static event EventHandler<BeforeShowDialogEventArgs> BeforeShowOpenDialog;
 
         #endregion
 
@@ -79,6 +83,11 @@ namespace DWSIM.Simulate365.FormFactories
 
         public S365File ShowSaveDialog(List<string> fileFormats = null)
         {
+            // Invoke event handlers
+            var eventArgs = new BeforeShowDialogEventArgs();
+            BeforeShowSaveDialog?.Invoke(null, eventArgs);
+            if (eventArgs.Cancel)
+                return null;
 
             var navigationPath = "filepicker/save";
             var queryParams = new Dictionary<string, string>();
@@ -132,6 +141,12 @@ namespace DWSIM.Simulate365.FormFactories
 
         public S365File ShowOpenDialog(List<string> fileFormats = null)
         {
+            // Invoke event handlers
+            var eventArgs = new BeforeShowDialogEventArgs();
+            BeforeShowOpenDialog?.Invoke(null, eventArgs);
+            if (eventArgs.Cancel)
+                return null;
+
             var navigationPath = "filepicker/open";
             var queryParams = new Dictionary<string, string>();
             if (fileFormats != null && fileFormats.Count > 0)
@@ -220,5 +235,10 @@ namespace DWSIM.Simulate365.FormFactories
         }
 
         #endregion
+    }
+
+    public class BeforeShowDialogEventArgs : EventArgs
+    {
+        public bool Cancel { get; set; }
     }
 }
