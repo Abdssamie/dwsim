@@ -370,6 +370,15 @@ Namespace Enums
         ALL = 3
     End Enum
 
+    Public Enum StreamType
+        Feed = 0
+        Product = 1
+        Recycle_In = 2
+        Recycle_Out = 3
+        Inner = 4
+        Undefined = 5
+    End Enum
+
     Public Enum StreamSpec
         Temperature_and_Pressure = 0
         Pressure_and_Enthalpy = 1

@@ -22,6 +22,8 @@
 <InterfaceType(ComInterfaceType.InterfaceIsIDispatch)>
 Public Interface IMaterialStream
 
+    Property StreamType As Enums.StreamType
+
     Property ForcePhase As Enums.ForcedPhase
 
     Property SpecType As Enums.StreamSpec
@@ -113,5 +115,7 @@ Public Interface IMaterialStream
     Property SolidParticleData As ISolidParticleData
 
     Property AdditionalSolidPhaseProperties As IAdditionalSolidPhaseProperties
+
+    Sub UpdateStreamType()
 
 End Interface
