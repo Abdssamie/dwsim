@@ -712,7 +712,7 @@ Public Class FormPureComp
 
                     Catch ex As Exception
 
-                        MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        'MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                     End Try
 

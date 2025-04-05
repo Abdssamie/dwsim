@@ -2881,7 +2881,7 @@ Public Class FormCompoundCreator
             pbRender.Image = renderer.renderToBitmap(mol)
             btnRenderSMILES.Enabled = False
         Catch ex As Exception
-            MessageBox.Show(ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            'MessageBox.Show(ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -2890,11 +2890,7 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub btnRenderSMILES_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRenderSMILES.Click
-        If DWSIM.App.IsRunningOnMono Then
-            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-        Else
-            RenderSMILES()
-        End If
+        RenderSMILES()
     End Sub
 
     Private Sub GridExpData_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridExpDataPVAP.CellValueChanged,
