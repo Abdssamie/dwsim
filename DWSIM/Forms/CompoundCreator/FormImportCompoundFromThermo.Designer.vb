@@ -48,6 +48,8 @@ Partial Class FormImportCompoundFromThermo
         Me.Column2 = New System.Windows.Forms.DataGridViewImageColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
         CType(Me.WizardControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.WizardPage2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -55,6 +57,7 @@ Partial Class FormImportCompoundFromThermo
         Me.WizardPage3.SuspendLayout()
         Me.WizardPage4.SuspendLayout()
         CType(Me.dgResults, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'WizardControl1
@@ -71,12 +74,9 @@ Partial Class FormImportCompoundFromThermo
         '
         'WizardPage2
         '
-        Me.WizardPage2.Controls.Add(Me.Label10)
+        Me.WizardPage2.Controls.Add(Me.Panel1)
         Me.WizardPage2.Controls.Add(Me.Label7)
         Me.WizardPage2.Controls.Add(Me.PictureBox1)
-        Me.WizardPage2.Controls.Add(Me.LinkLabel2)
-        Me.WizardPage2.Controls.Add(Me.LinkLabel1)
-        Me.WizardPage2.Controls.Add(Me.Label8)
         Me.WizardPage2.Controls.Add(Me.Label3)
         Me.WizardPage2.Name = "WizardPage2"
         Me.WizardPage2.Size = New System.Drawing.Size(701, 354)
@@ -86,9 +86,9 @@ Partial Class FormImportCompoundFromThermo
         'Label10
         '
         Me.Label10.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label10.Location = New System.Drawing.Point(21, 282)
+        Me.Label10.Location = New System.Drawing.Point(3, 133)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(663, 53)
+        Me.Label10.Size = New System.Drawing.Size(663, 36)
         Me.Label10.TabIndex = 11
         Me.Label10.Text = "'thermo' and 'chemicals' Python libraries are Copyright (c) Caleb Bell and Contri" &
     "butors (2016-2021). Thermo: Chemical properties component of Chemical Engineerin" &
@@ -121,7 +121,7 @@ Partial Class FormImportCompoundFromThermo
         '
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.LinkLabel2.Location = New System.Drawing.Point(126, 240)
+        Me.LinkLabel2.Location = New System.Drawing.Point(108, 91)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(221, 15)
         Me.LinkLabel2.TabIndex = 8
@@ -132,7 +132,7 @@ Partial Class FormImportCompoundFromThermo
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.LinkLabel1.Location = New System.Drawing.Point(126, 205)
+        Me.LinkLabel1.Location = New System.Drawing.Point(108, 56)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(207, 15)
         Me.LinkLabel1.TabIndex = 7
@@ -143,7 +143,7 @@ Partial Class FormImportCompoundFromThermo
         '
         Me.Label8.AutoSize = True
         Me.Label8.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label8.Location = New System.Drawing.Point(21, 205)
+        Me.Label8.Location = New System.Drawing.Point(3, 56)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(67, 15)
         Me.Label8.TabIndex = 6
@@ -155,11 +155,10 @@ Partial Class FormImportCompoundFromThermo
         Me.Label3.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label3.Location = New System.Drawing.Point(21, 142)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(489, 45)
+        Me.Label3.Size = New System.Drawing.Size(491, 15)
         Me.Label3.TabIndex = 5
         Me.Label3.Text = "This tool imports compound data from Caleb Bell's Thermo and Chemicals Python lib" &
-    "raries." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Please install the 'thermo' and 'chemicals' packages with pip before " &
-    "using this tool."
+    "raries."
         '
         'WizardPage1
         '
@@ -218,7 +217,7 @@ Partial Class FormImportCompoundFromThermo
         Me.Label5.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Label5.Location = New System.Drawing.Point(18, 95)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(446, 15)
+        Me.Label5.Size = New System.Drawing.Size(445, 15)
         Me.Label5.TabIndex = 6
         Me.Label5.Text = "If the compound found matches your search criteria, click 'Next' to retrieve its " &
     "data."
@@ -329,6 +328,29 @@ Partial Class FormImportCompoundFromThermo
         Me.Label6.TabIndex = 4
         Me.Label6.Text = resources.GetString("Label6.Text")
         '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.ImeMode = System.Windows.Forms.ImeMode.NoControl
+        Me.Label11.Location = New System.Drawing.Point(3, 15)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(443, 15)
+        Me.Label11.TabIndex = 12
+        Me.Label11.Text = "Please install the 'thermo' and 'chemicals' packages with pip before using this t" &
+    "ool."
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Label11)
+        Me.Panel1.Controls.Add(Me.Label8)
+        Me.Panel1.Controls.Add(Me.Label10)
+        Me.Panel1.Controls.Add(Me.LinkLabel1)
+        Me.Panel1.Controls.Add(Me.LinkLabel2)
+        Me.Panel1.Location = New System.Drawing.Point(17, 164)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(681, 177)
+        Me.Panel1.TabIndex = 13
+        '
         'FormImportCompoundFromThermo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
@@ -351,6 +373,8 @@ Partial Class FormImportCompoundFromThermo
         Me.WizardPage4.ResumeLayout(False)
         Me.WizardPage4.PerformLayout()
         CType(Me.dgResults, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -380,4 +404,6 @@ Partial Class FormImportCompoundFromThermo
     Friend WithEvents Label9 As Label
     Friend WithEvents Label10 As Label
     Friend WithEvents Button1 As Button
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label11 As Label
 End Class
