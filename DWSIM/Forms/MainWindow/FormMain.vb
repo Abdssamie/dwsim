@@ -5314,7 +5314,7 @@ Label_00CC:
         UserService.Logout()
     End Sub
 
-    Private Sub LoggedInS365Button_Click(sender As Object, e As EventArgs) Handles LoggedInS365Button.Click
+    Private Sub LoggedInS365Button_Click(sender As Object, e As EventArgs)
         If IsPro Then
             Dim fb As New FormBrowser()
             fb.Show()

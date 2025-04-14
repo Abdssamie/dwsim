@@ -30,6 +30,7 @@ Partial Class FormMain
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.FileTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmiNewCompoundCreatorStudy = New System.Windows.Forms.ToolStripMenuItem()
@@ -103,7 +104,6 @@ Partial Class FormMain
         Me.LoginButton = New System.Windows.Forms.ToolStripButton()
         Me.LogoutDropdown = New System.Windows.Forms.ToolStripDropDownButton()
         Me.DashboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LoggedInS365Button = New System.Windows.Forms.ToolStripMenuItem()
         Me.LogoutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckingCredentialsLabel = New System.Windows.Forms.ToolStripLabel()
         Me.BgLoadComp = New System.ComponentModel.BackgroundWorker()
@@ -123,7 +123,6 @@ Partial Class FormMain
         Me.tsbdonate2 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsbQuickQuestion = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SettingsPanel.SuspendLayout()
@@ -140,6 +139,13 @@ Partial Class FormMain
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         Me.MenuStrip1.ShowItemToolTips = True
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripMenuItem2.Image = Global.DWSIM.My.Resources.Resources.home_30px
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
         '
         'FileTSMI
         '
@@ -590,7 +596,7 @@ Partial Class FormMain
         'LogoutDropdown
         '
         Me.LogoutDropdown.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.LogoutDropdown.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DashboardToolStripMenuItem, Me.LoggedInS365Button, Me.LogoutToolStripMenuItem})
+        Me.LogoutDropdown.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DashboardToolStripMenuItem, Me.LogoutToolStripMenuItem})
         resources.ApplyResources(Me.LogoutDropdown, "LogoutDropdown")
         Me.LogoutDropdown.Name = "LogoutDropdown"
         '
@@ -599,12 +605,6 @@ Partial Class FormMain
         Me.DashboardToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
         Me.DashboardToolStripMenuItem.Name = "DashboardToolStripMenuItem"
         resources.ApplyResources(Me.DashboardToolStripMenuItem, "DashboardToolStripMenuItem")
-        '
-        'LoggedInS365Button
-        '
-        Me.LoggedInS365Button.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
-        Me.LoggedInS365Button.Name = "LoggedInS365Button"
-        resources.ApplyResources(Me.LoggedInS365Button, "LoggedInS365Button")
         '
         'LogoutToolStripMenuItem
         '
@@ -708,13 +708,6 @@ Partial Class FormMain
         resources.ApplyResources(Me.tsbQuickQuestion, "tsbQuickQuestion")
         Me.tsbQuickQuestion.Name = "tsbQuickQuestion"
         Me.tsbQuickQuestion.ShowDropDownArrow = False
-        '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripMenuItem2.Image = Global.DWSIM.My.Resources.Resources.home_30px
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
         '
         'FormMain
         '
@@ -997,7 +990,6 @@ Partial Class FormMain
     Friend WithEvents LoginButton As ToolStripButton
     Friend WithEvents LogoutDropdown As ToolStripDropDownButton
     Friend WithEvents LogoutToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents LoggedInS365Button As ToolStripMenuItem
     Friend WithEvents tsmiFreeProTrial As ToolStripMenuItem
     Public WithEvents AbrirDoDashboardToolStripMenuItem As ToolStripMenuItem
     Public WithEvents SaveToDashboardTSMI As ToolStripMenuItem
