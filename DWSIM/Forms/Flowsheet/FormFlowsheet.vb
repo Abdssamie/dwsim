@@ -4412,9 +4412,7 @@ Public Class FormFlowsheet
     Public Sub UpdateSpreadsheet(act As Action) Implements IFlowsheet.UpdateSpreadsheet
 
         Try
-            Me.UIThread(Sub()
-                            If FormSpreadsheet IsNot Nothing Then Me.FormSpreadsheet.EvaluateAll()
-                        End Sub)
+            FormSpreadsheet.EvaluateAll()
         Catch ex As Exception
             WriteToLog("Error updating spreadsheet: " & ex.Message.ToString, Color.Red, SharedClasses.DWSIM.Flowsheet.MessageType.GeneralError)
         End Try
