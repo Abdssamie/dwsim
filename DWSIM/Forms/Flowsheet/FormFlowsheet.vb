@@ -1590,7 +1590,7 @@ Public Class FormFlowsheet
 
             Else
 
-                UIThreadInvoke(Sub() ShowMessage(DWSIM.App.GetLocalString("Flowsheet Solver is busy, please be patient..."), IFlowsheet.MessageType.Warning))
+                UIThreadInvoke(Sub() ShowMessage(DWSIM.App.GetLocalString("Flowsheet Solver is busy, please wait for it to finish or click 'Abort' to cancel."), IFlowsheet.MessageType.Warning))
 
             End If
 
