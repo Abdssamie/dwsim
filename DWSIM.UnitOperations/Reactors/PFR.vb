@@ -1697,6 +1697,8 @@ Namespace Reactors
                             value = SystemsOfUnits.Converter.ConvertFromSI(su.diameter, Me.Diameter)
                         Case 10
                             value = NumberOfTubes
+                        Case 11
+                            value = dV
                     End Select
 
                 Else
@@ -1764,15 +1766,15 @@ Namespace Reactors
             If basecol.Length > 0 Then proplist.AddRange(basecol)
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 10
+                    For i = 0 To 11
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 10
+                    For i = 0 To 11
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.ALL, PropertyType.RO
-                    For i = 0 To 10
+                    For i = 0 To 11
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                     proplist.Add("Calculation Mode")
@@ -1822,6 +1824,8 @@ Namespace Reactors
                     Me.Diameter = SystemsOfUnits.Converter.ConvertToSI(su.diameter, propval)
                 Case 10
                     NumberOfTubes = propval
+                Case 11
+                    dV = propval
             End Select
             Return 1
         End Function
@@ -1863,7 +1867,7 @@ Namespace Reactors
                                 value = su.heatflow
                             Case 9
                                 value = su.diameter
-                            Case 10
+                            Case 10, 11
                                 value = ""
                         End Select
 

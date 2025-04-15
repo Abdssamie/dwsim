@@ -1686,4 +1686,7 @@
   <data name="PROP_PU_7" xml:space="preserve">
     <value>NPSH Available</value>
   </data>
+  <data name="PROP_PF_11" xml:space="preserve">
+    <value>Integration Step</value>
+  </data>
 </root>
