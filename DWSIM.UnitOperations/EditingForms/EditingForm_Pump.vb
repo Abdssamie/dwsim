@@ -159,6 +159,9 @@ Public Class EditingForm_Pump
             tbPressureIncr.Text = su.Converter.ConvertFromSI(units.deltaP, SimObject.DeltaP.GetValueOrDefault).ToString(nf)
             tbTemperatureChange.Text = su.Converter.ConvertFromSI(units.deltaT, SimObject.DeltaT.GetValueOrDefault).ToString(nf)
 
+            tbNPSH.Text = SimObject.NPSH.GetValueOrDefault().ConvertFromSI(units.distance).ToString(nf)
+            lblNPSH.Text = units.distance
+
         End With
 
         Loaded = True

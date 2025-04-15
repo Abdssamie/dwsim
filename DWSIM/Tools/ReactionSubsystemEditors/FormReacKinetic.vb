@@ -493,4 +493,7 @@ Public Class FormReacKinetic
         End If
     End Sub
 
+    Private Sub KryptonLabel9_Click(sender As Object, e As EventArgs) Handles KryptonLabel9.Click
+
+    End Sub
 End Class

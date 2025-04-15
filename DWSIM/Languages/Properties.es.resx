@@ -149,6 +149,9 @@
     <value>Fracción Molar de vapor de salida</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_CL_5" xml:space="preserve">
+    <value>ΔT</value>
+  </data>
   <data name="PROP_CO_0" xml:space="preserve">
     <value>Aumento de presión (Head)</value>
     <comment>1</comment>
@@ -156,6 +159,9 @@
   <data name="PROP_CO_1" xml:space="preserve">
     <value>Eficiencia</value>
     <comment>1</comment>
+  </data>
+  <data name="PROP_CO_2" xml:space="preserve">
+    <value>ΔT</value>
   </data>
   <data name="PROP_CO_3" xml:space="preserve">
     <value>Potencia Requerida</value>
@@ -277,6 +283,9 @@
     <value>Fracción Molar de vapor de salida</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_HT_5" xml:space="preserve">
+    <value>ΔT</value>
+  </data>
   <data name="PROP_HX_0" xml:space="preserve">
     <value>Coeficiente global de transferencia de calor (U)</value>
     <comment>1</comment>
@@ -336,6 +345,9 @@
   </data>
   <data name="PROP_HX_9" xml:space="preserve">
     <value>[Coraza y Tubo] Separación entre Deflectores</value>
+  </data>
+  <data name="PROP_MS_0" xml:space="preserve">
+    <value>Temperatura</value>
   </data>
   <data name="PROP_MS_1" xml:space="preserve">
     <value>Presión</value>
@@ -926,8 +938,8 @@
     <value>Diámetro de Orificio</value>
     <comment>1</comment>
   </data>
-  <data name="PROP_OP_4" xml:space="preserve">
-    <value>Beta (d/D)</value>
+  <data name="PROP_OP_2" xml:space="preserve">
+    <value>Diámetro Interno de Tubo</value>
     <comment>1</comment>
   </data>
   <data name="PROP_OP_3" xml:space="preserve">
@@ -969,6 +981,9 @@
   <data name="PROP_PU_1" xml:space="preserve">
     <value>Eficiencia</value>
     <comment>1</comment>
+  </data>
+  <data name="PROP_PU_2" xml:space="preserve">
+    <value>ΔT</value>
   </data>
   <data name="PROP_PU_3" xml:space="preserve">
     <value>Potencia Requerida</value>
@@ -1148,6 +1163,9 @@
     <value>Eficiencia</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_TU_2" xml:space="preserve">
+    <value>ΔT</value>
+  </data>
   <data name="PROP_TU_3" xml:space="preserve">
     <value>Potencia Generada</value>
     <comment>0</comment>
@@ -1172,26 +1190,8 @@
     <value>Caída de Temperatura</value>
     <comment>0</comment>
   </data>
-  <data name="PROP_CL_5" xml:space="preserve">
-    <value>ΔT</value>
-  </data>
-  <data name="PROP_CO_2" xml:space="preserve">
-    <value>ΔT</value>
-  </data>
   <data name="PROP_CS_01" xml:space="preserve">
     <value>Caida de Presión</value>
-  </data>
-  <data name="PROP_HT_5" xml:space="preserve">
-    <value>ΔT</value>
-  </data>
-  <data name="PROP_MS_0" xml:space="preserve">
-    <value>Temperatura</value>
-  </data>
-  <data name="PROP_PU_2" xml:space="preserve">
-    <value>ΔT</value>
-  </data>
-  <data name="PROP_TU_2" xml:space="preserve">
-    <value>ΔT</value>
   </data>
   <data name="PROP_HX_19" xml:space="preserve">
     <value>Logarithmic mean temperature difference LMTD</value>
@@ -1266,8 +1266,8 @@
   <data name="PROP_PS_7" xml:space="preserve">
     <value>Gradiente de Temperatura Ambiente</value>
   </data>
-  <data name="PROP_OP_2" xml:space="preserve">
-    <value>Diámetro Interno de Tubo</value>
+  <data name="PROP_OP_4" xml:space="preserve">
+    <value>Beta (d/D)</value>
     <comment>1</comment>
   </data>
   <data name="PROP_MS_155" xml:space="preserve">
@@ -1512,5 +1512,8 @@
   </data>
   <data name="PROP_VA_5" xml:space="preserve">
     <value>Abertura</value>
+  </data>
+  <data name="PROP_PU_7" xml:space="preserve">
+    <value />
   </data>
 </root>

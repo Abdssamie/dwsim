@@ -22,7 +22,6 @@ Partial Class EditingForm_Pump
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Pump))
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.lblTag = New System.Windows.Forms.TextBox()
@@ -73,8 +72,11 @@ Partial Class EditingForm_Pump
         Me.cbOutlet1 = New System.Windows.Forms.ComboBox()
         Me.cbInlet1 = New System.Windows.Forms.ComboBox()
         Me.Label19 = New System.Windows.Forms.Label()
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip()
+        Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip()
+        Me.tbNPSH = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.lblNPSH = New System.Windows.Forms.Label()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -171,7 +173,7 @@ Partial Class EditingForm_Pump
         resources.ApplyResources(Me.rtbAnnotations, "rtbAnnotations")
         Me.rtbAnnotations.Name = "rtbAnnotations"
         Me.rtbAnnotations.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil Microsoft " &
-    "Sans Serif;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.19041}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\" &
+    "Sans Serif;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.26100}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\" &
     "par" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.rtbAnnotations.ShowRedo = False
         Me.rtbAnnotations.ShowUndo = False
@@ -222,6 +224,9 @@ Partial Class EditingForm_Pump
         'GroupBoxParameters
         '
         resources.ApplyResources(Me.GroupBoxParameters, "GroupBoxParameters")
+        Me.GroupBoxParameters.Controls.Add(Me.lblNPSH)
+        Me.GroupBoxParameters.Controls.Add(Me.tbNPSH)
+        Me.GroupBoxParameters.Controls.Add(Me.Label10)
         Me.GroupBoxParameters.Controls.Add(Me.cbPressure)
         Me.GroupBoxParameters.Controls.Add(Me.tbOutletPressure)
         Me.GroupBoxParameters.Controls.Add(Me.Label15)
@@ -576,6 +581,31 @@ Partial Class EditingForm_Pump
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
+        'tbNPSH
+        '
+        resources.ApplyResources(Me.tbNPSH, "tbNPSH")
+        Me.tbNPSH.Name = "tbNPSH"
+        Me.tbNPSH.ReadOnly = True
+        Me.ToolTipValues.SetToolTip(Me.tbNPSH, resources.GetString("tbNPSH.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.tbNPSH, resources.GetString("tbNPSH.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.tbNPSH, resources.GetString("tbNPSH.ToolTip2"))
+        '
+        'Label10
+        '
+        resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.Name = "Label10"
+        Me.ToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip2"))
+        '
+        'lblNPSH
+        '
+        resources.ApplyResources(Me.lblNPSH, "lblNPSH")
+        Me.lblNPSH.Name = "lblNPSH"
+        Me.ToolTip1.SetToolTip(Me.lblNPSH, resources.GetString("lblNPSH.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.lblNPSH, resources.GetString("lblNPSH.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.lblNPSH, resources.GetString("lblNPSH.ToolTip2"))
+        '
         'EditingForm_Pump
         '
         resources.ApplyResources(Me, "$this")
@@ -652,4 +682,7 @@ Partial Class EditingForm_Pump
     Public WithEvents btnCreateAndConnectOutlet1 As System.Windows.Forms.Button
     Public WithEvents btnCreateAndConnectInlet1 As System.Windows.Forms.Button
     Friend WithEvents ToolTipChangeTag As ToolTip
+    Public WithEvents tbNPSH As TextBox
+    Public WithEvents Label10 As Label
+    Public WithEvents lblNPSH As Label
 End Class

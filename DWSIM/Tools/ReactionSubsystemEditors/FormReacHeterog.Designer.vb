@@ -105,9 +105,7 @@ Partial Class FormReacHeterog
         Me.GroupBox2.Controls.Add(Me.KryptonLabel11)
         Me.GroupBox2.Controls.Add(Me.cbConcUnit)
         Me.GroupBox2.Controls.Add(Me.tbTmin)
-        Me.GroupBox2.Controls.Add(Me.KryptonLabel12)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel8)
-        Me.GroupBox2.Controls.Add(Me.cbVelUnit)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel7)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel4)
         Me.GroupBox2.Controls.Add(Me.cbBase)
@@ -176,6 +174,8 @@ Partial Class FormReacHeterog
         Me.gbExpression.Controls.Add(Me.tbNumerator)
         Me.gbExpression.Controls.Add(Me.KryptonLabel10)
         Me.gbExpression.Controls.Add(Me.KryptonLabel5)
+        Me.gbExpression.Controls.Add(Me.KryptonLabel12)
+        Me.gbExpression.Controls.Add(Me.cbVelUnit)
         Me.gbExpression.Name = "gbExpression"
         Me.gbExpression.TabStop = False
         '
