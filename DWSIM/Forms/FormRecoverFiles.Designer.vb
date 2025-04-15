@@ -26,14 +26,14 @@ Partial Class FormRecoverFiles
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
-        Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.KryptonButton2 = New System.Windows.Forms.Button()
-        Me.KryptonButton1 = New System.Windows.Forms.Button()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LabelWithDivider1 = New System.Windows.Forms.LabelWithDivider()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.KryptonButton2 = New System.Windows.Forms.Button()
+        Me.KryptonButton1 = New System.Windows.Forms.Button()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -59,30 +59,6 @@ Partial Class FormRecoverFiles
         Me.Grid1.Name = "Grid1"
         Me.Grid1.RowHeadersVisible = False
         Me.Grid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        '
-        'LabelWithDivider1
-        '
-        resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
-        Me.LabelWithDivider1.Name = "LabelWithDivider1"
-        '
-        'Panel1
-        '
-        resources.ApplyResources(Me.Panel1, "Panel1")
-        Me.Panel1.BackColor = System.Drawing.Color.White
-        Me.Panel1.ForeColor = System.Drawing.Color.White
-        Me.Panel1.Name = "Panel1"
-        '
-        'KryptonButton2
-        '
-        resources.ApplyResources(Me.KryptonButton2, "KryptonButton2")
-        Me.KryptonButton2.DialogResult = System.Windows.Forms.DialogResult.Ignore
-        Me.KryptonButton2.Name = "KryptonButton2"
-        '
-        'KryptonButton1
-        '
-        resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
-        Me.KryptonButton1.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.KryptonButton1.Name = "KryptonButton1"
         '
         'Column4
         '
@@ -116,6 +92,30 @@ Partial Class FormRecoverFiles
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
         Me.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'LabelWithDivider1
+        '
+        resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
+        Me.LabelWithDivider1.Name = "LabelWithDivider1"
+        '
+        'Panel1
+        '
+        resources.ApplyResources(Me.Panel1, "Panel1")
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.ForeColor = System.Drawing.Color.White
+        Me.Panel1.Name = "Panel1"
+        '
+        'KryptonButton2
+        '
+        resources.ApplyResources(Me.KryptonButton2, "KryptonButton2")
+        Me.KryptonButton2.DialogResult = System.Windows.Forms.DialogResult.Ignore
+        Me.KryptonButton2.Name = "KryptonButton2"
+        '
+        'KryptonButton1
+        '
+        resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
+        Me.KryptonButton1.DialogResult = System.Windows.Forms.DialogResult.OK
+        Me.KryptonButton1.Name = "KryptonButton1"
         '
         'FormRecoverFiles
         '
