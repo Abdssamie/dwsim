@@ -194,7 +194,6 @@ Public Class FormMain
 
 #If LINUX = False Then
             If IsPro Then
-                DownloadSupplementarySoftwareToolStripMenuItem.Visible = False
                 StatusStrip1.Visible = False
                 tsbRegCO.Visible = False
                 RegistroCAPEOPENToolStripMenuItem.Enabled = False
@@ -5281,27 +5280,27 @@ Label_00CC:
         End If
     End Sub
 
-    Private Sub NNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NNUOToolStripMenuItem.Click
+    Private Sub NNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) 
         Process.Start("https://dwsim.org/wiki/index.php?title=Neural_Network_Unit_Operation")
     End Sub
 
-    Private Sub PNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PNUOToolStripMenuItem.Click
+    Private Sub PNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) 
         Process.Start("https://dwsim.org/wiki/index.php?title=Pipe_Network_Unit_Operation")
     End Sub
 
-    Private Sub CapitalCostToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CapitalCostToolStripMenuItem.Click
+    Private Sub CapitalCostToolStripMenuItem_Click(sender As Object, e As EventArgs) 
         Process.Start("https://dwsim.org/wiki/index.php?title=Capital_Cost_Estimator")
     End Sub
 
-    Private Sub OPCPluginToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OPCPluginToolStripMenuItem.Click
+    Private Sub OPCPluginToolStripMenuItem_Click(sender As Object, e As EventArgs) 
         Process.Start("https://dwsim.org/wiki/index.php?title=OPC_Client_Plugin")
     End Sub
 
-    Private Sub DTLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DTLToolStripMenuItem.Click
+    Private Sub DTLToolStripMenuItem_Click(sender As Object, e As EventArgs) 
         Process.Start("https://dwsim.org/wiki/index.php?title=DTL")
     End Sub
 
-    Private Sub PsycrometrySimulationTemplateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PsycrometrySimulationTemplateToolStripMenuItem.Click
+    Private Sub PsycrometrySimulationTemplateToolStripMenuItem_Click(sender As Object, e As EventArgs) 
         Process.Start("https://github.com/Spogis/Psychrometry")
     End Sub
 

@@ -30,6 +30,7 @@ Partial Class FormMain
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain))
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.FileTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmiNewCompoundCreatorStudy = New System.Windows.Forms.ToolStripMenuItem()
@@ -55,13 +56,6 @@ Partial Class FormMain
         Me.ToolsTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.DatabaseManagerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RegistroCAPEOPENToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DownloadSupplementarySoftwareToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NNUOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PNUOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CapitalCostToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OPCPluginToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DTLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PsycrometrySimulationTemplateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WindowsMenu = New System.Windows.Forms.ToolStripMenuItem()
         Me.CascadeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TileVerticalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -123,7 +117,6 @@ Partial Class FormMain
         Me.tsbdonate2 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsbQuickQuestion = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SettingsPanel.SuspendLayout()
@@ -140,6 +133,13 @@ Partial Class FormMain
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         Me.MenuStrip1.ShowItemToolTips = True
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripMenuItem2.Image = Global.DWSIM.My.Resources.Resources.home_30px
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
         '
         'FileTSMI
         '
@@ -273,7 +273,7 @@ Partial Class FormMain
         '
         'ToolsTSMI
         '
-        Me.ToolsTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DatabaseManagerToolStripMenuItem, Me.RegistroCAPEOPENToolStripMenuItem, Me.DownloadSupplementarySoftwareToolStripMenuItem})
+        Me.ToolsTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DatabaseManagerToolStripMenuItem, Me.RegistroCAPEOPENToolStripMenuItem})
         Me.ToolsTSMI.Name = "ToolsTSMI"
         resources.ApplyResources(Me.ToolsTSMI, "ToolsTSMI")
         '
@@ -288,43 +288,6 @@ Partial Class FormMain
         Me.RegistroCAPEOPENToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.colan2
         Me.RegistroCAPEOPENToolStripMenuItem.Name = "RegistroCAPEOPENToolStripMenuItem"
         resources.ApplyResources(Me.RegistroCAPEOPENToolStripMenuItem, "RegistroCAPEOPENToolStripMenuItem")
-        '
-        'DownloadSupplementarySoftwareToolStripMenuItem
-        '
-        Me.DownloadSupplementarySoftwareToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.DownloadSupplementarySoftwareToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NNUOToolStripMenuItem, Me.PNUOToolStripMenuItem, Me.CapitalCostToolStripMenuItem, Me.OPCPluginToolStripMenuItem, Me.DTLToolStripMenuItem, Me.PsycrometrySimulationTemplateToolStripMenuItem})
-        Me.DownloadSupplementarySoftwareToolStripMenuItem.Name = "DownloadSupplementarySoftwareToolStripMenuItem"
-        resources.ApplyResources(Me.DownloadSupplementarySoftwareToolStripMenuItem, "DownloadSupplementarySoftwareToolStripMenuItem")
-        '
-        'NNUOToolStripMenuItem
-        '
-        Me.NNUOToolStripMenuItem.Name = "NNUOToolStripMenuItem"
-        resources.ApplyResources(Me.NNUOToolStripMenuItem, "NNUOToolStripMenuItem")
-        '
-        'PNUOToolStripMenuItem
-        '
-        Me.PNUOToolStripMenuItem.Name = "PNUOToolStripMenuItem"
-        resources.ApplyResources(Me.PNUOToolStripMenuItem, "PNUOToolStripMenuItem")
-        '
-        'CapitalCostToolStripMenuItem
-        '
-        Me.CapitalCostToolStripMenuItem.Name = "CapitalCostToolStripMenuItem"
-        resources.ApplyResources(Me.CapitalCostToolStripMenuItem, "CapitalCostToolStripMenuItem")
-        '
-        'OPCPluginToolStripMenuItem
-        '
-        Me.OPCPluginToolStripMenuItem.Name = "OPCPluginToolStripMenuItem"
-        resources.ApplyResources(Me.OPCPluginToolStripMenuItem, "OPCPluginToolStripMenuItem")
-        '
-        'DTLToolStripMenuItem
-        '
-        Me.DTLToolStripMenuItem.Name = "DTLToolStripMenuItem"
-        resources.ApplyResources(Me.DTLToolStripMenuItem, "DTLToolStripMenuItem")
-        '
-        'PsycrometrySimulationTemplateToolStripMenuItem
-        '
-        Me.PsycrometrySimulationTemplateToolStripMenuItem.Name = "PsycrometrySimulationTemplateToolStripMenuItem"
-        resources.ApplyResources(Me.PsycrometrySimulationTemplateToolStripMenuItem, "PsycrometrySimulationTemplateToolStripMenuItem")
         '
         'WindowsMenu
         '
@@ -709,13 +672,6 @@ Partial Class FormMain
         Me.tsbQuickQuestion.Name = "tsbQuickQuestion"
         Me.tsbQuickQuestion.ShowDropDownArrow = False
         '
-        'ToolStripMenuItem2
-        '
-        Me.ToolStripMenuItem2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripMenuItem2.Image = Global.DWSIM.My.Resources.Resources.home_30px
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
-        '
         'FormMain
         '
         Me.AllowDrop = True
@@ -986,14 +942,7 @@ Partial Class FormMain
     Public WithEvents WelcomePanel As Panel
     Friend WithEvents tsbInspector As ToolStripButton
     Friend WithEvents tsFileSeparator As ToolStripSeparator
-    Friend WithEvents NNUOToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PNUOToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents CapitalCostToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents OPCPluginToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DTLToolStripMenuItem As ToolStripMenuItem
     Public WithEvents PainelDeBoasvindasToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PsycrometrySimulationTemplateToolStripMenuItem As ToolStripMenuItem
-    Public WithEvents DownloadSupplementarySoftwareToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LoginButton As ToolStripButton
     Friend WithEvents LogoutDropdown As ToolStripDropDownButton
     Friend WithEvents LogoutToolStripMenuItem As ToolStripMenuItem
