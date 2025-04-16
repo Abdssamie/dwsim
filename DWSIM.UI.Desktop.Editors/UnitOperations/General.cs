@@ -149,7 +149,7 @@ namespace DWSIM.UI.Desktop.Editors
                     break;
                 case ObjectType.EnergyStream:
                     var es = (EnergyStream)SimObject;
-                    s.CreateAndAddTextBoxRow(container, nf, "Heat Flow (" + su.heatflow + ")", cv.ConvertFromSI(su.heatflow, es.EnergyFlow.GetValueOrDefault()),
+                    var tb = s.CreateAndAddTextBoxRow(container, nf, "Heat Flow (" + su.heatflow + ")", cv.ConvertFromSI(su.heatflow, es.EnergyFlow.GetValueOrDefault()),
                                    (TextBox arg3, EventArgs ev) =>
                                    {
                                        if (arg3.Text.IsValidDoubleExpression())
@@ -162,6 +162,7 @@ namespace DWSIM.UI.Desktop.Editors
                                            arg3.TextColor = (Colors.Red);
                                        }
                                    });
+                    if (SimObject.GraphicObject.InputConnectors[0].IsAttached) tb.ReadOnly = true;
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Heat Flow"));
                     break;
