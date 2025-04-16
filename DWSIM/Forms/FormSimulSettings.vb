@@ -380,7 +380,7 @@ Public Class FormSimulSettings
             .Add(New String() {DWSIM.App.GetLocalString("CapacidadeCalorfica"), su.heatCapacityCp, DWSIM.App.GetLocalString("Condutividadetrmica"), su.thermalConductivity})
             .Add(New String() {DWSIM.App.GetLocalString("Viscosidadecinemtica"), su.cinematic_viscosity, DWSIM.App.GetLocalString("Viscosidadedinmica"), su.viscosity})
             .Add(New String() {DWSIM.App.GetLocalString("DeltaT2"), su.deltaT, DWSIM.App.GetLocalString("DeltaP"), su.deltaP})
-            .Add(New String() {DWSIM.App.GetLocalString("ComprimentoHead"), su.head, DWSIM.App.GetLocalString("FluxodeEnergyFlow"), su.heatflow})
+            .Add(New String() {DWSIM.App.GetLocalString("ComprimentoHead"), su.head, DWSIM.App.GetLocalString("Power / Heat Duty / Energy Flow"), su.heatflow})
             .Add(New String() {DWSIM.App.GetLocalString("Tempo"), su.time, DWSIM.App.GetLocalString("Volume"), su.volume})
             .Add(New String() {DWSIM.App.GetLocalString("VolumeMolar"), su.molar_volume, DWSIM.App.GetLocalString("rea"), su.area})
             .Add(New String() {DWSIM.App.GetLocalString("DimetroEspessura"), su.diameter, DWSIM.App.GetLocalString("Fora"), su.force})
@@ -1888,23 +1888,23 @@ Public Class FormSimulSettings
 
             Dim filePickerForm As IFilePicker = FilePickerService.GetInstance().GetFilePicker()
 
-        Dim handler As IVirtualFile = filePickerForm.ShowSaveDialog(
-            New List(Of FilePickerAllowedType) From {New FilePickerAllowedType("JSON File", "*.json")})
+            Dim handler As IVirtualFile = filePickerForm.ShowSaveDialog(
+                New List(Of FilePickerAllowedType) From {New FilePickerAllowedType("JSON File", "*.json")})
 
-        If handler IsNot Nothing Then
-            Using stream As New IO.MemoryStream()
-                Using writer As New StreamWriter(stream) With {.AutoFlush = True}
-                    Try
+            If handler IsNot Nothing Then
+                Using stream As New IO.MemoryStream()
+                    Using writer As New StreamWriter(stream) With {.AutoFlush = True}
+                        Try
                             Dim jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(compound, Newtonsoft.Json.Formatting.Indented)
                             writer.Write(jsondata)
-                        handler.Write(stream)
-                        MessageBox.Show(DWSIM.App.GetLocalString("FileSaved"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Catch ex As Exception
-                        MessageBox.Show(DWSIM.App.GetLocalString("Erroaosalvararquivo") + ex.Message.ToString, "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
+                            handler.Write(stream)
+                            MessageBox.Show(DWSIM.App.GetLocalString("FileSaved"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Catch ex As Exception
+                            MessageBox.Show(DWSIM.App.GetLocalString("Erroaosalvararquivo") + ex.Message.ToString, "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End Try
+                    End Using
                 End Using
-            End Using
-        End If
+            End If
 
         End If
 
@@ -1981,6 +1981,51 @@ Public Class FormSimulSettings
         CurrentFlowsheet.Options.EnabledUndoRedo = chkEnableUndoRedo.Checked
 
         FormMain.AnalyticsProvider?.RegisterEvent("Undo/Redo Enabled/Disabled", CurrentFlowsheet.Options.EnabledUndoRedo, Nothing)
+
+    End Sub
+
+    Private Sub ComboBox2_TextUpdate(sender As Object, e As KeyEventArgs) Handles ComboBox2.KeyDown
+
+        If e.KeyCode = Keys.Enter Then
+
+            Dim current = CurrentFlowsheet.Options.SelectedUnitSystem
+
+            If current.Name = "SI" Or current.Name = "CGS" Or current.Name = "SI (Engineering)" Or current.Name = "ENG" Or
+                current.Name = "C1" Or current.Name = "C2" Or current.Name = "C3" Or current.Name = "C4" Or current.Name = "C5" Then
+
+                MessageBox.Show("This system of units cannot be renamed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Else
+
+                Dim newname = ComboBox2.Text
+
+                If FormMain.AvailableUnitSystems.ContainsKey(newname) Then
+
+                    MessageBox.Show("A system of units with this name already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                    Exit Sub
+
+                End If
+
+                My.Application.UserUnitSystems.Remove(current.Name)
+                FormMain.AvailableUnitSystems.Remove(current.Name)
+
+                ComboBox2.SelectedIndex = 0
+                ComboBox2.Items.Remove(current.Name)
+
+                current.Name = newname
+
+                My.Application.UserUnitSystems.Add(current.Name, current)
+                My.Application.MainWindowForm.AvailableUnitSystems.Add(current.Name, current)
+
+                ComboBox2.Items.Clear()
+                ComboBox2.Items.AddRange(FormMain.AvailableUnitSystems.Keys.ToArray)
+
+                ComboBox2.SelectedItem = newname
+
+            End If
+
+        End If
 
     End Sub
 

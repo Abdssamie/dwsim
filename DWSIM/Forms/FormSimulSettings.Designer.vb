@@ -64,6 +64,7 @@ Partial Class FormSimulSettings
         Me.Button3 = New System.Windows.Forms.Button()
         Me.GroupBoxComps = New System.Windows.Forms.GroupBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button5 = New System.Windows.Forms.Button()
         Me.ogc1 = New System.Windows.Forms.DataGridView()
         Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colAdd = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -87,7 +88,6 @@ Partial Class FormSimulSettings
         Me.Button13 = New System.Windows.Forms.Button()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.btnInfoLeft = New System.Windows.Forms.Button()
-        Me.Button5 = New System.Windows.Forms.Button()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
@@ -430,7 +430,6 @@ Partial Class FormSimulSettings
         'ComboBox2
         '
         resources.ApplyResources(Me.ComboBox2, "ComboBox2")
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox2.DropDownWidth = 205
         Me.ComboBox2.Name = "ComboBox2"
         Me.ToolTip1.SetToolTip(Me.ComboBox2, resources.GetString("ComboBox2.ToolTip"))
@@ -486,6 +485,14 @@ Partial Class FormSimulSettings
         Me.Panel1.Controls.Add(Me.btnInfoLeft)
         Me.Panel1.Name = "Panel1"
         Me.ToolTip1.SetToolTip(Me.Panel1, resources.GetString("Panel1.ToolTip"))
+        '
+        'Button5
+        '
+        resources.ApplyResources(Me.Button5, "Button5")
+        Me.Button5.Image = Global.DWSIM.My.Resources.Resources.cross
+        Me.Button5.Name = "Button5"
+        Me.ToolTip1.SetToolTip(Me.Button5, resources.GetString("Button5.ToolTip"))
+        Me.Button5.UseVisualStyleBackColor = True
         '
         'ogc1
         '
@@ -660,14 +667,6 @@ Partial Class FormSimulSettings
         Me.btnInfoLeft.Name = "btnInfoLeft"
         Me.ToolTip1.SetToolTip(Me.btnInfoLeft, resources.GetString("btnInfoLeft.ToolTip"))
         Me.btnInfoLeft.UseVisualStyleBackColor = True
-        '
-        'Button5
-        '
-        resources.ApplyResources(Me.Button5, "Button5")
-        Me.Button5.Image = Global.DWSIM.My.Resources.Resources.cross
-        Me.Button5.Name = "Button5"
-        Me.ToolTip1.SetToolTip(Me.Button5, resources.GetString("Button5.ToolTip"))
-        Me.Button5.UseVisualStyleBackColor = True
         '
         'Label8
         '
