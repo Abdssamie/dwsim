@@ -2413,6 +2413,12 @@ namespace DWSIM.UI.Desktop.Editors
                     break;
                 case ObjectType.Vessel:
                     var vessel = (Vessel)SimObject;
+                    s.CreateAndAddDropDownRow(container, "Calculation Mode", new List<string>(new[] { 
+                        "Adiabatic", "Legacy", "Heating/Cooling Isothermic", "Heating/Cooling Isobaric" }), (int)vessel.CalculationMode,
+                       (sender, e) =>
+                       {
+                           vessel.CalculationMode = sender.SelectedIndex.ToEnum<Vessel.CalculationModes>();
+                       });
                     s.CreateAndAddCheckBoxRow(container, "Override Separation Pressure", vessel.OverrideP, (CheckBox arg2, EventArgs ev) =>
                     {
                         vessel.OverrideP = arg2.Checked.GetValueOrDefault();
