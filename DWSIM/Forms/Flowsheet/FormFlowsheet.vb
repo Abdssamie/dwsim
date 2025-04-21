@@ -1264,6 +1264,8 @@ Public Class FormFlowsheet
                                           MessagesLog.Add("[" + Date.Now.ToString() + "] " + Message)
                                       End If
 
+                                      If MessagesLog.Count > 1000 Then MessagesLog.RemoveAt(0)
+
                                       If frsht.Visible Then
 
                                           Dim showtips As Boolean = True
