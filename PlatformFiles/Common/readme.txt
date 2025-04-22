@@ -1,6 +1,6 @@
 ﻿==================================================
 DWSIM - Open Source Process Simulator
-Version 9.0.1
+Version 9.0.2
 Copyright (c) 2017-2025 Daniel Wagner and contributors
 Copyright (c) 2008-2016 Daniel Wagner, Gregor Reichert, Gustavo Leon
 ==================================================
@@ -61,6 +61,11 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog including souce code changes can be viewed at https://github.com/DanWBR/dwsim/commits/windows
+
+Version 9.0.2
+
+[Bug] Classic UI: Material Stream Component Results Transposed #761
+
 
 Version 9.0.1
 
