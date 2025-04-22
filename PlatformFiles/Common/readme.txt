@@ -64,8 +64,22 @@ The full changelog including souce code changes can be viewed at https://github.
 
 Version 9.0.2
 
-[Bug] Classic UI: Material Stream Component Results Transposed #761
-[Bug] Need convert to SI for TC, PC and fix overriding MW calculation in Form FormBulkAddPseudos #764
+- New: User-defined Systems of Units can be now renamed in Simulation Settings panel (Classic UI)
+- New: Implemented new calculation modes for vessel unit op
+- New: Expose PFR integration step
+- New: Display NPSH Available for Pumps; 
+- New: Material Stream list order by (Classic UI)
+- New: Five-point stencil numerical derivatives for NL PV flash
+- Changed: Property table UI redesign  (Cross-Platform UI) #752
+- Changed: Remove backup files on user closing recovery window
+- Changed: Redesigned layout of Kin/HetCat reaction editors (Classic UI)
+- Changed: Flowsheet busy message; added TR as power unit
+- Bugfix: Classic UI: Material Stream Component Results Transposed #761
+- Bugfix: Need convert to SI for TC, PC and fix overriding MW calculation in Form FormBulkAddPseudos #764
+- Bugfix: Cross Plateform UI Crash on no schedule launch #779
+- Bugfix: Hot Fluid Flow Conductance in Heat Exchanger Dynamic Mode Properties #772
+- Bugfix: Conversion reactor - output energy stream is editable #783
+- Bugfix: Fixed issue with Spreadsheet solving
 
 Version 9.0.1
 
