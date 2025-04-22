@@ -5472,7 +5472,7 @@ Label_00CC:
 
         Dim fb As New FormBrowser()
         fb.Show()
-        fb.DisplayURL(fpath, "DWSIM Pro User's Guide")
+        fb.DisplayURL(fpath, "DWSIM Pro User Guide")
 
     End Sub
 
