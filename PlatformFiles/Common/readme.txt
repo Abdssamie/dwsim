@@ -65,7 +65,7 @@ The full changelog including souce code changes can be viewed at https://github.
 Version 9.0.2
 
 [Bug] Classic UI: Material Stream Component Results Transposed #761
-
+[Bug] Need convert to SI for TC, PC and fix overriding MW calculation in Form FormBulkAddPseudos #764
 
 Version 9.0.1
 
