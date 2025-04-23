@@ -24,10 +24,15 @@ Public Class AboutBox
 
         Dim updfile = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "version.info"
 
+
+#If NOADS Then
+        Version.Text = "Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & " (Patreon Supporters Build)"
+#Else
         Version.Text = "Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build
+#End If
 
 #If DEBUG Then
-        Version.Text += "-" + IO.File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location).ToString()
+        Version.Text += " - " + IO.File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location).ToString()
 #End If
 
         tbAcknowledgements.Text = "A HUGE thank you to the following Patrons/Sponsors who made this release possible:" + vbCrLf + vbCrLf +
