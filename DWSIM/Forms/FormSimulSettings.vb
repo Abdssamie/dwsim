@@ -182,7 +182,7 @@ Public Class FormSimulSettings
 
 #If NOADS = False Then
             If Not FormMain.IsPro Then
-                ProFeatures.Functions.AddProPPs(DataGridViewPP)
+                ProFeatures.Functions.AddProPPs2(DataGridViewPP)
             End If
 #End If
 
