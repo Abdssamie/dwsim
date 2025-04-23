@@ -93,7 +93,7 @@ namespace DWSIM.UI.Forms.Forms
                     case "18.5.0.0": osinfo = "macOS Mojave (v10.14.4)"; break;
                     case "18.6.0.0": osinfo = "macOS Mojave (v10.14.5)"; break;
                     case "18.7.1.1": osinfo = "macOS Mojave (v10.14.6)"; break;
-                    case "19.0.1.0": osinfo = "macOS Catalina (v10.15)"; break;
+                    case "19.0.2.0": osinfo = "macOS Catalina (v10.15)"; break;
                     case "19.2.0.0": osinfo = "macOS Catalina (v10.15.2)"; break;
                     case "19.3.0.0": osinfo = "macOS Catalina (v10.15.3)"; break;
                     case "19.4.0.0": osinfo = "macOS Catalina (v10.15.4)"; break;

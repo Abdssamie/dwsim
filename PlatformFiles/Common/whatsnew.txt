@@ -3,7 +3,7 @@ Version 9.0.2
 - New: User-defined Systems of Units can be now renamed in Simulation Settings panel (Classic UI)
 - New: Implemented new calculation modes for vessel unit op
 - New: Expose PFR integration step
-- New: Display NPSH Available for Pumps; 
+- New: Display NPSH Available for Pumps
 - New: Material Stream list order by (Classic UI)
 - New: Five-point stencil numerical derivatives for NL PV flash
 - Changed: Property table UI redesign  (Cross-Platform UI) #752
