@@ -374,12 +374,22 @@ Public Class FormFlowsheet
 
         End If
 
+#If NOADS = False Then
         If Not FormMain.IsPro Then
             Dim fg As New ProFeatures.FormGHG With {.CurrentFlowsheet = Me, .AnalyticsProvider = FormMain.AnalyticsProvider}
             fg.Show(dckPanel)
             Dim fc As New ProFeatures.FormCosting With {.CurrentFlowsheet = Me, .AnalyticsProvider = FormMain.AnalyticsProvider}
             fc.Show(dckPanel)
         End If
+#Else
+        tsmiDetailedReport.Visible = False
+        ExcelReportsToolStripMenuItem.Visible = False
+        ProcessFlowsheetDiagramToolStripMenuItem.Visible = False
+        StreamDataImporterTSMI.Visible = False
+        tsmiSolidsManager.Visible = False
+        tsmiSolidsManager2.Visible = False
+
+#End If
 
         Me.UpdateFormText()
 

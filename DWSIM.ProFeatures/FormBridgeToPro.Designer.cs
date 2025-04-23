@@ -96,14 +96,14 @@ namespace DWSIM.ProFeatures
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(239, 72);
             this.Button2.TabIndex = 3;
-            this.Button2.Text = "Switch to DWSIM Pro";
+            this.Button2.Text = "Access DWSIM Pro";
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // Label4
             // 
             this.Label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(409, 454);
+            this.Label4.Location = new System.Drawing.Point(732, 487);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(284, 64);
             this.Label4.TabIndex = 6;

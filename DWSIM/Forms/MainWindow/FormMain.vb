@@ -207,6 +207,11 @@ Public Class FormMain
             End If
 #End If
 
+#If NOADS Then
+            tsmiProUG.Visible = False
+            tsmiFreeProTrial.Visible = False           
+#End If
+
             'Search and populate CAPE-OPEN Flowsheet Monitoring Object collection
             'SearchCOMOs() 'doing this only when the user hovers the mouse over the plugins toolstrip menu item
 
@@ -5324,14 +5329,17 @@ Label_00CC:
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles tsmiFreeProTrial.Click
-        Dim userService As UserService = UserService.GetInstance()
-        Dim isLoggedIn As Boolean = userService._IsLoggedIn()
-        If isLoggedIn Then
-            ProFeatures.Functions.DisplayTransitionForm(Me.AnalyticsProvider, Nothing, "Access DWSIM Pro Now")
-        Else
-            Dim loginForm = New LoginForm()
-            loginForm.ShowDialog()
-        End If
+
+        Process.Start("https://dashboard.simulate365.com/")
+
+        'Dim userService As UserService = UserService.GetInstance()
+        'Dim isLoggedIn As Boolean = userService._IsLoggedIn()
+        'If isLoggedIn Then
+        '    ProFeatures.Functions.DisplayTransitionForm(Me.AnalyticsProvider, Nothing, "Access DWSIM Pro Now")
+        'Else
+        '    Dim loginForm = New LoginForm()
+        '    loginForm.ShowDialog()
+        'End If
 
     End Sub
 

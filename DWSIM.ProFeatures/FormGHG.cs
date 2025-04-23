@@ -24,9 +24,11 @@ namespace DWSIM.ProFeatures
         private void Button2_Click(object sender, EventArgs e)
         {
 
-            Functions.CreateTransitionObject(CurrentFlowsheet, "", "GHG Emissions", "", "", default);
+            Process.Start("https://dashboard.simulate365.com/");
 
-            Functions.DisplayTransitionForm(AnalyticsProvider, CurrentFlowsheet, "GHG Emissions");
+            //Functions.CreateTransitionObject(CurrentFlowsheet, "", "GHG Emissions", "", "", default);
+
+            //Functions.DisplayTransitionForm(AnalyticsProvider, CurrentFlowsheet, "GHG Emissions");
 
         }
 

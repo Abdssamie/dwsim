@@ -122,9 +122,11 @@ Public Class FormSimulWizard
                 Me.DataGridViewPP.Rows.Add(New Object() {pp2.ComponentName, 0, Nothing, pp2.GetDisplayIcon(), pp2.ComponentName, pp2.ComponentDescription})
             Next
 
+#If NOADS = False Then
             If Not FormMain.IsPro Then
                 ProFeatures.Functions.AddProPPs(DataGridViewPP)
             End If
+#End If
 
             DataGridViewPP.Sort(DataGridViewPP.Columns(3), System.ComponentModel.ListSortDirection.Ascending)
 

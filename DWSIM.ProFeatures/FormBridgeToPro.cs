@@ -1,5 +1,6 @@
 ﻿using DWSIM.Interfaces;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace DWSIM.ProFeatures
@@ -50,10 +51,12 @@ namespace DWSIM.ProFeatures
         private void Button2_Click(object sender, EventArgs e)
         {
 
-            AnalyticsProvider?.RegisterEvent("Portal Window: User Clicked 'Switch to Pro'", lblFeature.Text, null);
+            Process.Start("https://dashboard.simulate365.com/");
 
-            Transitioning = true;
-            SwitchToFormPortal();
+            //AnalyticsProvider?.RegisterEvent("Portal Window: User Clicked 'Switch to Pro'", lblFeature.Text, null);
+
+            //Transitioning = true;
+            //SwitchToFormPortal();
 
             // Functions.ProcessTransition(CurrentFlowsheet);
 
