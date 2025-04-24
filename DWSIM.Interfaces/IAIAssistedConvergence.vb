@@ -214,6 +214,10 @@ End Interface
 
 Public Interface IManagerSettings
 
+    Property UniqueID As String
+
+    Property UploadToServer As Boolean
+
     Property AssistanceLevel As Integer
 
     Property AutoUpdateEnabled As Boolean
