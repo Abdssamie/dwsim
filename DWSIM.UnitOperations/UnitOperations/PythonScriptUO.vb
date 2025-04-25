@@ -296,13 +296,8 @@ Namespace UnitOperations
                     engine = Nothing
                     scope = Nothing
                     source = Nothing
-                    If ErrorMessage.Contains("line") Then
-                        Dim line = ErrorMessage.Split(vbCrLf)(1).Split(",")(1)
-                        Dim msg = String.Format("Python Script error,{1}: {2}", GraphicObject.Tag, line, ex.Message)
-                        Throw New Exception(msg)
-                    Else
-                        Throw ex
-                    End If
+                    Dim msg = String.Format("Python Script error: {1}", GraphicObject.Tag, ErrorMessage)
+                    Throw New Exception(msg)
                 Finally
                     engine = Nothing
                     scope = Nothing
