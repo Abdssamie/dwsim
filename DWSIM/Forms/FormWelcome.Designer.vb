@@ -88,6 +88,7 @@ Partial Class FormWelcome
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.ImageList2 = New System.Windows.Forms.ImageList(Me.components)
+        Me.btnClose = New System.Windows.Forms.Button()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -639,11 +640,19 @@ Partial Class FormWelcome
         Me.ImageList2.Images.SetKeyName(2, "dataregression.png")
         Me.ImageList2.Images.SetKeyName(3, "folder.png")
         '
+        'btnClose
+        '
+        resources.ApplyResources(Me.btnClose, "btnClose")
+        Me.btnClose.BackgroundImage = Global.DWSIM.My.Resources.Resources.icons8_delete1
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.UseVisualStyleBackColor = True
+        '
         'FormWelcome
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.btnClose)
         Me.Controls.Add(Me.TabControl2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TabControl1)
@@ -747,4 +756,5 @@ Partial Class FormWelcome
     Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
     Friend WithEvents FlowLayoutPanel3 As FlowLayoutPanel
     Friend WithEvents LinkLabel15 As LinkLabel
+    Friend WithEvents btnClose As Button
 End Class

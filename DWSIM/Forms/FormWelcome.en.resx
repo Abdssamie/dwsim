@@ -122,7 +122,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAo
-        KQAAAk1TRnQBSQFMAgEBBAEAAaABAAGgAQABIAEAASABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAGA
+        KQAAAk1TRnQBSQFMAgEBBAEAAbABAAGwAQABIAEAASABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAGA
         AwABQAMAAQEBAAEQBgABQP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8AQAABPwE3AT8BNwE/ATcBPwE3AT8BNwE/ATcBPwE3AT8BNwE/
         ATcBPwE3AT8BNwE/ATcBPwE3AT8BNwE/ATcBPwE3AT8BNwE/ATcBPwE3AT8BNwE/ATcWAAE/ATcBPwE3
@@ -302,22 +302,34 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lvlatest.Size" type="System.Drawing.Size, System.Drawing">
-    <value>402, 764</value>
+    <value>414, 764</value>
+  </data>
+  <data name="TabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>939, 49</value>
+  </data>
+  <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>428, 799</value>
   </data>
   <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 770</value>
+    <value>420, 770</value>
   </data>
   <data name="TabPage1.Text" xml:space="preserve">
     <value>Recent Files</value>
-  </data>
-  <data name="lvsamples.Size" type="System.Drawing.Size, System.Drawing">
-    <value>402, 764</value>
   </data>
   <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
     <value>408, 770</value>
   </data>
   <data name="TabPage2.Text" xml:space="preserve">
     <value>Samples</value>
+  </data>
+  <data name="lvsamples.Size" type="System.Drawing.Size, System.Drawing">
+    <value>402, 764</value>
+  </data>
+  <data name="TabPage5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 770</value>
+  </data>
+  <data name="TabPage5.Text" xml:space="preserve">
+    <value>FOSSEE Flowsheets</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>408, 68</value>
@@ -335,20 +347,8 @@
   <data name="FOSSEEList.Size" type="System.Drawing.Size, System.Drawing">
     <value>386, 563</value>
   </data>
-  <data name="TabPage5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 770</value>
-  </data>
-  <data name="TabPage5.Text" xml:space="preserve">
-    <value>FOSSEE Flowsheets</value>
-  </data>
-  <data name="TabControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>939, 49</value>
-  </data>
-  <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 799</value>
-  </data>
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 15</value>
+    <value>3, 10</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>161, 19</value>
@@ -357,7 +357,7 @@
     <value>Welcome to DWSIM!</value>
   </data>
   <data name="PictureBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>777, 0</value>
+    <value>793, 0</value>
   </data>
   <data name="PictureBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 94</value>
@@ -390,7 +390,7 @@
     <value>Load File from Simulate 365 Dashboard</value>
   </data>
   <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>768, 28</value>
+    <value>784, 28</value>
   </data>
   <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 38</value>
@@ -411,7 +411,7 @@
     <value>11, 6</value>
   </data>
   <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>889, 94</value>
+    <value>905, 94</value>
   </data>
   <data name="FlowLayoutPanel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -456,13 +456,13 @@
     <value>Create New (with Wizard)</value>
   </data>
   <data name="FlowLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>768, 62</value>
+    <value>784, 62</value>
   </data>
   <data name="PictureBox7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="PictureBox7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>777, 0</value>
+    <value>793, 0</value>
   </data>
   <data name="PictureBox7.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 105</value>
@@ -477,7 +477,7 @@
     <value>11, 347</value>
   </data>
   <data name="Panel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>889, 105</value>
+    <value>905, 105</value>
   </data>
   <data name="LinkLabel7.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 82</value>
@@ -496,7 +496,7 @@
     <value>13, 37</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>758, 40</value>
+    <value>774, 40</value>
   </data>
   <data name="Label6.TabIndex" type="System.Int32, mscorlib">
     <value>99</value>
@@ -514,7 +514,7 @@
     <value>Discover DWSIM Pro</value>
   </data>
   <data name="PictureBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>777, 0</value>
+    <value>793, 0</value>
   </data>
   <data name="PictureBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 118</value>
@@ -523,7 +523,7 @@
     <value>11, 106</value>
   </data>
   <data name="Panel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>889, 118</value>
+    <value>905, 118</value>
   </data>
   <data name="Button3.Location" type="System.Drawing.Point, System.Drawing">
     <value>370, 60</value>
@@ -559,7 +559,7 @@
     <value>NoControl</value>
   </data>
   <data name="PictureBox6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>777, 0</value>
+    <value>793, 0</value>
   </data>
   <data name="PictureBox6.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 110</value>
@@ -568,7 +568,7 @@
     <value>11, 458</value>
   </data>
   <data name="Panel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>889, 110</value>
+    <value>905, 110</value>
   </data>
   <data name="FlowLayoutPanel3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -634,7 +634,7 @@
     <value>API Documentation</value>
   </data>
   <data name="FlowLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>768, 52</value>
+    <value>784, 52</value>
   </data>
   <data name="Label15.Location" type="System.Drawing.Point, System.Drawing">
     <value>10, 12</value>
@@ -646,7 +646,7 @@
     <value>Documentation</value>
   </data>
   <data name="PictureBox5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>777, 0</value>
+    <value>793, 0</value>
   </data>
   <data name="PictureBox5.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 114</value>
@@ -655,7 +655,7 @@
     <value>11, 574</value>
   </data>
   <data name="Panel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>889, 114</value>
+    <value>905, 114</value>
   </data>
   <data name="LinkLabel14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -676,7 +676,7 @@
     <value>13, 34</value>
   </data>
   <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>758, 40</value>
+    <value>774, 40</value>
   </data>
   <data name="Label9.TabIndex" type="System.Int32, mscorlib">
     <value>99</value>
@@ -707,7 +707,7 @@
     <value>None</value>
   </data>
   <data name="PictureBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>777, 6</value>
+    <value>793, 6</value>
   </data>
   <data name="PictureBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>105, 98</value>
@@ -719,23 +719,26 @@
     <value>11, 231</value>
   </data>
   <data name="Panel6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>889, 110</value>
+    <value>905, 110</value>
   </data>
   <data name="TabPage4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>906, 770</value>
+    <value>922, 770</value>
   </data>
   <data name="TabPage4.Text" xml:space="preserve">
     <value>Shortcuts</value>
   </data>
+  <data name="TabControl2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 49</value>
+  </data>
   <data name="TabControl2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>914, 799</value>
+    <value>930, 799</value>
   </data>
   <data name="ImageList2.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABO
-        pAAAAk1TRnQBSQFMAgEBBAEAAXgBAAF4AQABQAEAAUABAAT/AREBAAj/AUIBTQE2BwABNgMAASgEAAEB
+        pAAAAk1TRnQBSQFMAgEBBAEAAYgBAAGIAQABQAEAAUABAAT/AREBAAj/AUIBTQE2BwABNgMAASgEAAEB
         AgABgAMAAQEBAAEQBwABAf8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
@@ -1438,6 +1441,9 @@
         A/8B4AMAAQ8D/wHgAwABDwv/AeADAAE/A/8B4AMAAT8D/wHgAwABPwv/AeADAAE/A/8B4AMAAT8D/wHg
         AwABP2r/Cw==
 </value>
+  </data>
+  <data name="btnClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1342, 3</value>
   </data>
   <data name="$this.AutoScrollMinSize" type="System.Drawing.Size, System.Drawing">
     <value>0, 869</value>

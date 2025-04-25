@@ -262,6 +262,20 @@ Public Interface IManagerSettings
 
     Property EnableSolutionProvider5 As Boolean
 
+    Property PTFlashEnable As Boolean
+
+    Property PHFlashEnable As Boolean
+
+    Property PSFlashEnable As Boolean
+
+    Property PVFlashEnable As Boolean
+
+    Property TVFlashEnable As Boolean
+
+    Property GibbsReactorEnable As Boolean
+
+    Property EquilibriumReactorEnable As Boolean
+
 End Interface
 
 Public Interface IPhaseEnvelopeResult
