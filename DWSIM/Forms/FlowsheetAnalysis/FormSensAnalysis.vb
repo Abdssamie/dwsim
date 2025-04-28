@@ -421,6 +421,8 @@ Public Class FormSensAnalysis
         If (Loaded And selectedindex <> lbCases.SelectedIndex And
             lbCases.SelectedIndex >= 0) Then
 
+            TabControl1.Enabled = True
+
             If MessageBox.Show(form.GetTranslatedString1("Desejasalvarasaltera"),
                form.GetTranslatedString1("Pergunta"),
                MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then

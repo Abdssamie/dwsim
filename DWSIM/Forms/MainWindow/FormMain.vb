@@ -1145,12 +1145,6 @@ Public Class FormMain
                 Sub(sender2, e2)
                     AnalyticsProvider.RegisterEvent(sender2.ToString(), "", Nothing)
                 End Sub
-            Task.Delay(30 * 1000).ContinueWith(
-            Sub(t)
-                UIThread(Sub()
-                             If Not My.Settings.UserTypeSent Then tsbQuickQuestion.Visible = True
-                         End Sub)
-            End Sub)
         End If
 
     End Sub
@@ -5402,7 +5396,7 @@ Label_00CC:
         Process.Start("https://simulate365.com/private-support/")
     End Sub
 
-    Private Sub ToolStripDropDownButton1_Click_1(sender As Object, e As EventArgs) Handles tsbQuickQuestion.Click
+    Private Sub ToolStripDropDownButton1_Click_1(sender As Object, e As EventArgs)
 
         Dim fq As New FormOccupancyQuestion()
         fq.ShowDialog(Me)
@@ -5490,6 +5484,11 @@ Label_00CC:
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
         WelcomePanel.Visible = True
+    End Sub
+
+    Private Sub ToolStripSplitButton1_ButtonClick(sender As Object, e As EventArgs) Handles ToolStripSplitButton1.Click, ToolStripSplitButton2.Click
+        Clipboard.SetText("0f0c6cf5-2489-4d03-b7a8-3a5fd22498a2")
+        MessageBox.Show("Chave Pix copiada. Obrigado pelo apoio!", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged

@@ -22,8 +22,6 @@
         My.Settings.UserTypeSent = True
         My.Settings.Save()
 
-        FormMain.tsbQuickQuestion.Visible = False
-
         If FormMain.TranslateFunction IsNot Nothing Then
             MessageBox.Show(FormMain.TranslateFunction.Invoke("Thank you very much for your contribution!"),
                             FormMain.TranslateFunction.Invoke("Thank you"),

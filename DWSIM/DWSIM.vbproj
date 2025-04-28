@@ -3443,6 +3443,7 @@
     <None Include="Resources\machine_learning_64px.png" />
     <None Include="Resources\home_30px.png" />
     <None Include="Resources\pointicon.ico" />
+    <None Include="Resources\Pix_48px.png" />
     <Content Include="Resources\ru.png" />
     <None Include="Resources\zoom.png" />
     <None Include="Resources\Services.png" />

@@ -114,8 +114,9 @@ Partial Class FormMain
         Me.tsblDonate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsbdonate1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.tsbdonate2 = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.ToolStripSplitButton1 = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.ToolStripSplitButton2 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.tsbQuickQuestion = New System.Windows.Forms.ToolStripDropDownButton()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SettingsPanel.SuspendLayout()
@@ -618,7 +619,7 @@ Partial Class FormMain
         'StatusStrip1
         '
         resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton1, Me.tsblDonate, Me.tsbdonate1, Me.tsbdonate2, Me.ToolStripStatusLabel2, Me.tsbQuickQuestion})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton1, Me.tsblDonate, Me.tsbdonate1, Me.tsbdonate2, Me.ToolStripSplitButton1, Me.ToolStripSplitButton2, Me.ToolStripStatusLabel2})
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         Me.StatusStrip1.SizingGrip = False
@@ -651,19 +652,26 @@ Partial Class FormMain
         Me.tsbdonate2.Name = "tsbdonate2"
         Me.tsbdonate2.ShowDropDownArrow = False
         '
+        'ToolStripSplitButton1
+        '
+        resources.ApplyResources(Me.ToolStripSplitButton1, "ToolStripSplitButton1")
+        Me.ToolStripSplitButton1.Image = Global.DWSIM.My.Resources.Resources.Pix_48px
+        Me.ToolStripSplitButton1.Name = "ToolStripSplitButton1"
+        Me.ToolStripSplitButton1.ShowDropDownArrow = False
+        '
+        'ToolStripSplitButton2
+        '
+        resources.ApplyResources(Me.ToolStripSplitButton2, "ToolStripSplitButton2")
+        Me.ToolStripSplitButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripSplitButton2.Image = Global.DWSIM.My.Resources.Resources.copy
+        Me.ToolStripSplitButton2.Name = "ToolStripSplitButton2"
+        Me.ToolStripSplitButton2.ShowDropDownArrow = False
+        '
         'ToolStripStatusLabel2
         '
         resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
         Me.ToolStripStatusLabel2.Spring = True
-        '
-        'tsbQuickQuestion
-        '
-        resources.ApplyResources(Me.tsbQuickQuestion, "tsbQuickQuestion")
-        Me.tsbQuickQuestion.ForeColor = System.Drawing.Color.Red
-        Me.tsbQuickQuestion.Image = Global.DWSIM.My.Resources.Resources.unverified_account_48px
-        Me.tsbQuickQuestion.Name = "tsbQuickQuestion"
-        Me.tsbQuickQuestion.ShowDropDownArrow = False
         '
         'FormMain
         '
@@ -951,7 +959,6 @@ Partial Class FormMain
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
     Public WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents WhatsNewToolStripMenuItem As ToolStripMenuItem
-    Public WithEvents tsbQuickQuestion As ToolStripDropDownButton
     Friend WithEvents UsersGuideToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents tsmiProUG As ToolStripMenuItem
     Friend WithEvents CheckingCredentialsLabel As ToolStripLabel
@@ -963,4 +970,6 @@ Partial Class FormMain
     Friend WithEvents tsmiProUserGuide As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+    Friend WithEvents ToolStripSplitButton1 As ToolStripDropDownButton
+    Friend WithEvents ToolStripSplitButton2 As ToolStripDropDownButton
 End Class
