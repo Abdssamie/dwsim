@@ -117,17 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 18</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 0, 6, 0</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1220, 114</value>
-  </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>An error ocurred and DWSIM wasn't correctly closed during the last run. The following files were saved as security copies of the opened simulations at the time of the event.
 
@@ -143,9 +132,6 @@ Select the ones that you want to recover. You can save them again once they're a
   <data name="Column1.MinimumWidth" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="Column1.Width" type="System.Int32, mscorlib">
-    <value>37</value>
-  </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>File</value>
   </data>
@@ -158,65 +144,21 @@ Select the ones that you want to recover. You can save them again once they're a
   <data name="Column3.MinimumWidth" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="Grid1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 138</value>
-  </data>
-  <data name="Grid1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="Grid1.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>82</value>
-  </data>
-  <data name="Grid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1232, 368</value>
-  </data>
-  <data name="LabelWithDivider1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-12, 520</value>
-  </data>
-  <data name="LabelWithDivider1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 0, 6, 0</value>
-  </data>
-  <data name="LabelWithDivider1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1298, 20</value>
-  </data>
-  <data name="Panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1268, 522</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="KryptonButton2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>858, 534</value>
-  </data>
-  <data name="KryptonButton2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
+    <value>429, 267</value>
   </data>
   <data name="KryptonButton2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>392, 50</value>
+    <value>196, 25</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Delete backup files and continue</value>
   </data>
   <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>522, 534</value>
-  </data>
-  <data name="KryptonButton1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
-  </data>
-  <data name="KryptonButton1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>324, 50</value>
+    <value>261, 267</value>
   </data>
   <data name="KryptonButton1.Text" xml:space="preserve">
     <value>Open selected files</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>192, 192</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1268, 604</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>6, 6, 6, 6</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Recovered simulations</value>
