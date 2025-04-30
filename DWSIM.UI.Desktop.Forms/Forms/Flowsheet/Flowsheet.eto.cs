@@ -1018,8 +1018,8 @@ namespace DWSIM.UI.Forms
                         }
                         else
                         {
-                        pitem.DoDragDrop(dobj, DragEffects.Copy);
-                        e.Handled = true;
+                            pitem.DoDragDrop(dobj, DragEffects.Copy);
+                            e.Handled = true;
                         }
 #endif
                     };
@@ -2287,7 +2287,7 @@ namespace DWSIM.UI.Forms
                 item3.Click += (sender, e) => FlowsheetObject.RequestCalculation3(obj, false);
 
                 var item4 = new ButtonMenuItem { Text = "Debug", Image = new Bitmap(bitmapprefix + "Console_96px.png") };
-            
+
                 item4.Click += (sender, e) =>
                 {
                     DebugObject();
@@ -2296,7 +2296,7 @@ namespace DWSIM.UI.Forms
                 var selobj = FlowsheetControl.FlowsheetSurface.SelectedObject;
 
                 var menuitem0 = new ButtonMenuItem { Text = "Edit/View", Image = new Bitmap(bitmapprefix + "EditProperty_96px.png") };
-               
+
                 menuitem0.Click += (sender, e) =>
                 {
                     var simobj = FlowsheetObject.GetSelectedFlowsheetSimulationObject(null);
@@ -2305,7 +2305,7 @@ namespace DWSIM.UI.Forms
                 };
 
                 var item5 = new ButtonMenuItem { Text = "Clone", Image = new Bitmap(bitmapprefix + "Copy_96px.png") };
-          
+
                 item5.Click += (sender, e) =>
                 {
                     Interfaces.ISimulationObject isobj;
@@ -2436,7 +2436,7 @@ namespace DWSIM.UI.Forms
                     };
                     selctxmenu.Items.Insert(5, aitem2);
                 }
-            
+
             }
             return;
 
@@ -2591,7 +2591,8 @@ namespace DWSIM.UI.Forms
 
         void CopyAsImage(int Zoom)
         {
-            using (SkiaSharp.SKBitmap bmp = new SkiaSharp.SKBitmap(FlowsheetControl.Width * Zoom, FlowsheetControl.Height * Zoom))
+            var scale = GlobalSettings.Settings.DpiScale;
+            using (SkiaSharp.SKBitmap bmp = new SkiaSharp.SKBitmap((int)(FlowsheetControl.Width * Zoom * scale), (int)(FlowsheetControl.Height * Zoom*scale)))
             {
                 using (SkiaSharp.SKCanvas canvas = new SkiaSharp.SKCanvas(bmp))
                 {
