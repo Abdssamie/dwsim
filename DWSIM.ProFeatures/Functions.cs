@@ -131,14 +131,14 @@ namespace DWSIM.ProFeatures
         public static void CreateTransitionObject(IFlowsheet fs, string feature, string @type, string action, string location, double[] position)
         {
 
-            var ts = new FlowsheetTransitionRestore();
-            ts.FeatureName = feature;
-            ts.FeatureType = type;
-            ts.Action = action;
-            ts.Location = location;
-            if (position is not null)
-                ts.Position = new List<double>(position);
-            fs.FlowsheetOptions.FlowsheetTransitionObject = ts;
+            //var ts = new FlowsheetTransitionRestore();
+            //ts.FeatureName = feature;
+            //ts.FeatureType = type;
+            //ts.Action = action;
+            //ts.Location = location;
+            //if (position is not null)
+            //    ts.Position = new List<double>(position);
+            //fs.FlowsheetOptions.FlowsheetTransitionObject = ts;
 
         }
 

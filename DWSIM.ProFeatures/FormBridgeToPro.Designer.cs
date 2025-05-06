@@ -39,12 +39,12 @@ namespace DWSIM.ProFeatures
             this.Label1 = new System.Windows.Forms.Label();
             this.Button1 = new System.Windows.Forms.Button();
             this.Button2 = new System.Windows.Forms.Button();
-            this.Label4 = new System.Windows.Forms.Label();
             this._lblFeature = new System.Windows.Forms.Label();
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.PictureBox3 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.BridgeToProPanel = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.formPortal = new DWSIM.ProFeatures.FormPortal();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
@@ -100,16 +100,6 @@ namespace DWSIM.ProFeatures
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // Label4
-            // 
-            this.Label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(732, 487);
-            this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(284, 64);
-            this.Label4.TabIndex = 6;
-            this.Label4.Text = "Your flowsheet will be automatically saved on Simulate 365 Dashboard";
-            this.Label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // _lblFeature
             // 
             this._lblFeature.AutoEllipsis = true;
@@ -154,18 +144,30 @@ namespace DWSIM.ProFeatures
             // 
             // BridgeToProPanel
             // 
+            this.BridgeToProPanel.Controls.Add(this.label2);
             this.BridgeToProPanel.Controls.Add(this._lblFeature);
             this.BridgeToProPanel.Controls.Add(this.PictureBox3);
             this.BridgeToProPanel.Controls.Add(this.PictureBox1);
             this.BridgeToProPanel.Controls.Add(this.PictureBox2);
             this.BridgeToProPanel.Controls.Add(this.Label1);
             this.BridgeToProPanel.Controls.Add(this.Button1);
-            this.BridgeToProPanel.Controls.Add(this.Label4);
             this.BridgeToProPanel.Controls.Add(this.Button2);
             this.BridgeToProPanel.Location = new System.Drawing.Point(3, 3);
             this.BridgeToProPanel.Name = "BridgeToProPanel";
             this.BridgeToProPanel.Size = new System.Drawing.Size(750, 596);
             this.BridgeToProPanel.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(14, 474);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(712, 103);
+            this.label2.TabIndex = 10;
+            this.label2.Text = resources.GetString("label2.Text");
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // formPortal
             // 
@@ -207,7 +209,6 @@ namespace DWSIM.ProFeatures
         internal System.Windows.Forms.Label Label1;
         internal System.Windows.Forms.Button Button1;
         internal System.Windows.Forms.Button Button2;
-        internal System.Windows.Forms.Label Label4;
         private System.Windows.Forms.Label _lblFeature;
 
         public virtual System.Windows.Forms.Label lblFeature
@@ -229,5 +230,6 @@ namespace DWSIM.ProFeatures
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel BridgeToProPanel;
         private FormPortal formPortal;
+        internal System.Windows.Forms.Label label2;
     }
 }
