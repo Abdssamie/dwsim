@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label2.Text" xml:space="preserve">
-    <value>Disclaimer: DWSIM is free and open-source. DWSIM Pro is the commercial sibling of DWSIM, targeted at professional industry users and is owned by Simulate365, a German-based company.
+    <value>Disclaimer: DWSIM is free and open-source. DWSIM Pro is the commercial sibling of DWSIM, targeted at professional industry users and is owned by CGC Capital-Gain Consultants GmbH, a German-based company.
 
 DWSIM open-source is developed and mantained by Daniel Wagner and a few sporadic contributors. DWSIM Pro is based on DWSIM open-source with permission from its contributors.</value>
   </data>
