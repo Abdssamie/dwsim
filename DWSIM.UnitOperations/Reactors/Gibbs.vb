@@ -1300,7 +1300,8 @@ Namespace Reactors
                })
 
                 If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
-                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass) Then
 
                     If ReactorOperationMode = OperationMode.Adiabatic Then
                         T = estimate.Temperature2
@@ -1455,7 +1456,8 @@ Namespace Reactors
                             Catch ex As Exception
 
                                 If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
-                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+                                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Or
+                                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass Then
 
                                     If estimate IsNot Nothing Then
 
