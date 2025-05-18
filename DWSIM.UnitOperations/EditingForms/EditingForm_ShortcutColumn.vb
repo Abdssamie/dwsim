@@ -139,6 +139,10 @@ Public Class EditingForm_ShortcutColumn
             tbCondPressure.Text = su.Converter.ConvertFromSI(units.pressure, .m_condenserpressure).ToString(nf)
             tbRebPressure.Text = su.Converter.ConvertFromSI(units.pressure, .m_boilerpressure).ToString(nf)
 
+            lblStageHeightUnit.Text = units.distance
+
+            tbStageHeight.Text = .StageHeight.ConvertFromSI(units.distance).ToString(nf)
+
             If .condtype = UnitOperations.ShortcutColumn.CondenserType.PartialCond Then
                 rbPartialCond.Checked = True
             Else
@@ -161,7 +165,9 @@ Public Class EditingForm_ShortcutColumn
                 gridResults.Rows.Add(New Object() {.FlowSheet.GetTranslatedString("SCRectifyVapor"), su.Converter.ConvertFromSI(units.molarflow, .V).ToString(nf), units.molarflow})
                 gridResults.Rows.Add(New Object() {.FlowSheet.GetTranslatedString("SCCondenserDuty"), su.Converter.ConvertFromSI(units.heatflow, .m_Qc).ToString(nf), units.heatflow})
                 gridResults.Rows.Add(New Object() {.FlowSheet.GetTranslatedString("SCReboilerDuty"), su.Converter.ConvertFromSI(units.heatflow, .m_Qb).ToString(nf), units.heatflow})
-          
+                gridResults.Rows.Add(New Object() {"Estimated Height", .EstimatedHeight.ConvertFromSI(units.distance).ToString(nf), units.distance})
+                gridResults.Rows.Add(New Object() {"Estimated Diameter", .EstimatedDiameter.ConvertFromSI(units.distance).ToString(nf), units.distance})
+
             End If
 
         End With
@@ -212,6 +218,7 @@ Public Class EditingForm_ShortcutColumn
         If sender Is tbRefluxRatio Then uobj.m_refluxratio = tbRefluxRatio.Text.ParseExpressionToDouble
         If sender Is tbRebPressure Then uobj.m_boilerpressure = su.Converter.ConvertToSI(cbRebPressureUnits.SelectedItem.ToString, tbRebPressure.Text.ParseExpressionToDouble)
         If sender Is tbCondPressure Then uobj.m_condenserpressure = su.Converter.ConvertToSI(cbCondPressureUnits.SelectedItem.ToString, tbCondPressure.Text.ParseExpressionToDouble)
+        If sender Is tbStageHeight Then uobj.StageHeight = tbStageHeight.Text.ToDoubleFromCurrent().ConvertToSI(units.distance)
 
         RequestCalc()
 
@@ -224,7 +231,7 @@ Public Class EditingForm_ShortcutColumn
     End Sub
 
     Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbLKmolfrac.TextChanged, tbHKmolfrac.TextChanged,
-                                                                        tbRefluxRatio.TextChanged,
+                                                                        tbRefluxRatio.TextChanged, tbStageHeight.TextChanged,
                                                                         tbRebPressure.TextChanged, tbCondPressure.TextChanged
 
         Dim tbox = DirectCast(sender, TextBox)
@@ -238,7 +245,7 @@ Public Class EditingForm_ShortcutColumn
     End Sub
 
     Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs) Handles tbLKmolfrac.KeyDown, tbHKmolfrac.KeyDown,
-                                                                        tbRefluxRatio.KeyDown,
+                                                                        tbRefluxRatio.KeyDown, tbStageHeight.KeyDown,
                                                                         tbRebPressure.KeyDown, tbCondPressure.KeyDown
 
         If e.KeyCode = Keys.Enter And Loaded And DirectCast(sender, TextBox).ForeColor = System.Drawing.Color.Blue Then

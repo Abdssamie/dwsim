@@ -87,6 +87,9 @@ Partial Class EditingForm_ShortcutColumn
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
+        Me.tbStageHeight = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.lblStageHeightUnit = New System.Windows.Forms.Label()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
@@ -212,6 +215,9 @@ Partial Class EditingForm_ShortcutColumn
         'GroupBoxParameters
         '
         resources.ApplyResources(Me.GroupBoxParameters, "GroupBoxParameters")
+        Me.GroupBoxParameters.Controls.Add(Me.lblStageHeightUnit)
+        Me.GroupBoxParameters.Controls.Add(Me.tbStageHeight)
+        Me.GroupBoxParameters.Controls.Add(Me.Label10)
         Me.GroupBoxParameters.Controls.Add(Me.rbPartialCond)
         Me.GroupBoxParameters.Controls.Add(Me.rbTotalCond)
         Me.GroupBoxParameters.Controls.Add(Me.cbRebPressureUnits)
@@ -680,6 +686,30 @@ Partial Class EditingForm_ShortcutColumn
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
+        'tbStageHeight
+        '
+        resources.ApplyResources(Me.tbStageHeight, "tbStageHeight")
+        Me.tbStageHeight.Name = "tbStageHeight"
+        Me.ToolTipValues.SetToolTip(Me.tbStageHeight, resources.GetString("tbStageHeight.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.tbStageHeight, resources.GetString("tbStageHeight.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.tbStageHeight, resources.GetString("tbStageHeight.ToolTip2"))
+        '
+        'Label10
+        '
+        resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.Name = "Label10"
+        Me.ToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip2"))
+        '
+        'lblStageHeightUnit
+        '
+        resources.ApplyResources(Me.lblStageHeightUnit, "lblStageHeightUnit")
+        Me.lblStageHeightUnit.Name = "lblStageHeightUnit"
+        Me.ToolTip1.SetToolTip(Me.lblStageHeightUnit, resources.GetString("lblStageHeightUnit.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.lblStageHeightUnit, resources.GetString("lblStageHeightUnit.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.lblStageHeightUnit, resources.GetString("lblStageHeightUnit.ToolTip2"))
+        '
         'EditingForm_ShortcutColumn
         '
         resources.ApplyResources(Me, "$this")
@@ -766,4 +796,7 @@ Partial Class EditingForm_ShortcutColumn
     Public WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents ToolTipChangeTag As ToolTip
+    Public WithEvents lblStageHeightUnit As Label
+    Public WithEvents tbStageHeight As TextBox
+    Public WithEvents Label10 As Label
 End Class

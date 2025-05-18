@@ -1199,6 +1199,9 @@ namespace DWSIM.UI.Desktop.Editors
                        });
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Reboiler Pressure"));
+
+
+
                     int pos6 = 0;
                     switch (sc.condtype)
                     {
@@ -1223,6 +1226,21 @@ namespace DWSIM.UI.Desktop.Editors
                     });
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Condenser Type"));
+
+                    s.CreateAndAddTextBoxRow(container, nf, "Stage/Tray Height", sc.StageHeight,
+                        (tbx, e) =>
+                        {
+                            if (tbx.Text.IsValidDoubleExpression())
+                            {
+                                tbx.TextColor = (SystemColors.ControlText);
+                                sc.StageHeight = cv.ConvertToSI(su.pressure, tbx.Text.ToString().ParseExpressionToDouble());
+                            }
+                            else
+                            {
+                                tbx.TextColor = (Colors.Red);
+                            }
+                        });
+
                     break;
                 case ObjectType.HeatExchanger:
                     var hx = (HeatExchanger)SimObject;
@@ -2413,7 +2431,7 @@ namespace DWSIM.UI.Desktop.Editors
                     break;
                 case ObjectType.Vessel:
                     var vessel = (Vessel)SimObject;
-                    s.CreateAndAddDropDownRow(container, "Calculation Mode", new List<string>(new[] { 
+                    s.CreateAndAddDropDownRow(container, "Calculation Mode", new List<string>(new[] {
                         "Adiabatic", "Legacy", "Heating/Cooling Isothermic", "Heating/Cooling Isobaric" }), (int)vessel.CalculationMode,
                        (sender, e) =>
                        {
