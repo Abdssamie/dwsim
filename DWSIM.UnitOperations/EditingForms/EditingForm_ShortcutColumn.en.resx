@@ -176,6 +176,9 @@
   <data name="GroupBoxParameters.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="lblStageHeightUnit.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblStageHeightUnit.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -183,50 +186,20 @@
   <data name="lblStageHeightUnit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblStageHeightUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>312, 219</value>
-  </data>
   <data name="lblStageHeightUnit.Size" type="System.Drawing.Size, System.Drawing">
     <value>15, 13</value>
-  </data>
-  <data name="lblStageHeightUnit.TabIndex" type="System.Int32, mscorlib">
-    <value>66</value>
   </data>
   <data name="lblStageHeightUnit.Text" xml:space="preserve">
     <value>m</value>
   </data>
-  <data name="lblStageHeightUnit.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblStageHeightUnit.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblStageHeightUnit.ToolTip2" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbStageHeight.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
-  </data>
-  <data name="tbStageHeight.Location" type="System.Drawing.Point, System.Drawing">
-    <value>174, 216</value>
   </data>
   <data name="tbStageHeight.Size" type="System.Drawing.Size, System.Drawing">
     <value>129, 20</value>
   </data>
-  <data name="tbStageHeight.TabIndex" type="System.Int32, mscorlib">
-    <value>65</value>
-  </data>
   <data name="tbStageHeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Right</value>
-  </data>
-  <data name="tbStageHeight.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStageHeight.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStageHeight.ToolTip2" xml:space="preserve">
-    <value />
   </data>
   <data name="Label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -234,26 +207,11 @@
   <data name="Label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 219</value>
-  </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 13</value>
   </data>
-  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
-    <value>64</value>
-  </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Stage/Tray Height</value>
-  </data>
-  <data name="Label10.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label10.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label10.ToolTip2" xml:space="preserve">
-    <value />
   </data>
   <data name="rbPartialCond.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 17</value>
