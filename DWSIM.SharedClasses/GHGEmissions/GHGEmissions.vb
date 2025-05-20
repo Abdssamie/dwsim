@@ -14,6 +14,9 @@
 
     Public Property Water As Double Implements IGHGComposition.Water
 
+    Public Property Inerts As Double Implements IGHGComposition.Inerts
+
+
     Public Function SaveData() As List(Of XElement) Implements ICustomXMLSerialization.SaveData
         Return XMLSerializer.XMLSerializer.Serialize(Me)
     End Function
