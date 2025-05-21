@@ -597,6 +597,12 @@ Public Class FormMain
 
     Private Sub SetupWelcomeScreen()
 
+        ' If welcome screen is already setup, do nothing
+        ' Welcome screen can be loaded from extensions
+        If Me.WelcomePanel IsNot Nothing And Me.WelcomePanel.Controls.Count > 0 Then
+            Return
+        End If
+
         Dim splfile = Path.Combine(Utility.GetExtendersRootDirectory(), "WelcomeScreen.dll")
 
         If File.Exists(splfile) Then
@@ -739,6 +745,18 @@ Public Class FormMain
         For Each es In esinstances
             ExternalSolvers.Add(es.ID, es)
         Next
+
+        'welcome screen
+
+        Dim wslist As List(Of Type) = availableTypes.FindAll(Function(t) t.GetInterfaces().Contains(GetType(Interfaces.IWelcomeScreen)))
+        If wslist.Count > 0 Then
+            Dim wsInstance As IWelcomeScreen = TryCast(Activator.CreateInstance(wslist(0)), IWelcomeScreen)
+            wsInstance.SetMainForm(Me)
+            Dim ucontrol = wsInstance.GetWelcomeScreen()
+            ucontrol.Dock = DockStyle.Fill
+            Me.WelcomePanel.Controls.Add(ucontrol)
+            My.Settings.CheckForUpdates = False
+        End If
 
         'extenders
 
