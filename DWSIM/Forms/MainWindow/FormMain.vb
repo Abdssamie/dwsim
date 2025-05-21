@@ -2793,6 +2793,14 @@ Public Class FormMain
                 End Try
             Next
 
+            If form.GHGEmissionCompositions.Count = 0 Then
+
+                form.GHGEmissionCompositions.Add("PureCO2", New GHGEmissionComposition With {.Name = "PureCO2", .CarbonDioxide = 1.0})
+                form.GHGEmissionCompositions.Add("FlueGas_NaturalGas", New GHGEmissionComposition With {.Name = "FlueGas_NaturalGas", .CarbonDioxide = 0.1, .Water = 0.2, .Inerts = 0.7})
+                form.GHGEmissionCompositions.Add("FlueGas_Coal", New GHGEmissionComposition With {.Name = "FlueGas_Coal", .CarbonDioxide = 0.14, .Water = 0.1, .Inerts = 0.76})
+
+            End If
+
         End If
 
         If Not ProgressFeedBack Is Nothing Then ProgressFeedBack.Invoke(90)
