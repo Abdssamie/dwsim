@@ -275,7 +275,9 @@ Partial Class FormMain
         '
         resources.ApplyResources(Me.ToolsTSMI, "ToolsTSMI")
         Me.ToolsTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DatabaseManagerToolStripMenuItem, Me.RegistroCAPEOPENToolStripMenuItem})
+        Me.ToolsTSMI.MergeIndex = 1
         Me.ToolsTSMI.Name = "ToolsTSMI"
+        Me.ToolsTSMI.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         '
         'DatabaseManagerToolStripMenuItem
         '

@@ -197,9 +197,6 @@
   <data name="tsFileSeparator.Size" type="System.Drawing.Size, System.Drawing">
     <value>278, 6</value>
   </data>
-  <data name="OpenFileS365.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>Magenta</value>
-  </data>
   <data name="CascadeToolStripMenuItem.Text" xml:space="preserve">
     <value>Em &amp;Cascata</value>
   </data>
@@ -272,17 +269,17 @@
   <data name="&gt;&gt;NovoRegressaoUNIFACIPs.Name" xml:space="preserve">
     <value>NovoRegressaoUNIFACIPs</value>
   </data>
-  <data name="&gt;&gt;ButtonClose.Name" xml:space="preserve">
-    <value>ButtonClose</value>
+  <data name="SaveToolStripButton.Text" xml:space="preserve">
+    <value>&amp;Salvar Simulação Ativa</value>
   </data>
   <data name="CloseAllToolstripMenuItem.Text" xml:space="preserve">
     <value>Fechar Todas as Janelas</value>
   </data>
-  <data name="SaveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>281, 22</value>
-  </data>
   <data name="&gt;&gt;ToolStripSeparator6.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ButtonClose.Name" xml:space="preserve">
+    <value>ButtonClose</value>
   </data>
   <data name="&gt;&gt;CheckingCredentialsLabel.Name" xml:space="preserve">
     <value>CheckingCredentialsLabel</value>
@@ -341,8 +338,8 @@
   <data name="&gt;&gt;HelpTSMI.Name" xml:space="preserve">
     <value>HelpTSMI</value>
   </data>
-  <data name="SaveToolStripButton.Text" xml:space="preserve">
-    <value>&amp;Salvar Simulação Ativa</value>
+  <data name="ViewTSMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 24</value>
   </data>
   <data name="DatabaseManagerToolStripMenuItem.Text" xml:space="preserve">
     <value>Gerenciador de Bancos de Dados</value>
@@ -394,6 +391,9 @@
   </data>
   <data name="SettingsPanel.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
+  </data>
+  <data name="LogoutToolStripMenuItem.Text" xml:space="preserve">
+    <value>Logout</value>
   </data>
   <data name="SaveFileS365.Size" type="System.Drawing.Size, System.Drawing">
     <value>24, 24</value>
@@ -477,7 +477,7 @@
   <data name="LogoutDropdown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAACbNJREFUaEPVmQlUW1Uax5FcQNoiLu041hlbz7ii7Qy2WvXULjPtFMdiwUFwtEcR
+        vAAADrwBlbxySQAACbNJREFUaEPVmQlUW1Uax5FcQNoiLu041hlbz7ii7Qy2WvXULjPtFMdiwUFwtEcR
         qlhpqcd2tAvTOGpbaN6SsK8JawghQAIhJDFpgEDYAoU2CRQIIYGKjlqdnlHHU8s35z5Cpa/tzDCs8zvn
         nvDue/e735+7vHe/z8NjjviwTR8Voi7sPNbZsIx9b8FDd5hi1nC5Y0hCQnht0ddZ51p/w35mwXLYqAt+
         UpIFqJACVEICkpGwVSf8hhgwrmE/u+AIV8o33JdHfItyKUAFbgFlBCAFAVu0wosf9dbfy26zYNipV/z2
@@ -683,8 +683,8 @@
   <data name="WhatsNewToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 22</value>
   </data>
-  <data name="ViewTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 24</value>
+  <data name="SaveToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>281, 22</value>
   </data>
   <data name="DatabaseManagerToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
     <value>Alt+D</value>
@@ -1019,8 +1019,8 @@
   <data name="&gt;&gt;OpenToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="LogoutToolStripMenuItem.Text" xml:space="preserve">
-    <value>Logout</value>
+  <data name="OpenFileS365.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
   </data>
   <data name="ExitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>281, 22</value>

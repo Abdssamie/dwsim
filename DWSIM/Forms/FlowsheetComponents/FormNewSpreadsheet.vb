@@ -392,7 +392,10 @@ Public Class FormNewSpreadsheet
 
         menustrip1.Items.Remove(SpreadsheetControl.SpreadsheetTSMI)
 
-        Flowsheet.MenuStrip1.Items.Insert(4, SpreadsheetControl.SpreadsheetTSMI)
+        SpreadsheetControl.SpreadsheetTSMI.MergeAction = MergeAction.Insert
+        SpreadsheetControl.SpreadsheetTSMI.MergeIndex = 6
+
+        Flowsheet.MenuStrip1.Items.Insert(6, SpreadsheetControl.SpreadsheetTSMI)
 
         SpreadsheetControl.SpreadsheetTSMI.Enabled = False
 
