@@ -5085,13 +5085,13 @@ Label_00CC:
         End If
     End Sub
 
-    Private Sub ForumToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ForumToolStripMenuItem.Click
+    Private Sub ForumToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If IsPro Then
             Dim fb As New FormBrowser()
             fb.Show()
-            fb.DisplayURL("https://dwsim.org/wiki/index.php?title=Support", "DWSIM Support (Open-Source)")
+            fb.DisplayURL("https://github.com/DanWBR/dwsim/discussions", "DWSIM Support (Open-Source)")
         Else
-            System.Diagnostics.Process.Start("https://dwsim.org/wiki/index.php?title=Support")
+            System.Diagnostics.Process.Start("https://github.com/DanWBR/dwsim/discussions")
         End If
     End Sub
 
@@ -5305,27 +5305,27 @@ Label_00CC:
         End If
     End Sub
 
-    Private Sub NNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) 
+    Private Sub NNUOToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=Neural_Network_Unit_Operation")
     End Sub
 
-    Private Sub PNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) 
+    Private Sub PNUOToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=Pipe_Network_Unit_Operation")
     End Sub
 
-    Private Sub CapitalCostToolStripMenuItem_Click(sender As Object, e As EventArgs) 
+    Private Sub CapitalCostToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=Capital_Cost_Estimator")
     End Sub
 
-    Private Sub OPCPluginToolStripMenuItem_Click(sender As Object, e As EventArgs) 
+    Private Sub OPCPluginToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=OPC_Client_Plugin")
     End Sub
 
-    Private Sub DTLToolStripMenuItem_Click(sender As Object, e As EventArgs) 
+    Private Sub DTLToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=DTL")
     End Sub
 
-    Private Sub PsycrometrySimulationTemplateToolStripMenuItem_Click(sender As Object, e As EventArgs) 
+    Private Sub PsycrometrySimulationTemplateToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://github.com/Spogis/Psychrometry")
     End Sub
 
@@ -5338,7 +5338,7 @@ Label_00CC:
         UserService.Logout()
     End Sub
 
-    Private Sub LoggedInS365Button_Click(sender As Object, e As EventArgs) 
+    Private Sub LoggedInS365Button_Click(sender As Object, e As EventArgs)
         If IsPro Then
             Dim fb As New FormBrowser()
             fb.Show()
@@ -5389,7 +5389,7 @@ Label_00CC:
         End If
     End Sub
 
-    Private Sub DIscordChannelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DIscordChannelToolStripMenuItem.Click
+    Private Sub DIscordChannelToolStripMenuItem_Click(sender As Object, e As EventArgs)
         If IsPro Then
             Dim fb As New FormBrowser()
             fb.Show()

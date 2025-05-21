@@ -3071,6 +3071,7 @@
     <None Include="Resources\disk1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\website_bug_48px.png" />
     <None Include="Resources\test_tube_80px.png" />
     <None Include="Resources\show_property_48px.png" />
     <None Include="Resources\Touch ID_64px.png" />
@@ -3285,6 +3286,7 @@
     <None Include="Resources\double_left_32px.png" />
     <None Include="Resources\double_right_32px.png" />
     <None Include="Resources\DWSIM_splash_v9.png" />
+    <None Include="Resources\discussion_forum_40px.png" />
     <Content Include="Resources\es.png" />
     <None Include="Resources\Excel.png" />
     <None Include="Resources\Excel_copy1.jpg" />

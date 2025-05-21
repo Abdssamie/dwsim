@@ -69,9 +69,7 @@ Partial Class FormMain
         Me.WhatsNewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DWSIMNaInternetToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WikiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ForumToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RastreamentoDeBugsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DIscordChannelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmiFreeProTrial = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmiProUserGuide = New System.Windows.Forms.ToolStripMenuItem()
@@ -374,31 +372,21 @@ Partial Class FormMain
         'DWSIMNaInternetToolStripMenuItem
         '
         resources.ApplyResources(Me.DWSIMNaInternetToolStripMenuItem, "DWSIMNaInternetToolStripMenuItem")
-        Me.DWSIMNaInternetToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WikiToolStripMenuItem, Me.ForumToolStripMenuItem, Me.RastreamentoDeBugsToolStripMenuItem, Me.DIscordChannelToolStripMenuItem})
+        Me.DWSIMNaInternetToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WikiToolStripMenuItem, Me.RastreamentoDeBugsToolStripMenuItem})
         Me.DWSIMNaInternetToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.collaboration_female_male_48px
         Me.DWSIMNaInternetToolStripMenuItem.Name = "DWSIMNaInternetToolStripMenuItem"
         '
         'WikiToolStripMenuItem
         '
         resources.ApplyResources(Me.WikiToolStripMenuItem, "WikiToolStripMenuItem")
+        Me.WikiToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.discussion_forum_40px
         Me.WikiToolStripMenuItem.Name = "WikiToolStripMenuItem"
-        '
-        'ForumToolStripMenuItem
-        '
-        resources.ApplyResources(Me.ForumToolStripMenuItem, "ForumToolStripMenuItem")
-        Me.ForumToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.world_go
-        Me.ForumToolStripMenuItem.Name = "ForumToolStripMenuItem"
         '
         'RastreamentoDeBugsToolStripMenuItem
         '
         resources.ApplyResources(Me.RastreamentoDeBugsToolStripMenuItem, "RastreamentoDeBugsToolStripMenuItem")
+        Me.RastreamentoDeBugsToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.website_bug_48px
         Me.RastreamentoDeBugsToolStripMenuItem.Name = "RastreamentoDeBugsToolStripMenuItem"
-        '
-        'DIscordChannelToolStripMenuItem
-        '
-        resources.ApplyResources(Me.DIscordChannelToolStripMenuItem, "DIscordChannelToolStripMenuItem")
-        Me.DIscordChannelToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.icons8_discord
-        Me.DIscordChannelToolStripMenuItem.Name = "DIscordChannelToolStripMenuItem"
         '
         'AboutToolStripMenuItem
         '
@@ -917,7 +905,6 @@ Partial Class FormMain
 
     Public WithEvents DWSIMNaInternetToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents WikiToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents ForumToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents RastreamentoDeBugsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
     Public WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
@@ -954,7 +941,6 @@ Partial Class FormMain
     Public WithEvents OpenFileS365 As ToolStripButton
     Public WithEvents SaveFileS365 As ToolStripButton
     Friend WithEvents DashboardToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DIscordChannelToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents tsblDonate As ToolStripStatusLabel
     Friend WithEvents tsbdonate1 As ToolStripDropDownButton
     Friend WithEvents tsbdonate2 As ToolStripDropDownButton
