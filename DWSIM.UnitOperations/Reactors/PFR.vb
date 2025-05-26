@@ -1699,6 +1699,8 @@ Namespace Reactors
                             value = NumberOfTubes
                         Case 11
                             value = dV
+                        Case 12
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.temperature, OutletTemperature)
                     End Select
 
                 Else
@@ -1766,15 +1768,15 @@ Namespace Reactors
             If basecol.Length > 0 Then proplist.AddRange(basecol)
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 11
+                    For i = 0 To 12
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 11
+                    For i = 0 To 12
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.ALL, PropertyType.RO
-                    For i = 0 To 11
+                    For i = 0 To 12
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                     proplist.Add("Calculation Mode")
@@ -1826,6 +1828,8 @@ Namespace Reactors
                     NumberOfTubes = propval
                 Case 11
                     dV = propval
+                Case 12
+                    OutletTemperature = SystemsOfUnits.Converter.ConvertToSI(su.temperature, propval)
             End Select
             Return 1
         End Function
@@ -1869,6 +1873,8 @@ Namespace Reactors
                                 value = su.diameter
                             Case 10, 11
                                 value = ""
+                            Case 12
+                                value = su.temperature
                         End Select
 
                     Catch ex As Exception

@@ -1689,4 +1689,7 @@
   <data name="PROP_PF_11" xml:space="preserve">
     <value>Integration Step</value>
   </data>
+  <data name="PROP_PF_12" xml:space="preserve">
+    <value>Outlet Temperature</value>
+  </data>
 </root>
