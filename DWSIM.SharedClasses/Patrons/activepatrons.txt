@@ -14,6 +14,7 @@
 🌟 Chris Hart
 🌟 Christian Hornhofer
 🌟 Domenico Marchese
+🌟 Frédéric Honnart
 🌟 George Brindle
 🌟 Gerry Agnew
 🌟 Gregory Marks
@@ -28,6 +29,7 @@
 🌟 José Marques
 🌟 Justin Parrot
 🌟 Leonard Seed
+🌟 Luis Contreras
 🌟 Marcos Guimarães
 🌟 Matt Hogg
 🌟 Michael Papantoniou
@@ -56,7 +58,7 @@ Bruce Williams
 Camilo Gantiva
 Christian Jordan
 CollectiveObjective
-Daniel Dornellas Athayde
+Daniel Athayde
 David Miller
 David Whitlock
 Denislav Zdravkov
@@ -65,7 +67,6 @@ Eugenio León
 Fabiano Scheufele
 Fernando Almeida
 Frans Le Roux
-Frédéric Honnart
 Gabriel Carvalho
 Harry Levinson
 Hep Ingham
@@ -77,8 +78,8 @@ Kenneth Troldal
 Leandro Favaretto
 Les Waymont
 Lewis Estall
-Luiz Augusto Meleiro
-Luís Gustavo Carneiro
+Luiz Meleiro
+Luís Carneiro
 Maša Novaković
 Marcelo Dahan
 Marcos Silva
