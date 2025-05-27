@@ -44,6 +44,8 @@ Public Interface IGHGEmitter
 
     Property GHGEmissionSource As String
 
+    Property ConversionEfficiency As Double
+
     Function GetCompoundMassEmission(compound As String, units As String) As Double
 
     Function GetCompoundMolarEmission(compound As String, units As String) As Double
