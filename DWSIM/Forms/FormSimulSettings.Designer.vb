@@ -479,9 +479,7 @@ Partial Class FormSimulSettings
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.txtSearch)
         Me.Panel1.Controls.Add(Me.Button1)
-        Me.Panel1.Controls.Add(Me.cbOrderCompoundsBy)
         Me.Panel1.Controls.Add(Me.Button13)
-        Me.Panel1.Controls.Add(Me.Label12)
         Me.Panel1.Controls.Add(Me.btnInfoLeft)
         Me.Panel1.Name = "Panel1"
         Me.ToolTip1.SetToolTip(Me.Panel1, resources.GetString("Panel1.ToolTip"))
@@ -1112,6 +1110,8 @@ Partial Class FormSimulSettings
         resources.ApplyResources(Me.GroupBox4, "GroupBox4")
         Me.GroupBox4.Controls.Add(Me.cbSpecCalcMode)
         Me.GroupBox4.Controls.Add(Me.Label20)
+        Me.GroupBox4.Controls.Add(Me.Label12)
+        Me.GroupBox4.Controls.Add(Me.cbOrderCompoundsBy)
         Me.GroupBox4.Controls.Add(Me.chkForceObjectCalculation)
         Me.GroupBox4.Controls.Add(Me.cbForcePhase)
         Me.GroupBox4.Controls.Add(Me.Label13)
