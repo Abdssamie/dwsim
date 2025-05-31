@@ -3194,13 +3194,6 @@ Public Class FormFlowsheet
             xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
             xel.Add(DirectCast(Results, ICustomXMLSerialization).SaveData().ToArray())
 
-            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-            xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-            For Each ghgcomp In GHGEmissionCompositions.Values
-                xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-            Next
-
         End If
 
         Return xdoc

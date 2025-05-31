@@ -2777,32 +2777,6 @@ Public Class FormMain
 
         End If
 
-        If xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions") IsNot Nothing Then
-
-            form.GHGEmissionCompositions = New Dictionary(Of String, IGHGComposition)()
-
-            data = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions").Elements.ToList
-
-            For Each xel As XElement In data
-                Try
-                    Dim obj As New GHGEmissionComposition()
-                    obj.LoadData(xel.Elements.ToList)
-                    form.GHGEmissionCompositions.Add(obj.ID, obj)
-                Catch ex As Exception
-                    excs.Add(New Exception("Error Loading GHG Composition Item Information", ex))
-                End Try
-            Next
-
-            If form.GHGEmissionCompositions.Count = 0 Then
-
-                form.GHGEmissionCompositions.Add("PureCO2", New GHGEmissionComposition With {.Name = "PureCO2", .CarbonDioxide = 1.0})
-                form.GHGEmissionCompositions.Add("FlueGas_NaturalGas", New GHGEmissionComposition With {.Name = "FlueGas_NaturalGas", .CarbonDioxide = 0.1, .Water = 0.2, .Inerts = 0.7})
-                form.GHGEmissionCompositions.Add("FlueGas_Coal", New GHGEmissionComposition With {.Name = "FlueGas_Coal", .CarbonDioxide = 0.14, .Water = 0.1, .Inerts = 0.76})
-
-            End If
-
-        End If
-
         If Not ProgressFeedBack Is Nothing Then ProgressFeedBack.Invoke(90)
 
         Try
@@ -3396,24 +3370,6 @@ Public Class FormMain
 
         End If
 
-        If xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions") IsNot Nothing Then
-
-            form.GHGEmissionCompositions = New Dictionary(Of String, IGHGComposition)()
-
-            data = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions").Elements.ToList
-
-            For Each xel As XElement In data
-                Try
-                    Dim obj As New GHGEmissionComposition()
-                    obj.LoadData(xel.Elements.ToList)
-                    form.GHGEmissionCompositions.Add(obj.ID, obj)
-                Catch ex As Exception
-                    excs.Add(New Exception("Error Loading GHG Composition Item Information", ex))
-                End Try
-            Next
-
-        End If
-
         If Not ProgressFeedBack Is Nothing Then ProgressFeedBack.Invoke(90)
 
         Try
@@ -3975,13 +3931,6 @@ Public Class FormMain
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
         xel.Add(DirectCast(form.Results, ICustomXMLSerialization).SaveData().ToArray())
 
-        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-        For Each ghgcomp In form.GHGEmissionCompositions.Values
-            xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-        Next
-
         Using stream As New IO.MemoryStream()
             xdoc.Save(stream)
             handler.Write(stream)
@@ -4215,13 +4164,6 @@ Public Class FormMain
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Results"))
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
         xel.Add(DirectCast(form.Results, ICustomXMLSerialization).SaveData().ToArray())
-
-        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-        For Each ghgcomp In form.GHGEmissionCompositions.Values
-            xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-        Next
 
         Return xdoc
 

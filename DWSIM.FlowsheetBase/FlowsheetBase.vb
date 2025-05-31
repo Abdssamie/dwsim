@@ -2589,30 +2589,6 @@ Imports DWSIM.ExtensionMethods
 
         GHGEmissionCompositions = New Dictionary(Of String, IGHGComposition)()
 
-        If xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions") IsNot Nothing Then
-
-            data = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions").Elements.ToList
-
-            For Each xel As XElement In data
-                Try
-                    Dim obj As New GHGEmissionComposition()
-                    obj.LoadData(xel.Elements.ToList)
-                    GHGEmissionCompositions.Add(obj.ID, obj)
-                Catch ex As Exception
-                    excs.Add(New Exception("Error Loading GHG Composition Item Information", ex))
-                End Try
-            Next
-
-            If GHGEmissionCompositions.Count = 0 Then
-
-                GHGEmissionCompositions.Add("PureCO2", New GHGEmissionComposition With {.Name = "PureCO2", .CarbonDioxide = 1.0})
-                GHGEmissionCompositions.Add("FlueGas_NaturalGas", New GHGEmissionComposition With {.Name = "FlueGas_NaturalGas", .CarbonDioxide = 0.1, .Water = 0.2, .Inerts = 0.7})
-                GHGEmissionCompositions.Add("FlueGas_Coal", New GHGEmissionComposition With {.Name = "FlueGas_Coal", .CarbonDioxide = 0.14, .Water = 0.1, .Inerts = 0.76})
-
-            End If
-
-        End If
-
         If LoadSpreadsheetData IsNot Nothing Then LoadSpreadsheetData.Invoke(xdoc)
 
         ProcessScripts(Enums.Scripts.EventType.SimulationOpened, Enums.Scripts.ObjectType.Simulation, "")
@@ -2809,13 +2785,6 @@ Imports DWSIM.ExtensionMethods
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Results"))
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
         xel.Add(DirectCast(Results, ICustomXMLSerialization).SaveData().ToArray())
-
-        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-        For Each ghgcomp In GHGEmissionCompositions.Values
-            xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-        Next
 
         If SaveSpreadsheetData IsNot Nothing Then SaveSpreadsheetData.Invoke(xdoc)
 
@@ -4663,13 +4632,6 @@ Label_00CC:
             xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
             xel.Add(DirectCast(Results, ICustomXMLSerialization).SaveData().ToArray())
 
-            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-            xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-            For Each ghgcomp In GHGEmissionCompositions.Values
-                xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-            Next
-
         End If
 
         Return xdoc
@@ -4758,24 +4720,6 @@ Label_00CC:
                     data = xdoc.Element("DWSIM_Simulation_Data").Element("Results").Elements.ToList
 
                     DirectCast(Results, ICustomXMLSerialization).LoadData(data)
-
-                End If
-
-                If xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions") IsNot Nothing Then
-
-                    GHGEmissionCompositions = New Dictionary(Of String, IGHGComposition)()
-
-                    data = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions").Elements.ToList
-
-                    For Each xel As XElement In data
-                        Try
-                            Dim obj As New GHGEmissionComposition()
-                            obj.LoadData(xel.Elements.ToList)
-                            GHGEmissionCompositions.Add(obj.ID, obj)
-                        Catch ex As Exception
-                            excs.Add(New Exception("Error Loading GHG Composition Item Information", ex))
-                        End Try
-                    Next
 
                 End If
 
