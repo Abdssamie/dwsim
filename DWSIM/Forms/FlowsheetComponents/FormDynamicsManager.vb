@@ -14,6 +14,8 @@ Public Class FormDynamicsManager
 
     Private Adding As Boolean = False
 
+    Private IntegratorSelectionChanging As Boolean = False
+
     Private Sub FormDynamicsManager_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ExtensionMethods.ChangeDefaultFont(Me)
@@ -676,6 +678,8 @@ Public Class FormDynamicsManager
 
     Private Sub gridintegrators_SelectionChanged(sender As Object, e As EventArgs) Handles gridintegrators.SelectionChanged
 
+        IntegratorSelectionChanging = True
+
         If gridintegrators.SelectedCells.Count < 1 Then Exit Sub
 
         Dim i1 = Manager.IntegratorList(gridintegrators.Rows(gridintegrators.SelectedCells(0).RowIndex).Cells(0).Value)
@@ -727,6 +731,8 @@ Public Class FormDynamicsManager
 
         Adding = False
 
+        IntegratorSelectionChanging = False
+
     End Sub
 
     Private Sub dtpIntegratorDuration_ValueChanged(sender As Object, e As EventArgs)
@@ -734,6 +740,9 @@ Public Class FormDynamicsManager
     End Sub
 
     Private Sub nupCalcEqFreq_ValueChanged(sender As Object, e As EventArgs) Handles nupCalcEqFreq.ValueChanged
+
+        If IntegratorSelectionChanging Then Exit Sub
+
         If Manager Is Nothing Then Exit Sub
 
         Try
@@ -745,6 +754,9 @@ Public Class FormDynamicsManager
     End Sub
 
     Private Sub nupCalcBalFreq_ValueChanged(sender As Object, e As EventArgs) Handles nupCalcBalFreq.ValueChanged
+
+        If IntegratorSelectionChanging Then Exit Sub
+
         If Manager Is Nothing Then Exit Sub
 
         Try
@@ -756,6 +768,9 @@ Public Class FormDynamicsManager
     End Sub
 
     Private Sub nupCalcControlFreq_ValueChanged(sender As Object, e As EventArgs) Handles nupCalcControlFreq.ValueChanged
+
+        If IntegratorSelectionChanging Then Exit Sub
+
         If Manager Is Nothing Then Exit Sub
 
         Try
@@ -1237,6 +1252,8 @@ Public Class FormDynamicsManager
 
     Private Sub nupRTStep_ValueChanged(sender As Object, e As EventArgs) Handles nupRTStep.ValueChanged
 
+        If IntegratorSelectionChanging Then Exit Sub
+
         If Manager IsNot Nothing Then
             Try
                 Dim i1 = Manager.IntegratorList(gridintegrators.Rows(gridintegrators.SelectedCells(0).RowIndex).Cells(0).Value)
@@ -1290,6 +1307,9 @@ Public Class FormDynamicsManager
     End Sub
 
     Private Sub nupIntegrationStep_ValueChanged(sender As Object, e As EventArgs) Handles nupIntegrationStep.ValueChanged
+
+        If IntegratorSelectionChanging Then Exit Sub
+
         If Manager Is Nothing Then Exit Sub
 
         Try
@@ -1297,6 +1317,7 @@ Public Class FormDynamicsManager
             i1.IntegrationStep = New TimeSpan(0, 0, 0, 0, nupIntegrationStep.Value)
         Catch ex As Exception
         End Try
+
     End Sub
 
     Private Sub FormDynamicsManager_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -1328,6 +1349,8 @@ Public Class FormDynamicsManager
     End Sub
 
     Private Sub nupDays_ValueChanged(sender As Object, e As EventArgs) Handles nupHours.ValueChanged, nupDays.ValueChanged, nupSeconds.ValueChanged, nupMinutes.ValueChanged
+
+        If IntegratorSelectionChanging Then Exit Sub
 
         If Manager Is Nothing Then Exit Sub
 
