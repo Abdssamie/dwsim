@@ -39,12 +39,6 @@ Namespace UnitOperations
 
         <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_ShortcutColumn
 
-        Public Overrides ReadOnly Property EquipmentTypes As List(Of String)
-            Get
-                Return New List(Of String) From {"", "Tray Column", "Packed Column"}
-            End Get
-        End Property
-
         Public Enum CondenserType
             TotalCond = 0
             PartialCond = 1
@@ -77,6 +71,29 @@ Namespace UnitOperations
             MyBase.CreateNew()
             ComponentName = name
             ComponentDescription = description
+
+        End Sub
+
+        Public Overrides ReadOnly Property EquipmentTypes As List(Of String)
+            Get
+                Return New List(Of String) From {"", "Tray Column", "Packed Column"}
+            End Get
+        End Property
+
+        Public Overrides Sub CreateDimensionsList()
+
+            Dimensions = New List(Of IDimension)
+            Dimensions.Add(New Dimension With {.Name = DimensionName.Diameter, .IsUserDefined = False})
+            Dimensions.Add(New Dimension With {.Name = DimensionName.Height, .IsUserDefined = False})
+            Dimensions.Add(New Dimension With {.Name = DimensionName.NumberOfTrays, .IsUserDefined = False})
+
+        End Sub
+
+        Public Overrides Sub UpdateDimensionsList()
+
+            Dimensions(0).Value = EstimatedDiameter
+            Dimensions(1).Value = EstimatedHeight
+            Dimensions(2).Value = m_N
 
         End Sub
 
