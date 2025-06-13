@@ -276,6 +276,8 @@ Public Interface IManagerSettings
 
     Property EquilibriumReactorEnable As Boolean
 
+    Property EnablePhaseEnvelopeEnhancements As Boolean
+
 End Interface
 
 Public Interface IPhaseEnvelopeResult

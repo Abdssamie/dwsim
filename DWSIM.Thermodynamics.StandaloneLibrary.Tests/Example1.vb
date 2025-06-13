@@ -30,8 +30,12 @@ Module Example1
 
         Console.WriteLine("Ethanol constant properties:" & vbCrLf)
         For Each prop As String In compprops
-            pval = dtlc.GetCompoundConstProp("Ethanol", prop)
-            Console.WriteLine(prop.PadRight(40) & vbTab & pval)
+            Try
+                pval = dtlc.GetCompoundConstProp("Ethanol", prop)
+                Console.WriteLine(prop.PadRight(40) & vbTab & pval)
+            Catch ex As Exception
+                Console.WriteLine(prop.PadRight(40) & vbTab & ex.Message)
+            End Try
         Next
 
         Console.Write(vbCrLf)
