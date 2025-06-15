@@ -749,7 +749,7 @@ Namespace UnitOperations
 
             For Each p In col1
                 If col2.ContainsKey(p.Key) And col3.ContainsKey(p.Key) Then
-                    If FlowSheet IsNot Nothing AndAlso FlowSheet.DynamicMode Then proplist.Add(p.Key)
+                    If FlowSheet IsNot Nothing Then proplist.Add(p.Key)
                 Else
                     proplist.Add(p.Key)
                 End If
