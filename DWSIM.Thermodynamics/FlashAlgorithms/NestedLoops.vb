@@ -23,6 +23,8 @@ Imports DWSIM.MathOps.MathEx.BrentOpt
 Imports DWSIM.SharedClasses
 Imports IronPython.Runtime.Operations
 Imports MathNet.Numerics
+Imports System.Linq
+Imports DWSIM.ExtensionMethods
 
 Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -2897,6 +2899,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             Dim cprops = PP.DW_GetConstantProperties()
 
             For i = 0 To n
+                Tsat(i) = PP.AUX_TSATi(P, i)
                 If cprops(i).IsSolid Or cprops(i).TemperatureOfFusion > 1000.0 Or cprops(i).Normal_Boiling_Point * 0.7 > 1000.0 Then
                     'solid. leave out of the calculation
                     Vs(i) = Vz2(i)
@@ -2915,12 +2918,17 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             fi = Vz.Clone
 
             If Tref = 0.0# Then
-                i = 0
-                Tref = 0.0#
-                Do
-                    Tref += Vz(i) * PP.AUX_TSATi(P, i)
-                    i += 1
-                Loop Until i = n + 1
+                If V < 0.5 Then
+                    Tref = 0.0#
+                    For i = 0 To n
+                        Tref += Vz(i) * Tsat(i)
+                    Next
+                Else
+                    Tref = -1000.0
+                    For i = 0 To n
+                        If Tsat(i) > Tref And Vz(i) > 0.0 Then Tref = Tsat(i)
+                    Next
+                End If
             End If
 
             T = Tref
