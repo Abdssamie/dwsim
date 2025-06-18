@@ -525,6 +525,8 @@ Namespace UnitOperations
             Dim Ntot = NH2 / xH2
             Dim NH20sat = Ntot - NH2
 
+            Dim wh1, wh2 As Double
+
             msout1.Clear()
             msout1.ClearAllProps()
             msout1.SetOverallCompoundMolarFlow(hid, NH2)
@@ -533,9 +535,11 @@ Namespace UnitOperations
             msout1.SetTemperature(T)
             msout1.SetFlashSpec("PT")
             msout1.Calculate()
-            msout1.SetMassEnthalpy(msout1.GetMassEnthalpy())
-            msout1.SetFlashSpec("PH")
 
+            wh1 = msout1.GetMassFlow() / msin.GetMassFlow()
+
+            msout1.SetMassEnthalpy(msout1.GetMassEnthalpy() + WasteHeat * wh1)
+            msout1.SetFlashSpec("PH")
             msout1.AtEquilibrium = False
 
             Nf(hidx) = 0.0
@@ -551,9 +555,11 @@ Namespace UnitOperations
             msout2.SetTemperature(T)
             msout2.SetFlashSpec("PT")
             msout2.Calculate()
-            msout2.SetMassEnthalpy(msout2.GetMassEnthalpy() + WasteHeat / msin.GetMassFlow())
-            msout2.SetFlashSpec("PH")
 
+            wh2 = msout2.GetMassFlow() / msin.GetMassFlow()
+
+            msout2.SetMassEnthalpy(msout2.GetMassEnthalpy() + WasteHeat * wh2)
+            msout2.SetFlashSpec("PH")
             msout2.AtEquilibrium = False
 
         End Sub
