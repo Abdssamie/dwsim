@@ -912,7 +912,7 @@ Partial Class FormFlowsheet
         Me.pbSolver.ActiveSegmentColour = System.Drawing.Color.SteelBlue
         Me.pbSolver.AutoIncrementFrequency = 50.0R
         Me.pbSolver.Name = "pbSolver"
-        Me.pbSolver.TransistionSegment = 1
+        Me.pbSolver.TransistionSegment = 2
         Me.pbSolver.TransistionSegmentColour = System.Drawing.Color.LightSkyBlue
         '
         'lblTotalMessages

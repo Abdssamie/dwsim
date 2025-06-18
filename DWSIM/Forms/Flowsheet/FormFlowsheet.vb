@@ -1460,6 +1460,7 @@ Public Class FormFlowsheet
         gObj.Name = "RECT-" & Guid.NewGuid.ToString
         gObj.Tag = "RECT" & ((From t As GraphicObject In Me.FormSurface.FlowsheetSurface.DrawingObjects Select t Where t.ObjectType = ObjectType.GO_Text).Count + 1).ToString
         gObj.ObjectType = ObjectType.GO_Rectangle
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Me.FormSurface.FlowsheetSurface.DrawingObjects.Add(gObj)
         Me.FormSurface.Invalidate()
     End Sub
@@ -1488,6 +1489,7 @@ Public Class FormFlowsheet
                         gObj.Tag = DWSIM.App.GetLocalString("FIGURA") & Guid.NewGuid.ToString
                         gObj.AutoSize = True
                     End If
+                    RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
                     Me.FormSurface.FlowsheetSurface.DrawingObjects.Add(gObj)
                     Me.FormSurface.Invalidate()
                 End Using
@@ -1507,6 +1509,7 @@ Public Class FormFlowsheet
         myobj.Height = 400
         myobj.Width = 500
         myobj.Flowsheet = Me
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Me.FormSurface.FlowsheetSurface.AddObject(myobj)
         Me.FormSurface.Invalidate()
     End Sub
@@ -1895,12 +1898,14 @@ Public Class FormFlowsheet
         gObj.AutoSize = True
         gObj.Flowsheet = Me
         gObj.ObjectType = ObjectType.GO_Text
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Me.FormSurface.FlowsheetSurface.DrawingObjects.Add(gObj)
         Me.FormSurface.Invalidate()
 
     End Sub
 
     Public Sub ToolStripButton19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TabelaDePropriedatesMestraToolStripMenuItem.Click
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Dim myMasterTable As New Drawing.SkiaSharp.GraphicObjects.Tables.MasterTableGraphic(30, 30)
         Dim gObj As GraphicObject = Nothing
         myMasterTable.Flowsheet = Me
@@ -1913,6 +1918,7 @@ Public Class FormFlowsheet
     End Sub
 
     Public Sub ToolStripButton4_Click(sender As Object, e As EventArgs) Handles TabelaDePropriedadesPlanilhaToolStripMenuItem.Click
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Dim mySpreadsheetTable As New SpreadsheetTableGraphic(30, 30)
         Dim gObj As GraphicObject = Nothing
         mySpreadsheetTable.Flowsheet = Me
@@ -2046,6 +2052,7 @@ Public Class FormFlowsheet
 
 
     Public Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles TabelaDePropriedadesToolStripMenuItem.Click
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Dim myPropertyTable As New TableGraphic(30, 30)
         Dim gObj As GraphicObject = Nothing
         myPropertyTable.Flowsheet = Me
@@ -4787,6 +4794,7 @@ Public Class FormFlowsheet
         gObj.Tag = "HTMLTEXT" & ((From t As GraphicObject In Me.FormSurface.FlowsheetSurface.DrawingObjects Select t Where t.ObjectType = ObjectType.GO_HTMLText).Count + 1).ToString
         gObj.AutoSize = True
         gObj.Flowsheet = Me
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Me.FormSurface.FlowsheetSurface.DrawingObjects.Add(gObj)
         Me.FormSurface.Invalidate()
 
@@ -4800,6 +4808,7 @@ Public Class FormFlowsheet
         gObj.Tag = "BTN" & ((From t As GraphicObject In Me.FormSurface.FlowsheetSurface.DrawingObjects Select t Where t.ObjectType = ObjectType.GO_HTMLText).Count + 1).ToString
         gObj.AutoSize = True
         gObj.Flowsheet = Me
+        RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
         Me.FormSurface.FlowsheetSurface.DrawingObjects.Add(gObj)
         Me.FormSurface.Invalidate()
     End Sub
