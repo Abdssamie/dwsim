@@ -103,7 +103,7 @@ Namespace UnitOperations
             Me.ComponentName = name
             Me.ComponentDescription = description
 
-            If Type.GetType("Mono.Runtime") Is Nothing Then
+            If GlobalSettings.Settings.RunningPlatform() = Settings.Platform.Windows Then
 
                 If Not chemsep Then
 
