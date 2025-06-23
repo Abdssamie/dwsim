@@ -2881,7 +2881,7 @@ Public Class FormCompoundCreator
             pbRender.Image = renderer.renderToBitmap(mol)
             btnRenderSMILES.Enabled = False
         Catch ex As Exception
-            'MessageBox.Show(ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Unable to render the molecule. Your input was sent to an external library, which did not return a result or a helpful error message.", DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 

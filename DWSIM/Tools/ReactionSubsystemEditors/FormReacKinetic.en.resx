@@ -120,136 +120,7 @@
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="gbKinetics.Text" xml:space="preserve">
-    <value>Rate Constants for Direct and Reverse Reactons (k and k')</value>
-  </data>
-  <data name="KryptonLabel9.Text" xml:space="preserve">
-    <value>Base Component</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="KryptonLabel11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 249</value>
-  </data>
-  <data name="KryptonLabel11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 13</value>
-  </data>
-  <data name="KryptonLabel11.Text" xml:space="preserve">
-    <value>Amount Units</value>
-  </data>
-  <data name="cbVelUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>434, 245</value>
-  </data>
-  <data name="cbVelUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 21</value>
-  </data>
-  <data name="KryptonLabel12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>356, 249</value>
-  </data>
-  <data name="KryptonLabel12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 13</value>
-  </data>
-  <data name="KryptonLabel12.Text" xml:space="preserve">
-    <value>Rate Units</value>
-  </data>
-  <data name="cbConcUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 245</value>
-  </data>
-  <data name="cbConcUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>239, 21</value>
-  </data>
-  <data name="KryptonLabel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>277, 20</value>
-  </data>
-  <data name="KryptonLabel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 13</value>
-  </data>
-  <data name="KryptonLabel4.Text" xml:space="preserve">
-    <value>Basis</value>
-  </data>
-  <data name="cbBase.Items" xml:space="preserve">
-    <value>Activities</value>
-  </data>
-  <data name="cbBase.Items1" xml:space="preserve">
-    <value>Fugacities</value>
-  </data>
-  <data name="cbBase.Items2" xml:space="preserve">
-    <value>Molar Concentrations</value>
-  </data>
-  <data name="cbBase.Items3" xml:space="preserve">
-    <value>Mass Concentrations</value>
-  </data>
-  <data name="cbBase.Items4" xml:space="preserve">
-    <value>Molar Fractions</value>
-  </data>
-  <data name="cbBase.Items5" xml:space="preserve">
-    <value>Mass Fractions</value>
-  </data>
-  <data name="cbBase.Items6" xml:space="preserve">
-    <value>Partial Pressures</value>
-  </data>
-  <data name="cbBase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>326, 16</value>
-  </data>
-  <data name="KryptonLabel6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>277, 45</value>
-  </data>
-  <data name="KryptonLabel6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 13</value>
-  </data>
-  <data name="KryptonLabel6.Text" xml:space="preserve">
-    <value>Phase</value>
-  </data>
-  <data name="tbPhase.Items" xml:space="preserve">
-    <value>Liquid</value>
-  </data>
-  <data name="tbPhase.Items1" xml:space="preserve">
-    <value>Vapor</value>
-  </data>
-  <data name="tbPhase.Items2" xml:space="preserve">
-    <value>Mixture</value>
-  </data>
-  <data name="tbPhase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>326, 41</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Kinetic Reaction Parameters</value>
-  </data>
-  <data name="btnScriptHelp.Text" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>281, 9</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Python Script</value>
-  </data>
-  <data name="cbScripts.Location" type="System.Drawing.Point, System.Drawing">
-    <value>367, 5</value>
-  </data>
-  <data name="cbScripts.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 21</value>
-  </data>
-  <data name="rbAdvKin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>192, 7</value>
-  </data>
-  <data name="rbAdvKin.Text" xml:space="preserve">
-    <value>Advanced</value>
-  </data>
-  <data name="rbBasicKin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>130, 7</value>
-  </data>
-  <data name="rbBasicKin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 17</value>
-  </data>
-  <data name="rbBasicKin.Text" xml:space="preserve">
-    <value>Simple</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 13</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Kinetics Specification</value>
-  </data>
   <data name="tbRevUE.Location" type="System.Drawing.Point, System.Drawing">
     <value>274, 95</value>
   </data>
@@ -265,20 +136,23 @@
   <data name="FlowLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 46</value>
   </data>
-  <data name="rdRevUD.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 17</value>
+  <data name="KryptonLabel12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 128</value>
   </data>
-  <data name="rdRevUD.Text" xml:space="preserve">
-    <value>User-Defined: f(T), T in K</value>
+  <data name="KryptonLabel12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 13</value>
+  </data>
+  <data name="KryptonLabel12.Text" xml:space="preserve">
+    <value>Rate Units</value>
+  </data>
+  <data name="cbVelUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>112, 124</value>
+  </data>
+  <data name="cbVelUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 21</value>
   </data>
   <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 46</value>
-  </data>
-  <data name="rdFwdUD.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 17</value>
-  </data>
-  <data name="rdFwdUD.Text" xml:space="preserve">
-    <value>User-Defined: f(T), T in K</value>
   </data>
   <data name="KryptonLabel15.Size" type="System.Drawing.Size, System.Drawing">
     <value>19, 13</value>
@@ -324,6 +198,154 @@
   </data>
   <data name="KryptonLabel5.Text" xml:space="preserve">
     <value>Direct Reaction</value>
+  </data>
+  <data name="gbKinetics.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 115</value>
+  </data>
+  <data name="gbKinetics.Size" type="System.Drawing.Size, System.Drawing">
+    <value>659, 156</value>
+  </data>
+  <data name="gbKinetics.Text" xml:space="preserve">
+    <value>Rate Constants for Direct and Reverse Reactons (k and k')</value>
+  </data>
+  <data name="tbCompBase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 16</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="KryptonLabel9.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 20</value>
+  </data>
+  <data name="KryptonLabel9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 13</value>
+  </data>
+  <data name="KryptonLabel9.Text" xml:space="preserve">
+    <value>Base Component</value>
+  </data>
+  <data name="KryptonLabel11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 47</value>
+  </data>
+  <data name="KryptonLabel11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 13</value>
+  </data>
+  <data name="KryptonLabel11.Text" xml:space="preserve">
+    <value>Amount Units</value>
+  </data>
+  <data name="cbConcUnit.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 43</value>
+  </data>
+  <data name="cbConcUnit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 21</value>
+  </data>
+  <data name="KryptonLabel4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 19</value>
+  </data>
+  <data name="KryptonLabel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 13</value>
+  </data>
+  <data name="KryptonLabel4.Text" xml:space="preserve">
+    <value>Basis</value>
+  </data>
+  <data name="cbBase.Items" xml:space="preserve">
+    <value>Activities</value>
+  </data>
+  <data name="cbBase.Items1" xml:space="preserve">
+    <value>Fugacities</value>
+  </data>
+  <data name="cbBase.Items2" xml:space="preserve">
+    <value>Molar Concentrations</value>
+  </data>
+  <data name="cbBase.Items3" xml:space="preserve">
+    <value>Mass Concentrations</value>
+  </data>
+  <data name="cbBase.Items4" xml:space="preserve">
+    <value>Molar Fractions</value>
+  </data>
+  <data name="cbBase.Items5" xml:space="preserve">
+    <value>Mass Fractions</value>
+  </data>
+  <data name="cbBase.Items6" xml:space="preserve">
+    <value>Partial Pressures</value>
+  </data>
+  <data name="cbBase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>338, 16</value>
+  </data>
+  <data name="KryptonLabel6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 46</value>
+  </data>
+  <data name="KryptonLabel6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 13</value>
+  </data>
+  <data name="KryptonLabel6.Text" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="tbPhase.Items" xml:space="preserve">
+    <value>Liquid</value>
+  </data>
+  <data name="tbPhase.Items1" xml:space="preserve">
+    <value>Vapor</value>
+  </data>
+  <data name="tbPhase.Items2" xml:space="preserve">
+    <value>Mixture</value>
+  </data>
+  <data name="tbPhase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>121, 43</value>
+  </data>
+  <data name="tbPhase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Kinetic Reaction Parameters</value>
+  </data>
+  <data name="btnScriptHelp.Text" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>281, 9</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Python Script</value>
+  </data>
+  <data name="cbScripts.Location" type="System.Drawing.Point, System.Drawing">
+    <value>367, 5</value>
+  </data>
+  <data name="cbScripts.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
+  <data name="rbAdvKin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>192, 7</value>
+  </data>
+  <data name="rbAdvKin.Text" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="rbBasicKin.Location" type="System.Drawing.Point, System.Drawing">
+    <value>130, 7</value>
+  </data>
+  <data name="rbBasicKin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 17</value>
+  </data>
+  <data name="rbBasicKin.Text" xml:space="preserve">
+    <value>Simple</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Kinetics Specification</value>
+  </data>
+  <data name="rdRevUD.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 17</value>
+  </data>
+  <data name="rdRevUD.Text" xml:space="preserve">
+    <value>User-Defined: f(T), T in K</value>
+  </data>
+  <data name="rdFwdUD.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 17</value>
+  </data>
+  <data name="rdFwdUD.Text" xml:space="preserve">
+    <value>User-Defined: f(T), T in K</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Components, Stoichiometry and Reaction Orders</value>

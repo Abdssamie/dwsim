@@ -202,6 +202,12 @@ Public Class FormFlowsheet
 
         Icon = My.Resources.pointicon
 
+        'ghg compositions
+
+        GHGEmissionCompositions.Add("PureCO2", New GHGEmissionComposition With {.Name = "PureCO2", .CarbonDioxide = 1.0})
+        GHGEmissionCompositions.Add("FlueGas_NaturalGas", New GHGEmissionComposition With {.Name = "FlueGas_NaturalGas", .CarbonDioxide = 0.1, .Water = 0.2, .Inerts = 0.7})
+        GHGEmissionCompositions.Add("FlueGas_Coal", New GHGEmissionComposition With {.Name = "FlueGas_Coal", .CarbonDioxide = 0.14, .Water = 0.1, .Inerts = 0.76})
+
     End Sub
 
     Public Sub SetActive()
@@ -374,12 +380,22 @@ Public Class FormFlowsheet
 
         End If
 
+#If NOADS = False Then
         If Not FormMain.IsPro Then
             Dim fg As New ProFeatures.FormGHG With {.CurrentFlowsheet = Me, .AnalyticsProvider = FormMain.AnalyticsProvider}
             fg.Show(dckPanel)
             Dim fc As New ProFeatures.FormCosting With {.CurrentFlowsheet = Me, .AnalyticsProvider = FormMain.AnalyticsProvider}
             fc.Show(dckPanel)
         End If
+#Else
+        tsmiDetailedReport.Visible = False
+        ExcelReportsToolStripMenuItem.Visible = False
+        ProcessFlowsheetDiagramToolStripMenuItem.Visible = False
+        StreamDataImporterTSMI.Visible = False
+        tsmiSolidsManager.Visible = False
+        tsmiSolidsManager2.Visible = False
+
+#End If
 
         Me.UpdateFormText()
 
@@ -1264,6 +1280,8 @@ Public Class FormFlowsheet
                                           MessagesLog.Add("[" + Date.Now.ToString() + "] " + Message)
                                       End If
 
+                                      If MessagesLog.Count > 1000 Then MessagesLog.RemoveAt(0)
+
                                       If frsht.Visible Then
 
                                           Dim showtips As Boolean = True
@@ -1590,7 +1608,7 @@ Public Class FormFlowsheet
 
             Else
 
-                UIThreadInvoke(Sub() ShowMessage(DWSIM.App.GetLocalString("Flowsheet Solver is busy, please be patient..."), IFlowsheet.MessageType.Warning))
+                UIThreadInvoke(Sub() ShowMessage(DWSIM.App.GetLocalString("Flowsheet Solver is busy, please wait for it to finish or click 'Abort' to cancel."), IFlowsheet.MessageType.Warning))
 
             End If
 
@@ -3176,13 +3194,6 @@ Public Class FormFlowsheet
             xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
             xel.Add(DirectCast(Results, ICustomXMLSerialization).SaveData().ToArray())
 
-            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-            xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-            For Each ghgcomp In GHGEmissionCompositions.Values
-                xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-            Next
-
         End If
 
         Return xdoc
@@ -4412,9 +4423,7 @@ Public Class FormFlowsheet
     Public Sub UpdateSpreadsheet(act As Action) Implements IFlowsheet.UpdateSpreadsheet
 
         Try
-            Me.UIThread(Sub()
-                            If FormSpreadsheet IsNot Nothing Then Me.FormSpreadsheet.EvaluateAll()
-                        End Sub)
+            FormSpreadsheet.EvaluateAll()
         Catch ex As Exception
             WriteToLog("Error updating spreadsheet: " & ex.Message.ToString, Color.Red, SharedClasses.DWSIM.Flowsheet.MessageType.GeneralError)
         End Try

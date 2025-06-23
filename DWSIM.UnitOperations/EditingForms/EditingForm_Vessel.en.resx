@@ -461,6 +461,25 @@
   <data name="GroupBoxParameters.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
+  <data name="cbCalcMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="cbCalcMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 21</value>
+  </data>
+  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 30</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 13</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Calculation Mode</value>
+  </data>
   <data name="cbPressureCalcMode.Items" xml:space="preserve">
     <value>Inlet Minimum</value>
   </data>
@@ -470,8 +489,14 @@
   <data name="cbPressureCalcMode.Items2" xml:space="preserve">
     <value>Inlet Maximum</value>
   </data>
+  <data name="cbPressureCalcMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>173, 54</value>
+  </data>
   <data name="cbPressureCalcMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>209, 21</value>
+  </data>
+  <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 57</value>
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 13</value>
@@ -480,16 +505,25 @@
     <value>Outlet Pressure Calculation</value>
   </data>
   <data name="cbPress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 77</value>
+    <value>293, 108</value>
+  </data>
+  <data name="tbPressure.Location" type="System.Drawing.Point, System.Drawing">
+    <value>173, 109</value>
   </data>
   <data name="tbPressure.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 20</value>
+  </data>
+  <data name="chkOverrideP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 112</value>
   </data>
   <data name="chkOverrideP.Size" type="System.Drawing.Size, System.Drawing">
     <value>135, 17</value>
   </data>
   <data name="chkOverrideP.Text" xml:space="preserve">
     <value>Override Sep. Pressure</value>
+  </data>
+  <data name="chkOverrideT.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 84</value>
   </data>
   <data name="chkOverrideT.Size" type="System.Drawing.Size, System.Drawing">
     <value>154, 17</value>
@@ -498,13 +532,16 @@
     <value>Override Sep. Temperature</value>
   </data>
   <data name="cbTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 50</value>
+    <value>293, 81</value>
+  </data>
+  <data name="tbTemperature.Location" type="System.Drawing.Point, System.Drawing">
+    <value>173, 82</value>
   </data>
   <data name="tbTemperature.Size" type="System.Drawing.Size, System.Drawing">
     <value>114, 20</value>
   </data>
   <data name="GroupBoxParameters.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 114</value>
+    <value>388, 150</value>
   </data>
   <data name="GroupBoxParameters.Text" xml:space="preserve">
     <value>Calculation Parameters</value>
@@ -552,13 +589,13 @@
     <value>General</value>
   </data>
   <data name="rtbAnnotations.Size" type="System.Drawing.Size, System.Drawing">
-    <value>382, 241</value>
+    <value>382, 206</value>
   </data>
   <data name="GroupBox4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 617</value>
+    <value>4, 652</value>
   </data>
   <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>388, 260</value>
+    <value>388, 225</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Notes</value>
@@ -577,6 +614,9 @@
   </data>
   <data name="Label9.Text" xml:space="preserve">
     <value>Property Package</value>
+  </data>
+  <data name="GroupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 589</value>
   </data>
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>388, 60</value>

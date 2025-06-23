@@ -94,6 +94,8 @@ Partial Class EditingForm_Vessel
         Me.AddUtilityTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.sizingtsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
+        Me.cbCalcMode = New System.Windows.Forms.ComboBox()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.GroupBoxConnections.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -534,6 +536,8 @@ Partial Class EditingForm_Vessel
         'GroupBoxParameters
         '
         resources.ApplyResources(Me.GroupBoxParameters, "GroupBoxParameters")
+        Me.GroupBoxParameters.Controls.Add(Me.cbCalcMode)
+        Me.GroupBoxParameters.Controls.Add(Me.Label10)
         Me.GroupBoxParameters.Controls.Add(Me.cbPressureCalcMode)
         Me.GroupBoxParameters.Controls.Add(Me.Label8)
         Me.GroupBoxParameters.Controls.Add(Me.cbPress)
@@ -723,7 +727,7 @@ Partial Class EditingForm_Vessel
         resources.ApplyResources(Me.rtbAnnotations, "rtbAnnotations")
         Me.rtbAnnotations.Name = "rtbAnnotations"
         Me.rtbAnnotations.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil Microsoft " &
-    "Sans Serif;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.19041}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\" &
+    "Sans Serif;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.26100}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\" &
     "par" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.rtbAnnotations.ShowRedo = False
         Me.rtbAnnotations.ShowUndo = False
@@ -797,6 +801,25 @@ Partial Class EditingForm_Vessel
         '
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
+        '
+        'cbCalcMode
+        '
+        resources.ApplyResources(Me.cbCalcMode, "cbCalcMode")
+        Me.cbCalcMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbCalcMode.FormattingEnabled = True
+        Me.cbCalcMode.Items.AddRange(New Object() {resources.GetString("cbCalcMode.Items"), resources.GetString("cbCalcMode.Items1"), resources.GetString("cbCalcMode.Items2"), resources.GetString("cbCalcMode.Items3")})
+        Me.cbCalcMode.Name = "cbCalcMode"
+        Me.ToolTip1.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip2"))
+        '
+        'Label10
+        '
+        resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.Name = "Label10"
+        Me.ToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip2"))
         '
         'EditingForm_Vessel
         '
@@ -895,4 +918,6 @@ Partial Class EditingForm_Vessel
     Public WithEvents AddUtilityTSMI As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents sizingtsmi As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolTipChangeTag As ToolTip
+    Public WithEvents cbCalcMode As ComboBox
+    Public WithEvents Label10 As Label
 End Class

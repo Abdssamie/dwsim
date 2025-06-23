@@ -83,6 +83,15 @@ Namespace UnitOperations
             Minimum = 2
         End Enum
 
+        Public Enum CalculationModes
+            Adiabatic = 0
+            Legacy = 1
+            HeatingCoolingIsothermic = 2
+            HeatingCoolingIsobaric = 3
+        End Enum
+
+        Public Property CalculationMode As CalculationModes = CalculationModes.Adiabatic
+
         Public Property DimensionRatio As Double = 3
 
         Public Property SurgeFactor As Double = 1.2
@@ -253,6 +262,10 @@ Namespace UnitOperations
             Dim oms2 As MaterialStream = Me.GetOutletMaterialStream(1)
 
             Dim oms3 As MaterialStream = Me.GetOutletMaterialStream(2)
+
+            If CalculationMode > 1 Then
+                Throw New Exception("Only Adiabatic and Legacy mode are supported in dynamic mode.")
+            End If
 
             If oms3 IsNot Nothing Then
                 Throw New Exception("The Gas-Liquid Separator currently supports only a single liquid phase in Dynamic Mode.")
@@ -466,19 +479,10 @@ Namespace UnitOperations
 
             Dim E0 As Double = 0.0#
 
-            If Me.OverrideP Or Me.OverrideT Then
-                If Not Me.GraphicObject.InputConnectors(6).IsAttached Then
-                    Throw New Exception(FlowSheet.GetTranslatedString("EnergyStreamRequired"))
-                End If
-            Else
-                If Me.GraphicObject.InputConnectors(6).IsAttached Then
-                    E0 = Me.GetInletEnergyStream(6).EnergyFlow.GetValueOrDefault
-                End If
-            End If
+            If OverrideP Or OverrideT Then CalculationMode = CalculationModes.Legacy
 
-            Dim H, Hs, T, W, M, We, P, VF, Hf, H0 As Double, nstr As Integer
+            Dim H, T, W, M, We, P, VF, Hf, H0 As Double, nstr As Integer
             H = 0
-            Hs = 0
             T = 0
             W = 0
             We = 0
@@ -528,8 +532,6 @@ Namespace UnitOperations
 
             If M <> 0.0# Then VF /= M
 
-            If W <> 0.0# Then Hs = (H + E0) / W Else Hs = 0.0#
-
             H0 = H
 
             If Me.PressureCalculation = PressureBehavior.Average Then P = P / (i - 1)
@@ -554,7 +556,7 @@ Namespace UnitOperations
 
             If W = 0.0# Then T = 273.15
 
-            CheckSpec(Hs, False, "enthalpy")
+            CheckSpec(H, False, "enthalpy")
             CheckSpec(W, True, "mass flow")
             CheckSpec(P, True, "pressure")
 
@@ -562,7 +564,7 @@ Namespace UnitOperations
 
                 .PreferredFlashAlgorithmTag = Me.PreferredFlashAlgorithmTag
 
-                If W <> 0.0# Then .Phases(0).Properties.enthalpy = Hs
+                .Phases(0).Properties.enthalpy = H
                 .Phases(0).Properties.pressure = P
                 .Phases(0).Properties.massflow = W
                 .Phases(0).Properties.molarfraction = 1
@@ -590,58 +592,107 @@ Namespace UnitOperations
 
             End With
 
-            If Me.OverrideT = False And Me.OverrideP = False Then
+            Select Case CalculationMode
 
-                W = MixedStream.Phases(0).Properties.massflow.GetValueOrDefault
+                Case CalculationModes.Adiabatic
 
-                If nstr = 1 And E0 = 0.0# Then
+                    W = MixedStream.Phases(0).Properties.massflow.GetValueOrDefault
 
-                    'no need to perform flash if there's only one stream and no heat added
-                    For Each cp In Me.GraphicObject.InputConnectors
-                        If cp.IsAttached And cp.Type = GraphicObjects.ConType.ConIn Then
-                            ms = FlowSheet.SimulationObjects(cp.AttachedConnector.AttachedFrom.Name)
-                            MixedStream.Assign(ms)
-                            MixedStream.AssignProps(ms)
-                            Exit For
-                        End If
-                    Next
+                    If nstr = 1 And E0 = 0.0# Then
 
-                Else
+                        'no need to perform flash if there's only one stream and no heat added
+                        For Each cp In Me.GraphicObject.InputConnectors
+                            If cp.IsAttached And cp.Type = GraphicObjects.ConType.ConIn Then
+                                ms = FlowSheet.SimulationObjects(cp.AttachedConnector.AttachedFrom.Name)
+                                MixedStream.Assign(ms)
+                                MixedStream.AssignProps(ms)
+                                Exit For
+                            End If
+                        Next
+
+                    Else
+
+                        IObj?.SetCurrent()
+                        MixedStream.PropertyPackage = Me.PropertyPackage
+                        MixedStream.SpecType = StreamSpec.Pressure_and_Enthalpy
+                        MixedStream.Calculate(True, True)
+
+                    End If
+
+                    T = MixedStream.Phases(0).Properties.temperature.GetValueOrDefault
+
+                Case CalculationModes.Legacy
+
+                    If Not Me.GraphicObject.InputConnectors(6).IsAttached Then Throw New Exception(FlowSheet.GetTranslatedString("EnergyStreamRequired"))
+
+                    W = MixedStream.Phases(0).Properties.massflow.GetValueOrDefault
+
+                    If Me.OverrideP Then
+                        P = Me.FlashPressure
+                        MixedStream.Phases(0).Properties.pressure = P
+                    Else
+                        P = MixedStream.Phases(0).Properties.pressure.GetValueOrDefault
+                    End If
+                    If Me.OverrideT Then
+                        T = Me.FlashTemperature
+                        MixedStream.Phases(0).Properties.temperature = T
+                    Else
+                        T = MixedStream.Phases(0).Properties.temperature.GetValueOrDefault
+                    End If
+
+                    Me.PropertyPackage.CurrentMaterialStream = MixedStream
+
+                    IObj?.SetCurrent()
+                    MixedStream.PropertyPackage = Me.PropertyPackage
+                    MixedStream.SpecType = StreamSpec.Temperature_and_Pressure
+                    MixedStream.Calculate(True, True)
+
+                Case CalculationModes.HeatingCoolingIsothermic
+
+                    If Not Me.GraphicObject.InputConnectors(6).IsAttached Then Throw New Exception(FlowSheet.GetTranslatedString("EnergyStreamRequired"))
+                    If Me.GraphicObject.InputConnectors(6).IsAttached Then E0 = Me.GetInletEnergyStream(6).EnergyFlow.GetValueOrDefault
 
                     IObj?.SetCurrent()
                     MixedStream.PropertyPackage = Me.PropertyPackage
                     MixedStream.SpecType = StreamSpec.Pressure_and_Enthalpy
+                    MixedStream.Calculate(True, False)
+
+                    T = MixedStream.Phases(0).Properties.temperature.GetValueOrDefault
+
+                    MixedStream.SetMassEnthalpy(H + E0 / W)
+
+                    'flash TH
+
+                    P = MathNet.Numerics.RootFinding.Bisection.FindRootExpand(
+                        Function(Px)
+                            MixedStream.PropertyPackage.CurrentMaterialStream = MixedStream
+                            MixedStream.SetPressure(Px)
+                            MixedStream.Calculate(True, False)
+                            Return MixedStream.GetTemperature() - T
+                        End Function, P * 0.5, P * 2, 0.1, 100)
+
+                    IObj?.SetCurrent()
+                    MixedStream.PropertyPackage = Me.PropertyPackage
+                    MixedStream.SpecType = StreamSpec.Pressure_and_Enthalpy
+                    MixedStream.SetPressure(P)
                     MixedStream.Calculate(True, True)
 
-                End If
-
-                T = MixedStream.Phases(0).Properties.temperature.GetValueOrDefault
-
-            Else
-
-                W = MixedStream.Phases(0).Properties.massflow.GetValueOrDefault
-
-                If Me.OverrideP Then
-                    P = Me.FlashPressure
-                    MixedStream.Phases(0).Properties.pressure = P
-                Else
-                    P = MixedStream.Phases(0).Properties.pressure.GetValueOrDefault
-                End If
-                If Me.OverrideT Then
-                    T = Me.FlashTemperature
-                    MixedStream.Phases(0).Properties.temperature = T
-                Else
                     T = MixedStream.Phases(0).Properties.temperature.GetValueOrDefault
-                End If
 
-                Me.PropertyPackage.CurrentMaterialStream = MixedStream
+                Case CalculationModes.HeatingCoolingIsobaric
 
-                IObj?.SetCurrent()
-                MixedStream.PropertyPackage = Me.PropertyPackage
-                MixedStream.SpecType = StreamSpec.Temperature_and_Pressure
-                MixedStream.Calculate(True, True)
+                    If Not Me.GraphicObject.InputConnectors(6).IsAttached Then Throw New Exception(FlowSheet.GetTranslatedString("EnergyStreamRequired"))
+                    If Me.GraphicObject.InputConnectors(6).IsAttached Then E0 = Me.GetInletEnergyStream(6).EnergyFlow.GetValueOrDefault
 
-            End If
+                    IObj?.SetCurrent()
+                    MixedStream.PropertyPackage = Me.PropertyPackage
+                    MixedStream.SpecType = StreamSpec.Pressure_and_Enthalpy
+                    MixedStream.SetMassEnthalpy(H + E0 / W)
+                    MixedStream.Calculate(True, True)
+
+                    T = MixedStream.Phases(0).Properties.temperature.GetValueOrDefault
+
+            End Select
 
             'Calculate distribution of solids into liquid outlet streams
             'Solids are distributed between liquid phases in the same ratio as the mass ratio of liquid phases
@@ -873,7 +924,7 @@ Namespace UnitOperations
             Me.DeltaQ = Hf - H0
 
             'Energy stream - update power value (kJ/s)
-            If Me.GraphicObject.InputConnectors(6).IsAttached And (Me.OverrideP OrElse Me.OverrideT) Then
+            If Me.GraphicObject.InputConnectors(6).IsAttached And CalculationMode = CalculationModes.Legacy Then
                 With Me.GetInletEnergyStream(6)
                     .EnergyFlow = Me.DeltaQ.GetValueOrDefault
                     .GraphicObject.Calculated = True
@@ -1295,13 +1346,13 @@ Namespace UnitOperations
 
         Public Overrides Function GetPropertyDescription(p As String) As String
             If p.Equals("Override Separation Pressure") Then
-                Return "Overrides the separation pressure. Enabling this setting requires an energy stream connected to the separator."
+                Return "[Legacy mode only] Overrides the separation pressure. Enabling this setting requires an energy stream connected to the separator."
             ElseIf p.Equals("Separation Pressure") Then
-                Return "If the separation pressure is overriden, enter the desired value."
+                Return "[Legacy mode only] If the separation pressure is overriden, enter the desired value."
             ElseIf p.Equals("Override Separation Temperature") Then
-                Return "Overrides the separation temperature. Enabling this setting requires an energy stream connected to the separator."
+                Return "[Legacy mode only] Overrides the separation temperature. Enabling this setting requires an energy stream connected to the separator."
             ElseIf p.Equals("Separation Temperature") Then
-                Return "If the separation temperature is overriden, enter the desired value."
+                Return "[Legacy mode only] If the separation temperature is overriden, enter the desired value."
             Else
                 Return p
             End If

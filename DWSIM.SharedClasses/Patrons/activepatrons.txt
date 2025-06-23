@@ -3,9 +3,9 @@
 🥈 Alexander Semenyak
 🥈 Macaw Energies
 🥈 Sukin Oh
-🌟 Abdulaziz AlShahrani	
 🌟 Abishek Shrestha
 🌟 Adam Kovalovszki
+🌟 Adeyemi Giwa
 🌟 Alberto Marzi
 🌟 Balaji Ramarao
 🌟 Bernhard Seyfang
@@ -14,6 +14,8 @@
 🌟 Chris Hart
 🌟 Christian Hornhofer
 🌟 Domenico Marchese
+🌟 Frédéric Honnart
+🌟 Gabriel González
 🌟 George Brindle
 🌟 Gerry Agnew
 🌟 Gregory Marks
@@ -21,6 +23,7 @@
 🌟 Harindi Perera
 🌟 Helena Thogersen
 🌟 Henk Fikkert
+🌟 Hubertt Elias Jr.
 🌟 Izabela Alves
 🌟 Javier Fontalvo
 🌟 Jens Greimeier
@@ -28,6 +31,7 @@
 🌟 José Marques
 🌟 Justin Parrot
 🌟 Leonard Seed
+🌟 Luis Contreras
 🌟 Marcos Guimarães
 🌟 Matt Hogg
 🌟 Michael Papantoniou
@@ -56,7 +60,7 @@ Bruce Williams
 Camilo Gantiva
 Christian Jordan
 CollectiveObjective
-Daniel Dornellas Athayde
+Daniel Athayde
 David Miller
 David Whitlock
 Denislav Zdravkov
@@ -65,7 +69,6 @@ Eugenio León
 Fabiano Scheufele
 Fernando Almeida
 Frans Le Roux
-Frédéric Honnart
 Gabriel Carvalho
 Harry Levinson
 Hep Ingham
@@ -77,9 +80,10 @@ Kenneth Troldal
 Leandro Favaretto
 Les Waymont
 Lewis Estall
-Luiz Augusto Meleiro
-Luís Gustavo Carneiro
+Luiz Meleiro
+Luís Carneiro
 Maša Novaković
+Marcelo Dahan
 Marcos Silva
 Mario Farley
 Nathan Schuh

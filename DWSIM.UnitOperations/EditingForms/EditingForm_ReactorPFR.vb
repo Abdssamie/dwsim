@@ -812,6 +812,9 @@ Public Class EditingForm_ReactorPFR
             Dim sheet = grid.CreateWorksheet(SimObject.GraphicObject.Tag + "_" + New Random().Next(1000).ToString())
             grid.Worksheets.Add(sheet)
 
+            sheet.RowCount = SimObject.Profile.Count + 10
+            sheet.ColumnCount = SimObject.Profile(0).Item4.Count * 6 + 10
+
             grid.CurrentWorksheet = sheet
 
             Dim item = SimObject.Profile(0)
@@ -877,6 +880,52 @@ Public Class EditingForm_ReactorPFR
     Private Sub cbInternalSolver_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbInternalSolver.SelectedIndexChanged
 
         SimObject.InternalSolver = cbInternalSolver.SelectedIndex
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        If SimObject.Profile.Count > 0 Then
+
+            Dim item = SimObject.Profile(0)
+
+            Dim sb As New System.Text.StringBuilder()
+
+            sb.Append(String.Format("Length ({0})", units.distance) & vbTab)
+            sb.Append(String.Format("Temperature ({0})", units.temperature) & vbTab)
+            sb.Append(String.Format("Pressure ({0})", units.pressure) & vbTab)
+
+            For Each pitem In item.Item4
+                sb.Append(String.Format("{0} MolFrac", pitem.Compound) & vbTab)
+                sb.Append(String.Format("{0} MassFrac", pitem.Compound) & vbTab)
+                sb.Append(String.Format("{0} MolFlow ({1})", pitem.Compound, units.molarflow) & vbTab)
+                sb.Append(String.Format("{0} MassFlow ({1})", pitem.Compound, units.massflow) & vbTab)
+                sb.Append(String.Format("{0} MolConc ({1})", pitem.Compound, units.molar_conc) & vbTab)
+                sb.Append(String.Format("{0} MassConc ({1})", pitem.Compound, units.mass_conc))
+            Next
+
+            sb.AppendLine()
+
+            For Each item In SimObject.Profile
+                sb.Append(item.Item1.ConvertFromSI(units.distance) & vbTab)
+                sb.Append(item.Item2.ConvertFromSI(units.temperature) & vbTab)
+                sb.Append(item.Item3.ConvertFromSI(units.pressure) & vbTab)
+                For Each pitem In item.Item4
+                    sb.Append(pitem.MolarFraction & vbTab)
+                    sb.Append(pitem.MassFraction & vbTab)
+                    sb.Append(pitem.MolarFlow.ConvertFromSI(units.molarflow) & vbTab)
+                    sb.Append(pitem.MassFlow.ConvertFromSI(units.massflow) & vbTab)
+                    sb.Append(pitem.MolarConcentration.ConvertFromSI(units.molar_conc) & vbTab)
+                    sb.Append(pitem.MassConcentration.ConvertFromSI(units.mass_conc) & vbTab)
+                Next
+                sb.Append(vbCrLf)
+            Next
+
+            Clipboard.SetText(sb.ToString())
+
+            MessageBox.Show(String.Format("Data copied successfully to clipboard."), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
 
     End Sub
 

@@ -115,7 +115,16 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
                     V = (H - HsatS) / (HsatV - HsatS)
                     S = 1 - V
-                    T = Tsat
+                    If V >= 1.0 Then
+                        V = 1.0
+                        S = 0.0
+                        T = New Brent().BrentOpt2(10, 2000, 10, 0.000001, 100,
+                                          Function(Tx)
+                                              Return OBJ_FUNC_PH_FLASH(H, "PT", Tx, P, Vz, PP, False, Nothing)(0)
+                                          End Function)
+                    Else
+                        T = Tsat
+                    End If
 
                 Else
 

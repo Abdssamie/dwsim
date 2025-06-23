@@ -27,7 +27,11 @@ Public NotInheritable Class SplashScreen
 
         ExtensionMethods.ChangeDefaultFont(Me)
 
+#If NOADS Then
+        lblVersion.Text = "Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build & " (Patreon Supporters Build)"
+#Else
         lblVersion.Text = "Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.Build
+#End If
 
 #If DEBUG Then
         lblVersion.Text += " (" + IO.File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location).ToString("s", Globalization.CultureInfo.InvariantCulture).Replace("T", " ") + ")"

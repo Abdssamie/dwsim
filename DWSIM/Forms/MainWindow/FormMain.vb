@@ -194,7 +194,6 @@ Public Class FormMain
 
 #If LINUX = False Then
             If IsPro Then
-                DownloadSupplementarySoftwareToolStripMenuItem.Visible = False
                 StatusStrip1.Visible = False
                 tsbRegCO.Visible = False
                 RegistroCAPEOPENToolStripMenuItem.Enabled = False
@@ -206,6 +205,11 @@ Public Class FormMain
                 WhatsNewToolStripMenuItem.Visible = False
                 tsmiProUserGuide.Visible = True
             End If
+#End If
+
+#If NOADS Then
+            tsmiProUG.Visible = False
+            tsmiFreeProTrial.Visible = False           
 #End If
 
             'Search and populate CAPE-OPEN Flowsheet Monitoring Object collection
@@ -593,6 +597,12 @@ Public Class FormMain
 
     Private Sub SetupWelcomeScreen()
 
+        ' If welcome screen is already setup, do nothing
+        ' Welcome screen can be loaded from extensions
+        If Me.WelcomePanel IsNot Nothing And Me.WelcomePanel.Controls.Count > 0 Then
+            Return
+        End If
+
         Dim splfile = Path.Combine(Utility.GetExtendersRootDirectory(), "WelcomeScreen.dll")
 
         If File.Exists(splfile) Then
@@ -735,6 +745,18 @@ Public Class FormMain
         For Each es In esinstances
             ExternalSolvers.Add(es.ID, es)
         Next
+
+        'welcome screen
+
+        Dim wslist As List(Of Type) = availableTypes.FindAll(Function(t) t.GetInterfaces().Contains(GetType(Interfaces.IWelcomeScreen)))
+        If wslist.Count > 0 Then
+            Dim wsInstance As IWelcomeScreen = TryCast(Activator.CreateInstance(wslist(0)), IWelcomeScreen)
+            wsInstance.SetMainForm(Me)
+            Dim ucontrol = wsInstance.GetWelcomeScreen()
+            ucontrol.Dock = DockStyle.Fill
+            Me.WelcomePanel.Controls.Add(ucontrol)
+            My.Settings.CheckForUpdates = False
+        End If
 
         'extenders
 
@@ -1141,12 +1163,6 @@ Public Class FormMain
                 Sub(sender2, e2)
                     AnalyticsProvider.RegisterEvent(sender2.ToString(), "", Nothing)
                 End Sub
-            Task.Delay(30 * 1000).ContinueWith(
-            Sub(t)
-                UIThread(Sub()
-                             If Not My.Settings.UserTypeSent Then tsbQuickQuestion.Visible = True
-                         End Sub)
-            End Sub)
         End If
 
     End Sub
@@ -2761,24 +2777,6 @@ Public Class FormMain
 
         End If
 
-        If xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions") IsNot Nothing Then
-
-            form.GHGEmissionCompositions = New Dictionary(Of String, IGHGComposition)()
-
-            data = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions").Elements.ToList
-
-            For Each xel As XElement In data
-                Try
-                    Dim obj As New GHGEmissionComposition()
-                    obj.LoadData(xel.Elements.ToList)
-                    form.GHGEmissionCompositions.Add(obj.ID, obj)
-                Catch ex As Exception
-                    excs.Add(New Exception("Error Loading GHG Composition Item Information", ex))
-                End Try
-            Next
-
-        End If
-
         If Not ProgressFeedBack Is Nothing Then ProgressFeedBack.Invoke(90)
 
         Try
@@ -3372,24 +3370,6 @@ Public Class FormMain
 
         End If
 
-        If xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions") IsNot Nothing Then
-
-            form.GHGEmissionCompositions = New Dictionary(Of String, IGHGComposition)()
-
-            data = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions").Elements.ToList
-
-            For Each xel As XElement In data
-                Try
-                    Dim obj As New GHGEmissionComposition()
-                    obj.LoadData(xel.Elements.ToList)
-                    form.GHGEmissionCompositions.Add(obj.ID, obj)
-                Catch ex As Exception
-                    excs.Add(New Exception("Error Loading GHG Composition Item Information", ex))
-                End Try
-            Next
-
-        End If
-
         If Not ProgressFeedBack Is Nothing Then ProgressFeedBack.Invoke(90)
 
         Try
@@ -3951,13 +3931,6 @@ Public Class FormMain
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
         xel.Add(DirectCast(form.Results, ICustomXMLSerialization).SaveData().ToArray())
 
-        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-        For Each ghgcomp In form.GHGEmissionCompositions.Values
-            xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-        Next
-
         Using stream As New IO.MemoryStream()
             xdoc.Save(stream)
             handler.Write(stream)
@@ -4191,13 +4164,6 @@ Public Class FormMain
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Results"))
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("Results")
         xel.Add(DirectCast(form.Results, ICustomXMLSerialization).SaveData().ToArray())
-
-        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GHGCompositions"))
-        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GHGCompositions")
-
-        For Each ghgcomp In form.GHGEmissionCompositions.Values
-            xel.Add(New XElement("GHGComposition", DirectCast(ghgcomp, ICustomXMLSerialization).SaveData().ToArray()))
-        Next
 
         Return xdoc
 
@@ -5061,13 +5027,13 @@ Label_00CC:
         End If
     End Sub
 
-    Private Sub ForumToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ForumToolStripMenuItem.Click
+    Private Sub ForumToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If IsPro Then
             Dim fb As New FormBrowser()
             fb.Show()
-            fb.DisplayURL("https://dwsim.org/wiki/index.php?title=Support", "DWSIM Support (Open-Source)")
+            fb.DisplayURL("https://github.com/DanWBR/dwsim/discussions", "DWSIM Support (Open-Source)")
         Else
-            System.Diagnostics.Process.Start("https://dwsim.org/wiki/index.php?title=Support")
+            System.Diagnostics.Process.Start("https://github.com/DanWBR/dwsim/discussions")
         End If
     End Sub
 
@@ -5281,27 +5247,27 @@ Label_00CC:
         End If
     End Sub
 
-    Private Sub NNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NNUOToolStripMenuItem.Click
+    Private Sub NNUOToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=Neural_Network_Unit_Operation")
     End Sub
 
-    Private Sub PNUOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PNUOToolStripMenuItem.Click
+    Private Sub PNUOToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=Pipe_Network_Unit_Operation")
     End Sub
 
-    Private Sub CapitalCostToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CapitalCostToolStripMenuItem.Click
+    Private Sub CapitalCostToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=Capital_Cost_Estimator")
     End Sub
 
-    Private Sub OPCPluginToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OPCPluginToolStripMenuItem.Click
+    Private Sub OPCPluginToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=OPC_Client_Plugin")
     End Sub
 
-    Private Sub DTLToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DTLToolStripMenuItem.Click
+    Private Sub DTLToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://dwsim.org/wiki/index.php?title=DTL")
     End Sub
 
-    Private Sub PsycrometrySimulationTemplateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PsycrometrySimulationTemplateToolStripMenuItem.Click
+    Private Sub PsycrometrySimulationTemplateToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Process.Start("https://github.com/Spogis/Psychrometry")
     End Sub
 
@@ -5325,14 +5291,17 @@ Label_00CC:
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles tsmiFreeProTrial.Click
-        Dim userService As UserService = UserService.GetInstance()
-        Dim isLoggedIn As Boolean = userService._IsLoggedIn()
-        If isLoggedIn Then
-            ProFeatures.Functions.DisplayTransitionForm(Me.AnalyticsProvider, Nothing, "Access DWSIM Pro Now")
-        Else
-            Dim loginForm = New LoginForm()
-            loginForm.ShowDialog()
-        End If
+
+        Process.Start("https://dashboard.simulate365.com/")
+
+        'Dim userService As UserService = UserService.GetInstance()
+        'Dim isLoggedIn As Boolean = userService._IsLoggedIn()
+        'If isLoggedIn Then
+        '    ProFeatures.Functions.DisplayTransitionForm(Me.AnalyticsProvider, Nothing, "Access DWSIM Pro Now")
+        'Else
+        '    Dim loginForm = New LoginForm()
+        '    loginForm.ShowDialog()
+        'End If
 
     End Sub
 
@@ -5362,7 +5331,7 @@ Label_00CC:
         End If
     End Sub
 
-    Private Sub DIscordChannelToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DIscordChannelToolStripMenuItem.Click
+    Private Sub DIscordChannelToolStripMenuItem_Click(sender As Object, e As EventArgs)
         If IsPro Then
             Dim fb As New FormBrowser()
             fb.Show()
@@ -5395,7 +5364,7 @@ Label_00CC:
         Process.Start("https://simulate365.com/private-support/")
     End Sub
 
-    Private Sub ToolStripDropDownButton1_Click_1(sender As Object, e As EventArgs) Handles tsbQuickQuestion.Click
+    Private Sub ToolStripDropDownButton1_Click_1(sender As Object, e As EventArgs)
 
         Dim fq As New FormOccupancyQuestion()
         fq.ShowDialog(Me)
@@ -5473,7 +5442,7 @@ Label_00CC:
 
         Dim fb As New FormBrowser()
         fb.Show()
-        fb.DisplayURL(fpath, "DWSIM Pro User's Guide")
+        fb.DisplayURL(fpath, "DWSIM Pro User Guide")
 
     End Sub
 
@@ -5483,6 +5452,11 @@ Label_00CC:
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
         WelcomePanel.Visible = True
+    End Sub
+
+    Private Sub ToolStripSplitButton1_ButtonClick(sender As Object, e As EventArgs) Handles ToolStripSplitButton1.Click, ToolStripSplitButton2.Click
+        Clipboard.SetText("0f0c6cf5-2489-4d03-b7a8-3a5fd22498a2")
+        MessageBox.Show("Chave Pix copiada. Obrigado pelo apoio!", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged

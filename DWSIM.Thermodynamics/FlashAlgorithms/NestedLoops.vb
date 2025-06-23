@@ -83,20 +83,21 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
-
+            If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Then
                 estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
-                   New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
-                   .CompoundNames = PP.RET_VNAMES(),
-                   .NumberOfCompounds = Vz.Count,
-                   .MixtureMolarFlows = Vz,
-                   .ModelName = PP.ComponentName,
-                   .Pressure = P,
-                   .Temperature = T,
-                   .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash
-               })
-
+                       New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                           .CompoundNames = PP.RET_VNAMES(),
+                           .NumberOfCompounds = Vz.Count,
+                           .MixtureMolarFlows = Vz,
+                           .ModelName = PP.ComponentName,
+                           .Pressure = P,
+                           .Temperature = T,
+                           .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash
+                       })
             End If
+
+            Dim calcex As Exception
 
             Try
 
@@ -111,31 +112,69 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
                 End If
 
-                Return Result
+                Return result
 
             Catch ex As Exception
 
-                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                calcex = ex
+
+            End Try
+
+            If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_2Pass Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                       New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                           .CompoundNames = PP.RET_VNAMES(),
+                           .NumberOfCompounds = Vz.Count,
+                           .MixtureMolarFlows = Vz,
+                           .ModelName = PP.ComponentName,
+                           .Pressure = P,
+                           .Temperature = T,
+                           .RequestType = Interfaces.ConvergenceHelperRequestType.PTFlash
+                       })
+
+                If estimate IsNot Nothing Then
+
+                    Try
+
+                        result = Flash_PT_1(Vz, P, T, PP, ReuseKI, PrevKi, estimate.VaporMolarFlows.Sum())
+
+                    Catch ex As Exception
+
+                        If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
                         Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
 
-                    If estimate IsNot Nothing Then
+                            If estimate IsNot Nothing Then
 
-                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                                Return New Object() {estimate.Liquid1MolarFlows.Sum,
                             estimate.VaporMolarFlows.Sum,
                             estimate.Liquid1MolarFlows.NormalizeY(),
                             estimate.VaporMolarFlows.NormalizeY(),
                             0, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, estimate.KValuesVL1}
 
-                    Else
+                            Else
 
-                        Throw New Exception(String.Format("{0}: Unable to calculate PT Flash with P = {1} and T = {2}, molar fractions = {3}",
+                                Throw New Exception(String.Format("{0}: Unable to calculate PT Flash with P = {1} and T = {2}, molar fractions = {3}",
                                     PP.ComponentName, P, T, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
 
-                    End If
+                            End If
+
+                        End If
+
+                    End Try
+
+                Else
+
+                    Throw calcex
 
                 End If
 
-            End Try
+            Else
+
+                Throw calcex
+
+            End If
 
             Return Nothing
 
@@ -629,7 +668,8 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Then
 
                 estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
                    New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
@@ -645,11 +685,12 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             End If
 
+            Dim calcex As Exception
+
             Try
 
                 If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
                     Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
-
 
                     result = Flash_PH_0(Vz, P, H, estimate.Temperature, PP, True, estimate.KValuesVL1)
 
@@ -663,28 +704,67 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             Catch ex As Exception
 
-                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                calcex = ex
+
+            End Try
+
+            If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_2Pass Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                               New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                               .CompoundNames = PP.RET_VNAMES(),
+                               .NumberOfCompounds = Vz.Count,
+                               .MixtureMolarFlows = Vz,
+                               .ModelName = PP.ComponentName,
+                               .Pressure = P,
+                               .MassEnthalpy = H,
+                               .Temperature = Tref,
+                               .RequestType = Interfaces.ConvergenceHelperRequestType.PHFlash
+                           })
+
+                If estimate IsNot Nothing Then
+
+                    Try
+
+                        result = Flash_PH_0(Vz, P, H, estimate.Temperature, PP, True, estimate.KValuesVL1)
+
+                    Catch ex As Exception
+
+                        If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
                         Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
 
-                    If estimate IsNot Nothing Then
+                            If estimate IsNot Nothing Then
 
-                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
-                            estimate.VaporMolarFlows.Sum,
-                            estimate.Liquid1MolarFlows.NormalizeY(),
-                            estimate.VaporMolarFlows.NormalizeY(),
-                            estimate.Temperature, 0, estimate.KValuesVL1,
-                            0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+                                Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                                    estimate.VaporMolarFlows.Sum,
+                                    estimate.Liquid1MolarFlows.NormalizeY(),
+                                    estimate.VaporMolarFlows.NormalizeY(),
+                                    estimate.Temperature, 0, estimate.KValuesVL1,
+                                    0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
-                    Else
+                            Else
 
-                        Throw New Exception(String.Format("{0}: Unable to calculate PH Flash with P = {1} and H = {2}, molar fractions = {3}",
+                                Throw New Exception(String.Format("{0}: Unable to calculate PH Flash with P = {1} and H = {2}, molar fractions = {3}",
                                     PP.ComponentName, P, H, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
 
-                    End If
+                            End If
+
+                        End If
+
+                    End Try
+
+                Else
+
+                    Throw calcex
 
                 End If
 
-            End Try
+            Else
+
+                Throw calcex
+
+            End If
 
             Return Nothing
 
@@ -1939,7 +2019,8 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Then
 
                 estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
                    New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
@@ -1954,6 +2035,8 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                })
 
             End If
+
+            Dim calcex As Exception
 
             Try
 
@@ -1972,29 +2055,69 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             Catch ex As Exception
 
-                If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
+                calcex = ex
+
+            End Try
+
+
+            If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_2Pass Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass Then
+
+                estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                               New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                               .CompoundNames = PP.RET_VNAMES(),
+                               .NumberOfCompounds = Vz.Count,
+                               .MixtureMolarFlows = Vz,
+                               .ModelName = PP.ComponentName,
+                               .Pressure = Pref,
+                               .VaporMolarFraction = V,
+                               .Temperature = T,
+                               .RequestType = Interfaces.ConvergenceHelperRequestType.TVFlash
+                           })
+
+                If estimate IsNot Nothing Then
+
+                    Try
+
+                        result = Flash_TV_1(Vz, T, V, estimate.Pressure, PP, True, estimate.KValuesVL1)
+
+                    Catch ex As Exception
+
+                        If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
                         Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
 
-                    If estimate IsNot Nothing Then
+                            If estimate IsNot Nothing Then
 
-                        Return New Object() {estimate.Liquid1MolarFlows.Sum,
-                            estimate.VaporMolarFlows.Sum,
-                            estimate.Liquid1MolarFlows.NormalizeY(),
-                            estimate.VaporMolarFlows.NormalizeY(),
-                            estimate.Pressure,
-                            0, estimate.KValuesVL1,
-                            0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+                                Return New Object() {estimate.Liquid1MolarFlows.Sum,
+                                    estimate.VaporMolarFlows.Sum,
+                                    estimate.Liquid1MolarFlows.NormalizeY(),
+                                    estimate.VaporMolarFlows.NormalizeY(),
+                                    estimate.Pressure,
+                                    0, estimate.KValuesVL1,
+                                    0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
-                    Else
+                            Else
 
-                        Throw New Exception(String.Format("{0}: Unable to calculate TV Flash with T = {1} and VF = {2}, molar fractions = {3}",
+                                Throw New Exception(String.Format("{0}: Unable to calculate TV Flash with T = {1} and VF = {2}, molar fractions = {3}",
                                     PP.ComponentName, T, V, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
 
-                    End If
+                            End If
+
+                        End If
+
+                    End Try
+
+                Else
+
+                    Throw calcex
 
                 End If
 
-            End Try
+            Else
+
+                Throw calcex
+
+            End If
 
             Return Nothing
 
@@ -2532,7 +2655,8 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             Dim estimate As Interfaces.IConvergenceHelperResponse = Nothing
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Then
 
                 estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
                    New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
@@ -2573,7 +2697,25 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                 'solution is not valid. 
 
-                If estimate IsNot Nothing And Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_2Pass Then
+                If estimate Is Nothing And Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_2Pass Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass Then
+
+                    estimate = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetSolutionEstimate(
+                       New DWSIM.AI.ConvergenceAssistant.Classes.ConvergenceHelperRequest With {
+                       .CompoundNames = PP.RET_VNAMES(),
+                       .NumberOfCompounds = Vz.Count,
+                       .MixtureMolarFlows = Vz,
+                       .ModelName = PP.ComponentName,
+                       .Pressure = P,
+                       .VaporMolarFraction = V,
+                       .Temperature = Tref,
+                       .RequestType = Interfaces.ConvergenceHelperRequestType.PVFlash
+                   })
+
+                End If
+
+                If estimate IsNot Nothing And (Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_2Pass Or
+                    Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass) Then
 
                     result = Flash_PV_1(Vz, P, V, estimate.Temperature, PP, True, estimate.KValuesVL1)
 
@@ -2662,7 +2804,8 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             If result.Count = 1 Then
 
                 If Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions Or
-                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Then
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Solutions Or
+                        Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass Then
 
                     If estimate IsNot Nothing Then
 

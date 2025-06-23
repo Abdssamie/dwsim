@@ -123,14 +123,26 @@
 Select the ones that you want to recover. You can save them again once they're active in the simulator.</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Column4.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
   <data name="Column4.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="Column1.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="Column2.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="Column3.MinimumWidth" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="KryptonButton2.Location" type="System.Drawing.Point, System.Drawing">

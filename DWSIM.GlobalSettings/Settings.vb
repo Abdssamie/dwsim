@@ -45,6 +45,7 @@ Public Class Settings
         Provide_Initial_Estimates_2Pass = 2
         Provide_Initial_Estimates_and_Solutions = 3
         Provide_Solutions = 4
+        Provide_Initial_Estimates_and_Solutions_2Pass = 5
     End Enum
 
     Public Shared Property WindowsRenderer As WindowsPlatformRenderer = WindowsPlatformRenderer.WinForms

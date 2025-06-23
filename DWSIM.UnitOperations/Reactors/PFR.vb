@@ -1670,7 +1670,7 @@ Namespace Reactors
                 Dim cv As New SystemsOfUnits.Converter
                 Dim value As Double = 0
 
-                If prop.Contains("_") Then
+                If prop.Contains("_") And Not prop.Contains(":") Then
 
                     Dim propidx As Integer = Convert.ToInt32(prop.Split("_")(2))
 
@@ -1697,6 +1697,10 @@ Namespace Reactors
                             value = SystemsOfUnits.Converter.ConvertFromSI(su.diameter, Me.Diameter)
                         Case 10
                             value = NumberOfTubes
+                        Case 11
+                            value = dV
+                        Case 12
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.temperature, OutletTemperature)
                     End Select
 
                 Else
@@ -1764,15 +1768,15 @@ Namespace Reactors
             If basecol.Length > 0 Then proplist.AddRange(basecol)
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 10
+                    For i = 0 To 12
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 10
+                    For i = 0 To 12
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.ALL, PropertyType.RO
-                    For i = 0 To 10
+                    For i = 0 To 12
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                     proplist.Add("Calculation Mode")
@@ -1822,6 +1826,10 @@ Namespace Reactors
                     Me.Diameter = SystemsOfUnits.Converter.ConvertToSI(su.diameter, propval)
                 Case 10
                     NumberOfTubes = propval
+                Case 11
+                    dV = propval
+                Case 12
+                    OutletTemperature = SystemsOfUnits.Converter.ConvertToSI(su.temperature, propval)
             End Select
             Return 1
         End Function
@@ -1836,7 +1844,7 @@ Namespace Reactors
                 Dim cv As New SystemsOfUnits.Converter
                 Dim value As String = ""
 
-                If prop.Contains("_") Then
+                If prop.Contains("_") And Not prop.Contains(":") Then
 
                     Try
 
@@ -1863,8 +1871,10 @@ Namespace Reactors
                                 value = su.heatflow
                             Case 9
                                 value = su.diameter
-                            Case 10
+                            Case 10, 11
                                 value = ""
+                            Case 12
+                                value = su.temperature
                         End Select
 
                     Catch ex As Exception

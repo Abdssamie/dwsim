@@ -138,6 +138,14 @@ Public Class FormBulkAddPseudos
                 tb = tb.ToString().ToDoubleFromCurrent().ConvertToSI(cbNBPUnits.SelectedItem)
             End If
 
+            If tc IsNot Nothing Then
+                tc = tc.ToString().ToDoubleFromCurrent().ConvertToSI(cbTCUnits.SelectedItem)
+            End If
+
+            If pc IsNot Nothing Then
+                pc = pc.ToString().ToDoubleFromCurrent().ConvertToSI(cbPCUnits.SelectedItem)
+            End If
+
             'calculations
 
             Dim comp As New ConstantProperties()
@@ -180,7 +188,6 @@ Public Class FormBulkAddPseudos
                             mw = PropertyMethods.MW_Riazi(tb, sg)
                     End Select
                 End If
-                mw = PropertyMethods.MW_Winn(tb, sg)
             ElseIf tb IsNot Nothing Then
                 tb = Convert.ToDouble(tb).ConvertToSI(cbNBPUnits.SelectedItem)
                 If mw IsNot Nothing And sg IsNot Nothing Then

@@ -1158,6 +1158,8 @@ Namespace UnitOperations
                         value = Pout.ConvertFromSI(su.pressure)
                     Case 6
                         value = Head.ConvertFromSI(su.distance)
+                    Case 7
+                        value = NPSH.GetValueOrDefault.ConvertFromSI(su.distance)
                 End Select
 
                 Return value
@@ -1171,7 +1173,7 @@ Namespace UnitOperations
             Dim proplist As New ArrayList
             Dim basecol = MyBase.GetProperties(proptype)
             If basecol.Length > 0 Then proplist.AddRange(basecol)
-            For i = 0 To 6
+            For i = 0 To 7
                 proplist.Add("PROP_PU_" + CStr(i))
             Next
             Return proplist.ToArray(GetType(System.String))
@@ -1231,6 +1233,8 @@ Namespace UnitOperations
                     Case 5
                         value = su.pressure
                     Case 6
+                        value = su.distance
+                    Case 7
                         value = su.distance
                 End Select
 

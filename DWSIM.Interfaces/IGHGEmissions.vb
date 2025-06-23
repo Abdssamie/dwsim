@@ -10,6 +10,8 @@
 
     Property NitrousOxide As Double
 
+    Property Inerts As Double
+
     Property Water As Double
 
     Function GetMolecularWeight() As Double
@@ -39,6 +41,10 @@ Public Interface IGHGEmitter
     Property EmissionFactorIsInCO2eq As Boolean
 
     Property GHGEmissionCompositionID As String
+
+    Property GHGEmissionSource As String
+
+    Property ConversionEfficiency As Double
 
     Function GetCompoundMassEmission(compound As String, units As String) As Double
 

@@ -285,7 +285,19 @@ namespace DWSIM.UI.Desktop.Editors.Dynamics
                 control.Abort = false;
             }
 
+            if (!Flowsheet.DynamicsManager.ScheduleList.ContainsKey(Flowsheet.DynamicsManager.CurrentSchedule))
+            {
+                Flowsheet.ShowMessage("Please select a schedule first.", IFlowsheet.MessageType.GeneralError);
+                return null;
+            }
+
             var schedule = Flowsheet.DynamicsManager.ScheduleList[Flowsheet.DynamicsManager.CurrentSchedule];
+
+            if (!Flowsheet.DynamicsManager.IntegratorList.ContainsKey(schedule.CurrentIntegrator))
+            {
+                Flowsheet.ShowMessage("Please select an integrator first.", IFlowsheet.MessageType.GeneralError);
+                return null;
+            }
 
             var integrator = Flowsheet.DynamicsManager.IntegratorList[schedule.CurrentIntegrator];
 

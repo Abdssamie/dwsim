@@ -214,6 +214,10 @@ End Interface
 
 Public Interface IManagerSettings
 
+    Property UniqueID As String
+
+    Property UploadToServer As Boolean
+
     Property AssistanceLevel As Integer
 
     Property AutoUpdateEnabled As Boolean
@@ -257,6 +261,20 @@ Public Interface IManagerSettings
     Property EnableSolutionProvider4 As Boolean
 
     Property EnableSolutionProvider5 As Boolean
+
+    Property PTFlashEnable As Boolean
+
+    Property PHFlashEnable As Boolean
+
+    Property PSFlashEnable As Boolean
+
+    Property PVFlashEnable As Boolean
+
+    Property TVFlashEnable As Boolean
+
+    Property GibbsReactorEnable As Boolean
+
+    Property EquilibriumReactorEnable As Boolean
 
 End Interface
 

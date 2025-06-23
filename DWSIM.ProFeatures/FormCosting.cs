@@ -1,5 +1,6 @@
 ﻿using DWSIM.Interfaces;
 using System;
+using System.Diagnostics;
 
 namespace DWSIM.ProFeatures
 {
@@ -22,9 +23,11 @@ namespace DWSIM.ProFeatures
         private void Button2_Click(object sender, EventArgs e)
         {
 
-            Functions.CreateTransitionObject(CurrentFlowsheet, "", "Costing", "", "", default);
+            Process.Start("https://dashboard.simulate365.com/");
 
-            Functions.DisplayTransitionForm(AnalyticsProvider, CurrentFlowsheet, "Costing");
+            //Functions.CreateTransitionObject(CurrentFlowsheet, "", "Costing", "", "", default);
+
+            //Functions.DisplayTransitionForm(AnalyticsProvider, CurrentFlowsheet, "Costing");
 
         }
 

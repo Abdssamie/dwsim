@@ -133,6 +133,8 @@ Public Class EditingForm_Vessel
                     cbPressureCalcMode.SelectedIndex = 2
             End Select
 
+            cbCalcMode.SelectedIndex = .CalculationMode
+
             cbTemp.Items.Clear()
             cbTemp.Items.AddRange(units.GetUnitSet(Interfaces.Enums.UnitOfMeasure.temperature).ToArray)
             cbTemp.SelectedItem = units.temperature
@@ -587,6 +589,20 @@ Public Class EditingForm_Vessel
             DirectCast(VesselObject.FlowSheet, Interfaces.IFlowsheetGUI).UpdateInterface()
 
         End If
+
+    End Sub
+
+    Private Sub cbCalcMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbCalcMode.SelectedIndexChanged
+        VesselObject.CalculationMode = cbCalcMode.SelectedIndex
+
+        Dim check = If(cbCalcMode.SelectedIndex = 1, True, False)
+
+        chkOverrideP.Enabled = check
+        chkOverrideT.Enabled = check
+        tbPressure.Enabled = check
+        tbTemperature.Enabled = check
+        cbTemp.Enabled = check
+        cbPress.Enabled = check
 
     End Sub
 

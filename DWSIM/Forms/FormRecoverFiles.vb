@@ -39,7 +39,7 @@ Public Class FormRecoverFiles
 
     Private Sub KryptonButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton2.Click
         My.Settings.BackupFiles.Clear()
-        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
+        My.Settings.Save()
         Me.Close()
     End Sub
 
@@ -60,12 +60,19 @@ Public Class FormRecoverFiles
         Next
 
         My.Settings.BackupFiles.Clear()
-        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
+        My.Settings.Save()
         Me.Close()
 
     End Sub
 
     Private Sub FormRecoverFiles_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         FormMain.TranslateFormFunction?.Invoke(Me)
+    End Sub
+
+    Private Sub FormRecoverFiles_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If e.CloseReason = CloseReason.UserClosing Then
+            My.Settings.BackupFiles.Clear()
+            My.Settings.Save()
+        End If
     End Sub
 End Class

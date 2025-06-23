@@ -1683,4 +1683,13 @@
   <data name="PROP_MS_264" xml:space="preserve">
     <value>Volumetric Fraction (Solid)</value>
   </data>
+  <data name="PROP_PU_7" xml:space="preserve">
+    <value>NPSH Available</value>
+  </data>
+  <data name="PROP_PF_11" xml:space="preserve">
+    <value>Integration Step</value>
+  </data>
+  <data name="PROP_PF_12" xml:space="preserve">
+    <value>Outlet Temperature</value>
+  </data>
 </root>

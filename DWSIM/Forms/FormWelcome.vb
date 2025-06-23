@@ -456,4 +456,10 @@ Public Class FormWelcome
             Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "Pro_User_Guide.pdf")
         End If
     End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        My.Application.MainWindowForm.PainelDeBoasvindasToolStripMenuItem.Checked = False
+        My.Application.MainWindowForm.WelcomePanel.Visible = False
+    End Sub
+
 End Class

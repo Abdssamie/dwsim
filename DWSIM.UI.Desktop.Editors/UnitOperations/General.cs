@@ -149,7 +149,7 @@ namespace DWSIM.UI.Desktop.Editors
                     break;
                 case ObjectType.EnergyStream:
                     var es = (EnergyStream)SimObject;
-                    s.CreateAndAddTextBoxRow(container, nf, "Heat Flow (" + su.heatflow + ")", cv.ConvertFromSI(su.heatflow, es.EnergyFlow.GetValueOrDefault()),
+                    var tb = s.CreateAndAddTextBoxRow(container, nf, "Heat Flow (" + su.heatflow + ")", cv.ConvertFromSI(su.heatflow, es.EnergyFlow.GetValueOrDefault()),
                                    (TextBox arg3, EventArgs ev) =>
                                    {
                                        if (arg3.Text.IsValidDoubleExpression())
@@ -162,6 +162,7 @@ namespace DWSIM.UI.Desktop.Editors
                                            arg3.TextColor = (Colors.Red);
                                        }
                                    });
+                    if (SimObject.GraphicObject.InputConnectors[0].IsAttached) tb.ReadOnly = true;
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Heat Flow"));
                     break;
@@ -1198,6 +1199,9 @@ namespace DWSIM.UI.Desktop.Editors
                        });
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Reboiler Pressure"));
+
+
+
                     int pos6 = 0;
                     switch (sc.condtype)
                     {
@@ -1222,6 +1226,21 @@ namespace DWSIM.UI.Desktop.Editors
                     });
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Condenser Type"));
+
+                    s.CreateAndAddTextBoxRow(container, nf, "Stage/Tray Height", sc.StageHeight,
+                        (tbx, e) =>
+                        {
+                            if (tbx.Text.IsValidDoubleExpression())
+                            {
+                                tbx.TextColor = (SystemColors.ControlText);
+                                sc.StageHeight = cv.ConvertToSI(su.pressure, tbx.Text.ToString().ParseExpressionToDouble());
+                            }
+                            else
+                            {
+                                tbx.TextColor = (Colors.Red);
+                            }
+                        });
+
                     break;
                 case ObjectType.HeatExchanger:
                     var hx = (HeatExchanger)SimObject;
@@ -2412,6 +2431,12 @@ namespace DWSIM.UI.Desktop.Editors
                     break;
                 case ObjectType.Vessel:
                     var vessel = (Vessel)SimObject;
+                    s.CreateAndAddDropDownRow(container, "Calculation Mode", new List<string>(new[] {
+                        "Adiabatic", "Legacy", "Heating/Cooling Isothermic", "Heating/Cooling Isobaric" }), (int)vessel.CalculationMode,
+                       (sender, e) =>
+                       {
+                           vessel.CalculationMode = sender.SelectedIndex.ToEnum<Vessel.CalculationModes>();
+                       });
                     s.CreateAndAddCheckBoxRow(container, "Override Separation Pressure", vessel.OverrideP, (CheckBox arg2, EventArgs ev) =>
                     {
                         vessel.OverrideP = arg2.Checked.GetValueOrDefault();

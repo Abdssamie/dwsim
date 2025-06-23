@@ -69,7 +69,7 @@ namespace DWSIM.ProFeatures
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(228, 50);
             this.Button2.TabIndex = 11;
-            this.Button2.Text = "Switch to DWSIM Pro";
+            this.Button2.Text = "Access DWSIM Pro";
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 

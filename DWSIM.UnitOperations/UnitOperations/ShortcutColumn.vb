@@ -39,16 +39,16 @@ Namespace UnitOperations
 
         <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_ShortcutColumn
 
-        Public Overrides ReadOnly Property EquipmentTypes As List(Of String)
-            Get
-                Return New List(Of String) From {"", "Tray Column", "Packed Column"}
-            End Get
-        End Property
-
         Public Enum CondenserType
             TotalCond = 0
             PartialCond = 1
         End Enum
+
+        Public Property EstimatedDiameter As Double = Double.NaN 'm
+
+        Public Property EstimatedHeight As Double = Double.NaN 'm
+
+        Public Property StageHeight As Double = 0.5 'm
 
         Public m_lightkey As String = ""
         Public m_heavykey As String = ""
@@ -71,6 +71,29 @@ Namespace UnitOperations
             MyBase.CreateNew()
             ComponentName = name
             ComponentDescription = description
+
+        End Sub
+
+        Public Overrides ReadOnly Property EquipmentTypes As List(Of String)
+            Get
+                Return New List(Of String) From {"", "Tray Column", "Packed Column"}
+            End Get
+        End Property
+
+        Public Overrides Sub CreateDimensionsList()
+
+            Dimensions = New List(Of IDimension)
+            Dimensions.Add(New Dimension With {.Name = DimensionName.Diameter, .IsUserDefined = False})
+            Dimensions.Add(New Dimension With {.Name = DimensionName.Height, .IsUserDefined = False})
+            Dimensions.Add(New Dimension With {.Name = DimensionName.NumberOfTrays, .IsUserDefined = False})
+
+        End Sub
+
+        Public Overrides Sub UpdateDimensionsList()
+
+            Dimensions(0).Value = EstimatedDiameter
+            Dimensions(1).Value = EstimatedHeight
+            Dimensions(2).Value = m_N
 
         End Sub
 
@@ -511,6 +534,32 @@ restart:    B = F - D
                 End With
             End If
 
+            'estimate diameter and height
+
+            Dim lt = StageHeight
+            EstimatedHeight = (m_N + 2) * lt
+
+            Dim maxV = Math.Max(V, V_)
+            Dim maxy As Double() = xd
+            Dim maxL = Math.Max(L, L_)
+            Dim maxx As Double() = xb
+
+            Dim ms = New MaterialStream("", "", FlowSheet, pp)
+            FlowSheet().AddCompoundsToMaterialStream(ms)
+            pp.CurrentMaterialStream = ms
+
+            Dim maxVW = maxV / 1000.0 * pp.AUX_MMM(maxy)
+            Dim maxLW = maxL / 1000.0 * pp.AUX_MMM(maxx)
+
+            Dim Tx = feed.GetTemperature()
+            Dim Px = feed.GetPressure()
+            Dim rhov = pp.AUX_MMM(maxy) / (8.314 * Tx / Px * 1000)
+            Dim rhol = pp.AUX_LIQDENS(Tx, maxx, Px)
+            Dim uv = (-0.17 * lt ^ 2 + 0.27 * lt - 0.047) * ((rhol - rhov) / rhov) ^ 0.5
+            Dim Dc = (4 * maxVW / (Math.PI * rhov * uv)) ^ 0.5
+
+            EstimatedDiameter = Dc
+
             IObj?.Close()
 
         End Sub
@@ -561,66 +610,93 @@ restart:    B = F - D
             Dim val0 As Object = MyBase.GetPropertyValue(prop, su)
 
             If Not val0 Is Nothing Then
+
                 Return val0
+
             Else
+
                 If su Is Nothing Then su = New SystemsOfUnits.SI
                 Dim cv As New SystemsOfUnits.Converter
                 Dim value As Double = 0
-                Dim propidx As Integer = Convert.ToInt32(prop.Split("_")(2))
 
-                Select Case propidx
+                If prop.Contains("_") Then
 
-                    Case 0
-                        'PROP_SC_0	Reflux Ratio
-                        value = Me.m_refluxratio
-                    Case 1
-                        'PROP_SC_1	Heavy Key Molar Fraction
-                        value = Me.m_heavykeymolarfrac
-                    Case 2
-                        'PROP_SC_2	Light Key Molar Fraction
-                        value = Me.m_lightkeymolarfrac
-                    Case 3
-                        'PROP_SC_3	Condenser Pressure
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.pressure, Me.m_condenserpressure)
-                    Case 4
-                        'PROP_SC_4	Reboiler Pressure
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.pressure, Me.m_boilerpressure)
-                    Case 5
-                        'PROP_SC_5	Minimun Reflux Ratio
-                        value = Me.m_Rmin
-                    Case 6
-                        'PROP_SC_6	Minimum Stages
-                        value = Me.m_Nmin
-                    Case 7
-                        'PROP_SC_7	Optimal Feed Stage
-                        value = Me.ofs
-                    Case 8
-                        'PROP_SC_8	Stripping Liquid Molar Flow
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.L_)
-                    Case 9
-                        'PROP_SC_9	Rectify Liquid Molar Flow
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.L)
-                    Case 10
-                        'PROP_SC_10	Stripping Vapor Molar Flow
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.V_)
-                    Case 11
-                        'PROP_SC_11	Rectify Vapor Molar Flow
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.V)
-                    Case 12
-                        'PROP_SC_12	Condenser Duty
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.heatflow, Me.m_Qc)
-                    Case 13
-                        'PROP_SC_13	Reboiler Duty
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.heatflow, Me.m_Qb)
-                    Case 14
-                        value = m_N
-                End Select
+
+                    Dim propidx As Integer = Convert.ToInt32(prop.Split("_")(2))
+
+                    Select Case propidx
+
+                        Case 0
+                            'PROP_SC_0	Reflux Ratio
+                            value = Me.m_refluxratio
+                        Case 1
+                            'PROP_SC_1	Heavy Key Molar Fraction
+                            value = Me.m_heavykeymolarfrac
+                        Case 2
+                            'PROP_SC_2	Light Key Molar Fraction
+                            value = Me.m_lightkeymolarfrac
+                        Case 3
+                            'PROP_SC_3	Condenser Pressure
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.pressure, Me.m_condenserpressure)
+                        Case 4
+                            'PROP_SC_4	Reboiler Pressure
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.pressure, Me.m_boilerpressure)
+                        Case 5
+                            'PROP_SC_5	Minimun Reflux Ratio
+                            value = Me.m_Rmin
+                        Case 6
+                            'PROP_SC_6	Minimum Stages
+                            value = Me.m_Nmin
+                        Case 7
+                            'PROP_SC_7	Optimal Feed Stage
+                            value = Me.ofs
+                        Case 8
+                            'PROP_SC_8	Stripping Liquid Molar Flow
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.L_)
+                        Case 9
+                            'PROP_SC_9	Rectify Liquid Molar Flow
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.L)
+                        Case 10
+                            'PROP_SC_10	Stripping Vapor Molar Flow
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.V_)
+                        Case 11
+                            'PROP_SC_11	Rectify Vapor Molar Flow
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.V)
+                        Case 12
+                            'PROP_SC_12	Condenser Duty
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.heatflow, Me.m_Qc)
+                        Case 13
+                            'PROP_SC_13	Reboiler Duty
+                            value = SystemsOfUnits.Converter.ConvertFromSI(su.heatflow, Me.m_Qb)
+                        Case 14
+                            value = m_N
+                    End Select
+
+                Else
+
+                    Select Case prop
+
+                        Case "Stage Height"
+
+                            value = StageHeight.ConvertFromSI(su.distance)
+
+                        Case "Estimated Height"
+
+                            value = EstimatedHeight.ConvertFromSI(su.distance)
+
+                        Case "Estimated Diameter"
+
+                            value = EstimatedDiameter.ConvertFromSI(su.distance)
+
+                    End Select
+
+                End If
 
                 Return value
+
             End If
 
         End Function
-
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As Interfaces.Enums.PropertyType) As String()
             Dim i As Integer = 0
@@ -645,6 +721,9 @@ restart:    B = F - D
                         proplist.Add("PROP_SC_" + CStr(i))
                     Next
             End Select
+            proplist.Add("Stage Height")
+            proplist.Add("Estimated Height")
+            proplist.Add("Estimated Diameter")
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
         End Function
@@ -655,91 +734,131 @@ restart:    B = F - D
 
             If su Is Nothing Then su = New SystemsOfUnits.SI
             Dim cv As New SystemsOfUnits.Converter
-            Dim propidx As Integer = Convert.ToInt32(prop.Split("_")(2))
 
-            Select Case propidx
+            If prop.Contains("_") Then
 
-                Case 0
-                    'PROP_SC_0	Reflux Ratio
-                    Me.m_refluxratio = propval
-                Case 1
-                    'PROP_SC_1	Heavy Key Molar Fraction
-                    Me.m_heavykeymolarfrac = propval
-                Case 2
-                    'PROP_SC_2	Light Key Molar Fraction
-                    Me.m_lightkeymolarfrac = propval
-                Case 3
-                    'PROP_SC_3	Condenser Pressure
-                    Me.m_condenserpressure = SystemsOfUnits.Converter.ConvertToSI(su.pressure, propval)
-                Case 4
-                    'PROP_SC_4	Reboiler Pressure
-                    Me.m_boilerpressure = SystemsOfUnits.Converter.ConvertToSI(su.pressure, propval)
-
-            End Select
-            Return 1
-        End Function
-
-        Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As Interfaces.IUnitsOfMeasure = Nothing) As String
-            Dim u0 As String = MyBase.GetPropertyUnit(prop, su)
-
-            If u0 <> "NF" Then
-                Return u0
-            Else
-                If su Is Nothing Then su = New SystemsOfUnits.SI
-                Dim cv As New SystemsOfUnits.Converter
-                Dim value As String = ""
                 Dim propidx As Integer = Convert.ToInt32(prop.Split("_")(2))
 
                 Select Case propidx
 
                     Case 0
                         'PROP_SC_0	Reflux Ratio
-                        value = ""
+                        Me.m_refluxratio = propval
                     Case 1
                         'PROP_SC_1	Heavy Key Molar Fraction
-                        value = ""
+                        Me.m_heavykeymolarfrac = propval
                     Case 2
                         'PROP_SC_2	Light Key Molar Fraction
-                        value = ""
+                        Me.m_lightkeymolarfrac = propval
                     Case 3
                         'PROP_SC_3	Condenser Pressure
-                        value = su.pressure
+                        Me.m_condenserpressure = SystemsOfUnits.Converter.ConvertToSI(su.pressure, propval)
                     Case 4
                         'PROP_SC_4	Reboiler Pressure
-                        value = su.pressure
-                    Case 5
-                        'PROP_SC_5	Minimun Reflux Ratio
-                        value = ""
-                    Case 6
-                        'PROP_SC_6	Minimum Stages
-                        value = ""
-                    Case 7
-                        'PROP_SC_7	Optimal Feed Stage
-                        value = ""
-                    Case 8
-                        'PROP_SC_8	Stripping Liquid Molar Flow
-                        value = su.molarflow
-                    Case 9
-                        'PROP_SC_9	Rectify Liquid Molar Flow
-                        value = su.molarflow
-                    Case 10
-                        'PROP_SC_10	Stripping Vapor Molar Flow
-                        value = su.molarflow
-                    Case 11
-                        'PROP_SC_11	Rectify Vapor Molar Flow
-                        value = su.molarflow
-                    Case 12
-                        'PROP_SC_12	Condenser Duty
-                        value = su.heatflow
-                    Case 13
-                        'PROP_SC_13	Reboiler Duty
-                        value = su.heatflow
-                    Case 14
-                        value = ""
+                        Me.m_boilerpressure = SystemsOfUnits.Converter.ConvertToSI(su.pressure, propval)
+
                 End Select
 
-                Return value
+            Else
+
+                Select Case prop
+
+                    Case "Stage Height"
+
+                        StageHeight = Convert.ToDouble(propval).ConvertToSI(su.distance)
+
+                End Select
+
             End If
+
+            Return 1
+
+        End Function
+
+        Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As Interfaces.IUnitsOfMeasure = Nothing) As String
+
+            Dim u0 As String = MyBase.GetPropertyUnit(prop, su)
+
+            If u0 <> "NF" Then
+
+                Return u0
+
+            Else
+
+                If su Is Nothing Then su = New SystemsOfUnits.SI
+                Dim cv As New SystemsOfUnits.Converter
+                Dim value As String = ""
+
+                If prop.Contains("_") Then
+
+                    Dim propidx As Integer = Convert.ToInt32(prop.Split("_")(2))
+
+                    Select Case propidx
+
+                        Case 0
+                            'PROP_SC_0	Reflux Ratio
+                            value = ""
+                        Case 1
+                            'PROP_SC_1	Heavy Key Molar Fraction
+                            value = ""
+                        Case 2
+                            'PROP_SC_2	Light Key Molar Fraction
+                            value = ""
+                        Case 3
+                            'PROP_SC_3	Condenser Pressure
+                            value = su.pressure
+                        Case 4
+                            'PROP_SC_4	Reboiler Pressure
+                            value = su.pressure
+                        Case 5
+                            'PROP_SC_5	Minimun Reflux Ratio
+                            value = ""
+                        Case 6
+                            'PROP_SC_6	Minimum Stages
+                            value = ""
+                        Case 7
+                            'PROP_SC_7	Optimal Feed Stage
+                            value = ""
+                        Case 8
+                            'PROP_SC_8	Stripping Liquid Molar Flow
+                            value = su.molarflow
+                        Case 9
+                            'PROP_SC_9	Rectify Liquid Molar Flow
+                            value = su.molarflow
+                        Case 10
+                            'PROP_SC_10	Stripping Vapor Molar Flow
+                            value = su.molarflow
+                        Case 11
+                            'PROP_SC_11	Rectify Vapor Molar Flow
+                            value = su.molarflow
+                        Case 12
+                            'PROP_SC_12	Condenser Duty
+                            value = su.heatflow
+                        Case 13
+                            'PROP_SC_13	Reboiler Duty
+                            value = su.heatflow
+                        Case 14
+                            value = ""
+                    End Select
+
+                    Return value
+
+                Else
+
+                    Select Case prop
+
+                        Case "Stage Height", "Estimated Height", "Estimated Diameter"
+
+                            Return su.distance
+
+                    End Select
+
+                    Return ""
+
+                End If
+
+            End If
+
         End Function
 
         Public Overrides Sub DisplayEditForm()
@@ -836,6 +955,7 @@ restart:    B = F - D
             str.AppendLine("    Heavy key mole fraction: " & Me.m_heavykeymolarfrac.ToString(numberformat, ci))
             str.AppendLine("    Condenser pressure: " & SystemsOfUnits.Converter.ConvertFromSI(su.pressure, Me.m_condenserpressure).ToString(numberformat, ci) & " " & su.pressure)
             str.AppendLine("    Reboiler pressure: " & SystemsOfUnits.Converter.ConvertFromSI(su.pressure, Me.m_condenserpressure).ToString(numberformat, ci) & " " & su.pressure)
+            str.AppendLine("    Stage/Tray height: " & SystemsOfUnits.Converter.ConvertFromSI(su.distance, Me.StageHeight).ToString(numberformat, ci) & " " & su.distance)
             str.AppendLine()
             str.AppendLine("Results")
             str.AppendLine()
@@ -849,6 +969,8 @@ restart:    B = F - D
             str.AppendLine("    Rectifying liquid mole flow: " & SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.L).ToString(numberformat, ci) & " " & su.molarflow)
             str.AppendLine("    Stripping vapor mole flow: " & SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.V_).ToString(numberformat, ci) & " " & su.molarflow)
             str.AppendLine("    Rectifying liquid mole flow: " & SystemsOfUnits.Converter.ConvertFromSI(su.molarflow, Me.V).ToString(numberformat, ci) & " " & su.molarflow)
+            str.AppendLine("    Estimated column height: " & SystemsOfUnits.Converter.ConvertFromSI(su.distance, Me.EstimatedHeight).ToString(numberformat, ci) & " " & su.distance)
+            str.AppendLine("    Estimated column diameter: " & SystemsOfUnits.Converter.ConvertFromSI(su.distance, Me.EstimatedDiameter).ToString(numberformat, ci) & " " & su.distance)
 
             Return str.ToString
 
