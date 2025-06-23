@@ -533,7 +533,7 @@ Namespace CalculatorInterface
             Dim tmpcomp As ConstantProperties = pp._availablecomps(compound)
             pp._selectedcomps.Add(compound, tmpcomp)
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             Dim results As Object = Nothing
@@ -573,7 +573,7 @@ Namespace CalculatorInterface
             Dim tmpcomp As ConstantProperties = pp._availablecomps(compound)
             pp._selectedcomps.Add(compound, tmpcomp)
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             Dim results As Object = Nothing
@@ -613,7 +613,7 @@ Namespace CalculatorInterface
             Dim tmpcomp As ConstantProperties = pp._availablecomps(compound)
             pp._selectedcomps.Add(compound, tmpcomp)
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             Dim results As Object = Nothing
@@ -774,7 +774,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.pressure = pressure
             ms.Phases(0).Properties.molarfraction = 1.0
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             If prop.ToLower <> "molecularweight" Then
@@ -879,7 +879,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.temperature = temperature
             ms.Phases(0).Properties.pressure = pressure
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             If prop.ToLower <> "molecularweight" Then
@@ -989,7 +989,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.temperature = temperature
             ms.Phases(0).Properties.pressure = pressure
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             pp.CalcTwoPhaseProp(New Object() {prop}, New Object() {phaselabel1, phaselabel2})
@@ -1096,7 +1096,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.temperature = temperature
             ms.Phases(0).Properties.pressure = pressure
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             pp.CalcTwoPhaseProp(New Object() {prop}, New Object() {phaselabel1, phaselabel2})
@@ -1333,7 +1333,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.temperature = T
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
@@ -1432,7 +1432,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.enthalpy = H
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.temperature = InitialTemperatureEstimate
@@ -1535,7 +1535,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.entropy = S
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.temperature = InitialTemperatureEstimate
@@ -1638,7 +1638,7 @@ Namespace CalculatorInterface
             ms.Phases(2).Properties.molarfraction = VF
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.temperature = InitialTemperatureEstimate
@@ -1741,7 +1741,7 @@ Namespace CalculatorInterface
             ms.Phases(2).Properties.molarfraction = VF
             ms.Phases(0).Properties.temperature = T
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.pressure = InitialPressureEstimate
@@ -1843,7 +1843,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.temperature = T
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
@@ -1937,7 +1937,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.enthalpy = H
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.temperature = InitialTemperatureEstimate
@@ -2035,7 +2035,7 @@ Namespace CalculatorInterface
             ms.Phases(0).Properties.entropy = S
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.temperature = InitialTemperatureEstimate
@@ -2133,7 +2133,7 @@ Namespace CalculatorInterface
             ms.Phases(2).Properties.molarfraction = VF
             ms.Phases(0).Properties.pressure = P
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.temperature = InitialTemperatureEstimate
@@ -2231,7 +2231,7 @@ Namespace CalculatorInterface
             ms.Phases(2).Properties.molarfraction = VF
             ms.Phases(0).Properties.temperature = T
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             ms.Phases(0).Properties.pressure = InitialPressureEstimate
@@ -2543,7 +2543,7 @@ Namespace CalculatorInterface
 
             ms.SetOverallComposition(molefractions)
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
             Dim results As New FlashCalculationResult
@@ -2610,7 +2610,7 @@ Namespace CalculatorInterface
 
             ms.SetOverallComposition(molefractions)
 
-            ms._pp = pp
+            ms.PropertyPackage = pp
             pp.SetMaterial(ms)
 
         End Sub

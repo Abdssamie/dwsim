@@ -337,7 +337,7 @@ Public Class EditingForm_Column
                 Case ColType.DistillationColumn
                     gridResults.Rows.Add(New Object() { .FlowSheet.GetTranslatedString("DCCondenserDuty"), su.Converter.ConvertFromSI(units.heatflow, .CondenserDuty).ToString(nf), units.heatflow})
                     gridResults.Rows.Add(New Object() { .FlowSheet.GetTranslatedString("DCReboilerDuty"), su.Converter.ConvertFromSI(units.heatflow, .ReboilerDuty).ToString(nf), units.heatflow})
-                    gridResults.Rows.Add(New Object() { .FlowSheet.GetTranslatedString("CondenserSpecValue"), .Specs("C").SpecValue.ToString(nf), spu2})
+                    gridResults.Rows.Add(New Object() { .FlowSheet.GetTranslatedString("CondenserSpecValue"), .Specs("C").SpecValue.ToString(nf), spu1})
                     gridResults.Rows.Add(New Object() { .FlowSheet.GetTranslatedString("CondenserCalcValue"), spval1.ToString(nf), spu1})
                     gridResults.Rows.Add(New Object() { .FlowSheet.GetTranslatedString("ReboilerSpecValue"), .Specs("R").SpecValue.ToString(nf), spu2})
                     gridResults.Rows.Add(New Object() { .FlowSheet.GetTranslatedString("ReboilerCalcValue"), spval2.ToString(nf), spu2})

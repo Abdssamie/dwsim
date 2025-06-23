@@ -284,20 +284,24 @@ Namespace Streams
                 If _ppid Is Nothing Then _ppid = ""
                 If _pp IsNot Nothing And _ppwasset Then
                     Return _pp
-                ElseIf _pp IsNot Nothing AndAlso FlowSheet.PropertyPackages.ContainsKey(_pp.UniqueID) Then
-                    Return FlowSheet.PropertyPackages(_pp.UniqueID)
-                Else
-                    If FlowSheet.PropertyPackages.ContainsKey(_ppid) Then
-                        Return FlowSheet.PropertyPackages(_ppid)
+                ElseIf FlowSheet IsNot Nothing Then
+                    If _pp IsNot Nothing AndAlso FlowSheet.PropertyPackages.ContainsKey(_pp.UniqueID) Then
+                        Return FlowSheet.PropertyPackages(_pp.UniqueID)
                     Else
-                        Dim firstpp = FlowSheet.PropertyPackages.Values.FirstOrDefault()
-                        If firstpp Is Nothing Then
-                            Return Nothing
+                        If FlowSheet.PropertyPackages.ContainsKey(_ppid) Then
+                            Return FlowSheet.PropertyPackages(_ppid)
                         Else
-                            _ppid = firstpp.UniqueID
-                            Return firstpp
+                            Dim firstpp = FlowSheet.PropertyPackages.Values.FirstOrDefault()
+                            If firstpp Is Nothing Then
+                                Return Nothing
+                            Else
+                                _ppid = firstpp.UniqueID
+                                Return firstpp
+                            End If
                         End If
                     End If
+                Else
+                    Return Nothing
                 End If
             End Get
             Set(ByVal value As PropertyPackage)

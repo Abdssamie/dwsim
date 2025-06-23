@@ -9917,7 +9917,7 @@ Final3:
         ''' must be raised. If the exception is raised, the client should check all the values returned to
         ''' determine which is undefined.</remarks>
         Public Overridable Function GetCompoundConstant(ByVal props As Object, ByVal compIds As Object) As Object Implements ICapeThermoCompounds.GetCompoundConstant
-            Dim vals As New ArrayList
+            Dim vals As New List(Of Object)
             If props(0).ToString().ToLower() = "charge" And compIds Is Nothing Then
                 vals.Add(0.0)
             Else
@@ -9999,16 +9999,10 @@ Final3:
                                 'vals.Add(Double.NaN)
                                 Throw New CapeThrmPropertyNotAvailableException("unsupported property")
                         End Select
-                        If vals(vals.Count - 1) = 0.0 Then
-                            'vals(vals.Count - 1) = Double.NaN
-                            Throw New CapeThrmPropertyNotAvailableException("property value not available")
-                        End If
                     Next
                 Next
             End If
-            Dim arr2(vals.Count - 1) As Object
-            Array.Copy(vals.ToArray, arr2, vals.Count)
-            Return arr2
+            Return vals.ToArray()
         End Function
 
         ''' <summary>

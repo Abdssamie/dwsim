@@ -21,6 +21,7 @@
 🌟 Gregory Marks
 🌟 Günther Holzer
 🌟 Harindi Perera
+🌟 Harry Levinson
 🌟 Helena Thogersen
 🌟 Henk Fikkert
 🌟 Hubertt Elias Jr.
@@ -31,7 +32,6 @@
 🌟 José Marques
 🌟 Justin Parrot
 🌟 Leonard Seed
-🌟 Luis Contreras
 🌟 Marcos Guimarães
 🌟 Matt Hogg
 🌟 Michael Papantoniou
@@ -46,6 +46,7 @@
 🌟 Ryan Smith
 🌟 Simone Vidille
 🌟 Tech-Rudra
+🌟 Todd Flach	
 Alberto Baumeister
 Alex Fells
 Alex Michinel
@@ -70,7 +71,6 @@ Fabiano Scheufele
 Fernando Almeida
 Frans Le Roux
 Gabriel Carvalho
-Harry Levinson
 Hep Ingham
 Hurudza
 John Eamon
