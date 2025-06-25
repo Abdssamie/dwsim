@@ -101,20 +101,23 @@ Public Class FormMain
     Public Shared ExternalSolvers As New Dictionary(Of String, Interfaces.IExternalSolverIdentification)
 
     Public Shared Property EnableUserDefinedSaveXMLRoutine As Boolean = False
-
+    Public Shared Property EnableUserDefinedSaveXMLZIPRoutine As Boolean = False
     Public Shared Property EnableUserDefinedLoadFileRoutine As Boolean = False
-
     Public Shared Property EnableUserDefinedLoadXMLRoutine As Boolean = False
-
     Public Shared Property EnableUserDefinedLoadXMLZIPRoutine As Boolean = False
+    Public Shared Property EnableUserDefinedCloseAllRoutine As Boolean = False
 
     Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean)
+
+    Public Shared UserDefinedSaveXMLZIPRoutine As Action(Of IVirtualFile, FormFlowsheet, Boolean)
 
     Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String)
 
     Public Shared UserDefinedLoadXMLRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, IFlowsheet)
 
     Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, IFlowsheet)
+
+    Public Shared UserDefinedCloseAllRoutine As Action(Of Object, System.EventArgs)
 
 #Region "    Form Events"
 
@@ -2337,6 +2340,10 @@ Public Class FormMain
 
     Public Function LoadXML(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
 
+        If EnableUserDefinedLoadXMLRoutine Then
+            Return UserDefinedLoadXMLRoutine.Invoke(handler, ProgressFeedBack, simulationfilename, forcommandline)
+        End If
+
         RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
@@ -3747,6 +3754,7 @@ Public Class FormMain
 
         If EnableUserDefinedSaveXMLRoutine Then
             UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation)
+            Exit Sub
         End If
 
         RaiseEvent FlowsheetSavingToXML(form, New EventArgs())
@@ -4197,6 +4205,10 @@ Public Class FormMain
 
     Function LoadAndExtractXMLZIP(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal forcommandline As Boolean = False, Optional fullpath As String = "") As Interfaces.IFlowsheet
 
+        If EnableUserDefinedLoadXMLZIPRoutine Then
+            Return UserDefinedLoadXMLZIPRoutine.Invoke(handler, ProgressFeedBack, forcommandline, fullpath)
+        End If
+
         Dim pathtosave As String = Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, Guid.NewGuid().ToString())
 
         Directory.CreateDirectory(pathtosave)
@@ -4288,6 +4300,11 @@ Label_00CC:
     End Sub
 
     Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False)
+
+        If EnableUserDefinedSaveXMLZIPRoutine Then
+            UserDefinedSaveXMLZIPRoutine.Invoke(handler, form, closingSimulation)
+            Exit Sub
+        End If
 
         Dim xmlfile As String = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), "xml")
 
@@ -4390,6 +4407,11 @@ Label_00CC:
     End Sub
 
     Sub LoadFile(handler As IVirtualFile, Optional fullpath As String = "")
+
+        If EnableUserDefinedLoadFileRoutine Then
+            UserDefinedLoadFileRoutine.Invoke(handler, fullpath)
+            Exit Sub
+        End If
 
         Me.WelcomePanel.Visible = False
         PainelDeBoasvindasToolStripMenuItem.Checked = False
@@ -5020,6 +5042,12 @@ Label_00CC:
     End Sub
 
     Private Sub FecharTodasAsSimulacoesAbertasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseAllToolstripMenuItem.Click
+
+        If EnableUserDefinedCloseAllRoutine Then
+            UserDefinedCloseAllRoutine.Invoke(sender, e)
+            Exit Sub
+        End If
+
         If Me.MdiChildren.Length > 0 Then
             Dim form2 As Form
             For Each form2 In Me.MdiChildren

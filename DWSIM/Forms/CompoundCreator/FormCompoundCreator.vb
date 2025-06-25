@@ -43,7 +43,7 @@ Public Class FormCompoundCreator
 
     Public mycase As New CompoundGeneratorCase
     Public simulate365File As S365File = Nothing
-    Friend loaded As Boolean = False
+    Public loaded As Boolean = False
     Friend PureUNIFACCompound As Boolean = True
     Friend isDWSimSaved As Boolean = True
     Friend isUserDBSaved As Boolean = True
