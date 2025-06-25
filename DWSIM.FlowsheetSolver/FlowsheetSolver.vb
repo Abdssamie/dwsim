@@ -42,6 +42,13 @@ Public Delegate Sub CustomEvent2(ByVal objinfo As CalculationArgs)
     Public Shared Event CalculationError As CustomEvent
     Public Shared Event CalculatingObject As CustomEvent2
 
+    Private Shared _callback As IFlowsheetSolveCallback
+    Public Shared Sub RegisterCallback(callback As IFlowsheetSolveCallback)
+        If _callback Is Nothing Then
+            _callback = callback
+        End If
+    End Sub
+
     ''' <summary>
     ''' Flowsheet calculation routine 1. Calculates the object using information sent by the queue and updates the flowsheet.
     ''' </summary>
