@@ -1136,6 +1136,15 @@ Public Delegate Sub CustomEvent2(ByVal objinfo As CalculationArgs)
                 Return New List(Of Exception)
             End If
 
+            If _callback IsNot Nothing Then
+
+                Dim filename = Path.GetFileName(fs.FilePath)
+
+                If Not String.IsNullOrEmpty(filename) Then
+                    _callback.OnSolved(filename)
+                End If
+            End If
+
             Inspector.Host.CurrentSolutionID = Date.Now.ToBinary
 
             If GlobalSettings.Settings.InspectorEnabled Then
