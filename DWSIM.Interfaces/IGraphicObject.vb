@@ -135,7 +135,11 @@ Public Interface IConnectionPoint
 
     Property Position As IPoint
 
-    Property IsEnergyConnector As Boolean
+    ''' <summary>
+    ''' Use Type = ConType.ConEn instead.
+    ''' </summary>
+    ''' <returns></returns>
+    <Obsolete> Property IsEnergyConnector As Boolean
 
     Property Active As Boolean
 
