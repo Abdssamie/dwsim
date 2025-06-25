@@ -100,6 +100,22 @@ Public Class FormMain
 
     Public Shared ExternalSolvers As New Dictionary(Of String, Interfaces.IExternalSolverIdentification)
 
+    Public Shared Property EnableUserDefinedSaveXMLRoutine As Boolean = False
+
+    Public Shared Property EnableUserDefinedLoadFileRoutine As Boolean = False
+
+    Public Shared Property EnableUserDefinedLoadXMLRoutine As Boolean = False
+
+    Public Shared Property EnableUserDefinedLoadXMLZIPRoutine As Boolean = False
+
+    Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean)
+
+    Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String)
+
+    Public Shared UserDefinedLoadXMLRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, IFlowsheet)
+
+    Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, IFlowsheet)
+
 #Region "    Form Events"
 
     Public Event ToolOpened(sender As Object, e As EventArgs)
@@ -2319,7 +2335,6 @@ Public Class FormMain
 
     End Function
 
-
     Public Function LoadXML(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
 
         RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
@@ -3728,7 +3743,11 @@ Public Class FormMain
 
     End Sub
 
-    Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "")
+    Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False)
+
+        If EnableUserDefinedSaveXMLRoutine Then
+            UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation)
+        End If
 
         RaiseEvent FlowsheetSavingToXML(form, New EventArgs())
 
@@ -4268,7 +4287,7 @@ Label_00CC:
 
     End Sub
 
-    Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet)
+    Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False)
 
         Dim xmlfile As String = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), "xml")
 
@@ -4856,7 +4875,7 @@ Label_00CC:
         Return True
     End Function
 
-    Public Function SaveFile(ByVal saveasync As Boolean, Optional saveToDashboard As Boolean = False) As String
+    Public Function SaveFile(ByVal saveasync As Boolean, Optional saveToDashboard As Boolean = False, Optional closing As Boolean = False) As String
 
         If My.Computer.Keyboard.ShiftKeyDown Then saveasync = False
 

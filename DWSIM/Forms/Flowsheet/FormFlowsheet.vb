@@ -1094,7 +1094,7 @@ Public Class FormFlowsheet
 
             If x = MsgBoxResult.Yes Then
 
-                My.Application.MainWindowForm.SaveFile(False)
+                My.Application.MainWindowForm.SaveFile(False, True)
                 Me.m_overrideCloseQuestion = True
                 Me.Close()
 
