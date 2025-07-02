@@ -218,6 +218,8 @@ Public Interface IManagerSettings
 
     Property UploadToServer As Boolean
 
+    Property StoreDataInLocalDatabase As Boolean
+
     Property AssistanceLevel As Integer
 
     Property AutoUpdateEnabled As Boolean
