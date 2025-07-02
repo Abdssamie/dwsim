@@ -1646,7 +1646,7 @@ Namespace Reactors
 
             OutletTemperature = T
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
@@ -2515,7 +2515,7 @@ Namespace Reactors
 
             pp.CurrentMaterialStream = ims
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                 If ReactorOperationMode = OperationMode.Adiabatic Then
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                     New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {

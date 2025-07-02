@@ -460,7 +460,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                 SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
@@ -1153,7 +1153,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 WriteDebugInfo("PH Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
                 IObj?.Paragraphs.Add("The algorithm converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
-                If Settings.AIAssistedConvergenceLevel > 0 Then
+                If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
@@ -1473,7 +1473,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                 DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
@@ -1711,7 +1711,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                 DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
@@ -1996,7 +1996,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                 DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Ki.Count,
@@ -2620,7 +2620,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             IObj?.Close()
 
-            If Settings.AIAssistedConvergenceLevel > 0 Then
+            If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                 DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                 New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                     .CompoundNames = PP.RET_VNAMES(),
@@ -2832,7 +2832,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                 'Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector, deltaT}
 
-                If Settings.AIAssistedConvergenceLevel > 0 Then
+                If SharedClasses.AI.ConvergenceAssistant.Manager IsNot Nothing Then
                     DWSIM.SharedClasses.AI.ConvergenceAssistant.Manager?.StoreData(
                         New AI.ConvergenceAssistant.Classes.ConvergenceHelperTrainingData With {
                         .CompoundNames = PP.RET_VNAMES(), .ModelName = PP.ComponentName, .NumberOfCompounds = Vz.Count,
