@@ -99,6 +99,13 @@ Public Class FormMain
     Public Property AnalyticsProvider As IAnalyticsProvider
 
     Public Shared ExternalSolvers As New Dictionary(Of String, Interfaces.IExternalSolverIdentification)
+    Public Shared Property SignalRGuid As String
+    Public Shared Property CurrentFileVersion As Decimal
+
+    Private ReadOnly dwsimVersion As String =
+    Assembly.GetExecutingAssembly().GetName().Version.Major.ToString() & "." &
+    Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString() & "." &
+    Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()
 
     Public Shared Property EnableUserDefinedSaveXMLRoutine As Boolean = False
     Public Shared Property EnableUserDefinedSaveXMLZIPRoutine As Boolean = False
@@ -106,18 +113,27 @@ Public Class FormMain
     Public Shared Property EnableUserDefinedLoadXMLRoutine As Boolean = False
     Public Shared Property EnableUserDefinedLoadXMLZIPRoutine As Boolean = False
     Public Shared Property EnableUserDefinedCloseAllRoutine As Boolean = False
+    Public Shared Property EnableUserDefinedOpenRecentRoutine As Boolean = False
+    Public Shared Property EnableFlowsheetSolveCallbackHandler As Boolean = False
+    Public Shared Property EnableLeaveCollaborationGroup As Boolean = False
 
-    Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean)
+    Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean, FormFlowsheet, String)
 
-    Public Shared UserDefinedSaveXMLZIPRoutine As Action(Of IVirtualFile, FormFlowsheet, Boolean)
+    Public Shared UserDefinedSaveXMLZIPRoutine As Action(Of IVirtualFile, FormFlowsheet, Boolean, FormFlowsheet, String)
 
-    Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String)
+    Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String, String)
 
     Public Shared UserDefinedLoadXMLRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, IFlowsheet)
 
-    Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, IFlowsheet)
+    Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, String, IFlowsheet)
 
     Public Shared UserDefinedCloseAllRoutine As Action(Of Object, System.EventArgs)
+
+    Public Shared UserDefinedOpenRecentRoutine As Action(Of Object, System.EventArgs, String)
+
+    Public Shared RegisterFlowsheetSolveCallbackHandler As Action
+
+    Public Shared LeaveCollaborationGroup As Action(Of String, String)
 
 #Region "    Form Events"
 
@@ -402,6 +418,9 @@ Public Class FormMain
 
 #End If
 
+        If EnableFlowsheetSolveCallbackHandler Then
+            RegisterFlowsheetSolveCallbackHandler.Invoke()
+        End If
     End Sub
 
     Private Sub FileManagementService_SaveFileToDashboard(sender As Object, e As EventArgs)
@@ -2340,10 +2359,6 @@ Public Class FormMain
 
     Public Function LoadXML(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
 
-        If EnableUserDefinedLoadXMLRoutine Then
-            Return UserDefinedLoadXMLRoutine.Invoke(handler, ProgressFeedBack, simulationfilename, forcommandline)
-        End If
-
         RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
@@ -2401,6 +2416,11 @@ Public Class FormMain
         Dim form As FormFlowsheet = New FormFlowsheet()
 
         form.Options.VirtualFile = handler
+
+        If EnableUserDefinedLoadXMLRoutine Then
+            form.SignalRGuid = SignalRGuid
+            form.FileVersion = CurrentFileVersion
+        End If
 
         Settings.CAPEOPENMode = False
 
@@ -3753,7 +3773,7 @@ Public Class FormMain
     Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False)
 
         If EnableUserDefinedSaveXMLRoutine Then
-            UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation)
+            UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation, My.Application.ActiveSimulation, dwsimVersion)
             Exit Sub
         End If
 
@@ -4206,7 +4226,7 @@ Public Class FormMain
     Function LoadAndExtractXMLZIP(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal forcommandline As Boolean = False, Optional fullpath As String = "") As Interfaces.IFlowsheet
 
         If EnableUserDefinedLoadXMLZIPRoutine Then
-            Return UserDefinedLoadXMLZIPRoutine.Invoke(handler, ProgressFeedBack, forcommandline, fullpath)
+            Return UserDefinedLoadXMLZIPRoutine.Invoke(handler, ProgressFeedBack, forcommandline, fullpath, dwsimVersion)
         End If
 
         Dim pathtosave As String = Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, Guid.NewGuid().ToString())
@@ -4302,7 +4322,7 @@ Label_00CC:
     Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False)
 
         If EnableUserDefinedSaveXMLZIPRoutine Then
-            UserDefinedSaveXMLZIPRoutine.Invoke(handler, form, closingSimulation)
+            UserDefinedSaveXMLZIPRoutine.Invoke(handler, form, closingSimulation, My.Application.ActiveSimulation, dwsimVersion)
             Exit Sub
         End If
 
@@ -4409,7 +4429,7 @@ Label_00CC:
     Sub LoadFile(handler As IVirtualFile, Optional fullpath As String = "")
 
         If EnableUserDefinedLoadFileRoutine Then
-            UserDefinedLoadFileRoutine.Invoke(handler, fullpath)
+            UserDefinedLoadFileRoutine.Invoke(handler, fullpath, dwsimVersion)
             Exit Sub
         End If
 
@@ -4789,6 +4809,11 @@ Label_00CC:
 
     Private Sub OpenRecent_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
+        If EnableUserDefinedOpenRecentRoutine Then
+            UserDefinedOpenRecentRoutine.Invoke(sender, e, dwsimVersion)
+            Exit Sub
+        End If
+
         Dim myLink As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
 
         If myLink.Text <> DWSIM.App.GetLocalString("vazio") Then
@@ -4897,7 +4922,7 @@ Label_00CC:
         Return True
     End Function
 
-    Public Function SaveFile(ByVal saveasync As Boolean, Optional saveToDashboard As Boolean = False, Optional closing As Boolean = False) As String
+    Public Function SaveFile(ByVal saveasync As Boolean, Optional saveToDashboard As Boolean = False, Optional closing As Boolean = False, Optional closingSimulation As Boolean = False) As String
 
         If My.Computer.Keyboard.ShiftKeyDown Then saveasync = False
 
@@ -4927,7 +4952,7 @@ Label_00CC:
                     filename = form2.Options.FilePath
                     SaveBackup(handler)
                     If Path.GetExtension(filename).ToLower = ".dwxml" Then
-                        SaveXML(handler, form2)
+                        SaveXML(handler, form2, closingSimulation:=closingSimulation)
                     ElseIf Path.GetExtension(filename).ToLower = ".xml" Then
                         If saveasync Then
                             TaskHelper.Run(Sub() SaveMobileXML(handler, form2)).ContinueWith(Sub(t)
@@ -4941,7 +4966,7 @@ Label_00CC:
                             SaveMobileXML(handler, form2)
                         End If
                     ElseIf Path.GetExtension(filename).ToLower = ".dwxmz" Then
-                        SaveXMLZIP(handler, form2)
+                        SaveXMLZIP(handler, form2, closingSimulation:=closingSimulation)
                     ElseIf Path.GetExtension(filename).ToLower = ".pfdx" Then
                         SaveJSON(handler, form2)
                     End If
@@ -4968,11 +4993,11 @@ Label_00CC:
                         'Application.DoEvents()
                         Console.WriteLine(handler.GetExtension().ToLower())
                         If handler.GetExtension().ToLower() = ".dwxml" Then
-                            SaveXML(handler, Me.ActiveMdiChild)
+                            SaveXML(handler, Me.ActiveMdiChild, closingSimulation:=closingSimulation)
                         ElseIf handler.GetExtension().ToLower() = ".xml" Then
                             SaveMobileXML(handler, Me.ActiveMdiChild)
                         ElseIf handler.GetExtension().ToLower() = ".dwxmz" Then
-                            SaveXMLZIP(handler, Me.ActiveMdiChild)
+                            SaveXMLZIP(handler, Me.ActiveMdiChild, closingSimulation:=closingSimulation)
                         ElseIf handler.GetExtension().ToLower() = ".pfdx" Then
                             SaveJSON(handler, Me.ActiveMdiChild)
                         End If

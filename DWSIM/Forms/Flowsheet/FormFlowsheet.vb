@@ -146,6 +146,8 @@ Public Class FormFlowsheet
     Private MessagePump As New Concurrent.ConcurrentQueue(Of Tuple(Of String, Interfaces.IFlowsheet.MessageType, String))
 
     Public Shared DoNotOpenSimulationWizard As Boolean = False
+    Public Property SignalRGuid As String
+    Public Property FileVersion As Decimal = 0.00D
 
 #End Region
 
@@ -1092,9 +1094,16 @@ Public Class FormFlowsheet
 
             Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Options.SimulationName & " (" & System.IO.Path.GetFileName(Me.Options.FilePath) & ") ...", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
 
+            If Not x = MsgBoxResult.Cancel Then
+                If FormMain.EnableLeaveCollaborationGroup Then
+                    Dim fileName = Path.GetFileName(My.Application.ActiveSimulation.FilePath)
+                    FormMain.LeaveCollaborationGroup(fileName, My.Application.ActiveSimulation.SignalRGuid)
+                End If
+            End If
+
             If x = MsgBoxResult.Yes Then
 
-                My.Application.MainWindowForm.SaveFile(False, True)
+                My.Application.MainWindowForm.SaveFile(False, True, closingSimulation:=True)
                 Me.m_overrideCloseQuestion = True
                 Me.Close()
 
