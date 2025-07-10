@@ -1,6 +1,6 @@
 ﻿==================================================
 DWSIM - Open Source Process Simulator
-Version 9.0.2
+Version 9.0.3
 Copyright (c) 2017-2025 Daniel Wagner and contributors
 Copyright (c) 2008-2016 Daniel Wagner, Gregor Reichert, Gustavo Leon
 ==================================================
@@ -61,6 +61,25 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog including souce code changes can be viewed at https://github.com/DanWBR/dwsim/commits/windows
+
+Version 9.0.3
+
+- Added Shortcut column Height and Diameter calculation
+- Distribute waste heat proportionally on water electrolyzer outlet streams (#838)
+- Added missing Object Layout undo/redo
+- Exposed outlet temperature on PFR (#806)
+- Updated translations
+- Fixed CAPE-OPEN UO crash on Linux/macOS (#837)
+- Fixed issue #833 (wrong unit for condenser spec)
+- Fixed issue #834 (PVF Flash spec issue/bug)
+- Fixed issue #831 (Dynamic control Tank Level missing liquid level property)
+- Fixed Dynamic Integrator input issue (Classic UI)
+- Fixed PFR profile exporting
+- Fixed issue with mass balance in compound separator
+- Fixed single-phase Flash
+- Fixed image export scaling (CPUI)
+- Fixed issue with Sensitivity Analysis utility (Classic UI)
+- Fixed Flowsheet UO not stopping solver on errors
 
 Version 9.0.2
 
