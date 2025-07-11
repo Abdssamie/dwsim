@@ -51,7 +51,6 @@
 🌟 Todd Flach	
 Alberto Baumeister
 Alex Fells
-Alex Michinel
 Alex Platon
 Andras Nady
 Anders Andreasen
@@ -79,6 +78,7 @@ John Eamon
 John Kossik
 Julio Ochoa
 Kenneth Troldal
+Kilian Clausen
 Leandro Favaretto
 Les Waymont
 Lewis Estall
@@ -88,6 +88,7 @@ Maša Novaković
 Marcelo Dahan
 Marcos Silva
 Mario Farley
+Michael Suter
 Nathan Schuh
 Peter Nordquist
 Petroconsulting LLC
