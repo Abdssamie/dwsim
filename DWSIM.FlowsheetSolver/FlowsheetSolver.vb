@@ -1244,8 +1244,11 @@ Public Delegate Sub CustomEvent2(ByVal objinfo As CalculationArgs)
 
             Dim objstack As List(Of String) = objl(0)
 
+            Dim WaitingForUserDefinedOrder As Boolean = False
+
             If ChangeCalcOrder Then
                 If mode = 0 Or mode = 1 Then
+                    WaitingForUserDefinedOrder = True
                     fgui.RunCodeOnUIThread(Sub()
                                                Dim customlist = fgui.FlowsheetOptions.CustomCalculationOrder
                                                Dim reflist = New List(Of String)(customlist)
@@ -1265,9 +1268,14 @@ Public Delegate Sub CustomEvent2(ByVal objinfo As CalculationArgs)
                                                    objstack = fgui.ChangeCalculationOrder(objstack)
                                                End If
                                                fgui.FlowsheetOptions.CustomCalculationOrder = New List(Of String)(objstack)
+                                               WaitingForUserDefinedOrder = False
                                            End Sub)
                 End If
             End If
+
+            While WaitingForUserDefinedOrder
+                Thread.Sleep(500)
+            End While
 
             IObj?.Paragraphs.Add("The objects which will be calculated are (in this order): ")
 
