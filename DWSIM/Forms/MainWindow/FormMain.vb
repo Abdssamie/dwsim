@@ -1099,14 +1099,19 @@ Public Class FormMain
             End If
 
 #If Not LINUX Then
-
-            ToolStripManager.RevertMerge(ToolStrip1)
+            Try
+                ToolStripManager.RevertMerge(ToolStrip1)
+            Catch ex As Exception
+            End Try
 
 #End If
 
-            If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
-                ToolStripManager.Merge(DirectCast(ActiveMdiChild, FormFlowsheet).ToolStrip1, ToolStrip1)
-            End If
+            Try
+                If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+                    ToolStripManager.Merge(DirectCast(ActiveMdiChild, FormFlowsheet).ToolStrip1, ToolStrip1)
+                End If
+            Catch ex As Exception
+            End Try
 
             FormMain.TranslateFormFunction?.Invoke(Me)
 
