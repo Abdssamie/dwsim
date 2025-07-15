@@ -779,7 +779,7 @@ Public Class FormFlowsheet
         'dispose objects
 
         Try
-            FileDatabaseProvider.ReleaseDatabase()
+            FileDatabaseProvider?.ReleaseDatabase()
         Catch ex As Exception
         End Try
 
@@ -1103,7 +1103,11 @@ Public Class FormFlowsheet
 
             If x = MsgBoxResult.Yes Then
 
-                My.Application.MainWindowForm.SaveFile(False, True, closingSimulation:=True)
+                If FormMain.EnableUserDefinedSaveXMLZIPRoutine Then
+                    My.Application.MainWindowForm.SaveFile(False, True, closingSimulation:=True)
+                Else
+                    My.Application.MainWindowForm.SaveFile(False, closingSimulation:=True)
+                End If
                 Me.m_overrideCloseQuestion = True
                 Me.Close()
 
@@ -4092,7 +4096,7 @@ Public Class FormFlowsheet
 
     Public Property PropertyPackages As Dictionary(Of String, IPropertyPackage) Implements IFlowsheet.PropertyPackages, IFlowsheetBag.PropertyPackages
         Get
-            Return Options.PropertyPackages
+            Return Options?.PropertyPackages
         End Get
         Set(value As Dictionary(Of String, IPropertyPackage))
 
@@ -4105,7 +4109,7 @@ Public Class FormFlowsheet
 
     Public Property SelectedCompounds As Dictionary(Of String, ICompoundConstantProperties) Implements IFlowsheet.SelectedCompounds, IFlowsheetBag.Compounds
         Get
-            Select Case Options.CompoundOrderingMode
+            Select Case Options?.CompoundOrderingMode
                 Case CompoundOrdering.CAS_ASC
                     Return Options.SelectedComponents.OrderBy(Function(c) c.Value.CAS_Number).ToDictionary(Of String, ICompoundConstantProperties)(Function(k) k.Key, Function(k) k.Value)
                 Case CompoundOrdering.CAS_DESC
