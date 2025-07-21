@@ -261,6 +261,20 @@ Public Class FormNewSpreadsheet
 
         SetCustomFunctions()
 
+        AddHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Private Sub ThisFormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        RemoveHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
+
+        CopyFromDT()
+
     End Sub
 
     Dim c1, c2, c3, c4, c5, c6 As Func(Of Cell, Object(), Object)

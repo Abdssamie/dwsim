@@ -116,6 +116,24 @@ Imports PythonConsoleControl
 
         Next
 
+        AddHandler fc.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Private Sub ThisFormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        RemoveHandler fc.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
+
+        TabStripScripts.Items.Clear()
+
+        'load existing scripts
+        For Each s As Script In fc.ScriptCollection.Values
+            InsertScriptTab(s)
+        Next
 
     End Sub
 

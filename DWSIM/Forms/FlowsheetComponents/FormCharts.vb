@@ -1,4 +1,6 @@
-﻿Public Class FormCharts
+﻿Imports DWSIM.Interfaces
+
+Public Class FormCharts
 
     Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
@@ -7,6 +9,33 @@
     Private Sub FormCharts_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ExtensionMethods.ChangeDefaultFont(Me)
+
+        If Flowsheet.ChartCollection.Count > 0 Then
+            For Each item In Flowsheet.ChartCollection
+                Dim tabpage As New TabPage
+                Dim chart = item.Value
+                tabpage.Controls.Add(New TwoDimChartControl() With {.Dock = DockStyle.Fill,
+                                 .Flowsheet = Flowsheet,
+                                 .Chart = chart,
+                                 .Spreadsheet = Flowsheet.FormSpreadsheet.Spreadsheet})
+                tabpage.Text = chart.DisplayName
+                TabControl1.TabPages.Add(tabpage)
+            Next
+        End If
+
+        AddHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Private Sub ThisFormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        RemoveHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
+
+        TabControl1.TabPages.Clear()
 
         If Flowsheet.ChartCollection.Count > 0 Then
             For Each item In Flowsheet.ChartCollection
@@ -62,4 +91,5 @@
     Private Sub FormCharts_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         FormMain.TranslateFormFunction?.Invoke(Me)
     End Sub
+
 End Class

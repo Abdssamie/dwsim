@@ -40,12 +40,33 @@ Public Class FormDynamicsManager
 
         CheckModelStatus()
 
-
         AddHandler gridselectedset.EditingControlShowing, AddressOf Me.EditingControlShowing1
 
         AddHandler grdiselmatrix.EditingControlShowing, AddressOf Me.EditingControlShowing2
 
         AddHandler gridMonitoredVariables.EditingControlShowing, AddressOf Me.EditingControlShowing3
+
+        AddHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Private Sub ThisFormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        RemoveHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
+
+        UpdateSelectables()
+
+        UpdateAllPanels()
+
+        UpdateControllerList()
+
+        UpdateIndicatorList()
+
+        CheckModelStatus()
 
     End Sub
 

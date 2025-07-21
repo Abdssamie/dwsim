@@ -152,69 +152,6 @@ Public Class FormOptimization
 
         RemoveHandler form.NewDataLoaded, AddressOf NewDataEventHandler
 
-
-        Me.ComboBox1.SelectedIndex = 0
-
-        keysind = New ArrayList
-        keysaux = New ArrayList
-        keyscon = New ArrayList
-
-        form = My.Application.ActiveSimulation
-
-        cv = New SystemsOfUnits.Converter
-        su = form.Options.SelectedUnitSystem
-        nf = form.Options.NumberFormat
-
-        Me.lbCases.Items.Clear()
-
-        If form.Collections.OPT_OptimizationCollection Is Nothing Then form.Collections.OPT_OptimizationCollection = New List(Of OptimizationCase)
-
-        For Each optcase As OptimizationCase In form.Collections.OPT_OptimizationCollection
-            Me.lbCases.Items.Add(optcase.name)
-        Next
-
-        cbc1 = New DataGridViewComboBoxCell
-        cbc1.Items.AddRange(New Object() {"IND", "AUX", "DEP", "CON"})
-
-        cbc2 = New DataGridViewComboBoxCell
-        cbc2.Sorted = True
-        cbc2.Items.Add(DWSIM.App.GetLocalString("Flowsheet Result"))
-        cbc2.Items.Add(DWSIM.App.GetLocalString("SpreadsheetCell"))
-        cbc2.Items.Add(DWSIM.App.GetLocalString("ReactionProperty"))
-        For Each obj As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
-            cbc2.Items.Add(obj.GraphicObject.Tag)
-        Next
-        cbc3 = New DataGridViewComboBoxCell
-
-        Dim tbc1 As New DataGridViewTextBoxCell()
-        Dim tbc2 As New DataGridViewTextBoxCell()
-        Dim tbc3 As New DataGridViewTextBoxCell()
-        With tbc1
-            .Style.Alignment = DataGridViewContentAlignment.MiddleLeft
-        End With
-        With tbc2
-            .Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-        End With
-        With tbc3
-            .Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Style.BackColor = Color.FromKnownColor(KnownColor.Control)
-        End With
-
-        With Me.dgVariables
-            .Columns(0).CellTemplate = tbc1
-            .Columns(1).CellTemplate = tbc2
-            .Columns(2).CellTemplate = cbc1
-            .Columns(3).CellTemplate = cbc2
-            .Columns(4).CellTemplate = cbc3
-            .Columns(5).CellTemplate = tbc2
-            .Columns(6).CellTemplate = tbc2
-            .Columns(7).CellTemplate = tbc3
-            .Columns(8).CellTemplate = tbc3
-            .Columns(9).CellTemplate = tbc3
-            .Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
-        End With
-
-        If Me.lbCases.Items.Count > 0 Then Me.lbCases.SelectedIndex = 0
     End Sub
 
     Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)

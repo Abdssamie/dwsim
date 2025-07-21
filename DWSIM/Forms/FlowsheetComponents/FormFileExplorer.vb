@@ -40,6 +40,21 @@ Public Class FormFileExplorer
         UpdateSize()
         ListFiles()
 
+        AddHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Private Sub ThisFormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        RemoveHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
+
+        UpdateSize()
+        ListFiles()
+
     End Sub
 
     Private Sub UpdateSize()
