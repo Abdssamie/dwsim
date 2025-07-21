@@ -224,6 +224,13 @@ Public Class FormFlowsheet
 
         RaiseEvent NewDataLoaded(sender, e)
 
+        UpdateOpenEditForms()
+        UpdateInformation()
+        UpdateObjectListPanel()
+        UpdateMassAndEnergyBalance()
+        UpdateFormText()
+        UpdateInterface()
+
     End Sub
 
     Private Sub FormChild_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
