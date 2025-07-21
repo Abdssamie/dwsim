@@ -85,6 +85,14 @@ Public Class FormSimulSettings
 
         AddMoreTabs?.Invoke(TabControl1, CurrentFlowsheet)
 
+        AddHandler CurrentFlowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
+
+        Init(True)
+
     End Sub
 
     Private Sub FormStSim_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -101,6 +109,8 @@ Public Class FormSimulSettings
         End If
 
         CurrentFlowsheet?.EnableUndoRedo()
+
+        RemoveHandler CurrentFlowsheet.NewDataLoaded, AddressOf NewDataEventHandler
 
     End Sub
 

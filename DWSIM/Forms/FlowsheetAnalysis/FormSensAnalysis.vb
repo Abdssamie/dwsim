@@ -25,6 +25,7 @@ Imports System.Linq
 Imports DWSIM.SharedClasses.Flowsheet.Optimization
 Imports DWSIM.SharedClasses.DWSIM.Flowsheet
 Imports System.Threading.Tasks
+Imports DWSIM.Interfaces
 
 Public Class FormSensAnalysis
 
@@ -151,6 +152,92 @@ Public Class FormSensAnalysis
 
         Loaded = True
 
+        AddHandler form.NewDataLoaded, AddressOf NewDataEventHandler
+
+    End Sub
+
+    Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
+
+        MessageBox.Show("Flowsheet data has been changed. This window will now reload.", "New Data Incoming", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Me.lbCases.Items.Clear()
+
+        If form.Collections.OPT_SensAnalysisCollection Is Nothing Then form.Collections.OPT_SensAnalysisCollection = New List(Of SensitivityAnalysisCase)
+
+        For Each sacase As SensitivityAnalysisCase In form.Collections.OPT_SensAnalysisCollection
+            Me.lbCases.Items.Add(sacase.name)
+        Next
+
+        Me.cbObjIndVar1.Items.Clear()
+        Me.cbObjIndVar2.Items.Clear()
+        Me.cbPropIndVar1.Items.Clear()
+        Me.cbPropIndVar2.Items.Clear()
+
+        Me.cbObjIndVar1.Items.Add(DWSIM.App.GetLocalString("SpreadsheetCell"))
+        Me.cbObjIndVar2.Items.Add(DWSIM.App.GetLocalString("SpreadsheetCell"))
+        Me.cbObjIndVar1.Items.Add(DWSIM.App.GetLocalString("ReactionProperty"))
+        Me.cbObjIndVar2.Items.Add(DWSIM.App.GetLocalString("ReactionProperty"))
+        For Each obj In form.SimulationObjects.Values.OrderBy(Function(o) o.GraphicObject.Tag)
+            Me.cbObjIndVar1.Items.Add(obj.GraphicObject.Tag)
+            Me.cbObjIndVar2.Items.Add(obj.GraphicObject.Tag)
+        Next
+
+        cbc0 = New DataGridViewComboBoxCell
+        cbc0.Sorted = True
+        cbc0.MaxDropDownItems = 10
+        cbc0.Items.Add(DWSIM.App.GetLocalString("SpreadsheetCell"))
+        cbc0.Items.Add(DWSIM.App.GetLocalString("Flowsheet Result"))
+        For Each obj As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
+            cbc0.Items.Add(obj.GraphicObject.Tag)
+        Next
+        cbc1 = New DataGridViewComboBoxCell
+        cbc1.MaxDropDownItems = 10
+
+        cbc2 = New DataGridViewComboBoxCell
+        cbc2.Sorted = True
+        cbc2.MaxDropDownItems = 10
+        cbc2.Items.Add(DWSIM.App.GetLocalString("SpreadsheetCell"))
+        cbc2.Items.Add(DWSIM.App.GetLocalString("Flowsheet Result"))
+        For Each obj As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
+            cbc2.Items.Add(obj.GraphicObject.Tag)
+        Next
+        cbc3 = New DataGridViewComboBoxCell
+        cbc3.MaxDropDownItems = 10
+
+        Dim tbc1 As New DataGridViewTextBoxCell()
+        Dim tbc2 As New DataGridViewTextBoxCell()
+        Dim tbc3 As New DataGridViewTextBoxCell()
+        With tbc1
+            .Style.Alignment = DataGridViewContentAlignment.MiddleLeft
+        End With
+        With tbc2
+            .Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+        End With
+        With tbc3
+            .Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Style.BackColor = Color.FromKnownColor(KnownColor.Control)
+        End With
+
+        With Me.dgDepVariables
+            .Columns(1).CellTemplate = cbc0
+            .Columns(2).CellTemplate = cbc1
+        End With
+
+        With Me.dgVariables
+            .Columns(0).CellTemplate = tbc1
+            .Columns(1).CellTemplate = tbc1
+            .Columns(2).CellTemplate = cbc2
+            .Columns(3).CellTemplate = cbc3
+            .Columns(4).CellTemplate = tbc2
+            .Columns(5).CellTemplate = tbc3
+            .Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
+        End With
+
+        If Me.lbCases.Items.Count > 0 Then
+            selectedindex = 0
+            lbCases.SelectedIndex = 0
+        End If
+
     End Sub
 
     Private Function ReturnProperties(ByVal objectTAG As String, ByVal dependent As Boolean) As String()
@@ -276,19 +363,19 @@ Public Class FormSensAnalysis
     Private Sub btnNewCase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnNewCase.Click
 
         Dim sacase As New SensitivityAnalysisCase
-            Dim n As Integer = form.Collections.OPT_SensAnalysisCollection.Count
+        Dim n As Integer = form.Collections.OPT_SensAnalysisCollection.Count
 
-            Do
-                If GetNameIndex("SACase" & n) < 0 Then Exit Do
-                n += 1
-            Loop
+        Do
+            If GetNameIndex("SACase" & n) < 0 Then Exit Do
+            n += 1
+        Loop
 
-            sacase.name = "SACase" & n
+        sacase.name = "SACase" & n
 
-            form.Collections.OPT_SensAnalysisCollection.Add(sacase)
+        form.Collections.OPT_SensAnalysisCollection.Add(sacase)
 
-            Me.lbCases.Items.Add(sacase.name)
-            Me.lbCases.SelectedItem = sacase.name
+        Me.lbCases.Items.Add(sacase.name)
+        Me.lbCases.SelectedItem = sacase.name
 
     End Sub
 
@@ -1318,6 +1405,12 @@ Public Class FormSensAnalysis
         If selected Then
             form.Collections.OPT_SensAnalysisCollection(Me.lbCases.SelectedIndex).description = Me.tbCaseDesc.Text
         End If
+    End Sub
+
+    Private Sub FormSensAnalysis_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        RemoveHandler form.NewDataLoaded, AddressOf NewDataEventHandler
+
     End Sub
 
 End Class
