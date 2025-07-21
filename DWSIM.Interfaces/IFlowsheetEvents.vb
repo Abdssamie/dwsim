@@ -27,3 +27,19 @@ Public Interface IFlowsheetNewMessageSentEvent
     <DispId(100)> Sub NewMessageSent(message As String)
 
 End Interface
+
+Public Interface INewDataLoadedEventArgs
+
+    Property ID As String
+
+    Property Tag As String
+
+    Property TimeStamp As DateTime
+
+    Property DataType As Enums.SnapshotType
+
+    Property SimulationObject As ISimulationObject
+
+    Property ShouldResetWindows As Boolean
+
+End Interface

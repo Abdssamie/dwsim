@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="nuNumPointsIndVar1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 20</value>
+  </data>
   <data name="&gt;&gt;LblParam.Name" xml:space="preserve">
     <value>LblParam</value>
   </data>
@@ -124,7 +128,6 @@
   <data name="Panel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnVerify.Location" type="System.Drawing.Point, System.Drawing">
     <value>332, 22</value>
   </data>
@@ -180,9 +183,6 @@
   <data name="tsbDelVar.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Caso Selecionado</value>
-  </data>
   <data name="BtnDrawChart.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -201,8 +201,8 @@
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>Expressão</value>
   </data>
-  <data name="tbLowerLimIndVar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>88, 50</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Caso Selecionado</value>
   </data>
   <data name="&gt;&gt;CbCrtPar.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -738,9 +738,6 @@
   <data name="&gt;&gt;Label11.Name" xml:space="preserve">
     <value>Label11</value>
   </data>
-  <data name="&gt;&gt;btnRegressData.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="&gt;&gt;GroupBox10.Parent" xml:space="preserve">
     <value>TabPage3</value>
   </data>
@@ -758,6 +755,9 @@
   </data>
   <data name="Label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;Label16.ZOrder" xml:space="preserve">
+    <value>6</value>
   </data>
   <data name="&gt;&gt;DockLeftAutoHideToolStripMenuItem.Name" xml:space="preserve">
     <value>DockLeftAutoHideToolStripMenuItem</value>
@@ -1002,6 +1002,9 @@
   <data name="&gt;&gt;tbUpperLimIndVar2.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="GroupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <data name="DockTopToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -1087,6 +1090,9 @@
     <value>False</value>
   </data>
   <data name="&gt;&gt;Label12.Parent" xml:space="preserve">
+    <value>gbIndVar2</value>
+  </data>
+  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
     <value>gbIndVar2</value>
   </data>
   <data name="&gt;&gt;tbLowerLimIndVar1.ZOrder" xml:space="preserve">
@@ -1440,9 +1446,6 @@
   <data name="&gt;&gt;TabControl1.Name" xml:space="preserve">
     <value>TabControl1</value>
   </data>
-  <data name="&gt;&gt;GroupBox7.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
   <data name="&gt;&gt;Label17.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1478,9 +1481,6 @@
   </data>
   <data name="graph.Location" type="System.Drawing.Point, System.Drawing">
     <value>263, 6</value>
-  </data>
-  <data name="TabPage2.Text" xml:space="preserve">
-    <value>Variável Independente</value>
   </data>
   <data name="rbVar.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -1650,9 +1650,6 @@
   <data name="&gt;&gt;GroupBox10.Name" xml:space="preserve">
     <value>GroupBox10</value>
   </data>
-  <data name="&gt;&gt;Label16.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
   <data name="&gt;&gt;DataGridViewComboBoxColumn2.Name" xml:space="preserve">
     <value>DataGridViewComboBoxColumn2</value>
   </data>
@@ -1722,6 +1719,9 @@
   <data name="&gt;&gt;tbCurrValIndVar1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="tbLowerLimIndVar1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>88, 50</value>
+  </data>
   <data name="&gt;&gt;Label11.Parent" xml:space="preserve">
     <value>gbIndVar2</value>
   </data>
@@ -1755,8 +1755,8 @@
   <data name="&gt;&gt;GroupBox7.Name" xml:space="preserve">
     <value>GroupBox7</value>
   </data>
-  <data name="&gt;&gt;Label10.Parent" xml:space="preserve">
-    <value>gbIndVar2</value>
+  <data name="&gt;&gt;GroupBox7.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
   </data>
   <data name="dckMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 224</value>
@@ -2190,8 +2190,8 @@
   <data name="&gt;&gt;graph.Parent" xml:space="preserve">
     <value>TabPage5</value>
   </data>
-  <data name="nuNumPointsIndVar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 20</value>
+  <data name="&gt;&gt;btnRegressData.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="btnNewCase.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2259,8 +2259,8 @@
   <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 42</value>
   </data>
-  <data name="GroupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="TabPage2.Text" xml:space="preserve">
+    <value>Variável Independente</value>
   </data>
   <data name="&gt;&gt;cbPropIndVar1.Parent" xml:space="preserve">
     <value>gbIndVar1</value>

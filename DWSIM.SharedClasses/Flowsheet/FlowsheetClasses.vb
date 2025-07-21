@@ -31,6 +31,24 @@ Namespace DWSIM.Flowsheet
         Tip
     End Enum
 
+    <System.Serializable()> Public Class NewDataLoadedEventArgs
+
+        Implements INewDataLoadedEventArgs
+
+        Public Property ID As String = Guid.NewGuid().ToString() Implements INewDataLoadedEventArgs.ID
+
+        Public Property Tag As String = "" Implements INewDataLoadedEventArgs.Tag
+
+        Public Property TimeStamp As Date = Date.Now Implements INewDataLoadedEventArgs.TimeStamp
+
+        Public Property DataType As SnapshotType = SnapshotType.All Implements INewDataLoadedEventArgs.DataType
+
+        Public Property SimulationObject As ISimulationObject Implements INewDataLoadedEventArgs.SimulationObject
+
+        Public Property ShouldResetWindows As Boolean = False Implements INewDataLoadedEventArgs.ShouldResetWindows
+
+    End Class
+
     <System.Serializable()> Public Class ObjectCollection
 
         Public GraphicObjectCollection As Dictionary(Of String, IGraphicObject)

@@ -165,6 +165,8 @@ Public Class FormFlowsheet
 
     Public Event NewMessageSent(message As String, type As IFlowsheet.MessageType, exception As Exception)
 
+    Public Event NewDataLoaded(sender As Object, e As SharedClasses.DWSIM.Flowsheet.NewDataLoadedEventArgs)
+
     Public Sub New()
 
         ' This call is required by the Windows Form Designer.

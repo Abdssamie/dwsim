@@ -275,11 +275,7 @@ Public Class FormSensAnalysis
 
     Private Sub btnNewCase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnNewCase.Click
 
-        If MessageBox.Show(form.GetTranslatedString1("ConfirmOperation"),
-                   form.GetTranslatedString1("Ateno"),
-                   MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
-            Dim sacase As New SensitivityAnalysisCase
+        Dim sacase As New SensitivityAnalysisCase
             Dim n As Integer = form.Collections.OPT_SensAnalysisCollection.Count
 
             Do
@@ -293,8 +289,6 @@ Public Class FormSensAnalysis
 
             Me.lbCases.Items.Add(sacase.name)
             Me.lbCases.SelectedItem = sacase.name
-
-        End If
 
     End Sub
 
@@ -418,7 +412,7 @@ Public Class FormSensAnalysis
 
     Private Sub lbCases_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbCases.SelectedIndexChanged
 
-        If (Loaded And selectedindex <> lbCases.SelectedIndex And
+        If (Loaded And selectedindex >= 0 And selectedindex <> lbCases.SelectedIndex And
             lbCases.SelectedIndex >= 0) Then
 
             TabControl1.Enabled = True
@@ -512,7 +506,11 @@ Public Class FormSensAnalysis
             For i As Integer = 0 To lbCases.Items.Count - 1
                 lbCases.SelectedIndex = i
                 Dim sacase = form.Collections.OPT_SensAnalysisCollection(Me.lbCases.SelectedIndex)
-                SaveForm(sacase)
+                Try
+                    SaveForm(sacase)
+                Catch ex As Exception
+                    MessageBox.Show(String.Format("Failed to save case {0}: {1}", sacase.name, ex.Message), form.GetTranslatedString1("Ateno"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
             Next
 
             lbCases.SelectedIndex = prevselected
