@@ -206,12 +206,6 @@ Public Class FormFlowsheet
 
         Icon = My.Resources.pointicon
 
-        'ghg compositions
-
-        GHGEmissionCompositions.Add("PureCO2", New GHGEmissionComposition With {.Name = "PureCO2", .CarbonDioxide = 1.0})
-        GHGEmissionCompositions.Add("FlueGas_NaturalGas", New GHGEmissionComposition With {.Name = "FlueGas_NaturalGas", .CarbonDioxide = 0.1, .Water = 0.2, .Inerts = 0.7})
-        GHGEmissionCompositions.Add("FlueGas_Coal", New GHGEmissionComposition With {.Name = "FlueGas_Coal", .CarbonDioxide = 0.14, .Water = 0.1, .Inerts = 0.76})
-
     End Sub
 
     Public Sub SetActive()
@@ -223,6 +217,12 @@ Public Class FormFlowsheet
     Private Sub FormChild_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
 
         SetActive()
+
+    End Sub
+
+    Public Sub TriggerNewDataLoadedEvent(sender As Object, e As INewDataLoadedEventArgs) Implements IFlowsheet.TriggerNewDataLoadedEvent
+
+        RaiseEvent NewDataLoaded(sender, e)
 
     End Sub
 

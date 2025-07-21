@@ -409,6 +409,8 @@ Public Interface IFlowsheet
 
     Sub UpdateMassAndEnergyBalance()
 
+    Sub TriggerNewDataLoadedEvent(sender As Object, e As INewDataLoadedEventArgs)
+
 End Interface
 
 ''' <summary>
