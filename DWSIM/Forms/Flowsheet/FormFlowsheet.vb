@@ -196,14 +196,6 @@ Public Class FormFlowsheet
 
         ' icon
 
-        '#If LINUX = False Then
-        '        If Not FormMain.IsPro Then
-        '            Icon = My.Resources.DWSIM_Icon_v8
-        '        Else
-        '            Icon = My.Resources.Icon1282
-        '        End If
-        '#End If
-
         Icon = My.Resources.pointicon
 
     End Sub
@@ -222,14 +214,18 @@ Public Class FormFlowsheet
 
     Public Sub TriggerNewDataLoadedEvent(sender As Object, e As INewDataLoadedEventArgs) Implements IFlowsheet.TriggerNewDataLoadedEvent
 
-        RaiseEvent NewDataLoaded(sender, e)
+        UIThread(Sub()
 
-        UpdateOpenEditForms()
-        UpdateInformation()
-        UpdateObjectListPanel()
-        UpdateMassAndEnergyBalance()
-        UpdateFormText()
-        UpdateInterface()
+                     RaiseEvent NewDataLoaded(sender, e)
+
+                     UpdateOpenEditForms()
+                     UpdateInformation()
+                     UpdateObjectListPanel()
+                     UpdateMassAndEnergyBalance()
+                     UpdateFormText()
+                     UpdateInterface()
+
+                 End Sub)
 
     End Sub
 
