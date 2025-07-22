@@ -78,7 +78,6 @@ John Eamon
 John Kossik
 Julio Ochoa
 Kenneth Troldal
-Kilian Clausen
 Leandro Favaretto
 Les Waymont
 Lewis Estall
