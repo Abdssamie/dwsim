@@ -615,17 +615,6 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Automation\AutomatedFlowsheet.vb" />
-    <Compile Include="Automation\Panels\PanelCharts.vb" />
-    <Compile Include="Automation\Panels\PanelDynamicsIntegrator.vb" />
-    <Compile Include="Automation\Panels\PanelDynamicsManager.vb" />
-    <Compile Include="Automation\Panels\PanelFlowsheetPFD.vb" />
-    <Compile Include="Automation\Panels\PanelMaterialStreams.vb" />
-    <Compile Include="Automation\Panels\PanelOptimization.vb" />
-    <Compile Include="Automation\Panels\PanelReports.vb" />
-    <Compile Include="Automation\Panels\PanelSensitivityAnalysis.vb" />
-    <Compile Include="Automation\Panels\PanelSimulationSettings.vb" />
-    <Compile Include="Automation\Panels\PanelSpreadsheet.vb" />
     <Compile Include="CommandLineProcessor.vb" />
     <Compile Include="Controls\TwoDimChartControl.Designer.vb">
       <DependentUpon>TwoDimChartControl.vb</DependentUpon>
@@ -1199,7 +1188,6 @@
     <Compile Include="Tools\DistillationCurveCharacterization\DCCharacterizationWizard.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Automation\UIAutomationServer.vb" />
     <Compile Include="Utilities\BaseClass\AttachedUtilityClass.vb">
       <SubType>Form</SubType>
     </Compile>
