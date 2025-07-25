@@ -2678,10 +2678,12 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions) Then
 
                 result = Flash_PV_1(Vz, P, V, estimate.Temperature, PP, True, estimate.KValuesVL1)
+                If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, estimate.Temperature, PP, True, estimate.KValuesVL1, True)
 
             Else
 
                 result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+                If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi, True)
 
             End If
 
@@ -2720,6 +2722,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     Settings.AIAssistedConvergenceLevel = Settings.AIAssistedConvergenceMode.Provide_Initial_Estimates_and_Solutions_2Pass) Then
 
                     result = Flash_PV_1(Vz, P, V, estimate.Temperature, PP, True, estimate.KValuesVL1)
+                    If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, estimate.Temperature, PP, True, estimate.KValuesVL1, True)
 
                 Else
 
@@ -2729,6 +2732,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     Dim Tl As Double = 0.0
                     For i = 0 To 10
                         result = Flash_PV_1(Vz, Pl, V, Tl, PP, ReuseKI, PrevKi)
+                        If result.Count = 1 Then result = Flash_PV_1(Vz, Pl, V, Tl, PP, ReuseKI, PrevKi, True)
                         If result.Count = 1 Then Exit For
                         Tl = result(4)
                         Kvals = result(6)
@@ -2740,6 +2744,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                         'extrapolate Tl
                         Tl = Interpolate.RationalWithPoles(Plist, Tlist).Interpolate(P)
                         result = Flash_PV_1(Vz, P, V, Tl, PP, True, Kvals)
+                        If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, Tl, PP, True, Kvals, True)
                         If result.Count > 1 Then
                             deltaT = result(11)
                         Else
@@ -2748,6 +2753,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                         If Math.Abs(deltaT) > 0.01 Then
                             'try previous calculation mode
                             result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi)
+                            If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, Tref, PP, ReuseKI, PrevKi, True)
                         End If
                     End If
 
@@ -2764,13 +2770,14 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
             If result.Count = 1 Or trivial Then
                 result = Flash_PV_1(Vz, P, V, 0.0, PP, False, Nothing)
+                If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, 0.0, PP, False, Nothing, True)
                 If result.Count > 1 Then
                     Kvals = result(6)
                     If PP.AUX_CheckTrivial(Kvals, 0.2) Then trivial = True
                 End If
             End If
 
-            If result.Count = 1 And P > 101325 * 5 Or trivial Then
+            If result.Count = 1 And P > 101325 Or trivial Then
                 'Try quadratic extrapolation For initial T
                 Dim Tlist, Plist As New List(Of Double)
                 Dim Pl As Double = 101325
@@ -2778,6 +2785,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 Dim Tl As Double = 0.0
                 For i = 0 To 10
                     result = Flash_PV_1(Vz, Pl, V, Tl, PP, ReuseKI, PrevKi)
+                    If result.Count = 1 Then result = Flash_PV_1(Vz, Pl, V, Tl, PP, ReuseKI, PrevKi, True)
                     If result.Count = 1 Then Exit For
                     Tl = result(4)
                     Kvals = result(6)
@@ -2789,6 +2797,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                     'extrapolate Tl
                     Tl = Interpolate.RationalWithPoles(Plist, Tlist).Interpolate(P)
                     result = Flash_PV_1(Vz, P, V, Tl, PP, True, Kvals)
+                    If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, Tl, PP, True, Kvals, True)
                 End If
             End If
 
@@ -2797,6 +2806,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                 Using IPP As New RaoultPropertyPackage()
                     IPP.CurrentMaterialStream = PP.CurrentMaterialStream
                     result = Flash_PV_1(Vz, P, V, 0.0, IPP, ReuseKI, PrevKi)
+                    If result.Count = 1 Then result = Flash_PV_1(Vz, P, V, 0.0, IPP, ReuseKI, PrevKi, True)
                     If result.Count = 1 And V = 0.0 Then
                         result = Flash_PV_4(Vz, P, V, 0.0, IPP, ReuseKI, PrevKi)
                     End If
@@ -2826,6 +2836,11 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                     End If
 
+                Else
+
+                    Throw New Exception(String.Format("{0}: Unable to calculate PV Flash with P = {1} and VF = {2}, molar fractions = {3}",
+                                    PP.ComponentName, P, V, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
+
                 End If
 
             Else
@@ -2851,7 +2866,7 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
         End Function
 
-        Public Function Flash_PV_1(ByVal Vz2 As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+        Public Function Flash_PV_1(ByVal Vz2 As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing, Optional OldTempEstimation As Boolean = False) As Object
 
             Dim IObj As Inspector.InspectorItem = Inspector.Host.GetNewInspectorItem()
 
@@ -2918,16 +2933,25 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
             fi = Vz.Clone
 
             If Tref = 0.0# Then
-                If V < 0.5 Then
+                If OldTempEstimation Then
+                    i = 0
                     Tref = 0.0#
-                    For i = 0 To n
-                        Tref += Vz(i) * Tsat(i)
-                    Next
+                    Do
+                        Tref += Vz(i) * PP.AUX_TSATi(P, i)
+                        i += 1
+                    Loop Until i = n + 1
                 Else
-                    Tref = -1000.0
-                    For i = 0 To n
-                        If Tsat(i) > Tref And Vz(i) > 0.0 Then Tref = Tsat(i)
-                    Next
+                    If V < 0.5 Then
+                        Tref = 5000.0
+                        For i = 0 To n
+                            If Tsat(i) < Tref And Vz(i) > 0.02 Then Tref = Tsat(i)
+                        Next
+                    Else
+                        Tref = -1000.0
+                        For i = 0 To n
+                            If Tsat(i) > Tref And Vz(i) > 0.0 Then Tref = Tsat(i)
+                        Next
+                    End If
                 End If
             End If
 
