@@ -202,7 +202,7 @@ Namespace SystemsOfUnits
                                    "MMSCFD", "SCFD", "SCFM",
                                    "Mm3/d @ BR", "Mm3/d @ SC", "Mm3/d @ NC"})
                 Case Enums.UnitOfMeasure.volumetricFlow
-                    units.AddRange(New String() {"m3/s", "ft3/s", "cm3/s", "m3/h", "m3/d", "bbl/h", "bbl/d", "ft3/min", "ft3/d", "gal[UK]/h", "gal[UK]/min", "gal[UK]/s", "gal[US]/h", "gal[US]/min", "gal[US]/s", "L/h", "L/min", "L/s"})
+                    units.AddRange(New String() {"m3/s", "ft3/s", "cm3/s", "m3/h", "m3/d", "bbl/h", "bbl/d", "ft3/min", "ft3/h", "ft3/d", "gal[UK]/h", "gal[UK]/min", "gal[UK]/s", "gal[US]/h", "gal[US]/min", "gal[US]/s", "L/h", "L/min", "L/s"})
                 Case Enums.UnitOfMeasure.enthalpy
                     units.AddRange(New String() {"kJ/kg", "cal/s/[g/s]", "BTU/lbm", "kcal/kg"})
                 Case Enums.UnitOfMeasure.entropy
@@ -305,12 +305,11 @@ Namespace SystemsOfUnits
                      "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC", "m3/d @ 0 C, 1 atm", "m3/d @ 15.56 C, 1 atm", "m3/d @ 20 C, 1 atm",
                      "ft3/d @ 60 f, 14.7 psia", "ft3/d @ 0 C, 1 atm",
                      "m3/h @ BR", "m3/h @ NC", "m3/h @ CNTP", "m3/h @ SC", "m3/h @ 0 C, 1 atm", "m3/h @ 15.56 C, 1 atm", "m3/h @ 20 C, 1 atm",
-                     "ft3/h @ 60 f, 14.7 psia", "ft3/h @ 0 C, 1 atm"
-                    Return Enums.UnitOfMeasure.molarflow
-                Case "m3/s", "ft3/s", "cm3/s", "m3/h", "m3/d", "bbl/h", "bbl/d", "ft3/min", "ft3/d", "gal[UK]/h", "gal[UK]/min", "gal[UK]/s", "gal[US]/h", "gal[US]/min", "gal[US]/s", "L/h", "L/min", "L/s",
-                     "ft3/d @ 60 f, 14.7 psia", "ft3/d @ 0 C, 1 atm",
+                     "ft3/h @ 60 f, 14.7 psia", "ft3/h @ 0 C, 1 atm",
                     "MMSCFD", "SCFD", "SCFM",
                     "Mm3/d @ BR", "Mm3/d @ SC", "Mm3/d @ SC"
+                    Return Enums.UnitOfMeasure.molarflow
+                Case "m3/s", "ft3/s", "cm3/s", "m3/h", "m3/d", "bbl/h", "bbl/d", "ft3/min", "ft3/h", "ft3/d", "gal[UK]/h", "gal[UK]/min", "gal[UK]/s", "gal[US]/h", "gal[US]/min", "gal[US]/s", "L/h", "L/min", "L/s"
                     Return Enums.UnitOfMeasure.volumetricFlow
                 Case "kJ", "J", "kcal", "BTU", "MMBTU", "cal"
                     Return Enums.UnitOfMeasure.heat
@@ -1520,6 +1519,8 @@ Namespace SystemsOfUnits
                     Return value / 543440
                 Case "ft3/min"
                     Return value / 35.3147 / 60
+                Case "ft3/h"
+                    Return value / 35.3147 / 60 / 60
                 Case "ft3/d"
                     Return value / 35.3147 / 60 / 60 / 24
                 Case "ft3/s"
@@ -2084,6 +2085,8 @@ Namespace SystemsOfUnits
                     Return value * 543440
                 Case "ft3/min"
                     Return value * 35.3147 * 60
+                Case "ft3/h"
+                    Return value * 35.3147 * 60 * 60
                 Case "ft3/d"
                     Return value * 35.3147 * 60 * 60 * 24
                 Case "ft3/s"
