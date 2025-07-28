@@ -5532,7 +5532,7 @@ Label_00CC:
     End Sub
 
     Private Sub ToolStripSplitButton1_ButtonClick(sender As Object, e As EventArgs) Handles ToolStripSplitButton1.Click, ToolStripSplitButton2.Click
-        Clipboard.SetText("0f0c6cf5-2489-4d03-b7a8-3a5fd22498a2")
+        Clipboard.SetText("daniel@dwsim.org")
         MessageBox.Show("Chave Pix copiada. Obrigado pelo apoio!", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
