@@ -52,7 +52,7 @@ Public Class FormDynamicsManager
 
     Private Sub ThisFormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
-        RemoveHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+        If Flowsheet IsNot Nothing Then RemoveHandler Flowsheet.NewDataLoaded, AddressOf NewDataEventHandler
 
     End Sub
 

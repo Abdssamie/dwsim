@@ -110,7 +110,7 @@ Public Class FormSimulSettings
 
         CurrentFlowsheet?.EnableUndoRedo()
 
-        RemoveHandler CurrentFlowsheet.NewDataLoaded, AddressOf NewDataEventHandler
+        If CurrentFlowsheet IsNot Nothing Then RemoveHandler CurrentFlowsheet.NewDataLoaded, AddressOf NewDataEventHandler
 
     End Sub
 

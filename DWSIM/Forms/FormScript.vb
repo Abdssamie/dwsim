@@ -122,7 +122,7 @@ Imports PythonConsoleControl
 
     Private Sub ThisFormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
-        RemoveHandler fc.NewDataLoaded, AddressOf NewDataEventHandler
+        If fc IsNot Nothing Then RemoveHandler fc.NewDataLoaded, AddressOf NewDataEventHandler
 
     End Sub
 

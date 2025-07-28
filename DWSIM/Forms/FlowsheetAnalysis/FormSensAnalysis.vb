@@ -1409,7 +1409,7 @@ Public Class FormSensAnalysis
 
     Private Sub FormSensAnalysis_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
-        RemoveHandler form.NewDataLoaded, AddressOf NewDataEventHandler
+        If form IsNot Nothing Then RemoveHandler form.NewDataLoaded, AddressOf NewDataEventHandler
 
     End Sub
 
