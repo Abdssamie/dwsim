@@ -1,18 +1,5 @@
-Version 9.0.3
+Version 9.0.4
 
-- Added Shortcut column Height and Diameter calculation
-- Distribute waste heat proportionally on water electrolyzer outlet streams (#838)
-- Added missing Object Layout undo/redo
-- Exposed outlet temperature on PFR (#806)
-- Updated translations
-- Fixed CAPE-OPEN UO crash on Linux/macOS (#837)
-- Fixed issue #833 (wrong unit for condenser spec)
-- Fixed issue #834 (PVF Flash spec issue/bug)
-- Fixed issue #831 (Dynamic control Tank Level missing liquid level property)
-- Fixed Dynamic Integrator input issue (Classic UI)
-- Fixed PFR profile exporting
-- Fixed issue with mass balance in compound separator
-- Fixed single-phase Flash
-- Fixed image export scaling (CPUI)
-- Fixed issue with Sensitivity Analysis utility (Classic UI)
-- Fixed Flowsheet UO not stopping solver on errors
+- Fixed an issue with bubble/dew point calculation
+- Fixed saving on close behavior (Classic UI)
+- Fixed custom calculation order behavior (Classic UI)
