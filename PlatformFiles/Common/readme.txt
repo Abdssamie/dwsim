@@ -64,9 +64,12 @@ The full changelog including souce code changes can be viewed at https://github.
 
 Version 9.0.4
 
+- Added ft3/h to volumetric units (#862)
 - Fixed an issue with bubble/dew point calculation
 - Fixed saving on close behavior (Classic UI)
 - Fixed custom calculation order behavior (Classic UI)
+- Fixed Property/Master Table configuration not being saved on macOS (#860)
+- Fixed crash on macOS when adding objects to PFD (#858)
 
 Version 9.0.3
 
