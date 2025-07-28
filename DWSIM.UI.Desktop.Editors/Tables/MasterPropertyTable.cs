@@ -147,9 +147,9 @@ namespace DWSIM.UI.Desktop.Editors.Tables
 
             lvObjects.CellEdited += (sender, e) =>
             {
-                if (e.Row >= 0 && e.Column == 1)
+                if (e.Item != null)
                 {
-                    var tgitem = (TreeGridItem)tgc[e.Row];
+                    var tgitem = (TreeGridItem)e.Item;
                     var key = tgitem.Values[2].ToString();
                     if (!Table.ObjectList.ContainsKey(key))
                     {
@@ -165,9 +165,9 @@ namespace DWSIM.UI.Desktop.Editors.Tables
 
             lvProps.CellEdited += (sender, e) =>
             {
-                if (e.Row >= 0 && e.Column == 1)
+                if (e.Item != null)
                 {
-                    var tgitem = (TreeGridItem)tgc2[e.Row];
+                    var tgitem = (TreeGridItem)e.Item;
                     var key = tgitem.Values[0].ToString();
                     if (!Table.PropertyList.ContainsKey(key))
                     {

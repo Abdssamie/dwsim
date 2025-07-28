@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Eto.Forms;
 using Eto.Drawing;
 using DWSIM.UI.Shared;
@@ -110,9 +111,9 @@ namespace DWSIM.UI.Desktop.Editors.Tables
 
             lvProperties.CellEdited += (sender, e) =>
             {
-                if (e.Row >= 0 && e.Column == 1)
+                if (e.Item != null)
                 {
-                    var tgitem = (TreeGridItem)tgc[e.Row];
+                    var tgitem = (TreeGridItem)e.Item;
                     if (!Table.VisibleProperties.ContainsKey(lvObjects.SelectedKey))
                     {
                         Table.VisibleProperties.Add(lvObjects.SelectedKey, new List<string>());
@@ -139,7 +140,7 @@ namespace DWSIM.UI.Desktop.Editors.Tables
             {
                 header.Text = Table.HeaderText;
                 lvObjects.Items.Clear();
-                foreach (var obj in Table.Flowsheet.SimulationObjects.Values)
+                foreach (var obj in Table.Flowsheet.SimulationObjects.Values.OrderBy(o => o.GraphicObject.Tag))
                 {
                     lvObjects.Items.Add(obj.GraphicObject.Tag, obj.Name);
                 }
