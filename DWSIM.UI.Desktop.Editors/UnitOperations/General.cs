@@ -2419,12 +2419,10 @@ namespace DWSIM.UI.Desktop.Editors
                                 });
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Temperature Convergence Tolerance"));
-                    s.CreateAndAddCheckBoxRow(container, "Include Joule-Thomson Effect", pipe.IncludeEmulsion, (CheckBox arg2, EventArgs ev) =>
+                    s.CreateAndAddCheckBoxRow(container, "Include Emulsion Effect", pipe.IncludeEmulsion, (CheckBox arg2, EventArgs ev) =>
                     {
                         pipe.IncludeEmulsion = arg2.Checked.GetValueOrDefault();
                     });
-                    s.CreateAndAddDescriptionRow(container,
-                                                 SimObject.GetPropertyDescription("Include Joule-Thomson Effect"));
                     s.CreateAndAddDropDownRow(container, "Slurry Viscosity Correction", new List<string> { "Disabled", "Yoshida et al" },
                         pipe.SlurryViscosityMode,
                          (dd, e) => pipe.SlurryViscosityMode = dd.SelectedIndex);
