@@ -867,6 +867,8 @@ Namespace UnitOperations
 
                             If calceq And CalculateEquilibrium Then
                                 oms.Calculate(True, True)
+                            Else
+                                oms.Calculate(False, True)
                             End If
 
                             With oms
