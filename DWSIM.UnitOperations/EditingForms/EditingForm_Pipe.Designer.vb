@@ -91,9 +91,9 @@ Partial Class EditingForm_Pipe
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBox5.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -730,11 +730,6 @@ Partial Class EditingForm_Pipe
         Me.ToolTipChangeTag.SetToolTip(Me.TabPage3, resources.GetString("TabPage3.ToolTip2"))
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'ToolTipChangeTag
-        '
-        Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.ToolTipChangeTag.ToolTipTitle = "Info"
-        '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
@@ -752,6 +747,11 @@ Partial Class EditingForm_Pipe
         Me.ToolTipChangeTag.SetToolTip(Me.Button3, resources.GetString("Button3.ToolTip1"))
         Me.ToolTipValues.SetToolTip(Me.Button3, resources.GetString("Button3.ToolTip2"))
         Me.Button3.UseVisualStyleBackColor = True
+        '
+        'ToolTipChangeTag
+        '
+        Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
         'EditingForm_Pipe
         '
