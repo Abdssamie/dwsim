@@ -2419,6 +2419,15 @@ namespace DWSIM.UI.Desktop.Editors
                                 });
                     s.CreateAndAddDescriptionRow(container,
                                                  SimObject.GetPropertyDescription("Temperature Convergence Tolerance"));
+
+                    s.CreateAndAddCheckBoxRow(container, "Calculate Equilibrium and Properties", pipe.CalculateEquilibrium, (CheckBox arg2, EventArgs ev) =>
+                    {
+                        pipe.CalculateEquilibrium = arg2.Checked.GetValueOrDefault();
+                    });
+                    s.CreateAndAddNumericEditorRow(container, "Eq./Prop. Calculation Interval (Sections)", pipe.CalculateEquilibriumIntervalInSteps,0.0, 1000.0,0, (arg2, ev) =>
+                    {
+                        pipe.CalculateEquilibriumIntervalInSteps = (int)arg2.Value;
+                    });
                     s.CreateAndAddCheckBoxRow(container, "Include Emulsion Effect", pipe.IncludeEmulsion, (CheckBox arg2, EventArgs ev) =>
                     {
                         pipe.IncludeEmulsion = arg2.Checked.GetValueOrDefault();
