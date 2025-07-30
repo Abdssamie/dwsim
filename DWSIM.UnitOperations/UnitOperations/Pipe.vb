@@ -813,9 +813,14 @@ Namespace UnitOperations
 
                                 Tout_ant = Tout
                                 IObj5?.SetCurrent()
-                                Dim flashresult = oms.PropertyPackage.FlashBase.CalculateEquilibrium(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pout, Hout, oms.PropertyPackage, oms.PropertyPackage.RET_VMOL(PropertyPackages.Phase.Mixture), Nothing, Tout)
-                                If flashresult.ResultException IsNot Nothing Then Throw flashresult.ResultException
-                                Tout = flashresult.CalculatedTemperature
+
+                                If calceq And CalculateEquilibrium Then
+                                    Dim flashresult = oms.PropertyPackage.FlashBase.CalculateEquilibrium(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pout, Hout, oms.PropertyPackage, oms.PropertyPackage.RET_VMOL(PropertyPackages.Phase.Mixture), Nothing, Tout)
+                                    If flashresult.ResultException IsNot Nothing Then Throw flashresult.ResultException
+                                    Tout = flashresult.CalculatedTemperature
+                                Else
+                                    Tout = Tin
+                                End If
 
                                 If Qvin + Qlin = 0.0 Then
                                     U = 0.0
