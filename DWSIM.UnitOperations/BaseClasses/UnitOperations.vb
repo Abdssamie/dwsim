@@ -52,6 +52,8 @@ Namespace UnitOperations
 
         Public Overridable ReadOnly Property SupportsParticleSizeDistributions As Boolean = False
 
+        Public Overridable ReadOnly Property SupportsRestoreStateAfterError As Boolean = True
+
         Public Sub New()
 
             MyBase.CreateNew()
@@ -71,8 +73,21 @@ Namespace UnitOperations
         End Sub
 
         Public Overrides Sub Solve()
-            MyBase.Solve()
-            UpdateDimensionsList()
+            If FlowSheet IsNot Nothing AndAlso
+                FlowSheet.FlowsheetOptions.RestoreUnitOperationStateAfterError And
+                SupportsRestoreStateAfterError Then
+                Dim cstate = SaveData()
+                Try
+                    MyBase.Solve()
+                    UpdateDimensionsList()
+                Catch ex As Exception
+                    LoadData(cstate)
+                    Throw ex
+                End Try
+            Else
+                MyBase.Solve()
+                UpdateDimensionsList()
+            End If
         End Sub
 
         Public Overridable Function SetCalculationMode(modeID As Integer)
