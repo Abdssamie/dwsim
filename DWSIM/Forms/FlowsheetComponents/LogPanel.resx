@@ -192,19 +192,19 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="LimparListaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="LimparListaToolStripMenuItem.Text" xml:space="preserve">
     <value>Limpar Lista</value>
   </data>
-  <data name="CopiarInformaçõesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 22</value>
+  <data name="CopiarInformacoesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
   </data>
-  <data name="CopiarInformaçõesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Copiar Informações</value>
+  <data name="CopiarInformacoesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Copy to Clipboard</value>
   </data>
   <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 48</value>
+    <value>181, 70</value>
   </data>
   <data name="&gt;&gt;ContextMenuStrip1.Name" xml:space="preserve">
     <value>ContextMenuStrip1</value>
@@ -427,10 +427,10 @@
   <data name="&gt;&gt;LimparListaToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;CopiarInformaçõesToolStripMenuItem.Name" xml:space="preserve">
-    <value>CopiarInformaçõesToolStripMenuItem</value>
+  <data name="&gt;&gt;CopiarInformacoesToolStripMenuItem.Name" xml:space="preserve">
+    <value>CopiarInformacoesToolStripMenuItem</value>
   </data>
-  <data name="&gt;&gt;CopiarInformaçõesToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;CopiarInformacoesToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;FloatToolStripMenuItem.Name" xml:space="preserve">
