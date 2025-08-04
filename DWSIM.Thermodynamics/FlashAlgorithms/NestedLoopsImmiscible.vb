@@ -70,10 +70,6 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim keycomps As String() = New String() {"Water"}
 
-            If keycomps.Count = 0 Then
-                Throw New Exception("Immiscible VLLE Flash Algorithm error: you must select an immiscible compound for liquid phase splitting.")
-            End If
-
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V As Double
@@ -88,6 +84,8 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
             n = Vz.Length - 1
 
             Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki2(n), Ki_ant(n), fi(n) As Double
+
+            Dim Vprops = PP.DW_GetConstantProperties()
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -189,6 +187,40 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                     If V > 0 Then
                         Vy(i) = Vy(i) * nHCy / V
                     End If
+                End If
+            Next
+
+            'supercritical gases solubility
+
+            Dim VTc = PP.RET_VTC()
+
+            For i = 0 To n
+                If xl2 > 0 And i <> wid And T / VTc(i) > 1.0 Then
+                    Vx2(i) = Vy(i) * P / PP.AUX_KHenry(Vn(i), T)
+                End If
+            Next
+
+            'hydrocarbon solubility
+
+            Dim isPF As Boolean
+
+            For i = 0 To n
+                If Vprops(i).IsPF Then
+                    isPF = True
+                Else
+                    If Vprops(i).Elements.Count = 2 And Vprops(i).Elements.ContainsKey("C") And Vprops(i).Elements.ContainsKey("H") Then
+                        isPF = True
+                    Else
+                        isPF = False
+                    End If
+                End If
+                Dim nC = 0
+                If Vprops(i).Elements.ContainsKey("C") Then
+                    nC = Vprops(i).Elements("C")
+                End If
+                If nC > 0 And fi(i) > 0.0 And xl2 > 0 And i <> wid And Vx2(i) = 0.0 And isPF Then
+                    Dim sol = Math.Exp(-1.6708 - 0.6386 * nC - 0.5538 * nC ^ 2)
+                    Vx2(i) = sol
                 End If
             Next
 
