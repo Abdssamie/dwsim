@@ -168,9 +168,9 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                         L2 = lps(2)
                         Vx2 = lps(3)
 
-                        If L2 > 0.001 Then
+                        If L2 > 0 Then
 
-                            result = Flash_PT_3P(Vz, V, L1, L2, Vy, Vx1, Vx2, P, T, PP)
+                            result = Flash_PT_3P(Vz, V, L / 2, L / 2, Vy, Vx1, Vx2, P, T, PP)
 
                         End If
 
@@ -643,7 +643,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                     Dim df1 = Abs(dL1 / L1)
                     Dim df2 = Abs(dL2 / L2)
 
-                    Dim df = Math.Max(Math.Min(df1, df2), 0.3)
+                    Dim df = Math.Min(Math.Min(df1, df2), 0.1)
 
                     If L1 > 0.0 Then L1 += -dL1 * df
                     If L2 > 0.0 Then L2 += -dL2 * df
