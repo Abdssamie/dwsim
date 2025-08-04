@@ -168,19 +168,11 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                         L2 = lps(2)
                         Vx2 = lps(3)
 
-                        If L2 > 0.0 Then
+                        If L2 > 0.001 Then
 
                             result = Flash_PT_3P(Vz, V, L1, L2, Vy, Vx1, Vx2, P, T, PP)
 
-                        Else
-
-                            result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
-
                         End If
-
-                    Else
-
-                        result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
 
                     End If
 
