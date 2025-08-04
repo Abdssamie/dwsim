@@ -155,7 +155,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             End If
 
-            Dim xl1, xl2, Vx1(n), Vx2(n), nHCy, nWy, nWx As Double
+            Dim xl1, xl2, Vx1(n), Vx2(n), Vn1(n), nHCy, nWy, nWx As Double
 
             V = V * (1 - nwm)
             xl1 = L * (1 - nwm)
@@ -220,9 +220,15 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
                 If nC > 0 And fi(i) > 0.0 And xl2 > 0 And i <> wid And Vx2(i) = 0.0 And isPF Then
                     Dim sol = Math.Exp(-1.6708 - 0.6386 * nC - 0.5538 * nC ^ 2)
-                    Vx2(i) = sol
+                    Dim sT1 = Math.Exp(19.76 - 30125 / (1.8 * T) + 8649917 / (1.8 * T) ^ 2)
+                    Dim sT2 = Math.Exp(19.76 - 30125 / (1.8 * 298.15) + 8649917 / (1.8 * 298.15) ^ 2)
+                    Dim dSdT = (sT1 - sT2) / (298.15 - T) / sT1
+                    Vx2(i) = sol + sol * dSdT * (T - 298.15)
+                    Vn1(i) = fi(i) - Vx2(i) * xl2
                 End If
             Next
+
+            Vx2 = Vx2.NormalizeY()
 
             Ki = PP.DW_CalcKvalue(Vx1, Vy, T, P)
             Ki2 = PP.DW_CalcKvalue(Vx2, Vy, T, P)
