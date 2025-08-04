@@ -1654,7 +1654,7 @@ out:
                     lnP2 = Log(P2)
                     dTP = (T2 - T1) * (lnP - lnP1) / (lnP2 - lnP1)
 
-                    'limit temperature change to avoid problems near aceotropic point
+                    'limit temperature change to avoid problems near azeotropic point
                     If Abs(dTP) > 40 Then dTP = 40 * Sign(dTP)
                     T = T1 + dTP
                     If T < 10 Then T = 10
@@ -1671,7 +1671,7 @@ out:
 
                     If icount > maxit_i Then Throw New Exception(Calculator.GetLocalString("PropPack_FlashMaxIt"))
 
-                Loop While Abs(P - Pn) > 1
+                Loop While Abs(P - Pn) > 1.0
 
                 'Detect symetric oscillations in vicinity to critical point of a component
                 'Do damping for new temperature in this case to avoid problems.
@@ -1679,6 +1679,10 @@ out:
                 T = Tant + DF * dT
                 If Abs(dTant + dT) < 0.05 Then
                     DF *= 0.8
+                End If
+
+                If Math.Abs(dTant - dT) < 0.01 Then
+                    T = (T + Tant) / 2
                 End If
 
                 'calculate new Ki's and vapour composition
@@ -1703,6 +1707,8 @@ out:
                 e3 = Math.Abs(T - Tant) + Math.Abs(L1 - L1ant) + Math.Abs(L2 - L2ant)
 
                 ecount += 1
+
+                If Math.Abs(dTP) < itol * 100 Then Exit Do
 
                 If ecount > maxit_e Then Throw New Exception(Calculator.GetLocalString("PropPack_FlashMaxIt"))
 

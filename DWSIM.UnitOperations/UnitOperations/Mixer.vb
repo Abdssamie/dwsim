@@ -146,79 +146,97 @@ Namespace UnitOperations
                 End If
             Next
 
-            If W <> 0.0# Then Hs = H / W Else Hs = 0.0#
+            Dim SS As MaterialStream, isSS As Boolean
 
-            If Me.PressureCalculation = PressureBehavior.Average Then P = P / (i - 1)
+            isSS = GraphicObject.InputConnectors.Where(Function(c) c.IsAttached).
+                Where(Function(c2) DirectCast(c2.AttachedConnector.AttachedFrom.Owner, MaterialStream).GetMassFlow() > 0).Count = 1
 
-            'propagate pressure backwards in dynamic mode
+            If isSS Then
 
-            If FlowSheet.DynamicMode Then
-                P = GetOutletMaterialStream(0).GetPressure()
+                SS = GraphicObject.InputConnectors.Where(Function(c) c.IsAttached).
+                Select(Function(c2) DirectCast(c2.AttachedConnector.AttachedFrom.Owner, MaterialStream)).
+                Where(Function(c3) c3.GetMassFlow() > 0).SingleOrDefault()
+
+                GetOutletMaterialStream(0).AssignFromPhase(PhaseLabel.Mixture, SS, True)
+                GetOutletMaterialStream(0).AtEquilibrium = True
+
+            Else
+
+                If W <> 0.0# Then Hs = H / W Else Hs = 0.0#
+
+                If Me.PressureCalculation = PressureBehavior.Average Then P = P / (i - 1)
+
+                'propagate pressure backwards in dynamic mode
+
+                If FlowSheet.DynamicMode Then
+                    P = GetOutletMaterialStream(0).GetPressure()
+                    For Each cp In Me.GraphicObject.InputConnectors
+                        If cp.IsAttached Then
+                            ms = Me.FlowSheet.SimulationObjects(cp.AttachedConnector.AttachedFrom.Name)
+                            ms.SetPressure(P)
+                        End If
+                    Next
+                End If
+
+                T = 0.0
+
+                Dim n As Integer = DirectCast(Me.FlowSheet.SimulationObjects(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name), MaterialStream).Phases(0).Compounds.Count
+                Dim Vw As New Dictionary(Of String, Double)
                 For Each cp In Me.GraphicObject.InputConnectors
                     If cp.IsAttached Then
                         ms = Me.FlowSheet.SimulationObjects(cp.AttachedConnector.AttachedFrom.Name)
-                        ms.SetPressure(P)
+                        Dim comp As BaseClasses.Compound
+                        For Each comp In ms.Phases(0).Compounds.Values
+                            If Not Vw.ContainsKey(comp.Name) Then
+                                Vw.Add(comp.Name, 0)
+                            End If
+                            Vw(comp.Name) += comp.MassFraction.GetValueOrDefault * ms.Phases(0).Properties.massflow.GetValueOrDefault
+                        Next
+                        If W <> 0.0# Then T += ms.Phases(0).Properties.massflow.GetValueOrDefault / W * ms.Phases(0).Properties.temperature.GetValueOrDefault
                     End If
                 Next
-            End If
 
-            T = 0.0
+                If W = 0.0# Then T = 273.15
 
-            Dim n As Integer = DirectCast(Me.FlowSheet.SimulationObjects(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name), MaterialStream).Phases(0).Compounds.Count
-            Dim Vw As New Dictionary(Of String, Double)
-            For Each cp In Me.GraphicObject.InputConnectors
-                If cp.IsAttached Then
-                    ms = Me.FlowSheet.SimulationObjects(cp.AttachedConnector.AttachedFrom.Name)
+                IObj?.Paragraphs.Add("Outlet Mixed Stream</h3>")
+
+                IObj?.Paragraphs.Add(String.Format("Mass Flow: {0} kg/s", W))
+                IObj?.Paragraphs.Add(String.Format("Pressure: {0} Pa", P))
+                IObj?.Paragraphs.Add(String.Format("Enthalpy: {0} kJ/kg", Hs))
+
+                Dim omstr As MaterialStream = Me.FlowSheet.SimulationObjects(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                With omstr
+                    .Clear()
+                    .ClearAllProps()
+                    If W <> 0.0# Then .Phases(0).Properties.enthalpy = Hs
+                    .Phases(0).Properties.pressure = P
+                    .Phases(0).Properties.massflow = W
+                    .DefinedFlow = FlowSpec.Mass
+                    .Phases(0).Properties.molarfraction = 1
+                    .Phases(0).Properties.massfraction = 1
                     Dim comp As BaseClasses.Compound
-                    For Each comp In ms.Phases(0).Compounds.Values
-                        If Not Vw.ContainsKey(comp.Name) Then
-                            Vw.Add(comp.Name, 0)
-                        End If
-                        Vw(comp.Name) += comp.MassFraction.GetValueOrDefault * ms.Phases(0).Properties.massflow.GetValueOrDefault
+                    For Each comp In .Phases(0).Compounds.Values
+                        If W <> 0.0# Then comp.MassFraction = Vw(comp.Name) / W
                     Next
-                    If W <> 0.0# Then T += ms.Phases(0).Properties.massflow.GetValueOrDefault / W * ms.Phases(0).Properties.temperature.GetValueOrDefault
-                End If
-            Next
+                    Dim mass_div_mm As Double = 0
+                    Dim sub1 As BaseClasses.Compound
+                    For Each sub1 In .Phases(0).Compounds.Values
+                        mass_div_mm += sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight
+                    Next
+                    For Each sub1 In .Phases(0).Compounds.Values
+                        If W <> 0.0# Then
+                            sub1.MoleFraction = sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight / mass_div_mm
+                        Else
+                            sub1.MoleFraction = 0.0#
+                        End If
+                    Next
+                    .Phases(0).Properties.temperature = T
+                    .SpecType = Interfaces.Enums.StreamSpec.Pressure_and_Enthalpy
+                End With
 
-            If W = 0.0# Then T = 273.15
+                IObj?.Close()
 
-            IObj?.Paragraphs.Add("Outlet Mixed Stream</h3>")
-
-            IObj?.Paragraphs.Add(String.Format("Mass Flow: {0} kg/s", W))
-            IObj?.Paragraphs.Add(String.Format("Pressure: {0} Pa", P))
-            IObj?.Paragraphs.Add(String.Format("Enthalpy: {0} kJ/kg", Hs))
-
-            Dim omstr As MaterialStream = Me.FlowSheet.SimulationObjects(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-            With omstr
-                .Clear()
-                .ClearAllProps()
-                If W <> 0.0# Then .Phases(0).Properties.enthalpy = Hs
-                .Phases(0).Properties.pressure = P
-                .Phases(0).Properties.massflow = W
-                .DefinedFlow = FlowSpec.Mass
-                .Phases(0).Properties.molarfraction = 1
-                .Phases(0).Properties.massfraction = 1
-                Dim comp As BaseClasses.Compound
-                For Each comp In .Phases(0).Compounds.Values
-                    If W <> 0.0# Then comp.MassFraction = Vw(comp.Name) / W
-                Next
-                Dim mass_div_mm As Double = 0
-                Dim sub1 As BaseClasses.Compound
-                For Each sub1 In .Phases(0).Compounds.Values
-                    mass_div_mm += sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight
-                Next
-                For Each sub1 In .Phases(0).Compounds.Values
-                    If W <> 0.0# Then
-                        sub1.MoleFraction = sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight / mass_div_mm
-                    Else
-                        sub1.MoleFraction = 0.0#
-                    End If
-                Next
-                .Phases(0).Properties.temperature = T
-                .SpecType = Interfaces.Enums.StreamSpec.Pressure_and_Enthalpy
-            End With
-
-            IObj?.Close()
+            End If
 
         End Sub
 
