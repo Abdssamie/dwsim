@@ -60,7 +60,8 @@ namespace DWSIM.Simulate365.Services
                     Filename = item.Name,
                     ParentUniqueIdentifier = parentFolderBreadcrumb?.UniqueIdentifier.ToString() ?? string.Empty,
                     FileUniqueIdentifier = item.UniqueIdentifier.ToString(),
-                    FullPath = GetFullPath(itemWithBreadcrumbs.BreadcrumbItems,item)
+                    FullPath = GetFullPath(itemWithBreadcrumbs.BreadcrumbItems,item),
+                    OwnerId = itemWithBreadcrumbs.File.OwnerId.ToString()
                 };
 
                 S3365DashboardFileOpened?.Invoke(this, this.SelectedOpenFile);

@@ -134,7 +134,8 @@ namespace DWSIM.Simulate365.FormFactories
                     Filename = _filePickerService.SelectedSaveFile.Filename,
                     ParentUniqueIdentifier = _filePickerService.SelectedSaveFile.ParentUniqueIdentifier,
                     FullPath = _filePickerService.SelectedSaveFile.SimulatePath,
-                    ConflictAction = _filePickerService.SelectedSaveFile.ConflictAction
+                    ConflictAction = _filePickerService.SelectedSaveFile.ConflictAction,
+                    OwnerId = UserService.GetInstance().CurrentUser?.Id
                 } : null;
         }
 

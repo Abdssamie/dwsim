@@ -48,7 +48,8 @@ namespace DWSIM.Simulate365.Services
                     FileUniqueIdentifier = file.FileUniqueIdentifier.ToString(),
                     ParentUniqueIdentifier = parentUniqueIdentifier,
                     Filename = file.Filename,
-                    FullPath = file.SimulatePath
+                    FullPath = file.SimulatePath,
+                    OwnerId = file.OwnerId.ToString()
                 };
             }
             catch (Exception ex)
@@ -90,7 +91,8 @@ namespace DWSIM.Simulate365.Services
                     FileUniqueIdentifier = fileResp.FileUniqueIdentifier.ToString(),
                     ParentUniqueIdentifier = parentUniqueIdentifier,
                     Filename = fileResp.Filename,
-                    FullPath = fileResp.SimulatePath
+                    FullPath = fileResp.SimulatePath,
+                    OwnerId = fileResp.OwnerId.ToString()
                 };
             }
             catch (Exception ex)

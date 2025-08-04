@@ -25,6 +25,8 @@ namespace DWSIM.Simulate365.Models
         public string FullPath { get; set; }
         public UploadConflictAction? ConflictAction { get; set; }
 
+        public string OwnerId { get; set; }
+
         public S365File(string localTmpFile)
         {
             _localTmpFile = localTmpFile;
@@ -76,7 +78,5 @@ namespace DWSIM.Simulate365.Models
             
             FileManagementService.GetInstance().FileSavedToDashboard();
         }
-
-
     }
 }
