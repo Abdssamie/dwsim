@@ -223,7 +223,9 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                     Dim sT1 = Math.Exp(19.76 - 30125 / (1.8 * T) + 8649917 / (1.8 * T) ^ 2)
                     Dim sT2 = Math.Exp(19.76 - 30125 / (1.8 * 298.15) + 8649917 / (1.8 * 298.15) ^ 2)
                     Dim dSdT = (sT1 - sT2) / (298.15 - T) / sT1
+                    If T = 298.15 Then dSdT = 0.0
                     Vx2(i) = sol + sol * dSdT * (T - 298.15)
+                    If Vx2(i) < 0.0 Then Vx2(i) = sol
                     Vn1(i) = fi(i) - Vx2(i) * xl2 - Vy(i) * V
                     If Vn1(i) < 0.0 Then Vx2(i) = 0.0
                 End If

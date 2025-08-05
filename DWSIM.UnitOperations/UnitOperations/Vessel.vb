@@ -90,7 +90,7 @@ Namespace UnitOperations
             HeatingCoolingIsobaric = 3
         End Enum
 
-        Public Property CalculationMode As CalculationModes = CalculationModes.Adiabatic
+        Public Property CalculationMode As CalculationModes = CalculationModes.Legacy
 
         Public Property DimensionRatio As Double = 3
 
