@@ -407,7 +407,8 @@ Namespace UnitOperations
 
             'Calcular DP
             Dim Tpe, Tspec, Pspec As Double
-            Dim resv As Object, resf As Double()
+            Dim resv As Object = New Object() {"", 0.0, 0.0, 0.0, 0.0}
+            Dim resf As Double()
             Dim equilibrio As Object = Nothing
             Dim tmp As Object = Nothing
             Dim tipofluxo As String
