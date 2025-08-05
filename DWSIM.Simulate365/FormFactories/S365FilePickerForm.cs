@@ -2,10 +2,12 @@
 using DWSIM.Simulate365.Models;
 using DWSIM.Simulate365.Services;
 using DWSIM.UI.Web;
+using Microsoft.IdentityModel.Protocols;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -45,11 +47,11 @@ namespace DWSIM.Simulate365.FormFactories
             _userService = UserService.GetInstance();
             _userService.OnUserLoggedIn += OnUserLoggedInEvent;
         }
-         
+
 
         private void OnUserLoggedInEvent(object sender, EventArgs e)
         {
-           
+
             _webUIForm.Navigate(_webUIForm.InitialUrl);
         }
 
@@ -157,6 +159,18 @@ namespace DWSIM.Simulate365.FormFactories
             if (!string.IsNullOrWhiteSpace(SuggestedDirectory))
             {
                 queryParams.Add("directory", HttpUtility.UrlEncode(SuggestedDirectory));
+            }
+
+            bool enableCollaboration = false;
+
+            string configValue = ConfigurationManager.AppSettings["EnableCollaboration"];
+            if (!string.IsNullOrEmpty(configValue))
+            {
+                bool.TryParse(configValue, out enableCollaboration);
+            }
+            if (enableCollaboration)
+            {
+                queryParams.Add("collaboration", "true");
             }
 
             var initialUrl = $"{navigationPath}";
