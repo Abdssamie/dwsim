@@ -1842,6 +1842,18 @@ Namespace UnitOperations
             Return 40.0
         End Function
 
+        Public Overridable Function GetProperties2() As String() Implements ISimulationObject.GetProperties2
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overridable Function GetPropertyValue2(propname As String, arg1 As String, units As String) As Object Implements ISimulationObject.GetPropertyValue2
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overridable Sub SetPropertyValue2(propname As String, arg1 As String, units As String, value As Object) Implements ISimulationObject.SetPropertyValue2
+            Throw New NotImplementedException()
+        End Sub
+
     End Class
 
 End Namespace

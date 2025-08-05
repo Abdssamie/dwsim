@@ -287,4 +287,10 @@ Public Interface ISimulationObject
 
     Function GetEnergyConsumption() As Double
 
+    Function GetProperties2() As String()
+
+    Function GetPropertyValue2(propname As String, arg1 As String, units As String) As Object
+
+    Sub SetPropertyValue2(propname As String, arg1 As String, units As String, value As Object)
+
 End Interface
