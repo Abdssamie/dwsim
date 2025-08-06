@@ -26,6 +26,8 @@ namespace DWSIM.Simulate365.FormFactories
 
         private readonly UserService _userService;
 
+        private bool CollaborationEnabled;
+
 
         #region Public events
 
@@ -46,6 +48,12 @@ namespace DWSIM.Simulate365.FormFactories
             _filePickerService.S365DashboardFolderCreated += _filePickerService_S365DashboardFolderCreated;
             _userService = UserService.GetInstance();
             _userService.OnUserLoggedIn += OnUserLoggedInEvent;
+
+            string configValue = ConfigurationManager.AppSettings["EnableCollaboration"];
+            if (!string.IsNullOrEmpty(configValue))
+            {
+                bool.TryParse(configValue, out CollaborationEnabled);
+            }
         }
 
 
@@ -99,7 +107,15 @@ namespace DWSIM.Simulate365.FormFactories
             }
             if (!string.IsNullOrWhiteSpace(SuggestedDirectory))
             {
-                queryParams.Add("directory", HttpUtility.UrlEncode(SuggestedDirectory));
+
+                // If user has opened collaboration file, and tries to save that file he will get wrong SuggestedDirectory.
+                // We could compare OwnerId of opened file with currentUserId, but getting opened file data from here is issue.
+                // For now we will just disable setting suggestedDirectory inside save form if collaboration is enabled.
+                if (!CollaborationEnabled)
+                {
+                    queryParams.Add("directory", HttpUtility.UrlEncode(SuggestedDirectory));
+                }
+
             }
 
             if (!string.IsNullOrWhiteSpace(SuggestedFilename))

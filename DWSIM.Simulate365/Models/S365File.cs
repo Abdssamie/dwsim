@@ -59,23 +59,23 @@ namespace DWSIM.Simulate365.Models
 
         public void Write(string localFilePath)
         {
-            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, ConflictAction ?? UploadConflictAction.Overwrite);
-            
+            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite);
+
             FileUniqueIdentifier = file.FileUniqueIdentifier;
             Filename = file.Filename;
             FullPath = file.FullPath;
-            
+
             FileManagementService.GetInstance().FileSavedToDashboard();
         }
 
         public void Write(System.IO.Stream stream)
         {
-            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, stream, Filename, FullPath, ConflictAction ?? UploadConflictAction.Overwrite);
-            
+            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, stream, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite);
+
             FileUniqueIdentifier = file.FileUniqueIdentifier;
             Filename = file.Filename;
             FullPath = file.FullPath;
-            
+
             FileManagementService.GetInstance().FileSavedToDashboard();
         }
     }
