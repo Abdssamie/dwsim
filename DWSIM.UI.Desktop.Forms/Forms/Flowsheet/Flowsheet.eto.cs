@@ -2536,7 +2536,15 @@ namespace DWSIM.UI.Forms
             item9.Click += (sender, e) => ExportToPDF();
             item10.Click += (sender, e) => ExportToSVG();
 
-            deselctxmenu.Items.AddRange(new MenuItem[] { item0, new SeparatorMenuItem(), item1, item2, new SeparatorMenuItem(), item4, item5, item6, new SeparatorMenuItem(), item9, item10, new SeparatorMenuItem(), item7a, item7b, item8 });
+            if (s.RunningPlatform() == s.Platform.Linux)
+            {
+                deselctxmenu.Items.AddRange(new MenuItem[] { item0, new SeparatorMenuItem(), item1, item2, new SeparatorMenuItem(), item9, new SeparatorMenuItem(), item7a, item7b, item8 });
+            }
+            else
+            {
+                deselctxmenu.Items.AddRange(new MenuItem[] { item0, new SeparatorMenuItem(), item1, item2, new SeparatorMenuItem(), item4, item5, item6, new SeparatorMenuItem(), item9, item10, new SeparatorMenuItem(), item7a, item7b, item8 });
+            }
+
 
             return;
 
