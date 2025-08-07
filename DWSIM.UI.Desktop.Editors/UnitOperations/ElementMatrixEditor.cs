@@ -47,7 +47,7 @@ namespace DWSIM.UI.Desktop.Editors.UnitOperations
                 Application.Instance.Invoke(() => Save());
             });
 
-            this.Add(gridcontrol);
+            this.Add(new Scrollable {Content = gridcontrol });
 
             Populate();
 
