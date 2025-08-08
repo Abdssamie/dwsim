@@ -153,4 +153,6 @@ Public Interface IFlowsheetOptions
 
     ReadOnly Property UniqueID As String
 
+    Property RestoreUnitOperationStateAfterError As Boolean
+
 End Interface

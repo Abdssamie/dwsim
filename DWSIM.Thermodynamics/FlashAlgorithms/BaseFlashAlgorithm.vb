@@ -1246,7 +1246,7 @@ will converge to this solution.")
             'if a second liquid phase is detected, estimate composition
             If stresult.Count > 0 Then
 
-                Dim validsolutions = stresult.Where(Function(s) s.Max > 0.5).ToList()
+                Dim validsolutions = stresult.Where(Function(s) s.Max > 0.05).ToList()
 
                 Dim fcl(n), fcv(n) As Double
 

@@ -9178,6 +9178,35 @@ Namespace Streams
         Public Function GetCompoundMassConcentration(name As String) As Double Implements IMaterialStream.GetCompoundMassConcentration
             Return Phases(0).Compounds(name).MassFlow.GetValueOrDefault() / Phases(0).Properties.volumetric_flow.GetValueOrDefault()
         End Function
+
+        Public Function IsSingleCompound() As Boolean Implements IMaterialStream.IsSingleCompound
+
+            Dim i, n As Integer
+            Dim sc, bo As Boolean
+
+            Dim Vx = GetOverallComposition()
+            Dim Comps = Phases(0).Compounds.Values.ToList()
+
+            n = Vx.Length - 1
+
+            bo = False
+            For i = 0 To n
+                If Comps(i).ConstantProperties.IsBlackOil Then
+                    bo = True
+                    Exit For
+                End If
+            Next
+            sc = False
+            For i = 0 To n
+                If Vx(i) > 0.999 Then
+                    sc = True
+                    Exit For
+                End If
+            Next
+
+            If sc And Not bo Then Return True Else Return False
+
+        End Function
     End Class
 
     Public Class CalculationResults

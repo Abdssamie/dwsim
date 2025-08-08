@@ -340,14 +340,16 @@ Public Class FormAssayManager
             Dim myassay As New Assay.Assay
             Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
             Try
-                myassay = DirectCast(mySerializer.Deserialize(handler), Assay.Assay)
-                Dim id As String = Guid.NewGuid().ToString
-                pfd.Options.PetroleumAssays.Add(id, myassay)
-                If myassay.IsBulk Then
-                    gridassays.Rows.Add(New Object() {id, myassay.Name, "Bulk"})
-                Else
-                    gridassays.Rows.Add(New Object() {id, myassay.Name, "Curves"})
-                End If
+                Using stream = handler.OpenRead()
+                    myassay = DirectCast(mySerializer.Deserialize(stream), Assay.Assay)
+                    Dim id As String = Guid.NewGuid().ToString
+                    pfd.Options.PetroleumAssays.Add(id, myassay)
+                    If myassay.IsBulk Then
+                        gridassays.Rows.Add(New Object() {id, myassay.Name, "Bulk"})
+                    Else
+                        gridassays.Rows.Add(New Object() {id, myassay.Name, "Curves"})
+                    End If
+                End Using
             Catch ex As System.Runtime.Serialization.SerializationException
                 MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try

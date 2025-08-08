@@ -407,7 +407,8 @@ Namespace UnitOperations
 
             'Calcular DP
             Dim Tpe, Tspec, Pspec As Double
-            Dim resv As Object, resf As Double()
+            Dim resv As Object = New Object() {"", 0.0, 0.0, 0.0, 0.0}
+            Dim resf As Double()
             Dim equilibrio As Object = Nothing
             Dim tmp As Object = Nothing
             Dim tipofluxo As String
@@ -813,9 +814,14 @@ Namespace UnitOperations
 
                                 Tout_ant = Tout
                                 IObj5?.SetCurrent()
-                                Dim flashresult = oms.PropertyPackage.FlashBase.CalculateEquilibrium(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pout, Hout, oms.PropertyPackage, oms.PropertyPackage.RET_VMOL(PropertyPackages.Phase.Mixture), Nothing, Tout)
-                                If flashresult.ResultException IsNot Nothing Then Throw flashresult.ResultException
-                                Tout = flashresult.CalculatedTemperature
+
+                                If calceq And CalculateEquilibrium Then
+                                    Dim flashresult = oms.PropertyPackage.FlashBase.CalculateEquilibrium(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pout, Hout, oms.PropertyPackage, oms.PropertyPackage.RET_VMOL(PropertyPackages.Phase.Mixture), Nothing, Tout)
+                                    If flashresult.ResultException IsNot Nothing Then Throw flashresult.ResultException
+                                    Tout = flashresult.CalculatedTemperature
+                                Else
+                                    Tout = Tin
+                                End If
 
                                 If Qvin + Qlin = 0.0 Then
                                     U = 0.0
@@ -867,6 +873,8 @@ Namespace UnitOperations
 
                             If calceq And CalculateEquilibrium Then
                                 oms.Calculate(True, True)
+                            Else
+                                oms.Calculate(False, True)
                             End If
 
                             With oms

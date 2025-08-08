@@ -309,6 +309,8 @@ Namespace DWSIM.Flowsheet
 
         Public ReadOnly Property UniqueID As String = Guid.NewGuid().ToString() Implements IFlowsheetOptions.UniqueID
 
+        Public Property RestoreUnitOperationStateAfterError As Boolean = False Implements IFlowsheetOptions.RestoreUnitOperationStateAfterError
+
     End Class
 
     <System.Serializable()> Public Class FlowsheetResults

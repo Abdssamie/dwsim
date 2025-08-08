@@ -78,6 +78,19 @@ Public Class FormConfigPropertyPackage
                         End Try
                     End If
                 End Sub
+            AddHandler .CellKeyUp,
+                 Sub(sender, e)
+                     If Loaded And Not Changing And e.KeyCode = (Interaction.KeyCode.V + Interaction.KeyCode.Control) Then
+                         Try
+                             SetKijVal(.RowHeaders(e.Cell.Row).Text, .ColumnHeaders(e.Cell.Column).Text, e.Cell.Data)
+                             Changing = True
+                             .Cells(e.Cell.Column, e.Cell.Row).Data = e.Cell.Data
+                         Catch ex As Exception
+                         Finally
+                             Changing = False
+                         End Try
+                     End If
+                 End Sub
             For i = 0 To comps.Count - 1
                 For j = 0 To comps.Count - 1
                     If i = j Then

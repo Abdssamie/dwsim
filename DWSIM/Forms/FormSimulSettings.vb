@@ -282,6 +282,8 @@ Public Class FormSimulSettings
 
         If DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True
 
+        chkRestoreUnitOpState.Checked = CurrentFlowsheet.Options.RestoreUnitOperationStateAfterError
+
         cbMassBalanceCheck.SelectedIndex = CurrentFlowsheet.Options.MassBalanceCheck
 
         cbEnergyBalanceCheck.SelectedIndex = CurrentFlowsheet.Options.EnergyBalanceCheck
@@ -2038,6 +2040,12 @@ Public Class FormSimulSettings
             End If
 
         End If
+
+    End Sub
+
+    Private Sub chkRestoreUnitOpState_CheckedChanged(sender As Object, e As EventArgs) Handles chkRestoreUnitOpState.CheckedChanged
+
+        CurrentFlowsheet.Options.RestoreUnitOperationStateAfterError = chkRestoreUnitOpState.Checked
 
     End Sub
 

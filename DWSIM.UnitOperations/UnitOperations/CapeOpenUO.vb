@@ -62,6 +62,8 @@ Namespace UnitOperations
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.CAPEOPEN
 
+        Public Overrides ReadOnly Property SupportsRestoreStateAfterError As Boolean = False
+
         Public Property EmbeddedImageData As String = ""
 
         Public Property UseEmbeddedImage As Boolean = False

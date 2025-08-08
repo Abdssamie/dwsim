@@ -1842,6 +1842,44 @@ Namespace UnitOperations
             Return 40.0
         End Function
 
+        Public Overridable Function GetProperties2() As String() Implements ISimulationObject.GetProperties2
+
+            Dim props = GetProperties(PropertyType.ALL).Select(Function(p) FlowSheet?.GetTranslatedString(p)).ToArray()
+            Return props
+
+        End Function
+
+        Public Overridable Function GetPropertyValue2(propname As String, arg1 As String, units As String) As Object Implements ISimulationObject.GetPropertyValue2
+
+            Dim propcodes = GetProperties(PropertyType.ALL)
+            Dim propnames = GetProperties2().ToList()
+
+            Dim value = GetPropertyValue(propcodes(propnames.IndexOf(propname)))
+
+            If Double.TryParse(value.ToString(), New Double) Then
+                Return cv.ConvertFromSI(units, Convert.ToDouble(value))
+            Else
+                Return value
+            End If
+
+        End Function
+
+        Public Overridable Sub SetPropertyValue2(propname As String, arg1 As String, units As String, value As Object) Implements ISimulationObject.SetPropertyValue2
+
+            Dim propcodes = GetProperties(PropertyType.ALL)
+            Dim propnames = GetProperties2().ToList()
+
+            Dim propcode = propcodes(propnames.IndexOf(propname))
+
+            If Double.TryParse(value.ToString(), New Double) Then
+                Dim newvalue = cv.ConvertToSI(units, Convert.ToDouble(value))
+                SetPropertyValue(propcode, newvalue)
+            Else
+                SetPropertyValue(propcode, value)
+            End If
+
+        End Sub
+
     End Class
 
 End Namespace

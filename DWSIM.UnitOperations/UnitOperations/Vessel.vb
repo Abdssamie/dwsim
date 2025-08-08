@@ -90,7 +90,7 @@ Namespace UnitOperations
             HeatingCoolingIsobaric = 3
         End Enum
 
-        Public Property CalculationMode As CalculationModes = CalculationModes.Adiabatic
+        Public Property CalculationMode As CalculationModes = CalculationModes.Legacy
 
         Public Property DimensionRatio As Double = 3
 
@@ -623,17 +623,17 @@ Namespace UnitOperations
 
                 Case CalculationModes.Legacy
 
-                    If Not Me.GraphicObject.InputConnectors(6).IsAttached Then Throw New Exception(FlowSheet.GetTranslatedString("EnergyStreamRequired"))
-
                     W = MixedStream.Phases(0).Properties.massflow.GetValueOrDefault
 
                     If Me.OverrideP Then
+                        If Not Me.GraphicObject.InputConnectors(6).IsAttached Then Throw New Exception(FlowSheet.GetTranslatedString("EnergyStreamRequired"))
                         P = Me.FlashPressure
                         MixedStream.Phases(0).Properties.pressure = P
                     Else
                         P = MixedStream.Phases(0).Properties.pressure.GetValueOrDefault
                     End If
                     If Me.OverrideT Then
+                        If Not Me.GraphicObject.InputConnectors(6).IsAttached Then Throw New Exception(FlowSheet.GetTranslatedString("EnergyStreamRequired"))
                         T = Me.FlashTemperature
                         MixedStream.Phases(0).Properties.temperature = T
                     Else

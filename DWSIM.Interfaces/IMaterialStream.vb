@@ -118,4 +118,6 @@ Public Interface IMaterialStream
 
     Sub UpdateStreamType()
 
+    Function IsSingleCompound() As Boolean
+
 End Interface

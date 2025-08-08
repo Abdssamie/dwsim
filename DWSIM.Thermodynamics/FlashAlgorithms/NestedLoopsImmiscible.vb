@@ -70,10 +70,6 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim keycomps As String() = New String() {"Water"}
 
-            If keycomps.Count = 0 Then
-                Throw New Exception("Immiscible VLLE Flash Algorithm error: you must select an immiscible compound for liquid phase splitting.")
-            End If
-
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V As Double
@@ -88,6 +84,8 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
             n = Vz.Length - 1
 
             Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki2(n), Ki_ant(n), fi(n) As Double
+
+            Dim Vprops = PP.DW_GetConstantProperties()
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -157,7 +155,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             End If
 
-            Dim xl1, xl2, Vx1(n), Vx2(n), nHCy, nWy, nWx As Double
+            Dim xl1, xl2, Vx1(n), Vx2(n), Vn1(n), nHCy, nWy, nWx As Double
 
             V = V * (1 - nwm)
             xl1 = L * (1 - nwm)
@@ -191,6 +189,49 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
                 End If
             Next
+
+            'supercritical gases solubility
+
+            Dim VTc = PP.RET_VTC()
+
+            For i = 0 To n
+                If xl2 > 0 And i <> wid And T / VTc(i) > 1.0 Then
+                    Vx2(i) = Vy(i) * P / PP.AUX_KHenry(Vn(i), T)
+                End If
+            Next
+
+            'hydrocarbon solubility
+
+            Dim isPF As Boolean
+
+            For i = 0 To n
+                If Vprops(i).IsPF Then
+                    isPF = True
+                Else
+                    If Vprops(i).Elements.Count = 2 And Vprops(i).Elements.ContainsKey("C") And Vprops(i).Elements.ContainsKey("H") Then
+                        isPF = True
+                    Else
+                        isPF = False
+                    End If
+                End If
+                Dim nC = 0
+                If Vprops(i).Elements.ContainsKey("C") Then
+                    nC = Vprops(i).Elements("C")
+                End If
+                If nC > 0 And fi(i) > 0.0 And xl2 > 0 And i <> wid And Vx2(i) = 0.0 And isPF Then
+                    Dim sol = Math.Exp(-1.6708 - 0.6386 * nC - 0.5538 * nC ^ 2)
+                    Dim sT1 = Math.Exp(19.76 - 30125 / (1.8 * T) + 8649917 / (1.8 * T) ^ 2)
+                    Dim sT2 = Math.Exp(19.76 - 30125 / (1.8 * 298.15) + 8649917 / (1.8 * 298.15) ^ 2)
+                    Dim dSdT = (sT1 - sT2) / (298.15 - T) / sT1
+                    If T = 298.15 Then dSdT = 0.0
+                    Vx2(i) = sol + sol * dSdT * (T - 298.15)
+                    If Vx2(i) < 0.0 Then Vx2(i) = sol
+                    Vn1(i) = fi(i) - Vx2(i) * xl2 - Vy(i) * V
+                    If Vn1(i) < 0.0 Then Vx2(i) = 0.0
+                End If
+            Next
+
+            Vx2 = Vx2.NormalizeY()
 
             Ki = PP.DW_CalcKvalue(Vx1, Vy, T, P)
             Ki2 = PP.DW_CalcKvalue(Vx2, Vy, T, P)

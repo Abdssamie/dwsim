@@ -551,6 +551,7 @@ Partial Class FormAssayManager
         '
         'Button1
         '
+        Me.Button1.DialogResult = System.Windows.Forms.DialogResult.OK
         resources.ApplyResources(Me.Button1, "Button1")
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True

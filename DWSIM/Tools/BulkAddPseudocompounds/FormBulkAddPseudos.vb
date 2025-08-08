@@ -261,8 +261,6 @@ Public Class FormBulkAddPseudos
                     Case "Farah (2006)"
                         tc = PropertyMethods.Tc_Farah(comp.PF_vA, comp.PF_vB, comp.NBP, comp.PF_SG)
                 End Select
-            Else
-                tc = tc.ToString().ToDoubleFromCurrent().ConvertToSI(cbTCUnits.SelectedItem)
             End If
 
             'Pc
@@ -277,8 +275,6 @@ Public Class FormBulkAddPseudos
                     Case "Farah (2006)"
                         pc = PropertyMethods.Pc_Farah(comp.PF_vA, comp.PF_vB, comp.NBP, comp.PF_SG)
                 End Select
-            Else
-                pc = pc.ToString().ToDoubleFromCurrent().ConvertToSI(cbPCUnits.SelectedItem)
             End If
 
             'Af
