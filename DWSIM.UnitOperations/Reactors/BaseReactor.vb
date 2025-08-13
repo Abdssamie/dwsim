@@ -188,7 +188,7 @@ Namespace Reactors
         Private scope As ScriptScope
         Private engine As ScriptEngine
 
-        Function ProcessAdvancedKineticReactionRate(scriptTItle As String, rc As Reactor, rxn As Reaction, T As Double, P As Double, amounts As Dictionary(Of String, Double), amounts2 As Dictionary(Of String, Double)) As Double
+        Function ProcessAdvancedKineticReactionRate(scriptTitle As String, rc As Reactor, rxn As Reaction, T As Double, P As Double, amounts As Dictionary(Of String, Double), amounts2 As Dictionary(Of String, Double)) As Double
 
             If scope Is Nothing Then
                 Dim opts As New Dictionary(Of String, Object)()
@@ -200,7 +200,7 @@ Namespace Reactors
                 scope = engine.CreateScope()
             End If
 
-            Dim script = FlowSheet.Scripts.Values.Where(Function(x) x.Title = scriptTItle).FirstOrDefault()
+            Dim script = FlowSheet.Scripts.Values.Where(Function(x) x.Title = scriptTitle).FirstOrDefault()
 
             If script Is Nothing Then Throw New Exception("Associated Python Script for Kinetics not found.")
 
