@@ -27,6 +27,14 @@ namespace DWSIM.UI.Web.Settings
                 TakeHomeExamsServiceUrl = "https://take-home-exams-service.staging.simulate365.com";
                 Environment = "Staging";
             }
+            if (!String.IsNullOrEmpty(s365Environment) && s365Environment.ToLowerInvariant() == "development")
+            {
+                DashboardServiceUrl = "https://localhost:7076";
+                ExcelRunnerServiceUrl = "";
+                SensitivityStudiesServiceUrl = "";
+                TakeHomeExamsServiceUrl = "";
+                Environment = "development";
+            }
 
         }
     }

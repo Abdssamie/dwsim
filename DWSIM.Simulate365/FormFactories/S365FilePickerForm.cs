@@ -60,7 +60,7 @@ namespace DWSIM.Simulate365.FormFactories
         private void OnUserLoggedInEvent(object sender, EventArgs e)
         {
 
-            _webUIForm.Navigate(_webUIForm.InitialUrl);
+            _webUIForm?.Navigate(_webUIForm?.InitialUrl);
         }
 
         private void _filePickerService_S365DashboardFolderCreated(object sender, EventArgs e)

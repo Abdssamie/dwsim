@@ -148,11 +148,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\AccessTokenType.cs" />
+    <Compile Include="Enums\AccessType.cs" />
     <Compile Include="FormFactories\LoginForm.cs" />
     <Compile Include="FormFactories\S365FilePickerForm.cs" />
     <Compile Include="GraphClientFactory.cs" />
     <Compile Include="IUserProvider.cs" />
     <Compile Include="Models\DashboardModels.cs" />
+    <Compile Include="Models\ErrorResponseModel.cs" />
     <Compile Include="Models\OAuthErrorResponse.cs" />
     <Compile Include="Models\OAuthTokenResponse.cs" />
     <Compile Include="Models\S365File.cs" />
