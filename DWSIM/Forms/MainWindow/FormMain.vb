@@ -112,14 +112,16 @@ Public Class FormMain
     Public Shared Property EnableUserDefinedLoadFileRoutine As Boolean = False
     Public Shared Property EnableUserDefinedLoadXMLRoutine As Boolean = False
     Public Shared Property EnableUserDefinedLoadXMLZIPRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedCloseAllRoutine As Boolean = False
     Public Shared Property EnableUserDefinedOpenRecentRoutine As Boolean = False
     Public Shared Property EnableFlowsheetSolveCallbackHandler As Boolean = False
     Public Shared Property EnableLeaveCollaborationGroup As Boolean = False
+    Public Shared Property EnableActiveUsersButton As Boolean = False
+    Public Shared Property EnableNotificationBadge As Boolean = False
+    Public Shared Property EnableUpdatesActiveSimulationUsersBadgeCount As Boolean = False
 
-    Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean, FormFlowsheet, String)
+    Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean, FormFlowsheet, String, Boolean)
 
-    Public Shared UserDefinedSaveXMLZIPRoutine As Action(Of IVirtualFile, FormFlowsheet, Boolean, FormFlowsheet, String)
+    Public Shared UserDefinedSaveXMLZIPRoutine As Action(Of IVirtualFile, FormFlowsheet, Boolean, FormFlowsheet, String, Boolean)
 
     Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String, String)
 
@@ -127,13 +129,17 @@ Public Class FormMain
 
     Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, String, IFlowsheet)
 
-    Public Shared UserDefinedCloseAllRoutine As Action(Of Object, System.EventArgs)
-
     Public Shared UserDefinedOpenRecentRoutine As Action(Of Object, System.EventArgs, String)
 
     Public Shared RegisterFlowsheetSolveCallbackHandler As Action
 
     Public Shared LeaveCollaborationGroup As Action(Of String, String)
+
+    Public Shared SetupActiveUsersButton As Func(Of Form, ToolStrip, ToolStripButton)
+
+    Public Shared ShowNotificationBadge As Action(Of Guid, String, ToolStripButton)
+
+    Public Shared Update_ActiveSimulation_UsersBadge_Count As Action(Of String)
 
 #Region "    Form Events"
 
@@ -3775,10 +3781,26 @@ Public Class FormMain
 
     End Sub
 
-    Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False)
+    Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
         If EnableUserDefinedSaveXMLRoutine Then
-            UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation, My.Application.ActiveSimulation, dwsimVersion)
+
+            Dim activeSimulation As FormFlowsheet = Nothing
+
+            Dim mainForm = Application.OpenForms.OfType(Of FormFlowsheet)().FirstOrDefault()
+
+            If mainForm IsNot Nothing Then
+
+                If mainForm.InvokeRequired Then
+                    mainForm.Invoke(Sub()
+                                        activeSimulation = My.Application.ActiveSimulation
+                                    End Sub)
+                Else
+                    activeSimulation = My.Application.ActiveSimulation
+                End If
+            End If
+
+            UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation, activeSimulation, dwsimVersion, savingToS365)
             Exit Sub
         End If
 
@@ -4324,10 +4346,26 @@ Label_00CC:
 
     End Sub
 
-    Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False)
+    Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
         If EnableUserDefinedSaveXMLZIPRoutine Then
-            UserDefinedSaveXMLZIPRoutine.Invoke(handler, form, closingSimulation, My.Application.ActiveSimulation, dwsimVersion)
+
+            Dim activeSimulation As FormFlowsheet = Nothing
+
+            Dim mainForm = Application.OpenForms.OfType(Of FormFlowsheet)().FirstOrDefault()
+
+            If mainForm IsNot Nothing Then
+
+                If mainForm.InvokeRequired Then
+                    mainForm.Invoke(Sub()
+                                        activeSimulation = My.Application.ActiveSimulation
+                                    End Sub)
+                Else
+                    activeSimulation = My.Application.ActiveSimulation
+                End If
+            End If
+
+            UserDefinedSaveXMLZIPRoutine.Invoke(handler, form, closingSimulation, activeSimulation, dwsimVersion, savingToS365)
             Exit Sub
         End If
 
@@ -4681,9 +4719,9 @@ Label_00CC:
                 Console.WriteLine(handler.GetExtension().ToLower())
                 If handler.GetExtension().ToLower() = ".dwxml" Then
                     TaskHelper.Run(Sub() SaveXML(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                               'Me.ToolStripStatusLabel1.Text = ""
-                                                                                               If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
-                                                                                           End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                                                                                                                   'Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                   If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
+                                                                                                               End Sub, TaskContinuationOptions.ExecuteSynchronously)
 
                 ElseIf handler.GetExtension().ToLower() = ".xml" Then
                     TaskHelper.Run(Sub() SaveMobileXML(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
@@ -4692,9 +4730,9 @@ Label_00CC:
                                                                                                  End Sub, TaskContinuationOptions.ExecuteSynchronously)
                 ElseIf handler.GetExtension().ToLower() = ".dwxmz" Then
                     TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                                  ' Me.ToolStripStatusLabel1.Text = ""
-                                                                                                  If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
-                                                                                              End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                                                                                                                      ' Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                      If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
+                                                                                                                  End Sub, TaskContinuationOptions.ExecuteSynchronously)
 
                 ElseIf handler.GetExtension().ToLower() = ".pfdx" Then
                     SaveJSON(handler, Me.ActiveMdiChild)
@@ -5072,11 +5110,6 @@ Label_00CC:
     End Sub
 
     Private Sub FecharTodasAsSimulacoesAbertasToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseAllToolstripMenuItem.Click
-
-        If EnableUserDefinedCloseAllRoutine Then
-            UserDefinedCloseAllRoutine.Invoke(sender, e)
-            Exit Sub
-        End If
 
         If Me.MdiChildren.Length > 0 Then
             Dim form2 As Form

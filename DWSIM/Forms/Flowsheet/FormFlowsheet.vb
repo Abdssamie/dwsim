@@ -149,6 +149,8 @@ Public Class FormFlowsheet
     Public Property SignalRGuid As String
     Public Property FileVersion As Decimal = 0.00D
 
+    Private toolstripButtonDict As New Dictionary(Of String, ToolStripButton)
+
 #End Region
 
 #Region "    Form Event Handlers "
@@ -204,6 +206,21 @@ Public Class FormFlowsheet
 
         My.Application.ActiveSimulation = Me
 
+        If FormMain.EnableUpdatesActiveSimulationUsersBadgeCount Then
+            If FormMain.Update_ActiveSimulation_UsersBadge_Count IsNot Nothing Then
+                If Not String.IsNullOrEmpty(Me.FilePath) Then
+
+                    If Me.Options IsNot Nothing Then
+
+                        Dim fileName = Path.GetFileName(Me.FilePath)
+
+                        FormMain.Update_ActiveSimulation_UsersBadge_Count(fileName)
+
+                    End If
+                End If
+            End If
+        End If
+
     End Sub
 
     Private Sub FormChild_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
@@ -224,8 +241,8 @@ Public Class FormFlowsheet
                      UpdateMassAndEnergyBalance()
                      UpdateFormText()
                      UpdateInterface()
-
                  End Sub)
+
 
     End Sub
 
@@ -241,6 +258,17 @@ Public Class FormFlowsheet
             Me.ToolStrip1.Size = New Size(ToolStrip1.Width, 28 * Settings.DpiScale)
             Me.ToolStrip1.ImageScalingSize = New Size(20 * Settings.DpiScale, 20 * Settings.DpiScale)
             Me.MenuStrip1.ImageScalingSize = New Size(20 * Settings.DpiScale, 20 * Settings.DpiScale)
+
+            If FormMain.EnableActiveUsersButton Then
+                Dim tsb = FormMain.SetupActiveUsersButton(Me, Me.ToolStrip1)
+
+                If tsb IsNot Nothing Then
+                    If Not toolstripButtonDict.ContainsKey(SignalRGuid) Then
+                        toolstripButtonDict(SignalRGuid) = tsb
+                    End If
+                End If
+            End If
+
             For Each item In Me.ToolStrip1.Items
                 If TryCast(item, ToolStripButton) IsNot Nothing Then
                     DirectCast(item, ToolStripButton).Size = New Size(ToolStrip1.ImageScalingSize.Width, ToolStrip1.ImageScalingSize.Height)
@@ -751,6 +779,23 @@ Public Class FormFlowsheet
 
         If FormMain.IsPro Then Task.Delay(3000).ContinueWith(Sub() UIThread(Sub() ProcessTransition()))
 
+
+        If toolstripButtonDict.ContainsKey(Me.SignalRGuid) Then
+
+            If Me.SignalRGuid IsNot Nothing Then
+                Dim sheetSignalRGuid As Guid = Guid.Parse(Me.SignalRGuid)
+
+                If sheetSignalRGuid <> Guid.Empty AndAlso FormMain.EnableNotificationBadge Then
+
+                    Dim tsb = toolstripButtonDict(Me.SignalRGuid)
+
+                    If Me.Options IsNot Nothing Then
+                        FormMain.ShowNotificationBadge(sheetSignalRGuid, Path.GetFileName(Me.FilePath), tsb)
+                    End If
+
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -1101,18 +1146,15 @@ Public Class FormFlowsheet
 
             If Not x = MsgBoxResult.Cancel Then
                 If FormMain.EnableLeaveCollaborationGroup Then
-                    Dim fileName = Path.GetFileName(My.Application.ActiveSimulation.FilePath)
-                    FormMain.LeaveCollaborationGroup(fileName, My.Application.ActiveSimulation.SignalRGuid)
+                    Dim fileName = Path.GetFileName(Me.FilePath)
+                    FormMain.LeaveCollaborationGroup(fileName, Me.SignalRGuid)
                 End If
             End If
 
             If x = MsgBoxResult.Yes Then
 
-                If FormMain.EnableUserDefinedSaveXMLZIPRoutine Then
-                    My.Application.MainWindowForm.SaveFile(False, True, closingSimulation:=True)
-                Else
-                    My.Application.MainWindowForm.SaveFile(False, closingSimulation:=True)
-                End If
+                My.Application.MainWindowForm.SaveFile(False, closingSimulation:=True)
+
                 Me.m_overrideCloseQuestion = True
                 Me.Close()
 
@@ -1122,11 +1164,8 @@ Public Class FormFlowsheet
                 e.Cancel = True
 
             Else
-
                 Me.m_overrideCloseQuestion = True
-
             End If
-
         End If
 
     End Sub
