@@ -62,6 +62,14 @@ Imports DWSIM.ExtensionMethods
 
     Private Shared AvailablePropPacks As New Dictionary(Of String, IPropertyPackage)
 
+    Public Event FlowsheetSavingToXML(sender As Object, e As EventArgs)
+
+    Public Event FlowsheetSavedToXML(sender As Object, e As EventArgs)
+
+    Public Event FlowsheetLoadingFromXML(sender As Object, e As EventArgs)
+
+    Public Event FlowsheetLoadedFromXML(sender As Object, e As EventArgs)
+
     Public Property AvailablePropertyPackages As Dictionary(Of String, IPropertyPackage) Implements IFlowsheet.AvailablePropertyPackages
         Get
             Return AvailablePropPacks
@@ -2224,6 +2232,8 @@ Imports DWSIM.ExtensionMethods
 
     Public Sub LoadFromXML(xdoc As XDocument) Implements IFlowsheet.LoadFromXML
 
+        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
+
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         Dim excs As New Concurrent.ConcurrentBag(Of Exception)
@@ -2600,6 +2610,8 @@ Imports DWSIM.ExtensionMethods
 
         ProcessScripts(Enums.Scripts.EventType.SimulationOpened, Enums.Scripts.ObjectType.Simulation, "")
 
+        RaiseEvent FlowsheetLoadedFromXML(Me, New EventArgs())
+
         If excs.Count > 0 Then
             If Settings.AutomationMode Then
                 'throw errors
@@ -2632,6 +2644,8 @@ Imports DWSIM.ExtensionMethods
     End Function
 
     Public Function SaveToXML() As XDocument Implements IFlowsheet.SaveToXML
+
+        RaiseEvent FlowsheetSavingToXML(Me, New EventArgs())
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
@@ -2794,6 +2808,8 @@ Imports DWSIM.ExtensionMethods
         xel.Add(DirectCast(Results, ICustomXMLSerialization).SaveData().ToArray())
 
         If SaveSpreadsheetData IsNot Nothing Then SaveSpreadsheetData.Invoke(xdoc)
+
+        RaiseEvent FlowsheetSavedToXML(Me, New EventArgs())
 
         Return xdoc
 
