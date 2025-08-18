@@ -779,23 +779,25 @@ Public Class FormFlowsheet
 
         If FormMain.IsPro Then Task.Delay(3000).ContinueWith(Sub() UIThread(Sub() ProcessTransition()))
 
+        If SignalRGuid IsNot Nothing Then
+            If toolstripButtonDict.ContainsKey(Me.SignalRGuid) Then
 
-        If toolstripButtonDict.ContainsKey(Me.SignalRGuid) Then
+                If Me.SignalRGuid IsNot Nothing Then
+                    Dim sheetSignalRGuid As Guid = Guid.Parse(Me.SignalRGuid)
 
-            If Me.SignalRGuid IsNot Nothing Then
-                Dim sheetSignalRGuid As Guid = Guid.Parse(Me.SignalRGuid)
+                    If sheetSignalRGuid <> Guid.Empty AndAlso FormMain.EnableNotificationBadge Then
 
-                If sheetSignalRGuid <> Guid.Empty AndAlso FormMain.EnableNotificationBadge Then
+                        Dim tsb = toolstripButtonDict(Me.SignalRGuid)
 
-                    Dim tsb = toolstripButtonDict(Me.SignalRGuid)
+                        If Me.Options IsNot Nothing Then
+                            FormMain.ShowNotificationBadge(sheetSignalRGuid, Path.GetFileName(Me.FilePath), tsb)
+                        End If
 
-                    If Me.Options IsNot Nothing Then
-                        FormMain.ShowNotificationBadge(sheetSignalRGuid, Path.GetFileName(Me.FilePath), tsb)
                     End If
-
                 End If
             End If
         End If
+
     End Sub
 
     Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
