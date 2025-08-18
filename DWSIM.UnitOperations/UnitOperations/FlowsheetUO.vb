@@ -37,6 +37,8 @@ Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
 Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes
 Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Tables
 Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Charts
+Imports System.Dynamic
+Imports System.Reflection
 
 Namespace UnitOperations.Auxiliary
 
@@ -408,6 +410,140 @@ Label_00CC:
                     excs.Add(New Exception("Error Loading Reaction Information", ex))
                 End Try
             Next
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("DynamicProperties") IsNot Nothing Then
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("DynamicProperties").Elements.ToList
+
+                Try
+
+                    fs.ExtraProperties = New ExpandoObject
+
+                    If Not data Is Nothing Then
+                        For Each xel As XElement In data
+                            Try
+                                Dim propname = xel.Element("Name").Value
+                                Dim proptype = xel.Element("PropertyType").Value
+                                Dim assembly1 As Assembly = Nothing
+                                For Each assembly In My.Application.Info.LoadedAssemblies
+                                    If proptype.Contains(assembly.GetName().Name) Then
+                                        assembly1 = assembly
+                                        Exit For
+                                    End If
+                                Next
+                                If assembly1 IsNot Nothing Then
+                                    Dim ptype As Type = assembly1.GetType(proptype)
+                                    Dim propval = Newtonsoft.Json.JsonConvert.DeserializeObject(xel.Element("Data").Value, ptype)
+                                    DirectCast(fs.ExtraProperties, IDictionary(Of String, Object))(propname) = propval
+                                End If
+                            Catch ex As Exception
+                            End Try
+                        Next
+                    End If
+
+                Catch ex As Exception
+
+                    excs.Add(New Exception("Error Loading Dynamic Properties", ex))
+
+                End Try
+
+            End If
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays") IsNot Nothing Then
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays").Elements.ToList
+
+                For Each xel As XElement In data
+                    Try
+                        Dim obj As New Utilities.PetroleumCharacterization.Assay.Assay()
+                        obj.LoadData(xel.Elements.ToList)
+                        fs.Options.PetroleumAssays.Add(obj.Name, obj)
+                    Catch ex As Exception
+                        excs.Add(New Exception("Error Loading Petroleum Assay Information", ex))
+                    End Try
+                Next
+
+            End If
+
+            fs.ScriptCollection = New Dictionary(Of String, Interfaces.IScript)
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems") IsNot Nothing Then
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems").Elements.ToList
+
+                Dim i As Integer = 0
+                For Each xel As XElement In data
+                    Try
+                        Dim obj As New FlowsheetSolver.Script()
+                        obj.LoadData(xel.Elements.ToList)
+                        fs.ScriptCollection.Add(obj.ID, obj)
+                    Catch ex As Exception
+                        excs.Add(New Exception("Error Loading Script Item Information", ex))
+                    End Try
+                    i += 1
+                Next
+
+            End If
+
+            fs.ChartCollection = New Dictionary(Of String, Interfaces.IChart)
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("ChartItems") IsNot Nothing Then
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("ChartItems").Elements.ToList
+
+                Dim i As Integer = 0
+                For Each xel As XElement In data
+                    Try
+                        Dim obj As New SharedClasses.Charts.Chart()
+                        obj.LoadData(xel.Elements.ToList)
+                        fs.ChartCollection.Add(obj.ID, obj)
+                    Catch ex As Exception
+                        excs.Add(New Exception("Error Loading Chart Item Information", ex))
+                    End Try
+                    i += 1
+                Next
+
+            End If
+
+            fs.ParticleSizeDistributions = New List(Of ISolidParticleSizeDistribution)
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("ParticleSizeDistributions") IsNot Nothing Then
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("ParticleSizeDistributions").Elements.ToList
+
+                Dim i As Integer = 0
+                For Each xel As XElement In data
+                    Try
+                        Dim obj As New SharedClassesCSharp.Solids.SolidParticleSizeDistribution()
+                        obj.LoadData(xel.Elements.ToList)
+                        fs.ParticleSizeDistributions.Add(obj)
+                    Catch ex As Exception
+                        excs.Add(New Exception("Error Loading PSD Item Information", ex))
+                    End Try
+                    i += 1
+                Next
+
+            End If
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("MessagesLog") IsNot Nothing Then
+                Try
+                    data = xdoc.Element("DWSIM_Simulation_Data").Element("MessagesLog").Elements.ToList
+                    For Each xel As XElement In data
+                        fs.MessagesLog.Add(xel.Value)
+                    Next
+                Catch ex As Exception
+                End Try
+            End If
+
+            fs.Results = New SharedClasses.DWSIM.Flowsheet.FlowsheetResults
+
+            If xdoc.Element("DWSIM_Simulation_Data").Element("Results") IsNot Nothing Then
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("Results").Elements.ToList
+
+                DirectCast(fs.Results, ICustomXMLSerialization).LoadData(data)
+
+            End If
 
             If excs.Count > 0 Then Throw New AggregateException(excs).Flatten Else Return fs
 
