@@ -4718,10 +4718,10 @@ Label_00CC:
                 'Application.DoEvents()
                 Console.WriteLine(handler.GetExtension().ToLower())
                 If handler.GetExtension().ToLower() = ".dwxml" Then
-                    TaskHelper.Run(Sub() SaveXML(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                                                   'Me.ToolStripStatusLabel1.Text = ""
-                                                                                                                   If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
-                                                                                                               End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                    TaskHelper.Run(Sub() SaveXML(handler, Me.ActiveMdiChild, savingToS365:=dashboardpicker)).ContinueWith(Sub(t)
+                                                                                                                              'Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                              If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
+                                                                                                                          End Sub, TaskContinuationOptions.ExecuteSynchronously)
 
                 ElseIf handler.GetExtension().ToLower() = ".xml" Then
                     TaskHelper.Run(Sub() SaveMobileXML(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
@@ -4729,10 +4729,10 @@ Label_00CC:
                                                                                                      If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
                                                                                                  End Sub, TaskContinuationOptions.ExecuteSynchronously)
                 ElseIf handler.GetExtension().ToLower() = ".dwxmz" Then
-                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                                                      ' Me.ToolStripStatusLabel1.Text = ""
-                                                                                                                      If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
-                                                                                                                  End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild, savingToS365:=dashboardpicker)).ContinueWith(Sub(t)
+                                                                                                                                 ' Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                                 If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
+                                                                                                                             End Sub, TaskContinuationOptions.ExecuteSynchronously)
 
                 ElseIf handler.GetExtension().ToLower() = ".pfdx" Then
                     SaveJSON(handler, Me.ActiveMdiChild)
