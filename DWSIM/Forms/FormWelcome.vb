@@ -96,21 +96,23 @@ Public Class FormWelcome
         FOSSEEList.Items.Add(New ListViewItem("Downloading flowsheet list, please wait...", 1) With {.Tag = ""})
 
         Task.Factory.StartNew(Function()
-                                  Return SharedClasses.FOSSEEFlowsheets.GetFOSSEEFlowsheets()
+                                  Return FOSSEEFlowsheets.GetFOSSEEFlowsheets()
                               End Function).ContinueWith(Sub(t)
-                                                             Me.UIThreadInvoke(Sub()
-                                                                                   FOSSEEList.Items.Clear()
-                                                                                   If (t.Exception IsNot Nothing) Then
-                                                                                       FOSSEEList.Items.Add(New ListViewItem("Error loading flowsheet list. Check your internet connection.", 1) With {.Tag = ""})
-                                                                                   Else
-                                                                                       For Each item As FOSSEEFlowsheet In t.Result
-                                                                                           fslist.Add(item.DownloadLink, item)
-                                                                                           FOSSEEList.Items.Add(New ListViewItem(item.DisplayName, 0) With {.Tag = item.DownloadLink})
-                                                                                           My.Application.MainWindowForm.FOSSEEList.Add(item)
-                                                                                       Next
-                                                                                       'Owner.UpdateFOSSEEList()
-                                                                                   End If
-                                                                               End Sub)
+                                                             If t.Exception Is Nothing Then
+                                                                 Me.UIThreadInvoke(Sub()
+                                                                                       FOSSEEList.Items.Clear()
+                                                                                       If (t.Exception IsNot Nothing) Then
+                                                                                           FOSSEEList.Items.Add(New ListViewItem("Error loading flowsheet list. Check your internet connection.", 1) With {.Tag = ""})
+                                                                                       Else
+                                                                                           For Each item As FOSSEEFlowsheet In t.Result
+                                                                                               fslist.Add(item.DownloadLink, item)
+                                                                                               FOSSEEList.Items.Add(New ListViewItem(item.DisplayName, 0) With {.Tag = item.DownloadLink})
+                                                                                               My.Application.MainWindowForm.FOSSEEList.Add(item)
+                                                                                           Next
+                                                                                           'Owner.UpdateFOSSEEList()
+                                                                                       End If
+                                                                                   End Sub)
+                                                             End If
                                                          End Sub)
 
 
