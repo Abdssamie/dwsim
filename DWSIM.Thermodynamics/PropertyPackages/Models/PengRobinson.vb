@@ -418,7 +418,7 @@ Namespace PropertyPackages.Auxiliary
 
             End If
 
-            Dim DHres = R * T * (Z - 1) + (T * dadT - ai) / (2 ^ 1.5 * bi) * Math.Log((Z + 2.44 * BG1) / (Z - 0.414 * BG1))
+            Dim DHres = R * T * (Z - 1) + (T * dadT - ai) / (2 ^ 1.5 * bi) * Math.Log((Z + 2.414 * BG1) / (Z - 0.414 * BG1))
 
             H_PR = DHres / MM
 
