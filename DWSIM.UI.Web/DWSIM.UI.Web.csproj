@@ -99,10 +99,22 @@
     <None Include="dwsim-web-ui\static\css\main.33990118.css.map">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="dwsim-web-ui\static\css\main.94c4a7ec.css.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="dwsim-web-ui\static\css\main.f74b435b.css.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="dwsim-web-ui\static\js\453.45034f41.chunk.js.map">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="dwsim-web-ui\static\js\main.002eda91.js.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="dwsim-web-ui\static\js\main.2ee21eca.js.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="dwsim-web-ui\static\js\main.98cde4c5.js.map">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="dwsim-web-ui\static\js\main.e268430b.js.map">
@@ -132,13 +144,31 @@
     <Content Include="dwsim-web-ui\static\css\main.33990118.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="dwsim-web-ui\static\css\main.94c4a7ec.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dwsim-web-ui\static\css\main.f74b435b.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="dwsim-web-ui\static\js\453.45034f41.chunk.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dwsim-web-ui\static\js\main.002eda91.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dwsim-web-ui\static\js\main.002eda91.js.LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="dwsim-web-ui\static\js\main.2ee21eca.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="dwsim-web-ui\static\js\main.2ee21eca.js.LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dwsim-web-ui\static\js\main.98cde4c5.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="dwsim-web-ui\static\js\main.98cde4c5.js.LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="dwsim-web-ui\static\js\main.e268430b.js">

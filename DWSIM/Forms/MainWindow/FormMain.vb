@@ -5569,6 +5569,36 @@ Label_00CC:
         MessageBox.Show("Chave Pix copiada. Obrigado pelo apoio!", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
+    Private Sub ShareFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShareFileToolStripMenuItem.Click
+
+        If Not Me.ActiveMdiChild Is Nothing Then
+            If Not TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+                MessageBox.Show(DWSIM.App.GetLocalString("ShareTypeNotSupported"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+            Dim form2 As FormFlowsheet = Me.ActiveMdiChild
+            Dim shareFileForm As New ShareFileForm()
+            Dim openedFile As S365File = Nothing
+
+            If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
+                openedFile = form2.Options.VirtualFile
+            Else
+                Me.SaveFile(True, True)
+                If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
+                    openedFile = form2.Options.VirtualFile
+                End If
+            End If
+
+            If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
+                shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
+            End If
+        Else
+            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+
+    End Sub
+
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged
         GlobalSettings.Settings.InspectorEnabled = tsbInspector.Checked
         FrmOptions.chkEnableInspector.Checked = tsbInspector.Checked

@@ -151,6 +151,7 @@
     <Compile Include="Enums\AccessType.cs" />
     <Compile Include="FormFactories\LoginForm.cs" />
     <Compile Include="FormFactories\S365FilePickerForm.cs" />
+    <Compile Include="FormFactories\ShareFileForm.cs" />
     <Compile Include="GraphClientFactory.cs" />
     <Compile Include="IUserProvider.cs" />
     <Compile Include="Models\DashboardModels.cs" />
