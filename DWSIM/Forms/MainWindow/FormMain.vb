@@ -101,6 +101,8 @@ Public Class FormMain
     Public Shared ExternalSolvers As New Dictionary(Of String, Interfaces.IExternalSolverIdentification)
     Public Shared Property SignalRGuid As String
     Public Shared Property CurrentFileVersion As Decimal
+    Public Shared Property S365FileId As String
+
 
     Private ReadOnly dwsimVersion As String =
     Assembly.GetExecutingAssembly().GetName().Version.Major.ToString() & "." &
@@ -133,13 +135,13 @@ Public Class FormMain
 
     Public Shared RegisterFlowsheetSolveCallbackHandler As Action
 
-    Public Shared LeaveCollaborationGroup As Action(Of String, String)
+    Public Shared LeaveCollaborationGroup As Action(Of Form)
 
     Public Shared SetupActiveUsersButton As Func(Of Form, ToolStrip, ToolStripButton)
 
     Public Shared ShowNotificationBadge As Action(Of Guid, String, ToolStripButton)
 
-    Public Shared Update_ActiveSimulation_UsersBadge_Count As Action(Of String)
+    Public Shared Update_ActiveSimulation_UsersBadge_Count As Action(Of Form)
 
 #Region "    Form Events"
 
@@ -2431,6 +2433,7 @@ Public Class FormMain
         If EnableUserDefinedLoadXMLRoutine Then
             form.SignalRGuid = SignalRGuid
             form.FileVersion = CurrentFileVersion
+            form.S365FileId = S365FileId
         End If
 
         Settings.CAPEOPENMode = False

@@ -146,8 +146,10 @@ Public Class FormFlowsheet
     Private MessagePump As New Concurrent.ConcurrentQueue(Of Tuple(Of String, Interfaces.IFlowsheet.MessageType, String))
 
     Public Shared DoNotOpenSimulationWizard As Boolean = False
+
     Public Property SignalRGuid As String
     Public Property FileVersion As Decimal = 0.00D
+    Public Property S365FileId As String
 
     Private toolstripButtonDict As New Dictionary(Of String, ToolStripButton)
 
@@ -206,18 +208,10 @@ Public Class FormFlowsheet
 
         My.Application.ActiveSimulation = Me
 
-        If FormMain.EnableUpdatesActiveSimulationUsersBadgeCount Then
-            If FormMain.Update_ActiveSimulation_UsersBadge_Count IsNot Nothing Then
-                If Not String.IsNullOrEmpty(Me.FilePath) Then
+        If FormMain.EnableUpdatesActiveSimulationUsersBadgeCount AndAlso FormMain.Update_ActiveSimulation_UsersBadge_Count IsNot Nothing Then
+            If Me.Options IsNot Nothing Then
+                FormMain.Update_ActiveSimulation_UsersBadge_Count(Me)
 
-                    If Me.Options IsNot Nothing Then
-
-                        Dim fileName = Path.GetFileName(Me.FilePath)
-
-                        FormMain.Update_ActiveSimulation_UsersBadge_Count(fileName)
-
-                    End If
-                End If
             End If
         End If
 
@@ -1148,9 +1142,8 @@ Public Class FormFlowsheet
             Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Options.SimulationName & " (" & System.IO.Path.GetFileName(Me.Options.FilePath) & ") ...", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
 
             If Not x = MsgBoxResult.Cancel Then
-                If FormMain.EnableLeaveCollaborationGroup Then
-                    Dim fileName = Path.GetFileName(Me.FilePath)
-                    FormMain.LeaveCollaborationGroup(fileName, Me.SignalRGuid)
+                If FormMain.EnableLeaveCollaborationGroup AndAlso FormMain.LeaveCollaborationGroup IsNot Nothing Then
+                    FormMain.LeaveCollaborationGroup(Me)
                 End If
             End If
 
