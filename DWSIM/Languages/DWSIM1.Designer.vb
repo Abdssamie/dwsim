@@ -14248,6 +14248,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to This file type is not supported for sharing..
+        '''</summary>
+        Friend Shared ReadOnly Property ShareTypeNotSupported() As String
+            Get
+                Return ResourceManager.GetString("ShareTypeNotSupported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Coluna Shortcut.
         '''</summary>
         Friend Shared ReadOnly Property ShortcutColumn() As String

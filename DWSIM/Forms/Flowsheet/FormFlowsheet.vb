@@ -742,6 +742,7 @@ Public Class FormFlowsheet
             My.Application.MainWindowForm.SaveToolStripButton.Enabled = True
             My.Application.MainWindowForm.SaveFileS365.Enabled = True
             My.Application.MainWindowForm.SaveToDashboardTSMI.Enabled = True
+            My.Application.MainWindowForm.ShareFileToolStripMenuItem.Enabled = True
             My.Application.MainWindowForm.SaveToolStripMenuItem.Enabled = True
             My.Application.MainWindowForm.SaveAsToolStripMenuItem.Enabled = True
             My.Application.MainWindowForm.ToolStripButton1.Enabled = True
@@ -885,6 +886,7 @@ Public Class FormFlowsheet
                 My.Application.MainWindowForm.SaveFileS365.Enabled = False
                 My.Application.MainWindowForm.SaveToolStripButton.Enabled = False
                 My.Application.MainWindowForm.SaveToDashboardTSMI.Enabled = False
+                My.Application.MainWindowForm.ShareFileToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.SaveToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.SaveAsToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.ToolStripButton1.Enabled = False
@@ -893,6 +895,7 @@ Public Class FormFlowsheet
                 My.Application.MainWindowForm.SaveFileS365.Enabled = True
                 My.Application.MainWindowForm.SaveToolStripButton.Enabled = True
                 My.Application.MainWindowForm.SaveToDashboardTSMI.Enabled = True
+                My.Application.MainWindowForm.ShareFileToolStripMenuItem.Enabled = True
                 My.Application.MainWindowForm.SaveToolStripMenuItem.Enabled = True
                 My.Application.MainWindowForm.SaveAsToolStripMenuItem.Enabled = True
                 My.Application.MainWindowForm.ToolStripButton1.Enabled = True
