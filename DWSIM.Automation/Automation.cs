@@ -260,7 +260,7 @@ namespace DWSIM.Automation
             currentDomain.AssemblyResolve += new ResolveEventHandler(LoadAssembly);
             //FlowsheetBase.FlowsheetBase.AddPropPacks();
             LoadItems();
-            LoadExtenders();
+            FlowsheetBase.FlowsheetBase.Extenders = LoadExtenders();
         }
 
         private void LoadItems()
@@ -564,6 +564,7 @@ namespace DWSIM.Automation
             {
                 fsheet.LoadFromXML(XDocument.Load(filepath));
             }
+            Settings.CalculatorActivated = true;
             return fsheet;
         }
 
@@ -587,6 +588,7 @@ namespace DWSIM.Automation
             {
                 fsheet.LoadFromXML(XDocument.Load(filepath));
             }
+            Settings.CalculatorActivated = true;
             return fsheet;
         }
 
@@ -737,7 +739,7 @@ namespace DWSIM.Automation
             return extList.ConvertAll(t => (IExtenderCollection)Activator.CreateInstance(t));
         }
 
-        void LoadExtenders()
+        List<IExtenderCollection> LoadExtenders()
         {
 
             List<IExtenderCollection> extlist = GetExtenders(LoadExtenderDLLs());
@@ -765,6 +767,9 @@ namespace DWSIM.Automation
                     Logging.Logger.LogError("Extender Initialization", ex);
                 }
             }
+
+            return extlist;
+
         }
 
     }

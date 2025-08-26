@@ -14,13 +14,8 @@
 '    GNU General Public License for more details.
 '
 '    You should have received a copy of the GNU General Public License
-'    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports DWSIM.Thermodynamics.BaseClasses
-Imports DWSIM.DWSIM.Optimization
-Imports DWSIM.DrawingTools
 Imports Ciloci.Flee
-Imports DWSIM.FlowsheetSolver
 Imports System.Linq
 Imports DWSIM.SharedClasses.Flowsheet.Optimization
 Imports DWSIM.SharedClasses.DWSIM.Flowsheet
