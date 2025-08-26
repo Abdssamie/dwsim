@@ -1136,12 +1136,9 @@ Public Delegate Sub CustomEvent2(ByVal objinfo As CalculationArgs)
                 Return New List(Of Exception)
             End If
 
-            If _callback IsNot Nothing Then
-
-                Dim filename = Path.GetFileName(fs.FilePath)
-
-                If Not String.IsNullOrEmpty(filename) Then
-                    _callback.OnSolved(filename)
+            If _callback IsNot Nothing AndAlso fs IsNot Nothing Then
+                If fs IsNot Nothing Then
+                    _callback.OnSolved(fs)
                 End If
             End If
 
