@@ -13681,6 +13681,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Only saved simulation file can be shared. Please save the file to Simulate 365 Dashboard first then share..
+        '''</summary>
+        Friend Shared ReadOnly Property SaveFileToShare() As String
+            Get
+                Return ResourceManager.GetString("SaveFileToShare", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Salvar Estado.
         '''</summary>
         Friend Shared ReadOnly Property SaveState() As String

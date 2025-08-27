@@ -5585,16 +5585,14 @@ Label_00CC:
 
             If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
                 openedFile = form2.Options.VirtualFile
-            Else
-                Me.SaveFile(True, True)
-                If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
-                    openedFile = form2.Options.VirtualFile
+                If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
+                    shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
                 End If
+            Else
+                MessageBox.Show(DWSIM.App.GetLocalString("SaveFileToShare"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
-            If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
-                shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
-            End If
+
         Else
             MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If

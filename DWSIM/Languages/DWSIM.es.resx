@@ -5469,6 +5469,9 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="CorrentedeEnergia" xml:space="preserve">
     <value>Corriente de EnergyFlow </value>
   </data>
+  <data name="ShareTypeNotSupported" xml:space="preserve">
+    <value>Este formato de archivo no se admite para compartir.</value>
+  </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Conectar/Desconectar Objeto</value>
   </data>
@@ -5487,7 +5490,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SolidCp" xml:space="preserve">
     <value>Capacidad Calorífica de Solido</value>
   </data>
-  <data name="ShareTypeNotSupported" xml:space="preserve">
-    <value>Este formato de archivo no se admite para compartir.</value>
+  <data name="SaveFileToShare" xml:space="preserve">
+    <value>Solo se pueden compartir los archivos de simulación guardados. Primero guarde el archivo en el panel de Simulate 365 y luego compártalo.</value>
   </data>
 </root>
