@@ -5594,7 +5594,7 @@ Label_00CC:
 
 
         Else
-            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotOpened"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
 

@@ -14257,6 +14257,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Only the open simulation file can be shared. Please open the file first then share. .
+        '''</summary>
+        Friend Shared ReadOnly Property ShareSimulationNotOpened() As String
+            Get
+                Return ResourceManager.GetString("ShareSimulationNotOpened", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to This file type is not supported for sharing..
         '''</summary>
         Friend Shared ReadOnly Property ShareTypeNotSupported() As String
