@@ -1216,7 +1216,7 @@ Public Class FormMain
                 End Sub
         End If
 
-        collabSubscription(ToolsTSMI)
+        collabSubscription?.Invoke(ToolsTSMI)
     End Sub
 
     Sub CheckForUpdates()
