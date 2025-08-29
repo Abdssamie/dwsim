@@ -352,10 +352,10 @@ Namespace UnitOperations
                         value = Me.OrifType
                     Case 1
                         'PROP_OP_1	Orifice Diameter	1
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.diameter, Me.OrificeDiameter)
+                        value = SystemsOfUnits.Converter.ConvertFromSI(su.distance, Me.OrificeDiameter)
                     Case 2
                         'PROP_OP_2	Internal Pipe Diameter	1
-                        value = SystemsOfUnits.Converter.ConvertFromSI(su.diameter, Me.InternalPipeDiameter)
+                        value = SystemsOfUnits.Converter.ConvertFromSI(su.distance, Me.InternalPipeDiameter)
                     Case 3
                         'PROP_OP_3	Correction Factor	1
                         value = Me.CorrectionFactor
@@ -427,11 +427,11 @@ Namespace UnitOperations
                     Me.OrifType = propval
                 Case 1
                     'PROP_OP_1	Orifice Diameter	1
-                    Me.OrificeDiameter = SystemsOfUnits.Converter.ConvertToSI(su.diameter, propval)
+                    Me.OrificeDiameter = SystemsOfUnits.Converter.ConvertToSI(su.distance, propval)
                     Me.Beta = Me.OrificeDiameter / Me.InternalPipeDiameter
                 Case 2
                     'PROP_OP_2	Internal Pipe Diameter	1
-                    Me.InternalPipeDiameter = SystemsOfUnits.Converter.ConvertToSI(su.diameter, propval)
+                    Me.InternalPipeDiameter = SystemsOfUnits.Converter.ConvertToSI(su.distance, propval)
                     Me.Beta = Me.OrificeDiameter / Me.InternalPipeDiameter
                 Case 3
                     'PROP_OP_3	Correction Factor	1
@@ -455,10 +455,10 @@ Namespace UnitOperations
                         value = ""
                     Case 1
                         'PROP_OP_1	Orifice Diameter	1
-                        value = su.diameter
+                        value = su.distance
                     Case 2
                         'PROP_OP_2	Internal Pipe Diameter
-                        value = su.diameter
+                        value = su.distance
                     Case 3
                         'PROP_OP_3	Correction Factor	1
                         value = ""
@@ -466,13 +466,13 @@ Namespace UnitOperations
                         'PROP_OP_4	Beta (d/D)	1
                         value = ""
                     Case 5
-                        'PROP_OP_4	Overall Pressure Drop	0
+                        'PROP_OP_5	Overall Pressure Drop	0
                         value = su.deltaP
                     Case 6
-                        'PROP_OP_5	Orifice Pressure Drop	0
+                        'PROP_OP_6	Orifice Pressure Drop	0
                         value = su.deltaP
                     Case 7
-                        'PROP_OP_6	Delta T	0
+                        'PROP_OP_7	Delta T	0
                         value = su.deltaT
                 End Select
                 Return value

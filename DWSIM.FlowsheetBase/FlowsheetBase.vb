@@ -70,6 +70,8 @@ Imports DWSIM.ExtensionMethods
 
     Public Event FlowsheetLoadedFromXML(sender As Object, e As EventArgs)
 
+    Public Shared Extenders As New List(Of IExtenderCollection)
+
     Public Property AvailablePropertyPackages As Dictionary(Of String, IPropertyPackage) Implements IFlowsheet.AvailablePropertyPackages
         Get
             Return AvailablePropPacks
@@ -3117,12 +3119,6 @@ Imports DWSIM.ExtensionMethods
 
         ReactionSets.Add("DefaultSet", New ReactionSet("DefaultSet", "Default Set", ""))
 
-        'ghg compositions
-
-        GHGEmissionCompositions.Add("PureCO2", New GHGEmissionComposition With {.Name = "PureCO2", .CarbonDioxide = 1.0})
-        GHGEmissionCompositions.Add("FlueGas_NaturalGas", New GHGEmissionComposition With {.Name = "FlueGas_NaturalGas", .CarbonDioxide = 0.1, .Water = 0.2, .Inerts = 0.7})
-        GHGEmissionCompositions.Add("FlueGas_Coal", New GHGEmissionComposition With {.Name = "FlueGas_Coal", .CarbonDioxide = 0.14, .Water = 0.1, .Inerts = 0.76})
-
         AddExternalUOs()
         AddSystemsOfUnits()
         'AddDefaultProperties()
@@ -3221,6 +3217,8 @@ Imports DWSIM.ExtensionMethods
             tc.Wait()
 
         End If
+
+        LoadExtenders()
 
     End Sub
 
@@ -5457,6 +5455,44 @@ Label_00CC:
         Next
 
         Results.ResidualMassBalance = totalM
+
+    End Sub
+
+    Sub LoadExtenders()
+
+        For Each extender In Extenders
+            Try
+                If extender.Level = ExtenderLevel.FlowsheetWindow Then
+                    For Each item In extender.Collection
+                        item.SetMainWindow(Nothing)
+                        item.SetFlowsheet(Me)
+                        item.Run()
+                    Next
+                End If
+            Catch ex As Exception
+                Logging.Logger.LogError("Extender Loading (Flowsheet)", ex)
+            End Try
+        Next
+
+    End Sub
+
+    Sub UnloadExtenders()
+
+        For Each extender In Extenders
+            Try
+                If extender.Level = ExtenderLevel.FlowsheetWindow Then
+                    For Each item In extender.Collection
+                        If TypeOf item Is IExtender3 Then
+                            DirectCast(item, IExtender3).ReleaseResources()
+                        Else
+                            item.SetFlowsheet(Nothing)
+                        End If
+                    Next
+                End If
+            Catch ex As Exception
+                Logging.Logger.LogError("Extender Unloading (Flowsheet)", ex)
+            End Try
+        Next
 
     End Sub
 

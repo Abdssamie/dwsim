@@ -1977,8 +1977,19 @@ namespace DWSIM.UI.Desktop.Editors
                     s.CreateAndAddDropDownRow(container, "ODE Solver", new List<string> { "Implicit Runge-Kutta", "Explicit Runge-Kutta", "Adams-Moulton", "Gear’s BDF" },
                      reactor4.InternalSolver,
                       (dd, e) => reactor4.InternalSolver = dd.SelectedIndex);
-                    s.CreateAndAddDescriptionRow(container,
-                                                 SimObject.GetPropertyDescription("Calculation Mode"));
+                    s.CreateAndAddTextBoxRow(container, nf, "ODE Solver Volume Step (0.00 to 1.00)", reactor4.dV,
+                              (TextBox arg3, EventArgs ev) =>
+                              {
+                                  if (arg3.Text.IsValidDoubleExpression())
+                                  {
+                                      arg3.TextColor = (SystemColors.ControlText);
+                                      reactor4.dV = arg3.Text.ToString().ParseExpressionToDouble();
+                                  }
+                                  else
+                                  {
+                                      arg3.TextColor = (Colors.Red);
+                                  }
+                              });
                     s.CreateAndAddTextBoxRow(container, nf, "Outlet Temperature (" + su.temperature + ")", cv.ConvertFromSI(su.temperature, reactor4.OutletTemperature),
                        (TextBox arg3, EventArgs ev) =>
                        {
@@ -2112,7 +2123,7 @@ namespace DWSIM.UI.Desktop.Editors
                               });
                     s.CreateAndAddDropDownRow(container, "Slurry Viscosity Correction", new List<string> { "Disabled", "Yoshida et al" },
                         reactor4.SlurryViscosityMode,
-                         (dd, e) => reactor4.SlurryViscosityMode = dd.SelectedIndex);
+                         (dd, e) => reactor4.SlurryViscosityMode = dd.SelectedIndex);                    
                     break;
                 case ObjectType.ComponentSeparator:
                     var csep = (ComponentSeparator)SimObject;
@@ -2185,7 +2196,8 @@ namespace DWSIM.UI.Desktop.Editors
                         {
                             cs.SpecUnit = units[arg3.SelectedIndex];
                         });
-                    };
+                    }
+                    ;
                     break;
                 case ObjectType.NodeOut:
                     var splitter = (DWSIM.UnitOperations.UnitOperations.Splitter)SimObject;
@@ -2424,7 +2436,7 @@ namespace DWSIM.UI.Desktop.Editors
                     {
                         pipe.CalculateEquilibrium = arg2.Checked.GetValueOrDefault();
                     });
-                    s.CreateAndAddNumericEditorRow(container, "Eq./Prop. Calculation Interval (Sections)", pipe.CalculateEquilibriumIntervalInSteps,0.0, 1000.0,0, (arg2, ev) =>
+                    s.CreateAndAddNumericEditorRow(container, "Eq./Prop. Calculation Interval (Sections)", pipe.CalculateEquilibriumIntervalInSteps, 0.0, 1000.0, 0, (arg2, ev) =>
                     {
                         pipe.CalculateEquilibriumIntervalInSteps = (int)arg2.Value;
                     });
@@ -2761,7 +2773,8 @@ namespace DWSIM.UI.Desktop.Editors
                                 if (sender.Text.IsValidDoubleExpression())
                                 {
                                     fsuo.Fsheet.SimulationObjects[item.Value.ObjectID].SetPropertyValue(item.Value.ObjectProperty, sender.Text.ParseExpressionToDouble(), su);
-                                };
+                                }
+                                ;
                             });
                         }
                     }

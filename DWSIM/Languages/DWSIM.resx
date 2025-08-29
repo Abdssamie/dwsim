@@ -5769,4 +5769,10 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareTypeNotSupported" xml:space="preserve">
     <value>This file type is not supported for sharing.</value>
   </data>
+  <data name="SaveFileToShare" xml:space="preserve">
+    <value>Only saved simulation file can be shared. Please save the file to Simulate 365 Dashboard first then share.</value>
+  </data>
+  <data name="ShareSimulationNotOpened" xml:space="preserve">
+    <value>Only the open simulation file can be shared. Please open the file first then share. </value>
+  </data>
 </root>

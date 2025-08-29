@@ -1096,7 +1096,7 @@ Public Class FormMain
             Me.SaveFileS365.Enabled = True
             Me.SaveToolStripMenuItem.Enabled = True
             Me.SaveAsToolStripMenuItem.Enabled = True
-            Me.ToolStripButton1.Enabled = True
+            Me.ToolStripButton6.Enabled = True
             Me.CloseAllToolstripMenuItem.Enabled = True
             If Not Me.ActiveMdiChild Is Nothing Then
                 If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
@@ -4732,10 +4732,10 @@ Label_00CC:
                                                                                                      If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
                                                                                                  End Sub, TaskContinuationOptions.ExecuteSynchronously)
                 ElseIf handler.GetExtension().ToLower() = ".dwxmz" Then
-                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild, savingToS365:=dashboardpicker)).ContinueWith(Sub(t)
-                                                                                                                                 ' Me.ToolStripStatusLabel1.Text = ""
-                                                                                                                                 If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
-                                                                                                                             End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
+                                                                                                  ' Me.ToolStripStatusLabel1.Text = ""
+                                                                                                  If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
+                                                                                              End Sub, TaskContinuationOptions.ExecuteSynchronously)
 
                 ElseIf handler.GetExtension().ToLower() = ".pfdx" Then
                     SaveJSON(handler, Me.ActiveMdiChild)
@@ -5585,21 +5585,44 @@ Label_00CC:
 
             If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
                 openedFile = form2.Options.VirtualFile
-            Else
-                Me.SaveFile(True, True)
-                If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
-                    openedFile = form2.Options.VirtualFile
+                If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
+                    shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
                 End If
+            Else
+                MessageBox.Show(DWSIM.App.GetLocalString("SaveFileToShare"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
 
-            If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
-                shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
-            End If
+
         Else
-            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotOpened"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
 
+    End Sub
+
+    Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
+        If Not Me.ActiveMdiChild Is Nothing Then
+            If Not TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+                MessageBox.Show(DWSIM.App.GetLocalString("ShareTypeNotSupported"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+            Dim form2 As FormFlowsheet = Me.ActiveMdiChild
+            Dim shareFileForm As New ShareFileForm()
+            Dim openedFile As S365File = Nothing
+
+            If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
+                openedFile = form2.Options.VirtualFile
+                If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
+                    shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
+                End If
+            Else
+                MessageBox.Show(DWSIM.App.GetLocalString("SaveFileToShare"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+
+        Else
+            MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotOpened"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged
