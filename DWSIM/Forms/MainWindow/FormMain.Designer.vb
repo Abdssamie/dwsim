@@ -81,8 +81,8 @@ Partial Class FormMain
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbAutoSave = New System.Windows.Forms.ToolStripButton()
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
-        Me.SaveFileS365 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.SaveFileS365 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
@@ -204,7 +204,7 @@ Partial Class FormMain
         'ShareFileToolStripMenuItem
         '
         resources.ApplyResources(Me.ShareFileToolStripMenuItem, "ShareFileToolStripMenuItem")
-        Me.ShareFileToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.dwsim_s365_share
+        Me.ShareFileToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.dwsim_s365_share1
         Me.ShareFileToolStripMenuItem.Name = "ShareFileToolStripMenuItem"
         '
         'SaveToolStripMenuItem
@@ -464,13 +464,6 @@ Partial Class FormMain
         Me.SaveToolStripButton.Image = Global.DWSIM.My.Resources.Resources.icons8_save
         Me.SaveToolStripButton.Name = "SaveToolStripButton"
         '
-        'SaveFileS365
-        '
-        resources.ApplyResources(Me.SaveFileS365, "SaveFileS365")
-        Me.SaveFileS365.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.SaveFileS365.Image = Global.DWSIM.My.Resources.Resources.save_file_s365
-        Me.SaveFileS365.Name = "SaveFileS365"
-        '
         'ToolStripButton1
         '
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
@@ -478,11 +471,18 @@ Partial Class FormMain
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.icons8_save_as
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
+        'SaveFileS365
+        '
+        resources.ApplyResources(Me.SaveFileS365, "SaveFileS365")
+        Me.SaveFileS365.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.SaveFileS365.Image = Global.DWSIM.My.Resources.Resources.save_file_s365
+        Me.SaveFileS365.Name = "SaveFileS365"
+        '
         'ToolStripButton6
         '
         resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.dwsim_s365_share
+        Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.dwsim_s365_share1
         Me.ToolStripButton6.Name = "ToolStripButton6"
         '
         'ToolStripSeparator3
