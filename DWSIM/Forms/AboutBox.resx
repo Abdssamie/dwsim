@@ -1372,6 +1372,47 @@ Public License instead of this License.  But first, please read
   <data name="&gt;&gt;TabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="tbAcknowledgements.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tbAcknowledgements.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Consolas, 9pt</value>
+  </data>
+  <data name="tbAcknowledgements.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="tbAcknowledgements.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tbAcknowledgements.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="tbAcknowledgements.Size" type="System.Drawing.Size, System.Drawing">
+    <value>771, 453</value>
+  </data>
+  <data name="tbAcknowledgements.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="tbAcknowledgements.Text" xml:space="preserve">
+    <value>Some icons by Icons8. https://icons8.com/
+
+Some icons created by Freepik -  https://www.flaticon.com/authors/freepik, https://www.flaticon.com/free-icons.
+
+Some images from Freepik - https://br.freepik.com/fotos-gratis/pesquisadores-em-busca-de-fontes-alternativas-de-energia_23668250.htm
+
+Reaktoro Gibbs Reactor icons created by Nhor Phai - Flaticon (https://www.flaticon.com/free-icons/reactor).
+
+DWSIM uses ChemSep's Pure Compound Data (PCD) file as the main source of pure compound data under permission from its authors. ChemSep is Copyright (c) Harry Kooijman and Ross Taylor - https://www.chemsep.org.
+
+DWSIM uses thermo and chemicals libraries as one of the sources of pure compound data. thermo and chemicals are Copyright (c) Caleb Bell and Contributors (2016-2021). Thermo: Chemical properties component of Chemical Engineering Design Library (ChEDL) - https://github.com/CalebBell/thermo.
+
+DWSIM uses OPEM library for PEM Fuel Cells. Haghighi et al., (2018). OPEM : Open Source PEM Cell Simulation Tool .
+Journal of Open Source Software, 3(27), 676, https://doi.org/10.21105/joss.00676
+
+Reaktoro Gibbs Reactor is based on Reaktoro v1. https://reaktoro.org/v1/ © Copyright 2021, Allan Leal and Reaktoro contributors
+ 
+Weather conditions are provided by Azure Maps Weather Service.</value>
+  </data>
   <data name="&gt;&gt;tbAcknowledgements.Name" xml:space="preserve">
     <value>tbAcknowledgements</value>
   </data>
@@ -1391,7 +1432,7 @@ Public License instead of this License.  But first, please read
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>781, 459</value>
+    <value>777, 459</value>
   </data>
   <data name="TabPage2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1430,57 +1471,6 @@ Public License instead of this License.  But first, please read
     <value>$this</value>
   </data>
   <data name="&gt;&gt;TabControl1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="tbAcknowledgements.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="tbAcknowledgements.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Consolas, 9pt</value>
-  </data>
-  <data name="tbAcknowledgements.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="tbAcknowledgements.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="tbAcknowledgements.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="tbAcknowledgements.Size" type="System.Drawing.Size, System.Drawing">
-    <value>775, 453</value>
-  </data>
-  <data name="tbAcknowledgements.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="tbAcknowledgements.Text" xml:space="preserve">
-    <value>Some icons by Icons8. https://icons8.com/
-
-Some icons created by Freepik -  https://www.flaticon.com/authors/freepik, https://www.flaticon.com/free-icons.
-
-Some images from Freepik - https://br.freepik.com/fotos-gratis/pesquisadores-em-busca-de-fontes-alternativas-de-energia_23668250.htm
-
-Reaktoro Gibbs Reactor icons created by Nhor Phai - Flaticon (https://www.flaticon.com/free-icons/reactor).
-
-DWSIM uses thermo and chemicals libraries as one of the sources of pure compound data. thermo and chemicals are Copyright (c) Caleb Bell and Contributors (2016-2021). Thermo: Chemical properties component of Chemical Engineering Design Library (ChEDL) - https://github.com/CalebBell/thermo.
-
-DWSIM uses OPEM library for PEM Fuel Cells. Haghighi et al., (2018). OPEM : Open Source PEM Cell Simulation Tool .
-Journal of Open Source Software, 3(27), 676, https://doi.org/10.21105/joss.00676
-
-Reaktoro Gibbs Reactor is based on Reaktoro v1. https://reaktoro.org/v1/ © Copyright 2021, Allan Leal and Reaktoro contributors
- 
-Weather conditions are provided by Azure Maps Weather Service.</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.Name" xml:space="preserve">
-    <value>tbAcknowledgements</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.Parent" xml:space="preserve">
-    <value>TabPage2</value>
-  </data>
-  <data name="&gt;&gt;tbAcknowledgements.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

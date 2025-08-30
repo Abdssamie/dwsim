@@ -4732,10 +4732,10 @@ Label_00CC:
                                                                                                      If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
                                                                                                  End Sub, TaskContinuationOptions.ExecuteSynchronously)
                 ElseIf handler.GetExtension().ToLower() = ".dwxmz" Then
-                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                                  ' Me.ToolStripStatusLabel1.Text = ""
-                                                                                                  If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
-                                                                                              End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild, savingToS365:=dashboardpicker)).ContinueWith(Sub(t)
+                                                                                                                                 ' Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                                 If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
+                                                                                                                             End Sub, TaskContinuationOptions.ExecuteSynchronously)
 
                 ElseIf handler.GetExtension().ToLower() = ".pfdx" Then
                     SaveJSON(handler, Me.ActiveMdiChild)
