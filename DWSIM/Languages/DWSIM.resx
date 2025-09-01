@@ -2054,7 +2054,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Não existem simulações a serem salvas.</value>
   </data>
   <data name="Noexistemsimulaesati" xml:space="preserve">
-    <value>Não existem simulações ativas.</value>
+    <value>Somente arquivos de simulação ativos podem ser salvos. Crie ou abra um arquivo antes de salvar.</value>
   </data>
   <data name="Noexistesoluonointer" xml:space="preserve">
     <value>Não existe solução no intervalo.</value>
@@ -5767,12 +5767,12 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
     <value>Carregando</value>
   </data>
   <data name="ShareTypeNotSupported" xml:space="preserve">
-    <value>This file type is not supported for sharing.</value>
+    <value>Este tipo de arquivo não é compatível para compartilhamento.</value>
   </data>
   <data name="SaveFileToShare" xml:space="preserve">
-    <value>Only saved simulation file can be shared. Please save the file to Simulate 365 Dashboard first then share.</value>
+    <value>Somente arquivos de simulação salvos podem ser compartilhados. Salve o arquivo no Simulate 365 Dashboard antes de compartilhar.</value>
   </data>
   <data name="ShareSimulationNotOpened" xml:space="preserve">
-    <value>Only the open simulation file can be shared. Please open the file first then share. </value>
+    <value>Somente o arquivo de simulação aberto pode ser compartilhado. Abra o arquivo primeiro e depois compartilhe.</value>
   </data>
 </root>

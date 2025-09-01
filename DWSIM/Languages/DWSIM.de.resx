@@ -2048,7 +2048,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Keine Simulation vorhanden, die gespeichert werden muß.</value>
   </data>
   <data name="Noexistemsimulaesati" xml:space="preserve">
-    <value>Keine aktiven Simulationen.</value>
+    <value>Nur aktive Simulationsdateien können gespeichert werden. Bitte erstellen oder öffnen Sie eine Datei, bevor Sie sie speichern.</value>
   </data>
   <data name="Noexistesoluonointer" xml:space="preserve">
     <value>Es existiert keine Lösung in diesem Bereich.</value>
@@ -5456,6 +5456,9 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SaveFileToShare" xml:space="preserve">
     <value>Nur gespeicherte Simulationsdateien können freigegeben werden. Bitte speichern Sie die Datei zuerst im Simulate 365 Dashboard und geben Sie sie anschließend frei.</value>
   </data>
+  <data name="ShareSimulationNotOpened" xml:space="preserve">
+    <value>Nur die geöffnete Simulationsdatei kann freigegeben werden. Bitte öffnen Sie die Datei zuerst und geben Sie sie anschließend frei.</value>
+  </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Objekt verbinden/trennen</value>
   </data>
@@ -5479,8 +5482,5 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="SolidCp" xml:space="preserve">
     <value>Wärmekapazität Feststoff</value>
-  </data>
-  <data name="ShareSimulationNotOpened" xml:space="preserve">
-    <value>Nur die geöffnete Simulationsdatei kann freigegeben werden. Bitte öffnen Sie die Datei zuerst und geben Sie sie anschließend frei.</value>
   </data>
 </root>

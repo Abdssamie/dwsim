@@ -10090,7 +10090,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Não existem simulações ativas..
+        '''  Looks up a localized string similar to Somente arquivos de simulação ativos podem ser salvos. Crie ou abra um arquivo antes de salvar..
         '''</summary>
         Friend Shared ReadOnly Property Noexistemsimulaesati() As String
             Get
@@ -13681,7 +13681,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Only saved simulation file can be shared. Please save the file to Simulate 365 Dashboard first then share..
+        '''  Looks up a localized string similar to Somente arquivos de simulação salvos podem ser compartilhados. Salve o arquivo no Simulate 365 Dashboard antes de compartilhar..
         '''</summary>
         Friend Shared ReadOnly Property SaveFileToShare() As String
             Get
@@ -14257,7 +14257,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Only the open simulation file can be shared. Please open the file first then share. .
+        '''  Looks up a localized string similar to Somente o arquivo de simulação aberto pode ser compartilhado. Abra o arquivo primeiro e depois compartilhe..
         '''</summary>
         Friend Shared ReadOnly Property ShareSimulationNotOpened() As String
             Get
@@ -14266,7 +14266,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to This file type is not supported for sharing..
+        '''  Looks up a localized string similar to Este tipo de arquivo não é compatível para compartilhamento..
         '''</summary>
         Friend Shared ReadOnly Property ShareTypeNotSupported() As String
             Get
