@@ -127,8 +127,6 @@ Public Class FormMain
 
     Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String, String)
 
-    Public Shared UserDefinedLoadXMLRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, IFlowsheet)
-
     Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, String, IFlowsheet)
 
     Public Shared UserDefinedOpenRecentRoutine As Action(Of Object, System.EventArgs, String)
@@ -142,6 +140,8 @@ Public Class FormMain
     Public Shared ShowNotificationBadge As Action(Of Guid, String, ToolStripButton)
 
     Public Shared Update_ActiveSimulation_UsersBadge_Count As Action(Of Form)
+
+    Public Shared collabSubscription As Action(Of ToolStripMenuItem)
 
 #Region "    Form Events"
 
@@ -426,7 +426,7 @@ Public Class FormMain
 
 #End If
 
-        If EnableFlowsheetSolveCallbackHandler Then
+        If EnableFlowsheetSolveCallbackHandler AndAlso RegisterFlowsheetSolveCallbackHandler IsNot Nothing Then
             RegisterFlowsheetSolveCallbackHandler.Invoke()
         End If
     End Sub
@@ -1216,6 +1216,7 @@ Public Class FormMain
                 End Sub
         End If
 
+        collabSubscription?.Invoke(ToolsTSMI)
     End Sub
 
     Sub CheckForUpdates()
@@ -3786,7 +3787,8 @@ Public Class FormMain
 
     Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
-        If EnableUserDefinedSaveXMLRoutine Then
+        Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
+        If isUserLoggedIn AndAlso EnableUserDefinedSaveXMLRoutine AndAlso UserDefinedSaveXMLRoutine IsNot Nothing Then
 
             Dim activeSimulation As FormFlowsheet = Nothing
 
@@ -4255,7 +4257,7 @@ Public Class FormMain
 
     Function LoadAndExtractXMLZIP(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal forcommandline As Boolean = False, Optional fullpath As String = "") As Interfaces.IFlowsheet
 
-        If EnableUserDefinedLoadXMLZIPRoutine Then
+        If EnableUserDefinedLoadXMLZIPRoutine AndAlso UserDefinedLoadXMLZIPRoutine IsNot Nothing Then
             Return UserDefinedLoadXMLZIPRoutine.Invoke(handler, ProgressFeedBack, forcommandline, fullpath, dwsimVersion)
         End If
 
@@ -4351,7 +4353,8 @@ Label_00CC:
 
     Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
-        If EnableUserDefinedSaveXMLZIPRoutine Then
+        Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
+        If isUserLoggedIn AndAlso EnableUserDefinedSaveXMLZIPRoutine AndAlso UserDefinedSaveXMLZIPRoutine IsNot Nothing Then
 
             Dim activeSimulation As FormFlowsheet = Nothing
 
@@ -4474,7 +4477,8 @@ Label_00CC:
 
     Sub LoadFile(handler As IVirtualFile, Optional fullpath As String = "")
 
-        If EnableUserDefinedLoadFileRoutine Then
+        Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
+        If EnableUserDefinedLoadFileRoutine AndAlso UserDefinedLoadFileRoutine IsNot Nothing Then
             UserDefinedLoadFileRoutine.Invoke(handler, fullpath, dwsimVersion)
             Exit Sub
         End If
@@ -4732,10 +4736,10 @@ Label_00CC:
                                                                                                      If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
                                                                                                  End Sub, TaskContinuationOptions.ExecuteSynchronously)
                 ElseIf handler.GetExtension().ToLower() = ".dwxmz" Then
-                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                                  ' Me.ToolStripStatusLabel1.Text = ""
-                                                                                                  If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
-                                                                                              End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                    TaskHelper.Run(Sub() SaveXMLZIP(handler, Me.ActiveMdiChild, savingToS365:=dashboardpicker)).ContinueWith(Sub(t)
+                                                                                                                                 ' Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                                 If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, MessageType.GeneralError)
+                                                                                                                             End Sub, TaskContinuationOptions.ExecuteSynchronously)
 
                 ElseIf handler.GetExtension().ToLower() = ".pfdx" Then
                     SaveJSON(handler, Me.ActiveMdiChild)
@@ -4855,7 +4859,9 @@ Label_00CC:
 
     Private Sub OpenRecent_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-        If EnableUserDefinedOpenRecentRoutine Then
+        Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
+
+        If EnableUserDefinedOpenRecentRoutine AndAlso UserDefinedOpenRecentRoutine IsNot Nothing Then
             UserDefinedOpenRecentRoutine.Invoke(sender, e, dwsimVersion)
             Exit Sub
         End If
