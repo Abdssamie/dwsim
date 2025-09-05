@@ -70,6 +70,7 @@ namespace DWSIM.Simulate365.Services
                     FileUniqueIdentifier = file.FileUniqueIdentifier.ToString(),
                     ParentUniqueIdentifier = parentUniqueIdentifier,
                     Filename = file.Filename,
+                    FileVersion = file.FileVersion,
                     FullPath = file.SimulatePath,
                     OwnerId = file.OwnerId.ToString()
                 };
@@ -80,7 +81,7 @@ namespace DWSIM.Simulate365.Services
             }
         }
 
-        public static S365File UploadFileByFilePath(string simulatePath, Stream fileStream,string ownerId, UploadConflictAction? conflictAction)
+        public static S365File UploadFileByFilePath(string simulatePath, Stream fileStream, string ownerId, UploadConflictAction? conflictAction)
         {
             try
             {
@@ -106,11 +107,12 @@ namespace DWSIM.Simulate365.Services
 
                 var filename = Path.GetFileName(simulatePath) ?? string.Empty;
 
-                var fileResp = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream,ownerId, conflictAction)).Result;
+                var fileResp = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, ownerId, conflictAction)).Result;
 
                 return new S365File(filename)
                 {
                     FileUniqueIdentifier = fileResp.FileUniqueIdentifier.ToString(),
+                    FileVersion = fileResp.FileVersion,
                     ParentUniqueIdentifier = parentUniqueIdentifier,
                     Filename = fileResp.Filename,
                     FullPath = fileResp.SimulatePath,
@@ -121,9 +123,9 @@ namespace DWSIM.Simulate365.Services
             {
                 throw new Exception("An error occurred while saving file to Simulate 365 Dashboard.", ex);
             }
-        }        
+        }
 
-        private static async Task<UploadFileResponseModel> UploadDocumentAsync(string parentUniqueIdentifier, string filename, Stream fileStream,string ownerId, UploadConflictAction? conflictAction)
+        private static async Task<UploadFileResponseModel> UploadDocumentAsync(string parentUniqueIdentifier, string filename, Stream fileStream, string ownerId, UploadConflictAction? conflictAction)
         {
             try
             {
@@ -138,7 +140,7 @@ namespace DWSIM.Simulate365.Services
                     if (!string.IsNullOrWhiteSpace(parentUniqueIdentifier))
                         content.Add(new StringContent(parentUniqueIdentifier), "ParentDirectoryUniqueId");
 
-                    if(!string.IsNullOrWhiteSpace(ownerId))
+                    if (!string.IsNullOrWhiteSpace(ownerId))
                         content.Add(new StringContent(ownerId), "OwnerId");
 
                     content.Add(new StreamContent(fileStream), "files", filename);
@@ -148,7 +150,7 @@ namespace DWSIM.Simulate365.Services
 
                     // Handle response
                     var responseContent = await response.Content.ReadAsStringAsync();
-                   
+
                     if (!response.IsSuccessStatusCode)
                     {
                         var errorMessage = await response.Content.ReadAsStringAsync();

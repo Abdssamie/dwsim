@@ -99,9 +99,6 @@ Public Class FormMain
     Public Property AnalyticsProvider As IAnalyticsProvider
 
     Public Shared ExternalSolvers As New Dictionary(Of String, Interfaces.IExternalSolverIdentification)
-    Public Shared Property SignalRGuid As String
-    Public Shared Property CurrentFileVersion As Decimal
-    Public Shared Property S365FileId As String
 
 
     Private ReadOnly dwsimVersion As String =
@@ -109,11 +106,6 @@ Public Class FormMain
     Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString() & "." &
     Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()
 
-    Public Shared Property EnableUserDefinedSaveXMLRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedSaveXMLZIPRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedLoadFileRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedLoadXMLRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedLoadXMLZIPRoutine As Boolean = False
     Public Shared Property EnableUserDefinedOpenRecentRoutine As Boolean = False
     Public Shared Property EnableFlowsheetSolveCallbackHandler As Boolean = False
     Public Shared Property EnableLeaveCollaborationGroup As Boolean = False
@@ -121,13 +113,7 @@ Public Class FormMain
     Public Shared Property EnableNotificationBadge As Boolean = False
     Public Shared Property EnableUpdatesActiveSimulationUsersBadgeCount As Boolean = False
 
-    Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean, FormFlowsheet, String, Boolean)
-
-    Public Shared UserDefinedSaveXMLZIPRoutine As Action(Of IVirtualFile, FormFlowsheet, Boolean, FormFlowsheet, String, Boolean)
-
-    Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String, String)
-
-    Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, String, IFlowsheet)
+    Public Shared OnFileLoaded As Action(Of IVirtualFile, String, String)
 
     Public Shared UserDefinedOpenRecentRoutine As Action(Of Object, System.EventArgs, String)
 
@@ -2431,12 +2417,6 @@ Public Class FormMain
 
         form.Options.VirtualFile = handler
 
-        If EnableUserDefinedLoadXMLRoutine Then
-            form.SignalRGuid = SignalRGuid
-            form.FileVersion = CurrentFileVersion
-            form.S365FileId = S365FileId
-        End If
-
         Settings.CAPEOPENMode = False
 
         My.Application.ActiveSimulation = form
@@ -3788,26 +3768,6 @@ Public Class FormMain
     Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-        If isUserLoggedIn AndAlso EnableUserDefinedSaveXMLRoutine AndAlso UserDefinedSaveXMLRoutine IsNot Nothing Then
-
-            Dim activeSimulation As FormFlowsheet = Nothing
-
-            Dim mainForm = Application.OpenForms.OfType(Of FormFlowsheet)().FirstOrDefault()
-
-            If mainForm IsNot Nothing Then
-
-                If mainForm.InvokeRequired Then
-                    mainForm.Invoke(Sub()
-                                        activeSimulation = My.Application.ActiveSimulation
-                                    End Sub)
-                Else
-                    activeSimulation = My.Application.ActiveSimulation
-                End If
-            End If
-
-            UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation, activeSimulation, dwsimVersion, savingToS365)
-            Exit Sub
-        End If
 
         RaiseEvent FlowsheetSavingToXML(form, New EventArgs())
 
@@ -4257,10 +4217,6 @@ Public Class FormMain
 
     Function LoadAndExtractXMLZIP(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal forcommandline As Boolean = False, Optional fullpath As String = "") As Interfaces.IFlowsheet
 
-        If EnableUserDefinedLoadXMLZIPRoutine AndAlso UserDefinedLoadXMLZIPRoutine IsNot Nothing Then
-            Return UserDefinedLoadXMLZIPRoutine.Invoke(handler, ProgressFeedBack, forcommandline, fullpath, dwsimVersion)
-        End If
-
         Dim pathtosave As String = Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, Guid.NewGuid().ToString())
 
         Directory.CreateDirectory(pathtosave)
@@ -4354,26 +4310,6 @@ Label_00CC:
     Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-        If isUserLoggedIn AndAlso EnableUserDefinedSaveXMLZIPRoutine AndAlso UserDefinedSaveXMLZIPRoutine IsNot Nothing Then
-
-            Dim activeSimulation As FormFlowsheet = Nothing
-
-            Dim mainForm = Application.OpenForms.OfType(Of FormFlowsheet)().FirstOrDefault()
-
-            If mainForm IsNot Nothing Then
-
-                If mainForm.InvokeRequired Then
-                    mainForm.Invoke(Sub()
-                                        activeSimulation = My.Application.ActiveSimulation
-                                    End Sub)
-                Else
-                    activeSimulation = My.Application.ActiveSimulation
-                End If
-            End If
-
-            UserDefinedSaveXMLZIPRoutine.Invoke(handler, form, closingSimulation, activeSimulation, dwsimVersion, savingToS365)
-            Exit Sub
-        End If
 
         Dim xmlfile As String = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), "xml")
 
@@ -4478,11 +4414,6 @@ Label_00CC:
     Sub LoadFile(handler As IVirtualFile, Optional fullpath As String = "")
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-        If EnableUserDefinedLoadFileRoutine AndAlso UserDefinedLoadFileRoutine IsNot Nothing Then
-            UserDefinedLoadFileRoutine.Invoke(handler, fullpath, dwsimVersion)
-            Exit Sub
-        End If
-
         Me.WelcomePanel.Visible = False
         PainelDeBoasvindasToolStripMenuItem.Checked = False
 
@@ -4637,7 +4568,9 @@ Label_00CC:
         End Select
 
         floading.Close()
-
+        If OnFileLoaded IsNot Nothing Then
+            OnFileLoaded.Invoke(handler, fullpath, dwsimVersion)
+        End If
     End Sub
 
     Sub SaveBackup(handler As IVirtualFile)

@@ -16,6 +16,7 @@ namespace DWSIM.Simulate365.Models
         public string ParentUniqueIdentifier { get; set; }
 
         public string FileUniqueIdentifier { get; set; }
+        public string FileVersion { get; set; }
 
         public string Filename { get; set; }
 
@@ -62,6 +63,7 @@ namespace DWSIM.Simulate365.Models
             var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite);
 
             FileUniqueIdentifier = file.FileUniqueIdentifier;
+            FileVersion = file.FileVersion;
             Filename = file.Filename;
             FullPath = file.FullPath;
 
@@ -75,6 +77,7 @@ namespace DWSIM.Simulate365.Models
             FileUniqueIdentifier = file.FileUniqueIdentifier;
             Filename = file.Filename;
             FullPath = file.FullPath;
+            FileVersion = file.FileVersion;
 
             FileManagementService.GetInstance().FileSavedToDashboard();
         }

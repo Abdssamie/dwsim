@@ -63,6 +63,7 @@ namespace DWSIM.Simulate365.Models
         public Guid? ParentDirectoryUniqueIdentifier { get; set; }
 
         public Guid FileUniqueIdentifier { get; set; }
+        public string FileVersion { get; set; }
 
         public string SimulatePath { get; set; }
 
