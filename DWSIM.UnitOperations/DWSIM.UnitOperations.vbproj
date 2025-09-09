@@ -1905,6 +1905,8 @@
     <Content Include="property_table.png" />
     <None Include="Resources\DWSIM Icon 4.ico" />
     <None Include="Resources\relief_valve.png" />
+    <None Include="Resources\Relief Valve_24px.png" />
+    <None Include="Resources\Relief Valve_48px.png" />
     <Content Include="table.png" />
     <Content Include="table_80px.png" />
   </ItemGroup>

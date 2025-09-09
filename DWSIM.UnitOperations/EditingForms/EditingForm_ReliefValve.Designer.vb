@@ -77,9 +77,9 @@ Partial Class EditingForm_ReliefValve
         Me.Panel1.Controls.Add(Me.Label14)
         Me.Panel1.Controls.Add(Me.cbOpeningKvRelType)
         Me.Panel1.Controls.Add(Me.Label10)
-        Me.Panel1.Location = New System.Drawing.Point(30, 264)
+        Me.Panel1.Location = New System.Drawing.Point(7, 259)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(335, 391)
+        Me.Panel1.Size = New System.Drawing.Size(462, 557)
         Me.Panel1.TabIndex = 49
         '
         'gbTable
@@ -90,7 +90,7 @@ Partial Class EditingForm_ReliefValve
         Me.gbTable.Controls.Add(Me.grid1)
         Me.gbTable.Location = New System.Drawing.Point(6, 126)
         Me.gbTable.Name = "gbTable"
-        Me.gbTable.Size = New System.Drawing.Size(326, 262)
+        Me.gbTable.Size = New System.Drawing.Size(453, 428)
         Me.gbTable.TabIndex = 47
         Me.gbTable.TabStop = False
         Me.gbTable.Text = "Data Table"
@@ -110,7 +110,7 @@ Partial Class EditingForm_ReliefValve
         Me.grid1.SheetTabVisible = False
         Me.grid1.SheetTabWidth = 60
         Me.grid1.ShowScrollEndSpacing = True
-        Me.grid1.Size = New System.Drawing.Size(320, 243)
+        Me.grid1.Size = New System.Drawing.Size(447, 409)
         Me.grid1.TabIndex = 0
         Me.grid1.Text = "ReoGridControl1"
         '
@@ -127,7 +127,7 @@ Partial Class EditingForm_ReliefValve
         'tbCharParam
         '
         Me.tbCharParam.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.tbCharParam.Location = New System.Drawing.Point(142, 91)
+        Me.tbCharParam.Location = New System.Drawing.Point(269, 91)
         Me.tbCharParam.Name = "tbCharParam"
         Me.tbCharParam.Size = New System.Drawing.Size(84, 20)
         Me.tbCharParam.TabIndex = 46
@@ -139,7 +139,7 @@ Partial Class EditingForm_ReliefValve
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tbKvOpRel.Location = New System.Drawing.Point(4, 64)
         Me.tbKvOpRel.Name = "tbKvOpRel"
-        Me.tbKvOpRel.Size = New System.Drawing.Size(328, 20)
+        Me.tbKvOpRel.Size = New System.Drawing.Size(455, 20)
         Me.tbKvOpRel.TabIndex = 36
         Me.tbKvOpRel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -159,7 +159,7 @@ Partial Class EditingForm_ReliefValve
         Me.cbOpeningKvRelType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbOpeningKvRelType.FormattingEnabled = True
         Me.cbOpeningKvRelType.Items.AddRange(New Object() {"Linear", "Equal Percentage", "Quick Opening", "User-Defined Expression", "Data Table"})
-        Me.cbOpeningKvRelType.Location = New System.Drawing.Point(143, 10)
+        Me.cbOpeningKvRelType.Location = New System.Drawing.Point(270, 10)
         Me.cbOpeningKvRelType.Name = "cbOpeningKvRelType"
         Me.cbOpeningKvRelType.Size = New System.Drawing.Size(189, 21)
         Me.cbOpeningKvRelType.TabIndex = 44
@@ -186,9 +186,9 @@ Partial Class EditingForm_ReliefValve
         Me.GroupBoxConnections.Controls.Add(Me.cbOutlet1)
         Me.GroupBoxConnections.Controls.Add(Me.cbInlet1)
         Me.GroupBoxConnections.Controls.Add(Me.Label19)
-        Me.GroupBoxConnections.Location = New System.Drawing.Point(24, 112)
+        Me.GroupBoxConnections.Location = New System.Drawing.Point(7, 107)
         Me.GroupBoxConnections.Name = "GroupBoxConnections"
-        Me.GroupBoxConnections.Size = New System.Drawing.Size(347, 83)
+        Me.GroupBoxConnections.Size = New System.Drawing.Size(462, 83)
         Me.GroupBoxConnections.TabIndex = 52
         Me.GroupBoxConnections.TabStop = False
         Me.GroupBoxConnections.Text = "Connections"
@@ -199,7 +199,7 @@ Partial Class EditingForm_ReliefValve
         Me.btnCreateAndConnectOutlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
         Me.btnCreateAndConnectOutlet1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnCreateAndConnectOutlet1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnCreateAndConnectOutlet1.Location = New System.Drawing.Point(293, 50)
+        Me.btnCreateAndConnectOutlet1.Location = New System.Drawing.Point(408, 50)
         Me.btnCreateAndConnectOutlet1.Name = "btnCreateAndConnectOutlet1"
         Me.btnCreateAndConnectOutlet1.Size = New System.Drawing.Size(21, 21)
         Me.btnCreateAndConnectOutlet1.TabIndex = 46
@@ -211,7 +211,7 @@ Partial Class EditingForm_ReliefValve
         Me.btnCreateAndConnectInlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
         Me.btnCreateAndConnectInlet1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnCreateAndConnectInlet1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnCreateAndConnectInlet1.Location = New System.Drawing.Point(293, 23)
+        Me.btnCreateAndConnectInlet1.Location = New System.Drawing.Point(408, 23)
         Me.btnCreateAndConnectInlet1.Name = "btnCreateAndConnectInlet1"
         Me.btnCreateAndConnectInlet1.Size = New System.Drawing.Size(21, 21)
         Me.btnCreateAndConnectInlet1.TabIndex = 45
@@ -222,7 +222,7 @@ Partial Class EditingForm_ReliefValve
         Me.btnDisconnectOutlet1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
         Me.btnDisconnectOutlet1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnDisconnectOutlet1.Location = New System.Drawing.Point(320, 50)
+        Me.btnDisconnectOutlet1.Location = New System.Drawing.Point(435, 50)
         Me.btnDisconnectOutlet1.Name = "btnDisconnectOutlet1"
         Me.btnDisconnectOutlet1.Size = New System.Drawing.Size(21, 21)
         Me.btnDisconnectOutlet1.TabIndex = 20
@@ -234,7 +234,7 @@ Partial Class EditingForm_ReliefValve
         Me.btnDisconnect1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDisconnect1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
         Me.btnDisconnect1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnDisconnect1.Location = New System.Drawing.Point(320, 23)
+        Me.btnDisconnect1.Location = New System.Drawing.Point(435, 23)
         Me.btnDisconnect1.Name = "btnDisconnect1"
         Me.btnDisconnect1.Size = New System.Drawing.Size(21, 21)
         Me.btnDisconnect1.TabIndex = 14
@@ -256,7 +256,7 @@ Partial Class EditingForm_ReliefValve
         Me.cbOutlet1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbOutlet1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbOutlet1.FormattingEnabled = True
-        Me.cbOutlet1.Location = New System.Drawing.Point(147, 50)
+        Me.cbOutlet1.Location = New System.Drawing.Point(262, 50)
         Me.cbOutlet1.Name = "cbOutlet1"
         Me.cbOutlet1.Size = New System.Drawing.Size(140, 21)
         Me.cbOutlet1.TabIndex = 8
@@ -266,7 +266,7 @@ Partial Class EditingForm_ReliefValve
         Me.cbInlet1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbInlet1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbInlet1.FormattingEnabled = True
-        Me.cbInlet1.Location = New System.Drawing.Point(147, 23)
+        Me.cbInlet1.Location = New System.Drawing.Point(262, 23)
         Me.cbInlet1.Name = "cbInlet1"
         Me.cbInlet1.Size = New System.Drawing.Size(140, 21)
         Me.cbInlet1.TabIndex = 1
@@ -293,9 +293,9 @@ Partial Class EditingForm_ReliefValve
         Me.GroupBox5.Controls.Add(Me.Label13)
         Me.GroupBox5.Controls.Add(Me.Label12)
         Me.GroupBox5.Controls.Add(Me.Label11)
-        Me.GroupBox5.Location = New System.Drawing.Point(24, 12)
+        Me.GroupBox5.Location = New System.Drawing.Point(7, 7)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(347, 98)
+        Me.GroupBox5.Size = New System.Drawing.Size(462, 98)
         Me.GroupBox5.TabIndex = 51
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "General Info"
@@ -305,7 +305,7 @@ Partial Class EditingForm_ReliefValve
         Me.btnUtils.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUtils.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_sparkle
         Me.btnUtils.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnUtils.Location = New System.Drawing.Point(320, 18)
+        Me.btnUtils.Location = New System.Drawing.Point(435, 18)
         Me.btnUtils.Name = "btnUtils"
         Me.btnUtils.Size = New System.Drawing.Size(20, 20)
         Me.btnUtils.TabIndex = 27
@@ -318,7 +318,7 @@ Partial Class EditingForm_ReliefValve
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblTag.Location = New System.Drawing.Point(133, 19)
         Me.lblTag.Name = "lblTag"
-        Me.lblTag.Size = New System.Drawing.Size(181, 20)
+        Me.lblTag.Size = New System.Drawing.Size(296, 20)
         Me.lblTag.TabIndex = 24
         '
         'chkActive
@@ -327,7 +327,7 @@ Partial Class EditingForm_ReliefValve
         Me.chkActive.Appearance = System.Windows.Forms.Appearance.Button
         Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
         Me.chkActive.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.chkActive.Location = New System.Drawing.Point(320, 43)
+        Me.chkActive.Location = New System.Drawing.Point(435, 43)
         Me.chkActive.Name = "chkActive"
         Me.chkActive.Size = New System.Drawing.Size(21, 21)
         Me.chkActive.TabIndex = 21
@@ -395,9 +395,9 @@ Partial Class EditingForm_ReliefValve
         Me.GroupBox3.Controls.Add(Me.btnConfigurePP)
         Me.GroupBox3.Controls.Add(Me.cbPropPack)
         Me.GroupBox3.Controls.Add(Me.Label9)
-        Me.GroupBox3.Location = New System.Drawing.Point(24, 198)
+        Me.GroupBox3.Location = New System.Drawing.Point(7, 193)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(347, 60)
+        Me.GroupBox3.Size = New System.Drawing.Size(462, 60)
         Me.GroupBox3.TabIndex = 50
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Property Package Settings"
@@ -408,7 +408,7 @@ Partial Class EditingForm_ReliefValve
         Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.cog
         Me.btnConfigurePP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.btnConfigurePP.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.btnConfigurePP.Location = New System.Drawing.Point(320, 26)
+        Me.btnConfigurePP.Location = New System.Drawing.Point(435, 26)
         Me.btnConfigurePP.Name = "btnConfigurePP"
         Me.btnConfigurePP.Size = New System.Drawing.Size(21, 21)
         Me.btnConfigurePP.TabIndex = 20
@@ -420,7 +420,7 @@ Partial Class EditingForm_ReliefValve
         Me.cbPropPack.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbPropPack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbPropPack.FormattingEnabled = True
-        Me.cbPropPack.Location = New System.Drawing.Point(147, 26)
+        Me.cbPropPack.Location = New System.Drawing.Point(262, 26)
         Me.cbPropPack.Name = "cbPropPack"
         Me.cbPropPack.Size = New System.Drawing.Size(167, 21)
         Me.cbPropPack.TabIndex = 15
@@ -463,15 +463,17 @@ Partial Class EditingForm_ReliefValve
         '
         'EditingForm_ReliefValve
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(598, 828)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
+        Me.AutoScroll = True
+        Me.ClientSize = New System.Drawing.Size(481, 828)
         Me.Controls.Add(Me.GroupBoxConnections)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.Panel1)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "EditingForm_ReliefValve"
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
         Me.Text = "EditingForm_ReliefValve"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()

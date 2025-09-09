@@ -576,8 +576,8 @@ Namespace GraphicObjects
                         End If
                     End If
 
-                    tpaint.Dispose()
-                    bpaint.Dispose()
+                    tpaint?.Dispose()
+                    bpaint?.Dispose()
 
                 End If
 

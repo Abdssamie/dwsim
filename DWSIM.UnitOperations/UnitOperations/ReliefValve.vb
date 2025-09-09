@@ -1,5 +1,7 @@
-﻿Imports DWSIM.UnitOperations.UnitOperations
+﻿Imports DWSIM.Interfaces.Enums
+Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.UnitOperations.UnitOperations.Valve
+Imports SkiaSharp
 Imports SkiaSharp.Views.Desktop
 
 Namespace UnitOperations
@@ -13,6 +15,8 @@ Namespace UnitOperations
         Private UOName As String = "Relief Valve"
 
         Private UODescription As String = "Safety Relief Valve model"
+
+        Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.PressureChangers
 
         Private ReadOnly Property IExternalUnitOperation_Name As String = UOName Implements IExternalUnitOperation.Name
 
@@ -28,11 +32,15 @@ Namespace UnitOperations
 
         Public Property CharacteristicParameter As Double = 50
 
-        Public Property DefinedOpeningKvRelationShipType As OpeningKvRelationshipType = OpeningKvRelationshipType.UserDefined
+        Public Property DefinedOpeningKvRelationShipType As OpeningKvRelationshipType = OpeningKvRelationshipType.Linear
 
         Public Property OpeningKvRelDataTableX As New List(Of Double)
 
         Public Property OpeningKvRelDataTableY As New List(Of Double)
+
+        Public Property SetPointPressure As Double = 0.0
+
+        Public Property FullyOpenedPressure As Double = 0.0
 
         Public Sub New(ByVal Name As String, ByVal Description As String)
 
@@ -87,7 +95,7 @@ Namespace UnitOperations
 #Region "Automatic Drawing Support"
 
         Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.relief_valve
+            Return My.Resources.Relief_Valve_48px
         End Function
 
         Private Image As SkiaSharp.SKImage
@@ -95,27 +103,96 @@ Namespace UnitOperations
         'this function draws the object on the flowsheet
         Public Sub Draw(g As Object) Implements Interfaces.IExternalUnitOperation.Draw
 
-            'get the canvas object
-            Dim canvas = DirectCast(g, SkiaSharp.SKCanvas)
+            Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
 
-            'load the icon image on memory
-            If Image Is Nothing Then
+            CreateConnectors()
+            GraphicObject.UpdateStatus()
 
-                Using bitmap = My.Resources.relief_valve.ToSKBitmap()
-                    Image = SkiaSharp.SKImage.FromBitmap(bitmap)
-                End Using
+            Dim myPen As New SKPaint()
+            With myPen
+                .Color = GraphicObject.LineColor
+                .StrokeWidth = GraphicObject.LineWidth
+                .IsStroke = True
+                .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+            End With
 
-            End If
+            Dim X = GraphicObject.X
+            Dim Y = GraphicObject.Y
+            Dim Height = GraphicObject.Height
+            Dim Width = GraphicObject.Width
 
-            Dim x = Me.GraphicObject.X
-            Dim y = Me.GraphicObject.Y
-            Dim w = Me.GraphicObject.Width
-            Dim h = Me.GraphicObject.Height
+            Dim gp As New SKPath()
 
-            'draw the image into the flowsheet inside the object's reserved rectangle area
-            Using p As New SkiaSharp.SKPaint With {.FilterQuality = SkiaSharp.SKFilterQuality.High}
-                canvas.DrawImage(Image, New SkiaSharp.SKRect(GraphicObject.X, GraphicObject.Y, GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height), p)
-            End Using
+            gp.MoveTo(Convert.ToInt32(X + 0.2 * Width), Convert.ToInt32(Y + Height))
+            gp.LineTo(Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.5 * Height))
+            gp.LineTo(Convert.ToInt32(X + Width), Convert.ToInt32(Y + 0.2 * Height))
+            gp.LineTo(Convert.ToInt32(X + Width), Convert.ToInt32(Y + 0.8 * Height))
+            gp.LineTo(Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.5 * Height))
+            gp.LineTo(Convert.ToInt32(X + 0.8 * Width), Convert.ToInt32(Y + Height))
+            gp.LineTo(Convert.ToInt32(X + 0.2 * Width), Convert.ToInt32(Y + Height))
+            gp.Close()
+
+            Select Case GraphicObject.DrawMode
+
+                Case 0
+
+                    'default
+
+                    Dim gradPen As New SKPaint()
+                    With gradPen
+                        .Color = GraphicObject.LineColor.WithAlpha(50)
+                        .StrokeWidth = GraphicObject.LineWidth
+                        .IsStroke = False
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                    End With
+
+                    canvas.DrawPath(gp, gradPen)
+
+                    canvas.DrawPath(gp, myPen)
+
+                    canvas.DrawLine(Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.5 * Height), Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.2 * Height), myPen)
+                    canvas.DrawLine(Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.2 * Height), Convert.ToInt32(X), Convert.ToInt32(Y + 0.2 * Height), myPen)
+
+                    canvas.DrawLine(Convert.ToInt32(X + 0.1 * Width), Convert.ToInt32(Y + 0.3 * Height), Convert.ToInt32(X + 0.2 * Width), Convert.ToInt32(Y + 0.1 * Height), myPen)
+                    canvas.DrawLine(Convert.ToInt32(X + 0.2 * Width), Convert.ToInt32(Y + 0.3 * Height), Convert.ToInt32(X + 0.3 * Width), Convert.ToInt32(Y + 0.1 * Height), myPen)
+                    canvas.DrawLine(Convert.ToInt32(X + 0.3 * Width), Convert.ToInt32(Y + 0.3 * Height), Convert.ToInt32(X + 0.4 * Width), Convert.ToInt32(Y + 0.1 * Height), myPen)
+
+                Case 1
+
+                    'b/w
+
+                    With myPen
+                        .Color = SKColors.Black
+                        .StrokeWidth = GraphicObject.LineWidth
+                        .IsStroke = True
+                        .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
+                    End With
+                    canvas.DrawPath(gp, myPen)
+
+                    canvas.DrawLine(Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.5 * Height), Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.2 * Height), myPen)
+                    canvas.DrawLine(Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.2 * Height), Convert.ToInt32(X), Convert.ToInt32(Y + 0.2 * Height), myPen)
+
+                    canvas.DrawLine(Convert.ToInt32(X + 0.1 * Width), Convert.ToInt32(Y + 0.3 * Height), Convert.ToInt32(X + 0.2 * Width), Convert.ToInt32(Y + 0.1 * Height), myPen)
+                    canvas.DrawLine(Convert.ToInt32(X + 0.2 * Width), Convert.ToInt32(Y + 0.3 * Height), Convert.ToInt32(X + 0.3 * Width), Convert.ToInt32(Y + 0.1 * Height), myPen)
+                    canvas.DrawLine(Convert.ToInt32(X + 0.3 * Width), Convert.ToInt32(Y + 0.3 * Height), Convert.ToInt32(X + 0.4 * Width), Convert.ToInt32(Y + 0.1 * Height), myPen)
+
+                Case 2
+
+                    'load the icon image on memory
+                    If Image Is Nothing Then
+
+                        Using bitmap = My.Resources.Relief_Valve_48px.ToSKBitmap()
+                            Image = SkiaSharp.SKImage.FromBitmap(bitmap)
+                        End Using
+
+                    End If
+
+                    'draw the image into the flowsheet inside the object's reserved rectangle area
+                    Using p As New SkiaSharp.SKPaint With {.FilterQuality = SkiaSharp.SKFilterQuality.High}
+                        canvas.DrawImage(Image, New SkiaSharp.SKRect(GraphicObject.X, GraphicObject.Y, GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height), p)
+                    End Using
+
+            End Select
 
         End Sub
 
@@ -128,15 +205,17 @@ Namespace UnitOperations
 
                 port1.IsEnergyConnector = False
                 port1.Type = Interfaces.Enums.GraphicObjects.ConType.ConIn
-                port1.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X, GraphicObject.Y + 0.55 * GraphicObject.Height)
-                port1.ConnectorName = "Inlet Port 1"
+                port1.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + 0.5 * GraphicObject.Width, GraphicObject.Y + GraphicObject.Height)
+                port1.ConnectorName = "Inlet Port"
+                port1.Direction = Enums.GraphicObjects.ConDir.Up
 
                 GraphicObject.InputConnectors.Add(port1)
 
             Else
 
-                GraphicObject.InputConnectors(0).Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X, GraphicObject.Y + 0.55 * GraphicObject.Height)
-                GraphicObject.InputConnectors(0).ConnectorName = "Inlet Port 1"
+                GraphicObject.InputConnectors(0).Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + 0.5 * GraphicObject.Width, GraphicObject.Y + GraphicObject.Height)
+                GraphicObject.InputConnectors(0).ConnectorName = "Inlet Port"
+                GraphicObject.InputConnectors(0).Direction = Enums.GraphicObjects.ConDir.Up
 
             End If
 
@@ -146,26 +225,15 @@ Namespace UnitOperations
 
                 port3.IsEnergyConnector = False
                 port3.Type = Interfaces.Enums.GraphicObjects.ConType.ConOut
-                port3.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.34 * GraphicObject.Height)
-                port3.ConnectorName = "Outlet Port 1"
+                port3.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.5 * GraphicObject.Height)
+                port3.ConnectorName = "Outlet Port"
 
                 GraphicObject.OutputConnectors.Add(port3)
 
-                Dim port4 As New Drawing.SkiaSharp.GraphicObjects.ConnectionPoint()
-
-                port4.IsEnergyConnector = False
-                port4.Type = Interfaces.Enums.GraphicObjects.ConType.ConOut
-                port4.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height + 0.78 * GraphicObject.Height)
-                port4.ConnectorName = "Outlet Port 2"
-
-                GraphicObject.OutputConnectors.Add(port4)
-
             Else
 
-                GraphicObject.OutputConnectors(0).Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.34 * GraphicObject.Height)
-                GraphicObject.OutputConnectors(1).Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.78 * GraphicObject.Height)
-                GraphicObject.OutputConnectors(0).ConnectorName = "Outlet Port 1"
-                GraphicObject.OutputConnectors(1).ConnectorName = "Outlet Port 2"
+                GraphicObject.OutputConnectors(0).Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.5 * GraphicObject.Height)
+                GraphicObject.OutputConnectors(0).ConnectorName = "Outlet Port"
 
             End If
 
