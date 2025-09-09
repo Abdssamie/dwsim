@@ -1,15 +1,12 @@
-﻿Imports System.Windows.Forms
-Imports DWSIM.Interfaces.Enums.GraphicObjects
-Imports DWSIM.SharedClasses.UnitOperations
-Imports su = DWSIM.SharedClasses.SystemsOfUnits
-Imports WeifenLuo.WinFormsUI.Docking
+﻿Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports unvell.ReoGrid
+Imports WeifenLuo.WinFormsUI.Docking
 
-Public Class EditingForm_Valve
+Public Class EditingForm_ReliefValve
 
     Inherits SharedClasses.ObjectEditorForm
 
-    Public Property SimObject As UnitOperations.Valve
+    Public Property SimObject As UnitOperations.ReliefValve
 
     Public Loaded As Boolean = False
     Public Filling As Boolean = False
@@ -17,7 +14,7 @@ Public Class EditingForm_Valve
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub EditingForm_ReliefValve_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         SetupGrid()
 
@@ -155,39 +152,9 @@ Public Class EditingForm_Valve
 
             'parameters
 
-            cbPress.Items.Clear()
-            cbPress.Items.AddRange(units.GetUnitSet(Interfaces.Enums.UnitOfMeasure.pressure).ToArray)
-            cbPress.SelectedItem = units.pressure
-
-            cbPressureDropU.Items.Clear()
-            cbPressureDropU.Items.AddRange(units.GetUnitSet(Interfaces.Enums.UnitOfMeasure.deltaP).ToArray)
-            cbPressureDropU.SelectedItem = units.deltaP
-
             Dim uobj = SimObject
 
-            Select Case uobj.CalcMode
-                Case UnitOperations.Valve.CalculationMode.OutletPressure
-                    cbCalcMode.SelectedIndex = 0
-                Case UnitOperations.Valve.CalculationMode.DeltaP
-                    cbCalcMode.SelectedIndex = 1
-                Case UnitOperations.Valve.CalculationMode.Kv_Liquid
-                    cbCalcMode.SelectedIndex = 2
-                Case UnitOperations.Valve.CalculationMode.Kv_Gas
-                    cbCalcMode.SelectedIndex = 3
-                Case UnitOperations.Valve.CalculationMode.Kv_Steam
-                    cbCalcMode.SelectedIndex = 4
-                Case UnitOperations.Valve.CalculationMode.Kv_General
-                    cbCalcMode.SelectedIndex = 5
-            End Select
-
-            tbOutletPressure.Text = su.Converter.ConvertFromSI(units.pressure, uobj.OutletPressure.GetValueOrDefault).ToString(nf)
-            tbPressureDrop.Text = su.Converter.ConvertFromSI(units.deltaP, uobj.DeltaP.GetValueOrDefault).ToString(nf)
-
-            tbOp.Text = uobj.OpeningPct.ToString(nf)
-            tbKv.Text = uobj.Kv.ToString(nf)
             tbKvOpRel.Text = uobj.PercentOpeningVersusPercentKvExpression
-
-            If .FlowCoefficient = UnitOperations.Valve.FlowCoefficientType.Kv Then rbKv.Checked = True Else rbCv.Checked = True
 
             tbCharParam.Text = .CharacteristicParameter.ToString(nf)
 
@@ -197,8 +164,6 @@ Public Class EditingForm_Valve
             For i = 0 To .OpeningKvRelDataTableY.Count - 1
                 grid1.Worksheets(0).SetCellData(i, 1, .OpeningKvRelDataTableY(i))
             Next
-
-            chkEnableKvOpRel.Checked = uobj.EnableOpeningKvRelationship
 
             Panel1.Enabled = uobj.EnableOpeningKvRelationship
 
@@ -210,8 +175,11 @@ Public Class EditingForm_Valve
 
     End Sub
 
+
     Private Sub btnConfigurePP_Click(sender As Object, e As EventArgs) Handles btnConfigurePP.Click
-        SimObject.FlowSheet.PropertyPackages.Values.Where(Function(x) x.Tag =  cbPropPack.SelectedItem.ToString).FirstOrDefault()?.DisplayGroupedEditingForm()
+
+        SimObject.FlowSheet.PropertyPackages.Values.Where(Function(x) x.Tag = cbPropPack.SelectedItem.ToString).FirstOrDefault()?.DisplayGroupedEditingForm()
+
     End Sub
 
     Private Sub lblTag_TextChanged(sender As Object, e As EventArgs) Handles lblTag.TextChanged
@@ -221,155 +189,29 @@ Public Class EditingForm_Valve
     End Sub
 
     Private Sub btnDisconnect1_Click(sender As Object, e As EventArgs) Handles btnDisconnect1.Click
+
         If cbInlet1.SelectedItem IsNot Nothing Then
+
             SimObject.FlowSheet.DisconnectObjects(SimObject.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom, SimObject.GraphicObject)
             cbInlet1.SelectedItem = Nothing
+
         End If
+
     End Sub
 
     Private Sub btnDisconnectOutlet1_Click(sender As Object, e As EventArgs) Handles btnDisconnectOutlet1.Click
+
         If cbOutlet1.SelectedItem IsNot Nothing Then
+
             SimObject.FlowSheet.DisconnectObjects(SimObject.GraphicObject, SimObject.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo)
             cbOutlet1.SelectedItem = Nothing
-        End If
-    End Sub
 
-    Private Sub cbCalcMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbCalcMode.SelectedIndexChanged
-
-        If Loaded Then SimObject.FlowSheet.RegisterSnapshot(Interfaces.Enums.SnapshotType.ObjectData, SimObject)
-
-        'Pressão na Saída
-        'Variação da Pressão
-        Select Case cbCalcMode.SelectedIndex
-            Case 0
-                tbPressureDrop.Enabled = False
-                tbOutletPressure.Enabled = True
-                tbKv.Enabled = False
-                tbKvOpRel.Enabled = False
-                tbOp.Enabled = False
-                chkEnableKvOpRel.Enabled = True
-                SimObject.CalcMode = UnitOperations.Valve.CalculationMode.OutletPressure
-                btnCalcKv.Enabled = True
-                rbCv.Enabled = False
-                rbKv.Enabled = False
-            Case 1
-                tbPressureDrop.Enabled = True
-                tbOutletPressure.Enabled = False
-                tbKv.Enabled = False
-                tbKvOpRel.Enabled = False
-                tbOp.Enabled = False
-                chkEnableKvOpRel.Enabled = True
-                SimObject.CalcMode = UnitOperations.Valve.CalculationMode.DeltaP
-                btnCalcKv.Enabled = True
-                rbCv.Enabled = False
-                rbKv.Enabled = False
-            Case 2
-                tbPressureDrop.Enabled = False
-                tbOutletPressure.Enabled = False
-                tbKv.Enabled = True
-                tbKvOpRel.Enabled = True
-                tbOp.Enabled = True
-                chkEnableKvOpRel.Enabled = True
-                SimObject.CalcMode = UnitOperations.Valve.CalculationMode.Kv_Liquid
-                btnCalcKv.Enabled = True
-                rbCv.Enabled = True
-                rbKv.Enabled = True
-            Case 3
-                tbPressureDrop.Enabled = False
-                tbOutletPressure.Enabled = False
-                tbKv.Enabled = True
-                tbKvOpRel.Enabled = True
-                tbOp.Enabled = True
-                chkEnableKvOpRel.Enabled = True
-                SimObject.CalcMode = UnitOperations.Valve.CalculationMode.Kv_Gas
-                btnCalcKv.Enabled = True
-                rbCv.Enabled = True
-                rbKv.Enabled = True
-            Case 4
-                tbPressureDrop.Enabled = False
-                tbOutletPressure.Enabled = False
-                tbKv.Enabled = True
-                tbKvOpRel.Enabled = True
-                tbOp.Enabled = True
-                chkEnableKvOpRel.Enabled = True
-                SimObject.CalcMode = UnitOperations.Valve.CalculationMode.Kv_Steam
-                btnCalcKv.Enabled = True
-                rbCv.Enabled = True
-                rbKv.Enabled = True
-            Case 5
-                tbPressureDrop.Enabled = False
-                tbOutletPressure.Enabled = False
-                tbKv.Enabled = True
-                tbKvOpRel.Enabled = True
-                tbOp.Enabled = True
-                chkEnableKvOpRel.Enabled = True
-                SimObject.CalcMode = UnitOperations.Valve.CalculationMode.Kv_General
-                btnCalcKv.Enabled = True
-                rbCv.Enabled = True
-                rbKv.Enabled = True
-        End Select
-
-    End Sub
-
-    Private Sub cb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbPressureDropU.SelectedIndexChanged,
-                                                                                  cbPress.SelectedIndexChanged
-
-        If Loaded Then
-            Try
-                If sender Is cbPress Then
-                    tbOutletPressure.Text = su.Converter.Convert(cbPress.SelectedItem.ToString, units.pressure, Double.Parse(tbOutletPressure.Text)).ToString(nf)
-                    cbPress.SelectedItem = units.pressure
-                    UpdateProps(tbOutletPressure)
-                ElseIf sender Is cbPressureDropU Then
-                    tbPressureDrop.Text = su.Converter.Convert(cbPressureDropU.SelectedItem.ToString, units.deltaP, Double.Parse(tbPressureDrop.Text)).ToString(nf)
-                    cbPressureDropU.SelectedItem = units.deltaP
-                    UpdateProps(tbPressureDrop)
-                End If
-            Catch ex As Exception
-                SimObject.FlowSheet.ShowMessage(ex.Message.ToString, Interfaces.IFlowsheet.MessageType.GeneralError)
-            End Try
         End If
 
     End Sub
 
-    Sub UpdateProps(sender As Object)
 
-        'Pressão na Saída
-        'Variação da Pressão
-
-        Dim uobj = SimObject
-
-        Select Case cbCalcMode.SelectedIndex
-            Case 0
-                uobj.CalcMode = UnitOperations.Valve.CalculationMode.OutletPressure
-            Case 1
-                uobj.CalcMode = UnitOperations.Valve.CalculationMode.DeltaP
-            Case 2
-                uobj.CalcMode = UnitOperations.Valve.CalculationMode.Kv_Liquid
-            Case 3
-                uobj.CalcMode = UnitOperations.Valve.CalculationMode.Kv_Gas
-            Case 4
-                uobj.CalcMode = UnitOperations.Valve.CalculationMode.Kv_Steam
-            Case 5
-                uobj.CalcMode = UnitOperations.Valve.CalculationMode.Kv_General
-        End Select
-
-        If sender Is tbOutletPressure Then uobj.OutletPressure = su.Converter.ConvertToSI(cbPress.SelectedItem.ToString, tbOutletPressure.Text.ParseExpressionToDouble)
-        If sender Is tbPressureDrop Then uobj.DeltaP = su.Converter.ConvertToSI(cbPressureDropU.SelectedItem.ToString, tbPressureDrop.Text.ParseExpressionToDouble)
-        If sender Is tbKv Then uobj.Kv = tbKv.Text.ParseExpressionToDouble
-        If sender Is tbOp Then uobj.OpeningPct = tbOp.Text.ParseExpressionToDouble
-
-        RequestCalc()
-
-    End Sub
-
-    Sub RequestCalc()
-
-        SimObject.FlowSheet.RequestCalculation3(SimObject, False)
-
-    End Sub
-
-    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbPressureDrop.TextChanged, tbOutletPressure.TextChanged, tbKv.TextChanged, tbOp.TextChanged
+    Private Sub tb_TextChanged(sender As Object, e As EventArgs)
 
         Dim tbox = DirectCast(sender, TextBox)
 
@@ -381,13 +223,11 @@ Public Class EditingForm_Valve
 
     End Sub
 
-    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs) Handles tbPressureDrop.KeyDown, tbOutletPressure.KeyDown, tbKv.KeyDown, tbOp.KeyDown
+    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs)
 
         If e.KeyCode = Keys.Enter And Loaded And DirectCast(sender, TextBox).ForeColor = System.Drawing.Color.Blue Then
 
             SimObject.FlowSheet.RegisterSnapshot(Interfaces.Enums.SnapshotType.ObjectData, SimObject)
-
-            UpdateProps(sender)
 
             DirectCast(sender, TextBox).SelectAll()
 
@@ -396,11 +236,14 @@ Public Class EditingForm_Valve
     End Sub
 
     Private Sub cbPropPack_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbPropPack.SelectedIndexChanged
+
         If Loaded Then
+
             SimObject.FlowSheet.RegisterSnapshot(Interfaces.Enums.SnapshotType.ObjectData, SimObject)
             SimObject.PropertyPackage = SimObject.FlowSheet.PropertyPackages.Values.Where(Function(x) x.Tag = cbPropPack.SelectedItem.ToString).SingleOrDefault
-            RequestCalc()
+
         End If
+
     End Sub
 
     Private Sub cbInlet1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbInlet1.SelectedIndexChanged
@@ -466,11 +309,15 @@ Public Class EditingForm_Valve
     End Sub
 
     Private Sub chkActive_CheckedChanged(sender As Object, e As EventArgs) Handles chkActive.CheckedChanged
+
         If Loaded Then
+
             SimObject.GraphicObject.Active = chkActive.Checked
             SimObject.FlowSheet.UpdateInterface()
             UpdateInfo()
+
         End If
+
     End Sub
 
     Private Sub btnCreateAndConnectInlet1_Click(sender As Object, e As EventArgs) Handles btnCreateAndConnectInlet1.Click, btnCreateAndConnectOutlet1.Click
@@ -510,12 +357,13 @@ Public Class EditingForm_Valve
         End If
 
         UpdateInfo()
-        RequestCalc()
 
     End Sub
 
     Private Sub btnUtils_Click(sender As Object, e As EventArgs) Handles btnUtils.Click
+
         UtilitiesCtxMenu.Show(btnUtils, New System.Drawing.Point(20, 0))
+
     End Sub
 
     Private Sub sizingtsmi_Click(sender As Object, e As EventArgs) Handles sizingtsmi.Click
@@ -560,18 +408,10 @@ Public Class EditingForm_Valve
 
     End Sub
 
-    Private Sub chkEnableKvOpRel_CheckedChanged(sender As Object, e As EventArgs) Handles chkEnableKvOpRel.CheckedChanged
-        If Loaded Then SimObject.FlowSheet.RegisterSnapshot(Interfaces.Enums.SnapshotType.ObjectData, SimObject)
-        SimObject.EnableOpeningKvRelationship = chkEnableKvOpRel.Checked
-        Panel1.Enabled = chkEnableKvOpRel.Checked
-    End Sub
-
     Private Sub tbKvOpRel_TextChanged(sender As Object, e As EventArgs) Handles tbKvOpRel.KeyDown
-        SimObject.PercentOpeningVersusPercentKvExpression = tbKvOpRel.Text
-    End Sub
 
-    Private Sub GroupBox2_MouseMove(sender As Object, e As MouseEventArgs) Handles GroupBoxParameters.MouseMove
-        MyBase.Editor_MouseMove(sender, e)
+        SimObject.PercentOpeningVersusPercentKvExpression = tbKvOpRel.Text
+
     End Sub
 
     Private Sub lblTag_KeyPress(sender As Object, e As KeyEventArgs) Handles lblTag.KeyUp
@@ -589,27 +429,13 @@ Public Class EditingForm_Valve
 
     End Sub
 
-    Private Sub btnCalcKv_Click(sender As Object, e As EventArgs) Handles btnCalcKv.Click
-
-        If Loaded Then SimObject.FlowSheet.RegisterSnapshot(Interfaces.Enums.SnapshotType.ObjectData, SimObject)
-
-        SimObject.CalculateKv()
-
-        UpdateInfo()
-
-    End Sub
-
-    Private Sub rbKv_CheckedChanged(sender As Object, e As EventArgs) Handles rbKv.CheckedChanged, rbCv.CheckedChanged
-        If Loaded Then SimObject.FlowSheet.RegisterSnapshot(Interfaces.Enums.SnapshotType.ObjectData, SimObject)
-        If rbCv.Checked Then SimObject.FlowCoefficient = UnitOperations.Valve.FlowCoefficientType.Cv
-        If rbKv.Checked Then SimObject.FlowCoefficient = UnitOperations.Valve.FlowCoefficientType.Kv
-    End Sub
-
     Private Sub tbCharParam_TextChanged(sender As Object, e As EventArgs) Handles tbCharParam.TextChanged
+
         Try
             SimObject.CharacteristicParameter = tbCharParam.Text.ToDoubleFromCurrent()
         Catch ex As Exception
         End Try
+
     End Sub
 
     Private Sub cbOpeningKvRelType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbOpeningKvRelType.SelectedIndexChanged
@@ -620,7 +446,6 @@ Public Class EditingForm_Valve
 
         gbTable.Enabled = False
         tbKvOpRel.Enabled = False
-        tbOp.Enabled = True
         tbCharParam.Enabled = False
 
         Select Case SimObject.DefinedOpeningKvRelationShipType
@@ -631,6 +456,7 @@ Public Class EditingForm_Valve
             Case UnitOperations.Valve.OpeningKvRelationshipType.QuickOpening
                 tbCharParam.Enabled = True
         End Select
+
     End Sub
 
 End Class
