@@ -29,10 +29,10 @@ namespace DWSIM.Simulate365.Services
         public S365DashboardSaveFile SelectedSaveFile { get; private set; } = null;
         public S365File SelectedOpenFile { get; private set; } = null;
 
-        public  string OpenFile(string fileUniqueIdentifier, int accessType)
+        public string OpenFile(string fileUniqueIdentifier, int accessType)
         {
             try
-            {              
+            {
 
                 var token = UserService.GetInstance().GetUserToken();
                 var client = GetDashboardClient(token);
@@ -41,7 +41,7 @@ namespace DWSIM.Simulate365.Services
 
                 if (!result.IsSuccessStatusCode)
                 {
-                    var errorMessage = Task.Run(async()=> await result.Content.ReadAsStringAsync()).Result;
+                    var errorMessage = Task.Run(async () => await result.Content.ReadAsStringAsync()).Result;
                     return errorMessage;
                 }
 
@@ -51,7 +51,7 @@ namespace DWSIM.Simulate365.Services
 
                 var item = itemWithBreadcrumbs.File;
                 // Get drive item
-                var stream = Task.Run(async () => await client.GetStreamAsync($"/api/files/{fileUniqueIdentifier}/download?accessType={accessType}")).Result;                
+                var stream = Task.Run(async () => await client.GetStreamAsync($"/api/files/{fileUniqueIdentifier}/download?accessType={accessType}")).Result;
 
                 var extension = System.IO.Path.GetExtension(item.Name);
                 var tmpFilePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid().ToString()}{extension}");
@@ -69,6 +69,7 @@ namespace DWSIM.Simulate365.Services
                     Filename = item.Name,
                     ParentUniqueIdentifier = parentFolderBreadcrumb?.UniqueIdentifier.ToString() ?? string.Empty,
                     FileUniqueIdentifier = item.UniqueIdentifier.ToString(),
+                    FileVersion = item.CurrentVersionNumber.ToString(),
                     FullPath = GetFullPath(itemWithBreadcrumbs.BreadcrumbItems, item),
                     OwnerId = itemWithBreadcrumbs.File.OwnerId.ToString()
                 };
@@ -79,7 +80,7 @@ namespace DWSIM.Simulate365.Services
             catch (Exception ex)
             {
                 this.SelectedOpenFile = null;
-                throw new Exception("An error occurred while opening file from S365 Dashboard.", ex);               
+                throw new Exception("An error occurred while opening file from S365 Dashboard.", ex);
             }
         }
         private string GetFullPath(List<BreadcrumbItem> breadcrumbItems, FileModel file)

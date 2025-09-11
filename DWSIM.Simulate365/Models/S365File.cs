@@ -60,7 +60,8 @@ namespace DWSIM.Simulate365.Models
 
         public void Write(string localFilePath)
         {
-            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite);
+            long? fileVersion = !string.IsNullOrWhiteSpace(FileVersion) ? long.Parse(FileVersion) : (long?)null;
+            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite,fileVersion);
 
             FileUniqueIdentifier = file.FileUniqueIdentifier;
             FileVersion = file.FileVersion;
@@ -72,7 +73,9 @@ namespace DWSIM.Simulate365.Models
 
         public void Write(System.IO.Stream stream)
         {
-            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, stream, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite);
+            long? fileVersion = !string.IsNullOrWhiteSpace(FileVersion) ? long.Parse(FileVersion) : (long?)null;
+
+            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, stream, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite, fileVersion);
 
             FileUniqueIdentifier = file.FileUniqueIdentifier;
             Filename = file.Filename;

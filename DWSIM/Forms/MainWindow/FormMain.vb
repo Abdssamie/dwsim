@@ -108,7 +108,6 @@ Public Class FormMain
 
     Public Shared Property EnableUserDefinedOpenRecentRoutine As Boolean = False
     Public Shared Property EnableFlowsheetSolveCallbackHandler As Boolean = False
-    Public Shared Property EnableLeaveCollaborationGroup As Boolean = False
     Public Shared Property EnableActiveUsersButton As Boolean = False
     Public Shared Property EnableNotificationBadge As Boolean = False
     Public Shared Property EnableUpdatesActiveSimulationUsersBadgeCount As Boolean = False
@@ -118,8 +117,6 @@ Public Class FormMain
     Public Shared UserDefinedOpenRecentRoutine As Action(Of Object, System.EventArgs, String)
 
     Public Shared RegisterFlowsheetSolveCallbackHandler As Action
-
-    Public Shared LeaveCollaborationGroup As Action(Of Form)
 
     Public Shared SetupActiveUsersButton As Func(Of Form, ToolStrip, ToolStripButton)
 
@@ -140,6 +137,9 @@ Public Class FormMain
     Public Event FlowsheetLoadingFromXML(sender As Object, e As EventArgs)
 
     Public Event FlowsheetLoadedFromXML(sender As Object, e As EventArgs)
+
+    Public Shared Event ActiveSimulationChanged(sender As Object, e As EventArgs)
+    Public Shared Event ActiveSimulationClosed(sender As Object, e As EventArgs)
 
     Public SavingSimulation As Func(Of IFlowsheet, Boolean)
 
@@ -3995,6 +3995,8 @@ Public Class FormMain
             End If
         End If
 
+
+
         If Not IO.Path.GetExtension(handler.FullPath).ToLower.Contains("dwbcs") Then
             form.ProcessScripts(Scripts.EventType.SimulationSaved, Scripts.ObjectType.Simulation, "")
         End If
@@ -4594,7 +4596,7 @@ Label_00CC:
         Return simulatePath.StartsWith("//Simulate 365 Dashboard")
     End Function
 
-    Sub SaveFileDialog(Optional dashboardpicker As Boolean = False)
+    Sub SaveFileDialog(Optional dashboardpicker As Boolean = False, Optional disableOverwrite As Boolean = False)
 
         If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
 
@@ -4610,7 +4612,7 @@ Label_00CC:
                 Try
                     Dim fname = Path.GetFileNameWithoutExtension(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
-                    If form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) Then
+                    If form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) And disableOverwrite = False Then
                         Dim shouldOverwriteExistingFileResult As DialogResult = MessageBox.Show("Do you want to overwrite the existing file?", "Save file", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                         If (shouldOverwriteExistingFileResult = DialogResult.Yes) Then
@@ -4630,7 +4632,7 @@ Label_00CC:
                     Dim fpath = Path.GetDirectoryName(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
                     filePickerForm.SuggestedDirectory = fpath
-                    If TypeOf filePickerForm Is Simulate365.FormFactories.S365FilePickerForm Then
+                    If TypeOf filePickerForm Is Simulate365.FormFactories.S365FilePickerForm And disableOverwrite = False Then
                         filePickerForm.SuggestedDirectory = form2.Options.VirtualFile.ParentUniqueIdentifier
                     End If
                 Catch ex As Exception
@@ -5569,6 +5571,12 @@ Label_00CC:
         FrmOptions.chkEnableInspector.Checked = tsbInspector.Checked
     End Sub
 
+    Public Shared Sub RaiseActiveSimulationChanged(sender As Object, e As EventArgs)
+        RaiseEvent ActiveSimulationChanged(sender, e)
+    End Sub
+    Public Shared Sub RaiseActiveSimulationClosed(sender As Object, e As EventArgs)
+        RaiseEvent ActiveSimulationClosed(sender, e)
+    End Sub
 #End Region
 
 End Class
