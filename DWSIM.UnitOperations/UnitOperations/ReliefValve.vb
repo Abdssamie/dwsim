@@ -468,6 +468,8 @@ Namespace UnitOperations
             With oms
                 .Phases(0).Properties.pressure = P2
                 .Phases(0).Properties.enthalpy = H1
+                .SetFlashSpec("PH")
+                .AtEquilibrium = False
                 Dim i As Integer = 0
                 For Each comp In .Phases(0).Compounds.Values
                     comp.MoleFraction = ims.Phases(0).Compounds(comp.Name).MoleFraction
