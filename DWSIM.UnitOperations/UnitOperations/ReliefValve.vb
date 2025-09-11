@@ -1,4 +1,5 @@
 ﻿Imports DWSIM.Interfaces.Enums
+Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.UnitOperations.UnitOperations.Valve
 Imports SkiaSharp
@@ -41,6 +42,32 @@ Namespace UnitOperations
         Public Property SetPointPressure As Double = 0.0
 
         Public Property FullyOpenedPressure As Double = 0.0
+
+        Public Property ViscosityCoefficient As Double = 1.0
+
+        Public Property DischargeCoefficient As Double = 1.0
+
+        Public Property BackPressureCoefficient As Double = 1.0
+
+        Public Property OrificeArea As Double = 0.71 * 0.0001  'D, m2 
+
+        Public Shared Property StandardOrificeAreas = New List(Of String)({
+            "D / 0.11 in² / 0.71 cm²",
+            "E / 0.20 in² / 1.26 cm²",
+            "F / 0.31 in² / 1.98 cm²",
+            "G / 0.50 in² / 3.24 cm²",
+            "H / 0.79 in² / 5.06 cm²",
+            "J / 1.29 in² / 8.30 cm²",
+            "K / 1.84 in² / 11.85 cm²",
+            "L / 2.85 in² / 18.40 cm²",
+            "M / 3.60 in² / 23.23 cm²",
+            "N / 4.34 in² / 28.00 cm²",
+            "P / 6.38 in² / 41.16 cm²",
+            "Q / 11.05 in² / 71.29 cm²",
+            "R / 16.00 in² / 103.22 cm²",
+            "T / 26.00 in² / 167.74 cm²"
+        })
+
 
         Public Sub New(ByVal Name As String, ByVal Description As String)
 
@@ -309,6 +336,120 @@ Namespace UnitOperations
         End Sub
 
 #End Region
+
+        Public Overrides Sub Calculate(Optional args As Object = Nothing)
+
+
+        End Sub
+
+        Public Overrides Sub RunDynamicModel()
+
+            If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
+                Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
+            ElseIf Not Me.GraphicObject.InputConnectors(0).IsAttached Then
+                Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
+            End If
+
+            Dim T1, P1, W, P2, rho, CpCv, V1, xv As Double
+
+            Dim ims, oms As MaterialStream
+
+            ims = Me.GetInletMaterialStream(0)
+            oms = Me.GetOutletMaterialStream(0)
+
+            Dim Kvc As Double = 1.0
+
+            Dim OpeningPct = (P1 - SetPointPressure) / (FullyOpenedPressure - SetPointPressure)
+
+            If OpeningPct < 0.0 Then OpeningPct = 0.0
+            If OpeningPct > 1.0 Then OpeningPct = 1.0
+
+            If Double.IsInfinity(OpeningPct) Then OpeningPct = 1.0
+
+            If EnableOpeningKvRelationship Then
+                Select Case DefinedOpeningKvRelationShipType
+                    Case OpeningKvRelationshipType.UserDefined
+                        Try
+                            Dim ExpContext As New Ciloci.Flee.ExpressionContext()
+                            ExpContext.Imports.AddType(GetType(System.Math))
+                            ExpContext.Variables.Clear()
+                            ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
+                            ExpContext.Variables.Add("OP", OpeningPct)
+                            Dim Expr = ExpContext.CompileGeneric(Of Double)(PercentOpeningVersusPercentKvExpression)
+                            Kvc = Expr.Evaluate() / 100
+                        Catch ex As Exception
+                            Throw New Exception("Invalid expression for Kv[Cv]/Opening relationship.")
+                        End Try
+                    Case OpeningKvRelationshipType.QuickOpening
+                        Kvc = (OpeningPct / 100.0) ^ 0.5
+                    Case OpeningKvRelationshipType.Linear
+                        Kvc = OpeningPct / 100.0
+                    Case OpeningKvRelationshipType.EqualPercentage
+                        Kvc = CharacteristicParameter ^ (OpeningPct / 100.0 - 1.0)
+                    Case OpeningKvRelationshipType.DataTable
+                        Try
+                            Dim factor = MathNet.Numerics.Interpolate.RationalWithoutPoles(OpeningKvRelDataTableX, OpeningKvRelDataTableX).Interpolate(OpeningPct) / 100.0
+                            Kvc = factor
+                        Catch ex As Exception
+                            Throw New Exception("Error calculating Kv from tabulated data: " + ex.Message)
+                        End Try
+                End Select
+            End If
+
+            T1 = ims.Phases(0).Properties.temperature.GetValueOrDefault
+            P1 = ims.Phases(0).Properties.pressure.GetValueOrDefault
+
+            xv = ims.Phases(2).Properties.massfraction.GetValueOrDefault
+
+            rho = ims.Phases(0).Properties.density.GetValueOrDefault
+
+            V1 = 1.0 / rho
+
+            P2 = oms.Phases(0).Properties.pressure.GetValueOrDefault
+
+            CpCv = ims.Phases(2).Properties.idealGasHeatCapacityRatio.GetValueOrDefault()
+
+            Dim choked_factor = (2.0 / (CpCv + 1)) ^ (CpCv / (CpCv - 1))
+
+            Dim A = OrificeArea
+
+            Dim Kv = ViscosityCoefficient
+
+            Dim Kd = DischargeCoefficient
+
+            Dim Kb = BackPressureCoefficient
+
+            If xv > 0.99 Then
+
+                'vapor flow
+
+                If (P2 / P1) >= choked_factor Then
+
+                    'choked flow
+
+                    W = A * Kvc * Kd * Kb * (P1 * CpCv / V1 * (2 / (CpCv + 1)) ^ ((CpCv - 1) / (CpCv + 1))) ^ 0.5
+
+                Else
+
+                    'non-choked flow
+
+                    W = A * Kvc * Kd * (P1 / V1 * (2 * CpCv / (CpCv + 1)) * ((P2 / P1) ^ (2.0 / CpCv) - (P2 / P1) ^ ((CpCv + 1) / CpCv))) ^ 0.5
+
+                End If
+
+            ElseIf xv < 0.01 Then
+
+                'liquid flow
+
+                W = A * Kvc * Kd * Kv * (2 * (P1 - P2) * rho) ^ 0.5
+
+            Else
+
+                Throw New Exception("Two-phase flow is not supported yet.")
+
+            End If
+
+        End Sub
 
     End Class
 
