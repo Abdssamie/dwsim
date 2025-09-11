@@ -93,6 +93,24 @@ Namespace Streams
 
         Public Shared PostCreationAction3 As Action(Of MaterialStream)
 
+        'Phase shortcuts
+
+        <Xml.Serialization.XmlIgnore>
+        Public Property Mixture As BaseClasses.Phase
+        <Xml.Serialization.XmlIgnore>
+        Public Property Vapor As BaseClasses.Phase
+        <Xml.Serialization.XmlIgnore>
+        Public Property OverallLiquid As BaseClasses.Phase
+        <Xml.Serialization.XmlIgnore>
+        Public Property Liquid1 As BaseClasses.Phase
+        <Xml.Serialization.XmlIgnore>
+        Public Property Liquid2 As BaseClasses.Phase
+        <Xml.Serialization.XmlIgnore>
+        Public Property Solid As BaseClasses.Phase
+
+
+
+
 #Region "    XML serialization"
 
         Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
@@ -343,6 +361,13 @@ Namespace Streams
             Me.Phases(0).Properties.pressure = 101325
             Me.Phases(0).Properties.massflow = 1
 
+            Mixture = Phases(0)
+            Vapor = Phases(2)
+            OverallLiquid = Phases(1)
+            Liquid1 = Phases(3)
+            Liquid2 = Phases(4)
+            Solid = Phases(7)
+
             PostCreationAction1?.Invoke(Me)
             PostCreationAction2?.Invoke(Me)
             PostCreationAction3?.Invoke(Me)
@@ -374,6 +399,13 @@ Namespace Streams
             Me.Phases.Add(6, New BaseClasses.Phase(("Aqueous"), ""))
             Me.Phases.Add(7, New BaseClasses.Phase(("Solid"), ""))
 
+            Mixture = Phases(0)
+            Vapor = Phases(2)
+            OverallLiquid = Phases(1)
+            Liquid1 = Phases(3)
+            Liquid2 = Phases(4)
+            Solid = Phases(7)
+
             'assign default values for temperature, pressure and mass flow
             Me.Phases(0).Properties.temperature = 298.15
             Me.Phases(0).Properties.pressure = 101325
@@ -400,6 +432,13 @@ Namespace Streams
             Me.Phases.Add(5, New BaseClasses.Phase(("Liquid3"), ""))
             Me.Phases.Add(6, New BaseClasses.Phase(("Aqueous"), ""))
             Me.Phases.Add(7, New BaseClasses.Phase(("Solid"), ""))
+
+            Mixture = Phases(0)
+            Vapor = Phases(2)
+            OverallLiquid = Phases(1)
+            Liquid1 = Phases(3)
+            Liquid2 = Phases(4)
+            Solid = Phases(7)
 
             'assign default values for temperature, pressure and mass flow
             Me.Phases(0).Properties.temperature = 298.15

@@ -344,18 +344,30 @@ Namespace UnitOperations
 
         Public Overrides Sub RunDynamicModel()
 
+            Dim integratorID = FlowSheet.DynamicsManager.ScheduleList(FlowSheet.DynamicsManager.CurrentSchedule).CurrentIntegrator
+            Dim integrator = FlowSheet.DynamicsManager.IntegratorList(integratorID)
+
+            If Not integrator.ShouldCalculatePressureFlow Then Exit Sub
+
             If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
                 Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
             ElseIf Not Me.GraphicObject.InputConnectors(0).IsAttached Then
                 Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
             End If
 
-            Dim T1, P1, W, P2, rho, CpCv, V1, xv As Double
+            Dim T1, P1, H1, W, P2, rho, CpCv, V1, xv As Double
 
             Dim ims, oms As MaterialStream
 
             ims = Me.GetInletMaterialStream(0)
             oms = Me.GetOutletMaterialStream(0)
+
+            If ims.DynamicsSpec <> Dynamics.DynamicsSpecType.Pressure OrElse
+                        oms.DynamicsSpec <> Dynamics.DynamicsSpecType.Pressure Then
+
+                Throw New Exception("Both onlet and outlet streams must be pressure-specified in dynamic mode.")
+
+            End If
 
             Dim Kvc As Double = 1.0
 
@@ -396,8 +408,9 @@ Namespace UnitOperations
                 End Select
             End If
 
-            T1 = ims.Phases(0).Properties.temperature.GetValueOrDefault
-            P1 = ims.Phases(0).Properties.pressure.GetValueOrDefault
+            T1 = ims.GetTemperature()
+            P1 = ims.GetPressure()
+            H1 = ims.GetMassEnthalpy()
 
             xv = ims.Phases(2).Properties.massfraction.GetValueOrDefault
 
@@ -405,7 +418,7 @@ Namespace UnitOperations
 
             V1 = 1.0 / rho
 
-            P2 = oms.Phases(0).Properties.pressure.GetValueOrDefault
+            P2 = oms.GetPressure()
 
             CpCv = ims.Phases(2).Properties.idealGasHeatCapacityRatio.GetValueOrDefault()
 
@@ -448,6 +461,31 @@ Namespace UnitOperations
                 Throw New Exception("Two-phase flow is not supported yet.")
 
             End If
+
+            ims.SetMassFlow(W)
+            oms.SetMassFlow(W)
+
+            With oms
+                .Phases(0).Properties.pressure = P2
+                .Phases(0).Properties.enthalpy = H1
+                Dim i As Integer = 0
+                For Each comp In .Phases(0).Compounds.Values
+                    comp.MoleFraction = ims.Phases(0).Compounds(comp.Name).MoleFraction
+                    comp.MassFraction = ims.Phases(0).Compounds(comp.Name).MassFraction
+                    comp.MassFlow = comp.MassFraction * W
+                    comp.MolarFlow = comp.MassFlow / comp.ConstantProperties.Molar_Weight * 1000
+                    i += 1
+                Next
+            End With
+
+            With ims
+                Dim i As Integer = 0
+                For Each comp In .Phases(0).Compounds.Values
+                    comp.MassFlow = comp.MassFraction * W
+                    comp.MolarFlow = comp.MassFlow / comp.ConstantProperties.Molar_Weight * 1000
+                    i += 1
+                Next
+            End With
 
         End Sub
 
