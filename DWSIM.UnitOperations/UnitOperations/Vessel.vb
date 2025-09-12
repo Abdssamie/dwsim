@@ -1,5 +1,5 @@
 '    Separator Vessel Calculation Routines 
-'    Copyright 2008-2020 Daniel Wagner O. de Medeiros
+'    Copyright 2008-2025 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -21,13 +21,23 @@ Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
 Imports DWSIM.Interfaces.Enums
+Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe
 
 Namespace UnitOperations
 
     <System.Serializable()> Public Class Vessel
 
         Inherits UnitOperations.UnitOpBaseClass
+
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.Separators
+
+        Public Property ThermalProperties As New ThermalEditorDefinitions
+
+        Public Property WallThickness As Double = 0.01 'm
+
+        Public Property WallMaterial As String = "Carbon Steel"
+
+        Public Shared Property MaterialTypes As List(Of String) = New List(Of String)({"Steel", "Carbon Steel", "Cast Iron", "Stainless Steel", "Commercial Copper"})
 
         Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
 
@@ -72,11 +82,6 @@ Namespace UnitOperations
 
         Protected m_DQ As Nullable(Of Double)
 
-        Protected m_overrideT As Boolean = False
-        Protected m_overrideP As Boolean = False
-        Protected m_T As Double = 298.15#
-        Protected m_P As Double = 101325.0#
-
         Public Enum PressureBehavior
             Average = 0
             Maximum = 1
@@ -98,69 +103,27 @@ Namespace UnitOperations
 
         Public Property ResidenceTime As Double = 5
 
-        Protected m_pressurebehavior As PressureBehavior = PressureBehavior.Minimum
-
-        Public Property PressureCalculation() As PressureBehavior
-            Get
-                Return Me.m_pressurebehavior
-            End Get
-            Set(ByVal value As PressureBehavior)
-                Me.m_pressurebehavior = value
-            End Set
-        End Property
+        Public Property PressureCalculation() As PressureBehavior = PressureBehavior.Minimum
 
         Public Enum OperationMode
             TwoPhase = 0
             ThreePhase = 1
         End Enum
 
-        Public Property OverrideT() As Boolean
-            Get
-                Return m_overrideT
-            End Get
-            Set(ByVal value As Boolean)
-                m_overrideT = value
-            End Set
-        End Property
+        Public Property OverrideT As Boolean = False
 
-        Public Property OverrideP() As Boolean
-            Get
-                Return m_overrideP
-            End Get
-            Set(ByVal value As Boolean)
-                m_overrideP = value
-            End Set
-        End Property
+        Public Property OverrideP As Boolean = False
 
-        Public Property FlashPressure() As Double
-            Get
-                Return m_P
-            End Get
-            Set(ByVal value As Double)
-                m_P = value
-            End Set
-        End Property
+        Public Property FlashPressure As Double = 101325
 
-        Public Property FlashTemperature() As Double
-            Get
-                Return m_T
-            End Get
-            Set(ByVal value As Double)
-                m_T = value
-            End Set
-        End Property
+        Public Property FlashTemperature As Double = 298.15
 
-        Public Property DeltaQ() As Nullable(Of Double)
-            Get
-                Return m_DQ
-            End Get
-            Set(ByVal value As Nullable(Of Double))
-                m_DQ = value
-            End Set
-        End Property
+        Public Property DeltaQ As Nullable(Of Double)
 
         Public Sub New()
+
             MyBase.New()
+
         End Sub
 
         Public Sub New(ByVal name As String, ByVal description As String)

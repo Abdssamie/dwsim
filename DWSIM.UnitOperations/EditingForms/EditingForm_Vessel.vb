@@ -2,6 +2,7 @@
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 Imports WeifenLuo.WinFormsUI.Docking
+Imports DWSIM.UnitOperations.UnitOperations
 
 Public Class EditingForm_Vessel
 
@@ -124,6 +125,11 @@ Public Class EditingForm_Vessel
 
             'parameters
 
+            TabPage2.Controls.Clear()
+            Dim teditor As New PipeThermalProfileEditor With {.Profile = VesselObject.ThermalProperties, .form = VesselObject.FlowSheet}
+            teditor.Dock = DockStyle.Fill
+            TabPage2.Controls.Add(teditor)
+
             Select Case .PressureCalculation
                 Case UnitOperations.Vessel.PressureBehavior.Minimum
                     cbPressureCalcMode.SelectedIndex = 0
@@ -148,6 +154,15 @@ Public Class EditingForm_Vessel
 
             tbTemperature.Text = su.Converter.ConvertFromSI(units.temperature, .FlashTemperature).ToString(nf)
             tbPressure.Text = su.Converter.ConvertFromSI(units.pressure, .FlashPressure).ToString(nf)
+
+            tbThickness.Text = .WallThickness.ConvertFromSI(units.thickness).ToString(nf)
+
+            lblThickness.Text = units.thickness
+
+            cbWallMaterial.Items.Clear()
+            cbWallMaterial.Items.AddRange(Vessel.MaterialTypes.ToArray())
+
+            cbWallMaterial.SelectedIndex = Vessel.MaterialTypes.IndexOf(VesselObject.WallMaterial)
 
             Dim proppacks As String() = .FlowSheet.PropertyPackages.Values.Select(Function(m) m.Tag).ToArray
             cbPropPack.Items.Clear()
@@ -367,7 +382,7 @@ Public Class EditingForm_Vessel
         If Loaded Then RequestCalc()
     End Sub
 
-    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbPressure.TextChanged, tbTemperature.TextChanged
+    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbPressure.TextChanged, tbTemperature.TextChanged, tbThickness.TextChanged
 
         Dim tbox = DirectCast(sender, TextBox)
 
@@ -395,6 +410,7 @@ Public Class EditingForm_Vessel
 
         If sender Is tbTemperature Then VesselObject.FlashTemperature = su.Converter.ConvertToSI(cbTemp.SelectedItem.ToString, tbTemperature.Text.ParseExpressionToDouble)
         If sender Is tbPressure Then VesselObject.FlashPressure = su.Converter.ConvertToSI(cbPress.SelectedItem.ToString, tbPressure.Text.ParseExpressionToDouble)
+        If sender Is tbThickness Then VesselObject.WallThickness = su.Converter.ConvertToSI(units.thickness, tbThickness.Text.ParseExpressionToDouble)
 
         RequestCalc()
 
@@ -413,7 +429,6 @@ Public Class EditingForm_Vessel
                     cbPress.SelectedItem = units.pressure
                     UpdateProps(tbPressure)
                 End If
-
             Catch ex As Exception
                 VesselObject.FlowSheet.ShowMessage(ex.Message.ToString, Interfaces.IFlowsheet.MessageType.GeneralError)
             End Try
@@ -422,7 +437,7 @@ Public Class EditingForm_Vessel
     End Sub
 
     Private Sub btnConfigurePP_Click(sender As Object, e As EventArgs) Handles btnConfigurePP.Click
-        VesselObject.FlowSheet.PropertyPackages.Values.Where(Function(x) x.Tag =  cbPropPack.SelectedItem.ToString).FirstOrDefault()?.DisplayGroupedEditingForm()
+        VesselObject.FlowSheet.PropertyPackages.Values.Where(Function(x) x.Tag = cbPropPack.SelectedItem.ToString).FirstOrDefault()?.DisplayGroupedEditingForm()
     End Sub
 
     Private Sub cbPressureCalcMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbPressureCalcMode.SelectedIndexChanged
@@ -603,6 +618,12 @@ Public Class EditingForm_Vessel
         tbTemperature.Enabled = check
         cbTemp.Enabled = check
         cbPress.Enabled = check
+
+    End Sub
+
+    Private Sub cbWallMaterial_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbWallMaterial.SelectedIndexChanged
+
+        VesselObject.WallMaterial = Vessel.MaterialTypes(cbWallMaterial.SelectedIndex)
 
     End Sub
 

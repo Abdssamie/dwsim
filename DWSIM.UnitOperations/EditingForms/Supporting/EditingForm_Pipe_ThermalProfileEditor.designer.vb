@@ -25,6 +25,8 @@ Partial Class PipeThermalProfileEditor
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PipeThermalProfileEditor))
         Me.RadioButton7 = New System.Windows.Forms.RadioButton()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tbSolarEff = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tbSolarIrradiation = New System.Windows.Forms.TextBox()
         Me.chkSolarIrradiationGlobal = New System.Windows.Forms.CheckBox()
@@ -68,8 +70,6 @@ Partial Class PipeThermalProfileEditor
         Me.Label52 = New System.Windows.Forms.Label()
         Me.TextBoxCGTC = New System.Windows.Forms.TextBox()
         Me.Label53 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.tbSolarEff = New System.Windows.Forms.TextBox()
         Me.GroupBox7.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
@@ -114,6 +114,16 @@ Partial Class PipeThermalProfileEditor
         Me.GroupBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.TabStop = False
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        '
+        'tbSolarEff
+        '
+        resources.ApplyResources(Me.tbSolarEff, "tbSolarEff")
+        Me.tbSolarEff.Name = "tbSolarEff"
         '
         'Label2
         '
@@ -355,16 +365,6 @@ Partial Class PipeThermalProfileEditor
         '
         resources.ApplyResources(Me.Label53, "Label53")
         Me.Label53.Name = "Label53"
-        '
-        'Label3
-        '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Name = "Label3"
-        '
-        'tbSolarEff
-        '
-        resources.ApplyResources(Me.tbSolarEff, "tbSolarEff")
-        Me.tbSolarEff.Name = "tbSolarEff"
         '
         'PipeThermalProfileEditor
         '

@@ -339,6 +339,13 @@ Namespace UnitOperations
 
         Public Overrides Sub Calculate(Optional args As Object = Nothing)
 
+            If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
+                Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
+            ElseIf Not Me.GraphicObject.InputConnectors(0).IsAttached Then
+                Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
+            End If
+
+
 
         End Sub
 
