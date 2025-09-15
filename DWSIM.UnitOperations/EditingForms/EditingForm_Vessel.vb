@@ -159,6 +159,16 @@ Public Class EditingForm_Vessel
 
             lblThickness.Text = units.thickness
 
+            tbDiam.Text = .Dimensions(0).Value.ConvertFromSI(.Dimensions(0).GetUnitsType()).ToString(nf)
+            tbHeight.Text = .Dimensions(1).Value.ConvertFromSI(.Dimensions(1).GetUnitsType()).ToString(nf)
+
+            lbDiam.Text = units.GetCurrentUnits(.Dimensions(0).GetUnitsType())
+            lbHeight.Text = units.GetCurrentUnits(.Dimensions(1).GetUnitsType())
+
+            If .Orientation = "Horizontal" Then rbHorizontal.Checked = True Else rbVertical.Checked = True
+
+            cbHeadType.SelectedIndex = Vessel.HeadTypes.IndexOf(VesselObject.HeadType)
+
             cbWallMaterial.Items.Clear()
             cbWallMaterial.Items.AddRange(Vessel.MaterialTypes.ToArray())
 
@@ -394,7 +404,7 @@ Public Class EditingForm_Vessel
 
     End Sub
 
-    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs) Handles tbPressure.KeyDown, tbTemperature.KeyDown
+    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs) Handles tbPressure.KeyDown, tbTemperature.KeyDown, tbThickness.KeyDown, tbDiam.KeyDown, tbHeight.KeyDown
 
         If e.KeyCode = Keys.Enter And Loaded And DirectCast(sender, TextBox).ForeColor = System.Drawing.Color.Blue Then
 
@@ -411,6 +421,8 @@ Public Class EditingForm_Vessel
         If sender Is tbTemperature Then VesselObject.FlashTemperature = su.Converter.ConvertToSI(cbTemp.SelectedItem.ToString, tbTemperature.Text.ParseExpressionToDouble)
         If sender Is tbPressure Then VesselObject.FlashPressure = su.Converter.ConvertToSI(cbPress.SelectedItem.ToString, tbPressure.Text.ParseExpressionToDouble)
         If sender Is tbThickness Then VesselObject.WallThickness = su.Converter.ConvertToSI(units.thickness, tbThickness.Text.ParseExpressionToDouble)
+        If sender Is tbDiam Then VesselObject.Dimensions(0).Value = su.Converter.ConvertToSI(VesselObject.Dimensions(0).GetUnitsType(), tbDiam.Text.ParseExpressionToDouble)
+        If sender Is tbHeight Then VesselObject.Dimensions(0).Value = su.Converter.ConvertToSI(VesselObject.Dimensions(1).GetUnitsType(), tbHeight.Text.ParseExpressionToDouble)
 
         RequestCalc()
 
@@ -624,6 +636,18 @@ Public Class EditingForm_Vessel
     Private Sub cbWallMaterial_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbWallMaterial.SelectedIndexChanged
 
         VesselObject.WallMaterial = Vessel.MaterialTypes(cbWallMaterial.SelectedIndex)
+
+    End Sub
+
+    Private Sub rbVertical_CheckedChanged(sender As Object, e As EventArgs) Handles rbVertical.CheckedChanged, rbHorizontal.CheckedChanged
+
+        VesselObject.Orientation = If(rbVertical.Checked, "Vertical", "Horizontal")
+
+    End Sub
+
+    Private Sub cbHeadType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbHeadType.SelectedIndexChanged
+
+        VesselObject.HeadType = Vessel.HeadTypes(cbHeadType.SelectedIndex)
 
     End Sub
 

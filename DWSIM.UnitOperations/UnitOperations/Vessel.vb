@@ -31,13 +31,19 @@ Namespace UnitOperations
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.Separators
 
+        Public Shared Property MaterialTypes As List(Of String) = New List(Of String)({"Steel", "Carbon Steel", "Cast Iron", "Stainless Steel", "Commercial Copper"})
+
+        Public Shared Property HeadTypes As List(Of String) = New List(Of String)({"Ellipsoidal (2:1)", "Hemispherical", "Torispherical (ASME F&D)", "Torispherical (Standard F&D)", "Torispherical (80:10 F&D)", "Flat"})
+
         Public Property ThermalProperties As New ThermalEditorDefinitions
 
         Public Property WallThickness As Double = 0.01 'm
 
         Public Property WallMaterial As String = "Carbon Steel"
 
-        Public Shared Property MaterialTypes As List(Of String) = New List(Of String)({"Steel", "Carbon Steel", "Cast Iron", "Stainless Steel", "Commercial Copper"})
+        Public Property HeadType As String = "Hemispherical"
+
+        Public Property Orientation As String = "Vertical"
 
         Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
 

@@ -454,11 +454,170 @@
   <data name="GroupBoxConnections.Text" xml:space="preserve">
     <value>Connections</value>
   </data>
+  <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>393, 274</value>
+  </data>
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cbHeadType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="cbHeadType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 105</value>
+  </data>
+  <data name="cbHeadType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 21</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Label24.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label24.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label24.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 107</value>
+  </data>
+  <data name="Label24.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="Label24.Text" xml:space="preserve">
+    <value>Head Type</value>
+  </data>
+  <data name="rbHorizontal.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbHorizontal.Location" type="System.Drawing.Point, System.Drawing">
+    <value>212, 76</value>
+  </data>
+  <data name="rbHorizontal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 17</value>
+  </data>
+  <data name="rbHorizontal.Text" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="rbVertical.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbVertical.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 76</value>
+  </data>
+  <data name="rbVertical.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 17</value>
+  </data>
+  <data name="rbVertical.Text" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="Label23.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label23.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label23.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 77</value>
+  </data>
+  <data name="Label23.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 13</value>
+  </data>
+  <data name="Label23.Text" xml:space="preserve">
+    <value>Orientation</value>
+  </data>
+  <data name="lbHeight.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="lbHeight.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbHeight.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbHeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 48</value>
+  </data>
+  <data name="lbHeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 13</value>
+  </data>
+  <data name="lbHeight.Text" xml:space="preserve">
+    <value>mm</value>
+  </data>
+  <data name="Label22.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label22.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label22.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 47</value>
+  </data>
+  <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 13</value>
+  </data>
+  <data name="Label22.Text" xml:space="preserve">
+    <value>Height/Length</value>
+  </data>
+  <data name="tbHeight.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="tbHeight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 45</value>
+  </data>
+  <data name="tbHeight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 20</value>
+  </data>
+  <data name="tbHeight.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="lbDiam.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="lbDiam.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbDiam.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbDiam.Location" type="System.Drawing.Point, System.Drawing">
+    <value>290, 22</value>
+  </data>
+  <data name="lbDiam.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 13</value>
+  </data>
+  <data name="lbDiam.Text" xml:space="preserve">
+    <value>mm</value>
+  </data>
+  <data name="Label20.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label20.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 21</value>
+  </data>
+  <data name="Label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 13</value>
+  </data>
+  <data name="Label20.Text" xml:space="preserve">
+    <value>Diameter</value>
+  </data>
+  <data name="tbDiam.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="tbDiam.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 19</value>
+  </data>
+  <data name="tbDiam.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 20</value>
+  </data>
+  <data name="tbDiam.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
   <data name="lblThickness.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblThickness.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -466,22 +625,13 @@
     <value>NoControl</value>
   </data>
   <data name="lblThickness.Location" type="System.Drawing.Point, System.Drawing">
-    <value>319, 204</value>
+    <value>290, 189</value>
   </data>
   <data name="lblThickness.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 13</value>
   </data>
   <data name="lblThickness.Text" xml:space="preserve">
     <value>mm</value>
-  </data>
-  <data name="tbThickness.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="tbThickness.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 20</value>
-  </data>
-  <data name="tbThickness.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Right</value>
   </data>
   <data name="Label18.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -490,13 +640,34 @@
     <value>NoControl</value>
   </data>
   <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 203</value>
+    <value>13, 188</value>
   </data>
   <data name="Label18.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 13</value>
   </data>
   <data name="Label18.Text" xml:space="preserve">
     <value>Wall Thickness</value>
+  </data>
+  <data name="cbWallMaterial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="cbWallMaterial.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 155</value>
+  </data>
+  <data name="cbWallMaterial.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 21</value>
+  </data>
+  <data name="tbThickness.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="tbThickness.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 186</value>
+  </data>
+  <data name="tbThickness.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 20</value>
+  </data>
+  <data name="tbThickness.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
   </data>
   <data name="Label17.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -505,7 +676,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 171</value>
+    <value>13, 157</value>
   </data>
   <data name="Label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 13</value>
@@ -513,98 +684,14 @@
   <data name="Label17.Text" xml:space="preserve">
     <value>Wall Material</value>
   </data>
-  <data name="cbWallMaterial.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+  <data name="TabPage3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
-  <data name="cbWallMaterial.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 21</value>
-  </data>
-  <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 44</value>
-  </data>
-  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 13</value>
-  </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>Outlet Pressure Calculation</value>
-  </data>
-  <data name="cbCalcMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="cbCalcMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 14</value>
-  </data>
-  <data name="cbCalcMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 21</value>
-  </data>
-  <data name="tbTemperature.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 73</value>
-  </data>
-  <data name="tbTemperature.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 20</value>
-  </data>
-  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 15</value>
-  </data>
-  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 13</value>
-  </data>
-  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
-    <value>40</value>
-  </data>
-  <data name="Label10.Text" xml:space="preserve">
-    <value>Calculation Mode</value>
-  </data>
-  <data name="cbTemp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>319, 73</value>
-  </data>
-  <data name="cbPressureCalcMode.Items" xml:space="preserve">
-    <value>Inlet Minimum</value>
-  </data>
-  <data name="cbPressureCalcMode.Items1" xml:space="preserve">
-    <value>Inlet Average</value>
-  </data>
-  <data name="cbPressureCalcMode.Items2" xml:space="preserve">
-    <value>Inlet Maximum</value>
-  </data>
-  <data name="cbPressureCalcMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 43</value>
-  </data>
-  <data name="cbPressureCalcMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>211, 21</value>
-  </data>
-  <data name="chkOverrideT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 73</value>
-  </data>
-  <data name="chkOverrideT.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 17</value>
-  </data>
-  <data name="chkOverrideT.Text" xml:space="preserve">
-    <value>Override Sep. Temperature</value>
-  </data>
-  <data name="chkOverrideP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 103</value>
-  </data>
-  <data name="chkOverrideP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>135, 17</value>
-  </data>
-  <data name="chkOverrideP.Text" xml:space="preserve">
-    <value>Override Sep. Pressure</value>
-  </data>
-  <data name="cbPress.Location" type="System.Drawing.Point, System.Drawing">
-    <value>319, 102</value>
-  </data>
-  <data name="tbPressure.Location" type="System.Drawing.Point, System.Drawing">
-    <value>173, 102</value>
-  </data>
-  <data name="tbPressure.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 20</value>
-  </data>
-  <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
     <value>393, 274</value>
   </data>
-  <data name="TabPage1.Text" xml:space="preserve">
-    <value>General</value>
+  <data name="TabPage3.Text" xml:space="preserve">
+    <value>Dimensions</value>
   </data>
   <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
     <value>393, 274</value>
@@ -620,6 +707,87 @@
   </data>
   <data name="GroupBoxParameters.Text" xml:space="preserve">
     <value>Calculation Parameters</value>
+  </data>
+  <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 51</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 13</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Outlet Pressure Calculation</value>
+  </data>
+  <data name="cbCalcMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="cbCalcMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 21</value>
+  </data>
+  <data name="cbCalcMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
+  <data name="tbTemperature.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 80</value>
+  </data>
+  <data name="tbTemperature.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 20</value>
+  </data>
+  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 22</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 13</value>
+  </data>
+  <data name="Label10.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Calculation Mode</value>
+  </data>
+  <data name="cbTemp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 80</value>
+  </data>
+  <data name="cbPressureCalcMode.Items" xml:space="preserve">
+    <value>Inlet Minimum</value>
+  </data>
+  <data name="cbPressureCalcMode.Items1" xml:space="preserve">
+    <value>Inlet Average</value>
+  </data>
+  <data name="cbPressureCalcMode.Items2" xml:space="preserve">
+    <value>Inlet Maximum</value>
+  </data>
+  <data name="cbPressureCalcMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 50</value>
+  </data>
+  <data name="cbPressureCalcMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 21</value>
+  </data>
+  <data name="chkOverrideT.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 80</value>
+  </data>
+  <data name="chkOverrideT.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 17</value>
+  </data>
+  <data name="chkOverrideT.Text" xml:space="preserve">
+    <value>Override Sep. Temperature</value>
+  </data>
+  <data name="chkOverrideP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 110</value>
+  </data>
+  <data name="chkOverrideP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 17</value>
+  </data>
+  <data name="chkOverrideP.Text" xml:space="preserve">
+    <value>Override Sep. Pressure</value>
+  </data>
+  <data name="cbPress.Location" type="System.Drawing.Point, System.Drawing">
+    <value>306, 108</value>
+  </data>
+  <data name="tbPressure.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 109</value>
+  </data>
+  <data name="tbPressure.Size" type="System.Drawing.Size, System.Drawing">
+    <value>122, 20</value>
   </data>
   <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
     <value>407, 98</value>

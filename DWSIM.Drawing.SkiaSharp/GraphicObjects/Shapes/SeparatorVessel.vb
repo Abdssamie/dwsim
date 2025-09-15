@@ -117,12 +117,12 @@ Namespace GraphicObjects.Shapes
                             .Item(i).Direction = ConDir.Down
                         Next
                     Else
-                        .Item(0).Position = New Point(X + 0.25 * Width, Y + 1 / 7 * Height)
-                        .Item(1).Position = New Point(X + 0.25 * Width, Y + 2 / 7 * Height)
-                        .Item(2).Position = New Point(X + 0.25 * Width, Y + 3 / 7 * Height)
-                        .Item(3).Position = New Point(X + 0.25 * Width, Y + 4 / 7 * Height)
-                        .Item(4).Position = New Point(X + 0.25 * Width, Y + 5 / 7 * Height)
-                        .Item(5).Position = New Point(X + 0.25 * Width, Y + 6 / 7 * Height)
+                        .Item(0).Position = New Point(X + 0.25 * Width, Y + 2 / 10 * Height)
+                        .Item(1).Position = New Point(X + 0.25 * Width, Y + 3 / 10 * Height)
+                        .Item(2).Position = New Point(X + 0.25 * Width, Y + 4 / 10 * Height)
+                        .Item(3).Position = New Point(X + 0.25 * Width, Y + 5 / 10 * Height)
+                        .Item(4).Position = New Point(X + 0.25 * Width, Y + 6 / 10 * Height)
+                        .Item(5).Position = New Point(X + 0.25 * Width, Y + 7 / 10 * Height)
                         .Item(6).Position = New Point(X + 0.25 * Width, Y + 1 * Height)
                         For i = 0 To 6
                             .Item(i).Direction = ConDir.Right
@@ -158,10 +158,10 @@ Namespace GraphicObjects.Shapes
                         .Item(1).Direction = ConDir.Right
                         .Item(2).Direction = ConDir.Right
                     Else
-                        .Item(0).Position = New Point(X + 0.827 * Width, Y + 1 / 7 * Height)
-                        .Item(1).Position = New Point(X + 0.827 * Width, Y + 6 / 7 * Height)
+                        .Item(0).Position = New Point(X + 0.5 * Width, Y)
+                        .Item(1).Position = New Point(X + 0.75 * Width, Y + 5 / 7 * Height)
                         .Item(2).Position = New Point(X + 0.5 * Width, Y + Height)
-                        .Item(0).Direction = ConDir.Right
+                        .Item(0).Direction = ConDir.Up
                         .Item(1).Direction = ConDir.Right
                         .Item(2).Direction = ConDir.Down
                     End If
@@ -203,9 +203,9 @@ Namespace GraphicObjects.Shapes
                         .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
                     End With
 
-                    Dim rect As New SKRect(X + 0.25 * Width, Y, X + 0.7 * Width, Y + Height)
-                    Dim rect3 As New SKRect(X + 0.7 * Width, Y + 0.1 * Height, X + 0.827 * Width, Y + 0.227 * Height)
-                    Dim rect4 As New SKRect(X + 0.7 * Width, Y + 0.773 * Height, X + 0.827 * Width, Y + (0.773 + 0.127) * Height)
+                    Dim rect As New SKRect(X + 0.25 * Width, Y + 0.2 * Height, X + 0.75 * Width, Y + 0.8 * Height)
+                    Dim rect1 As New SKRect(X + 0.25 * Width, Y, X + 0.75 * Width, Y + 0.4 * Height)
+                    Dim rect2 As New SKRect(X + 0.25 * Width, Y + 0.6 * Height, X + 0.75 * Width, Y + Height)
 
                     Dim gradPen As New SKPaint()
                     With gradPen
@@ -215,13 +215,14 @@ Namespace GraphicObjects.Shapes
                         .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
                     End With
 
-                    canvas.DrawRoundRect(rect, 6, 6, gradPen)
-                    canvas.DrawRoundRect(rect3, 2, 2, gradPen)
-                    canvas.DrawRoundRect(rect4, 2, 2, gradPen)
+                    canvas.DrawRect(rect, gradPen)
+                    canvas.DrawRect(rect, myPen)
 
-                    canvas.DrawRoundRect(rect, 6, 6, myPen)
-                    canvas.DrawRoundRect(rect3, 2, 2, myPen)
-                    canvas.DrawRoundRect(rect4, 2, 2, myPen)
+                    canvas.DrawArc(rect1, -180, 180, False, gradPen)
+                    canvas.DrawArc(rect2, 180, -180, False, gradPen)
+                    canvas.DrawArc(rect1, -180, 180, False, myPen)
+                    canvas.DrawArc(rect2, 180, -180, False, myPen)
+
 
                 Case 1
 
@@ -234,13 +235,15 @@ Namespace GraphicObjects.Shapes
                         .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
                     End With
 
-                    Dim rect As New SKRect(X + 0.25 * Width, Y, X + 0.7 * Width, Y + Height)
-                    Dim rect3 As New SKRect(X + 0.7 * Width, Y + 0.1 * Height, X + 0.827 * Width, Y + 0.227 * Height)
-                    Dim rect4 As New SKRect(X + 0.7 * Width, Y + 0.773 * Height, X + 0.827 * Width, Y + (0.773 + 0.127) * Height)
+                    Dim rect As New SKRect(X + 0.25 * Width, Y + 0.2 * Height, X + 0.75 * Width, Y + 0.8 * Height)
+                    Dim rect1 As New SKRect(X + 0.25 * Width, Y, X + 0.75 * Width, Y + 0.4 * Height)
+                    Dim rect2 As New SKRect(X + 0.25 * Width, Y + 0.6 * Height, X + 0.75 * Width, Y + Height)
 
-                    canvas.DrawRoundRect(rect, 6, 6, myPen)
-                    canvas.DrawRoundRect(rect3, 2, 2, myPen)
-                    canvas.DrawRoundRect(rect4, 2, 2, myPen)
+                    canvas.DrawRect(rect, myPen)
+
+                    canvas.DrawArc(rect1, -180, 180, False, myPen)
+                    canvas.DrawArc(rect2, 180, -180, False, myPen)
+
 
                 Case 2
 
