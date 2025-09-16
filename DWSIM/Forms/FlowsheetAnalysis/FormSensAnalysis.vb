@@ -225,8 +225,11 @@ Public Class FormSensAnalysis
         End With
 
         If Me.lbCases.Items.Count > 0 Then
-            selectedindex = 0
-            lbCases.SelectedIndex = 0
+            Try
+                lbCases.SelectedIndex = selectedindex
+                lbCases_SelectedIndexChanged(Me, New EventArgs())
+            Catch ex As Exception
+            End Try
         End If
 
     End Sub
@@ -568,25 +571,12 @@ Public Class FormSensAnalysis
 
     Private Sub btnSaveCase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveCase.Click
 
-        If MessageBox.Show(form.GetTranslatedString1("ConfirmOperation"),
-                           form.GetTranslatedString1("Ateno"),
-                           MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
-            Dim prevselected = lbCases.SelectedIndex
-
-            For i As Integer = 0 To lbCases.Items.Count - 1
-                lbCases.SelectedIndex = i
-                Dim sacase = form.Collections.OPT_SensAnalysisCollection(Me.lbCases.SelectedIndex)
-                Try
-                    SaveForm(sacase)
-                Catch ex As Exception
-                    MessageBox.Show(String.Format("Failed to save case {0}: {1}", sacase.name, ex.Message), form.GetTranslatedString1("Ateno"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            Next
-
-            lbCases.SelectedIndex = prevselected
-
-        End If
+        Dim sacase = form.Collections.OPT_SensAnalysisCollection(Me.lbCases.SelectedIndex)
+        Try
+            SaveForm(sacase)
+        Catch ex As Exception
+            MessageBox.Show(String.Format("Failed to save case {0}: {1}", sacase.name, ex.Message), form.GetTranslatedString1("Ateno"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
     End Sub
 
