@@ -64,10 +64,10 @@ Namespace UnitOperations
         Public Overrides Sub UpdateDimensionsList()
 
             If SelectedEquipmentType = "Horizontal" Then
-                Dimensions(0).Value = DH
+                Dimensions(0).Value = DH * 1000
                 Dimensions(1).Value = AH
             Else
-                Dimensions(0).Value = DV
+                Dimensions(0).Value = DV * 1000
                 Dimensions(1).Value = AV
             End If
 
@@ -914,13 +914,13 @@ Namespace UnitOperations
             Me.K = 0.0692
             Me.VGI = 90
 
-            AppendDebugLine("Sizing horizontal separator...")
+            'AppendDebugLine("Sizing horizontal separator...")
 
-            SizeHorizontal()
+            'SizeHorizontal()
 
-            AppendDebugLine("Sizing vertical separator...")
+            'AppendDebugLine("Sizing vertical separator...")
 
-            SizeVertical()
+            'SizeVertical()
 
             IObj?.Close()
 

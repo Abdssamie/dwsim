@@ -32,7 +32,7 @@ Public Class FormSensAnalysis
     Public form As FormFlowsheet
 
     Public abortCalc As Boolean = False
-    Public selectedindex As Integer = -1
+    Public selectedindex As Integer = -2
     Public selectedsacase As SensitivityAnalysisCase
     Private selected As Boolean = False
     Private EnableAutoSave As Boolean = True
@@ -136,12 +136,10 @@ Public Class FormSensAnalysis
             .Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft
         End With
 
-        If Me.lbCases.Items.Count > 0 Then
-            selectedindex = 0
-            lbCases.SelectedIndex = 0
-        End If
-
-        form.WriteToLog(DWSIM.App.GetLocalTipString("FSAN001"), Color.Black, MessageType.Tip)
+        'If Me.lbCases.Items.Count > 0 Then
+        '    selectedindex = 0
+        '    lbCases.SelectedIndex = 0
+        'End If
 
         FormMain.TranslateFormFunction?.Invoke(Me)
 
@@ -227,8 +225,11 @@ Public Class FormSensAnalysis
         End With
 
         If Me.lbCases.Items.Count > 0 Then
-            selectedindex = 0
-            lbCases.SelectedIndex = 0
+            Try
+                lbCases.SelectedIndex = selectedindex
+                lbCases_SelectedIndexChanged(Me, New EventArgs())
+            Catch ex As Exception
+            End Try
         End If
 
     End Sub
@@ -492,43 +493,36 @@ Public Class FormSensAnalysis
 
     Private Sub lbCases_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbCases.SelectedIndexChanged
 
-        If (Loaded And selectedindex >= 0 And selectedindex <> lbCases.SelectedIndex And
-            lbCases.SelectedIndex >= 0) Then
+        If (Loaded And selectedindex <> lbCases.SelectedIndex And lbCases.SelectedIndex >= 0) Then
 
             TabControl1.Enabled = True
 
-            If MessageBox.Show(form.GetTranslatedString1("Desejasalvarasaltera"),
-               form.GetTranslatedString1("Pergunta"),
-               MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Me.selectedindex = Me.lbCases.SelectedIndex
 
-                Me.selectedindex = Me.lbCases.SelectedIndex
-
-                If Not Me.lbCases.SelectedItem Is Nothing Then
-                    For Each sacase As SensitivityAnalysisCase In form.Collections.OPT_SensAnalysisCollection
-                        If sacase.name = Me.lbCases.SelectedItem.ToString Then
-                            Me.selectedsacase = sacase
-                            Me.PopulateForm(sacase)
-                            Exit For
-                        End If
-                    Next
-                    'TabPage2.Enabled = True
-                    'TabPage3.Enabled = True
-                    GroupBox8.Enabled = True
-                    GroupBox9.Enabled = True
-                    btnRun.Enabled = True
-                    'gbExp.Enabled = True
-                Else
-                    'TabPage2.Enabled = False
-                    'TabPage3.Enabled = False
-                    'gbExp.Enabled = False
-                    GroupBox8.Enabled = False
-                    GroupBox9.Enabled = False
-                    btnRun.Enabled = False
-                End If
-
-                selected = True
-
+            If Not Me.lbCases.SelectedItem Is Nothing Then
+                For Each sacase As SensitivityAnalysisCase In form.Collections.OPT_SensAnalysisCollection
+                    If sacase.name = Me.lbCases.SelectedItem.ToString Then
+                        Me.selectedsacase = sacase
+                        Me.PopulateForm(sacase)
+                        Exit For
+                    End If
+                Next
+                'TabPage2.Enabled = True
+                'TabPage3.Enabled = True
+                GroupBox8.Enabled = True
+                GroupBox9.Enabled = True
+                btnRun.Enabled = True
+                'gbExp.Enabled = True
+            Else
+                'TabPage2.Enabled = False
+                'TabPage3.Enabled = False
+                'gbExp.Enabled = False
+                GroupBox8.Enabled = False
+                GroupBox9.Enabled = False
+                btnRun.Enabled = False
             End If
+
+            selected = True
 
         ElseIf Not Loaded And selectedindex = lbCases.SelectedIndex Then
 
@@ -577,25 +571,12 @@ Public Class FormSensAnalysis
 
     Private Sub btnSaveCase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveCase.Click
 
-        If MessageBox.Show(form.GetTranslatedString1("ConfirmOperation"),
-                           form.GetTranslatedString1("Ateno"),
-                           MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
-            Dim prevselected = lbCases.SelectedIndex
-
-            For i As Integer = 0 To lbCases.Items.Count - 1
-                lbCases.SelectedIndex = i
-                Dim sacase = form.Collections.OPT_SensAnalysisCollection(Me.lbCases.SelectedIndex)
-                Try
-                    SaveForm(sacase)
-                Catch ex As Exception
-                    MessageBox.Show(String.Format("Failed to save case {0}: {1}", sacase.name, ex.Message), form.GetTranslatedString1("Ateno"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            Next
-
-            lbCases.SelectedIndex = prevselected
-
-        End If
+        Dim sacase = form.Collections.OPT_SensAnalysisCollection(Me.lbCases.SelectedIndex)
+        Try
+            SaveForm(sacase)
+        Catch ex As Exception
+            MessageBox.Show(String.Format("Failed to save case {0}: {1}", sacase.name, ex.Message), form.GetTranslatedString1("Ateno"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
 
     End Sub
 
