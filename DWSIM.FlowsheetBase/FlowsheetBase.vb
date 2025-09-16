@@ -4042,29 +4042,28 @@ Label_00CC:
 
     Private Shared Function LoadFromExtensionsFolder(ByVal sender As Object, ByVal args As ResolveEventArgs) As Assembly
 
-        Dim assemblyPath1 As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location), New AssemblyName(args.Name).Name + ".dll")
-        Dim assemblyPath2 As String = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly.Location), "extenders", New AssemblyName(args.Name).Name + ".dll")
+        Dim directories = New List(Of String)({
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "extenders"),
+                Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).FullName,
+                Path.Combine(Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).FullName, "extenders"),
+                Directory.GetCurrentDirectory(),
+                Path.Combine(Directory.GetCurrentDirectory(), "extenders")
+            })
 
-        If Not File.Exists(assemblyPath1) Then
-            If Not File.Exists(assemblyPath2) Then
-                'Console.WriteLine("Could not find assembly " + assemblyPath1)
-                Return Nothing
+        For Each Dir1 In directories
+            Dim fullPath = Path.Combine(Dir1, New AssemblyName(args.Name).Name + ".dll")
+            If (File.Exists(fullPath)) Then
+                Dim Assembly1 = Assembly.LoadFrom(fullPath)
+                Return Assembly1
             Else
-                Try
-                    Dim assembly As Assembly = Assembly.LoadFrom(assemblyPath2)
-                    Return assembly
-                Catch ex As System.IO.FileLoadException
-                    'Console.WriteLine("Could not find assembly " + ex.FileName)
-                End Try
+                fullPath = Path.Combine(Dir1, New AssemblyName(args.Name).Name + ".exe")
+                If (File.Exists(fullPath)) Then
+                    Dim Assembly1 = Assembly.LoadFrom(fullPath)
+                    Return Assembly1
+                End If
             End If
-        Else
-            Try
-                Dim assembly As Assembly = Assembly.LoadFrom(assemblyPath1)
-                Return assembly
-            Catch ex As System.IO.FileLoadException
-                'Console.WriteLine("Could not find assembly " + ex.FileName)
-            End Try
-        End If
+        Next
 
     End Function
 
@@ -5471,6 +5470,7 @@ Label_00CC:
                 End If
             Catch ex As Exception
                 Logging.Logger.LogError("Extender Loading (Flowsheet)", ex)
+                Console.WriteLine("Error loading extension '{0}': {1}", extender.DisplayText, ex.ToString())
             End Try
         Next
 

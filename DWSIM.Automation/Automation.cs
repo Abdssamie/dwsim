@@ -538,6 +538,14 @@ namespace DWSIM.Automation
                     var assembly = Assembly.LoadFrom(fullPath);
                     return assembly;
                 }
+                else {
+                    fullPath = Path.Combine(dir, new AssemblyName(args.Name).Name + ".exe");
+                    if (File.Exists(fullPath))
+                    {
+                        var assembly = Assembly.LoadFrom(fullPath);
+                        return assembly;
+                    }
+                }
             }
 
             return null;
@@ -760,11 +768,12 @@ namespace DWSIM.Automation
                                 item.Run();
                             }
                         }
-                    }
+                   }
                 }
                 catch (Exception ex)
                 {
                     Logging.Logger.LogError("Extender Initialization", ex);
+                    Console.WriteLine("Error loading extension {0}:{1}", extender.DisplayText, ex.ToString());
                 }
             }
 

@@ -2,6 +2,7 @@
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 Imports WeifenLuo.WinFormsUI.Docking
+Imports DWSIM.UnitOperations.UnitOperations
 
 Public Class EditingForm_Vessel
 
@@ -124,6 +125,11 @@ Public Class EditingForm_Vessel
 
             'parameters
 
+            TabPage2.Controls.Clear()
+            Dim teditor As New PipeThermalProfileEditor With {.Profile = VesselObject.ThermalProperties, .form = VesselObject.FlowSheet}
+            teditor.Dock = DockStyle.Fill
+            TabPage2.Controls.Add(teditor)
+
             Select Case .PressureCalculation
                 Case UnitOperations.Vessel.PressureBehavior.Minimum
                     cbPressureCalcMode.SelectedIndex = 0
@@ -148,6 +154,25 @@ Public Class EditingForm_Vessel
 
             tbTemperature.Text = su.Converter.ConvertFromSI(units.temperature, .FlashTemperature).ToString(nf)
             tbPressure.Text = su.Converter.ConvertFromSI(units.pressure, .FlashPressure).ToString(nf)
+
+            tbThickness.Text = .WallThickness.ConvertFromSI(units.thickness).ToString(nf)
+
+            lblThickness.Text = units.thickness
+
+            tbDiam.Text = .Dimensions(0).Value.ConvertFromSI(.Dimensions(0).GetUnitsType()).ToString(nf)
+            tbHeight.Text = .Dimensions(1).Value.ConvertFromSI(.Dimensions(1).GetUnitsType()).ToString(nf)
+
+            lbDiam.Text = units.GetCurrentUnits(.Dimensions(0).GetUnitsType())
+            lbHeight.Text = units.GetCurrentUnits(.Dimensions(1).GetUnitsType())
+
+            If .SelectedEquipmentType = "Horizontal" Then rbHorizontal.Checked = True Else rbVertical.Checked = True
+
+            cbHeadType.SelectedIndex = Vessel.HeadTypes.IndexOf(VesselObject.HeadType)
+
+            cbWallMaterial.Items.Clear()
+            cbWallMaterial.Items.AddRange(Vessel.MaterialTypes.ToArray())
+
+            cbWallMaterial.SelectedIndex = Vessel.MaterialTypes.IndexOf(VesselObject.WallMaterial)
 
             Dim proppacks As String() = .FlowSheet.PropertyPackages.Values.Select(Function(m) m.Tag).ToArray
             cbPropPack.Items.Clear()
@@ -367,7 +392,7 @@ Public Class EditingForm_Vessel
         If Loaded Then RequestCalc()
     End Sub
 
-    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbPressure.TextChanged, tbTemperature.TextChanged
+    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbPressure.TextChanged, tbTemperature.TextChanged, tbThickness.TextChanged
 
         Dim tbox = DirectCast(sender, TextBox)
 
@@ -379,7 +404,7 @@ Public Class EditingForm_Vessel
 
     End Sub
 
-    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs) Handles tbPressure.KeyDown, tbTemperature.KeyDown
+    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs) Handles tbPressure.KeyDown, tbTemperature.KeyDown, tbThickness.KeyDown, tbDiam.KeyDown, tbHeight.KeyDown
 
         If e.KeyCode = Keys.Enter And Loaded And DirectCast(sender, TextBox).ForeColor = System.Drawing.Color.Blue Then
 
@@ -395,6 +420,9 @@ Public Class EditingForm_Vessel
 
         If sender Is tbTemperature Then VesselObject.FlashTemperature = su.Converter.ConvertToSI(cbTemp.SelectedItem.ToString, tbTemperature.Text.ParseExpressionToDouble)
         If sender Is tbPressure Then VesselObject.FlashPressure = su.Converter.ConvertToSI(cbPress.SelectedItem.ToString, tbPressure.Text.ParseExpressionToDouble)
+        If sender Is tbThickness Then VesselObject.WallThickness = su.Converter.ConvertToSI(units.thickness, tbThickness.Text.ParseExpressionToDouble)
+        If sender Is tbDiam Then VesselObject.Dimensions(0).Value = su.Converter.ConvertToSI(VesselObject.Dimensions(0).GetUnitsType(), tbDiam.Text.ParseExpressionToDouble)
+        If sender Is tbHeight Then VesselObject.Dimensions(1).Value = su.Converter.ConvertToSI(VesselObject.Dimensions(1).GetUnitsType(), tbHeight.Text.ParseExpressionToDouble)
 
         RequestCalc()
 
@@ -413,7 +441,6 @@ Public Class EditingForm_Vessel
                     cbPress.SelectedItem = units.pressure
                     UpdateProps(tbPressure)
                 End If
-
             Catch ex As Exception
                 VesselObject.FlowSheet.ShowMessage(ex.Message.ToString, Interfaces.IFlowsheet.MessageType.GeneralError)
             End Try
@@ -422,7 +449,7 @@ Public Class EditingForm_Vessel
     End Sub
 
     Private Sub btnConfigurePP_Click(sender As Object, e As EventArgs) Handles btnConfigurePP.Click
-        VesselObject.FlowSheet.PropertyPackages.Values.Where(Function(x) x.Tag =  cbPropPack.SelectedItem.ToString).FirstOrDefault()?.DisplayGroupedEditingForm()
+        VesselObject.FlowSheet.PropertyPackages.Values.Where(Function(x) x.Tag = cbPropPack.SelectedItem.ToString).FirstOrDefault()?.DisplayGroupedEditingForm()
     End Sub
 
     Private Sub cbPressureCalcMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbPressureCalcMode.SelectedIndexChanged
@@ -603,6 +630,36 @@ Public Class EditingForm_Vessel
         tbTemperature.Enabled = check
         cbTemp.Enabled = check
         cbPress.Enabled = check
+
+    End Sub
+
+    Private Sub cbWallMaterial_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbWallMaterial.SelectedIndexChanged
+
+        VesselObject.WallMaterial = Vessel.MaterialTypes(cbWallMaterial.SelectedIndex)
+
+    End Sub
+
+    Private Sub rbVertical_CheckedChanged(sender As Object, e As EventArgs) Handles rbVertical.CheckedChanged, rbHorizontal.CheckedChanged
+
+        VesselObject.SelectedEquipmentType = If(rbVertical.Checked, "Vertical", "Horizontal")
+
+    End Sub
+
+    Private Sub cbHeadType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbHeadType.SelectedIndexChanged
+
+        VesselObject.HeadType = Vessel.HeadTypes(cbHeadType.SelectedIndex)
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        If VesselObject.SelectedEquipmentType = "Vertical" Then
+            VesselObject.SizeVertical()
+        Else
+            VesselObject.SizeHorizontal()
+        End If
+        VesselObject.UpdateDimensionsList()
+        UpdateInfo()
 
     End Sub
 

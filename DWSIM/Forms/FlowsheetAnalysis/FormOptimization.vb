@@ -156,8 +156,6 @@ Public Class FormOptimization
 
     Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
 
-        MessageBox.Show("Flowsheet data has been changed. This window will now reload.", "New Data Incoming", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
         Me.ComboBox1.SelectedIndex = 0
 
         keysind = New ArrayList

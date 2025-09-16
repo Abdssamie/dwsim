@@ -294,6 +294,12 @@
     <Compile Include="EditingForms\EditingForm_ReaktoroGibbs.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="EditingForms\EditingForm_ReliefValve.Designer.vb">
+      <DependentUpon>EditingForm_ReliefValve.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditingForms\EditingForm_ReliefValve.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="EditingForms\EditingForm_SolarPanel.Designer.vb">
       <DependentUpon>EditingForm_SolarPanel.vb</DependentUpon>
     </Compile>
@@ -739,6 +745,7 @@
     <Compile Include="UnitOperations\ComponentSeparator.vb" />
     <Compile Include="UnitOperations\Compressor.vb" />
     <Compile Include="UnitOperations\Cooler.vb" />
+    <Compile Include="UnitOperations\ReliefValve.vb" />
     <Compile Include="UnitOperations\RigorousColumn.vb" />
     <Compile Include="UnitOperations\RigorousColumnSolvers\BubblePoint.vb" />
     <Compile Include="UnitOperations\RigorousColumnSolvers\BubblePoint2.vb" />
@@ -809,6 +816,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditingForms\EditingForm_ReaktoroGibbs.resx">
       <DependentUpon>EditingForm_ReaktoroGibbs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditingForms\EditingForm_ReliefValve.resx">
+      <DependentUpon>EditingForm_ReliefValve.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditingForms\EditingForm_SolarPanel.resx">
       <DependentUpon>EditingForm_SolarPanel.vb</DependentUpon>
@@ -1894,6 +1904,9 @@
     <Content Include="master_table.png" />
     <Content Include="property_table.png" />
     <None Include="Resources\DWSIM Icon 4.ico" />
+    <None Include="Resources\relief_valve.png" />
+    <None Include="Resources\Relief Valve_24px.png" />
+    <None Include="Resources\Relief Valve_48px.png" />
     <Content Include="table.png" />
     <Content Include="table_80px.png" />
   </ItemGroup>

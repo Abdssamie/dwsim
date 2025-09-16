@@ -66,14 +66,36 @@ Partial Class EditingForm_Vessel
         Me.cbInlet1 = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBoxParameters = New System.Windows.Forms.GroupBox()
-        Me.cbPressureCalcMode = New System.Windows.Forms.ComboBox()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.cbCalcMode = New System.Windows.Forms.ComboBox()
+        Me.tbTemperature = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.cbTemp = New System.Windows.Forms.ComboBox()
+        Me.cbPressureCalcMode = New System.Windows.Forms.ComboBox()
+        Me.chkOverrideT = New System.Windows.Forms.CheckBox()
+        Me.chkOverrideP = New System.Windows.Forms.CheckBox()
         Me.cbPress = New System.Windows.Forms.ComboBox()
         Me.tbPressure = New System.Windows.Forms.TextBox()
-        Me.chkOverrideP = New System.Windows.Forms.CheckBox()
-        Me.chkOverrideT = New System.Windows.Forms.CheckBox()
-        Me.cbTemp = New System.Windows.Forms.ComboBox()
-        Me.tbTemperature = New System.Windows.Forms.TextBox()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.cbHeadType = New System.Windows.Forms.ComboBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.rbHorizontal = New System.Windows.Forms.RadioButton()
+        Me.rbVertical = New System.Windows.Forms.RadioButton()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.lbHeight = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.tbHeight = New System.Windows.Forms.TextBox()
+        Me.lbDiam = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.tbDiam = New System.Windows.Forms.TextBox()
+        Me.lblThickness = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.cbWallMaterial = New System.Windows.Forms.ComboBox()
+        Me.tbThickness = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.btnUtils = New System.Windows.Forms.Button()
         Me.lblTag = New System.Windows.Forms.TextBox()
@@ -94,10 +116,12 @@ Partial Class EditingForm_Vessel
         Me.AddUtilityTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.sizingtsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
-        Me.cbCalcMode = New System.Windows.Forms.ComboBox()
-        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBoxConnections.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -536,21 +560,89 @@ Partial Class EditingForm_Vessel
         'GroupBoxParameters
         '
         resources.ApplyResources(Me.GroupBoxParameters, "GroupBoxParameters")
-        Me.GroupBoxParameters.Controls.Add(Me.cbCalcMode)
-        Me.GroupBoxParameters.Controls.Add(Me.Label10)
-        Me.GroupBoxParameters.Controls.Add(Me.cbPressureCalcMode)
-        Me.GroupBoxParameters.Controls.Add(Me.Label8)
-        Me.GroupBoxParameters.Controls.Add(Me.cbPress)
-        Me.GroupBoxParameters.Controls.Add(Me.tbPressure)
-        Me.GroupBoxParameters.Controls.Add(Me.chkOverrideP)
-        Me.GroupBoxParameters.Controls.Add(Me.chkOverrideT)
-        Me.GroupBoxParameters.Controls.Add(Me.cbTemp)
-        Me.GroupBoxParameters.Controls.Add(Me.tbTemperature)
+        Me.GroupBoxParameters.Controls.Add(Me.TabControl1)
         Me.GroupBoxParameters.Name = "GroupBoxParameters"
         Me.GroupBoxParameters.TabStop = False
         Me.ToolTipChangeTag.SetToolTip(Me.GroupBoxParameters, resources.GetString("GroupBoxParameters.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.GroupBoxParameters, resources.GetString("GroupBoxParameters.ToolTip1"))
         Me.ToolTip1.SetToolTip(Me.GroupBoxParameters, resources.GetString("GroupBoxParameters.ToolTip2"))
+        '
+        'TabControl1
+        '
+        resources.ApplyResources(Me.TabControl1, "TabControl1")
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Name = "TabControl1"
+        Me.TabControl1.SelectedIndex = 0
+        Me.ToolTipChangeTag.SetToolTip(Me.TabControl1, resources.GetString("TabControl1.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.TabControl1, resources.GetString("TabControl1.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.TabControl1, resources.GetString("TabControl1.ToolTip2"))
+        '
+        'TabPage1
+        '
+        resources.ApplyResources(Me.TabPage1, "TabPage1")
+        Me.TabPage1.Controls.Add(Me.Label8)
+        Me.TabPage1.Controls.Add(Me.cbCalcMode)
+        Me.TabPage1.Controls.Add(Me.tbTemperature)
+        Me.TabPage1.Controls.Add(Me.Label10)
+        Me.TabPage1.Controls.Add(Me.cbTemp)
+        Me.TabPage1.Controls.Add(Me.cbPressureCalcMode)
+        Me.TabPage1.Controls.Add(Me.chkOverrideT)
+        Me.TabPage1.Controls.Add(Me.chkOverrideP)
+        Me.TabPage1.Controls.Add(Me.cbPress)
+        Me.TabPage1.Controls.Add(Me.tbPressure)
+        Me.TabPage1.Name = "TabPage1"
+        Me.ToolTip1.SetToolTip(Me.TabPage1, resources.GetString("TabPage1.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.TabPage1, resources.GetString("TabPage1.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.TabPage1, resources.GetString("TabPage1.ToolTip2"))
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Label8
+        '
+        resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.Name = "Label8"
+        Me.ToolTip1.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip2"))
+        '
+        'cbCalcMode
+        '
+        resources.ApplyResources(Me.cbCalcMode, "cbCalcMode")
+        Me.cbCalcMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbCalcMode.FormattingEnabled = True
+        Me.cbCalcMode.Items.AddRange(New Object() {resources.GetString("cbCalcMode.Items"), resources.GetString("cbCalcMode.Items1"), resources.GetString("cbCalcMode.Items2"), resources.GetString("cbCalcMode.Items3")})
+        Me.cbCalcMode.Name = "cbCalcMode"
+        Me.ToolTip1.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip2"))
+        '
+        'tbTemperature
+        '
+        resources.ApplyResources(Me.tbTemperature, "tbTemperature")
+        Me.tbTemperature.Name = "tbTemperature"
+        Me.ToolTipValues.SetToolTip(Me.tbTemperature, resources.GetString("tbTemperature.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.tbTemperature, resources.GetString("tbTemperature.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.tbTemperature, resources.GetString("tbTemperature.ToolTip2"))
+        '
+        'Label10
+        '
+        resources.ApplyResources(Me.Label10, "Label10")
+        Me.Label10.Name = "Label10"
+        Me.ToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip2"))
+        '
+        'cbTemp
+        '
+        resources.ApplyResources(Me.cbTemp, "cbTemp")
+        Me.cbTemp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbTemp.FormattingEnabled = True
+        Me.cbTemp.Items.AddRange(New Object() {resources.GetString("cbTemp.Items"), resources.GetString("cbTemp.Items1"), resources.GetString("cbTemp.Items2")})
+        Me.cbTemp.Name = "cbTemp"
+        Me.ToolTip1.SetToolTip(Me.cbTemp, resources.GetString("cbTemp.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbTemp, resources.GetString("cbTemp.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbTemp, resources.GetString("cbTemp.ToolTip2"))
         '
         'cbPressureCalcMode
         '
@@ -563,13 +655,23 @@ Partial Class EditingForm_Vessel
         Me.ToolTipValues.SetToolTip(Me.cbPressureCalcMode, resources.GetString("cbPressureCalcMode.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me.cbPressureCalcMode, resources.GetString("cbPressureCalcMode.ToolTip2"))
         '
-        'Label8
+        'chkOverrideT
         '
-        resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.Name = "Label8"
-        Me.ToolTip1.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip2"))
+        resources.ApplyResources(Me.chkOverrideT, "chkOverrideT")
+        Me.chkOverrideT.Name = "chkOverrideT"
+        Me.ToolTip1.SetToolTip(Me.chkOverrideT, resources.GetString("chkOverrideT.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.chkOverrideT, resources.GetString("chkOverrideT.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.chkOverrideT, resources.GetString("chkOverrideT.ToolTip2"))
+        Me.chkOverrideT.UseVisualStyleBackColor = True
+        '
+        'chkOverrideP
+        '
+        resources.ApplyResources(Me.chkOverrideP, "chkOverrideP")
+        Me.chkOverrideP.Name = "chkOverrideP"
+        Me.ToolTip1.SetToolTip(Me.chkOverrideP, resources.GetString("chkOverrideP.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.chkOverrideP, resources.GetString("chkOverrideP.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.chkOverrideP, resources.GetString("chkOverrideP.ToolTip2"))
+        Me.chkOverrideP.UseVisualStyleBackColor = True
         '
         'cbPress
         '
@@ -590,42 +692,177 @@ Partial Class EditingForm_Vessel
         Me.ToolTip1.SetToolTip(Me.tbPressure, resources.GetString("tbPressure.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me.tbPressure, resources.GetString("tbPressure.ToolTip2"))
         '
-        'chkOverrideP
+        'TabPage3
         '
-        resources.ApplyResources(Me.chkOverrideP, "chkOverrideP")
-        Me.chkOverrideP.Name = "chkOverrideP"
-        Me.ToolTip1.SetToolTip(Me.chkOverrideP, resources.GetString("chkOverrideP.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.chkOverrideP, resources.GetString("chkOverrideP.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.chkOverrideP, resources.GetString("chkOverrideP.ToolTip2"))
-        Me.chkOverrideP.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.TabPage3, "TabPage3")
+        Me.TabPage3.Controls.Add(Me.Button1)
+        Me.TabPage3.Controls.Add(Me.cbHeadType)
+        Me.TabPage3.Controls.Add(Me.Label24)
+        Me.TabPage3.Controls.Add(Me.rbHorizontal)
+        Me.TabPage3.Controls.Add(Me.rbVertical)
+        Me.TabPage3.Controls.Add(Me.Label23)
+        Me.TabPage3.Controls.Add(Me.lbHeight)
+        Me.TabPage3.Controls.Add(Me.Label22)
+        Me.TabPage3.Controls.Add(Me.tbHeight)
+        Me.TabPage3.Controls.Add(Me.lbDiam)
+        Me.TabPage3.Controls.Add(Me.Label20)
+        Me.TabPage3.Controls.Add(Me.tbDiam)
+        Me.TabPage3.Controls.Add(Me.lblThickness)
+        Me.TabPage3.Controls.Add(Me.Label18)
+        Me.TabPage3.Controls.Add(Me.cbWallMaterial)
+        Me.TabPage3.Controls.Add(Me.tbThickness)
+        Me.TabPage3.Controls.Add(Me.Label17)
+        Me.TabPage3.Name = "TabPage3"
+        Me.ToolTip1.SetToolTip(Me.TabPage3, resources.GetString("TabPage3.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.TabPage3, resources.GetString("TabPage3.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.TabPage3, resources.GetString("TabPage3.ToolTip2"))
+        Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'chkOverrideT
+        'cbHeadType
         '
-        resources.ApplyResources(Me.chkOverrideT, "chkOverrideT")
-        Me.chkOverrideT.Name = "chkOverrideT"
-        Me.ToolTip1.SetToolTip(Me.chkOverrideT, resources.GetString("chkOverrideT.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.chkOverrideT, resources.GetString("chkOverrideT.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.chkOverrideT, resources.GetString("chkOverrideT.ToolTip2"))
-        Me.chkOverrideT.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.cbHeadType, "cbHeadType")
+        Me.cbHeadType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbHeadType.FormattingEnabled = True
+        Me.cbHeadType.Items.AddRange(New Object() {resources.GetString("cbHeadType.Items"), resources.GetString("cbHeadType.Items1"), resources.GetString("cbHeadType.Items2"), resources.GetString("cbHeadType.Items3"), resources.GetString("cbHeadType.Items4"), resources.GetString("cbHeadType.Items5")})
+        Me.cbHeadType.Name = "cbHeadType"
+        Me.ToolTip1.SetToolTip(Me.cbHeadType, resources.GetString("cbHeadType.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbHeadType, resources.GetString("cbHeadType.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbHeadType, resources.GetString("cbHeadType.ToolTip2"))
         '
-        'cbTemp
+        'Label24
         '
-        resources.ApplyResources(Me.cbTemp, "cbTemp")
-        Me.cbTemp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbTemp.FormattingEnabled = True
-        Me.cbTemp.Items.AddRange(New Object() {resources.GetString("cbTemp.Items"), resources.GetString("cbTemp.Items1"), resources.GetString("cbTemp.Items2")})
-        Me.cbTemp.Name = "cbTemp"
-        Me.ToolTip1.SetToolTip(Me.cbTemp, resources.GetString("cbTemp.ToolTip"))
-        Me.ToolTipValues.SetToolTip(Me.cbTemp, resources.GetString("cbTemp.ToolTip1"))
-        Me.ToolTipChangeTag.SetToolTip(Me.cbTemp, resources.GetString("cbTemp.ToolTip2"))
+        resources.ApplyResources(Me.Label24, "Label24")
+        Me.Label24.Name = "Label24"
+        Me.ToolTip1.SetToolTip(Me.Label24, resources.GetString("Label24.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label24, resources.GetString("Label24.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label24, resources.GetString("Label24.ToolTip2"))
         '
-        'tbTemperature
+        'rbHorizontal
         '
-        resources.ApplyResources(Me.tbTemperature, "tbTemperature")
-        Me.tbTemperature.Name = "tbTemperature"
-        Me.ToolTipValues.SetToolTip(Me.tbTemperature, resources.GetString("tbTemperature.ToolTip"))
-        Me.ToolTip1.SetToolTip(Me.tbTemperature, resources.GetString("tbTemperature.ToolTip1"))
-        Me.ToolTipChangeTag.SetToolTip(Me.tbTemperature, resources.GetString("tbTemperature.ToolTip2"))
+        resources.ApplyResources(Me.rbHorizontal, "rbHorizontal")
+        Me.rbHorizontal.Name = "rbHorizontal"
+        Me.rbHorizontal.TabStop = True
+        Me.ToolTip1.SetToolTip(Me.rbHorizontal, resources.GetString("rbHorizontal.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.rbHorizontal, resources.GetString("rbHorizontal.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.rbHorizontal, resources.GetString("rbHorizontal.ToolTip2"))
+        Me.rbHorizontal.UseVisualStyleBackColor = True
+        '
+        'rbVertical
+        '
+        resources.ApplyResources(Me.rbVertical, "rbVertical")
+        Me.rbVertical.Name = "rbVertical"
+        Me.rbVertical.TabStop = True
+        Me.ToolTip1.SetToolTip(Me.rbVertical, resources.GetString("rbVertical.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.rbVertical, resources.GetString("rbVertical.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.rbVertical, resources.GetString("rbVertical.ToolTip2"))
+        Me.rbVertical.UseVisualStyleBackColor = True
+        '
+        'Label23
+        '
+        resources.ApplyResources(Me.Label23, "Label23")
+        Me.Label23.Name = "Label23"
+        Me.ToolTip1.SetToolTip(Me.Label23, resources.GetString("Label23.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label23, resources.GetString("Label23.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label23, resources.GetString("Label23.ToolTip2"))
+        '
+        'lbHeight
+        '
+        resources.ApplyResources(Me.lbHeight, "lbHeight")
+        Me.lbHeight.Name = "lbHeight"
+        Me.ToolTip1.SetToolTip(Me.lbHeight, resources.GetString("lbHeight.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.lbHeight, resources.GetString("lbHeight.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.lbHeight, resources.GetString("lbHeight.ToolTip2"))
+        '
+        'Label22
+        '
+        resources.ApplyResources(Me.Label22, "Label22")
+        Me.Label22.Name = "Label22"
+        Me.ToolTip1.SetToolTip(Me.Label22, resources.GetString("Label22.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label22, resources.GetString("Label22.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label22, resources.GetString("Label22.ToolTip2"))
+        '
+        'tbHeight
+        '
+        resources.ApplyResources(Me.tbHeight, "tbHeight")
+        Me.tbHeight.Name = "tbHeight"
+        Me.ToolTipValues.SetToolTip(Me.tbHeight, resources.GetString("tbHeight.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.tbHeight, resources.GetString("tbHeight.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.tbHeight, resources.GetString("tbHeight.ToolTip2"))
+        '
+        'lbDiam
+        '
+        resources.ApplyResources(Me.lbDiam, "lbDiam")
+        Me.lbDiam.Name = "lbDiam"
+        Me.ToolTip1.SetToolTip(Me.lbDiam, resources.GetString("lbDiam.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.lbDiam, resources.GetString("lbDiam.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.lbDiam, resources.GetString("lbDiam.ToolTip2"))
+        '
+        'Label20
+        '
+        resources.ApplyResources(Me.Label20, "Label20")
+        Me.Label20.Name = "Label20"
+        Me.ToolTip1.SetToolTip(Me.Label20, resources.GetString("Label20.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label20, resources.GetString("Label20.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label20, resources.GetString("Label20.ToolTip2"))
+        '
+        'tbDiam
+        '
+        resources.ApplyResources(Me.tbDiam, "tbDiam")
+        Me.tbDiam.Name = "tbDiam"
+        Me.ToolTipValues.SetToolTip(Me.tbDiam, resources.GetString("tbDiam.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.tbDiam, resources.GetString("tbDiam.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.tbDiam, resources.GetString("tbDiam.ToolTip2"))
+        '
+        'lblThickness
+        '
+        resources.ApplyResources(Me.lblThickness, "lblThickness")
+        Me.lblThickness.Name = "lblThickness"
+        Me.ToolTip1.SetToolTip(Me.lblThickness, resources.GetString("lblThickness.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.lblThickness, resources.GetString("lblThickness.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.lblThickness, resources.GetString("lblThickness.ToolTip2"))
+        '
+        'Label18
+        '
+        resources.ApplyResources(Me.Label18, "Label18")
+        Me.Label18.Name = "Label18"
+        Me.ToolTip1.SetToolTip(Me.Label18, resources.GetString("Label18.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label18, resources.GetString("Label18.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label18, resources.GetString("Label18.ToolTip2"))
+        '
+        'cbWallMaterial
+        '
+        resources.ApplyResources(Me.cbWallMaterial, "cbWallMaterial")
+        Me.cbWallMaterial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbWallMaterial.FormattingEnabled = True
+        Me.cbWallMaterial.Name = "cbWallMaterial"
+        Me.ToolTip1.SetToolTip(Me.cbWallMaterial, resources.GetString("cbWallMaterial.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbWallMaterial, resources.GetString("cbWallMaterial.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbWallMaterial, resources.GetString("cbWallMaterial.ToolTip2"))
+        '
+        'tbThickness
+        '
+        resources.ApplyResources(Me.tbThickness, "tbThickness")
+        Me.tbThickness.Name = "tbThickness"
+        Me.ToolTipValues.SetToolTip(Me.tbThickness, resources.GetString("tbThickness.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.tbThickness, resources.GetString("tbThickness.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.tbThickness, resources.GetString("tbThickness.ToolTip2"))
+        '
+        'Label17
+        '
+        resources.ApplyResources(Me.Label17, "Label17")
+        Me.Label17.Name = "Label17"
+        Me.ToolTip1.SetToolTip(Me.Label17, resources.GetString("Label17.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label17, resources.GetString("Label17.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label17, resources.GetString("Label17.ToolTip2"))
+        '
+        'TabPage2
+        '
+        resources.ApplyResources(Me.TabPage2, "TabPage2")
+        Me.TabPage2.Name = "TabPage2"
+        Me.ToolTip1.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip2"))
+        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'GroupBox5
         '
@@ -802,24 +1039,14 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'cbCalcMode
+        'Button1
         '
-        resources.ApplyResources(Me.cbCalcMode, "cbCalcMode")
-        Me.cbCalcMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbCalcMode.FormattingEnabled = True
-        Me.cbCalcMode.Items.AddRange(New Object() {resources.GetString("cbCalcMode.Items"), resources.GetString("cbCalcMode.Items1"), resources.GetString("cbCalcMode.Items2"), resources.GetString("cbCalcMode.Items3")})
-        Me.cbCalcMode.Name = "cbCalcMode"
-        Me.ToolTip1.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip"))
-        Me.ToolTipValues.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip1"))
-        Me.ToolTipChangeTag.SetToolTip(Me.cbCalcMode, resources.GetString("cbCalcMode.ToolTip2"))
-        '
-        'Label10
-        '
-        resources.ApplyResources(Me.Label10, "Label10")
-        Me.Label10.Name = "Label10"
-        Me.ToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip2"))
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip2"))
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'EditingForm_Vessel
         '
@@ -838,7 +1065,11 @@ Partial Class EditingForm_Vessel
         Me.GroupBoxConnections.ResumeLayout(False)
         Me.GroupBoxConnections.PerformLayout()
         Me.GroupBoxParameters.ResumeLayout(False)
-        Me.GroupBoxParameters.PerformLayout()
+        Me.TabControl1.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -920,4 +1151,25 @@ Partial Class EditingForm_Vessel
     Friend WithEvents ToolTipChangeTag As ToolTip
     Public WithEvents cbCalcMode As ComboBox
     Public WithEvents Label10 As Label
+    Friend WithEvents TabControl1 As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents TabPage2 As TabPage
+    Public WithEvents lblThickness As Label
+    Public WithEvents tbThickness As TextBox
+    Public WithEvents Label18 As Label
+    Public WithEvents Label17 As Label
+    Public WithEvents cbWallMaterial As ComboBox
+    Friend WithEvents TabPage3 As TabPage
+    Public WithEvents Label23 As Label
+    Public WithEvents lbHeight As Label
+    Public WithEvents Label22 As Label
+    Public WithEvents tbHeight As TextBox
+    Public WithEvents lbDiam As Label
+    Public WithEvents Label20 As Label
+    Public WithEvents tbDiam As TextBox
+    Friend WithEvents rbHorizontal As RadioButton
+    Friend WithEvents rbVertical As RadioButton
+    Public WithEvents cbHeadType As ComboBox
+    Public WithEvents Label24 As Label
+    Public WithEvents Button1 As Button
 End Class
