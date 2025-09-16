@@ -86,6 +86,11 @@ Namespace GraphicObjects.Shapes
             myOC3.Type = ConType.ConOut
             myOC3.Direction = ConDir.Down
 
+            Dim myOC4 As New ConnectionPoint
+            myOC4.Position = New Point(X + 0.4 * Width, Y + 0.05 * Height)
+            myOC4.Type = ConType.ConOut
+            myOC4.Direction = ConDir.Up
+
             Dim myIC7 As New ConnectionPoint
             myIC7.Position = New Point(X + 0.25 * Width, Y + 1 * Height)
             myIC7.Type = ConType.ConEn
@@ -104,6 +109,9 @@ Namespace GraphicObjects.Shapes
                     End If
                     If .Count = 6 Then
                         .Add(myIC7)
+                    End If
+                    If .Count = 7 Then
+                        .Add(myOC4)
                     End If
                     If DrawMode = 2 Then
                         .Item(0).Position = New Point(X + 0.453 * Width, Y + 0.2979 * Height)
@@ -154,26 +162,32 @@ Namespace GraphicObjects.Shapes
                         .Item(0).Position = New Point(X + 0.84 * Width, Y + 0.32 * Height)
                         .Item(1).Position = New Point(X + Width, Y + 0.58 * Height)
                         .Item(2).Position = New Point(X + Width, Y + 0.7 * Height)
+                        .Item(3).Position = New Point(X + 0.29 * Width, Y + 0.32 * Height)
                         .Item(0).Direction = ConDir.Up
                         .Item(1).Direction = ConDir.Right
                         .Item(2).Direction = ConDir.Right
+                        .Item(3).Direction = ConDir.Up
                     Else
                         .Item(0).Position = New Point(X + 0.5 * Width, Y)
                         .Item(1).Position = New Point(X + 0.75 * Width, Y + 5 / 7 * Height)
                         .Item(2).Position = New Point(X + 0.5 * Width, Y + Height)
+                        .Item(3).Position = New Point(X + 0.65 * Width, Y + 0.045 * Height)
                         .Item(0).Direction = ConDir.Up
                         .Item(1).Direction = ConDir.Right
                         .Item(2).Direction = ConDir.Down
+                        .Item(3).Direction = ConDir.Up
                     End If
                 Else
                     .Add(myOC1)
                     .Add(myOC2)
                     .Add(myOC3)
+                    .Add(myOC4)
                 End If
 
                 .Item(0).ConnectorName = "Vapor Outlet"
                 .Item(1).ConnectorName = "Light Liquid Outlet"
                 .Item(2).ConnectorName = "Heavy Liquid Outlet"
+                .Item(3).ConnectorName = "Relief Valve Outlet"
 
             End With
 

@@ -117,9 +117,101 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnCreateAndConnectOutlet4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnCreateAndConnectOutlet4.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="btnCreateAndConnectOutlet4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnCreateAndConnectOutlet4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>368, 273</value>
+  </data>
+  <data name="btnCreateAndConnectOutlet4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 21</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnCreateAndConnectOutlet4.TabIndex" type="System.Int32, mscorlib">
+    <value>61</value>
+  </data>
+  <data name="btnCreateAndConnectOutlet4.ToolTip" xml:space="preserve">
+    <value>Create and Connect</value>
+  </data>
+  <data name="btnCreateAndConnectOutlet4.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnCreateAndConnectOutlet4.ToolTip2" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnDisconnectOutlet4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btnDisconnectOutlet4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btnDisconnectOutlet4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>395, 273</value>
+  </data>
+  <data name="btnDisconnectOutlet4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 21</value>
+  </data>
+  <data name="btnDisconnectOutlet4.TabIndex" type="System.Int32, mscorlib">
+    <value>60</value>
+  </data>
+  <data name="btnDisconnectOutlet4.ToolTip" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="btnDisconnectOutlet4.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="btnDisconnectOutlet4.ToolTip2" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label19.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 276</value>
+  </data>
+  <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 13</value>
+  </data>
+  <data name="Label19.TabIndex" type="System.Int32, mscorlib">
+    <value>59</value>
+  </data>
+  <data name="Label19.Text" xml:space="preserve">
+    <value>Relief Valve Stream</value>
+  </data>
+  <data name="cbOutlet4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="cbOutlet4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 273</value>
+  </data>
+  <data name="cbOutlet4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 21</value>
+  </data>
+  <data name="cbOutlet4.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="cbOutlet4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbOutlet4.ToolTip1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbOutlet4.ToolTip2" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnCreateAndConnectEnergy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 287</value>
+    <value>368, 309</value>
   </data>
   <data name="btnCreateAndConnectEnergy.ToolTip" xml:space="preserve">
     <value>Create and Connect</value>
@@ -239,7 +331,7 @@
     <value />
   </data>
   <data name="btnDisconnectEnergy.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 287</value>
+    <value>395, 309</value>
   </data>
   <data name="btnDisconnectEnergy.ToolTip" xml:space="preserve">
     <value>Disconnect</value>
@@ -250,11 +342,17 @@
   <data name="btnDisconnectEnergy.ToolTip2" xml:space="preserve">
     <value />
   </data>
+  <data name="Label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 312</value>
+  </data>
   <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
   </data>
   <data name="Label16.Text" xml:space="preserve">
     <value>Energy Stream</value>
+  </data>
+  <data name="cbEnergy.Location" type="System.Drawing.Point, System.Drawing">
+    <value>144, 309</value>
   </data>
   <data name="cbEnergy.Size" type="System.Drawing.Size, System.Drawing">
     <value>216, 21</value>
@@ -449,7 +547,7 @@
     <value>Inlet Stream 1</value>
   </data>
   <data name="GroupBoxConnections.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 322</value>
+    <value>422, 341</value>
   </data>
   <data name="GroupBoxConnections.Text" xml:space="preserve">
     <value>Connections</value>
@@ -463,7 +561,6 @@
   <data name="Label8.Text" xml:space="preserve">
     <value>Outlet Pressure Calculation</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cbCalcMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -485,7 +582,6 @@
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 13</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label10.TabIndex" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
@@ -538,34 +634,28 @@
     <value>137, 20</value>
   </data>
   <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 274</value>
+    <value>408, 255</value>
   </data>
   <data name="TabPage1.Text" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="TabPage3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+  <data name="Button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
-  <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 274</value>
+  <data name="Button1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
   </data>
-  <data name="TabPage3.Text" xml:space="preserve">
-    <value>Dimensions</value>
+  <data name="Button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 274</value>
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 30</value>
   </data>
-  <data name="TabPage2.Text" xml:space="preserve">
-    <value>Heat Exchange</value>
+  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 22</value>
   </data>
-  <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 300</value>
-  </data>
-  <data name="GroupBoxParameters.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 319</value>
-  </data>
-  <data name="GroupBoxParameters.Text" xml:space="preserve">
-    <value>Calculation Parameters</value>
+  <data name="Button1.Text" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="cbHeadType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -789,11 +879,32 @@
   <data name="Label17.Text" xml:space="preserve">
     <value>Wall Material</value>
   </data>
-  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 98</value>
+  <data name="TabPage3.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>General</value>
+  <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 274</value>
+  </data>
+  <data name="TabPage3.Text" xml:space="preserve">
+    <value>Dimensions</value>
+  </data>
+  <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>408, 274</value>
+  </data>
+  <data name="TabPage2.Text" xml:space="preserve">
+    <value>Heat Exchange</value>
+  </data>
+  <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 281</value>
+  </data>
+  <data name="GroupBoxParameters.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 452</value>
+  </data>
+  <data name="GroupBoxParameters.Size" type="System.Drawing.Size, System.Drawing">
+    <value>422, 300</value>
+  </data>
+  <data name="GroupBoxParameters.Text" xml:space="preserve">
+    <value>Calculation Parameters</value>
   </data>
   <data name="btnUtils.Location" type="System.Drawing.Point, System.Drawing">
     <value>395, 19</value>
@@ -831,6 +942,15 @@
   <data name="Label11.Text" xml:space="preserve">
     <value>Object</value>
   </data>
+  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>422, 98</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="rtbAnnotations.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 206</value>
+  </data>
   <data name="GroupBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 824</value>
   </data>
@@ -839,18 +959,6 @@
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Notes</value>
-  </data>
-  <data name="rtbAnnotations.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 206</value>
-  </data>
-  <data name="GroupBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 758</value>
-  </data>
-  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>422, 60</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Property Package Settings</value>
   </data>
   <data name="btnConfigurePP.Location" type="System.Drawing.Point, System.Drawing">
     <value>395, 26</value>
@@ -867,14 +975,14 @@
   <data name="Label9.Text" xml:space="preserve">
     <value>Property Package</value>
   </data>
-  <data name="UtilitiesCtxMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>131, 26</value>
+  <data name="GroupBox3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 758</value>
   </data>
-  <data name="AddUtilityTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>130, 22</value>
+  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>422, 60</value>
   </data>
-  <data name="AddUtilityTSMI.Text" xml:space="preserve">
-    <value>Add Utility</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Property Package Settings</value>
   </data>
   <data name="sizingtsmi.Size" type="System.Drawing.Size, System.Drawing">
     <value>192, 22</value>
@@ -882,23 +990,14 @@
   <data name="sizingtsmi.Text" xml:space="preserve">
     <value>Separator Vessel Sizing</value>
   </data>
-  <data name="Button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="AddUtilityTSMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 22</value>
   </data>
-  <data name="Button1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+  <data name="AddUtilityTSMI.Text" xml:space="preserve">
+    <value>Add Utility</value>
   </data>
-  <data name="Button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 30</value>
-  </data>
-  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 22</value>
-  </data>
-  <data name="Button1.Text" xml:space="preserve">
-    <value>Size</value>
+  <data name="UtilitiesCtxMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 26</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>431, 1061</value>

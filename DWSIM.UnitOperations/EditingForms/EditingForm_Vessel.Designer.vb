@@ -79,6 +79,7 @@ Partial Class EditingForm_Vessel
         Me.cbPress = New System.Windows.Forms.ComboBox()
         Me.tbPressure = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.cbHeadType = New System.Windows.Forms.ComboBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.rbHorizontal = New System.Windows.Forms.RadioButton()
@@ -116,7 +117,10 @@ Partial Class EditingForm_Vessel
         Me.AddUtilityTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.sizingtsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnCreateAndConnectOutlet4 = New System.Windows.Forms.Button()
+        Me.btnDisconnectOutlet4 = New System.Windows.Forms.Button()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.cbOutlet4 = New System.Windows.Forms.ComboBox()
         Me.GroupBoxConnections.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -131,6 +135,10 @@ Partial Class EditingForm_Vessel
         'GroupBoxConnections
         '
         resources.ApplyResources(Me.GroupBoxConnections, "GroupBoxConnections")
+        Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectOutlet4)
+        Me.GroupBoxConnections.Controls.Add(Me.btnDisconnectOutlet4)
+        Me.GroupBoxConnections.Controls.Add(Me.Label19)
+        Me.GroupBoxConnections.Controls.Add(Me.cbOutlet4)
         Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectEnergy)
         Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectOutlet3)
         Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectOutlet2)
@@ -718,6 +726,15 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.SetToolTip(Me.TabPage3, resources.GetString("TabPage3.ToolTip2"))
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip2"))
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'cbHeadType
         '
         resources.ApplyResources(Me.cbHeadType, "cbHeadType")
@@ -1039,14 +1056,43 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'Button1
+        'btnCreateAndConnectOutlet4
         '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip2"))
-        Me.Button1.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.btnCreateAndConnectOutlet4, "btnCreateAndConnectOutlet4")
+        Me.btnCreateAndConnectOutlet4.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet4.Name = "btnCreateAndConnectOutlet4"
+        Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip2"))
+        Me.btnCreateAndConnectOutlet4.UseVisualStyleBackColor = True
+        '
+        'btnDisconnectOutlet4
+        '
+        resources.ApplyResources(Me.btnDisconnectOutlet4, "btnDisconnectOutlet4")
+        Me.btnDisconnectOutlet4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet4.Name = "btnDisconnectOutlet4"
+        Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip2"))
+        Me.btnDisconnectOutlet4.UseVisualStyleBackColor = True
+        '
+        'Label19
+        '
+        resources.ApplyResources(Me.Label19, "Label19")
+        Me.Label19.Name = "Label19"
+        Me.ToolTip1.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip2"))
+        '
+        'cbOutlet4
+        '
+        resources.ApplyResources(Me.cbOutlet4, "cbOutlet4")
+        Me.cbOutlet4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbOutlet4.FormattingEnabled = True
+        Me.cbOutlet4.Name = "cbOutlet4"
+        Me.ToolTip1.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip2"))
         '
         'EditingForm_Vessel
         '
@@ -1172,4 +1218,8 @@ Partial Class EditingForm_Vessel
     Public WithEvents cbHeadType As ComboBox
     Public WithEvents Label24 As Label
     Public WithEvents Button1 As Button
+    Public WithEvents btnCreateAndConnectOutlet4 As Button
+    Public WithEvents btnDisconnectOutlet4 As Button
+    Public WithEvents Label19 As Label
+    Public WithEvents cbOutlet4 As ComboBox
 End Class

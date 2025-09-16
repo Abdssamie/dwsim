@@ -41,6 +41,8 @@ Namespace UnitOperations
 
         Public Property WallMaterial As String = "Carbon Steel"
 
+        Public Property WallTemperature As Double = 0.0
+
         Public Property HeadType As String = "Hemispherical"
 
         Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
@@ -153,11 +155,13 @@ Namespace UnitOperations
             AddDynamicProperty("Vessel Orientation", "Vertical or Horizontal (V = 0, H = 1)", 0, UnitOfMeasure.none, 1.0.GetType())
             AddDynamicProperty("Operating Pressure", "Current Vessel Operating Pressure", 0, UnitOfMeasure.pressure, 1.0.GetType())
             AddDynamicProperty("Liquid Level", "Current Liquid Level", 0, UnitOfMeasure.distance, 1.0.GetType())
-            AddDynamicProperty("Volume", "Vessel Volume", 1, UnitOfMeasure.volume, 1.0.GetType())
-            AddDynamicProperty("Height", "Available Height for Liquid", 2, UnitOfMeasure.distance, 1.0.GetType())
-            AddDynamicProperty("Minimum Pressure", "Minimum Dynamic Pressure for this Unit Operation.", 101325, UnitOfMeasure.pressure, 1.0.GetType())
-            AddDynamicProperty("Initialize using Inlet Stream", "Initializes the vessel content with information from the inlet stream, if the vessel content is null.", True, UnitOfMeasure.none, True.GetType())
-            AddDynamicProperty("Reset Content", "Empties the vessel's content on the next run.", False, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Get Volume from Dimensions", "Calculate volume from dimensions (Diameter, Height and Head Type)", False, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Volume", "Vessel Volume (define if no dimensions set)", 1, UnitOfMeasure.volume, 1.0.GetType())
+            AddDynamicProperty("Get Height from Dimensions", "Use Height from Dimensions", False, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Height", "Available height for liquid (define if no dimensions set)", 2, UnitOfMeasure.distance, 1.0.GetType())
+            AddDynamicProperty("Minimum Pressure", "Minimum dynamic pressure", 101325, UnitOfMeasure.pressure, 1.0.GetType())
+            AddDynamicProperty("Initialize using Inlet Stream", "Initializes the vessel content with information from the inlet stream, if the vessel content is null", True, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Reset Content", "Empties the vessel's content on the next run", False, UnitOfMeasure.none, True.GetType())
 
         End Sub
 
