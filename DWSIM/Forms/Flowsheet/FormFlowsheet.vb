@@ -237,6 +237,7 @@ Public Class FormFlowsheet
                      UpdateMassAndEnergyBalance()
                      UpdateFormText()
                      UpdateInterface()
+
                  End Sub)
 
 

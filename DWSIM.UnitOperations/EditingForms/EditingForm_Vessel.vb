@@ -165,7 +165,7 @@ Public Class EditingForm_Vessel
             lbDiam.Text = units.GetCurrentUnits(.Dimensions(0).GetUnitsType())
             lbHeight.Text = units.GetCurrentUnits(.Dimensions(1).GetUnitsType())
 
-            If .Orientation = "Horizontal" Then rbHorizontal.Checked = True Else rbVertical.Checked = True
+            If .SelectedEquipmentType = "Horizontal" Then rbHorizontal.Checked = True Else rbVertical.Checked = True
 
             cbHeadType.SelectedIndex = Vessel.HeadTypes.IndexOf(VesselObject.HeadType)
 
@@ -422,7 +422,7 @@ Public Class EditingForm_Vessel
         If sender Is tbPressure Then VesselObject.FlashPressure = su.Converter.ConvertToSI(cbPress.SelectedItem.ToString, tbPressure.Text.ParseExpressionToDouble)
         If sender Is tbThickness Then VesselObject.WallThickness = su.Converter.ConvertToSI(units.thickness, tbThickness.Text.ParseExpressionToDouble)
         If sender Is tbDiam Then VesselObject.Dimensions(0).Value = su.Converter.ConvertToSI(VesselObject.Dimensions(0).GetUnitsType(), tbDiam.Text.ParseExpressionToDouble)
-        If sender Is tbHeight Then VesselObject.Dimensions(0).Value = su.Converter.ConvertToSI(VesselObject.Dimensions(1).GetUnitsType(), tbHeight.Text.ParseExpressionToDouble)
+        If sender Is tbHeight Then VesselObject.Dimensions(1).Value = su.Converter.ConvertToSI(VesselObject.Dimensions(1).GetUnitsType(), tbHeight.Text.ParseExpressionToDouble)
 
         RequestCalc()
 
@@ -641,13 +641,25 @@ Public Class EditingForm_Vessel
 
     Private Sub rbVertical_CheckedChanged(sender As Object, e As EventArgs) Handles rbVertical.CheckedChanged, rbHorizontal.CheckedChanged
 
-        VesselObject.Orientation = If(rbVertical.Checked, "Vertical", "Horizontal")
+        VesselObject.SelectedEquipmentType = If(rbVertical.Checked, "Vertical", "Horizontal")
 
     End Sub
 
     Private Sub cbHeadType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbHeadType.SelectedIndexChanged
 
         VesselObject.HeadType = Vessel.HeadTypes(cbHeadType.SelectedIndex)
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+        If VesselObject.SelectedEquipmentType = "Vertical" Then
+            VesselObject.SizeVertical()
+        Else
+            VesselObject.SizeHorizontal()
+        End If
+        VesselObject.UpdateDimensionsList()
+        UpdateInfo()
 
     End Sub
 

@@ -153,8 +153,6 @@ Public Class FormSensAnalysis
 
     Public Sub NewDataEventHandler(sender As Object, e As INewDataLoadedEventArgs)
 
-        MessageBox.Show("Flowsheet data has been changed. This window will now reload.", "New Data Incoming", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
         Me.lbCases.Items.Clear()
 
         If form.Collections.OPT_SensAnalysisCollection Is Nothing Then form.Collections.OPT_SensAnalysisCollection = New List(Of SensitivityAnalysisCase)

@@ -43,8 +43,6 @@ Namespace UnitOperations
 
         Public Property HeadType As String = "Hemispherical"
 
-        Public Property Orientation As String = "Vertical"
-
         Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
 
         Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = True
@@ -976,6 +974,187 @@ Namespace UnitOperations
 
         End Sub
 
+        Function CalcOverallHeatTransferCoefficient(ByVal section As PipeSection, ByVal materialparede As String, ByVal EL As Double, ByVal L As Double,
+                            ByVal Dint As Double, ByVal Dext As Double, ByVal rugosidade As Double,
+                            ByVal T As Double, ByVal Text As Double, ByVal vel_g As Double, ByVal vel_l As Double,
+                            ByVal Cpl As Double, ByVal Cpv As Double, ByVal kl As Double, ByVal kv As Double,
+                            ByVal mu_l As Double, ByVal mu_v As Double, ByVal rho_l As Double,
+                            ByVal rho_v As Double, ByVal hinterno As Boolean, ByVal isolamento As Boolean,
+                            ByVal parede As Boolean, ByVal hexterno As Boolean) As Double()
+
+            If Double.IsNaN(rho_l) Then rho_l = 0.0#
+
+            'Calculate average properties
+            Dim vel As Double = vel_g + vel_l 'm/s
+            Dim mu As Double = EL * mu_l + (1 - EL) * mu_v 'Pa.s
+            Dim rho As Double = EL * rho_l + (1 - EL) * rho_v 'kg/m3
+            Dim Cp As Double = 1000 * (EL * Cpl + (1 - EL) * Cpv) 'J/kg.K
+            Dim k As Double = EL * kl + (1 - EL) * kv 'W/[m.K]
+            Dim Cpmist = Cp
+
+            'Internal HTC calculation
+            Dim U_int As Double
+
+            If hinterno Then
+
+                'Internal Re calc
+                Dim Re_int = Pipe.NRe(rho, vel, Dint, mu)
+
+                Dim epsilon = GetRugosity(materialparede, section)
+                Dim ffint = 0.0#
+                If Re_int > 3250 Then
+                    Dim a1 = Math.Log(((epsilon / Dint) ^ 1.1096) / 2.8257 + (7.149 / Re_int) ^ 0.8961) / Math.Log(10.0#)
+                    Dim b1 = -2 * Math.Log((epsilon / Dint) / 3.7065 - 5.0452 * a1 / Re_int) / Math.Log(10.0#)
+                    ffint = (1 / b1) ^ 2
+                Else
+                    ffint = 64 / Re_int
+                End If
+
+                'Internal Pr calc
+                Dim Pr_int = Pipe.NPr(Cp, mu, k)
+
+                'Internal h calc
+                Dim h_int = Pipe.hint_petukhov(k, Dint, ffint, Re_int, Pr_int)
+
+                'Internal h contribution
+                U_int = h_int
+
+            End If
+
+            'Pipe wall HTC contribution
+            Dim U_parede = 0.0#
+
+            If parede = True Then
+
+                U_parede = Kwall(materialparede, T, section) / (Math.Log(Dext / Dint) * Dint)
+                If Dext = Dint Then U_parede = 0.0#
+
+            End If
+
+            'Insulation HTC contribution
+            Dim U_isol = 0.0#
+
+            Dim esp_isol = 0.0#
+            If isolamento = True Then
+
+                esp_isol = ThermalProperties.Espessura 'm
+                U_isol = ThermalProperties.Condtermica / (Math.Log((Dext + 2 * esp_isol) / Dext) * Dext)
+
+            End If
+
+            'External HTC contribution
+            Dim U_ext = 0.0#
+
+            If hexterno = True Then
+
+                Dim mu2, k2, cp2, rho2 As Double 'Soil, undergound
+
+                'Average air properties
+
+                Dim Pext As Double = 101325.0
+
+                vel = Convert.ToDouble(ThermalProperties.Velocidade)
+
+                Dim props = Pipe.PropsAR(Text, Pext)
+                mu2 = props(1)
+                rho2 = props(0)
+                cp2 = props(2) * 1000
+                k2 = props(3)
+
+                'External Re
+                Dim Re_ext = Pipe.NRe(rho2, vel, (Dext + 2 * esp_isol), mu2)
+
+                'External Pr
+                Dim Pr_ext = Pipe.NPr(cp2, mu2, k2)
+
+                'External h
+                Dim h_ext = Pipe.hext_holman(k2, (Dext + 2 * esp_isol), Re_ext, Pr_ext)
+
+                'External HTC contribution
+                U_ext = h_ext * (Dext + 2 * esp_isol) / Dint
+
+            End If
+
+            'Calculate overall HTC
+            Dim _U As Double
+
+            If U_int <> 0.0# Then
+                _U = _U + 1 / U_int
+            Else
+                If hinterno = True Then
+                    _U = _U + 1.0E+30
+                End If
+            End If
+            If U_parede <> 0.0# Then
+                _U = _U + 1 / U_parede
+            Else
+                If parede = True Then
+                    _U = _U + 1.0E+30
+                End If
+            End If
+            If U_isol <> 0.0# Then
+                _U = _U + 1 / U_isol
+            Else
+                If isolamento = True Then
+                    _U = _U + 1.0E+30
+                End If
+            End If
+            If U_ext <> 0.0# Then
+                _U = _U + 1 / U_ext
+            Else
+                If hexterno = True Then
+                    _U = _U + 1.0E+30
+                End If
+            End If
+
+            Return New Double() {1 / _U, U_int, U_parede, U_isol, U_ext} '[W/m².K]
+
+        End Function
+
+        Function Kwall(ByVal material As String, ByVal T As Double, section As PipeSection) As Double
+
+            Dim kp As Double
+
+            Select Case material
+                Case "Steel"
+                    kp = -0.000000004 * T ^ 3 - 0.00002 * T ^ 2 + 0.021 * T + 33.743
+                Case "Carbon Steel"
+                    kp = 0.000000007 * T ^ 3 - 0.00002 * T ^ 2 - 0.0291 * T + 70.765
+                Case "Cast Iron"
+                    kp = -0.00000008 * T ^ 3 + 0.0002 * T ^ 2 - 0.211 * T + 127.99
+                Case "Stainless Steel"
+                    kp = 14.6 + 0.0127 * (T - 273.15)
+                Case "Commercial Copper"
+                    kp = 420.75 - 0.068493 * T
+            End Select
+
+            Return kp   'W/m.K
+
+        End Function
+
+        Public Function GetRugosity(ByVal material As String, section As PipeSection) As Double
+
+            Dim epsilon As Double
+
+            'wall rugosity in m
+
+            Select Case material
+                Case "Steel"
+                    epsilon = 0.0000457
+                Case "Carbon Steel"
+                    epsilon = 0.000045
+                Case "Cast Iron"
+                    epsilon = 0.000259
+                Case "Stainless Steel"
+                    epsilon = 0.000045
+                Case "Commercial Copper"
+                    epsilon = 0.0000015
+            End Select
+
+            Return epsilon
+
+        End Function
+
         Public Overrides Function GetPropertyValue(ByVal prop As String, Optional ByVal su As Interfaces.IUnitsOfMeasure = Nothing) As Object
 
             Dim val0 As Object = MyBase.GetPropertyValue(prop, su)
@@ -1143,7 +1322,7 @@ Namespace UnitOperations
             End Get
         End Property
 
-        Private Sub SizeVertical()
+        Public Sub SizeVertical()
 
             Try
 
@@ -1190,7 +1369,7 @@ Namespace UnitOperations
 
         End Sub
 
-        Private Sub SizeHorizontal()
+        Public Sub SizeHorizontal()
 
             Try
 

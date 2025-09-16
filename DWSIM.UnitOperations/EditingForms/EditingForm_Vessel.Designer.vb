@@ -116,6 +116,7 @@ Partial Class EditingForm_Vessel
         Me.AddUtilityTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.sizingtsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBoxConnections.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -694,6 +695,7 @@ Partial Class EditingForm_Vessel
         'TabPage3
         '
         resources.ApplyResources(Me.TabPage3, "TabPage3")
+        Me.TabPage3.Controls.Add(Me.Button1)
         Me.TabPage3.Controls.Add(Me.cbHeadType)
         Me.TabPage3.Controls.Add(Me.Label24)
         Me.TabPage3.Controls.Add(Me.rbHorizontal)
@@ -1037,6 +1039,15 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip2"))
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'EditingForm_Vessel
         '
         resources.ApplyResources(Me, "$this")
@@ -1160,4 +1171,5 @@ Partial Class EditingForm_Vessel
     Friend WithEvents rbVertical As RadioButton
     Public WithEvents cbHeadType As ComboBox
     Public WithEvents Label24 As Label
+    Public WithEvents Button1 As Button
 End Class
