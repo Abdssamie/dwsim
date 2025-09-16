@@ -128,24 +128,8 @@
     <value>NoControl</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnCreateAndConnectOutlet4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>368, 273</value>
-  </data>
   <data name="btnCreateAndConnectOutlet4.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnCreateAndConnectOutlet4.TabIndex" type="System.Int32, mscorlib">
-    <value>61</value>
-  </data>
-  <data name="btnCreateAndConnectOutlet4.ToolTip" xml:space="preserve">
-    <value>Create and Connect</value>
-  </data>
-  <data name="btnCreateAndConnectOutlet4.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnCreateAndConnectOutlet4.ToolTip2" xml:space="preserve">
-    <value />
   </data>
   <data name="btnDisconnectOutlet4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -153,24 +137,10 @@
   <data name="btnDisconnectOutlet4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btnDisconnectOutlet4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 273</value>
-  </data>
   <data name="btnDisconnectOutlet4.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 21</value>
   </data>
-  <data name="btnDisconnectOutlet4.TabIndex" type="System.Int32, mscorlib">
-    <value>60</value>
-  </data>
-  <data name="btnDisconnectOutlet4.ToolTip" xml:space="preserve">
-    <value>Disconnect</value>
-  </data>
-  <data name="btnDisconnectOutlet4.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnDisconnectOutlet4.ToolTip2" xml:space="preserve">
-    <value />
-  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label19.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -192,23 +162,8 @@
   <data name="cbOutlet4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="cbOutlet4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>144, 273</value>
-  </data>
   <data name="cbOutlet4.Size" type="System.Drawing.Size, System.Drawing">
     <value>216, 21</value>
-  </data>
-  <data name="cbOutlet4.TabIndex" type="System.Int32, mscorlib">
-    <value>58</value>
-  </data>
-  <data name="cbOutlet4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOutlet4.ToolTip1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbOutlet4.ToolTip2" xml:space="preserve">
-    <value />
   </data>
   <data name="btnCreateAndConnectEnergy.Location" type="System.Drawing.Point, System.Drawing">
     <value>368, 309</value>
@@ -657,6 +612,12 @@
   <data name="Button1.Text" xml:space="preserve">
     <value>Size</value>
   </data>
+  <data name="Button1.ToolTip" xml:space="preserve">
+    <value>Calculate Diameter and Length/Height</value>
+  </data>
+  <data name="Button1.ToolTip2" xml:space="preserve">
+    <value />
+  </data>
   <data name="cbHeadType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -883,13 +844,13 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 274</value>
+    <value>408, 255</value>
   </data>
   <data name="TabPage3.Text" xml:space="preserve">
     <value>Dimensions</value>
   </data>
   <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 274</value>
+    <value>408, 255</value>
   </data>
   <data name="TabPage2.Text" xml:space="preserve">
     <value>Heat Exchange</value>

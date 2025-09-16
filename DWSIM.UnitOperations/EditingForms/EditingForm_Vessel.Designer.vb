@@ -25,6 +25,10 @@ Partial Class EditingForm_Vessel
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Vessel))
         Me.GroupBoxConnections = New System.Windows.Forms.GroupBox()
+        Me.btnCreateAndConnectOutlet4 = New System.Windows.Forms.Button()
+        Me.btnDisconnectOutlet4 = New System.Windows.Forms.Button()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.cbOutlet4 = New System.Windows.Forms.ComboBox()
         Me.btnCreateAndConnectEnergy = New System.Windows.Forms.Button()
         Me.btnCreateAndConnectOutlet3 = New System.Windows.Forms.Button()
         Me.btnCreateAndConnectOutlet2 = New System.Windows.Forms.Button()
@@ -117,10 +121,6 @@ Partial Class EditingForm_Vessel
         Me.AddUtilityTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.sizingtsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
-        Me.btnCreateAndConnectOutlet4 = New System.Windows.Forms.Button()
-        Me.btnDisconnectOutlet4 = New System.Windows.Forms.Button()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.cbOutlet4 = New System.Windows.Forms.ComboBox()
         Me.GroupBoxConnections.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -184,6 +184,44 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.SetToolTip(Me.GroupBoxConnections, resources.GetString("GroupBoxConnections.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.GroupBoxConnections, resources.GetString("GroupBoxConnections.ToolTip1"))
         Me.ToolTip1.SetToolTip(Me.GroupBoxConnections, resources.GetString("GroupBoxConnections.ToolTip2"))
+        '
+        'btnCreateAndConnectOutlet4
+        '
+        resources.ApplyResources(Me.btnCreateAndConnectOutlet4, "btnCreateAndConnectOutlet4")
+        Me.btnCreateAndConnectOutlet4.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet4.Name = "btnCreateAndConnectOutlet4"
+        Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip2"))
+        Me.btnCreateAndConnectOutlet4.UseVisualStyleBackColor = True
+        '
+        'btnDisconnectOutlet4
+        '
+        resources.ApplyResources(Me.btnDisconnectOutlet4, "btnDisconnectOutlet4")
+        Me.btnDisconnectOutlet4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet4.Name = "btnDisconnectOutlet4"
+        Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip2"))
+        Me.btnDisconnectOutlet4.UseVisualStyleBackColor = True
+        '
+        'Label19
+        '
+        resources.ApplyResources(Me.Label19, "Label19")
+        Me.Label19.Name = "Label19"
+        Me.ToolTip1.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip2"))
+        '
+        'cbOutlet4
+        '
+        resources.ApplyResources(Me.cbOutlet4, "cbOutlet4")
+        Me.cbOutlet4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbOutlet4.FormattingEnabled = True
+        Me.cbOutlet4.Name = "cbOutlet4"
+        Me.ToolTip1.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip2"))
         '
         'btnCreateAndConnectEnergy
         '
@@ -1055,44 +1093,6 @@ Partial Class EditingForm_Vessel
         '
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
-        '
-        'btnCreateAndConnectOutlet4
-        '
-        resources.ApplyResources(Me.btnCreateAndConnectOutlet4, "btnCreateAndConnectOutlet4")
-        Me.btnCreateAndConnectOutlet4.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
-        Me.btnCreateAndConnectOutlet4.Name = "btnCreateAndConnectOutlet4"
-        Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip2"))
-        Me.btnCreateAndConnectOutlet4.UseVisualStyleBackColor = True
-        '
-        'btnDisconnectOutlet4
-        '
-        resources.ApplyResources(Me.btnDisconnectOutlet4, "btnDisconnectOutlet4")
-        Me.btnDisconnectOutlet4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
-        Me.btnDisconnectOutlet4.Name = "btnDisconnectOutlet4"
-        Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip2"))
-        Me.btnDisconnectOutlet4.UseVisualStyleBackColor = True
-        '
-        'Label19
-        '
-        resources.ApplyResources(Me.Label19, "Label19")
-        Me.Label19.Name = "Label19"
-        Me.ToolTip1.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip2"))
-        '
-        'cbOutlet4
-        '
-        resources.ApplyResources(Me.cbOutlet4, "cbOutlet4")
-        Me.cbOutlet4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbOutlet4.FormattingEnabled = True
-        Me.cbOutlet4.Name = "cbOutlet4"
-        Me.ToolTip1.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip"))
-        Me.ToolTipValues.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip1"))
-        Me.ToolTipChangeTag.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip2"))
         '
         'EditingForm_Vessel
         '
