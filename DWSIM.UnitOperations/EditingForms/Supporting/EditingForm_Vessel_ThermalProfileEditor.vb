@@ -252,11 +252,11 @@ Public Class VesselThermalProfileEditor
         End If
     End Sub
 
-    Private Sub CheckBoxIPT_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxIPT.CheckedChanged
+    Private Sub CheckBoxIPT_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Profile.Incluir_paredes = Me.CheckBoxIPT.Checked
     End Sub
 
-    Private Sub CheckBoxICTI_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxICTI.CheckedChanged
+    Private Sub CheckBoxICTI_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Profile.Incluir_cti = Me.CheckBoxICTI.Checked
     End Sub
 
@@ -274,7 +274,7 @@ Public Class VesselThermalProfileEditor
         End If
     End Sub
 
-    Private Sub CheckBoxICTE_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxICTE.CheckedChanged
+    Private Sub CheckBoxICTE_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) 
         Profile.Incluir_cte = Me.CheckBoxICTE.Checked
         If Me.CheckBoxICTE.Checked = False Then
             Me.ComboBoxMAMB.Enabled = False

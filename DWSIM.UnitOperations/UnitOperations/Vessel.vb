@@ -373,7 +373,9 @@ Namespace UnitOperations
 
                 End If
 
-                Dim U, A, DQ, DQmax, Tin, Tout, Tpe, Cp_m, holdup, Cpl, Cpv, Text, Kl, Kv, VapVel, LiqVel, MUl, MUv As Double
+                Dim Uint, Uext, A, DQ, DQmax, Twall, Tint, Tpe, Cp_m, holdup, Cpl, Cpv, Text, Kl, Kv, VapVel, LiqVel, MUl, MUv As Double
+
+                Twall = WallTemperature
 
                 If ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
                     Text = ThermalProperties.Temp_amb_definir
@@ -394,29 +396,30 @@ Namespace UnitOperations
 
                 holdup = AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / Vol
 
-                VapVel = AccumulationStream.GetMassFlow() * AccumulationStream.Vapor.Properties.massfraction.GetValueOrDefault() / rhov / A
-                LiqVel = AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / A
+                VapVel = 0.0 'AccumulationStream.GetMassFlow() * AccumulationStream.Vapor.Properties.massfraction.GetValueOrDefault() / rhov / A
+                LiqVel = 0.0 'AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / A
 
                 Cp_m = holdup * Cpl + (1 - holdup) * Cpv
 
                 If Not ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_Q Then
                     If ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
-                        U = ThermalProperties.CGTC_Definido
+                        Uint = ThermalProperties.CGTC_Definido
                     ElseIf ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Estimar_CGTC Then
-                        Tpe = Tin + (Tout - Tin) / 2
-                        Dim resultU As Double() = CalcOverallHeatTransferCoefficient(holdup, Dimensions(1).Value,
+                        Tpe = Tint
+                        Uint = CalcOverallInternalHeatTransferCoefficient(holdup, Dimensions(1).Value,
                                                                                 Dimensions(0).Value, (Dimensions(0).Value + WallThickness),
                                                                                 Me.GetRugosity(WallMaterial), Tpe, Text,
                                                                                 VapVel, LiqVel, Cpl, Cpv, Kl, Kv,
-                                                                                MUl, MUv, rhol, rhov,
-                                                                                ThermalProperties.Incluir_cti, ThermalProperties.Incluir_isolamento,
-                                                                                ThermalProperties.Incluir_paredes, ThermalProperties.Incluir_cte)
-                        U = resultU(0)
+                                                                                MUl, MUv, rhol, rhov)(0)
                     End If
-                    If U <> 0.0# Then
-                        DQ = (Tout - Tin) / Math.Log((Text - Tin) / (Text - Tout)) * U / 1000 * A
-                        DQmax = (Text - Tin) * Cp_m * Wa
-                        Dim SR, Qrad As Double
+                    If Uint <> 0.0# Then
+
+                        DQ = (Twall - Tint) * Uint / 1000 * A
+                        Uext = CalcOverallExternalHeatTransferCoefficient(Dimensions(0).Value, (Dimensions(0).Value + WallThickness), GetRugosity(WallMaterial), Tpe, Text, ThermalProperties.Incluir_isolamento)(0)
+
+                        Dim Qwall, SR, Qrad As Double
+                        Qwall = (Text - Twall) * Uext / 1000 * A
+
                         If ThermalProperties.IncludeSolarRadiation Then
                             If ThermalProperties.UseGlobalSolarRadiation Then
                                 SR = ThermalProperties.SolarRadiationAbsorptionEfficiency * FlowSheet.FlowsheetOptions.CurrentWeather.SolarIrradiation_kWh_m2
@@ -424,14 +427,14 @@ Namespace UnitOperations
                                 SR = ThermalProperties.SolarRadiationAbsorptionEfficiency * ThermalProperties.SolarRadiationValue_kWh_m2
                             End If
                             Dim Asec = Math.PI * Dimensions(1).Value * (Dimensions(0).Value + WallThickness)
-                            Dim tflux = (Math.PI * ((Dimensions(0).Value + WallThickness)) ^ 2 / 4) * Dimensions(1).Value / AccumulationStream.GetVolumetricFlow()
-                            Qrad = SR / tflux * Asec
-                            DQ += Qrad
-                            DQmax += Qrad
-                            'results.Absorbed_Radiation = Qrad
+                            Qrad = SR / timestep * Asec
+                            Qwall += Qrad
                         End If
+
+                        'WallTemperature = 
+
+
                         If Double.IsNaN(DQ) Then DQ = 0.0#
-                        If Math.Abs(DQ) > Math.Abs(DQmax) Then DQ = DQmax
 
                         'results.Internal_Temperature = (Tout + Tin) / 2
                         'results.Wall_Temperature = results.Internal_Temperature + DQ / (results.HTC_pipewall * Math.PI * (Math.Log(.DE / .DI) * .DI * 0.0254) * .Comprimento / .Incrementos)
@@ -443,8 +446,6 @@ Namespace UnitOperations
                     End If
                 Else
                     DQ = ThermalProperties.Calor_trocado
-                    'Tout = DQ / (Win * Cp_m) + Tin
-                    U = DQ / (A * (Tout - Tin)) * 1000
                 End If
 
             Else
@@ -1118,13 +1119,12 @@ Namespace UnitOperations
 
         End Sub
 
-        Function CalcOverallHeatTransferCoefficient(ByVal EL As Double, ByVal L As Double,
+        Function CalcOverallInternalHeatTransferCoefficient(ByVal EL As Double, ByVal L As Double,
                             ByVal Dint As Double, ByVal Dext As Double, ByVal rugosidade As Double,
                             ByVal T As Double, ByVal Text As Double, ByVal vel_g As Double, ByVal vel_l As Double,
                             ByVal Cpl As Double, ByVal Cpv As Double, ByVal kl As Double, ByVal kv As Double,
                             ByVal mu_l As Double, ByVal mu_v As Double, ByVal rho_l As Double,
-                            ByVal rho_v As Double, ByVal hinterno As Boolean, ByVal isolamento As Boolean,
-                            ByVal parede As Boolean, ByVal hexterno As Boolean) As Double()
+                            ByVal rho_v As Double) As Double()
 
             If Double.IsNaN(rho_l) Then rho_l = 0.0#
 
@@ -1139,41 +1139,60 @@ Namespace UnitOperations
             'Internal HTC calculation
             Dim U_int As Double
 
-            If hinterno Then
+            'Internal Re calc
+            Dim Re_int = Pipe.NRe(rho, vel, Dint, mu)
 
-                'Internal Re calc
-                Dim Re_int = Pipe.NRe(rho, vel, Dint, mu)
-
-                Dim epsilon = GetRugosity(WallMaterial)
-                Dim ffint = 0.0#
-                If Re_int > 3250 Then
-                    Dim a1 = Math.Log(((epsilon / Dint) ^ 1.1096) / 2.8257 + (7.149 / Re_int) ^ 0.8961) / Math.Log(10.0#)
-                    Dim b1 = -2 * Math.Log((epsilon / Dint) / 3.7065 - 5.0452 * a1 / Re_int) / Math.Log(10.0#)
-                    ffint = (1 / b1) ^ 2
-                Else
-                    ffint = 64 / Re_int
-                End If
-
-                'Internal Pr calc
-                Dim Pr_int = Pipe.NPr(Cp, mu, k)
-
-                'Internal h calc
-                Dim h_int = Pipe.hint_petukhov(k, Dint, ffint, Re_int, Pr_int)
-
-                'Internal h contribution
-                U_int = h_int
-
+            Dim epsilon = GetRugosity(WallMaterial)
+            Dim ffint = 0.0#
+            If Re_int > 3250 Then
+                Dim a1 = Math.Log(((epsilon / Dint) ^ 1.1096) / 2.8257 + (7.149 / Re_int) ^ 0.8961) / Math.Log(10.0#)
+                Dim b1 = -2 * Math.Log((epsilon / Dint) / 3.7065 - 5.0452 * a1 / Re_int) / Math.Log(10.0#)
+                ffint = (1 / b1) ^ 2
+            Else
+                ffint = 64 / Re_int
             End If
+
+            'Internal Pr calc
+            Dim Pr_int = Pipe.NPr(Cp, mu, k)
+
+            'Internal h calc
+            Dim h_int = Pipe.hint_petukhov(k, Dint, ffint, Re_int, Pr_int)
+
+            'Internal h contribution
+            U_int = h_int
 
             'Pipe wall HTC contribution
             Dim U_parede = 0.0#
 
-            If parede = True Then
+            U_parede = Kwall(T) / (Math.Log(Dext / Dint) * Dint)
+            If Dext = Dint Then U_parede = 0.0#
 
-                U_parede = Kwall(T) / (Math.Log(Dext / Dint) * Dint)
-                If Dext = Dint Then U_parede = 0.0#
+            'Calculate overall HTC
+            Dim _U As Double
 
+            If U_int <> 0.0# Then
+                _U = _U + 1 / U_int
+            Else
+                _U = _U + 1.0E+30
             End If
+            If U_parede <> 0.0# Then
+                _U = _U + 1 / U_parede
+            Else
+                _U = _U + 1.0E+30
+            End If
+
+            Return New Double() {1 / _U, U_int, U_parede} '[W/m².K]
+
+        End Function
+
+        Function CalcOverallExternalHeatTransferCoefficient(Dint As Double, Dext As Double, rugosidade As Double,
+                            T As Double, Text As Double, isolamento As Boolean) As Double()
+
+            'Pipe wall HTC contribution
+            Dim U_parede = 0.0#
+
+            U_parede = Kwall(T) / (Math.Log(Dext / Dint) * Dint)
+            If Dext = Dint Then U_parede = 0.0#
 
             'Insulation HTC contribution
             Dim U_isol = 0.0#
@@ -1189,52 +1208,39 @@ Namespace UnitOperations
             'External HTC contribution
             Dim U_ext = 0.0#
 
-            If hexterno = True Then
+            Dim mu2, k2, cp2, rho2 As Double 'Soil, undergound
 
-                Dim mu2, k2, cp2, rho2 As Double 'Soil, undergound
+            'Average air properties
 
-                'Average air properties
+            Dim Pext As Double = 101325.0
 
-                Dim Pext As Double = 101325.0
+            Dim vel = Convert.ToDouble(ThermalProperties.Velocidade)
 
-                vel = Convert.ToDouble(ThermalProperties.Velocidade)
+            Dim props = Pipe.PropsAR(Text, Pext)
+            mu2 = props(1)
+            rho2 = props(0)
+            cp2 = props(2) * 1000
+            k2 = props(3)
 
-                Dim props = Pipe.PropsAR(Text, Pext)
-                mu2 = props(1)
-                rho2 = props(0)
-                cp2 = props(2) * 1000
-                k2 = props(3)
+            'External Re
+            Dim Re_ext = Pipe.NRe(rho2, vel, (Dext + 2 * esp_isol), mu2)
 
-                'External Re
-                Dim Re_ext = Pipe.NRe(rho2, vel, (Dext + 2 * esp_isol), mu2)
+            'External Pr
+            Dim Pr_ext = Pipe.NPr(cp2, mu2, k2)
 
-                'External Pr
-                Dim Pr_ext = Pipe.NPr(cp2, mu2, k2)
+            'External h
+            Dim h_ext = Pipe.hext_holman(k2, (Dext + 2 * esp_isol), Re_ext, Pr_ext)
 
-                'External h
-                Dim h_ext = Pipe.hext_holman(k2, (Dext + 2 * esp_isol), Re_ext, Pr_ext)
-
-                'External HTC contribution
-                U_ext = h_ext * (Dext + 2 * esp_isol) / Dint
-
-            End If
+            'External HTC contribution
+            U_ext = h_ext * (Dext + 2 * esp_isol) / Dint
 
             'Calculate overall HTC
             Dim _U As Double
 
-            If U_int <> 0.0# Then
-                _U = _U + 1 / U_int
-            Else
-                If hinterno = True Then
-                    _U = _U + 1.0E+30
-                End If
-            End If
             If U_parede <> 0.0# Then
                 _U = _U + 1 / U_parede
             Else
-                If parede = True Then
-                    _U = _U + 1.0E+30
-                End If
+                _U = _U + 1.0E+30
             End If
             If U_isol <> 0.0# Then
                 _U = _U + 1 / U_isol
@@ -1246,14 +1252,13 @@ Namespace UnitOperations
             If U_ext <> 0.0# Then
                 _U = _U + 1 / U_ext
             Else
-                If hexterno = True Then
-                    _U = _U + 1.0E+30
-                End If
+                _U = _U + 1.0E+30
             End If
 
-            Return New Double() {1 / _U, U_int, U_parede, U_isol, U_ext} '[W/m².K]
+            Return New Double() {1 / _U, U_parede, U_isol, U_ext} '[W/m².K]
 
         End Function
+
 
         Function Kwall(ByVal T As Double) As Double
 

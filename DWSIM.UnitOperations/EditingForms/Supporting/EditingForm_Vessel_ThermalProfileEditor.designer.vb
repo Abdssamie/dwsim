@@ -46,10 +46,7 @@ Partial Class VesselThermalProfileEditor
         Me.Label34 = New System.Windows.Forms.Label()
         Me.ComboBoxMAT = New System.Windows.Forms.ComboBox()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.CheckBoxICTE = New System.Windows.Forms.CheckBox()
-        Me.CheckBoxICTI = New System.Windows.Forms.CheckBox()
         Me.CheckBoxII = New System.Windows.Forms.CheckBox()
-        Me.CheckBoxIPT = New System.Windows.Forms.CheckBox()
         Me.RadioButton8 = New System.Windows.Forms.RadioButton()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
@@ -97,10 +94,7 @@ Partial Class VesselThermalProfileEditor
         Me.GroupBox7.Controls.Add(Me.Label34)
         Me.GroupBox7.Controls.Add(Me.ComboBoxMAT)
         Me.GroupBox7.Controls.Add(Me.Label35)
-        Me.GroupBox7.Controls.Add(Me.CheckBoxICTE)
-        Me.GroupBox7.Controls.Add(Me.CheckBoxICTI)
         Me.GroupBox7.Controls.Add(Me.CheckBoxII)
-        Me.GroupBox7.Controls.Add(Me.CheckBoxIPT)
         Me.GroupBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.TabStop = False
@@ -216,25 +210,10 @@ Partial Class VesselThermalProfileEditor
         resources.ApplyResources(Me.Label35, "Label35")
         Me.Label35.Name = "Label35"
         '
-        'CheckBoxICTE
-        '
-        resources.ApplyResources(Me.CheckBoxICTE, "CheckBoxICTE")
-        Me.CheckBoxICTE.Name = "CheckBoxICTE"
-        '
-        'CheckBoxICTI
-        '
-        resources.ApplyResources(Me.CheckBoxICTI, "CheckBoxICTI")
-        Me.CheckBoxICTI.Name = "CheckBoxICTI"
-        '
         'CheckBoxII
         '
         resources.ApplyResources(Me.CheckBoxII, "CheckBoxII")
         Me.CheckBoxII.Name = "CheckBoxII"
-        '
-        'CheckBoxIPT
-        '
-        resources.ApplyResources(Me.CheckBoxIPT, "CheckBoxIPT")
-        Me.CheckBoxIPT.Name = "CheckBoxIPT"
         '
         'RadioButton8
         '
@@ -354,10 +333,7 @@ Partial Class VesselThermalProfileEditor
     Public WithEvents Label34 As System.Windows.Forms.Label
     Public WithEvents ComboBoxMAT As System.Windows.Forms.ComboBox
     Public WithEvents Label35 As System.Windows.Forms.Label
-    Public WithEvents CheckBoxICTE As System.Windows.Forms.CheckBox
-    Public WithEvents CheckBoxICTI As System.Windows.Forms.CheckBox
     Public WithEvents CheckBoxII As System.Windows.Forms.CheckBox
-    Public WithEvents CheckBoxIPT As System.Windows.Forms.CheckBox
     Public WithEvents RadioButton8 As System.Windows.Forms.RadioButton
     Public WithEvents GroupBox8 As System.Windows.Forms.GroupBox
     Public WithEvents Label37 As System.Windows.Forms.Label
