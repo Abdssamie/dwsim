@@ -236,6 +236,8 @@ Namespace UnitOperations
 
             Dim oms3 As MaterialStream = Me.GetOutletMaterialStream(2)
 
+            Dim omsr As MaterialStream = GetOutletMaterialStream(3)
+
             If CalculationMode > 1 Then
                 Throw New Exception("Only Adiabatic and Legacy mode are supported in dynamic mode.")
             End If
@@ -255,7 +257,54 @@ Namespace UnitOperations
             Next
 
             Dim Vol As Double = GetDynamicProperty("Volume")
+
             Dim Height As Double = GetDynamicProperty("Height")
+
+            If GetDynamicProperty("Get Height from Dimensions") Then
+
+                Height = Dimensions(1).Value
+
+            End If
+
+            If GetDynamicProperty("Get Volume from Dimensions") Then
+
+                ' Calculate vessel volume
+
+                Dim pi = Math.PI
+
+                Dim D = Dimensions(0).Value
+                Dim L = Dimensions(1).Value
+
+                Select Case HeadType
+
+                    Case "Ellipsoidal (2:1)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (pi * D ^ 3 / 24)
+
+                    Case "Hemispherical"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (pi * D ^ 3 / 12)
+
+                    Case "Torispherical (ASME F&D)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (0.0847 * D ^ 3)
+
+                    Case "Torispherical (Standard F&D)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (0.0808 * D ^ 3)
+
+                    Case "Torispherical (80:10 F&D)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (0.0746 * D ^ 3)
+
+                    Case "Flat"
+
+                        Vol = pi * D ^ 2 * L / 4
+
+                End Select
+
+            End If
+
             Dim Pressure, Enthalpy As Double
             Dim Pmin = GetDynamicProperty("Minimum Pressure")
             Dim Orientation As Integer = GetDynamicProperty("Vessel Orientation")
@@ -299,14 +348,13 @@ Namespace UnitOperations
                 AccumulationStream.Calculate()
                 If oms1.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(oms1, timestep)
                 If oms2.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(oms2, timestep)
+                If omsr IsNot Nothing Then
+                    If omsr.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(omsr, timestep)
+                End If
                 If AccumulationStream.GetMassFlow <= 0.0 Then AccumulationStream.SetMassFlow(0.0)
             End If
 
             AccumulationStream.SetFlowsheet(FlowSheet)
-
-            ' Calculate vessel volume
-
-            Dim VesselVolume As Double = 0.0
 
             ' Calculate Temperature
 
@@ -338,7 +386,7 @@ Namespace UnitOperations
                 rhol = AccumulationStream.OverallLiquid.Properties.density.GetValueOrDefault()
                 rhov = AccumulationStream.Vapor.Properties.density.GetValueOrDefault()
 
-                holdup = AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / VesselVolume
+                holdup = AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / Vol
 
                 VapVel = AccumulationStream.GetMassFlow() * AccumulationStream.Vapor.Properties.massfraction.GetValueOrDefault() / rhov / A
                 LiqVel = AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / A
