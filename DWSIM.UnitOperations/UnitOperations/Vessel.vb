@@ -367,6 +367,12 @@ Namespace UnitOperations
 
             If CalculateRigorousHeatBalance Then
 
+                If es IsNot Nothing Then
+
+                    Throw New Exception("Please disconnect the energy stream to calculate the rigorous heat balance.")
+
+                End If
+
                 Dim U, A, DQ, DQmax, Tin, Tout, Tpe, Cp_m, holdup, Cpl, Cpv, Text, Kl, Kv, VapVel, LiqVel, MUl, MUv As Double
 
                 If ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
