@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label11.Text" xml:space="preserve">
-    <value>You can now log in to DWSIM Pro with your Simulate 365 account. 
+    <value>You can now sign in to DWSIM Pro with your Simulate 365 account. 
 
-Make sure to use your Simulate 365 username (name.surname@simulate365.com). If you are logged in to your PC with your company or personal Microsoft account, you can get an error message: "Your administrator hasn’t set up any resources". 
+Make sure to use your Simulate 365 username (name.surname@simulate365.com). If you are signed in to your PC with your company or personal Microsoft account, you can get an error message: "Your administrator hasn’t set up any resources". 
 
 Use the buttons on the right to launch private browsing mode to access DWSIM Pro: “Incognito” for Chrome, “InPrivate” for Edge and “Private” for Firefox.</value>
   </data>

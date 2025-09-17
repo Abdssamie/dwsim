@@ -1,4 +1,5 @@
 ﻿
+using DWSIM.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace DWSIM.Simulate365.Services
         #region Public events    
         public event EventHandler OnSaveFileToDashboard;
         public event EventHandler OnFileSavedToDashboard;
+
+        public event EventHandler<IVirtualFile> OnFileSaved;
 
         #endregion
 
@@ -30,6 +33,10 @@ namespace DWSIM.Simulate365.Services
         public void FileSavedToDashboard()
         {
             this.OnFileSavedToDashboard?.Invoke(this, EventArgs.Empty);
+        }
+        public void FileSaved(IVirtualFile file)
+        {
+            this.OnFileSaved?.Invoke(this, file);
         }
     }
 }

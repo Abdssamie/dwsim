@@ -106,37 +106,16 @@ Public Class FormMain
     Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString() & "." &
     Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()
 
-    Public Shared Property EnableUserDefinedOpenRecentRoutine As Boolean = False
     Public Shared Property EnableFlowsheetSolveCallbackHandler As Boolean = False
-    Public Shared Property EnableActiveUsersButton As Boolean = False
-    Public Shared Property EnableNotificationBadge As Boolean = False
-    Public Shared Property EnableUpdatesActiveSimulationUsersBadgeCount As Boolean = False
 
     Public Shared OnFileLoaded As Action(Of IVirtualFile, String, String)
 
-    Public Shared UserDefinedOpenRecentRoutine As Action(Of Object, System.EventArgs, String)
 
     Public Shared RegisterFlowsheetSolveCallbackHandler As Action
-
-    Public Shared SetupActiveUsersButton As Func(Of Form, ToolStrip, ToolStripButton)
-
-    Public Shared ShowNotificationBadge As Action(Of Guid, String, ToolStripButton)
-
-    Public Shared Update_ActiveSimulation_UsersBadge_Count As Action(Of Form)
-
-    Public Shared collabSubscription As Action(Of ToolStripMenuItem)
 
 #Region "    Form Events"
 
     Public Event ToolOpened(sender As Object, e As EventArgs)
-
-    Public Event FlowsheetSavingToXML(sender As Object, e As EventArgs)
-
-    Public Event FlowsheetSavedToXML(sender As Object, e As EventArgs)
-
-    Public Event FlowsheetLoadingFromXML(sender As Object, e As EventArgs)
-
-    Public Event FlowsheetLoadedFromXML(sender As Object, e As EventArgs)
 
     Public Shared Event ActiveSimulationChanged(sender As Object, e As EventArgs)
     Public Shared Event ActiveSimulationClosed(sender As Object, e As EventArgs)
@@ -1202,7 +1181,6 @@ Public Class FormMain
                 End Sub
         End If
 
-        collabSubscription?.Invoke(ToolsTSMI)
     End Sub
 
     Sub CheckForUpdates()
@@ -2006,8 +1984,6 @@ Public Class FormMain
 
     Public Function LoadJSON(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "") As Interfaces.IFlowsheet
 
-        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
-
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         Dim excs As New Concurrent.ConcurrentBag(Of Exception)
@@ -2351,15 +2327,13 @@ Public Class FormMain
 
         form.ProcessScripts(Enums.Scripts.EventType.SimulationOpened, Enums.Scripts.ObjectType.Simulation, "")
 
-        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
+
 
         Return form
 
     End Function
 
     Public Function LoadXML(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
-
-        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
@@ -2992,8 +2966,6 @@ Public Class FormMain
         Application.DoEvents()
 
         form.ProcessScripts(Enums.Scripts.EventType.SimulationOpened, Enums.Scripts.ObjectType.Simulation, "")
-
-        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
 
         form.Options.EnabledUndoRedo = undoredoenabled
 
@@ -3760,16 +3732,14 @@ Public Class FormMain
                                    form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & mypath & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, MessageType.Information)
                                    'Me.ToolStripStatusLabel1.Text = ""
                                End Sub))
-
         Application.DoEvents()
+
 
     End Sub
 
     Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-
-        RaiseEvent FlowsheetSavingToXML(form, New EventArgs())
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
@@ -4000,8 +3970,6 @@ Public Class FormMain
         If Not IO.Path.GetExtension(handler.FullPath).ToLower.Contains("dwbcs") Then
             form.ProcessScripts(Scripts.EventType.SimulationSaved, Scripts.ObjectType.Simulation, "")
         End If
-
-        RaiseEvent FlowsheetSavedToXML(form, New EventArgs())
 
     End Sub
 
@@ -4682,7 +4650,11 @@ Label_00CC:
                     Me.bgSaveFile.RunWorkerAsync()
                 End If
                 If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
-                    DirectCast(ActiveMdiChild, FormFlowsheet).FlowsheetOptions.VirtualFile = handler
+                    Dim flowsheet As FormFlowsheet = DirectCast(Me.ActiveMdiChild, FormFlowsheet)
+                    flowsheet.FlowsheetOptions.VirtualFile = handler
+                    flowsheet.Options.FilePath = handler.FullPath
+                    flowsheet.UpdateFormText()
+
                 End If
             End If
         Else
@@ -4795,11 +4767,6 @@ Label_00CC:
     Private Sub OpenRecent_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-
-        If EnableUserDefinedOpenRecentRoutine AndAlso UserDefinedOpenRecentRoutine IsNot Nothing Then
-            UserDefinedOpenRecentRoutine.Invoke(sender, e, dwsimVersion)
-            Exit Sub
-        End If
 
         Dim myLink As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
 
@@ -5022,6 +4989,7 @@ Label_00CC:
                             Me.ActiveMdiChild.Text = handler.FullPath
                         End Using
                     End Using
+
                     Return handler.FullPath
                 End If
             ElseIf TypeOf Me.ActiveMdiChild Is FormUNIFACRegression Then
@@ -5041,7 +5009,7 @@ Label_00CC:
                 End If
             End If
         Else
-            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
         Return ""
 
@@ -5513,8 +5481,7 @@ Label_00CC:
         MessageBox.Show("Chave Pix copiada. Obrigado pelo apoio!", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
-    Private Sub ShareFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShareFileToolStripMenuItem.Click
-
+    Private Sub onShareFileClick()
         If Not Me.ActiveMdiChild Is Nothing Then
             If Not TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
                 MessageBox.Show(DWSIM.App.GetLocalString("ShareTypeNotSupported"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -5524,46 +5491,34 @@ Label_00CC:
             Dim shareFileForm As New ShareFileForm()
             Dim openedFile As S365File = Nothing
 
-            If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
-                openedFile = form2.Options.VirtualFile
-                If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
-                    shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
-                End If
-            Else
+            If form2.Options.VirtualFile Is Nothing Or Not IsCorrectVirtualFile(True, form2.Options.VirtualFile) Then
                 MessageBox.Show(DWSIM.App.GetLocalString("SaveFileToShare"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
             End If
 
+            openedFile = form2.Options.VirtualFile
+            Dim user As UserDetailsModel = UserService.GetInstance().CurrentUser
+
+            If user.Id <> openedFile.OwnerId Then
+                MessageBox.Show(DWSIM.App.GetLocalString("ShareNotFileOwner"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
+            End If
+
+            If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
+                shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
+            End If
 
         Else
             MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotOpened"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+    End Sub
 
-
+    Private Sub ShareFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShareFileToolStripMenuItem.Click
+        Me.onShareFileClick()
     End Sub
 
     Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
-        If Not Me.ActiveMdiChild Is Nothing Then
-            If Not TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
-                MessageBox.Show(DWSIM.App.GetLocalString("ShareTypeNotSupported"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return
-            End If
-            Dim form2 As FormFlowsheet = Me.ActiveMdiChild
-            Dim shareFileForm As New ShareFileForm()
-            Dim openedFile As S365File = Nothing
-
-            If (form2.Options.VirtualFile IsNot Nothing And IsCorrectVirtualFile(True, form2.Options.VirtualFile)) Then
-                openedFile = form2.Options.VirtualFile
-                If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
-                    shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
-                End If
-            Else
-                MessageBox.Show(DWSIM.App.GetLocalString("SaveFileToShare"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
-            End If
-
-
-        Else
-            MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotOpened"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
+        Me.onShareFileClick()
     End Sub
 
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged
@@ -5577,6 +5532,7 @@ Label_00CC:
     Public Shared Sub RaiseActiveSimulationClosed(sender As Object, e As EventArgs)
         RaiseEvent ActiveSimulationClosed(sender, e)
     End Sub
+
 #End Region
 
 End Class

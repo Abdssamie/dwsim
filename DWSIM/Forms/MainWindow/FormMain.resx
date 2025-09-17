@@ -216,7 +216,7 @@
     <value>Abrir do Dashboard</value>
   </data>
   <data name="LoginButton.Text" xml:space="preserve">
-    <value>Log in with Simulate 365 account</value>
+    <value>Sign in with Simulate 365 account</value>
   </data>
   <data name="ToolStripButton3.Text" xml:space="preserve">
     <value>Janelas em Cascata</value>

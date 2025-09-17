@@ -3857,6 +3857,9 @@
   <ItemGroup>
     <Folder Include="Tools\CompoundParameterTuning\" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -69,6 +69,7 @@ namespace DWSIM.Simulate365.Models
             FullPath = file.FullPath;
 
             FileManagementService.GetInstance().FileSavedToDashboard();
+            FileManagementService.GetInstance().FileSaved(this);
         }
 
         public void Write(System.IO.Stream stream)
@@ -83,6 +84,7 @@ namespace DWSIM.Simulate365.Models
             FileVersion = file.FileVersion;
 
             FileManagementService.GetInstance().FileSavedToDashboard();
+            FileManagementService.GetInstance().FileSaved(this);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DWSIM.Interfaces;
+using DWSIM.Simulate365.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,11 +42,13 @@ namespace DWSIM.SharedClassesCSharp.FilePicker.Windows
             {
                 stream.CopyTo(fileStream);
             }
+            FileManagementService.GetInstance().FileSaved(this);
         }
 
         public void Write(string localFile)
         {
             File.Copy(localFile, _filePath);
+            FileManagementService.GetInstance().FileSaved(this);
         }
 
         public string GetExtension()

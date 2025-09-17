@@ -87,6 +87,10 @@
       <Name>DWSIM.XMLSerializer</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\DWSIM.Simulate365\DWSIM.Simulate365.csproj">
+      <Project>{1CC0851C-F6C2-477C-A725-A2E1C5E96802}</Project>
+      <Name>DWSIM.Simulate365</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ConnectionsEditor\ConnectionsEditor.resx">

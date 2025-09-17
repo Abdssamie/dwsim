@@ -10684,6 +10684,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Para começar a colaborar, por favor, abra o arquivo no painel do Simulate 365..
+        '''</summary>
+        Friend Shared ReadOnly Property OpenFileFromDashboardToCollaborate() As String
+            Get
+                Return ResourceManager.GetString("OpenFileFromDashboardToCollaborate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to O perfil hidráulico da tubulação não está definido..
         '''</summary>
         Friend Shared ReadOnly Property Operfilhidrulicodatu() As String
@@ -13681,6 +13690,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Salve o arquivo no seu Painel do Simulate 365 para colaborar com outros usuários..
+        '''</summary>
+        Friend Shared ReadOnly Property SaveFileToDashboardToCollaborate() As String
+            Get
+                Return ResourceManager.GetString("SaveFileToDashboardToCollaborate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Somente arquivos de simulação salvos podem ser compartilhados. Salve o arquivo no Simulate 365 Dashboard antes de compartilhar..
         '''</summary>
         Friend Shared ReadOnly Property SaveFileToShare() As String
@@ -14253,6 +14271,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SetpointdoAjusteouov() As String
             Get
                 Return ResourceManager.GetString("SetpointdoAjusteouov", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Apenas o proprietário do arquivo que iniciou a colaboração pode compartilhar este arquivo. Os colaboradores convidados não têm permissão para compartilhar novamente..
+        '''</summary>
+        Friend Shared ReadOnly Property ShareNotFileOwner() As String
+            Get
+                Return ResourceManager.GetString("ShareNotFileOwner", resourceCulture)
             End Get
         End Property
         

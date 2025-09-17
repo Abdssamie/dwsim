@@ -5775,4 +5775,13 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareSimulationNotOpened" xml:space="preserve">
     <value>Somente o arquivo de simulação aberto pode ser compartilhado. Abra o arquivo primeiro e depois compartilhe.</value>
   </data>
+  <data name="ShareNotFileOwner" xml:space="preserve">
+    <value>Apenas o proprietário do arquivo que iniciou a colaboração pode compartilhar este arquivo. Os colaboradores convidados não têm permissão para compartilhar novamente.</value>
+  </data>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>Para começar a colaborar, por favor, abra o arquivo no painel do Simulate 365.</value>
+  </data>
+  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
+    <value>Salve o arquivo no seu Painel do Simulate 365 para colaborar com outros usuários.</value>
+  </data>
 </root>

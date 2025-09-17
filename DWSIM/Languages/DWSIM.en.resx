@@ -5741,6 +5741,12 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareSimulationNotOpened" xml:space="preserve">
     <value>Only the open simulation file can be shared. Please open the file first then share. </value>
   </data>
+  <data name="ShareNotFileOwner" xml:space="preserve">
+    <value>Only the file owner who initiated collaboration can share this file. Invited collaborators do not have the re-sharing permission.</value>
+  </data>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>To begin collaborating, please open the file from the Simulate 365 dashboard.</value>
+  </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Connect/Disconnect Object</value>
   </data>
@@ -5950,5 +5956,8 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="DescDHPP" xml:space="preserve">
     <value>Includes only the Debye-Hückel term for the calculation of activity coefficients.</value>
+  </data>
+  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
+    <value>Save the file to your Simulate 365 Dashboard to collaborate with other users.</value>
   </data>
 </root>
