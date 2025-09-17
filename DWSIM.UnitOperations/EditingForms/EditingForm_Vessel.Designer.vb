@@ -101,6 +101,8 @@ Partial Class EditingForm_Vessel
         Me.tbThickness = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.chkDoRigorousHB = New System.Windows.Forms.CheckBox()
+        Me.PanelThermalProfileEditor = New System.Windows.Forms.Panel()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.btnUtils = New System.Windows.Forms.Button()
         Me.lblTag = New System.Windows.Forms.TextBox()
@@ -126,6 +128,7 @@ Partial Class EditingForm_Vessel
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -913,11 +916,30 @@ Partial Class EditingForm_Vessel
         'TabPage2
         '
         resources.ApplyResources(Me.TabPage2, "TabPage2")
+        Me.TabPage2.Controls.Add(Me.chkDoRigorousHB)
+        Me.TabPage2.Controls.Add(Me.PanelThermalProfileEditor)
         Me.TabPage2.Name = "TabPage2"
         Me.ToolTip1.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip2"))
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'chkDoRigorousHB
+        '
+        resources.ApplyResources(Me.chkDoRigorousHB, "chkDoRigorousHB")
+        Me.chkDoRigorousHB.Name = "chkDoRigorousHB"
+        Me.ToolTip1.SetToolTip(Me.chkDoRigorousHB, resources.GetString("chkDoRigorousHB.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.chkDoRigorousHB, resources.GetString("chkDoRigorousHB.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.chkDoRigorousHB, resources.GetString("chkDoRigorousHB.ToolTip2"))
+        Me.chkDoRigorousHB.UseVisualStyleBackColor = True
+        '
+        'PanelThermalProfileEditor
+        '
+        resources.ApplyResources(Me.PanelThermalProfileEditor, "PanelThermalProfileEditor")
+        Me.PanelThermalProfileEditor.Name = "PanelThermalProfileEditor"
+        Me.ToolTipValues.SetToolTip(Me.PanelThermalProfileEditor, resources.GetString("PanelThermalProfileEditor.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.PanelThermalProfileEditor, resources.GetString("PanelThermalProfileEditor.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.PanelThermalProfileEditor, resources.GetString("PanelThermalProfileEditor.ToolTip2"))
         '
         'GroupBox5
         '
@@ -1116,6 +1138,8 @@ Partial Class EditingForm_Vessel
         Me.TabPage1.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -1222,4 +1246,6 @@ Partial Class EditingForm_Vessel
     Public WithEvents btnDisconnectOutlet4 As Button
     Public WithEvents Label19 As Label
     Public WithEvents cbOutlet4 As ComboBox
+    Friend WithEvents chkDoRigorousHB As CheckBox
+    Public WithEvents PanelThermalProfileEditor As Panel
 End Class

@@ -510,6 +510,12 @@
     <Compile Include="EditingForms\EditingForm_WindTurbine.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="EditingForms\Supporting\EditingForm_Vessel_ThermalProfileEditor.designer.vb">
+      <DependentUpon>EditingForm_Vessel_ThermalProfileEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditingForms\Supporting\EditingForm_Vessel_ThermalProfileEditor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="EditingForms\Other\Form_CapeOpenSelector.designer.vb">
       <DependentUpon>Form_CapeOpenSelector.vb</DependentUpon>
     </Compile>
@@ -1086,6 +1092,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditingForms\EditingForm_WindTurbine.resx">
       <DependentUpon>EditingForm_WindTurbine.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditingForms\Supporting\EditingForm_Vessel_ThermalProfileEditor.de.resx">
+      <DependentUpon>EditingForm_Vessel_ThermalProfileEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditingForms\Supporting\EditingForm_Vessel_ThermalProfileEditor.en.resx">
+      <DependentUpon>EditingForm_Vessel_ThermalProfileEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditingForms\Supporting\EditingForm_Vessel_ThermalProfileEditor.es.resx">
+      <DependentUpon>EditingForm_Vessel_ThermalProfileEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditingForms\Supporting\EditingForm_Vessel_ThermalProfileEditor.resx">
+      <DependentUpon>EditingForm_Vessel_ThermalProfileEditor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditingForms\Other\Form_CapeOpenSelector.de.resx">
       <DependentUpon>Form_CapeOpenSelector.vb</DependentUpon>

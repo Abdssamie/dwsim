@@ -128,10 +128,12 @@ Public Class EditingForm_Vessel
 
             'parameters
 
-            TabPage2.Controls.Clear()
-            Dim teditor As New PipeThermalProfileEditor With {.Profile = VesselObject.ThermalProperties, .form = VesselObject.FlowSheet}
+            PanelThermalProfileEditor.Controls.Clear()
+            Dim teditor As New VesselThermalProfileEditor With {.Profile = VesselObject.ThermalProperties, .form = VesselObject.FlowSheet}
             teditor.Dock = DockStyle.Fill
-            TabPage2.Controls.Add(teditor)
+            PanelThermalProfileEditor.Controls.Add(teditor)
+
+            chkDoRigorousHB.Checked = VesselObject.CalculateRigorousHeatBalance
 
             Select Case .PressureCalculation
                 Case UnitOperations.Vessel.PressureBehavior.Minimum
@@ -675,4 +677,8 @@ Public Class EditingForm_Vessel
 
     End Sub
 
+    Private Sub chkDoRigorousHB_CheckedChanged(sender As Object, e As EventArgs) Handles chkDoRigorousHB.CheckedChanged
+        VesselObject.CalculateRigorousHeatBalance = chkDoRigorousHB.Checked
+        PanelThermalProfileEditor.Enabled = chkDoRigorousHB.Checked
+    End Sub
 End Class
