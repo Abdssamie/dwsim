@@ -266,14 +266,17 @@ Namespace UnitOperations
 
             End If
 
+            Dim D, L, DE As Double
+
             If GetDynamicProperty("Get Volume from Dimensions") Then
 
                 ' Calculate vessel volume
 
                 Dim pi = Math.PI
 
-                Dim D = Dimensions(0).Value
-                Dim L = Dimensions(1).Value
+                D = Dimensions(0).Value
+                L = Dimensions(1).Value
+                DE = D + WallThickness
 
                 Select Case HeadType
 
@@ -406,16 +409,14 @@ Namespace UnitOperations
                         Uint = ThermalProperties.CGTC_Definido
                     ElseIf ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Estimar_CGTC Then
                         Tpe = Tint
-                        Uint = CalcOverallInternalHeatTransferCoefficient(holdup, Dimensions(1).Value,
-                                                                                Dimensions(0).Value, (Dimensions(0).Value + WallThickness),
-                                                                                Me.GetRugosity(WallMaterial), Tpe, Text,
+                        Uint = CalcOverallInternalHeatTransferCoefficient(holdup, L, D, DE, Me.GetRugosity(WallMaterial), Tpe, Text,
                                                                                 VapVel, LiqVel, Cpl, Cpv, Kl, Kv,
                                                                                 MUl, MUv, rhol, rhov)(0)
                     End If
                     If Uint <> 0.0# Then
 
                         DQ = (Twall - Tint) * Uint / 1000 * A
-                        Uext = CalcOverallExternalHeatTransferCoefficient(Dimensions(0).Value, (Dimensions(0).Value + WallThickness), GetRugosity(WallMaterial), Tpe, Text, ThermalProperties.Incluir_isolamento)(0)
+                        Uext = CalcOverallExternalHeatTransferCoefficient(D, DE, GetRugosity(WallMaterial), Tpe, Text, ThermalProperties.Incluir_isolamento)(0)
 
                         Dim Qwall, SR, Qrad As Double
                         Qwall = (Text - Twall) * Uext / 1000 * A
@@ -426,26 +427,29 @@ Namespace UnitOperations
                             Else
                                 SR = ThermalProperties.SolarRadiationAbsorptionEfficiency * ThermalProperties.SolarRadiationValue_kWh_m2
                             End If
-                            Dim Asec = Math.PI * Dimensions(1).Value * (Dimensions(0).Value + WallThickness)
+                            SR *= 3600
+                            Dim Asec = Math.PI * L * DE
                             Qrad = SR / timestep * Asec
                             Qwall += Qrad
                         End If
 
-                        'WallTemperature = 
-
+                        WallTemperature = WallTemperature + (DQ + Qwall) / (Kwall(WallTemperature) * Math.PI * (Math.Log(DE / D) * D) * L)
 
                         If Double.IsNaN(DQ) Then DQ = 0.0#
 
-                        'results.Internal_Temperature = (Tout + Tin) / 2
-                        'results.Wall_Temperature = results.Internal_Temperature + DQ / (results.HTC_pipewall * Math.PI * (Math.Log(.DE / .DI) * .DI * 0.0254) * .Comprimento / .Incrementos)
-                        'results.Insulation_Temperature = results.Wall_Temperature + DQ / (results.HTC_insulation * Math.PI * (Math.Log((.DE + ThermalProperties.Espessura / 0.0254) / .DE) * .DE * 0.0254) * .Comprimento / .Incrementos)
-
                     Else
+
                         DQ = 0.0#
                         DQmax = 0.0#
+
                     End If
+
+                    Qval = DQ
+
                 Else
-                    DQ = ThermalProperties.Calor_trocado
+
+                    Qval = ThermalProperties.Calor_trocado
+
                 End If
 
             Else
