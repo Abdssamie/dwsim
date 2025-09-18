@@ -48,13 +48,10 @@ Public Class VesselThermalProfileEditor
         If RadioButton7.Checked = True Then
             Profile.TipoPerfil = UnitOperations.Auxiliary.Pipe.ThermalEditorDefinitions.ThermalProfileType.Estimar_CGTC
             TextBoxTA2.Enabled = True
-            CheckBoxIPT.Enabled = True
-            CheckBoxICTI.Enabled = True
             CheckBoxII.Enabled = True
             ComboBoxMAT.Enabled = True
             TextBoxCTERM.Enabled = True
             TextBoxESP.Enabled = True
-            CheckBoxICTE.Enabled = True
             ComboBoxMAMB.Enabled = True
             TextBoxVEL.Enabled = True
 
@@ -63,13 +60,10 @@ Public Class VesselThermalProfileEditor
         Else
 
             TextBoxTA2.Enabled = False
-            CheckBoxIPT.Enabled = False
-            CheckBoxICTI.Enabled = False
             CheckBoxII.Enabled = False
             ComboBoxMAT.Enabled = False
             TextBoxCTERM.Enabled = False
             TextBoxESP.Enabled = False
-            CheckBoxICTE.Enabled = False
             ComboBoxMAMB.Enabled = False
             TextBoxVEL.Enabled = False
 
@@ -163,10 +157,7 @@ Public Class VesselThermalProfileEditor
                 Me.TextBoxTA.Text = cv.ConvertFromSI(su.temperature, .Temp_amb_definir).ToString()
                 Me.TextBoxTA2.Text = cv.ConvertFromSI(su.temperature, .Temp_amb_estimar).ToString()
                 Me.TextBoxVEL.Text = .Velocidade.ToString()
-                Me.CheckBoxICTE.Checked = .Incluir_cte
-                Me.CheckBoxICTI.Checked = .Incluir_cti
                 Me.CheckBoxII.Checked = .Incluir_isolamento
-                Me.CheckBoxIPT.Checked = .Incluir_paredes
                 chkIncludeSolarIrradiation.Checked = .IncludeSolarRadiation
                 tbSolarIrradiation.Text = .SolarRadiationValue_kWh_m2.ToString()
                 tbSolarEff.Text = .SolarRadiationAbsorptionEfficiency.ToString()
@@ -252,14 +243,6 @@ Public Class VesselThermalProfileEditor
         End If
     End Sub
 
-    Private Sub CheckBoxIPT_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Profile.Incluir_paredes = Me.CheckBoxIPT.Checked
-    End Sub
-
-    Private Sub CheckBoxICTI_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        Profile.Incluir_cti = Me.CheckBoxICTI.Checked
-    End Sub
-
     Private Sub CheckBoxII_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBoxII.CheckedChanged
         Profile.Incluir_isolamento = Me.CheckBoxII.Checked
         If Me.CheckBoxII.Checked = False Then
@@ -271,17 +254,6 @@ Public Class VesselThermalProfileEditor
             Me.TextBoxCTERM.Enabled = True
             Me.TextBoxESP.Enabled = True
             ComboBoxMAT_SelectedIndexChanged(sender, e)
-        End If
-    End Sub
-
-    Private Sub CheckBoxICTE_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) 
-        Profile.Incluir_cte = Me.CheckBoxICTE.Checked
-        If Me.CheckBoxICTE.Checked = False Then
-            Me.ComboBoxMAMB.Enabled = False
-            Me.TextBoxVEL.Enabled = False
-        Else
-            Me.ComboBoxMAMB.Enabled = True
-            Me.TextBoxVEL.Enabled = True
         End If
     End Sub
 
