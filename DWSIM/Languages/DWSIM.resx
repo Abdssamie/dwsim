@@ -5784,4 +5784,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
     <value>Salve o arquivo no seu Painel do Simulate 365 para colaborar com outros usuários.</value>
   </data>
+  <data name="NotSupportedCollaborationFileType" xml:space="preserve">
+    <value>O tipo de arquivo não é compatível para colaboração.</value>
+  </data>
 </root>

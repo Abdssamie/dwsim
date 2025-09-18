@@ -10423,6 +10423,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to O tipo de arquivo não é compatível para colaboração..
+        '''</summary>
+        Friend Shared ReadOnly Property NotSupportedCollaborationFileType() As String
+            Get
+                Return ResourceManager.GetString("NotSupportedCollaborationFileType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to n-Pentano (nC5).
         '''</summary>
         Friend Shared ReadOnly Property nPentanonC5() As String

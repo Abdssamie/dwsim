@@ -5465,6 +5465,9 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
     <value> Um mit der Zusammenarbeit zu beginnen, öffnen Sie bitte die Datei im Simulate 365 Dashboard.</value>
   </data>
+  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
+    <value>Speichern Sie die Datei in Ihrem Simulate 365-Dashboard, um mit anderen Benutzern zusammenzuarbeiten.</value>
+  </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Objekt verbinden/trennen</value>
   </data>
@@ -5489,7 +5492,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SolidCp" xml:space="preserve">
     <value>Wärmekapazität Feststoff</value>
   </data>
-  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Speichern Sie die Datei in Ihrem Simulate 365-Dashboard, um mit anderen Benutzern zusammenzuarbeiten.</value>
+  <data name="NotSupportedCollaborationFileType" xml:space="preserve">
+    <value>Der Dateityp wird für die Zusammenarbeit nicht unterstützt.</value>
   </data>
 </root>

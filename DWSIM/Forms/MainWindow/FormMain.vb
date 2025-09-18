@@ -1088,6 +1088,7 @@ Public Class FormMain
 
             FormMain.TranslateFormFunction?.Invoke(Me)
 
+            RaiseEvent ActiveSimulationChanged(Me, New EventArgs())
         End If
 
     End Sub
