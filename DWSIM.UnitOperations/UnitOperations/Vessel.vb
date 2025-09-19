@@ -378,6 +378,8 @@ Namespace UnitOperations
 
                 Dim Uint, Uext, A, DQ, DQmax, Twall, Tint, Tpe, Cp_m, holdup, Cpl, Cpv, Text, Kl, Kv, VapVel, LiqVel, MUl, MUv As Double
 
+                Tint = AccumulationStream.GetTemperature()
+
                 Twall = WallTemperature
 
                 If ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
@@ -427,9 +429,9 @@ Namespace UnitOperations
                             Else
                                 SR = ThermalProperties.SolarRadiationAbsorptionEfficiency * ThermalProperties.SolarRadiationValue_kWh_m2
                             End If
-                            SR *= 3600
+                            SR *= 3600 'kJ/m2
                             Dim Asec = Math.PI * L * DE
-                            Qrad = SR / timestep * Asec
+                            Qrad = SR / timestep * Asec 'kW
                             Qwall += Qrad
                         End If
 

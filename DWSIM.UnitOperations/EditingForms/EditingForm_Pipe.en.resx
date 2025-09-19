@@ -150,13 +150,13 @@
     <value>Top, Right</value>
   </data>
   <data name="cbPropPack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>152, 265</value>
+    <value>152, 293</value>
   </data>
   <data name="cbPropPack.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 21</value>
   </data>
   <data name="Label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 268</value>
+    <value>8, 296</value>
   </data>
   <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
@@ -166,6 +166,22 @@
   </data>
   <data name="GroupBoxParameters.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkCalcHeatBalance.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkCalcHeatBalance.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="chkCalcHeatBalance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 207</value>
+  </data>
+  <data name="chkCalcHeatBalance.Size" type="System.Drawing.Size, System.Drawing">
+    <value>233, 17</value>
+  </data>
+  <data name="chkCalcHeatBalance.Text" xml:space="preserve">
+    <value>Calculate thermal balance with surroundings</value>
   </data>
   <data name="nupCalculateEquilibrium.Location" type="System.Drawing.Point, System.Drawing">
     <value>282, 176</value>
@@ -177,10 +193,10 @@
     <value>10, 178</value>
   </data>
   <data name="chkCalculateEquilibrium.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 17</value>
+    <value>205, 17</value>
   </data>
   <data name="chkCalculateEquilibrium.Text" xml:space="preserve">
-    <value>Calculate Equilibrium at each X sections</value>
+    <value>Calculate equilibria at each X sections</value>
   </data>
   <data name="cbSlurryVisc.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -189,38 +205,46 @@
     <value>Yoshida et al</value>
   </data>
   <data name="cbSlurryVisc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>153, 236</value>
+    <value>153, 264</value>
   </data>
   <data name="cbSlurryVisc.Size" type="System.Drawing.Size, System.Drawing">
     <value>197, 21</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Label21.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="Label21.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 239</value>
+    <value>8, 267</value>
   </data>
   <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 13</value>
+    <value>130, 13</value>
   </data>
   <data name="Label21.Text" xml:space="preserve">
-    <value>Slurry Viscosity</value>
+    <value>Slurry viscosity calculation</value>
   </data>
   <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 319</value>
+    <value>8, 348</value>
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>342, 36</value>
   </data>
   <data name="CheckBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 295</value>
+    <value>10, 324</value>
+  </data>
+  <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 17</value>
+  </data>
+  <data name="CheckBox1.Text" xml:space="preserve">
+    <value>Use Global weather conditions</value>
+  </data>
+  <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 124</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 13</value>
+    <value>108, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Temperature Tolerance</value>
+    <value>Temp. error tolerance</value>
   </data>
   <data name="Label4.ToolTip" xml:space="preserve">
     <value>Tolerance of temperature in calculation loop</value>
@@ -241,10 +265,10 @@
     <value>282, 121</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 13</value>
+    <value>119, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Pressure Tolerance</value>
+    <value>Pressure error tolerance</value>
   </data>
   <data name="Label5.ToolTip" xml:space="preserve">
     <value>Tolerance of pressure in calculation loop</value>
@@ -274,16 +298,16 @@
     <value />
   </data>
   <data name="chkincludeEmulsion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 208</value>
+    <value>10, 236</value>
   </data>
   <data name="chkincludeEmulsion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 17</value>
+    <value>135, 17</value>
   </data>
   <data name="chkincludeEmulsion.Text" xml:space="preserve">
-    <value>Include Emulsion Effect</value>
+    <value>Include emulsion effect</value>
   </data>
   <data name="btnConfigurePP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>330, 265</value>
+    <value>330, 293</value>
   </data>
   <data name="btnConfigurePP.ToolTip" xml:space="preserve">
     <value>Configure</value>
@@ -300,11 +324,14 @@
   <data name="cbPDropModel.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 21</value>
   </data>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 17</value>
+  </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 13</value>
+    <value>88, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Calculation Mode</value>
+    <value>Calculation mode</value>
   </data>
   <data name="cbCalcMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -324,11 +351,14 @@
   <data name="cbCalcMode.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 21</value>
   </data>
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 44</value>
+  </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 13</value>
+    <value>126, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>Outlet Temperature</value>
+    <value>Outlet temperature (spec)</value>
   </data>
   <data name="tbOutletTemperature.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -342,17 +372,23 @@
   <data name="cbTemp.Location" type="System.Drawing.Point, System.Drawing">
     <value>282, 41</value>
   </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 96</value>
+  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>127, 13</value>
+    <value>124, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
-    <value>Pressure Drop Correlation</value>
+    <value>Pressure drop correlation</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 70</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 13</value>
+    <value>110, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Outlet Pressure</value>
+    <value>Outlet pressure (spec)</value>
   </data>
   <data name="cbPressure.Location" type="System.Drawing.Point, System.Drawing">
     <value>282, 67</value>
@@ -367,28 +403,28 @@
     <value>127, 20</value>
   </data>
   <data name="TabPage4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>361, 370</value>
+    <value>361, 399</value>
   </data>
   <data name="TabPage4.Text" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="TabPage5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>359, 370</value>
+    <value>361, 370</value>
   </data>
   <data name="TabPage5.Text" xml:space="preserve">
     <value>Hydraulic Profile</value>
   </data>
   <data name="TabPage6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>359, 370</value>
+    <value>361, 370</value>
   </data>
   <data name="TabPage6.Text" xml:space="preserve">
     <value>Thermal Profile</value>
   </data>
   <data name="TabControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>369, 396</value>
+    <value>369, 425</value>
   </data>
   <data name="GroupBoxParameters.Size" type="System.Drawing.Size, System.Drawing">
-    <value>375, 415</value>
+    <value>375, 444</value>
   </data>
   <data name="GroupBoxParameters.Text" xml:space="preserve">
     <value>Calculation Parameters</value>
@@ -505,48 +541,54 @@
     <value>Units</value>
   </data>
   <data name="gridResults.Size" type="System.Drawing.Size, System.Drawing">
-    <value>355, 212</value>
+    <value>355, 309</value>
   </data>
   <data name="TabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>361, 218</value>
+    <value>361, 315</value>
   </data>
   <data name="TabPage1.Text" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="TabPage2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>359, 218</value>
+    <value>361, 218</value>
   </data>
   <data name="TabPage2.Text" xml:space="preserve">
     <value>Profile Data</value>
   </data>
   <data name="TabPage3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>359, 218</value>
+    <value>361, 218</value>
   </data>
   <data name="TabPage3.Text" xml:space="preserve">
     <value>Profile Graph</value>
   </data>
   <data name="tabstrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>369, 244</value>
+    <value>369, 341</value>
+  </data>
+  <data name="GroupBoxResults.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 666</value>
   </data>
   <data name="GroupBoxResults.Size" type="System.Drawing.Size, System.Drawing">
-    <value>375, 263</value>
+    <value>375, 360</value>
   </data>
   <data name="GroupBoxResults.Text" xml:space="preserve">
     <value>Results</value>
   </data>
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 909</value>
+    <value>6, 1031</value>
   </data>
   <data name="Button3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="Button3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 909</value>
+    <value>200, 1031</value>
   </data>
   <data name="Button3.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 23</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>385, 940</value>
+    <value>385, 1061</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
 </root>

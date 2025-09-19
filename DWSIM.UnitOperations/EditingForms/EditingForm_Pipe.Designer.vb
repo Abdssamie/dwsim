@@ -94,6 +94,7 @@ Partial Class EditingForm_Pipe
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
+        Me.chkCalcHeatBalance = New System.Windows.Forms.CheckBox()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -223,6 +224,7 @@ Partial Class EditingForm_Pipe
         'TabPage4
         '
         resources.ApplyResources(Me.TabPage4, "TabPage4")
+        Me.TabPage4.Controls.Add(Me.chkCalcHeatBalance)
         Me.TabPage4.Controls.Add(Me.nupCalculateEquilibrium)
         Me.TabPage4.Controls.Add(Me.chkCalculateEquilibrium)
         Me.TabPage4.Controls.Add(Me.cbSlurryVisc)
@@ -753,6 +755,15 @@ Partial Class EditingForm_Pipe
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
+        'chkCalcHeatBalance
+        '
+        resources.ApplyResources(Me.chkCalcHeatBalance, "chkCalcHeatBalance")
+        Me.chkCalcHeatBalance.Name = "chkCalcHeatBalance"
+        Me.ToolTip1.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip2"))
+        Me.chkCalcHeatBalance.UseVisualStyleBackColor = True
+        '
         'EditingForm_Pipe
         '
         resources.ApplyResources(Me, "$this")
@@ -849,4 +860,5 @@ Partial Class EditingForm_Pipe
     Friend WithEvents chkCalculateEquilibrium As CheckBox
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
+    Public WithEvents chkCalcHeatBalance As CheckBox
 End Class

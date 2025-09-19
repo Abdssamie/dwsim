@@ -29,7 +29,6 @@ Partial Class PipeThermalProfileEditor
         Me.tbSolarEff = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tbSolarIrradiation = New System.Windows.Forms.TextBox()
-        Me.chkSolarIrradiationGlobal = New System.Windows.Forms.CheckBox()
         Me.chkIncludeSolarIrradiation = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lblTAGUnits2 = New System.Windows.Forms.Label()
@@ -53,6 +52,7 @@ Partial Class PipeThermalProfileEditor
         Me.CheckBoxICTI = New System.Windows.Forms.CheckBox()
         Me.CheckBoxII = New System.Windows.Forms.CheckBox()
         Me.CheckBoxIPT = New System.Windows.Forms.CheckBox()
+        Me.chkSolarIrradiationGlobal = New System.Windows.Forms.CheckBox()
         Me.RadioButton8 = New System.Windows.Forms.RadioButton()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
@@ -87,7 +87,6 @@ Partial Class PipeThermalProfileEditor
         Me.GroupBox7.Controls.Add(Me.tbSolarEff)
         Me.GroupBox7.Controls.Add(Me.Label2)
         Me.GroupBox7.Controls.Add(Me.tbSolarIrradiation)
-        Me.GroupBox7.Controls.Add(Me.chkSolarIrradiationGlobal)
         Me.GroupBox7.Controls.Add(Me.chkIncludeSolarIrradiation)
         Me.GroupBox7.Controls.Add(Me.Label1)
         Me.GroupBox7.Controls.Add(Me.lblTAGUnits2)
@@ -111,6 +110,7 @@ Partial Class PipeThermalProfileEditor
         Me.GroupBox7.Controls.Add(Me.CheckBoxICTI)
         Me.GroupBox7.Controls.Add(Me.CheckBoxII)
         Me.GroupBox7.Controls.Add(Me.CheckBoxIPT)
+        Me.GroupBox7.Controls.Add(Me.chkSolarIrradiationGlobal)
         Me.GroupBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.TabStop = False
@@ -134,11 +134,6 @@ Partial Class PipeThermalProfileEditor
         '
         resources.ApplyResources(Me.tbSolarIrradiation, "tbSolarIrradiation")
         Me.tbSolarIrradiation.Name = "tbSolarIrradiation"
-        '
-        'chkSolarIrradiationGlobal
-        '
-        resources.ApplyResources(Me.chkSolarIrradiationGlobal, "chkSolarIrradiationGlobal")
-        Me.chkSolarIrradiationGlobal.Name = "chkSolarIrradiationGlobal"
         '
         'chkIncludeSolarIrradiation
         '
@@ -260,6 +255,11 @@ Partial Class PipeThermalProfileEditor
         '
         resources.ApplyResources(Me.CheckBoxIPT, "CheckBoxIPT")
         Me.CheckBoxIPT.Name = "CheckBoxIPT"
+        '
+        'chkSolarIrradiationGlobal
+        '
+        resources.ApplyResources(Me.chkSolarIrradiationGlobal, "chkSolarIrradiationGlobal")
+        Me.chkSolarIrradiationGlobal.Name = "chkSolarIrradiationGlobal"
         '
         'RadioButton8
         '

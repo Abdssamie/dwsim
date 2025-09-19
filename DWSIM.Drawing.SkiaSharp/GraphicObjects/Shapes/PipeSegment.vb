@@ -107,12 +107,12 @@ Namespace GraphicObjects.Shapes
                     End With
 
                     Dim rect1 As New SKRect(X + 0.1 * Width, Y, X + 0.9 * Width, Y + Height)
-                    Dim rect0 As New SKRect(X, Y, X + 0.2 * Width, Y + Height)
-                    Dim rect2 As New SKRect(X + 0.8 * Width, Y, X + Width, Y + Height)
+                    Dim rect0 As New SKRect(X, Y, X + 0.1 * Width, Y + Height)
+                    Dim rect2 As New SKRect(X + 0.9 * Width, Y, X + Width, Y + Height)
 
                     Dim gp As New SKPath()
                     gp.MoveTo(X + 0.1 * Width, Y)
-                    gp.LineTo(X + 0.8 * Width, Y)
+                    gp.LineTo(X + 0.9 * Width, Y)
                     gp.ArcTo(rect2, -90, 180, False)
                     gp.LineTo(X + 0.1 * Width, Y + Height)
                     gp.ArcTo(rect0, 90, 180, False)
