@@ -453,6 +453,8 @@ Namespace UnitOperations
 
                     Dim Mout, Vout, Pout1, Hout1, D, L As Double
 
+                    'outlet
+
                     Mout = ms_out.GetMolarFlow()
 
                     D = segmento.DI * 0.0254
@@ -462,11 +464,10 @@ Namespace UnitOperations
 
                     Mout = Vout / Mout 'm3/mol
 
-                    PropertyPackage.CurrentMaterialStream = AccumulationStream
+                    PropertyPackage.CurrentMaterialStream = ms_out
 
-                    Dim result As IFlashCalculationResult
-
-                    result = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature, Mout, ms_out.GetTemperature(), ms_out.GetPressure())
+                    Dim result As IFlashCalculationResult = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature,
+                                                                                                  Mout, ms_out.GetTemperature(), ms_out.GetPressure())
 
                     Pout1 = result.CalculatedPressure
                     Hout1 = result.CalculatedEnthalpy
@@ -474,6 +475,23 @@ Namespace UnitOperations
                     ms_out.SetPressure(Pout1)
                     ms_out.SetMassEnthalpy(Hout1)
                     ms_out.SpecType = StreamSpec.Pressure_and_Enthalpy
+
+                    'current
+
+                    Mout = current_as.GetMolarFlow()
+                    Mout = Vout / Mout 'm3/mol
+
+                    PropertyPackage.CurrentMaterialStream = current_as
+
+                    result = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature,
+                                                                                                  Mout, current_as.GetTemperature(), current_as.GetPressure())
+
+                    Pout1 = result.CalculatedPressure
+                    Hout1 = result.CalculatedEnthalpy
+
+                    current_as.SetPressure(Pout1)
+                    current_as.SetMassEnthalpy(Hout1)
+                    current_as.SpecType = StreamSpec.Pressure_and_Enthalpy
 
                     kg -= 1
 
