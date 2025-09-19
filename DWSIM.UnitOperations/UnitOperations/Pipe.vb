@@ -451,46 +451,46 @@ Namespace UnitOperations
 
                     'calculate new pressures
 
-                    Dim Mout, Vout, Pout1, Hout1, D, L As Double
+                    Dim M1, V1, P1, H1, D, L As Double
 
-                    'outlet
+                    'segment outlet stream pressure
 
-                    Mout = ms_out.GetMolarFlow()
+                    M1 = ms_out.GetMolarFlow()
 
                     D = segmento.DI * 0.0254
                     L = segmento.Comprimento / segmento.Incrementos
 
-                    Vout = Math.PI * D ^ 2 * L / 4 'segment volume
+                    V1 = Math.PI * D ^ 2 * L / 4 'segment volume
 
-                    Mout = Vout / Mout 'm3/mol
+                    M1 = V1 / M1 'm3/mol
 
                     PropertyPackage.CurrentMaterialStream = ms_out
 
                     Dim result As IFlashCalculationResult = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature,
-                                                                                                  Mout, ms_out.GetTemperature(), ms_out.GetPressure())
+                                                                                                  M1, ms_out.GetTemperature(), ms_out.GetPressure())
 
-                    Pout1 = result.CalculatedPressure
-                    Hout1 = result.CalculatedEnthalpy
+                    P1 = result.CalculatedPressure
+                    H1 = result.CalculatedEnthalpy
 
-                    ms_out.SetPressure(Pout1)
-                    ms_out.SetMassEnthalpy(Hout1)
+                    ms_out.SetPressure(P1)
+                    ms_out.SetMassEnthalpy(P1)
                     ms_out.SpecType = StreamSpec.Pressure_and_Enthalpy
 
-                    'current
+                    'current segment pressure
 
-                    Mout = current_as.GetMolarFlow()
-                    Mout = Vout / Mout 'm3/mol
+                    M1 = current_as.GetMolarFlow()
+                    M1 = V1 / M1 'm3/mol
 
                     PropertyPackage.CurrentMaterialStream = current_as
 
                     result = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature,
-                                                                                                  Mout, current_as.GetTemperature(), current_as.GetPressure())
+                                                                                                  M1, current_as.GetTemperature(), current_as.GetPressure())
 
-                    Pout1 = result.CalculatedPressure
-                    Hout1 = result.CalculatedEnthalpy
+                    P1 = result.CalculatedPressure
+                    H1 = result.CalculatedEnthalpy
 
-                    current_as.SetPressure(Pout1)
-                    current_as.SetMassEnthalpy(Hout1)
+                    current_as.SetPressure(P1)
+                    current_as.SetMassEnthalpy(H1)
                     current_as.SpecType = StreamSpec.Pressure_and_Enthalpy
 
                     kg -= 1
