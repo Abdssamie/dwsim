@@ -252,6 +252,13 @@ Namespace UnitOperations
                                 Dim as1 As MaterialStream = ims1.CloneXML()
                                 as1.SetPressure(res.Pressure_Initial.Value)
                                 as1.SetTemperature(res.Temperature_Initial.Value)
+                                Dim D, L, V As Double
+                                D = seg.DI * 0.0254
+                                L = seg.Comprimento / seg.Incrementos
+                                V = Math.PI * D ^ 2 * L / 4 'segment volume
+                                as1.SetVolumetricFlow(V)
+                                as1.AssignSelfToPP()
+                                as1.Calculate(False, True)
                                 AccumulationStreams.Add(as1)
                             Next
                         Next
