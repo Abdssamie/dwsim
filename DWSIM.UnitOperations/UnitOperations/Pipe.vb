@@ -559,6 +559,12 @@ Namespace UnitOperations
                     current_as = current_as.Subtract(ms_transition)
                     ms_out = ms_out.Add(ms_transition)
 
+                    current_as.AssignSelfToPP()
+                    current_as.Calculate(False, True)
+
+                    ms_out.AssignSelfToPP()
+                    ms_out.Calculate(False, True)
+
                     'calculate new pressures
 
                     Dim M1, V1, P1, H1, D, L As Double
@@ -583,8 +589,11 @@ Namespace UnitOperations
                     H1 = result.CalculatedEnthalpy
 
                     ms_out.SetPressure(P1)
-                    ms_out.SetMassEnthalpy(P1)
+                    ms_out.SetMassEnthalpy(H1)
                     ms_out.SpecType = StreamSpec.Pressure_and_Enthalpy
+
+                    ms_out.AssignSelfToPP()
+                    ms_out.Calculate()
 
                     'current segment pressure
 
@@ -602,6 +611,9 @@ Namespace UnitOperations
                     current_as.SetPressure(P1)
                     current_as.SetMassEnthalpy(H1)
                     current_as.SpecType = StreamSpec.Pressure_and_Enthalpy
+
+                    current_as.AssignSelfToPP()
+                    current_as.Calculate()
 
                     kg -= 1
 
