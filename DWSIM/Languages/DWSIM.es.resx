@@ -5476,16 +5476,22 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
     <value>Solo se pueden compartir los archivos de simulación guardados. Primero guarde el archivo en el panel de Simulate 365 y luego compártalo.</value>
   </data>
   <data name="ShareSimulationNotOpened" xml:space="preserve">
-    <value>Solo se puede compartir el archivo de simulación abierto. Primero abra el archivo y luego compártalo.</value>
+    <value>Solo los archivos abiertos desde el Panel de Simulate 365 se pueden compartir.</value>
   </data>
   <data name="ShareNotFileOwner" xml:space="preserve">
-    <value>Solo el propietario del archivo que inició la colaboración puede compartir este archivo. Los colaboradores invitados no tienen permiso para volver a compartirlo.</value>
-  </data>
-  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
-    <value>Para comenzar a colaborar, por favor abra el archivo desde el panel de Simulate 365.</value>
+    <value>Solo el propietario del archivo puede compartirlo.</value>
   </data>
   <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Guarde el archivo en su Panel de Simulate 365 para colaborar con otros usuarios.</value>
+    <value>Solo los archivos guardados en el Panel de Simulate 365 se pueden compartir.</value>
+  </data>
+  <data name="NotSupportedCollaborationFileType" xml:space="preserve">
+    <value>Solo el diagrama de flujo se puede utilizar para la colaboración.</value>
+  </data>
+  <data name="ShareFileToCollaborate" xml:space="preserve">
+    <value>La colaboración solo está disponible en archivos compartidos.</value>
+  </data>
+  <data name="ShareSimulationNotSaved" xml:space="preserve">
+    <value>Solo los archivos guardados en el Panel de Simulate 365 se pueden compartir.</value>
   </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Conectar/Desconectar Objeto</value>
@@ -5505,7 +5511,10 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SolidCp" xml:space="preserve">
     <value>Capacidad Calorífica de Solido</value>
   </data>
-  <data name="NotSupportedCollaborationFileType" xml:space="preserve">
-    <value>El tipo de archivo no es compatible con la colaboración.</value>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>Para iniciar la colaboración, abra el archivo de colaboración desde el Panel de Simulate 365.</value>
+  </data>
+  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
+    <value>Solo el diagrama de flujo se puede utilizar para la colaboración.</value>
   </data>
 </root>

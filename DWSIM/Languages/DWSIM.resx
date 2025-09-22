@@ -5773,18 +5773,27 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
     <value>Somente arquivos de simulação salvos podem ser compartilhados. Salve o arquivo no Simulate 365 Dashboard antes de compartilhar.</value>
   </data>
   <data name="ShareSimulationNotOpened" xml:space="preserve">
-    <value>Somente o arquivo de simulação aberto pode ser compartilhado. Abra o arquivo primeiro e depois compartilhe.</value>
+    <value>Somente os arquivos abertos pelo Simulate 365 Dashboard podem ser compartilhados.</value>
   </data>
   <data name="ShareNotFileOwner" xml:space="preserve">
-    <value>Apenas o proprietário do arquivo que iniciou a colaboração pode compartilhar este arquivo. Os colaboradores convidados não têm permissão para compartilhar novamente.</value>
-  </data>
-  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
-    <value>Para começar a colaborar, por favor, abra o arquivo no painel do Simulate 365.</value>
+    <value>Apenas o proprietário do arquivo pode compartilhá-lo.</value>
   </data>
   <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Salve o arquivo no seu Painel do Simulate 365 para colaborar com outros usuários.</value>
+    <value>Somente os arquivos salvos no Simulate 365 Dashboard podem ser compartilhados.</value>
   </data>
   <data name="NotSupportedCollaborationFileType" xml:space="preserve">
-    <value>O tipo de arquivo não é compatível para colaboração.</value>
+    <value>Somente o fluxograma pode ser usado para colaboração.</value>
+  </data>
+  <data name="ShareFileToCollaborate" xml:space="preserve">
+    <value>A colaboração está disponível apenas em arquivos compartilhados.</value>
+  </data>
+  <data name="ShareSimulationNotSaved" xml:space="preserve">
+    <value>Somente os arquivos salvos no Simulate 365 Dashboard podem ser compartilhados.</value>
+  </data>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>ara iniciar a colaboração, abra o arquivo de colaboração no Simulate 365 Dashboard.</value>
+  </data>
+  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
+    <value>Somente o fluxograma pode ser usado para colaboração.</value>
   </data>
 </root>

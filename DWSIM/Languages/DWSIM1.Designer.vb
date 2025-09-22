@@ -10423,7 +10423,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to O tipo de arquivo não é compatível para colaboração..
+        '''  Looks up a localized string similar to Somente o fluxograma pode ser usado para colaboração..
         '''</summary>
         Friend Shared ReadOnly Property NotSupportedCollaborationFileType() As String
             Get
@@ -10621,6 +10621,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Somente o fluxograma pode ser usado para colaboração..
+        '''</summary>
+        Friend Shared ReadOnly Property OnlyFlowsheetCanBeShared() As String
+            Get
+                Return ResourceManager.GetString("OnlyFlowsheetCanBeShared", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to O número máximo de iterações foi atingido. Deseja continuar o processo de convergência do reciclo?.
         '''</summary>
         Friend Shared ReadOnly Property Onmeromximodeiteraes() As String
@@ -10693,7 +10702,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Para começar a colaborar, por favor, abra o arquivo no painel do Simulate 365..
+        '''  Looks up a localized string similar to ara iniciar a colaboração, abra o arquivo de colaboração no Simulate 365 Dashboard..
         '''</summary>
         Friend Shared ReadOnly Property OpenFileFromDashboardToCollaborate() As String
             Get
@@ -13699,7 +13708,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Salve o arquivo no seu Painel do Simulate 365 para colaborar com outros usuários..
+        '''  Looks up a localized string similar to Somente os arquivos salvos no Simulate 365 Dashboard podem ser compartilhados..
         '''</summary>
         Friend Shared ReadOnly Property SaveFileToDashboardToCollaborate() As String
             Get
@@ -14284,7 +14293,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Apenas o proprietário do arquivo que iniciou a colaboração pode compartilhar este arquivo. Os colaboradores convidados não têm permissão para compartilhar novamente..
+        '''  Looks up a localized string similar to A colaboração está disponível apenas em arquivos compartilhados..
+        '''</summary>
+        Friend Shared ReadOnly Property ShareFileToCollaborate() As String
+            Get
+                Return ResourceManager.GetString("ShareFileToCollaborate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Apenas o proprietário do arquivo pode compartilhá-lo..
         '''</summary>
         Friend Shared ReadOnly Property ShareNotFileOwner() As String
             Get
@@ -14293,11 +14311,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Somente o arquivo de simulação aberto pode ser compartilhado. Abra o arquivo primeiro e depois compartilhe..
+        '''  Looks up a localized string similar to Somente os arquivos abertos pelo Simulate 365 Dashboard podem ser compartilhados..
         '''</summary>
         Friend Shared ReadOnly Property ShareSimulationNotOpened() As String
             Get
                 Return ResourceManager.GetString("ShareSimulationNotOpened", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Somente os arquivos salvos no Simulate 365 Dashboard podem ser compartilhados..
+        '''</summary>
+        Friend Shared ReadOnly Property ShareSimulationNotSaved() As String
+            Get
+                Return ResourceManager.GetString("ShareSimulationNotSaved", resourceCulture)
             End Get
         End Property
         

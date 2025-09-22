@@ -117,6 +117,7 @@ Partial Class FormMain
         Me.ToolStripSplitButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripSplitButton2 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SettingsPanel.SuspendLayout()
@@ -144,7 +145,7 @@ Partial Class FormMain
         'FileTSMI
         '
         resources.ApplyResources(Me.FileTSMI, "FileTSMI")
-        Me.FileTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.tsmiNewCompoundCreatorStudy, Me.tsmiNewCompoundWizard, Me.NovoEstudoDeRegressaoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.AbrirDoDashboardToolStripMenuItem, Me.toolStripSeparator, Me.SaveToDashboardTSMI, Me.ShareFileToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.tsmiFOSSEE, Me.tsmiSamples, Me.tsFileSeparator, Me.ToolStripMenuItem1, Me.ExitToolStripMenuItem})
+        Me.FileTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.tsmiNewCompoundCreatorStudy, Me.tsmiNewCompoundWizard, Me.NovoEstudoDeRegressaoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.AbrirDoDashboardToolStripMenuItem, Me.toolStripSeparator, Me.SaveToDashboardTSMI, Me.SaveAsToSimulate365DashboardToolStripMenuItem, Me.ShareFileToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.tsmiFOSSEE, Me.tsmiSamples, Me.tsFileSeparator, Me.ToolStripMenuItem1, Me.ExitToolStripMenuItem})
         Me.FileTSMI.Name = "FileTSMI"
         Me.FileTSMI.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         '
@@ -678,6 +679,12 @@ Partial Class FormMain
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
         Me.ToolStripStatusLabel2.Spring = True
         '
+        'SaveAsToSimulate365DashboardToolStripMenuItem
+        '
+        resources.ApplyResources(Me.SaveAsToSimulate365DashboardToolStripMenuItem, "SaveAsToSimulate365DashboardToolStripMenuItem")
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Name = "SaveAsToSimulate365DashboardToolStripMenuItem"
+        '
         'FormMain
         '
         resources.ApplyResources(Me, "$this")
@@ -977,4 +984,5 @@ Partial Class FormMain
     Friend WithEvents ToolStripSplitButton2 As ToolStripDropDownButton
     Friend WithEvents ShareFileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripButton6 As ToolStripButton
+    Friend WithEvents SaveAsToSimulate365DashboardToolStripMenuItem As ToolStripMenuItem
 End Class

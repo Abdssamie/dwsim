@@ -848,6 +848,9 @@
   <data name="WelcomePanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>48, 22, 48, 22</value>
   </data>
+  <data name="&gt;&gt;SaveAsToSimulate365DashboardToolStripMenuItem.Name" xml:space="preserve">
+    <value>SaveAsToSimulate365DashboardToolStripMenuItem</value>
+  </data>
   <data name="&gt;&gt;ToolStripSeparator5.Name" xml:space="preserve">
     <value>ToolStripSeparator5</value>
   </data>
@@ -1229,6 +1232,9 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>96, 96</value>
   </data>
+  <data name="&gt;&gt;SaveAsToSimulate365DashboardToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;RegistroCAPEOPENToolStripMenuItem.Name" xml:space="preserve">
     <value>RegistroCAPEOPENToolStripMenuItem</value>
   </data>
@@ -1282,6 +1288,9 @@
   </data>
   <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SaveAsToSimulate365DashboardToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>291, 26</value>
   </data>
   <data name="&gt;&gt;ToolStripMenuItem2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

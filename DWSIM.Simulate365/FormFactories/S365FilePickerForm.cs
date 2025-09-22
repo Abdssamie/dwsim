@@ -58,8 +58,8 @@ namespace DWSIM.Simulate365.FormFactories
 
         private void OnUserLoggedInEvent(object sender, EventArgs e)
         {
-
-            _webUIForm?.Navigate(_webUIForm?.InitialUrl);
+            _webUIForm.RealoadPage();
+            //_webUIForm?.Navigate(_webUIForm?.InitialUrl);
         }
 
         private void _filePickerService_S365DashboardFolderCreated(object sender, EventArgs e)
@@ -152,7 +152,8 @@ namespace DWSIM.Simulate365.FormFactories
                     ParentUniqueIdentifier = _filePickerService.SelectedSaveFile.ParentUniqueIdentifier,
                     FullPath = _filePickerService.SelectedSaveFile.SimulatePath,
                     ConflictAction = _filePickerService.SelectedSaveFile.ConflictAction,
-                    OwnerId = UserService.GetInstance().CurrentUser?.Id
+                    OwnerId = UserService.GetInstance().CurrentUser?.Id,
+                    IsSharedForCollaboration = _filePickerService.SelectedSaveFile.IsSharedForCollaboration
                 } : null;
         }
 

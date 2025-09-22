@@ -1061,7 +1061,6 @@ Public Class FormMain
             Me.SaveFileS365.Enabled = True
             Me.SaveToolStripMenuItem.Enabled = True
             Me.SaveAsToolStripMenuItem.Enabled = True
-            Me.ToolStripButton6.Enabled = True
             Me.CloseAllToolstripMenuItem.Enabled = True
             If Not Me.ActiveMdiChild Is Nothing Then
                 If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
@@ -4565,14 +4564,13 @@ Label_00CC:
         Return simulatePath.StartsWith("//Simulate 365 Dashboard")
     End Function
 
-    Sub SaveFileDialog(Optional dashboardpicker As Boolean = False, Optional disableOverwrite As Boolean = False)
+    Sub SaveFileDialog(Optional dashboardpicker As Boolean = False, Optional disableOverwriteQuestion As Boolean = False, Optional shouldOverwriteFile As Boolean = False)
 
         If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
 
             Dim form2 As FormFlowsheet = Me.ActiveMdiChild
 
             Dim filename = form2.Options.FilePath
-            Dim shouldOverwriteFile As Boolean = False
 
             Dim filePickerForm As IFilePicker
 
@@ -4581,7 +4579,7 @@ Label_00CC:
                 Try
                     Dim fname = Path.GetFileNameWithoutExtension(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
-                    If form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) And disableOverwrite = False Then
+                    If form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) And disableOverwriteQuestion = False Then
                         Dim shouldOverwriteExistingFileResult As DialogResult = MessageBox.Show("Do you want to overwrite the existing file?", "Save file", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                         If (shouldOverwriteExistingFileResult = DialogResult.Yes) Then
@@ -4601,7 +4599,7 @@ Label_00CC:
                     Dim fpath = Path.GetDirectoryName(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
                     filePickerForm.SuggestedDirectory = fpath
-                    If TypeOf filePickerForm Is Simulate365.FormFactories.S365FilePickerForm And disableOverwrite = False Then
+                    If TypeOf filePickerForm Is Simulate365.FormFactories.S365FilePickerForm And disableOverwriteQuestion = False Then
                         filePickerForm.SuggestedDirectory = form2.Options.VirtualFile.ParentUniqueIdentifier
                     End If
                 Catch ex As Exception
@@ -4609,7 +4607,7 @@ Label_00CC:
             End If
 
             Dim handler As IVirtualFile = Nothing
-            If shouldOverwriteFile Then
+            If shouldOverwriteFile And IsCorrectVirtualFile(dashboardpicker, form2.Options.VirtualFile) Then
                 handler = form2.Options.VirtualFile
             Else
                 handler = filePickerForm.ShowSaveDialog(
@@ -5333,7 +5331,7 @@ Label_00CC:
     End Sub
 
     Private Sub SaveToDashboardTSMI_Click(sender As Object, e As EventArgs) Handles SaveToDashboardTSMI.Click
-        SaveFileDialog(True)
+        SaveFileDialog(True, True, True)
     End Sub
 
     Private Sub OpenFileS365_Click(sender As Object, e As EventArgs) Handles OpenFileS365.Click
@@ -5341,7 +5339,7 @@ Label_00CC:
     End Sub
 
     Private Sub SaveFileS365_Click(sender As Object, e As EventArgs) Handles SaveFileS365.Click
-        SaveFileDialog(True)
+        SaveFileDialog(True, True, True)
     End Sub
 
     Private Sub DashboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DashboardToolStripMenuItem.Click
@@ -5483,35 +5481,43 @@ Label_00CC:
     End Sub
 
     Private Sub onShareFileClick()
+        Dim shareFileForm As New ShareFileForm()
+        Dim openedFile As S365File = Nothing
+        Dim userService As UserService = UserService.GetInstance()
+        If userService._IsLoggedIn() = False Then
+            shareFileForm.ShowFileShareDialog("user_not_logged_in")
+        End If
+
         If Not Me.ActiveMdiChild Is Nothing Then
-            If Not TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
-                MessageBox.Show(DWSIM.App.GetLocalString("ShareTypeNotSupported"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return
-            End If
-            Dim form2 As FormFlowsheet = Me.ActiveMdiChild
-            Dim shareFileForm As New ShareFileForm()
-            Dim openedFile As S365File = Nothing
+            If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
 
-            If form2.Options.VirtualFile Is Nothing Or Not IsCorrectVirtualFile(True, form2.Options.VirtualFile) Then
-                MessageBox.Show(DWSIM.App.GetLocalString("SaveFileToShare"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Return
-            End If
+                Dim form2 As FormFlowsheet = Me.ActiveMdiChild
 
-            openedFile = form2.Options.VirtualFile
-            Dim user As UserDetailsModel = UserService.GetInstance().CurrentUser
+                If form2.Options.VirtualFile Is Nothing Or Not IsCorrectVirtualFile(True, form2.Options.VirtualFile) Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotSaved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Return
+                End If
 
-            If user.Id <> openedFile.OwnerId Then
-                MessageBox.Show(DWSIM.App.GetLocalString("ShareNotFileOwner"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Return
+                openedFile = form2.Options.VirtualFile
+                Dim user As UserDetailsModel = UserService.GetInstance().CurrentUser
+
+                If user.Id <> openedFile.OwnerId Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("ShareNotFileOwner"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Return
+                End If
             End If
 
-            If (openedFile IsNot Nothing And openedFile IsNot Nothing And openedFile.FileUniqueIdentifier IsNot Nothing) Then
+            If openedFile?.FileUniqueIdentifier IsNot Nothing Then
                 shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
+            Else
+                MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotSaved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
             End If
 
         Else
             MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotOpened"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+
     End Sub
 
     Private Sub ShareFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShareFileToolStripMenuItem.Click
@@ -5530,6 +5536,11 @@ Label_00CC:
     Public Shared Sub RaiseActiveSimulationChanged(sender As Object, e As EventArgs)
         RaiseEvent ActiveSimulationChanged(sender, e)
     End Sub
+
+    Private Sub SaveAsToSimulate365DashboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsToSimulate365DashboardToolStripMenuItem.Click
+        SaveFileDialog(True, True, False)
+    End Sub
+
     Public Shared Sub RaiseActiveSimulationClosed(sender As Object, e As EventArgs)
         RaiseEvent ActiveSimulationClosed(sender, e)
     End Sub

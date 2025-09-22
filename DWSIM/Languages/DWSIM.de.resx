@@ -5457,16 +5457,22 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
     <value>Nur gespeicherte Simulationsdateien können freigegeben werden. Bitte speichern Sie die Datei zuerst im Simulate 365 Dashboard und geben Sie sie anschließend frei.</value>
   </data>
   <data name="ShareSimulationNotOpened" xml:space="preserve">
-    <value>Nur die geöffnete Simulationsdatei kann freigegeben werden. Bitte öffnen Sie die Datei zuerst und geben Sie sie anschließend frei.</value>
+    <value>Nur Dateien, die über das Simulate 365 Dashboard geöffnet wurden, können geteilt werden.</value>
   </data>
   <data name="ShareNotFileOwner" xml:space="preserve">
-    <value>Nur der Dateibesitzer, der die Zusammenarbeit initiiert hat, kann diese Datei teilen. Eingeladene Mitarbeiter haben keine Berechtigung zum Weiterteilen.</value>
-  </data>
-  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
-    <value> Um mit der Zusammenarbeit zu beginnen, öffnen Sie bitte die Datei im Simulate 365 Dashboard.</value>
+    <value>Nur der Dateibesitzer kann diese Datei freigeben.</value>
   </data>
   <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Speichern Sie die Datei in Ihrem Simulate 365-Dashboard, um mit anderen Benutzern zusammenzuarbeiten.</value>
+    <value>Nur Dateien, die im Simulate 365 Dashboard gespeichert sind, können geteilt werden.</value>
+  </data>
+  <data name="NotSupportedCollaborationFileType" xml:space="preserve">
+    <value>Nur das Flussdiagramm kann für die Zusammenarbeit verwendet werden.</value>
+  </data>
+  <data name="ShareFileToCollaborate" xml:space="preserve">
+    <value>Zusammenarbeit ist nur bei freigegebenen Dateien verfügbar.</value>
+  </data>
+  <data name="ShareSimulationNotSaved" xml:space="preserve">
+    <value>Nur Dateien, die im Simulate 365 Dashboard gespeichert sind, können geteilt werden.</value>
   </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Objekt verbinden/trennen</value>
@@ -5492,7 +5498,10 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SolidCp" xml:space="preserve">
     <value>Wärmekapazität Feststoff</value>
   </data>
-  <data name="NotSupportedCollaborationFileType" xml:space="preserve">
-    <value>Der Dateityp wird für die Zusammenarbeit nicht unterstützt.</value>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>Um die Zusammenarbeit zu beginnen, öffnen Sie die Zusammenarbeitsdatei im Simulate 365 Dashboard.</value>
+  </data>
+  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
+    <value>Nur das Flussdiagramm kann für die Zusammenarbeit verwendet werden.</value>
   </data>
 </root>

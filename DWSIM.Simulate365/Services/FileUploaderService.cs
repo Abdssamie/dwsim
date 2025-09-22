@@ -77,7 +77,8 @@ namespace DWSIM.Simulate365.Services
                     Filename = file.Filename,
                     FileVersion = file.FileVersion,
                     FullPath = file.SimulatePath,
-                    OwnerId = file.OwnerId.ToString()
+                    OwnerId = file.OwnerId.ToString(),
+                    IsSharedForCollaboration = file.IsSharedForCollaboration
                 };
             }
             catch (Exception ex)
@@ -121,7 +122,8 @@ namespace DWSIM.Simulate365.Services
                     ParentUniqueIdentifier = parentUniqueIdentifier,
                     Filename = fileResp.Filename,
                     FullPath = fileResp.SimulatePath,
-                    OwnerId = fileResp.OwnerId.ToString()
+                    OwnerId = fileResp.OwnerId.ToString(),
+                    IsSharedForCollaboration = fileResp.IsSharedForCollaboration
                 };
             }
             catch (Exception ex)
@@ -193,7 +195,7 @@ namespace DWSIM.Simulate365.Services
             return itemWithBreadcrumbs;
         }
 
-        public static FilesWithBreadcrumbsResponseModel GetFileByUniqueIdentifier(string fileUniqueIdentifier, AccessType? accessType=AccessType.ReadOnly)
+        public static FilesWithBreadcrumbsResponseModel GetFileByUniqueIdentifier(string fileUniqueIdentifier, AccessType? accessType = AccessType.ReadOnly)
         {
             var token = UserService.GetInstance().GetUserToken();
             var client = GetDashboardClient(token);

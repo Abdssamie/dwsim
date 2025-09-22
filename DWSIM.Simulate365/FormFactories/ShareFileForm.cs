@@ -1,4 +1,5 @@
-﻿using DWSIM.Simulate365.Services;
+﻿using DWSIM.Interfaces;
+using DWSIM.Simulate365.Services;
 using DWSIM.UI.Web;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
@@ -7,15 +8,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DWSIM.Simulate365.FormFactories
 {
     public class ShareFileForm
     {
         private WebUIForm _webUIForm;
+        private readonly FilePickerService _filePickerService;
+        private readonly UserService _userService;
         public ShareFileForm()
         {
-
+            _filePickerService = new FilePickerService();
+            _userService = UserService.GetInstance();
+            _userService.OnUserLoggedIn += OnUserLoggedInEvent;
         }
 
         public void ShowFileShareDialog(string fileUniqueId)
@@ -40,7 +46,7 @@ namespace DWSIM.Simulate365.FormFactories
                 if (webView.CoreWebView2 != null)
                 {
                     webView.CoreWebView2.AddHostObjectToScript("authService", new AuthService());
-                   
+                    webView.CoreWebView2.AddHostObjectToScript("filePickerService", _filePickerService);
                 }
             }
             catch (Exception ex)
@@ -48,6 +54,16 @@ namespace DWSIM.Simulate365.FormFactories
 
                 //  throw;
             }
+        }
+
+        private void OnUserLoggedInEvent(object sender, EventArgs e)
+        {
+            // We do not have file unique id here, so just close the form
+            if(_webUIForm!=null && _webUIForm.Visible)
+            {
+                _webUIForm?.Close();              
+            }
+           
         }
     }
 }

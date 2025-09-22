@@ -71,7 +71,8 @@ namespace DWSIM.Simulate365.Services
                     FileUniqueIdentifier = item.UniqueIdentifier.ToString(),
                     FileVersion = item.CurrentVersionNumber.ToString(),
                     FullPath = GetFullPath(itemWithBreadcrumbs.BreadcrumbItems, item),
-                    OwnerId = itemWithBreadcrumbs.File.OwnerId.ToString()
+                    OwnerId = item.OwnerId.ToString(),
+                    IsSharedForCollaboration = item.IsSharedForCollaboration
                 };
 
                 S3365DashboardFileOpened?.Invoke(this, this.SelectedOpenFile);
@@ -171,5 +172,6 @@ namespace DWSIM.Simulate365.Services
         public string ParentUniqueIdentifier { get; set; }
         public string SimulatePath { get; set; }
         public UploadConflictAction? ConflictAction { get; set; }
+        public bool IsSharedForCollaboration { get; set; }
     }
 }

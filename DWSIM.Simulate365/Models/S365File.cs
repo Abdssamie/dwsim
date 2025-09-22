@@ -28,6 +28,8 @@ namespace DWSIM.Simulate365.Models
 
         public string OwnerId { get; set; }
 
+        public bool IsSharedForCollaboration { get; set; }
+
         public S365File(string localTmpFile)
         {
             _localTmpFile = localTmpFile;
@@ -61,12 +63,13 @@ namespace DWSIM.Simulate365.Models
         public void Write(string localFilePath)
         {
             long? fileVersion = !string.IsNullOrWhiteSpace(FileVersion) ? long.Parse(FileVersion) : (long?)null;
-            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite,fileVersion);
+            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite, fileVersion);
 
             FileUniqueIdentifier = file.FileUniqueIdentifier;
             FileVersion = file.FileVersion;
             Filename = file.Filename;
             FullPath = file.FullPath;
+            IsSharedForCollaboration = file.IsSharedForCollaboration;
 
             FileManagementService.GetInstance().FileSavedToDashboard();
             FileManagementService.GetInstance().FileSaved(this);
@@ -82,6 +85,7 @@ namespace DWSIM.Simulate365.Models
             Filename = file.Filename;
             FullPath = file.FullPath;
             FileVersion = file.FileVersion;
+            IsSharedForCollaboration = file.IsSharedForCollaboration;
 
             FileManagementService.GetInstance().FileSavedToDashboard();
             FileManagementService.GetInstance().FileSaved(this);

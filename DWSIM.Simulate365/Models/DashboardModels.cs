@@ -36,6 +36,7 @@ namespace DWSIM.Simulate365.Models
         public List<TagResponseModel> Tags { get; set; }
 
         public Guid OwnerId { get; set; }
+        public bool IsSharedForCollaboration { get; set; }
     }
 
     public class BreadcrumbItem
@@ -68,6 +69,7 @@ namespace DWSIM.Simulate365.Models
         public string SimulatePath { get; set; }
 
         public Guid OwnerId { get; set; }
+        public bool IsSharedForCollaboration { get; set; }
     }
     public class FileExistsByPathPostModel
     {
