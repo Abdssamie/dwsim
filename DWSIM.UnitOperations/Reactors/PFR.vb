@@ -194,7 +194,7 @@ Namespace Reactors
                 Dim astr As New XElement("AccumulationStreams")
                 elements.Add(astr)
                 For Each mstream In AccumulationStreams
-                    elements.Add(New XElement("AccumulationStream", mstream.SaveData()))
+                    astr.Add(New XElement("AccumulationStream", mstream.SaveData()))
                 Next
             End If
 

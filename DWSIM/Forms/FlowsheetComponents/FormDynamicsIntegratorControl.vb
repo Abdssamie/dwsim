@@ -304,6 +304,9 @@ Public Class FormDynamicsIntegratorControl
                     If Not realtime Then
                         If Not schedule.UseCurrentStateAsInitial Then
                             RestoreState(schedule.InitialFlowsheetStateID)
+                            Flowsheet.ShowMessage(String.Format("Initializing dynamic schedule from state '{0}'.", schedule.InitialFlowsheetStateID), IFlowsheet.MessageType.Information)
+                        Else
+                            Flowsheet.ShowMessage("Initializing dynamic schedule from current state.", IFlowsheet.MessageType.Information)
                         End If
                     End If
                 End If

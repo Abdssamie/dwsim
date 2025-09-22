@@ -64,7 +64,7 @@ Namespace UnitOperations
 
         Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
 
-        Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = False
+        Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = True
 
         Public Property UseGlobalWeather As Boolean = False
 
@@ -122,6 +122,37 @@ Namespace UnitOperations
             ComponentDescription = description
         End Sub
 
+        Public Overrides Function LoadData(data As List(Of XElement)) As Boolean
+
+            AccumulationStreams = New List(Of MaterialStream)
+            Dim ael = (From xel As XElement In data Select xel Where xel.Name = "AccumulationStreams").FirstOrDefault
+            If Not ael Is Nothing Then
+                For Each xel In ael.Elements
+                    Dim as1 As New MaterialStream()
+                    as1.LoadData(xel.Elements.ToList)
+                    AccumulationStreams.Add(as1)
+                Next
+            End If
+            Return MyBase.LoadData(data)
+
+        End Function
+
+        Public Overrides Function SaveData() As List(Of XElement)
+
+            Dim elements As List(Of XElement) = MyBase.SaveData()
+
+            If AccumulationStreams IsNot Nothing Then
+                Dim astr As New XElement("AccumulationStreams")
+                elements.Add(astr)
+                For Each mstream In AccumulationStreams
+                    astr.Add(New XElement("AccumulationStream", mstream.SaveData()))
+                Next
+            End If
+
+            Return elements
+
+        End Function
+
         Public Overrides Function CloneXML() As Object
             Dim obj As ICustomXMLSerialization = New Pipe()
             obj.LoadData(SaveData)
@@ -178,6 +209,61 @@ Namespace UnitOperations
                 Return eta_l
             End With
         End Function
+
+        Public Overrides Sub DisplayDynamicsEditForm()
+
+            If fd Is Nothing Then
+                fd = New DynamicsPropertyEditor With {.SimObject = Me}
+                fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
+                fd.Tag = "ObjectEditor"
+                fd.UpdateCallBack = Sub(table)
+                                        AddButtonsToDynEditor(table)
+                                    End Sub
+                Me.FlowSheet.DisplayForm(fd)
+            Else
+                If fd.IsDisposed Then
+                    fd = New DynamicsPropertyEditor With {.SimObject = Me}
+                    fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
+                    fd.Tag = "ObjectEditor"
+                    fd.UpdateCallBack = Sub(table)
+                                            AddButtonsToDynEditor(table)
+                                        End Sub
+                    Me.FlowSheet.DisplayForm(fd)
+                Else
+                    fd.Activate()
+                End If
+            End If
+
+        End Sub
+
+        Private Sub AddButtonsToDynEditor(table As TableLayoutPanel)
+
+            Dim button1 As New Button With {.Text = FlowSheet.GetTranslatedString("Initialize from Steady-State solution"),
+                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
+            AddHandler button1.Click,
+                Sub(s, e)
+                    Try
+                        Dim ims1 = GetInletMaterialStream(0)
+                        AccumulationStreams = New List(Of MaterialStream)
+                        For Each seg In Profile.Sections.Values
+                            Dim idx As Integer
+                            For idx = 0 To seg.Results.Count - 2
+                                Dim res = seg.Results(idx)
+                                Dim as1 As MaterialStream = ims1.CloneXML()
+                                as1.SetPressure(res.Pressure_Initial.Value)
+                                as1.SetTemperature(res.Temperature_Initial.Value)
+                                AccumulationStreams.Add(as1)
+                            Next
+                        Next
+                        MessageBox.Show(String.Format("{0}: Dynamic state initialized successfully.", GraphicObject.Tag))
+                    Catch ex As Exception
+                        MessageBox.Show(String.Format("{0}: Error intializing dynamic state: {1}.", GraphicObject.Tag, ex.Message))
+                    End Try
+                End Sub
+            table.Controls.Add(button1)
+            table.Controls.Add(New Panel())
+
+        End Sub
 
         Public Overrides Sub RunDynamicModel()
 
@@ -237,15 +323,15 @@ Namespace UnitOperations
                 NumberOfSections += seg.Incrementos * seg.Quantidade
             Next
 
-            Dim Reset As Boolean = GetDynamicProperty("Reset Contents")
+            'Dim Reset As Boolean = GetDynamicProperty("Reset Contents")
 
-            Dim MustReset As Boolean = CDbl(NumberOfSections) / CDbl(AccumulationStreams.Count) - 1.0 > 0.001
+            'Dim MustReset As Boolean = CDbl(NumberOfSections) / CDbl(AccumulationStreams.Count) - 1.0 > 0.001
 
-            If Reset Or MustReset Then
-                AccumulationStreams = New List(Of MaterialStream)
-                SetDynamicProperty("Reset Contents", 0)
-                FlowSheet.ShowMessage(GraphicObject.Tag + ": Resetting contents...", IFlowsheet.MessageType.Warning)
-            End If
+            'If Reset Or MustReset Then
+            '    AccumulationStreams = New List(Of MaterialStream)
+            '    SetDynamicProperty("Reset Contents", 0)
+            '    FlowSheet.ShowMessage(GraphicObject.Tag + ": Resetting contents...", IFlowsheet.MessageType.Warning)
+            'End If
 
             If AccumulationStreams.Count = 0 Then
 
@@ -255,17 +341,26 @@ Namespace UnitOperations
 
             Else
 
+                For Each astr In AccumulationStreams
+                    If astr.GetMassFlow <= 0.0 Then astr.SetMassFlow(0.0)
+                Next
+
                 'AccumulationStreams.Insert(0, ims.CloneXML)
                 'AccumulationStreams.Remove(AccumulationStreams.Last)
 
-                AccumulationStreams(0) = AccumulationStreams(0).Add(ims1)
-                AccumulationStreams(AccumulationStreams.Count - 1) = AccumulationStreams(AccumulationStreams.Count - 1).Subtract(oms1)
+                'AccumulationStreams(0) = AccumulationStreams(0).Add(ims1)
+                'AccumulationStreams(AccumulationStreams.Count - 1) = AccumulationStreams(AccumulationStreams.Count - 1).Subtract(oms1)
 
                 For Each astr In AccumulationStreams
+                    For Each p As Phase In astr.Phases.Values
+                        For Each comp In p.Compounds.Values
+                            comp.ConstantProperties = FlowSheet.SelectedCompounds(comp.Name)
+                        Next
+                    Next
                     astr.SetFlowsheet(FlowSheet)
+                    astr.PropertyPackage = PropertyPackage
                     astr.PropertyPackage.CurrentMaterialStream = astr
                     astr.Calculate()
-                    If astr.GetMassFlow <= 0.0 Then astr.SetMassFlow(0.0)
                 Next
 
             End If
@@ -302,16 +397,16 @@ Namespace UnitOperations
             Dim sections_inverted = Profile.Sections.Values.ToList()
             sections_inverted.Reverse()
 
-            Dim kg As Integer = NumberOfSections - 2
+            Dim kg As Integer
 
             Dim ms_in, ms_out, current_as, ms_transition As MaterialStream
             Dim Pdrop_transition As Double
 
             For Each segmento In sections_inverted
 
-                Dim n_inc = segmento.Incrementos
+                Dim n_inc = segmento.Incrementos - 1
 
-                For k = n_inc To 0
+                For kg = n_inc To 0 Step -1
 
                     If kg = 0 Then
 

@@ -96,19 +96,41 @@ Namespace Streams
         'Phase shortcuts
 
         <Xml.Serialization.XmlIgnore>
-        Public Property Mixture As BaseClasses.Phase
+        Public ReadOnly Property Mixture As BaseClasses.Phase
+            Get
+                If Phases.Count > 0 Then Return Phases(0) Else Return nothing
+            End Get
+        End Property
         <Xml.Serialization.XmlIgnore>
-        Public Property Vapor As BaseClasses.Phase
+        Public ReadOnly Property Vapor As BaseClasses.Phase
+            Get
+                If Phases.Count > 0 Then Return Phases(2) Else Return Nothing
+            End Get
+        End Property
         <Xml.Serialization.XmlIgnore>
-        Public Property OverallLiquid As BaseClasses.Phase
+        Public ReadOnly Property OverallLiquid As BaseClasses.Phase
+            Get
+                If Phases.Count > 0 Then Return Phases(1) Else Return Nothing
+            End Get
+        End Property
         <Xml.Serialization.XmlIgnore>
-        Public Property Liquid1 As BaseClasses.Phase
+        Public ReadOnly Property Liquid1 As BaseClasses.Phase
+            Get
+                If Phases.Count > 0 Then Return Phases(3) Else Return Nothing
+            End Get
+        End Property
         <Xml.Serialization.XmlIgnore>
-        Public Property Liquid2 As BaseClasses.Phase
+        Public ReadOnly Property Liquid2 As BaseClasses.Phase
+            Get
+                If Phases.Count > 0 Then Return Phases(4) Else Return Nothing
+            End Get
+        End Property
         <Xml.Serialization.XmlIgnore>
-        Public Property Solid As BaseClasses.Phase
-
-
+        Public ReadOnly Property Solid As BaseClasses.Phase
+            Get
+                If Phases.Count > 0 Then Return Phases(7) Else Return Nothing
+            End Get
+        End Property
 
 
 #Region "    XML serialization"
@@ -361,13 +383,6 @@ Namespace Streams
             Me.Phases(0).Properties.pressure = 101325
             Me.Phases(0).Properties.massflow = 1
 
-            Mixture = Phases(0)
-            Vapor = Phases(2)
-            OverallLiquid = Phases(1)
-            Liquid1 = Phases(3)
-            Liquid2 = Phases(4)
-            Solid = Phases(7)
-
             PostCreationAction1?.Invoke(Me)
             PostCreationAction2?.Invoke(Me)
             PostCreationAction3?.Invoke(Me)
@@ -399,13 +414,6 @@ Namespace Streams
             Me.Phases.Add(6, New BaseClasses.Phase(("Aqueous"), ""))
             Me.Phases.Add(7, New BaseClasses.Phase(("Solid"), ""))
 
-            Mixture = Phases(0)
-            Vapor = Phases(2)
-            OverallLiquid = Phases(1)
-            Liquid1 = Phases(3)
-            Liquid2 = Phases(4)
-            Solid = Phases(7)
-
             'assign default values for temperature, pressure and mass flow
             Me.Phases(0).Properties.temperature = 298.15
             Me.Phases(0).Properties.pressure = 101325
@@ -432,13 +440,6 @@ Namespace Streams
             Me.Phases.Add(5, New BaseClasses.Phase(("Liquid3"), ""))
             Me.Phases.Add(6, New BaseClasses.Phase(("Aqueous"), ""))
             Me.Phases.Add(7, New BaseClasses.Phase(("Solid"), ""))
-
-            Mixture = Phases(0)
-            Vapor = Phases(2)
-            OverallLiquid = Phases(1)
-            Liquid1 = Phases(3)
-            Liquid2 = Phases(4)
-            Solid = Phases(7)
 
             'assign default values for temperature, pressure and mass flow
             Me.Phases(0).Properties.temperature = 298.15

@@ -79,6 +79,7 @@ Partial Class MaterialStreamEditor
         Me.Label14 = New System.Windows.Forms.Label()
         Me.TabPageInputComposition = New System.Windows.Forms.TabPage()
         Me.PanelComposition = New System.Windows.Forms.Panel()
+        Me.lblInputAmount = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.gridInputComposition = New System.Windows.Forms.DataGridView()
@@ -90,7 +91,6 @@ Partial Class MaterialStreamEditor
         Me.lblSolvent = New System.Windows.Forms.Label()
         Me.btnEraseInput = New System.Windows.Forms.Button()
         Me.btnNormalizeInput = New System.Windows.Forms.Button()
-        Me.lblInputAmount = New System.Windows.Forms.Label()
         Me.btnEqualizeInput = New System.Windows.Forms.Button()
         Me.TabPageResultsPane = New System.Windows.Forms.TabPage()
         Me.TabControlMain = New System.Windows.Forms.TabControl()
@@ -184,7 +184,6 @@ Partial Class MaterialStreamEditor
         Me.DataGridViewTextBoxColumn17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPageAnnotations = New System.Windows.Forms.TabPage()
         Me.rtbAnnotations = New Extended.Windows.Forms.RichTextBoxExtended()
-        Me.TabPageDynamics = New System.Windows.Forms.TabPage()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.cbDynSpec = New System.Windows.Forms.ComboBox()
         Me.TabPageFloatingTables = New System.Windows.Forms.TabPage()
@@ -278,7 +277,6 @@ Partial Class MaterialStreamEditor
         Me.tabPropsSolid.SuspendLayout()
         CType(Me.gridPropertiesSolid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPageAnnotations.SuspendLayout()
-        Me.TabPageDynamics.SuspendLayout()
         Me.TabPageFloatingTables.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -317,7 +315,6 @@ Partial Class MaterialStreamEditor
         Me.TabControlMain0.Controls.Add(Me.TabPageInputPane)
         Me.TabControlMain0.Controls.Add(Me.TabPageResultsPane)
         Me.TabControlMain0.Controls.Add(Me.TabPageAnnotations)
-        Me.TabControlMain0.Controls.Add(Me.TabPageDynamics)
         Me.TabControlMain0.Controls.Add(Me.TabPageFloatingTables)
         Me.TabControlMain0.Name = "TabControlMain0"
         Me.TabControlMain0.SelectedIndex = 0
@@ -355,6 +352,8 @@ Partial Class MaterialStreamEditor
         'PanelConditions
         '
         resources.ApplyResources(Me.PanelConditions, "PanelConditions")
+        Me.PanelConditions.Controls.Add(Me.Label21)
+        Me.PanelConditions.Controls.Add(Me.cbDynSpec)
         Me.PanelConditions.Controls.Add(Me.Label8)
         Me.PanelConditions.Controls.Add(Me.Label22)
         Me.PanelConditions.Controls.Add(Me.Label6)
@@ -637,6 +636,13 @@ Partial Class MaterialStreamEditor
         Me.ToolTipChangeTag.SetToolTip(Me.PanelComposition, resources.GetString("PanelComposition.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.PanelComposition, resources.GetString("PanelComposition.ToolTip1"))
         '
+        'lblInputAmount
+        '
+        resources.ApplyResources(Me.lblInputAmount, "lblInputAmount")
+        Me.lblInputAmount.Name = "lblInputAmount"
+        Me.ToolTipValues.SetToolTip(Me.lblInputAmount, resources.GetString("lblInputAmount.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.lblInputAmount, resources.GetString("lblInputAmount.ToolTip1"))
+        '
         'Label16
         '
         resources.ApplyResources(Me.Label16, "Label16")
@@ -729,13 +735,6 @@ Partial Class MaterialStreamEditor
         Me.ToolTipValues.SetToolTip(Me.btnNormalizeInput, resources.GetString("btnNormalizeInput.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnNormalizeInput, resources.GetString("btnNormalizeInput.ToolTip1"))
         Me.btnNormalizeInput.UseVisualStyleBackColor = True
-        '
-        'lblInputAmount
-        '
-        resources.ApplyResources(Me.lblInputAmount, "lblInputAmount")
-        Me.lblInputAmount.Name = "lblInputAmount"
-        Me.ToolTipValues.SetToolTip(Me.lblInputAmount, resources.GetString("lblInputAmount.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.lblInputAmount, resources.GetString("lblInputAmount.ToolTip1"))
         '
         'btnEqualizeInput
         '
@@ -1562,16 +1561,6 @@ Partial Class MaterialStreamEditor
         Me.ToolTipChangeTag.SetToolTip(Me.rtbAnnotations, resources.GetString("rtbAnnotations.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.rtbAnnotations, resources.GetString("rtbAnnotations.ToolTip1"))
         '
-        'TabPageDynamics
-        '
-        resources.ApplyResources(Me.TabPageDynamics, "TabPageDynamics")
-        Me.TabPageDynamics.Controls.Add(Me.Label21)
-        Me.TabPageDynamics.Controls.Add(Me.cbDynSpec)
-        Me.TabPageDynamics.Name = "TabPageDynamics"
-        Me.ToolTipChangeTag.SetToolTip(Me.TabPageDynamics, resources.GetString("TabPageDynamics.ToolTip"))
-        Me.ToolTipValues.SetToolTip(Me.TabPageDynamics, resources.GetString("TabPageDynamics.ToolTip1"))
-        Me.TabPageDynamics.UseVisualStyleBackColor = True
-        '
         'Label21
         '
         resources.ApplyResources(Me.Label21, "Label21")
@@ -1954,8 +1943,6 @@ Partial Class MaterialStreamEditor
         Me.tabPropsSolid.ResumeLayout(False)
         CType(Me.gridPropertiesSolid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPageAnnotations.ResumeLayout(False)
-        Me.TabPageDynamics.ResumeLayout(False)
-        Me.TabPageDynamics.PerformLayout()
         Me.TabPageFloatingTables.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
@@ -2138,7 +2125,6 @@ Partial Class MaterialStreamEditor
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage3 As TabPage
     Friend WithEvents TabPage4 As TabPage
-    Friend WithEvents TabPageDynamics As TabPage
     Public WithEvents Label21 As Label
     Public WithEvents cbDynSpec As ComboBox
     Friend WithEvents SplitContainer1 As SplitContainer
