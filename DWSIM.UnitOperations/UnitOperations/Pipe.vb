@@ -410,19 +410,21 @@ Namespace UnitOperations
 
                     If kg = 0 Then
 
-                        Exit For
-
-                    ElseIf kg = 1 Then
-
-                        ms_out = AccumulationStreams(kg)
+                        ms_out = AccumulationStreams(kg + 1)
                         ms_in = ims1
-                        current_as = AccumulationStreams(0)
+                        current_as = AccumulationStreams(kg)
+
+                    ElseIf kg = n_inc Then
+
+                        ms_out = oms1
+                        ms_in = AccumulationStreams(kg - 1)
+                        current_as = AccumulationStreams(kg)
 
                     Else
 
-                        ms_out = AccumulationStreams(kg)
-                        ms_in = AccumulationStreams(kg - 2)
-                        current_as = AccumulationStreams(kg - 1)
+                        ms_out = AccumulationStreams(kg + 1)
+                        ms_in = AccumulationStreams(kg - 1)
+                        current_as = AccumulationStreams(kg)
 
                     End If
 
@@ -437,6 +439,8 @@ Namespace UnitOperations
                                              'stream properties
 
                                              ms_transition.SetMassFlow(mass_flow)
+                                             ms_transition.AssignSelfToPP()
+                                             ms_transition.Calculate()
 
                                              With ms_transition
 
@@ -533,13 +537,17 @@ Namespace UnitOperations
                                              dph = resv(3)
                                              dpt = resv(4)
 
-                                             Return dpt
+                                             Return Pdrop_transition - dpt
 
                                          End Function
 
-                    Dim Pdrop_error = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0000000001, ims1.GetMassFlow() * 10, 10, 0.01, 1000, Pdrop_function)
+                    Dim massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0000000001, ims1.GetMassFlow() * 10, 10, 0.01, 1000, Pdrop_function)
+
+                    Dim Pdrop_error = Pdrop_function.Invoke(massflow)
 
                     'update next accumulation stream
+
+                    ms_transition.SetMassFlow(massflow * timestep)
 
                     current_as = current_as.Subtract(ms_transition)
                     ms_out = ms_out.Add(ms_transition)

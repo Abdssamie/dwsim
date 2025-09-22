@@ -991,6 +991,12 @@ Namespace Streams
 
         End Sub
 
+        Public Sub AssignSelfToPP()
+
+            PropertyPackage.CurrentMaterialStream = Me
+
+        End Sub
+
         ''' <summary>
         ''' Copies basic properties from another stream.
         ''' </summary>
