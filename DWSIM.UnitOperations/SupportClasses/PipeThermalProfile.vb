@@ -10,7 +10,7 @@
         Public Property UserDefinedU_U As New List(Of Double)
         Public Property IncludeSolarRadiation As Boolean = False
         Public Property UseGlobalSolarRadiation As Boolean = False
-        Public Property SolarRadiationValue_kWh_m2 As Double = 5000.0
+        Public Property SolarRadiationValue_kWh_m2 As Double = 3.0
         Public Property SolarRadiationAbsorptionEfficiency As Double = 0.1
 
         Public Sub New()
