@@ -60,7 +60,7 @@ namespace DWSIM.UI.Web
 
         public void RealoadPage()
         {
-            this.webView.CoreWebView2.Reload();
+            this.webView?.CoreWebView2?.Reload();
         }
         public void Navigate(string url)
         {

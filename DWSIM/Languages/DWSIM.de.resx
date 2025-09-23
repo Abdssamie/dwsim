@@ -5462,8 +5462,8 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareNotFileOwner" xml:space="preserve">
     <value>Nur der Dateibesitzer kann diese Datei freigeben.</value>
   </data>
-  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Nur Dateien, die im Simulate 365 Dashboard gespeichert sind, können geteilt werden.</value>
+  <data name="CollaborationAvailableOnlyOnSharedFile" xml:space="preserve">
+    <value>Zusammenarbeit ist nur für freigegebene Dateien verfügbar.</value>
   </data>
   <data name="NotSupportedCollaborationFileType" xml:space="preserve">
     <value>Nur das Flussdiagramm kann für die Zusammenarbeit verwendet werden.</value>
@@ -5473,6 +5473,12 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="ShareSimulationNotSaved" xml:space="preserve">
     <value>Nur Dateien, die im Simulate 365 Dashboard gespeichert sind, können geteilt werden.</value>
+  </data>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>Um die Zusammenarbeit zu beginnen, öffnen Sie die Zusammenarbeitsdatei im Simulate 365 Dashboard.</value>
+  </data>
+  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
+    <value>Nur das Flussdiagramm kann für die Zusammenarbeit verwendet werden.</value>
   </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Objekt verbinden/trennen</value>
@@ -5497,11 +5503,5 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="SolidCp" xml:space="preserve">
     <value>Wärmekapazität Feststoff</value>
-  </data>
-  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
-    <value>Um die Zusammenarbeit zu beginnen, öffnen Sie die Zusammenarbeitsdatei im Simulate 365 Dashboard.</value>
-  </data>
-  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
-    <value>Nur das Flussdiagramm kann für die Zusammenarbeit verwendet werden.</value>
   </data>
 </root>

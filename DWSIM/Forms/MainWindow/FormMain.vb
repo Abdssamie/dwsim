@@ -4572,6 +4572,12 @@ Label_00CC:
 
             Dim filename = form2.Options.FilePath
 
+            Dim isLoggedIn = UserService.GetInstance()._IsLoggedIn()
+
+            If dashboardpicker And Not isLoggedIn Then
+                shouldOverwriteFile = False
+            End If
+
             Dim filePickerForm As IFilePicker
 
             If dashboardpicker Then
@@ -4579,7 +4585,7 @@ Label_00CC:
                 Try
                     Dim fname = Path.GetFileNameWithoutExtension(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
-                    If form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) And disableOverwriteQuestion = False Then
+                    If isLoggedIn And form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) And disableOverwriteQuestion = False Then
                         Dim shouldOverwriteExistingFileResult As DialogResult = MessageBox.Show("Do you want to overwrite the existing file?", "Save file", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                         If (shouldOverwriteExistingFileResult = DialogResult.Yes) Then
@@ -4657,7 +4663,7 @@ Label_00CC:
                 End If
             End If
         Else
-            SaveFile(False)
+            SaveFile(False, dashboardpicker)
         End If
 
     End Sub
@@ -4870,9 +4876,11 @@ Label_00CC:
         If shouldSaveToDashboard = True Then
             If TypeOf file Is WindowsFile Then
                 Return False
+            Else
+                Return True
             End If
+            Return TypeOf file Is WindowsFile
         End If
-        Return True
     End Function
 
     Public Function SaveFile(ByVal saveasync As Boolean, Optional saveToDashboard As Boolean = False, Optional closing As Boolean = False, Optional closingSimulation As Boolean = False) As String
@@ -4884,6 +4892,21 @@ Label_00CC:
         If saveToDashboard Then
             filePickerForm = New Simulate365.FormFactories.S365FilePickerForm()
         End If
+        Dim isLoggedIn = UserService.GetInstance()._IsLoggedIn()
+
+        'If user is not logged in, show filepicker dialog with message login to access this feature
+        If Not isLoggedIn And saveToDashboard Then
+            Dim tempfilePickerForm As S365FilePickerForm = New S365FilePickerForm()
+            AddHandler tempfilePickerForm.AfterUserLoggedIn, AddressOf TempFormPickerForm_AfterUserLoggedIn
+            tempfilePickerForm.ShowSaveDialog(New List(Of SharedClassesCSharp.FilePicker.FilePickerAllowedType))
+        End If
+
+        'If user does not log in, exit function
+        isLoggedIn = UserService.GetInstance()._IsLoggedIn()
+        If Not isLoggedIn And saveToDashboard Then
+            Return Nothing
+        End If
+
 
         Dim filename As String
 
@@ -5013,6 +5036,12 @@ Label_00CC:
         Return ""
 
     End Function
+
+    Private Sub TempFormPickerForm_AfterUserLoggedIn(sender As Object, e As EventArgs)
+        Dim formPickerForm As S365FilePickerForm = CType(sender, S365FilePickerForm)
+        RemoveHandler formPickerForm.AfterUserLoggedIn, AddressOf TempFormPickerForm_AfterUserLoggedIn
+        formPickerForm.Close()
+    End Sub
 
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click, SaveAsToolStripMenuItem.Click
 
@@ -5486,6 +5515,10 @@ Label_00CC:
         Dim userService As UserService = UserService.GetInstance()
         If userService._IsLoggedIn() = False Then
             shareFileForm.ShowFileShareDialog("user_not_logged_in")
+        End If
+        'If user logs in, we show him next step
+        If userService._IsLoggedIn() = False Then
+            Return
         End If
 
         If Not Me.ActiveMdiChild Is Nothing Then

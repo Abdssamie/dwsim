@@ -1964,6 +1964,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to A colaboração está disponível apenas em arquivos compartilhados..
+        '''</summary>
+        Friend Shared ReadOnly Property CollaborationAvailableOnlyOnSharedFile() As String
+            Get
+                Return ResourceManager.GetString("CollaborationAvailableOnlyOnSharedFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Coluna 1 (Fonte).
         '''</summary>
         Friend Shared ReadOnly Property Coluna1Fonte() As String
@@ -13704,15 +13713,6 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Saved() As String
             Get
                 Return ResourceManager.GetString("Saved", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to Somente os arquivos salvos no Simulate 365 Dashboard podem ser compartilhados..
-        '''</summary>
-        Friend Shared ReadOnly Property SaveFileToDashboardToCollaborate() As String
-            Get
-                Return ResourceManager.GetString("SaveFileToDashboardToCollaborate", resourceCulture)
             End Get
         End Property
         

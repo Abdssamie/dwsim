@@ -5778,8 +5778,8 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareNotFileOwner" xml:space="preserve">
     <value>Apenas o proprietário do arquivo pode compartilhá-lo.</value>
   </data>
-  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Somente os arquivos salvos no Simulate 365 Dashboard podem ser compartilhados.</value>
+  <data name="CollaborationAvailableOnlyOnSharedFile" xml:space="preserve">
+    <value>A colaboração está disponível apenas em arquivos compartilhados.</value>
   </data>
   <data name="NotSupportedCollaborationFileType" xml:space="preserve">
     <value>Somente o fluxograma pode ser usado para colaboração.</value>

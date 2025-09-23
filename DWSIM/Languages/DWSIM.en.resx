@@ -5744,8 +5744,8 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareNotFileOwner" xml:space="preserve">
     <value>Only the file owner can share this file.</value>
   </data>
-  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Only files saved to Simulate 365 Dashboard can be shared.</value>
+  <data name="CollaborationAvailableOnlyOnSharedFile" xml:space="preserve">
+    <value>Collaboration is only available on shared files.</value>
   </data>
   <data name="NotSupportedCollaborationFileType" xml:space="preserve">
     <value>Only flowsheet can be used for collaboration.</value>
@@ -5755,6 +5755,12 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="ShareSimulationNotSaved" xml:space="preserve">
     <value>Only files saved to Simulate 365 Dashboard can be shared.</value>
+  </data>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>To start collaboration, open the collaboration file from Simulate 365 Dashboard.</value>
+  </data>
+  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
+    <value>Only flowsheet can be used for collaboration.</value>
   </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Connect/Disconnect Object</value>
@@ -5965,11 +5971,5 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="DescDHPP" xml:space="preserve">
     <value>Includes only the Debye-Hückel term for the calculation of activity coefficients.</value>
-  </data>
-  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
-    <value>To start collaboration, open the collaboration file from Simulate 365 Dashboard.</value>
-  </data>
-  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
-    <value>Only flowsheet can be used for collaboration.</value>
   </data>
 </root>

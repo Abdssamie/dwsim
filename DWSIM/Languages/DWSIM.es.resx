@@ -5481,8 +5481,8 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareNotFileOwner" xml:space="preserve">
     <value>Solo el propietario del archivo puede compartirlo.</value>
   </data>
-  <data name="SaveFileToDashboardToCollaborate" xml:space="preserve">
-    <value>Solo los archivos guardados en el Panel de Simulate 365 se pueden compartir.</value>
+  <data name="CollaborationAvailableOnlyOnSharedFile" xml:space="preserve">
+    <value>La colaboración solo está disponible en archivos compartilhados.</value>
   </data>
   <data name="NotSupportedCollaborationFileType" xml:space="preserve">
     <value>Solo el diagrama de flujo se puede utilizar para la colaboración.</value>
@@ -5492,6 +5492,12 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="ShareSimulationNotSaved" xml:space="preserve">
     <value>Solo los archivos guardados en el Panel de Simulate 365 se pueden compartir.</value>
+  </data>
+  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
+    <value>Para iniciar la colaboración, abra el archivo de colaboración desde el Panel de Simulate 365.</value>
+  </data>
+  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
+    <value>Solo el diagrama de flujo se puede utilizar para la colaboración.</value>
   </data>
   <data name="ConectarDesconectarO" xml:space="preserve">
     <value>Conectar/Desconectar Objeto</value>
@@ -5510,11 +5516,5 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="SolidCp" xml:space="preserve">
     <value>Capacidad Calorífica de Solido</value>
-  </data>
-  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
-    <value>Para iniciar la colaboración, abra el archivo de colaboración desde el Panel de Simulate 365.</value>
-  </data>
-  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
-    <value>Solo el diagrama de flujo se puede utilizar para la colaboración.</value>
   </data>
 </root>

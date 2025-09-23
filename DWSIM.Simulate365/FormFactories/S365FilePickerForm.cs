@@ -35,6 +35,7 @@ namespace DWSIM.Simulate365.FormFactories
         public static event EventHandler<BeforeShowDialogEventArgs> BeforeShowSaveDialog;
 
         public static event EventHandler<BeforeShowDialogEventArgs> BeforeShowOpenDialog;
+        public event EventHandler AfterUserLoggedIn;
 
         #endregion
 
@@ -58,13 +59,20 @@ namespace DWSIM.Simulate365.FormFactories
 
         private void OnUserLoggedInEvent(object sender, EventArgs e)
         {
-            _webUIForm.RealoadPage();
+            if (AfterUserLoggedIn != null)
+            {
+                AfterUserLoggedIn?.Invoke(this, new EventArgs());
+            }
+            else
+            {
+                _webUIForm?.RealoadPage();
+            }
             //_webUIForm?.Navigate(_webUIForm?.InitialUrl);
         }
 
         private void _filePickerService_S365DashboardFolderCreated(object sender, EventArgs e)
         {
-            _webUIForm.RealoadPage();
+            _webUIForm?.RealoadPage();
         }
 
         private void FilePickerService_S365DashboardSaveFileClicked(object sender, S365DashboardSaveFile e)
@@ -78,6 +86,9 @@ namespace DWSIM.Simulate365.FormFactories
         private void UsubscribeFromEvents()
         {
             _userService.OnUserLoggedIn -= OnUserLoggedInEvent;
+            _filePickerService.S3365DashboardFileOpenStarted -= FilePickerService_S3365DashboardFileOpenStarted;
+            _filePickerService.S365DashboardSaveFileClicked -= FilePickerService_S365DashboardSaveFileClicked;
+            _filePickerService.S365DashboardFolderCreated -= _filePickerService_S365DashboardFolderCreated;
         }
 
         private void FilePickerService_S3365DashboardFileOpenStarted(object sender, EventArgs e)
@@ -88,7 +99,12 @@ namespace DWSIM.Simulate365.FormFactories
             _webUIForm?.Dispose();
         }
 
-
+        public void Close()
+        {
+            UsubscribeFromEvents();
+            _webUIForm?.Close();
+            _webUIForm?.Dispose();
+        }
 
         public S365File ShowSaveDialog(List<string> fileFormats = null)
         {
