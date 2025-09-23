@@ -372,23 +372,19 @@ Namespace UnitOperations
 
             End If
 
-            Dim Tin, Pin, Tout, Pout, Tout_ant, Pout_ant, Pout_ant2, Text, Win, Qin, Qvin, Qlin, Qsin, eta_phi, eta_r, TinP, PinP,
-                rho_l, rho_v, Cp_l, Cp_v, Cp_m, K_l, K_v, eta_l, eta_v, tens, Hin, Hout, HinP,
-                fT, fP, fP_ant, fP_ant2, w_v, w_l, w, z, dText_dL As Double
-            Dim cntP, cntT As Integer
+            Dim Tin, Qvin, Qlin, Qsin, eta_phi, eta_r, rho_l, rho_v, Cp_l, Cp_v, K_l, K_v, eta_l, eta_v, tens, w_v, w_l, w, z As Double
 
             'Calcular DP
 
-            Dim Tpe, Tspec, Pspec As Double
+            Dim Tspec, Pspec As Double
             Dim resv As Object = New Object() {"", 0.0, 0.0, 0.0, 0.0}
             Dim resf As Double()
             Dim equilibrio As Object = Nothing
             Dim tmp As Object = Nothing
             Dim tipofluxo As String
             Dim first As Boolean = True
-            Dim holdup, dpf, dph, dpt, DQ, DQmax, U, A, p0, t0 As Double
+            Dim holdup, dpf, dph, dpt As Double
             Dim f_mix, mu_mix, rho_mix, vel_mix, Re_mix As Double
-            Dim nseg As Double
             Dim results As New PipeResults
 
             Tspec = OutletTemperature
@@ -404,7 +400,7 @@ Namespace UnitOperations
             Dim sections_inverted = Profile.Sections.Values.ToList()
             sections_inverted.Reverse()
 
-            Dim kg As Integer
+            Dim k2 As Integer
 
             Dim ms_in, ms_out, current_as, ms_transition As MaterialStream
             Dim Pdrop_transition As Double
@@ -413,25 +409,25 @@ Namespace UnitOperations
 
                 Dim n_inc = segmento.Incrementos - 1
 
-                For kg = n_inc To 0 Step -1
+                For k2 = n_inc To 0 Step -1
 
-                    If kg = 0 Then
+                    If k2 = 0 Then
 
-                        ms_out = AccumulationStreams(kg + 1)
+                        ms_out = AccumulationStreams(k2 + 1)
                         ms_in = ims1
-                        current_as = AccumulationStreams(kg)
+                        current_as = AccumulationStreams(k2)
 
-                    ElseIf kg = n_inc Then
+                    ElseIf k2 = n_inc Then
 
                         ms_out = oms1
-                        ms_in = AccumulationStreams(kg - 1)
-                        current_as = AccumulationStreams(kg)
+                        ms_in = AccumulationStreams(k2 - 1)
+                        current_as = AccumulationStreams(k2)
 
                     Else
 
-                        ms_out = AccumulationStreams(kg + 1)
-                        ms_in = AccumulationStreams(kg - 1)
-                        current_as = AccumulationStreams(kg)
+                        ms_out = AccumulationStreams(k2 + 1)
+                        ms_in = AccumulationStreams(k2 - 1)
+                        current_as = AccumulationStreams(k2)
 
                     End If
 
@@ -556,8 +552,11 @@ Namespace UnitOperations
 
                     ms_transition.SetMassFlow(massflow * timestep)
 
+                    If k2 = 0 Then current_as = current_as.Add(ms_in)
+
                     current_as = current_as.Subtract(ms_transition)
-                    ms_out = ms_out.Add(ms_transition)
+
+                    If k2 < n_inc Then ms_out = ms_out.Add(ms_transition)
 
                     current_as.AssignSelfToPP()
                     current_as.Calculate(False, True)
@@ -565,45 +564,35 @@ Namespace UnitOperations
                     ms_out.AssignSelfToPP()
                     ms_out.Calculate(False, True)
 
+                    k2 -= 1
+
+                Next
+
+            Next
+
+            'update pressures
+
+            For Each segmento In sections_inverted
+
+                Dim n_inc = segmento.Incrementos - 1
+
+                For k2 = n_inc To 0 Step -1
+
+                    current_as = AccumulationStreams(k2)
+
                     'calculate new pressures
 
-                    Dim M1, V1, P1, H1, D, L As Double
-
-                    'segment outlet stream pressure
-
-                    M1 = ms_out.GetMolarFlow()
-
-                    D = segmento.DI * 0.0254
-                    L = segmento.Comprimento / segmento.Incrementos
-
-                    V1 = Math.PI * D ^ 2 * L / 4 'segment volume
-
-                    M1 = V1 / M1 'm3/mol
-
-                    PropertyPackage.CurrentMaterialStream = ms_out
-
-                    Dim result As IFlashCalculationResult = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature,
-                                                                                                  M1, ms_out.GetTemperature(), ms_out.GetPressure())
-
-                    P1 = result.CalculatedPressure
-                    H1 = result.CalculatedEnthalpy
-
-                    ms_out.SetPressure(P1)
-                    ms_out.SetMassEnthalpy(H1)
-                    ms_out.SpecType = StreamSpec.Pressure_and_Enthalpy
-
-                    ms_out.AssignSelfToPP()
-                    ms_out.Calculate()
+                    Dim M1, P1, H1 As Double
 
                     'current segment pressure
 
-                    M1 = current_as.GetMolarFlow()
-                    M1 = V1 / M1 'm3/mol
+                    M1 = current_as.GetVolumetricFlow() / current_as.GetMolarFlow() 'm3/mol
 
-                    PropertyPackage.CurrentMaterialStream = current_as
+                    current_as.AssignSelfToPP()
 
-                    result = PropertyPackage.CalculateEquilibrium2(FlashCalculationType.VolumeTemperature,
-                                                                                                  M1, current_as.GetTemperature(), current_as.GetPressure())
+                    Dim result = PropertyPackage.CalculateEquilibrium2(
+                        FlashCalculationType.VolumeTemperature,
+                        M1, current_as.GetTemperature(), current_as.GetPressure())
 
                     P1 = result.CalculatedPressure
                     H1 = result.CalculatedEnthalpy
@@ -615,7 +604,7 @@ Namespace UnitOperations
                     current_as.AssignSelfToPP()
                     current_as.Calculate()
 
-                    kg -= 1
+                    k2 -= 1
 
                 Next
 
