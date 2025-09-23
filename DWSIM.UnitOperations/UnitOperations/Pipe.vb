@@ -653,9 +653,9 @@ Namespace UnitOperations
                                         Else
                                             SR = ThermalProfile.SolarRadiationAbsorptionEfficiency * ThermalProfile.SolarRadiationValue_kWh_m2
                                         End If
-                                        SR *= 3600
+                                        SR *= 3600 'kJ/m2
                                         Dim Asec = Math.PI * .Comprimento / .Incrementos * .DE * 0.0254
-                                        Qrad = SR / timestep * Asec
+                                        Qrad = SR / timestep * Asec 'kJ/m2 / s * m2 = kW
                                         DQ += Qrad
                                         DQmax += Qrad
                                         results.Absorbed_Radiation = Qrad
