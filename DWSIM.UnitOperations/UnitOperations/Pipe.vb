@@ -372,7 +372,8 @@ Namespace UnitOperations
 
             End If
 
-            Dim Tin, Qvin, Qlin, Qsin, eta_phi, eta_r, rho_l, rho_v, Cp_l, Cp_v, K_l, K_v, eta_l, eta_v, tens, w_v, w_l, w, z As Double
+            Dim A, U, Cp_m, DQ, DQmax, dText_dL, Text, Tout, Tpe, Tin, Qvin, Qlin, Qsin, eta_phi, eta_r,
+                rho_l, rho_v, Cp_l, Cp_v, K_l, K_v, eta_l, eta_v, tens, w_v, w_l, w, z As Double
 
             'Calcular DP
 
@@ -385,7 +386,6 @@ Namespace UnitOperations
             Dim first As Boolean = True
             Dim holdup, dpf, dph, dpt As Double
             Dim f_mix, mu_mix, rho_mix, vel_mix, Re_mix As Double
-            Dim results As New PipeResults
 
             Tspec = OutletTemperature
             Pspec = OutletPressure
@@ -395,10 +395,10 @@ Namespace UnitOperations
 
             Dim countext As Integer = 0
 
-            Dim currL As Double = 0.0#
-
             Dim sections_inverted = Profile.Sections.Values.ToList()
             sections_inverted.Reverse()
+
+            Dim currL As Double = sections_inverted.Select(Function(sc) sc.Comprimento).Sum()
 
             Dim k2 As Integer
 
@@ -407,9 +407,13 @@ Namespace UnitOperations
 
             For Each segmento In sections_inverted
 
+                segmento.Results.Clear()
+
                 Dim n_inc = segmento.Incrementos - 1
 
                 For k2 = n_inc To 0 Step -1
+
+                    currL -= segmento.Comprimento / segmento.Incrementos
 
                     If k2 = 0 Then
 
@@ -523,7 +527,7 @@ Namespace UnitOperations
                                                          Dim krug = GetRugosity(segmento.Material, segmento)
                                                          f_mix = fpp.FrictionFactor(Re_mix, segmento.DI * 0.0254, krug)
                                                          dph = 0
-                                                         dpf = resf(0) * ((Qlin + Qsin) / (Qvin + Qlin + Qsin) * rho_l + Qvin / (Qvin + Qlin + Qsin) * rho_v) * (results.LiqVel.GetValueOrDefault + results.VapVel.GetValueOrDefault) ^ 2 / 2
+                                                         dpf = resf(0) * ((Qlin + Qsin) / (Qvin + Qlin + Qsin) * rho_l + Qvin / (Qvin + Qlin + Qsin) * rho_v) * ((Qlin + Qvin) / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)) ^ 2 / 2
                                                          dpt = dpf
                                                          resv(0) = ""
                                                          resv(1) = (Qlin + Qsin) / (Qvin + Qlin + Qsin)
@@ -547,6 +551,139 @@ Namespace UnitOperations
                     Dim massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0000000001, ims1.GetMassFlow() * 10, 10, 0.01, 1000, Pdrop_function)
 
                     Dim Pdrop_error = Pdrop_function.Invoke(massflow)
+
+                    Dim results As New PipeResults()
+
+                    With results
+
+                        .Temperature_Initial = Tin
+                        .Pressure_Initial = current_as.GetPressure()
+                        .EnergyFlow_Initial = current_as.GetMassEnthalpy()
+                        .Cpl = Cp_l
+                        .Cpv = Cp_v
+                        .Kl = K_l
+                        .Kv = K_v
+                        .RHOl = rho_l
+                        .RHOv = rho_v
+                        .Ql = Qlin + Qsin
+                        .Qv = Qvin
+                        .MUl = eta_l
+                        .MUv = eta_v
+                        .Surft = tens
+                        .LiqRe = 4 / Math.PI * .RHOl * .Ql / (.MUl * segmento.DI * 0.0254)
+                        .VapRe = 4 / Math.PI * .RHOv * .Qv / (.MUv * segmento.DI * 0.0254)
+                        .LiqVel = .Ql / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
+                        .VapVel = .Qv / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
+                        .MachNumber = .VapVel / current_as.Phases(2).Properties.speedOfSound.GetValueOrDefault()
+
+                    End With
+
+                    segmento.Results.Add(results)
+
+                    'calculate temperature balance
+
+                    If CalculateHeatBalance Then
+
+                        If ThermalProfile.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
+                            If ThermalProfile.UseUserDefinedU Then
+                                Text = MathNet.Numerics.Interpolate.Linear(ThermalProfile.UserDefinedU_Length,
+                                                                                        ThermalProfile.UserDefinedU_Temp).Interpolate(currL)
+                                dText_dL = 0.0
+                            Else
+                                Text = ThermalProfile.Temp_amb_definir
+                                dText_dL = ThermalProfile.AmbientTemperatureGradient
+                            End If
+                        Else
+                            Text = ThermalProfile.Temp_amb_estimar
+                            dText_dL = ThermalProfile.AmbientTemperatureGradient_EstimateHTC
+                        End If
+
+                        If Text > Tin Then
+                            Tout = Tin * 1.005
+                        Else
+                            Tout = Tin / 1.005
+                        End If
+
+                        If Tin < Text And Tout > Text Then Tout = Text * 0.98 + dText_dL * currL
+                        If Tin > Text And Tout < Text Then Tout = Text * 1.02 + dText_dL * currL
+
+                        With segmento
+
+                            If UseGlobalWeather Then
+                                results.External_Temperature = FlowSheet.FlowsheetOptions.CurrentWeather.Temperature_C + 273.15
+                            Else
+                                results.External_Temperature = Text + dText_dL * currL
+                            End If
+
+                            Cp_m = holdup * Cp_l + (1 - holdup) * Cp_v
+
+                            If Not ThermalProfile.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_Q Then
+                                If ThermalProfile.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
+                                    If ThermalProfile.UseUserDefinedU Then
+                                        U = MathNet.Numerics.Interpolate.Step(ThermalProfile.UserDefinedU_Length,
+                                                                                            ThermalProfile.UserDefinedU_U).Interpolate(currL)
+                                    Else
+                                        U = ThermalProfile.CGTC_Definido
+                                    End If
+                                    A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
+                                ElseIf ThermalProfile.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Estimar_CGTC Then
+                                    A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
+                                    Tpe = Tin + (Tout - Tin) / 2
+                                    Dim resultU As Double() = CalcOverallHeatTransferCoefficient(segmento, .Material, holdup, .Comprimento / .Incrementos,
+                                                                                    .DI * 0.0254, .DE * 0.0254, GetRugosity(.Material, segmento), Tpe, results.External_Temperature,
+                                                                                    results.VapVel, results.LiqVel, results.Cpl, results.Cpv, results.Kl, results.Kv,
+                                                                                    results.MUl, results.MUv, results.RHOl, results.RHOv,
+                                                                                    ThermalProfile.Incluir_cti, ThermalProfile.Incluir_isolamento,
+                                                                                    ThermalProfile.Incluir_paredes, ThermalProfile.Incluir_cte)
+                                    U = resultU(0)
+                                    With results
+                                        .HTC_internal = resultU(1)
+                                        .HTC_pipewall = resultU(2)
+                                        .HTC_insulation = resultU(3)
+                                        .HTC_external = resultU(4)
+                                    End With
+                                End If
+                                If U > 0 Then
+                                    DQ = (Tout - Tin) / Math.Log((results.External_Temperature - Tin) / (results.External_Temperature - Tout)) * U / 1000 * A
+                                    DQmax = (results.External_Temperature - Tin) * Cp_m * (current_as.GetMassFlow() / timestep)
+                                    Dim SR, Qrad As Double
+                                    If ThermalProfile.IncludeSolarRadiation Then
+                                        If ThermalProfile.UseGlobalSolarRadiation Then
+                                            SR = ThermalProfile.SolarRadiationAbsorptionEfficiency * FlowSheet.FlowsheetOptions.CurrentWeather.SolarIrradiation_kWh_m2
+                                        Else
+                                            SR = ThermalProfile.SolarRadiationAbsorptionEfficiency * ThermalProfile.SolarRadiationValue_kWh_m2
+                                        End If
+                                        SR *= 3600
+                                        Dim Asec = Math.PI * .Comprimento / .Incrementos * .DE * 0.0254
+                                        Qrad = SR / timestep * Asec
+                                        DQ += Qrad
+                                        DQmax += Qrad
+                                        results.Absorbed_Radiation = Qrad
+                                    End If
+                                    If Double.IsNaN(DQ) Then DQ = 0.0#
+                                    If Math.Abs(DQ) > Math.Abs(DQmax) Then DQ = DQmax
+
+                                    results.Internal_Temperature = DQ / (current_as.GetMassFlow() / timestep * Cp_m) + Tin
+                                    results.Wall_Temperature = results.Internal_Temperature + DQ / (results.HTC_pipewall * Math.PI * (Math.Log(.DE / .DI) * .DI * 0.0254) * .Comprimento / .Incrementos)
+                                    results.Insulation_Temperature = results.Wall_Temperature + DQ / (results.HTC_insulation * Math.PI * (Math.Log((.DE + ThermalProfile.Espessura / 0.0254) / .DE) * .DE * 0.0254) * .Comprimento / .Incrementos)
+
+                                Else
+                                    DQ = 0.0#
+                                    DQmax = 0.0#
+                                End If
+                            Else
+                                DQ = ThermalProfile.Calor_trocado / timestep
+                                Tout = DQ / (current_as.GetMassFlow() / timestep * Cp_m) + Tin
+                                results.Internal_Temperature = Tout
+                                A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
+                                U = DQ / (A * (Tout - Tin)) * 1000
+                            End If
+
+                        End With
+
+                        current_as.SetTemperature(results.Internal_Temperature)
+
+                    End If
 
                     'update next accumulation stream
 
@@ -623,8 +760,6 @@ Namespace UnitOperations
             es.SetEnergyFlow(DeltaQ.GetValueOrDefault())
 
         End Sub
-
-
 
         Public Overrides Sub Calculate(Optional ByVal args As Object = Nothing)
 

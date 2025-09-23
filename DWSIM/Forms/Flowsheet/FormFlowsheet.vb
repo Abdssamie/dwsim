@@ -3208,6 +3208,29 @@ Public Class FormFlowsheet
 
             End If
 
+            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("OptimizationCases"))
+            xel = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases")
+
+            For Each pp In Collections.OPT_OptimizationCollection
+                xel.Add(New XElement("OptimizationCase", {pp.SaveData().ToArray()}))
+            Next
+
+            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SensitivityAnalysis"))
+            xel = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis")
+
+            For Each pp In Collections.OPT_SensAnalysisCollection
+                xel.Add(New XElement("SensitivityAnalysisCase", {pp.SaveData().ToArray()}))
+            Next
+
+            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PetroleumAssays"))
+            xel = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays")
+
+            If Options.PetroleumAssays Is Nothing Then Options.PetroleumAssays = New Dictionary(Of String, Utilities.PetroleumCharacterization.Assay.Assay)
+
+            For Each pp As KeyValuePair(Of String, Utilities.PetroleumCharacterization.Assay.Assay) In Options.PetroleumAssays
+                xel.Add(New XElement("Assay", pp.Value.SaveData().ToArray()))
+            Next
+
             xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("MessagesLog"))
             xel = xdoc.Element("DWSIM_Simulation_Data").Element("MessagesLog")
 
@@ -3730,6 +3753,52 @@ Public Class FormFlowsheet
                     Catch ex As Exception
                         excs.Add(New Exception("Error Loading Dynamics Manager Information", ex))
                     End Try
+
+                End If
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases").Elements.ToList
+
+                Collections.OPT_OptimizationCollection.Clear()
+
+                For Each xel As XElement In data
+                    Try
+                        Dim obj As New SharedClasses.Flowsheet.Optimization.OptimizationCase
+                        obj.LoadData(xel.Elements.ToList)
+                        Collections.OPT_OptimizationCollection.Add(obj)
+                    Catch ex As Exception
+                        excs.Add(New Exception("Error Loading Optimization Case Information", ex))
+                    End Try
+                Next
+
+                data = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis").Elements.ToList
+
+                Collections.OPT_SensAnalysisCollection.Clear()
+
+                For Each xel As XElement In data
+                    Try
+                        Dim obj As New SharedClasses.Flowsheet.Optimization.SensitivityAnalysisCase
+                        obj.LoadData(xel.Elements.ToList)
+                        Collections.OPT_SensAnalysisCollection.Add(obj)
+                    Catch ex As Exception
+                        excs.Add(New Exception("Error Loading Sensitivity Analysis Case Information", ex))
+                    End Try
+                Next
+
+                If xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays") IsNot Nothing Then
+
+                    Options.PetroleumAssays.Clear()
+
+                    data = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays").Elements.ToList
+
+                    For Each xel As XElement In data
+                        Try
+                            Dim obj As New Utilities.PetroleumCharacterization.Assay.Assay()
+                            obj.LoadData(xel.Elements.ToList)
+                            Options.PetroleumAssays.Add(obj.Name, obj)
+                        Catch ex As Exception
+                            excs.Add(New Exception("Error Loading Petroleum Assay Information", ex))
+                        End Try
+                    Next
 
                 End If
 
