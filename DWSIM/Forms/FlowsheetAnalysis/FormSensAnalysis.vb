@@ -227,6 +227,7 @@ Public Class FormSensAnalysis
         If Me.lbCases.Items.Count > 0 Then
             Try
                 lbCases.SelectedIndex = selectedindex
+                selectedindex = -1
                 lbCases_SelectedIndexChanged(Me, New EventArgs())
             Catch ex As Exception
             End Try
@@ -507,16 +508,10 @@ Public Class FormSensAnalysis
                         Exit For
                     End If
                 Next
-                'TabPage2.Enabled = True
-                'TabPage3.Enabled = True
                 GroupBox8.Enabled = True
                 GroupBox9.Enabled = True
                 btnRun.Enabled = True
-                'gbExp.Enabled = True
             Else
-                'TabPage2.Enabled = False
-                'TabPage3.Enabled = False
-                'gbExp.Enabled = False
                 GroupBox8.Enabled = False
                 GroupBox9.Enabled = False
                 btnRun.Enabled = False

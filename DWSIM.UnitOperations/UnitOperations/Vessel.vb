@@ -41,7 +41,11 @@ Namespace UnitOperations
 
         Public Property WallMaterial As String = "Carbon Steel"
 
+        Public Property WallTemperature As Double = 0.0
+
         Public Property HeadType As String = "Hemispherical"
+
+        Public Property CalculateRigorousHeatBalance As Boolean = False
 
         Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
 
@@ -153,11 +157,13 @@ Namespace UnitOperations
             AddDynamicProperty("Vessel Orientation", "Vertical or Horizontal (V = 0, H = 1)", 0, UnitOfMeasure.none, 1.0.GetType())
             AddDynamicProperty("Operating Pressure", "Current Vessel Operating Pressure", 0, UnitOfMeasure.pressure, 1.0.GetType())
             AddDynamicProperty("Liquid Level", "Current Liquid Level", 0, UnitOfMeasure.distance, 1.0.GetType())
-            AddDynamicProperty("Volume", "Vessel Volume", 1, UnitOfMeasure.volume, 1.0.GetType())
-            AddDynamicProperty("Height", "Available Height for Liquid", 2, UnitOfMeasure.distance, 1.0.GetType())
-            AddDynamicProperty("Minimum Pressure", "Minimum Dynamic Pressure for this Unit Operation.", 101325, UnitOfMeasure.pressure, 1.0.GetType())
-            AddDynamicProperty("Initialize using Inlet Stream", "Initializes the vessel content with information from the inlet stream, if the vessel content is null.", True, UnitOfMeasure.none, True.GetType())
-            AddDynamicProperty("Reset Content", "Empties the vessel's content on the next run.", False, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Get Volume from Dimensions", "Calculate volume from dimensions (Diameter, Height and Head Type)", False, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Volume", "Vessel Volume (define if no dimensions set)", 1, UnitOfMeasure.volume, 1.0.GetType())
+            AddDynamicProperty("Get Height from Dimensions", "Use Height from Dimensions", False, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Height", "Available height for liquid (define if no dimensions set)", 2, UnitOfMeasure.distance, 1.0.GetType())
+            AddDynamicProperty("Minimum Pressure", "Minimum dynamic pressure", 101325, UnitOfMeasure.pressure, 1.0.GetType())
+            AddDynamicProperty("Initialize using Inlet Stream", "Initializes the vessel content with information from the inlet stream, if the vessel content is null", True, UnitOfMeasure.none, True.GetType())
+            AddDynamicProperty("Reset Content", "Empties the vessel's content on the next run", False, UnitOfMeasure.none, True.GetType())
 
         End Sub
 
@@ -230,6 +236,8 @@ Namespace UnitOperations
 
             Dim oms3 As MaterialStream = Me.GetOutletMaterialStream(2)
 
+            Dim omsr As MaterialStream = GetOutletMaterialStream(3)
+
             If CalculationMode > 1 Then
                 Throw New Exception("Only Adiabatic and Legacy mode are supported in dynamic mode.")
             End If
@@ -249,7 +257,57 @@ Namespace UnitOperations
             Next
 
             Dim Vol As Double = GetDynamicProperty("Volume")
+
             Dim Height As Double = GetDynamicProperty("Height")
+
+            If GetDynamicProperty("Get Height from Dimensions") Then
+
+                Height = Dimensions(1).Value
+
+            End If
+
+            Dim D, L, DE As Double
+
+            If GetDynamicProperty("Get Volume from Dimensions") Then
+
+                ' Calculate vessel volume
+
+                Dim pi = Math.PI
+
+                D = Dimensions(0).Value
+                L = Dimensions(1).Value
+                DE = D + WallThickness
+
+                Select Case HeadType
+
+                    Case "Ellipsoidal (2:1)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (pi * D ^ 3 / 24)
+
+                    Case "Hemispherical"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (pi * D ^ 3 / 12)
+
+                    Case "Torispherical (ASME F&D)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (0.0847 * D ^ 3)
+
+                    Case "Torispherical (Standard F&D)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (0.0808 * D ^ 3)
+
+                    Case "Torispherical (80:10 F&D)"
+
+                        Vol = pi * D ^ 2 * L / 4 + 2 * (0.0746 * D ^ 3)
+
+                    Case "Flat"
+
+                        Vol = pi * D ^ 2 * L / 4
+
+                End Select
+
+            End If
+
             Dim Pressure, Enthalpy As Double
             Dim Pmin = GetDynamicProperty("Minimum Pressure")
             Dim Orientation As Integer = GetDynamicProperty("Vessel Orientation")
@@ -293,6 +351,9 @@ Namespace UnitOperations
                 AccumulationStream.Calculate()
                 If oms1.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(oms1, timestep)
                 If oms2.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(oms2, timestep)
+                If omsr IsNot Nothing Then
+                    If omsr.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(omsr, timestep)
+                End If
                 If AccumulationStream.GetMassFlow <= 0.0 Then AccumulationStream.SetMassFlow(0.0)
             End If
 
@@ -307,7 +368,97 @@ Namespace UnitOperations
 
             Dim es = GetInletEnergyStream(6)
 
-            If es IsNot Nothing Then Qval = es.EnergyFlow.GetValueOrDefault
+            If CalculateRigorousHeatBalance Then
+
+                If es IsNot Nothing Then
+
+                    Throw New Exception("Please disconnect the energy stream to calculate the rigorous heat balance.")
+
+                End If
+
+                Dim Uint, Uext, A, DQ, DQmax, Twall, Tint, Tpe, Cp_m, holdup, Cpl, Cpv, Text, Kl, Kv, VapVel, LiqVel, MUl, MUv As Double
+
+                Tint = AccumulationStream.GetTemperature()
+
+                Twall = WallTemperature
+
+                If ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
+                    Text = ThermalProperties.Temp_amb_definir
+                ElseIf ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Estimar_CGTC Then
+                    Text = ThermalProperties.Temp_amb_estimar
+                End If
+
+                A = Math.PI * (Dimensions(0).Value + WallThickness) * Dimensions(1).Value
+
+                Cpl = AccumulationStream.OverallLiquid.Properties.heatCapacityCp.GetValueOrDefault()
+                Cpv = AccumulationStream.Vapor.Properties.heatCapacityCp.GetValueOrDefault()
+                Kl = AccumulationStream.OverallLiquid.Properties.thermalConductivity.GetValueOrDefault()
+                Kv = AccumulationStream.Vapor.Properties.thermalConductivity.GetValueOrDefault()
+                MUl = AccumulationStream.OverallLiquid.Properties.viscosity.GetValueOrDefault()
+                MUv = AccumulationStream.Vapor.Properties.heatCapacityCp.GetValueOrDefault()
+                rhol = AccumulationStream.OverallLiquid.Properties.density.GetValueOrDefault()
+                rhov = AccumulationStream.Vapor.Properties.density.GetValueOrDefault()
+
+                holdup = AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / Vol
+
+                VapVel = 0.0 'AccumulationStream.GetMassFlow() * AccumulationStream.Vapor.Properties.massfraction.GetValueOrDefault() / rhov / A
+                LiqVel = 0.0 'AccumulationStream.GetMassFlow() * AccumulationStream.OverallLiquid.Properties.massfraction.GetValueOrDefault() / rhol / A
+
+                Cp_m = holdup * Cpl + (1 - holdup) * Cpv
+
+                If Not ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_Q Then
+                    If ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Definir_CGTC Then
+                        Uint = ThermalProperties.CGTC_Definido
+                    ElseIf ThermalProperties.TipoPerfil = ThermalEditorDefinitions.ThermalProfileType.Estimar_CGTC Then
+                        Tpe = Tint
+                        Uint = CalcOverallInternalHeatTransferCoefficient(holdup, L, D, DE, Me.GetRugosity(WallMaterial), Tpe, Text,
+                                                                                VapVel, LiqVel, Cpl, Cpv, Kl, Kv,
+                                                                                MUl, MUv, rhol, rhov)(0)
+                    End If
+                    If Uint <> 0.0# Then
+
+                        DQ = (Twall - Tint) * Uint / 1000 * A
+                        Uext = CalcOverallExternalHeatTransferCoefficient(D, DE, GetRugosity(WallMaterial), Tpe, Text, ThermalProperties.Incluir_isolamento)(0)
+
+                        Dim Qwall, SR, Qrad As Double
+                        Qwall = (Text - Twall) * Uext / 1000 * A
+
+                        If ThermalProperties.IncludeSolarRadiation Then
+                            If ThermalProperties.UseGlobalSolarRadiation Then
+                                SR = ThermalProperties.SolarRadiationAbsorptionEfficiency * FlowSheet.FlowsheetOptions.CurrentWeather.SolarIrradiation_kWh_m2
+                            Else
+                                SR = ThermalProperties.SolarRadiationAbsorptionEfficiency * ThermalProperties.SolarRadiationValue_kWh_m2
+                            End If
+                            SR *= 3600 'kJ/m2
+                            Dim Asec = Math.PI * L * DE
+                            Qrad = SR / timestep * Asec 'kW
+                            Qwall += Qrad
+                        End If
+
+                        WallTemperature = WallTemperature + (DQ + Qwall) / (Kwall(WallTemperature) * Math.PI * (Math.Log(DE / D) * D) * L)
+
+                        If Double.IsNaN(DQ) Then DQ = 0.0#
+
+                    Else
+
+                        DQ = 0.0#
+                        DQmax = 0.0#
+
+                    End If
+
+                    Qval = DQ
+
+                Else
+
+                    Qval = ThermalProperties.Calor_trocado
+
+                End If
+
+            Else
+
+                If es IsNot Nothing Then Qval = es.EnergyFlow.GetValueOrDefault
+
+            End If
 
             If Qval <> 0.0 Then
 
@@ -974,13 +1125,12 @@ Namespace UnitOperations
 
         End Sub
 
-        Function CalcOverallHeatTransferCoefficient(ByVal section As PipeSection, ByVal materialparede As String, ByVal EL As Double, ByVal L As Double,
+        Function CalcOverallInternalHeatTransferCoefficient(ByVal EL As Double, ByVal L As Double,
                             ByVal Dint As Double, ByVal Dext As Double, ByVal rugosidade As Double,
                             ByVal T As Double, ByVal Text As Double, ByVal vel_g As Double, ByVal vel_l As Double,
                             ByVal Cpl As Double, ByVal Cpv As Double, ByVal kl As Double, ByVal kv As Double,
                             ByVal mu_l As Double, ByVal mu_v As Double, ByVal rho_l As Double,
-                            ByVal rho_v As Double, ByVal hinterno As Boolean, ByVal isolamento As Boolean,
-                            ByVal parede As Boolean, ByVal hexterno As Boolean) As Double()
+                            ByVal rho_v As Double) As Double()
 
             If Double.IsNaN(rho_l) Then rho_l = 0.0#
 
@@ -995,41 +1145,60 @@ Namespace UnitOperations
             'Internal HTC calculation
             Dim U_int As Double
 
-            If hinterno Then
+            'Internal Re calc
+            Dim Re_int = Pipe.NRe(rho, vel, Dint, mu)
 
-                'Internal Re calc
-                Dim Re_int = Pipe.NRe(rho, vel, Dint, mu)
-
-                Dim epsilon = GetRugosity(materialparede, section)
-                Dim ffint = 0.0#
-                If Re_int > 3250 Then
-                    Dim a1 = Math.Log(((epsilon / Dint) ^ 1.1096) / 2.8257 + (7.149 / Re_int) ^ 0.8961) / Math.Log(10.0#)
-                    Dim b1 = -2 * Math.Log((epsilon / Dint) / 3.7065 - 5.0452 * a1 / Re_int) / Math.Log(10.0#)
-                    ffint = (1 / b1) ^ 2
-                Else
-                    ffint = 64 / Re_int
-                End If
-
-                'Internal Pr calc
-                Dim Pr_int = Pipe.NPr(Cp, mu, k)
-
-                'Internal h calc
-                Dim h_int = Pipe.hint_petukhov(k, Dint, ffint, Re_int, Pr_int)
-
-                'Internal h contribution
-                U_int = h_int
-
+            Dim epsilon = GetRugosity(WallMaterial)
+            Dim ffint = 0.0#
+            If Re_int > 3250 Then
+                Dim a1 = Math.Log(((epsilon / Dint) ^ 1.1096) / 2.8257 + (7.149 / Re_int) ^ 0.8961) / Math.Log(10.0#)
+                Dim b1 = -2 * Math.Log((epsilon / Dint) / 3.7065 - 5.0452 * a1 / Re_int) / Math.Log(10.0#)
+                ffint = (1 / b1) ^ 2
+            Else
+                ffint = 64 / Re_int
             End If
+
+            'Internal Pr calc
+            Dim Pr_int = Pipe.NPr(Cp, mu, k)
+
+            'Internal h calc
+            Dim h_int = Pipe.hint_petukhov(k, Dint, ffint, Re_int, Pr_int)
+
+            'Internal h contribution
+            U_int = h_int
 
             'Pipe wall HTC contribution
             Dim U_parede = 0.0#
 
-            If parede = True Then
+            U_parede = Kwall(T) / (Math.Log(Dext / Dint) * Dint)
+            If Dext = Dint Then U_parede = 0.0#
 
-                U_parede = Kwall(materialparede, T, section) / (Math.Log(Dext / Dint) * Dint)
-                If Dext = Dint Then U_parede = 0.0#
+            'Calculate overall HTC
+            Dim _U As Double
 
+            If U_int <> 0.0# Then
+                _U = _U + 1 / U_int
+            Else
+                _U = _U + 1.0E+30
             End If
+            If U_parede <> 0.0# Then
+                _U = _U + 1 / U_parede
+            Else
+                _U = _U + 1.0E+30
+            End If
+
+            Return New Double() {1 / _U, U_int, U_parede} '[W/m².K]
+
+        End Function
+
+        Function CalcOverallExternalHeatTransferCoefficient(Dint As Double, Dext As Double, rugosidade As Double,
+                            T As Double, Text As Double, isolamento As Boolean) As Double()
+
+            'Pipe wall HTC contribution
+            Dim U_parede = 0.0#
+
+            U_parede = Kwall(T) / (Math.Log(Dext / Dint) * Dint)
+            If Dext = Dint Then U_parede = 0.0#
 
             'Insulation HTC contribution
             Dim U_isol = 0.0#
@@ -1045,52 +1214,39 @@ Namespace UnitOperations
             'External HTC contribution
             Dim U_ext = 0.0#
 
-            If hexterno = True Then
+            Dim mu2, k2, cp2, rho2 As Double 'Soil, undergound
 
-                Dim mu2, k2, cp2, rho2 As Double 'Soil, undergound
+            'Average air properties
 
-                'Average air properties
+            Dim Pext As Double = 101325.0
 
-                Dim Pext As Double = 101325.0
+            Dim vel = Convert.ToDouble(ThermalProperties.Velocidade)
 
-                vel = Convert.ToDouble(ThermalProperties.Velocidade)
+            Dim props = Pipe.PropsAR(Text, Pext)
+            mu2 = props(1)
+            rho2 = props(0)
+            cp2 = props(2) * 1000
+            k2 = props(3)
 
-                Dim props = Pipe.PropsAR(Text, Pext)
-                mu2 = props(1)
-                rho2 = props(0)
-                cp2 = props(2) * 1000
-                k2 = props(3)
+            'External Re
+            Dim Re_ext = Pipe.NRe(rho2, vel, (Dext + 2 * esp_isol), mu2)
 
-                'External Re
-                Dim Re_ext = Pipe.NRe(rho2, vel, (Dext + 2 * esp_isol), mu2)
+            'External Pr
+            Dim Pr_ext = Pipe.NPr(cp2, mu2, k2)
 
-                'External Pr
-                Dim Pr_ext = Pipe.NPr(cp2, mu2, k2)
+            'External h
+            Dim h_ext = Pipe.hext_holman(k2, (Dext + 2 * esp_isol), Re_ext, Pr_ext)
 
-                'External h
-                Dim h_ext = Pipe.hext_holman(k2, (Dext + 2 * esp_isol), Re_ext, Pr_ext)
-
-                'External HTC contribution
-                U_ext = h_ext * (Dext + 2 * esp_isol) / Dint
-
-            End If
+            'External HTC contribution
+            U_ext = h_ext * (Dext + 2 * esp_isol) / Dint
 
             'Calculate overall HTC
             Dim _U As Double
 
-            If U_int <> 0.0# Then
-                _U = _U + 1 / U_int
-            Else
-                If hinterno = True Then
-                    _U = _U + 1.0E+30
-                End If
-            End If
             If U_parede <> 0.0# Then
                 _U = _U + 1 / U_parede
             Else
-                If parede = True Then
-                    _U = _U + 1.0E+30
-                End If
+                _U = _U + 1.0E+30
             End If
             If U_isol <> 0.0# Then
                 _U = _U + 1 / U_isol
@@ -1102,20 +1258,19 @@ Namespace UnitOperations
             If U_ext <> 0.0# Then
                 _U = _U + 1 / U_ext
             Else
-                If hexterno = True Then
-                    _U = _U + 1.0E+30
-                End If
+                _U = _U + 1.0E+30
             End If
 
-            Return New Double() {1 / _U, U_int, U_parede, U_isol, U_ext} '[W/m².K]
+            Return New Double() {1 / _U, U_parede, U_isol, U_ext} '[W/m².K]
 
         End Function
 
-        Function Kwall(ByVal material As String, ByVal T As Double, section As PipeSection) As Double
+
+        Function Kwall(ByVal T As Double) As Double
 
             Dim kp As Double
 
-            Select Case material
+            Select Case WallMaterial
                 Case "Steel"
                     kp = -0.000000004 * T ^ 3 - 0.00002 * T ^ 2 + 0.021 * T + 33.743
                 Case "Carbon Steel"
@@ -1132,7 +1287,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Function GetRugosity(ByVal material As String, section As PipeSection) As Double
+        Public Function GetRugosity(ByVal material As String) As Double
 
             Dim epsilon As Double
 

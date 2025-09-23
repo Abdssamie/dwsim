@@ -100,10 +100,12 @@ Public Class EditingForm_Vessel
             cbOutlet1.Items.Clear()
             cbOutlet2.Items.Clear()
             cbOutlet3.Items.Clear()
+            cbOutlet4.Items.Clear()
 
             cbOutlet1.Items.AddRange(mslist)
             cbOutlet2.Items.AddRange(mslist)
             cbOutlet3.Items.AddRange(mslist)
+            cbOutlet4.Items.AddRange(mslist)
 
             If Not .GetInletMaterialStream(0) Is Nothing Then cbInlet1.SelectedItem = .GetInletMaterialStream(0).GraphicObject.Tag
             If Not .GetInletMaterialStream(1) Is Nothing Then cbInlet2.SelectedItem = .GetInletMaterialStream(1).GraphicObject.Tag
@@ -115,6 +117,7 @@ Public Class EditingForm_Vessel
             If Not .GetOutletMaterialStream(0) Is Nothing Then cbOutlet1.SelectedItem = .GetOutletMaterialStream(0).GraphicObject.Tag
             If Not .GetOutletMaterialStream(1) Is Nothing Then cbOutlet2.SelectedItem = .GetOutletMaterialStream(1).GraphicObject.Tag
             If Not .GetOutletMaterialStream(2) Is Nothing Then cbOutlet3.SelectedItem = .GetOutletMaterialStream(2).GraphicObject.Tag
+            If Not .GetOutletMaterialStream(3) Is Nothing Then cbOutlet4.SelectedItem = .GetOutletMaterialStream(3).GraphicObject.Tag
 
             Dim eslist As String() = .FlowSheet.GraphicObjects.Values.Where(Function(x) x.ObjectType = ObjectType.EnergyStream).Select(Function(m) m.Tag).ToArray
 
@@ -125,10 +128,12 @@ Public Class EditingForm_Vessel
 
             'parameters
 
-            TabPage2.Controls.Clear()
-            Dim teditor As New PipeThermalProfileEditor With {.Profile = VesselObject.ThermalProperties, .form = VesselObject.FlowSheet}
+            PanelThermalProfileEditor.Controls.Clear()
+            Dim teditor As New VesselThermalProfileEditor With {.Profile = VesselObject.ThermalProperties, .form = VesselObject.FlowSheet}
             teditor.Dock = DockStyle.Fill
-            TabPage2.Controls.Add(teditor)
+            PanelThermalProfileEditor.Controls.Add(teditor)
+
+            chkDoRigorousHB.Checked = VesselObject.CalculateRigorousHeatBalance
 
             Select Case .PressureCalculation
                 Case UnitOperations.Vessel.PressureBehavior.Minimum
@@ -257,7 +262,8 @@ Public Class EditingForm_Vessel
 
     Private Sub btnDisconnect_Click(sender As Object, e As EventArgs) Handles btnDisconnect1.Click, btnDisconnect2.Click, btnDisconnect3.Click,
                                                                             btnDisconnect4.Click, btnDisconnect5.Click, btnDisconnect6.Click,
-                                                                            btnDisconnectOutlet1.Click, btnDisconnectOutlet2.Click, btnDisconnectOutlet3.Click
+                                                                            btnDisconnectOutlet1.Click, btnDisconnectOutlet2.Click, btnDisconnectOutlet3.Click,
+                                                                            btnDisconnectOutlet4.Click
 
         Dim iindex As Integer = -1
         Dim oindex As Integer = -1
@@ -308,6 +314,11 @@ Public Class EditingForm_Vessel
                     oindex = 2
                     cbOutlet3.SelectedItem = Nothing
                 End If
+            Case "btnDisconnectOutlet4"
+                If cbOutlet4.SelectedItem.ToString <> "" Then
+                    oindex = 3
+                    cbOutlet4.SelectedItem = Nothing
+                End If
         End Select
 
         If iindex > -1 Then VesselObject.FlowSheet.DisconnectObjects(VesselObject.GraphicObject.InputConnectors(iindex).AttachedConnector.AttachedFrom, VesselObject.GraphicObject)
@@ -350,7 +361,6 @@ Public Class EditingForm_Vessel
         End If
 
     End Sub
-
 
     Private Sub cbPropPack_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbPropPack.SelectedIndexChanged
         If Loaded Then
@@ -483,7 +493,8 @@ Public Class EditingForm_Vessel
                                                                                 btnCreateAndConnectInlet3.Click, btnCreateAndConnectInlet4.Click,
                                                                                 btnCreateAndConnectInlet5.Click, btnCreateAndConnectInlet6.Click,
                                                                                 btnCreateAndConnectOutlet1.Click, btnCreateAndConnectOutlet2.Click,
-                                                                                btnCreateAndConnectOutlet3.Click, btnCreateAndConnectEnergy.Click
+                                                                                btnCreateAndConnectOutlet3.Click, btnCreateAndConnectEnergy.Click,
+                                                                                btnCreateAndConnectOutlet4.Click
 
         Dim sgobj = VesselObject.GraphicObject
         Dim fs = VesselObject.FlowSheet
@@ -527,6 +538,9 @@ Public Class EditingForm_Vessel
 
             oidx = 2
 
+        ElseIf sender Is btnCreateAndConnectOutlet4 Then
+
+            oidx = 3
 
         ElseIf sender Is btnCreateAndConnectEnergy Then
 
@@ -548,7 +562,7 @@ Public Class EditingForm_Vessel
 
         If oidx >= 0 Then
 
-            Dim obj = fs.AddObject(ObjectType.MaterialStream, sgobj.OutputConnectors(oidx).Position.X + 30, sgobj.OutputConnectors(oidx).Position.Y, "")
+            Dim obj = fs.AddObject(ObjectType.MaterialStream, sgobj.OutputConnectors(oidx).Position.X + 40, sgobj.OutputConnectors(oidx).Position.Y - 40, "")
 
             If sgobj.OutputConnectors(oidx).IsAttached Then fs.DisconnectObjects(sgobj, sgobj.OutputConnectors(oidx).AttachedConnector.AttachedTo)
             fs.ConnectObjects(sgobj, obj.GraphicObject, oidx, 0)
@@ -663,4 +677,8 @@ Public Class EditingForm_Vessel
 
     End Sub
 
+    Private Sub chkDoRigorousHB_CheckedChanged(sender As Object, e As EventArgs) Handles chkDoRigorousHB.CheckedChanged
+        VesselObject.CalculateRigorousHeatBalance = chkDoRigorousHB.Checked
+        PanelThermalProfileEditor.Enabled = chkDoRigorousHB.Checked
+    End Sub
 End Class

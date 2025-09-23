@@ -140,6 +140,8 @@ Public Class EditingForm_Pipe
 
             nupCalculateEquilibrium.Value = .CalculateEquilibriumIntervalInSteps
 
+            chkCalcHeatBalance.Checked = SimObject.CalculateHeatBalance
+
             'profiles
 
             TabPage5.Controls.Clear()
@@ -533,4 +535,7 @@ Public Class EditingForm_Pipe
 
     End Sub
 
+    Private Sub chkCalcHeatBalance_CheckedChanged(sender As Object, e As EventArgs) Handles chkCalcHeatBalance.CheckedChanged
+        SimObject.CalculateHeatBalance = chkCalcHeatBalance.Checked
+    End Sub
 End Class

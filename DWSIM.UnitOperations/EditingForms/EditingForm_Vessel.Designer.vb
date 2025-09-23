@@ -25,6 +25,10 @@ Partial Class EditingForm_Vessel
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Vessel))
         Me.GroupBoxConnections = New System.Windows.Forms.GroupBox()
+        Me.btnCreateAndConnectOutlet4 = New System.Windows.Forms.Button()
+        Me.btnDisconnectOutlet4 = New System.Windows.Forms.Button()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.cbOutlet4 = New System.Windows.Forms.ComboBox()
         Me.btnCreateAndConnectEnergy = New System.Windows.Forms.Button()
         Me.btnCreateAndConnectOutlet3 = New System.Windows.Forms.Button()
         Me.btnCreateAndConnectOutlet2 = New System.Windows.Forms.Button()
@@ -79,6 +83,7 @@ Partial Class EditingForm_Vessel
         Me.cbPress = New System.Windows.Forms.ComboBox()
         Me.tbPressure = New System.Windows.Forms.TextBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.cbHeadType = New System.Windows.Forms.ComboBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.rbHorizontal = New System.Windows.Forms.RadioButton()
@@ -96,6 +101,8 @@ Partial Class EditingForm_Vessel
         Me.tbThickness = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.chkDoRigorousHB = New System.Windows.Forms.CheckBox()
+        Me.PanelThermalProfileEditor = New System.Windows.Forms.Panel()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.btnUtils = New System.Windows.Forms.Button()
         Me.lblTag = New System.Windows.Forms.TextBox()
@@ -116,12 +123,12 @@ Partial Class EditingForm_Vessel
         Me.AddUtilityTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.sizingtsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBoxConnections.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
@@ -131,6 +138,10 @@ Partial Class EditingForm_Vessel
         'GroupBoxConnections
         '
         resources.ApplyResources(Me.GroupBoxConnections, "GroupBoxConnections")
+        Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectOutlet4)
+        Me.GroupBoxConnections.Controls.Add(Me.btnDisconnectOutlet4)
+        Me.GroupBoxConnections.Controls.Add(Me.Label19)
+        Me.GroupBoxConnections.Controls.Add(Me.cbOutlet4)
         Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectEnergy)
         Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectOutlet3)
         Me.GroupBoxConnections.Controls.Add(Me.btnCreateAndConnectOutlet2)
@@ -176,6 +187,44 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.SetToolTip(Me.GroupBoxConnections, resources.GetString("GroupBoxConnections.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.GroupBoxConnections, resources.GetString("GroupBoxConnections.ToolTip1"))
         Me.ToolTip1.SetToolTip(Me.GroupBoxConnections, resources.GetString("GroupBoxConnections.ToolTip2"))
+        '
+        'btnCreateAndConnectOutlet4
+        '
+        resources.ApplyResources(Me.btnCreateAndConnectOutlet4, "btnCreateAndConnectOutlet4")
+        Me.btnCreateAndConnectOutlet4.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet4.Name = "btnCreateAndConnectOutlet4"
+        Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip2"))
+        Me.btnCreateAndConnectOutlet4.UseVisualStyleBackColor = True
+        '
+        'btnDisconnectOutlet4
+        '
+        resources.ApplyResources(Me.btnDisconnectOutlet4, "btnDisconnectOutlet4")
+        Me.btnDisconnectOutlet4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet4.Name = "btnDisconnectOutlet4"
+        Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip2"))
+        Me.btnDisconnectOutlet4.UseVisualStyleBackColor = True
+        '
+        'Label19
+        '
+        resources.ApplyResources(Me.Label19, "Label19")
+        Me.Label19.Name = "Label19"
+        Me.ToolTip1.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip2"))
+        '
+        'cbOutlet4
+        '
+        resources.ApplyResources(Me.cbOutlet4, "cbOutlet4")
+        Me.cbOutlet4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbOutlet4.FormattingEnabled = True
+        Me.cbOutlet4.Name = "cbOutlet4"
+        Me.ToolTip1.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.cbOutlet4, resources.GetString("cbOutlet4.ToolTip2"))
         '
         'btnCreateAndConnectEnergy
         '
@@ -718,6 +767,15 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.SetToolTip(Me.TabPage3, resources.GetString("TabPage3.ToolTip2"))
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip2"))
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'cbHeadType
         '
         resources.ApplyResources(Me.cbHeadType, "cbHeadType")
@@ -858,11 +916,30 @@ Partial Class EditingForm_Vessel
         'TabPage2
         '
         resources.ApplyResources(Me.TabPage2, "TabPage2")
+        Me.TabPage2.Controls.Add(Me.chkDoRigorousHB)
+        Me.TabPage2.Controls.Add(Me.PanelThermalProfileEditor)
         Me.TabPage2.Name = "TabPage2"
         Me.ToolTip1.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip2"))
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'chkDoRigorousHB
+        '
+        resources.ApplyResources(Me.chkDoRigorousHB, "chkDoRigorousHB")
+        Me.chkDoRigorousHB.Name = "chkDoRigorousHB"
+        Me.ToolTip1.SetToolTip(Me.chkDoRigorousHB, resources.GetString("chkDoRigorousHB.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.chkDoRigorousHB, resources.GetString("chkDoRigorousHB.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.chkDoRigorousHB, resources.GetString("chkDoRigorousHB.ToolTip2"))
+        Me.chkDoRigorousHB.UseVisualStyleBackColor = True
+        '
+        'PanelThermalProfileEditor
+        '
+        resources.ApplyResources(Me.PanelThermalProfileEditor, "PanelThermalProfileEditor")
+        Me.PanelThermalProfileEditor.Name = "PanelThermalProfileEditor"
+        Me.ToolTipValues.SetToolTip(Me.PanelThermalProfileEditor, resources.GetString("PanelThermalProfileEditor.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.PanelThermalProfileEditor, resources.GetString("PanelThermalProfileEditor.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.PanelThermalProfileEditor, resources.GetString("PanelThermalProfileEditor.ToolTip2"))
         '
         'GroupBox5
         '
@@ -1039,15 +1116,6 @@ Partial Class EditingForm_Vessel
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'Button1
-        '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip2"))
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'EditingForm_Vessel
         '
         resources.ApplyResources(Me, "$this")
@@ -1070,6 +1138,8 @@ Partial Class EditingForm_Vessel
         Me.TabPage1.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
@@ -1172,4 +1242,10 @@ Partial Class EditingForm_Vessel
     Public WithEvents cbHeadType As ComboBox
     Public WithEvents Label24 As Label
     Public WithEvents Button1 As Button
+    Public WithEvents btnCreateAndConnectOutlet4 As Button
+    Public WithEvents btnDisconnectOutlet4 As Button
+    Public WithEvents Label19 As Label
+    Public WithEvents cbOutlet4 As ComboBox
+    Friend WithEvents chkDoRigorousHB As CheckBox
+    Public WithEvents PanelThermalProfileEditor As Panel
 End Class

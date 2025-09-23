@@ -659,7 +659,7 @@ Public Class FormMain
 
             If Not files Is Nothing Then
                 For Each fi As FileInfo In files
-                    If fi.Extension.ToLower = ".exe" Or fi.Extension.ToLower = ".dll" Then
+                    If Not fi.Name.StartsWith("lib") And (fi.Extension.ToLower = ".exe" Or fi.Extension.ToLower = ".dll") Then
                         Try
                             pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
                         Catch ex As Exception

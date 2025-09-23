@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class PipeThermalProfileEditor
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class VesselThermalProfileEditor
     Inherits System.Windows.Forms.UserControl
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,9 @@ Partial Class PipeThermalProfileEditor
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PipeThermalProfileEditor))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(VesselThermalProfileEditor))
         Me.RadioButton7 = New System.Windows.Forms.RadioButton()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -31,8 +31,6 @@ Partial Class PipeThermalProfileEditor
         Me.tbSolarIrradiation = New System.Windows.Forms.TextBox()
         Me.chkIncludeSolarIrradiation = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.lblTAGUnits2 = New System.Windows.Forms.Label()
-        Me.TextBoxTAG2 = New System.Windows.Forms.TextBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.TextBoxTA2 = New System.Windows.Forms.TextBox()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -48,11 +46,7 @@ Partial Class PipeThermalProfileEditor
         Me.Label34 = New System.Windows.Forms.Label()
         Me.ComboBoxMAT = New System.Windows.Forms.ComboBox()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.CheckBoxICTE = New System.Windows.Forms.CheckBox()
-        Me.CheckBoxICTI = New System.Windows.Forms.CheckBox()
         Me.CheckBoxII = New System.Windows.Forms.CheckBox()
-        Me.CheckBoxIPT = New System.Windows.Forms.CheckBox()
-        Me.chkSolarIrradiationGlobal = New System.Windows.Forms.CheckBox()
         Me.RadioButton8 = New System.Windows.Forms.RadioButton()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.Label37 = New System.Windows.Forms.Label()
@@ -60,10 +54,6 @@ Partial Class PipeThermalProfileEditor
         Me.Label38 = New System.Windows.Forms.Label()
         Me.RadioButton9 = New System.Windows.Forms.RadioButton()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.chkUserDefU = New System.Windows.Forms.CheckBox()
-        Me.lblTAGUnits = New System.Windows.Forms.Label()
-        Me.TextBoxTAG = New System.Windows.Forms.TextBox()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.TextBoxTA = New System.Windows.Forms.TextBox()
         Me.Label51 = New System.Windows.Forms.Label()
@@ -89,8 +79,6 @@ Partial Class PipeThermalProfileEditor
         Me.GroupBox7.Controls.Add(Me.tbSolarIrradiation)
         Me.GroupBox7.Controls.Add(Me.chkIncludeSolarIrradiation)
         Me.GroupBox7.Controls.Add(Me.Label1)
-        Me.GroupBox7.Controls.Add(Me.lblTAGUnits2)
-        Me.GroupBox7.Controls.Add(Me.TextBoxTAG2)
         Me.GroupBox7.Controls.Add(Me.Label25)
         Me.GroupBox7.Controls.Add(Me.TextBoxTA2)
         Me.GroupBox7.Controls.Add(Me.Label26)
@@ -106,11 +94,7 @@ Partial Class PipeThermalProfileEditor
         Me.GroupBox7.Controls.Add(Me.Label34)
         Me.GroupBox7.Controls.Add(Me.ComboBoxMAT)
         Me.GroupBox7.Controls.Add(Me.Label35)
-        Me.GroupBox7.Controls.Add(Me.CheckBoxICTE)
-        Me.GroupBox7.Controls.Add(Me.CheckBoxICTI)
         Me.GroupBox7.Controls.Add(Me.CheckBoxII)
-        Me.GroupBox7.Controls.Add(Me.CheckBoxIPT)
-        Me.GroupBox7.Controls.Add(Me.chkSolarIrradiationGlobal)
         Me.GroupBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.TabStop = False
@@ -144,16 +128,6 @@ Partial Class PipeThermalProfileEditor
         '
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
-        '
-        'lblTAGUnits2
-        '
-        resources.ApplyResources(Me.lblTAGUnits2, "lblTAGUnits2")
-        Me.lblTAGUnits2.Name = "lblTAGUnits2"
-        '
-        'TextBoxTAG2
-        '
-        resources.ApplyResources(Me.TextBoxTAG2, "TextBoxTAG2")
-        Me.TextBoxTAG2.Name = "TextBoxTAG2"
         '
         'Label25
         '
@@ -190,7 +164,7 @@ Partial Class PipeThermalProfileEditor
         resources.ApplyResources(Me.ComboBoxMAMB, "ComboBoxMAMB")
         Me.ComboBoxMAMB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxMAMB.DropDownWidth = 173
-        Me.ComboBoxMAMB.Items.AddRange(New Object() {resources.GetString("ComboBoxMAMB.Items"), resources.GetString("ComboBoxMAMB.Items1"), resources.GetString("ComboBoxMAMB.Items2"), resources.GetString("ComboBoxMAMB.Items3"), resources.GetString("ComboBoxMAMB.Items4"), resources.GetString("ComboBoxMAMB.Items5")})
+        Me.ComboBoxMAMB.Items.AddRange(New Object() {resources.GetString("ComboBoxMAMB.Items"), resources.GetString("ComboBoxMAMB.Items1")})
         Me.ComboBoxMAMB.Name = "ComboBoxMAMB"
         '
         'Label30
@@ -236,30 +210,10 @@ Partial Class PipeThermalProfileEditor
         resources.ApplyResources(Me.Label35, "Label35")
         Me.Label35.Name = "Label35"
         '
-        'CheckBoxICTE
-        '
-        resources.ApplyResources(Me.CheckBoxICTE, "CheckBoxICTE")
-        Me.CheckBoxICTE.Name = "CheckBoxICTE"
-        '
-        'CheckBoxICTI
-        '
-        resources.ApplyResources(Me.CheckBoxICTI, "CheckBoxICTI")
-        Me.CheckBoxICTI.Name = "CheckBoxICTI"
-        '
         'CheckBoxII
         '
         resources.ApplyResources(Me.CheckBoxII, "CheckBoxII")
         Me.CheckBoxII.Name = "CheckBoxII"
-        '
-        'CheckBoxIPT
-        '
-        resources.ApplyResources(Me.CheckBoxIPT, "CheckBoxIPT")
-        Me.CheckBoxIPT.Name = "CheckBoxIPT"
-        '
-        'chkSolarIrradiationGlobal
-        '
-        resources.ApplyResources(Me.chkSolarIrradiationGlobal, "chkSolarIrradiationGlobal")
-        Me.chkSolarIrradiationGlobal.Name = "chkSolarIrradiationGlobal"
         '
         'RadioButton8
         '
@@ -301,10 +255,6 @@ Partial Class PipeThermalProfileEditor
         '
         resources.ApplyResources(Me.GroupBox9, "GroupBox9")
         Me.GroupBox9.BackColor = System.Drawing.Color.Transparent
-        Me.GroupBox9.Controls.Add(Me.Button1)
-        Me.GroupBox9.Controls.Add(Me.chkUserDefU)
-        Me.GroupBox9.Controls.Add(Me.lblTAGUnits)
-        Me.GroupBox9.Controls.Add(Me.TextBoxTAG)
         Me.GroupBox9.Controls.Add(Me.Label39)
         Me.GroupBox9.Controls.Add(Me.TextBoxTA)
         Me.GroupBox9.Controls.Add(Me.Label51)
@@ -314,27 +264,6 @@ Partial Class PipeThermalProfileEditor
         Me.GroupBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.GroupBox9.Name = "GroupBox9"
         Me.GroupBox9.TabStop = False
-        '
-        'Button1
-        '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'chkUserDefU
-        '
-        resources.ApplyResources(Me.chkUserDefU, "chkUserDefU")
-        Me.chkUserDefU.Name = "chkUserDefU"
-        '
-        'lblTAGUnits
-        '
-        resources.ApplyResources(Me.lblTAGUnits, "lblTAGUnits")
-        Me.lblTAGUnits.Name = "lblTAGUnits"
-        '
-        'TextBoxTAG
-        '
-        resources.ApplyResources(Me.TextBoxTAG, "TextBoxTAG")
-        Me.TextBoxTAG.Name = "TextBoxTAG"
         '
         'Label39
         '
@@ -366,7 +295,7 @@ Partial Class PipeThermalProfileEditor
         resources.ApplyResources(Me.Label53, "Label53")
         Me.Label53.Name = "Label53"
         '
-        'PipeThermalProfileEditor
+        'VesselThermalProfileEditor
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -376,7 +305,7 @@ Partial Class PipeThermalProfileEditor
         Me.Controls.Add(Me.RadioButton8)
         Me.Controls.Add(Me.GroupBox9)
         Me.Controls.Add(Me.GroupBox8)
-        Me.Name = "PipeThermalProfileEditor"
+        Me.Name = "VesselThermalProfileEditor"
         Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox7.PerformLayout()
         Me.GroupBox8.ResumeLayout(False)
@@ -404,10 +333,7 @@ Partial Class PipeThermalProfileEditor
     Public WithEvents Label34 As System.Windows.Forms.Label
     Public WithEvents ComboBoxMAT As System.Windows.Forms.ComboBox
     Public WithEvents Label35 As System.Windows.Forms.Label
-    Public WithEvents CheckBoxICTE As System.Windows.Forms.CheckBox
-    Public WithEvents CheckBoxICTI As System.Windows.Forms.CheckBox
     Public WithEvents CheckBoxII As System.Windows.Forms.CheckBox
-    Public WithEvents CheckBoxIPT As System.Windows.Forms.CheckBox
     Public WithEvents RadioButton8 As System.Windows.Forms.RadioButton
     Public WithEvents GroupBox8 As System.Windows.Forms.GroupBox
     Public WithEvents Label37 As System.Windows.Forms.Label
@@ -421,14 +347,7 @@ Partial Class PipeThermalProfileEditor
     Public WithEvents Label52 As System.Windows.Forms.Label
     Public WithEvents TextBoxCGTC As System.Windows.Forms.TextBox
     Public WithEvents Label53 As System.Windows.Forms.Label
-    Public WithEvents lblTAGUnits As System.Windows.Forms.Label
-    Public WithEvents TextBoxTAG As System.Windows.Forms.TextBox
-    Public WithEvents lblTAGUnits2 As System.Windows.Forms.Label
-    Public WithEvents TextBoxTAG2 As System.Windows.Forms.TextBox
     Public WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As Button
-    Public WithEvents chkUserDefU As CheckBox
-    Public WithEvents chkSolarIrradiationGlobal As CheckBox
     Public WithEvents chkIncludeSolarIrradiation As CheckBox
     Public WithEvents Label2 As Label
     Public WithEvents tbSolarIrradiation As TextBox

@@ -62,19 +62,16 @@ Public Class DynamicsPropertyEditor
                 tl.RowStyles.Clear()
                 tl.RowStyles.Add(New RowStyle(SizeType.Percent, 1.0))
                 tl.ColumnStyles.Clear()
-                tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.6))
-                tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.3))
-                tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.1))
 
                 Dim l As New Label With {.Text = p.Key, .Font = New Drawing.Font(Drawing.SystemFonts.MessageBoxFont, Drawing.FontStyle.Bold), .Dock = DockStyle.Fill, .AutoSize = False, .TextAlign = Drawing.ContentAlignment.MiddleLeft}
                 Dim l2 As New Label With {.Text = unitsstring, .Font = Drawing.SystemFonts.MessageBoxFont, .Dock = DockStyle.Fill, .AutoSize = False, .TextAlign = Drawing.ContentAlignment.MiddleLeft}
-                Dim l3 As New Label With {.Text = col2(p.Key).ToString, .Font = Drawing.SystemFonts.MessageBoxFont, .Dock = DockStyle.Fill, .AutoSize = False, .Height = 46 * GlobalSettings.Settings.DpiScale, .TextAlign = Drawing.ContentAlignment.TopLeft}
-
-                tl.Controls.Add(l, 0, 0)
-                tl.Controls.Add(l2, 2, 0)
+                Dim l3 As New Label With {.Text = col2(p.Key).ToString, .Font = Drawing.SystemFonts.MessageBoxFont, .Dock = DockStyle.Fill, .AutoSize = False, .TextAlign = Drawing.ContentAlignment.TopLeft, .AutoEllipsis = True}
 
                 Select Case DirectCast(col4(p.Key), System.Type)
                     Case 1.0.GetType()
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.6))
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.3))
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.1))
                         Dim tb As New TextBox With {.Text = value, .Dock = DockStyle.Fill, .TextAlign = HorizontalAlignment.Right}
                         AddHandler tb.TextChanged, Sub(s, e)
                                                        If Double.TryParse(tb.Text, New Double) Then
@@ -92,8 +89,13 @@ Public Class DynamicsPropertyEditor
                                                      End If
                                                  End If
                                              End Sub
+                        tl.Controls.Add(l, 0, 0)
+                        tl.Controls.Add(l2, 2, 0)
                         tl.Controls.Add(tb, 1, 0)
                     Case 1.GetType()
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.6))
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.3))
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.1))
                         Dim control As New NumericUpDown With {.Value = value, .Minimum = Integer.MinValue, .Maximum = Integer.MaxValue,
                             .DecimalPlaces = 0, .Increment = 1,
                             .Dock = DockStyle.Fill, .TextAlign = HorizontalAlignment.Right}
@@ -101,19 +103,28 @@ Public Class DynamicsPropertyEditor
                                                              col1(p.Key) = control.Value
                                                              SimObject.GetFlowsheet().RegisterSnapshot(Enums.SnapshotType.ObjectData, SimObject)
                                                          End Sub
+                        tl.Controls.Add(l, 0, 0)
+                        tl.Controls.Add(l2, 2, 0)
                         tl.Controls.Add(control, 1, 0)
                     Case True.GetType()
-                        Dim control As New CheckBox With {.Checked = value, .CheckAlign = Drawing.ContentAlignment.MiddleRight,
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 20 * GlobalSettings.Settings.DpiScale))
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.99))
+                        tl.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 0.01))
+                        Dim control As New CheckBox With {.Checked = value, .CheckAlign = Drawing.ContentAlignment.MiddleLeft,
                             .Dock = DockStyle.Fill, .TextAlign = HorizontalAlignment.Right}
                         AddHandler control.CheckedChanged, Sub(s, e)
                                                                col1(p.Key) = control.Checked
                                                                SimObject.GetFlowsheet().RegisterSnapshot(Enums.SnapshotType.ObjectData, SimObject)
                                                            End Sub
-                        tl.Controls.Add(control, 1, 0)
+                        AddHandler l.Click, Sub(s, e)
+                                                control.Checked = Not control.Checked
+                                            End Sub
+                        tl.Controls.Add(control, 0, 0)
+                        tl.Controls.Add(l, 1, 0)
                 End Select
 
 
-                Dim tl2 As New TableLayoutPanel With {.Height = 30 * GlobalSettings.Settings.DpiScale}
+                Dim tl2 As New TableLayoutPanel With {.Height = 36 * GlobalSettings.Settings.DpiScale}
                 tl2.RowStyles.Clear()
                 tl2.RowStyles.Add(New RowStyle(SizeType.Percent, 1.0))
                 tl2.ColumnStyles.Clear()

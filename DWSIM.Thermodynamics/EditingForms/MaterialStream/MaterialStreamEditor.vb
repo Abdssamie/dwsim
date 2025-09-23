@@ -477,7 +477,7 @@ Public Class MaterialStreamEditor
             If IsAccumulationStream Then
 
                 TabControlMain0.TabPages.Remove(TabPageAnnotations)
-                TabControlMain0.TabPages.Remove(TabPageDynamics)
+                cbDynSpec.Enabled = False
                 TabControlMain0.TabPages.Remove(TabPageFloatingTables)
                 cbForcePhase.Enabled = False
                 cbUnitsQ.Enabled = False
