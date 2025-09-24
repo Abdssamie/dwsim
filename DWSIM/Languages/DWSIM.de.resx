@@ -5474,8 +5474,8 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ShareSimulationNotSaved" xml:space="preserve">
     <value>Nur Dateien, die im Simulate 365 Dashboard gespeichert sind, können geteilt werden.</value>
   </data>
-  <data name="OpenFileFromDashboardToCollaborate" xml:space="preserve">
-    <value>Um die Zusammenarbeit zu beginnen, öffnen Sie die Zusammenarbeitsdatei im Simulate 365 Dashboard.</value>
+  <data name="ToStartCollaboratingOpenOrShareFile" xml:space="preserve">
+    <value>Zusammenarbeit ist nur für freigegebene Dateien verfügbar. Teilen Sie eine Datei oder öffnen Sie eine bereits freigegebene Datei aus dem Simulate 365 Dashboard, um mit der Zusammenarbeit zu beginnen.</value>
   </data>
   <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
     <value>Nur das Flussdiagramm kann für die Zusammenarbeit verwendet werden.</value>

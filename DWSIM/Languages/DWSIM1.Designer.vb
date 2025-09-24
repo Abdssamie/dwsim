@@ -10711,15 +10711,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to ara iniciar a colaboração, abra o arquivo de colaboração no Simulate 365 Dashboard..
-        '''</summary>
-        Friend Shared ReadOnly Property OpenFileFromDashboardToCollaborate() As String
-            Get
-                Return ResourceManager.GetString("OpenFileFromDashboardToCollaborate", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized string similar to O perfil hidráulico da tubulação não está definido..
         '''</summary>
         Friend Shared ReadOnly Property Operfilhidrulicodatu() As String
@@ -15297,6 +15288,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Tolernciapreclculode2() As String
             Get
                 Return ResourceManager.GetString("Tolernciapreclculode2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to A colaboração está disponível apenas em arquivos compartilhados. Compartilhe um arquivo ou abra um arquivo já compartilhado no Simulate 365 Dashboard para começar a colaborar..
+        '''</summary>
+        Friend Shared ReadOnly Property ToStartCollaboratingOpenOrShareFile() As String
+            Get
+                Return ResourceManager.GetString("ToStartCollaboratingOpenOrShareFile", resourceCulture)
             End Get
         End Property
         
