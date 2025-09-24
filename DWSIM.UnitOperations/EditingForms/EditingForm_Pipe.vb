@@ -144,10 +144,10 @@ Public Class EditingForm_Pipe
 
             'profiles
 
-            TabPage5.Controls.Clear()
+            PanelHydEditor.Controls.Clear()
             Dim heditor As New PipeHydraulicProfileEditor With {.PipeOp = Me.SimObject}
             heditor.Dock = DockStyle.Fill
-            TabPage5.Controls.Add(heditor)
+            PanelHydEditor.Controls.Add(heditor)
 
             TabPage6.Controls.Clear()
             Dim teditor As New PipeThermalProfileEditor With {.Profile = Me.SimObject.ThermalProfile, .form = SimObject.FlowSheet}
@@ -538,4 +538,19 @@ Public Class EditingForm_Pipe
     Private Sub chkCalcHeatBalance_CheckedChanged(sender As Object, e As EventArgs) Handles chkCalcHeatBalance.CheckedChanged
         SimObject.CalculateHeatBalance = chkCalcHeatBalance.Checked
     End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+
+        Dim f As New Form With {.Text = SimObject.GraphicObject.Tag + ": Hydraulic Profile Editor", .FormBorderStyle = FormBorderStyle.SizableToolWindow,
+                                .Width = 1024 * Settings.DpiScale, .Height = 400 * Settings.DpiScale, .StartPosition = FormStartPosition.CenterScreen}
+
+        Dim heditor As New PipeHydraulicProfileEditor With {.PipeOp = Me.SimObject}
+        heditor.Dock = DockStyle.Fill
+        f.Controls.Add(heditor)
+
+        f.ShowDialog()
+        UpdateInfo()
+
+    End Sub
+
 End Class

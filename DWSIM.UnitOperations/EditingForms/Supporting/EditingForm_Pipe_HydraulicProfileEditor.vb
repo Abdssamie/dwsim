@@ -58,6 +58,9 @@ Imports System.Drawing
 
 #End Region
 
+#Region "Design"
+
+
     Public PipeOp As UnitOperations.Pipe
 
     Private Units As SharedClasses.SystemsOfUnits.Units
@@ -83,15 +86,20 @@ Imports System.Drawing
     Dim px, py As New ArrayList
     Friend WithEvents ToolTip1 As ToolTip
     Friend WithEvents tsbImportFromTable As ToolStripButton
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents Label2 As Label
+    Friend WithEvents cbDefaultMaterial As ComboBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents cbDefaultDiameter As ComboBox
     Dim loaded As Boolean = False
 
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PipeHydraulicProfileEditor))
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GridMalha = New System.Windows.Forms.DataGridView()
         Me.ColBase = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CMenu1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -122,6 +130,11 @@ Imports System.Drawing
         Me.KryptonRadioButton2 = New System.Windows.Forms.RadioButton()
         Me.KryptonRadioButton1 = New System.Windows.Forms.RadioButton()
         Me.GraphControl = New ZedGraph.ZedGraphControl()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.cbDefaultDiameter = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cbDefaultMaterial = New System.Windows.Forms.ComboBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.GridMalha, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMenu1.SuspendLayout()
@@ -129,10 +142,12 @@ Imports System.Drawing
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.SuspendLayout()
         '
         'GridMalha
         '
+        resources.ApplyResources(Me.GridMalha, "GridMalha")
         Me.GridMalha.AllowUserToAddRows = False
         Me.GridMalha.AllowUserToOrderColumns = True
         Me.GridMalha.AllowUserToResizeRows = False
@@ -140,104 +155,105 @@ Imports System.Drawing
         Me.GridMalha.BackgroundColor = System.Drawing.SystemColors.Control
         Me.GridMalha.ColumnHeadersVisible = False
         Me.GridMalha.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColBase})
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
-        DataGridViewCellStyle2.NullValue = "<empty>"
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GridMalha.DefaultCellStyle = DataGridViewCellStyle2
-        resources.ApplyResources(Me.GridMalha, "GridMalha")
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle10.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
+        DataGridViewCellStyle10.NullValue = "<empty>"
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GridMalha.DefaultCellStyle = DataGridViewCellStyle10
         Me.GridMalha.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.GridMalha.GridColor = System.Drawing.SystemColors.Control
         Me.GridMalha.Name = "GridMalha"
         Me.GridMalha.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.MenuText
-        DataGridViewCellStyle3.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
-        DataGridViewCellStyle3.NullValue = "0"
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GridMalha.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
-        Me.GridMalha.RowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.MenuText
+        DataGridViewCellStyle11.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
+        DataGridViewCellStyle11.NullValue = "0"
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GridMalha.RowHeadersDefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
+        Me.GridMalha.RowsDefaultCellStyle = DataGridViewCellStyle12
         Me.GridMalha.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         Me.GridMalha.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.GridMalha.RowTemplate.DefaultCellStyle.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
         Me.GridMalha.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ToolTip1.SetToolTip(Me.GridMalha, resources.GetString("GridMalha.ToolTip"))
         '
         'ColBase
         '
-        DataGridViewCellStyle1.NullValue = "<empty>"
-        Me.ColBase.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle9.NullValue = "<empty>"
+        Me.ColBase.DefaultCellStyle = DataGridViewCellStyle9
         resources.ApplyResources(Me.ColBase, "ColBase")
         Me.ColBase.Name = "ColBase"
         '
         'CMenu1
         '
+        resources.ApplyResources(Me.CMenu1, "CMenu1")
         Me.CMenu1.ImageScalingSize = New System.Drawing.Size(32, 32)
         Me.CMenu1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10, Me.ToolStripMenuItem11})
         Me.CMenu1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.CMenu1.Name = "ContextMenuStrip1"
         Me.CMenu1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         Me.CMenu1.ShowImageMargin = False
-        resources.ApplyResources(Me.CMenu1, "CMenu1")
+        Me.ToolTip1.SetToolTip(Me.CMenu1, resources.GetString("CMenu1.ToolTip"))
         '
         'ToolStripMenuItem2
         '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
         resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
         '
         'ToolStripMenuItem3
         '
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
         resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
         '
         'ToolStripMenuItem4
         '
-        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
         resources.ApplyResources(Me.ToolStripMenuItem4, "ToolStripMenuItem4")
+        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
         '
         'ToolStripMenuItem5
         '
-        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
         resources.ApplyResources(Me.ToolStripMenuItem5, "ToolStripMenuItem5")
+        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
         '
         'ToolStripMenuItem6
         '
-        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
         resources.ApplyResources(Me.ToolStripMenuItem6, "ToolStripMenuItem6")
+        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
         '
         'ToolStripMenuItem7
         '
-        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
         resources.ApplyResources(Me.ToolStripMenuItem7, "ToolStripMenuItem7")
+        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
         '
         'ToolStripMenuItem8
         '
-        Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
         resources.ApplyResources(Me.ToolStripMenuItem8, "ToolStripMenuItem8")
+        Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
         '
         'ToolStripMenuItem9
         '
-        Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
         resources.ApplyResources(Me.ToolStripMenuItem9, "ToolStripMenuItem9")
+        Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
         '
         'ToolStripMenuItem10
         '
-        Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
         resources.ApplyResources(Me.ToolStripMenuItem10, "ToolStripMenuItem10")
+        Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
         '
         'ToolStripMenuItem11
         '
-        Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
         resources.ApplyResources(Me.ToolStripMenuItem11, "ToolStripMenuItem11")
+        Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
         '
         'ToolStrip1
         '
@@ -245,94 +261,100 @@ Imports System.Drawing
         Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(32, 32)
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripSeparator1, Me.ToolStripButton5, Me.ToolStripSeparator2, Me.ToolStripLabel1, Me.ToolStripLabel2, Me.tsbImportFromTable})
         Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+        Me.ToolTip1.SetToolTip(Me.ToolStrip1, resources.GetString("ToolStrip1.ToolTip"))
         '
         'ToolStripButton1
         '
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.arrow_up
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton3
         '
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
         '
+        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.cross
-        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'ToolStripSeparator1
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         '
         'ToolStripButton5
         '
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
-        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripSeparator2
         '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         '
         'ToolStripLabel1
         '
-        Me.ToolStripLabel1.Name = "ToolStripLabel1"
         resources.ApplyResources(Me.ToolStripLabel1, "ToolStripLabel1")
+        Me.ToolStripLabel1.Name = "ToolStripLabel1"
         '
         'ToolStripLabel2
         '
+        resources.ApplyResources(Me.ToolStripLabel2, "ToolStripLabel2")
         Me.ToolStripLabel2.Name = "ToolStripLabel2"
         Me.ToolStripLabel2.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never
-        resources.ApplyResources(Me.ToolStripLabel2, "ToolStripLabel2")
         '
         'tsbImportFromTable
         '
+        resources.ApplyResources(Me.tsbImportFromTable, "tsbImportFromTable")
         Me.tsbImportFromTable.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.tsbImportFromTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbImportFromTable.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.table_80px
-        resources.ApplyResources(Me.tsbImportFromTable, "tsbImportFromTable")
         Me.tsbImportFromTable.Name = "tsbImportFromTable"
         '
         'TabControl1
         '
+        resources.ApplyResources(Me.TabControl1, "TabControl1")
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        resources.ApplyResources(Me.TabControl1, "TabControl1")
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
+        Me.ToolTip1.SetToolTip(Me.TabControl1, resources.GetString("TabControl1.ToolTip"))
         '
         'TabPage1
         '
+        resources.ApplyResources(Me.TabPage1, "TabPage1")
         Me.TabPage1.Controls.Add(Me.GridMalha)
         Me.TabPage1.Controls.Add(Me.ToolStrip1)
-        resources.ApplyResources(Me.TabPage1, "TabPage1")
         Me.TabPage1.Name = "TabPage1"
+        Me.ToolTip1.SetToolTip(Me.TabPage1, resources.GetString("TabPage1.ToolTip"))
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'TabPage2
         '
+        resources.ApplyResources(Me.TabPage2, "TabPage2")
         Me.TabPage2.Controls.Add(Me.KryptonRadioButton2)
         Me.TabPage2.Controls.Add(Me.KryptonRadioButton1)
         Me.TabPage2.Controls.Add(Me.GraphControl)
-        resources.ApplyResources(Me.TabPage2, "TabPage2")
         Me.TabPage2.Name = "TabPage2"
+        Me.ToolTip1.SetToolTip(Me.TabPage2, resources.GetString("TabPage2.ToolTip"))
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'KryptonRadioButton2
@@ -341,11 +363,13 @@ Imports System.Drawing
         Me.KryptonRadioButton2.Checked = True
         Me.KryptonRadioButton2.Name = "KryptonRadioButton2"
         Me.KryptonRadioButton2.TabStop = True
+        Me.ToolTip1.SetToolTip(Me.KryptonRadioButton2, resources.GetString("KryptonRadioButton2.ToolTip"))
         '
         'KryptonRadioButton1
         '
         resources.ApplyResources(Me.KryptonRadioButton1, "KryptonRadioButton1")
         Me.KryptonRadioButton1.Name = "KryptonRadioButton1"
+        Me.ToolTip1.SetToolTip(Me.KryptonRadioButton1, resources.GetString("KryptonRadioButton1.ToolTip"))
         '
         'GraphControl
         '
@@ -362,6 +386,46 @@ Imports System.Drawing
         Me.GraphControl.ScrollMinX = 0R
         Me.GraphControl.ScrollMinY = 0R
         Me.GraphControl.ScrollMinY2 = 0R
+        Me.ToolTip1.SetToolTip(Me.GraphControl, resources.GetString("GraphControl.ToolTip"))
+        '
+        'TabPage3
+        '
+        resources.ApplyResources(Me.TabPage3, "TabPage3")
+        Me.TabPage3.Controls.Add(Me.cbDefaultDiameter)
+        Me.TabPage3.Controls.Add(Me.Label2)
+        Me.TabPage3.Controls.Add(Me.cbDefaultMaterial)
+        Me.TabPage3.Controls.Add(Me.Label1)
+        Me.TabPage3.Name = "TabPage3"
+        Me.ToolTip1.SetToolTip(Me.TabPage3, resources.GetString("TabPage3.ToolTip"))
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'cbDefaultDiameter
+        '
+        resources.ApplyResources(Me.cbDefaultDiameter, "cbDefaultDiameter")
+        Me.cbDefaultDiameter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbDefaultDiameter.FormattingEnabled = True
+        Me.cbDefaultDiameter.Name = "cbDefaultDiameter"
+        Me.ToolTip1.SetToolTip(Me.cbDefaultDiameter, resources.GetString("cbDefaultDiameter.ToolTip"))
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        Me.ToolTip1.SetToolTip(Me.Label2, resources.GetString("Label2.ToolTip"))
+        '
+        'cbDefaultMaterial
+        '
+        resources.ApplyResources(Me.cbDefaultMaterial, "cbDefaultMaterial")
+        Me.cbDefaultMaterial.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbDefaultMaterial.FormattingEnabled = True
+        Me.cbDefaultMaterial.Name = "cbDefaultMaterial"
+        Me.ToolTip1.SetToolTip(Me.cbDefaultMaterial, resources.GetString("cbDefaultMaterial.ToolTip"))
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        Me.ToolTip1.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
         '
         'PipeHydraulicProfileEditor
         '
@@ -369,6 +433,7 @@ Imports System.Drawing
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.TabControl1)
         Me.Name = "PipeHydraulicProfileEditor"
+        Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         CType(Me.GridMalha, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CMenu1.ResumeLayout(False)
         Me.ToolStrip1.ResumeLayout(False)
@@ -378,6 +443,8 @@ Imports System.Drawing
         Me.TabPage1.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -387,6 +454,8 @@ Imports System.Drawing
         Me.InitializeComponent()
 
     End Sub
+
+#End Region
 
 
     Private Sub PipeEditor_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -414,6 +483,8 @@ Imports System.Drawing
 
 #Region "Pipe diameters"
 
+        Dim diameters As New List(Of String)
+
         Using MyReader2 As New Microsoft.VisualBasic.FileIO.TextFieldParser(ThisExe.GetManifestResourceStream(ThisExeName & "." & "pipes.dat"))
             MyReader2.TextFieldType = FileIO.FieldType.Delimited
             MyReader2.SetDelimiters(";")
@@ -438,8 +509,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                    & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                    & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -451,8 +524,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -464,8 +539,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -477,8 +554,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -490,8 +569,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -503,8 +584,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -516,8 +599,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -529,8 +614,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -543,8 +630,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -556,8 +645,10 @@ Imports System.Drawing
             aux = .Count
             If aux <> 0 Then .Clear()
             Do
-                .Add(DN(r, 2) & " / " & DN(r, 3) _
-                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)")
+                Dim item = DN(r, 2) & " / " & DN(r, 3) _
+                 & " / " & DN(r, 4) & " (" & DN(r, 1) & " OD / " & DN(r, 6) & " ID)"
+                diameters.Add(item)
+                .Add(item)
                 r = r + 1
             Loop Until r = linha_final - 3
         End With
@@ -622,6 +713,8 @@ Imports System.Drawing
             .Style.Alignment = DataGridViewContentAlignment.MiddleLeft
         End With
 
+        Dim materials As New List(Of String)
+
         With CBMat
             .FlatStyle = FlatStyle.Popup
             .DropDownWidth = 100
@@ -636,6 +729,15 @@ Imports System.Drawing
             .Items.Add(PipeOp.FlowSheet.GetTranslatedString("UserDefined"))
             .Style.Alignment = DataGridViewContentAlignment.MiddleLeft
         End With
+
+        materials.Add(PipeOp.FlowSheet.GetTranslatedString("AoComum"))
+        materials.Add(PipeOp.FlowSheet.GetTranslatedString("AoCarbono"))
+        materials.Add(PipeOp.FlowSheet.GetTranslatedString("FerroBottomido"))
+        materials.Add(PipeOp.FlowSheet.GetTranslatedString("AoInoxidvel"))
+        materials.Add("PVC")
+        materials.Add("PVC+PFRV")
+        materials.Add(PipeOp.FlowSheet.GetTranslatedString("CommercialCopper"))
+        materials.Add(PipeOp.FlowSheet.GetTranslatedString("UserDefined"))
 
         GridMalha.Rows(1).Cells(0) = CBTemplate
         GridMalha.Rows(4).Cells(0) = CBMat
@@ -677,6 +779,12 @@ Imports System.Drawing
             End If
             Me.PipeEditor1_StatusChanged(e, PipeEditorStatus.OK)
         End If
+
+        cbDefaultDiameter.Items.AddRange(diameters.ToArray())
+        cbDefaultMaterial.Items.AddRange(materials.ToArray())
+
+        cbDefaultMaterial.SelectedItem = PipeOp.Profile.DefaultMaterial
+        cbDefaultDiameter.SelectedItem = PipeOp.Profile.DefaultDiameter
 
         AddHandler GridMalha.EditingControlShowing, AddressOf Me.myDataGridView_EditingControlShowing
 
@@ -921,6 +1029,23 @@ Imports System.Drawing
         GridMalha.Rows(4 + 1).Cells(GridMalha.Columns.Count - 1).Style.BackColor = System.Drawing.Color.LightGray
         GridMalha.Rows(4 + 2).Cells(GridMalha.Columns.Count - 1).Style.BackColor = System.Drawing.Color.LightGray
 
+        If loaded Then
+
+            GridMalha.Rows(4).Cells(GridMalha.Columns.Count - 1).Value = PipeOp.Profile.DefaultMaterial
+
+            GridMalha.Rows(7).Cells(GridMalha.Columns.Count - 1).Value = 0
+            GridMalha.Rows(8).Cells(GridMalha.Columns.Count - 1).Value = 0
+
+            Dim di, de As Double
+            Dim substr = cbDefaultDiameter.SelectedItem.ToString().Split("(")(1).Replace(" OD", "").Replace(" ID", "").Replace(")", "").Split(" / ")
+            de = substr(0).ToDoubleFromInvariant()
+            di = substr(2).ToDoubleFromInvariant()
+
+            GridMalha.Rows(9).Cells(GridMalha.Columns.Count - 1).Value = Format(cv.Convert("in", Units.diameter, de), NumberFormat)
+            GridMalha.Rows(10).Cells(GridMalha.Columns.Count - 1).Value = Format(cv.Convert("in", Units.diameter, di), NumberFormat)
+
+        End If
+
         Me.GridMalha.Rows(9).Cells(GridMalha.Columns.Count - 1).ToolTipText = PipeOp.FlowSheet.GetTranslatedString("StandardPipeSizes")
         Me.GridMalha.Rows(10).Cells(GridMalha.Columns.Count - 1).ToolTipText = PipeOp.FlowSheet.GetTranslatedString("StandardPipeSizes")
 
@@ -981,6 +1106,23 @@ Imports System.Drawing
         End With
         CBTemplate.Dispose()
         CBMat.Dispose()
+
+        If loaded Then
+
+            GridMalha.Rows(4).Cells(GridMalha.CurrentCell.ColumnIndex + 1).Value = PipeOp.Profile.DefaultMaterial
+
+            GridMalha.Rows(7).Cells(GridMalha.CurrentCell.ColumnIndex + 1).Value = 0
+            GridMalha.Rows(8).Cells(GridMalha.CurrentCell.ColumnIndex + 1).Value = 0
+
+            Dim di, de As Double
+            Dim substr = cbDefaultDiameter.SelectedItem.ToString().Split("(")(1).Replace(" OD", "").Replace(" ID", "").Replace(")", "").Split(" / ")
+            de = substr(0).ToDoubleFromInvariant()
+            di = substr(2).ToDoubleFromInvariant()
+
+            GridMalha.Rows(9).Cells(GridMalha.CurrentCell.ColumnIndex + 1).Value = Format(cv.Convert("in", Units.diameter, de), NumberFormat)
+            GridMalha.Rows(10).Cells(GridMalha.CurrentCell.ColumnIndex + 1).Value = Format(cv.Convert("in", Units.diameter, di), NumberFormat)
+
+        End If
 
     End Sub
 
@@ -1427,6 +1569,14 @@ Imports System.Drawing
         Dim ft As New EditingForm_Pipe_HydraulicProfileImportFromTabularData With {.PipeObject = PipeOp}
         ft.ShowDialog()
 
+    End Sub
+
+    Private Sub cbDefaultMaterial_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDefaultMaterial.SelectedIndexChanged
+        PipeOp.Profile.DefaultMaterial = cbDefaultMaterial.SelectedItem.ToString()
+    End Sub
+
+    Private Sub cbDefaultDiameter_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDefaultDiameter.SelectedIndexChanged
+        PipeOp.Profile.DefaultDiameter = cbDefaultDiameter.SelectedItem.ToString()
     End Sub
 
     Private Sub GridMalha_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles GridMalha.CellValueChanged

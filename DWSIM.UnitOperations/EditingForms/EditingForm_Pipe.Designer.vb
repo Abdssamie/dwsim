@@ -25,9 +25,9 @@ Partial Class EditingForm_Pipe
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Pipe))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.lblTag = New System.Windows.Forms.TextBox()
         Me.chkActive = New System.Windows.Forms.CheckBox()
@@ -41,6 +41,7 @@ Partial Class EditingForm_Pipe
         Me.GroupBoxParameters = New System.Windows.Forms.GroupBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.chkCalcHeatBalance = New System.Windows.Forms.CheckBox()
         Me.nupCalculateEquilibrium = New System.Windows.Forms.NumericUpDown()
         Me.chkCalculateEquilibrium = New System.Windows.Forms.CheckBox()
         Me.cbSlurryVisc = New System.Windows.Forms.ComboBox()
@@ -67,6 +68,8 @@ Partial Class EditingForm_Pipe
         Me.cbPressure = New System.Windows.Forms.ComboBox()
         Me.tbOutletPressure = New System.Windows.Forms.TextBox()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.PanelHydEditor = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.GroupBoxConnections = New System.Windows.Forms.GroupBox()
         Me.btnCreateAndConnectEnergy = New System.Windows.Forms.Button()
@@ -94,12 +97,12 @@ Partial Class EditingForm_Pipe
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
-        Me.chkCalcHeatBalance = New System.Windows.Forms.CheckBox()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBoxParameters.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         CType(Me.nupCalculateEquilibrium, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage5.SuspendLayout()
         Me.GroupBoxConnections.SuspendLayout()
         Me.GroupBoxResults.SuspendLayout()
         Me.tabstrip1.SuspendLayout()
@@ -257,6 +260,15 @@ Partial Class EditingForm_Pipe
         Me.ToolTipValues.SetToolTip(Me.TabPage4, resources.GetString("TabPage4.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me.TabPage4, resources.GetString("TabPage4.ToolTip2"))
         Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'chkCalcHeatBalance
+        '
+        resources.ApplyResources(Me.chkCalcHeatBalance, "chkCalcHeatBalance")
+        Me.chkCalcHeatBalance.Name = "chkCalcHeatBalance"
+        Me.ToolTip1.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip2"))
+        Me.chkCalcHeatBalance.UseVisualStyleBackColor = True
         '
         'nupCalculateEquilibrium
         '
@@ -490,11 +502,30 @@ Partial Class EditingForm_Pipe
         'TabPage5
         '
         resources.ApplyResources(Me.TabPage5, "TabPage5")
+        Me.TabPage5.Controls.Add(Me.PanelHydEditor)
+        Me.TabPage5.Controls.Add(Me.Button4)
         Me.TabPage5.Name = "TabPage5"
         Me.ToolTip1.SetToolTip(Me.TabPage5, resources.GetString("TabPage5.ToolTip"))
         Me.ToolTipValues.SetToolTip(Me.TabPage5, resources.GetString("TabPage5.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me.TabPage5, resources.GetString("TabPage5.ToolTip2"))
         Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'PanelHydEditor
+        '
+        resources.ApplyResources(Me.PanelHydEditor, "PanelHydEditor")
+        Me.PanelHydEditor.Name = "PanelHydEditor"
+        Me.ToolTipValues.SetToolTip(Me.PanelHydEditor, resources.GetString("PanelHydEditor.ToolTip"))
+        Me.ToolTip1.SetToolTip(Me.PanelHydEditor, resources.GetString("PanelHydEditor.ToolTip1"))
+        Me.ToolTipChangeTag.SetToolTip(Me.PanelHydEditor, resources.GetString("PanelHydEditor.ToolTip2"))
+        '
+        'Button4
+        '
+        resources.ApplyResources(Me.Button4, "Button4")
+        Me.Button4.Name = "Button4"
+        Me.ToolTip1.SetToolTip(Me.Button4, resources.GetString("Button4.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Button4, resources.GetString("Button4.ToolTip1"))
+        Me.ToolTipValues.SetToolTip(Me.Button4, resources.GetString("Button4.ToolTip2"))
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'TabPage6
         '
@@ -689,8 +720,8 @@ Partial Class EditingForm_Pipe
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle16
         Me.DataGridViewTextBoxColumn1.FillWeight = 60.0!
         resources.ApplyResources(Me.DataGridViewTextBoxColumn1, "DataGridViewTextBoxColumn1")
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
@@ -698,8 +729,8 @@ Partial Class EditingForm_Pipe
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridViewTextBoxColumn2.FillWeight = 40.0!
         resources.ApplyResources(Me.DataGridViewTextBoxColumn2, "DataGridViewTextBoxColumn2")
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
@@ -707,8 +738,8 @@ Partial Class EditingForm_Pipe
         '
         'Column1
         '
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle18
         Me.Column1.FillWeight = 30.0!
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
@@ -755,15 +786,6 @@ Partial Class EditingForm_Pipe
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'chkCalcHeatBalance
-        '
-        resources.ApplyResources(Me.chkCalcHeatBalance, "chkCalcHeatBalance")
-        Me.chkCalcHeatBalance.Name = "chkCalcHeatBalance"
-        Me.ToolTip1.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip"))
-        Me.ToolTipChangeTag.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip1"))
-        Me.ToolTipValues.SetToolTip(Me.chkCalcHeatBalance, resources.GetString("chkCalcHeatBalance.ToolTip2"))
-        Me.chkCalcHeatBalance.UseVisualStyleBackColor = True
-        '
         'EditingForm_Pipe
         '
         resources.ApplyResources(Me, "$this")
@@ -785,6 +807,7 @@ Partial Class EditingForm_Pipe
         Me.TabPage4.ResumeLayout(False)
         Me.TabPage4.PerformLayout()
         CType(Me.nupCalculateEquilibrium, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage5.ResumeLayout(False)
         Me.GroupBoxConnections.ResumeLayout(False)
         Me.GroupBoxConnections.PerformLayout()
         Me.GroupBoxResults.ResumeLayout(False)
@@ -861,4 +884,6 @@ Partial Class EditingForm_Pipe
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Public WithEvents chkCalcHeatBalance As CheckBox
+    Friend WithEvents Button4 As Button
+    Friend WithEvents PanelHydEditor As Panel
 End Class
