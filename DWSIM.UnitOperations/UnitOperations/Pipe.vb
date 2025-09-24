@@ -80,7 +80,7 @@ Namespace UnitOperations
 
         Public Property CalculateEquilibriumIntervalInSteps As Integer = 1
 
-        Public Property CalculateHeatBalance As Boolean = True
+        Public Property CalculateHeatBalance As Boolean = False
 
         Public Property PressureDrop_Static As Double = 0.0
 

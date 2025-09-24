@@ -48,14 +48,6 @@ Namespace GraphicObjects.Shapes
 
         Public Overrides Sub CreateConnectors(InCount As Integer, OutCount As Integer)
 
-            Dim myIC1 As New ConnectionPoint
-            myIC1.Position = New Point(X, Y + 0.5 * Height)
-            myIC1.Type = ConType.ConIn
-
-            Dim myOC1 As New ConnectionPoint
-            myOC1.Position = New Point(X + Width, Y + 0.5 * Height)
-            myOC1.Type = ConType.ConOut
-
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
             Me.EnergyConnector.Direction = ConDir.Down
@@ -66,6 +58,9 @@ Namespace GraphicObjects.Shapes
                 If .Count <> 0 Then
                     .Item(0).Position = New Point(X, Y + 0.5 * Height)
                 Else
+                    Dim myIC1 As New ConnectionPoint
+                    myIC1.Position = New Point(X, Y + 0.5 * Height)
+                    myIC1.Type = ConType.ConIn
                     .Add(myIC1)
                 End If
                 .Item(0).ConnectorName = "Inlet"
@@ -77,6 +72,9 @@ Namespace GraphicObjects.Shapes
                 If .Count <> 0 Then
                     .Item(0).Position = New Point(X + Width, Y + 0.5 * Height)
                 Else
+                    Dim myOC1 As New ConnectionPoint
+                    myOC1.Position = New Point(X + Width, Y + 0.5 * Height)
+                    myOC1.Type = ConType.ConOut
                     .Add(myOC1)
                 End If
                 .Item(0).ConnectorName = "Outlet"
