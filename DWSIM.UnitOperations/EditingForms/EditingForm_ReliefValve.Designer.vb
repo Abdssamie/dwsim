@@ -96,9 +96,9 @@ Partial Class EditingForm_ReliefValve
         Me.Panel1.Controls.Add(Me.Label14)
         Me.Panel1.Controls.Add(Me.cbOpeningKvRelType)
         Me.Panel1.Controls.Add(Me.Label10)
-        Me.Panel1.Location = New System.Drawing.Point(6, 192)
+        Me.Panel1.Location = New System.Drawing.Point(4, 189)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(365, 359)
+        Me.Panel1.Size = New System.Drawing.Size(365, 370)
         Me.Panel1.TabIndex = 49
         '
         'gbTable
@@ -109,7 +109,7 @@ Partial Class EditingForm_ReliefValve
         Me.gbTable.Controls.Add(Me.grid1)
         Me.gbTable.Location = New System.Drawing.Point(6, 126)
         Me.gbTable.Name = "gbTable"
-        Me.gbTable.Size = New System.Drawing.Size(356, 230)
+        Me.gbTable.Size = New System.Drawing.Size(356, 241)
         Me.gbTable.TabIndex = 47
         Me.gbTable.TabStop = False
         Me.gbTable.Text = "Data Table"
@@ -129,7 +129,7 @@ Partial Class EditingForm_ReliefValve
         Me.grid1.SheetTabVisible = False
         Me.grid1.SheetTabWidth = 60
         Me.grid1.ShowScrollEndSpacing = True
-        Me.grid1.Size = New System.Drawing.Size(350, 211)
+        Me.grid1.Size = New System.Drawing.Size(350, 222)
         Me.grid1.TabIndex = 0
         Me.grid1.Text = "ReoGridControl1"
         '
@@ -187,7 +187,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.Label10.AutoSize = True
         Me.Label10.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label10.Location = New System.Drawing.Point(3, 14)
+        Me.Label10.Location = New System.Drawing.Point(3, 13)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(124, 13)
         Me.Label10.TabIndex = 43
@@ -502,7 +502,7 @@ Partial Class EditingForm_ReliefValve
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Location = New System.Drawing.Point(7, 259)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(376, 557)
+        Me.GroupBox1.Size = New System.Drawing.Size(376, 565)
         Me.GroupBox1.TabIndex = 53
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Parameters"
@@ -525,7 +525,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.lblFOP.AutoSize = True
         Me.lblFOP.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.lblFOP.Location = New System.Drawing.Point(243, 81)
+        Me.lblFOP.Location = New System.Drawing.Point(243, 80)
         Me.lblFOP.Name = "lblFOP"
         Me.lblFOP.Size = New System.Drawing.Size(27, 13)
         Me.lblFOP.TabIndex = 55
@@ -535,7 +535,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.lblSP.AutoSize = True
         Me.lblSP.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.lblSP.Location = New System.Drawing.Point(243, 52)
+        Me.lblSP.Location = New System.Drawing.Point(243, 51)
         Me.lblSP.Name = "lblSP"
         Me.lblSP.Size = New System.Drawing.Size(27, 13)
         Me.lblSP.TabIndex = 54
@@ -545,7 +545,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.lblOrifArea.AutoSize = True
         Me.lblOrifArea.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.lblOrifArea.Location = New System.Drawing.Point(243, 23)
+        Me.lblOrifArea.Location = New System.Drawing.Point(243, 22)
         Me.lblOrifArea.Name = "lblOrifArea"
         Me.lblOrifArea.Size = New System.Drawing.Size(27, 13)
         Me.lblOrifArea.TabIndex = 53
@@ -603,7 +603,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.Label8.AutoSize = True
         Me.Label8.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label8.Location = New System.Drawing.Point(8, 23)
+        Me.Label8.Location = New System.Drawing.Point(8, 22)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(121, 13)
         Me.Label8.TabIndex = 20
@@ -613,7 +613,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.Label6.AutoSize = True
         Me.Label6.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label6.Location = New System.Drawing.Point(8, 168)
+        Me.Label6.Location = New System.Drawing.Point(8, 167)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(101, 13)
         Me.Label6.TabIndex = 19
@@ -623,7 +623,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.Label5.AutoSize = True
         Me.Label5.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label5.Location = New System.Drawing.Point(8, 139)
+        Me.Label5.Location = New System.Drawing.Point(8, 138)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(129, 13)
         Me.Label5.TabIndex = 18
@@ -633,7 +633,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.Label3.AutoSize = True
         Me.Label3.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label3.Location = New System.Drawing.Point(8, 110)
+        Me.Label3.Location = New System.Drawing.Point(8, 109)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(108, 13)
         Me.Label3.TabIndex = 17
@@ -643,7 +643,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.Label2.AutoSize = True
         Me.Label2.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label2.Location = New System.Drawing.Point(8, 81)
+        Me.Label2.Location = New System.Drawing.Point(8, 80)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(113, 13)
         Me.Label2.TabIndex = 16
@@ -653,7 +653,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.Label1.AutoSize = True
         Me.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.Label1.Location = New System.Drawing.Point(8, 52)
+        Me.Label1.Location = New System.Drawing.Point(8, 51)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(94, 13)
         Me.Label1.TabIndex = 15
