@@ -647,7 +647,7 @@ Namespace Reactors
                 .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
             AddHandler button2.Click, Sub(s, e)
                                           AccumulationStream.SetFlowsheet(FlowSheet)
-                                          Dim fms As New EditingForm_SeparatorFiller With {.Separator = Me}
+                                          Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
                                           fms.ShowDialog()
                                       End Sub
 

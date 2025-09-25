@@ -210,7 +210,7 @@ Namespace UnitOperations
                 .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
             AddHandler button2.Click, Sub(s, e)
                                           AccumulationStream.SetFlowsheet(FlowSheet)
-                                          Dim fms As New EditingForm_SeparatorFiller With {.Separator = Me}
+                                          Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
                                           fms.ShowDialog()
                                       End Sub
 
@@ -220,41 +220,7 @@ Namespace UnitOperations
 
         End Sub
 
-        Private prevM, currentM As Double
-
-        Public Overrides Sub RunDynamicModel()
-
-            Dim integratorID = FlowSheet.DynamicsManager.ScheduleList(FlowSheet.DynamicsManager.CurrentSchedule).CurrentIntegrator
-            Dim integrator = FlowSheet.DynamicsManager.IntegratorList(integratorID)
-
-            Dim timestep = integrator.IntegrationStep.TotalSeconds
-
-            If integrator.RealTime Then timestep = Convert.ToDouble(integrator.RealTimeStepMs) / 1000.0
-
-            Dim oms1 As MaterialStream = Me.GetOutletMaterialStream(0)
-            Dim oms2 As MaterialStream = Me.GetOutletMaterialStream(1)
-
-            Dim oms3 As MaterialStream = Me.GetOutletMaterialStream(2)
-
-            Dim omsr As MaterialStream = GetOutletMaterialStream(3)
-
-            If CalculationMode > 1 Then
-                Throw New Exception("Only Adiabatic and Legacy mode are supported in dynamic mode.")
-            End If
-
-            If oms3 IsNot Nothing Then
-                Throw New Exception("The Gas-Liquid Separator currently supports only a single liquid phase in Dynamic Mode.")
-            End If
-
-            Dim imsmix As MaterialStream = Nothing
-
-            For i = 0 To 5
-                If Me.GraphicObject.InputConnectors(i).IsAttached Then
-                    Dim imsx = GetInletMaterialStream(i)
-                    If imsmix Is Nothing Then imsmix = imsx.CloneXML
-                    imsmix = imsmix.Add(imsx)
-                End If
-            Next
+        Public Function CalculateVolume() As Double
 
             Dim Vol As Double = GetDynamicProperty("Volume")
 
@@ -308,6 +274,48 @@ Namespace UnitOperations
 
             End If
 
+            Return Vol
+
+        End Function
+
+        Private prevM, currentM As Double
+
+        Public Overrides Sub RunDynamicModel()
+
+            Dim integratorID = FlowSheet.DynamicsManager.ScheduleList(FlowSheet.DynamicsManager.CurrentSchedule).CurrentIntegrator
+            Dim integrator = FlowSheet.DynamicsManager.IntegratorList(integratorID)
+
+            Dim timestep = integrator.IntegrationStep.TotalSeconds
+
+            If integrator.RealTime Then timestep = Convert.ToDouble(integrator.RealTimeStepMs) / 1000.0
+
+            Dim oms1 As MaterialStream = Me.GetOutletMaterialStream(0)
+            Dim oms2 As MaterialStream = Me.GetOutletMaterialStream(1)
+
+            Dim oms3 As MaterialStream = Me.GetOutletMaterialStream(2)
+
+            Dim omsr As MaterialStream = GetOutletMaterialStream(3)
+
+            If CalculationMode > 1 Then
+                Throw New Exception("Only Adiabatic and Legacy mode are supported in dynamic mode.")
+            End If
+
+            If oms3 IsNot Nothing Then
+                Throw New Exception("The Gas-Liquid Separator currently supports only a single liquid phase in Dynamic Mode.")
+            End If
+
+            Dim imsmix As MaterialStream = Nothing
+
+            For i = 0 To 5
+                If Me.GraphicObject.InputConnectors(i).IsAttached Then
+                    Dim imsx = GetInletMaterialStream(i)
+                    If imsmix Is Nothing Then imsmix = imsx.CloneXML
+                    imsmix = imsmix.Add(imsx)
+                End If
+            Next
+
+            Dim Vol = CalculateVolume()
+
             Dim Pressure, Enthalpy As Double
             Dim Pmin = GetDynamicProperty("Minimum Pressure")
             Dim Orientation As Integer = GetDynamicProperty("Vessel Orientation")
@@ -358,6 +366,14 @@ Namespace UnitOperations
             End If
 
             AccumulationStream.SetFlowsheet(FlowSheet)
+
+            Dim D = Dimensions(0).Value
+            Dim L = Dimensions(1).Value
+            Dim DE = D + WallThickness
+
+            Dim Height As Double = GetDynamicProperty("Height")
+
+            If GetDynamicProperty("Get Height from Dimensions") Then Height = Dimensions(1).Value
 
             ' Calculate Temperature
 

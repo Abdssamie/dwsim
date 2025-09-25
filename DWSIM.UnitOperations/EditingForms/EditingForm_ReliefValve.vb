@@ -154,6 +154,24 @@ Public Class EditingForm_ReliefValve
 
             Dim uobj = SimObject
 
+            lblFOP.Text = units.pressure
+            lblSP.Text = units.pressure
+            lblOrifArea.Text = units.area
+
+            tbSize.Text = .OrificeArea.ConvertFromSI(units.area).ToString(nf)
+            tbSP.Text = .SetPointPressure.ConvertFromSI(units.pressure).ToString(nf)
+            tbFOP.Text = .FullyOpenedPressure.ConvertFromSI(units.pressure).ToString(nf)
+
+            tbDC.Text = .DischargeCoefficient.ToString(nf)
+            tbBPC.Text = .BackPressureCoefficient.ToString(nf)
+            tbVC.Text = .ViscosityCoefficient.ToString(nf)
+
+            cbStandardSizes.Items.Clear()
+            cbStandardSizes.Items.Add("<- Std Sizes")
+            cbStandardSizes.Items.AddRange(UnitOperations.ReliefValve.StandardOrificeAreas.ToArray())
+
+            cbStandardSizes.SelectedIndex = 0
+
             tbKvOpRel.Text = uobj.PercentOpeningVersusPercentKvExpression
 
             tbCharParam.Text = .CharacteristicParameter.ToString(nf)
@@ -164,8 +182,6 @@ Public Class EditingForm_ReliefValve
             For i = 0 To .OpeningKvRelDataTableY.Count - 1
                 grid1.Worksheets(0).SetCellData(i, 1, .OpeningKvRelDataTableY(i))
             Next
-
-            Panel1.Enabled = uobj.EnableOpeningKvRelationship
 
             cbOpeningKvRelType.SelectedIndex = .DefinedOpeningKvRelationShipType
 
@@ -211,7 +227,7 @@ Public Class EditingForm_ReliefValve
     End Sub
 
 
-    Private Sub tb_TextChanged(sender As Object, e As EventArgs)
+    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbSize.TextChanged, tbSP.TextChanged, tbFOP.TextChanged, tbDC.TextChanged, tbBPC.TextChanged, tbVC.TextChanged
 
         Dim tbox = DirectCast(sender, TextBox)
 
@@ -223,7 +239,7 @@ Public Class EditingForm_ReliefValve
 
     End Sub
 
-    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs)
+    Private Sub TextBoxKeyDown(sender As Object, e As KeyEventArgs) Handles tbSize.KeyDown, tbSP.KeyDown, tbFOP.KeyDown, tbDC.KeyDown, tbBPC.KeyDown, tbVC.KeyDown
 
         If e.KeyCode = Keys.Enter And Loaded And DirectCast(sender, TextBox).ForeColor = System.Drawing.Color.Blue Then
 
@@ -231,7 +247,22 @@ Public Class EditingForm_ReliefValve
 
             DirectCast(sender, TextBox).SelectAll()
 
+            UpdateProps(sender)
+
         End If
+
+    End Sub
+
+    Sub UpdateProps(sender As Object)
+
+        Dim uobj = SimObject
+
+        If sender Is tbSize Then uobj.OrificeArea = tbSize.Text.ToDoubleFromCurrent().ConvertToSI(units.area)
+        If sender Is tbSP Then uobj.SetPointPressure = tbSP.Text.ToDoubleFromCurrent().ConvertToSI(units.pressure)
+        If sender Is tbFOP Then uobj.FullyOpenedPressure = tbFOP.Text.ToDoubleFromCurrent().ConvertToSI(units.pressure)
+        If sender Is tbDC Then uobj.DischargeCoefficient = tbDC.Text.ToDoubleFromCurrent()
+        If sender Is tbBPC Then uobj.BackPressureCoefficient = tbBPC.Text.ToDoubleFromCurrent()
+        If sender Is tbVC Then uobj.ViscosityCoefficient = tbVC.Text.ToDoubleFromCurrent()
 
     End Sub
 
@@ -456,6 +487,20 @@ Public Class EditingForm_ReliefValve
             Case UnitOperations.Valve.OpeningKvRelationshipType.QuickOpening
                 tbCharParam.Enabled = True
         End Select
+
+    End Sub
+
+    Private Sub cbStandardSizes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbStandardSizes.SelectedIndexChanged
+
+        If cbStandardSizes.SelectedIndex > 0 Then
+
+            Dim osize = cbStandardSizes.SelectedItem.ToString().Substring(4, 5).Trim()
+
+            tbSize.Text = (osize.ToDoubleFromInvariant() * 0.00064516).ConvertUnits("m2", units.area)
+
+            UpdateProps(tbSize)
+
+        End If
 
     End Sub
 

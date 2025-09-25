@@ -262,12 +262,21 @@ Namespace UnitOperations
                                 AccumulationStreams.Add(as1)
                             Next
                         Next
-                        MessageBox.Show(String.Format("{0}: Dynamic state initialized successfully.", GraphicObject.Tag))
+                        MessageBox.Show(String.Format("{0}: Dynamic state initialized successfully.", GraphicObject.Tag), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Catch ex As Exception
-                        MessageBox.Show(String.Format("{0}: Error intializing dynamic state: {1}.", GraphicObject.Tag, ex.Message))
+                        MessageBox.Show(String.Format("{0}: Error intializing dynamic state: {1}.", GraphicObject.Tag, ex.Message), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End Sub
+
+            Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("FillWithStream"),
+                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
+            AddHandler button2.Click, Sub(s, e)
+                                          Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
+                                          fms.ShowDialog()
+                                      End Sub
+
             table.Controls.Add(button1)
+            table.Controls.Add(button2)
             table.Controls.Add(New Panel())
 
         End Sub
