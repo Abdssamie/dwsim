@@ -19,6 +19,10 @@ Namespace UnitOperations
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.PressureChangers
 
+        Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
+
+        Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = False
+
         Private ReadOnly Property IExternalUnitOperation_Name As String = UOName Implements IExternalUnitOperation.Name
 
         Public ReadOnly Property Description As String = UODescription Implements IExternalUnitOperation.Description
@@ -28,8 +32,6 @@ Namespace UnitOperations
         Public Overrides ReadOnly Property MobileCompatible As Boolean = False
 
         Public Property PercentOpeningVersusPercentKvExpression As String = "1.0*OP"
-
-        Public Property EnableOpeningKvRelationship As Boolean = False
 
         Public Property CharacteristicParameter As Double = 50
 
@@ -339,14 +341,6 @@ Namespace UnitOperations
 
         Public Overrides Sub Calculate(Optional args As Object = Nothing)
 
-            If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
-                Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
-            ElseIf Not Me.GraphicObject.InputConnectors(0).IsAttached Then
-                Throw New Exception(FlowSheet.GetTranslatedString("Verifiqueasconexesdo"))
-            End If
-
-
-
         End Sub
 
         Public Overrides Sub RunDynamicModel()
@@ -385,35 +379,33 @@ Namespace UnitOperations
 
             If Double.IsInfinity(OpeningPct) Then OpeningPct = 1.0
 
-            If EnableOpeningKvRelationship Then
-                Select Case DefinedOpeningKvRelationShipType
-                    Case OpeningKvRelationshipType.UserDefined
-                        Try
-                            Dim ExpContext As New Ciloci.Flee.ExpressionContext()
-                            ExpContext.Imports.AddType(GetType(System.Math))
-                            ExpContext.Variables.Clear()
-                            ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
-                            ExpContext.Variables.Add("OP", OpeningPct)
-                            Dim Expr = ExpContext.CompileGeneric(Of Double)(PercentOpeningVersusPercentKvExpression)
-                            Kvc = Expr.Evaluate() / 100
-                        Catch ex As Exception
-                            Throw New Exception("Invalid expression for Kv[Cv]/Opening relationship.")
-                        End Try
-                    Case OpeningKvRelationshipType.QuickOpening
-                        Kvc = (OpeningPct / 100.0) ^ 0.5
-                    Case OpeningKvRelationshipType.Linear
-                        Kvc = OpeningPct / 100.0
-                    Case OpeningKvRelationshipType.EqualPercentage
-                        Kvc = CharacteristicParameter ^ (OpeningPct / 100.0 - 1.0)
-                    Case OpeningKvRelationshipType.DataTable
-                        Try
-                            Dim factor = MathNet.Numerics.Interpolate.RationalWithoutPoles(OpeningKvRelDataTableX, OpeningKvRelDataTableX).Interpolate(OpeningPct) / 100.0
-                            Kvc = factor
-                        Catch ex As Exception
-                            Throw New Exception("Error calculating Kv from tabulated data: " + ex.Message)
-                        End Try
-                End Select
-            End If
+            Select Case DefinedOpeningKvRelationShipType
+                Case OpeningKvRelationshipType.UserDefined
+                    Try
+                        Dim ExpContext As New Ciloci.Flee.ExpressionContext()
+                        ExpContext.Imports.AddType(GetType(System.Math))
+                        ExpContext.Variables.Clear()
+                        ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
+                        ExpContext.Variables.Add("OP", OpeningPct)
+                        Dim Expr = ExpContext.CompileGeneric(Of Double)(PercentOpeningVersusPercentKvExpression)
+                        Kvc = Expr.Evaluate() / 100
+                    Catch ex As Exception
+                        Throw New Exception("Invalid expression for Kv[Cv]/Opening relationship.")
+                    End Try
+                Case OpeningKvRelationshipType.QuickOpening
+                    Kvc = (OpeningPct / 100.0) ^ 0.5
+                Case OpeningKvRelationshipType.Linear
+                    Kvc = OpeningPct / 100.0
+                Case OpeningKvRelationshipType.EqualPercentage
+                    Kvc = CharacteristicParameter ^ (OpeningPct / 100.0 - 1.0)
+                Case OpeningKvRelationshipType.DataTable
+                    Try
+                        Dim factor = MathNet.Numerics.Interpolate.RationalWithoutPoles(OpeningKvRelDataTableX, OpeningKvRelDataTableX).Interpolate(OpeningPct) / 100.0
+                        Kvc = factor
+                    Catch ex As Exception
+                        Throw New Exception("Error calculating Kv from tabulated data: " + ex.Message)
+                    End Try
+            End Select
 
             T1 = ims.GetTemperature()
             P1 = ims.GetPressure()

@@ -128,7 +128,7 @@
     <value>159, 21</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
-    <value>Fill Separator with Selected Stream</value>
+    <value>Fill with Selected Stream</value>
   </data>
   <data name="tbPressure.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 20</value>
@@ -157,13 +157,10 @@
     <value>Material Stream</value>
   </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 13</value>
+    <value>75, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>Separator</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>96, 96</value>
+    <value>Unit Operation</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>338, 304</value>
@@ -172,6 +169,6 @@
     <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Gas-Liquid Separator Filling Utility</value>
+    <value>Dynamic Mode Fill Contents Utility</value>
   </data>
 </root>
