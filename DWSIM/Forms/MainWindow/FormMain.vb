@@ -4576,7 +4576,7 @@ Label_00CC:
 
             Dim isSaveAs = shouldOverwriteFile = False
             Dim isSharedForCollaboration = False
-            Dim virtualFile = form2.Options.VirtualFile
+            Dim virtualFile = form2.FlowsheetOptions.VirtualFile
 
             If TypeOf virtualFile Is S365File Then
                 Dim s365file As S365File = DirectCast(virtualFile, S365File)
@@ -4594,7 +4594,7 @@ Label_00CC:
                 Try
                     Dim fname = Path.GetFileNameWithoutExtension(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
-                    If isLoggedIn And form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) And disableOverwriteQuestion = False Then
+                    If isLoggedIn And virtualFile IsNot Nothing And IsSimulateFilePath(virtualFile.FullPath) And disableOverwriteQuestion = False Then
                         Dim shouldOverwriteExistingFileResult As DialogResult = MessageBox.Show("Do you want to overwrite the existing file?", "Save file", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                         If (shouldOverwriteExistingFileResult = DialogResult.Yes) Then
@@ -4602,7 +4602,7 @@ Label_00CC:
                         End If
 
 
-                        filePickerForm.SuggestedDirectory = form2.Options.VirtualFile.ParentUniqueIdentifier
+                        filePickerForm.SuggestedDirectory = virtualFile.ParentUniqueIdentifier
                     End If
 
                 Catch ex As Exception
@@ -4615,15 +4615,15 @@ Label_00CC:
                     filePickerForm.SuggestedFilename = fname
                     filePickerForm.SuggestedDirectory = fpath
                     If TypeOf filePickerForm Is Simulate365.FormFactories.S365FilePickerForm And disableOverwriteQuestion = False Then
-                        filePickerForm.SuggestedDirectory = form2.Options.VirtualFile.ParentUniqueIdentifier
+                        filePickerForm.SuggestedDirectory = virtualFile.ParentUniqueIdentifier
                     End If
                 Catch ex As Exception
                 End Try
             End If
 
             Dim handler As IVirtualFile = Nothing
-            If shouldOverwriteFile And IsCorrectVirtualFile(dashboardpicker, form2.Options.VirtualFile) Then
-                handler = form2.Options.VirtualFile
+            If shouldOverwriteFile And IsCorrectVirtualFile(dashboardpicker, virtualFile) Then
+                handler = virtualFile
             Else
                 handler = filePickerForm.ShowSaveDialog(
                 New List(Of SharedClassesCSharp.FilePicker.FilePickerAllowedType) From
@@ -4897,6 +4897,12 @@ Label_00CC:
         If My.Computer.Keyboard.ShiftKeyDown Then saveasync = False
 
         Dim filePickerForm As IFilePicker = SharedClassesCSharp.FilePicker.FilePickerService.GetInstance().GetFilePicker()
+
+        If TypeOf ActiveMdiChild Is FormFlowsheet Then
+            Dim virtualFile = DirectCast(ActiveMdiChild, FormFlowsheet).FlowsheetOptions.VirtualFile
+            saveToDashboard = saveToDashboard Or TypeOf virtualFile Is S365File
+        End If
+
 
         If saveToDashboard Then
             filePickerForm = New Simulate365.FormFactories.S365FilePickerForm()

@@ -41,6 +41,7 @@ Partial Class FormMain
         Me.AbrirDoDashboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.SaveToDashboardTSMI = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShareFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveAsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -117,7 +118,6 @@ Partial Class FormMain
         Me.ToolStripSplitButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripSplitButton2 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.SaveAsToSimulate365DashboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.SettingsPanel.SuspendLayout()
@@ -201,6 +201,12 @@ Partial Class FormMain
         resources.ApplyResources(Me.SaveToDashboardTSMI, "SaveToDashboardTSMI")
         Me.SaveToDashboardTSMI.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
         Me.SaveToDashboardTSMI.Name = "SaveToDashboardTSMI"
+        '
+        'SaveAsToSimulate365DashboardToolStripMenuItem
+        '
+        resources.ApplyResources(Me.SaveAsToSimulate365DashboardToolStripMenuItem, "SaveAsToSimulate365DashboardToolStripMenuItem")
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Name = "SaveAsToSimulate365DashboardToolStripMenuItem"
         '
         'ShareFileToolStripMenuItem
         '
@@ -421,7 +427,7 @@ Partial Class FormMain
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.OpenFileS365, Me.ToolStripSeparator5, Me.tsbAutoSave, Me.SaveToolStripButton, Me.ToolStripButton1, Me.SaveFileS365, Me.ToolStripButton6, Me.ToolStripSeparator3, Me.ToolStripButton2, Me.tsbInspector, Me.ToolStripSeparator4, Me.ToolStripButton3, Me.ToolStripButton5, Me.ToolStripButton4, Me.ToolStripSeparator6, Me.tsbRegCO, Me.ToolStripSeparator8, Me.LoginButton, Me.LogoutDropdown, Me.CheckingCredentialsLabel})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.OpenFileS365, Me.ToolStripSeparator5, Me.SaveToolStripButton, Me.tsbAutoSave, Me.ToolStripButton1, Me.SaveFileS365, Me.ToolStripButton6, Me.ToolStripSeparator3, Me.ToolStripButton2, Me.tsbInspector, Me.ToolStripSeparator4, Me.ToolStripButton3, Me.ToolStripButton5, Me.ToolStripButton4, Me.ToolStripSeparator6, Me.tsbRegCO, Me.ToolStripSeparator8, Me.LoginButton, Me.LogoutDropdown, Me.CheckingCredentialsLabel})
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         '
@@ -678,12 +684,6 @@ Partial Class FormMain
         resources.ApplyResources(Me.ToolStripStatusLabel2, "ToolStripStatusLabel2")
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
         Me.ToolStripStatusLabel2.Spring = True
-        '
-        'SaveAsToSimulate365DashboardToolStripMenuItem
-        '
-        resources.ApplyResources(Me.SaveAsToSimulate365DashboardToolStripMenuItem, "SaveAsToSimulate365DashboardToolStripMenuItem")
-        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
-        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Name = "SaveAsToSimulate365DashboardToolStripMenuItem"
         '
         'FormMain
         '
