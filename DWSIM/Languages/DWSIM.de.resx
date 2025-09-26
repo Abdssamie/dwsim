@@ -5504,4 +5504,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SolidCp" xml:space="preserve">
     <value>Wärmekapazität Feststoff</value>
   </data>
+  <data name="LeavingCollaborationMessage" xml:space="preserve">
+    <value>Möchten Sie wirklich eine Kopie dieser Datei erstellen? Wenn Sie Ja wählen, verlassen Sie die Zusammenarbeit an dieser Datei.</value>
+  </data>
 </root>

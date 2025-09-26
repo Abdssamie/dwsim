@@ -2,5 +2,9 @@
     Function ShowOpenDialog(ByVal allowedTypes As IEnumerable(Of IFilePickerAllowedType)) As IVirtualFile
     Property SuggestedDirectory As String
     Property SuggestedFilename As String
-    Function ShowSaveDialog(ByVal allowedTypes As IEnumerable(Of IFilePickerAllowedType)) As IVirtualFile
+    Function ShowSaveDialog(
+    ByVal allowedTypes As IEnumerable(Of IFilePickerAllowedType),
+    Optional ByVal isSaveAs As Boolean = False,
+    Optional ByVal isLeavingCollaborationFile As Boolean = False
+) As IVirtualFile
 End Interface

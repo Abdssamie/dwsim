@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Forms;
 
 namespace DWSIM.Simulate365.FormFactories
 {
@@ -106,7 +107,7 @@ namespace DWSIM.Simulate365.FormFactories
             _webUIForm?.Dispose();
         }
 
-        public S365File ShowSaveDialog(List<string> fileFormats = null)
+        public S365File ShowSaveDialog(List<string> fileFormats = null, bool isSaveAs = false, bool isLeavingCollaborationFile = false)
         {
             // Invoke event handlers
             var eventArgs = new BeforeShowDialogEventArgs();
@@ -133,6 +134,16 @@ namespace DWSIM.Simulate365.FormFactories
 
             }
 
+            if (isSaveAs)
+            {
+                queryParams.Add("saveAs", "true");
+            }
+
+            if (isLeavingCollaborationFile)
+            {
+                queryParams.Add("leavingCollaborationFile", "true");
+            }
+
             if (!string.IsNullOrWhiteSpace(SuggestedFilename))
             {
                 queryParams.Add("filename", HttpUtility.UrlEncode(SuggestedFilename));
@@ -149,7 +160,7 @@ namespace DWSIM.Simulate365.FormFactories
                 }).ToList());
             }
 
-            string title = "Save file to Simulate 365 Dashboard";
+            string title = $"Save {(isSaveAs ? "As" : "")} file to Simulate 365 Dashboard";
             _webUIForm = new WebUIForm(initialUrl, title, true)
             {
                 Width = (int)(1300 * DWSIM.GlobalSettings.Settings.DpiScale),
@@ -264,7 +275,7 @@ namespace DWSIM.Simulate365.FormFactories
             return file;
         }
 
-        public IVirtualFile ShowSaveDialog(IEnumerable<IFilePickerAllowedType> allowedTypes)
+        public IVirtualFile ShowSaveDialog(IEnumerable<IFilePickerAllowedType> allowedTypes, bool isSaveAs = false, bool isLeavingCollaborationFile = false)
         {
             List<string> fileFormats = null;
             if (allowedTypes != null && allowedTypes.Count() > 0)
@@ -272,7 +283,7 @@ namespace DWSIM.Simulate365.FormFactories
                 fileFormats = allowedTypes.SelectMany(t => t.AllowedExtensions.Select(e => ReplateLeadingStarDot(e))).Distinct().ToList();
             }
 
-            var file = ShowSaveDialog(fileFormats);
+            var file = ShowSaveDialog(fileFormats, isSaveAs, isLeavingCollaborationFile);
             return file;
         }
 
@@ -280,6 +291,7 @@ namespace DWSIM.Simulate365.FormFactories
         {
             return Regex.Replace(input, @"^\*{0,1}\.", "");
         }
+
 
         #endregion
     }

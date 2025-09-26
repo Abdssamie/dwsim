@@ -8641,6 +8641,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Você realmente deseja criar uma cópia deste arquivo?  Se escolher Sim, você sairá da colaboração neste arquivo..
+        '''</summary>
+        Friend Shared ReadOnly Property LeavingCollaborationMessage() As String
+            Get
+                Return ResourceManager.GetString("LeavingCollaborationMessage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Lei de Raoult - Gás/Solução Ideal.
         '''</summary>
         Friend Shared ReadOnly Property LeideRaoultGsSoluoId() As String

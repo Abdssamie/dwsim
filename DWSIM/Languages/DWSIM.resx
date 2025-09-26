@@ -5796,4 +5796,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
     <value>Somente o fluxograma pode ser usado para colaboração.</value>
   </data>
+  <data name="LeavingCollaborationMessage" xml:space="preserve">
+    <value>Você realmente deseja criar uma cópia deste arquivo?  Se escolher Sim, você sairá da colaboração neste arquivo.</value>
+  </data>
 </root>

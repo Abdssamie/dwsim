@@ -5517,4 +5517,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SolidCp" xml:space="preserve">
     <value>Capacidad Calorífica de Solido</value>
   </data>
+  <data name="LeavingCollaborationMessage" xml:space="preserve">
+    <value>Realmente quieres crear una copia de este archivo? Si eliges Sí, dejarás de colaborar en este archivo.</value>
+  </data>
 </root>

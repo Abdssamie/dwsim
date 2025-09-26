@@ -155,6 +155,11 @@ namespace DWSIM.Simulate365.Services
             userService.ShowLogin();
         }
 
+        public string GetLeavingCollaborationFileMessage()
+        {
+            return "Do you really want to create a copy of this file?\n If you create a copy, you’ll leave collaboration on this file.";
+        }
+
         private HttpClient GetDashboardClient(string token)
         {
             var client = new HttpClient();

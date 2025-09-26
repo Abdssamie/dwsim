@@ -4574,6 +4574,15 @@ Label_00CC:
 
             Dim isLoggedIn = UserService.GetInstance()._IsLoggedIn()
 
+            Dim isSaveAs = shouldOverwriteFile = False
+            Dim isSharedForCollaboration = False
+            Dim virtualFile = form2.Options.VirtualFile
+
+            If TypeOf virtualFile Is S365File Then
+                Dim s365file As S365File = DirectCast(virtualFile, S365File)
+                isSharedForCollaboration = s365file.IsSharedForCollaboration
+            End If
+
             If dashboardpicker And Not isLoggedIn Then
                 shouldOverwriteFile = False
             End If
@@ -4621,7 +4630,7 @@ Label_00CC:
                 {New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Compressed XML Simulation File", "*.dwxmz"),
                 New SharedClassesCSharp.FilePicker.FilePickerAllowedType("XML Simulation File", "*.dwxml"),
                 New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Interchangeable PFD Simulation File", "*.pfdx"),
-                New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Mobile XML Simulation File", "*.xml")})
+                New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Mobile XML Simulation File", "*.xml")}, isSaveAs, isSharedForCollaboration)
             End If
 
             If handler IsNot Nothing Then
@@ -4899,14 +4908,8 @@ Label_00CC:
             Dim tempfilePickerForm As S365FilePickerForm = New S365FilePickerForm()
             AddHandler tempfilePickerForm.AfterUserLoggedIn, AddressOf TempFormPickerForm_AfterUserLoggedIn
             tempfilePickerForm.ShowSaveDialog(New List(Of SharedClassesCSharp.FilePicker.FilePickerAllowedType))
-        End If
-
-        'If user does not log in, exit function
-        isLoggedIn = UserService.GetInstance()._IsLoggedIn()
-        If Not isLoggedIn And saveToDashboard Then
             Return Nothing
         End If
-
 
         Dim filename As String
 

@@ -41,7 +41,7 @@ namespace DWSIM.SharedClassesCSharp.FilePicker.Windows
                 return null;
         }
 
-        public IVirtualFile ShowSaveDialog(IEnumerable<IFilePickerAllowedType> allowedTypes)
+        public IVirtualFile ShowSaveDialog(IEnumerable<IFilePickerAllowedType> allowedTypes, bool isSaveAs = false, bool isLeavingCollaborationFile = false)
         {
             var saveFileDialog = new SaveFileDialog();
 
@@ -72,5 +72,6 @@ namespace DWSIM.SharedClassesCSharp.FilePicker.Windows
             else
                 return null;
         }
+
     }
 }
