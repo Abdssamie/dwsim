@@ -16,6 +16,7 @@ namespace DWSIM.Simulate365.Models
         public string ParentUniqueIdentifier { get; set; }
 
         public string FileUniqueIdentifier { get; set; }
+        public string FileVersion { get; set; }
 
         public string Filename { get; set; }
 
@@ -24,6 +25,10 @@ namespace DWSIM.Simulate365.Models
         /// </summary>
         public string FullPath { get; set; }
         public UploadConflictAction? ConflictAction { get; set; }
+
+        public string OwnerId { get; set; }
+
+        public bool IsSharedForCollaboration { get; set; }
 
         public S365File(string localTmpFile)
         {
@@ -57,26 +62,33 @@ namespace DWSIM.Simulate365.Models
 
         public void Write(string localFilePath)
         {
-            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, ConflictAction ?? UploadConflictAction.Overwrite);
-            
+            long? fileVersion = !string.IsNullOrWhiteSpace(FileVersion) ? long.Parse(FileVersion) : (long?)null;
+            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, localFilePath, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite, fileVersion);
+
             FileUniqueIdentifier = file.FileUniqueIdentifier;
+            FileVersion = file.FileVersion;
             Filename = file.Filename;
             FullPath = file.FullPath;
-            
+            IsSharedForCollaboration = file.IsSharedForCollaboration;
+
             FileManagementService.GetInstance().FileSavedToDashboard();
+            FileManagementService.GetInstance().FileSaved(this);
         }
 
         public void Write(System.IO.Stream stream)
         {
-            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, stream, Filename, FullPath, ConflictAction ?? UploadConflictAction.Overwrite);
-            
+            long? fileVersion = !string.IsNullOrWhiteSpace(FileVersion) ? long.Parse(FileVersion) : (long?)null;
+
+            var file = FileUploaderService.UploadFile(FileUniqueIdentifier, ParentUniqueIdentifier, stream, Filename, FullPath, OwnerId, ConflictAction ?? UploadConflictAction.Overwrite, fileVersion);
+
             FileUniqueIdentifier = file.FileUniqueIdentifier;
             Filename = file.Filename;
             FullPath = file.FullPath;
-            
+            FileVersion = file.FileVersion;
+            IsSharedForCollaboration = file.IsSharedForCollaboration;
+
             FileManagementService.GetInstance().FileSavedToDashboard();
+            FileManagementService.GetInstance().FileSaved(this);
         }
-
-
     }
 }

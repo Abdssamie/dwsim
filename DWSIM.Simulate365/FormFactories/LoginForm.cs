@@ -41,7 +41,7 @@ namespace DWSIM.Simulate365.FormFactories
                 useLocalUI = true;
             }
 
-            _webUIForm = new WebUIForm(initalUrl, "Log in with Simulate 365 account", useLocalUI)
+            _webUIForm = new WebUIForm(initalUrl, "Sign in with Simulate 365 account", useLocalUI)
             {
                 Width = (int)(500 * GlobalSettings.Settings.DpiScale),
                 Height = (int)(600 * GlobalSettings.Settings.DpiScale)

@@ -5516,4 +5516,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="DescDHPP" xml:space="preserve">
     <value>Includes only the Debye-Hückel term for the calculation of activity coefficients.</value>
   </data>
+  <data name="ShareTypeNotSupported" xml:space="preserve">
+    <value>This file type is not supported for sharing.</value>
+  </data>
 </root>

@@ -99,9 +99,6 @@ Public Class FormMain
     Public Property AnalyticsProvider As IAnalyticsProvider
 
     Public Shared ExternalSolvers As New Dictionary(Of String, Interfaces.IExternalSolverIdentification)
-    Public Shared Property SignalRGuid As String
-    Public Shared Property CurrentFileVersion As Decimal
-    Public Shared Property S365FileId As String
 
 
     Private ReadOnly dwsimVersion As String =
@@ -109,51 +106,19 @@ Public Class FormMain
     Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString() & "." &
     Assembly.GetExecutingAssembly().GetName().Version.Build.ToString()
 
-    Public Shared Property EnableUserDefinedSaveXMLRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedSaveXMLZIPRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedLoadFileRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedLoadXMLRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedLoadXMLZIPRoutine As Boolean = False
-    Public Shared Property EnableUserDefinedOpenRecentRoutine As Boolean = False
     Public Shared Property EnableFlowsheetSolveCallbackHandler As Boolean = False
-    Public Shared Property EnableLeaveCollaborationGroup As Boolean = False
-    Public Shared Property EnableActiveUsersButton As Boolean = False
-    Public Shared Property EnableNotificationBadge As Boolean = False
-    Public Shared Property EnableUpdatesActiveSimulationUsersBadgeCount As Boolean = False
 
-    Public Shared UserDefinedSaveXMLRoutine As Action(Of IVirtualFile, FormFlowsheet, String, Boolean, FormFlowsheet, String, Boolean)
+    Public Shared OnFileLoaded As Action(Of IVirtualFile, String, String)
 
-    Public Shared UserDefinedSaveXMLZIPRoutine As Action(Of IVirtualFile, FormFlowsheet, Boolean, FormFlowsheet, String, Boolean)
-
-    Public Shared UserDefinedLoadFileRoutine As Action(Of IVirtualFile, String, String)
-
-    Public Shared UserDefinedLoadXMLZIPRoutine As Func(Of IVirtualFile, Action(Of Integer), Boolean, String, String, IFlowsheet)
-
-    Public Shared UserDefinedOpenRecentRoutine As Action(Of Object, System.EventArgs, String)
 
     Public Shared RegisterFlowsheetSolveCallbackHandler As Action
-
-    Public Shared LeaveCollaborationGroup As Action(Of Form)
-
-    Public Shared SetupActiveUsersButton As Func(Of Form, ToolStrip, ToolStripButton)
-
-    Public Shared ShowNotificationBadge As Action(Of Guid, String, ToolStripButton)
-
-    Public Shared Update_ActiveSimulation_UsersBadge_Count As Action(Of Form)
-
-    Public Shared collabSubscription As Action(Of ToolStripMenuItem)
 
 #Region "    Form Events"
 
     Public Event ToolOpened(sender As Object, e As EventArgs)
 
-    Public Event FlowsheetSavingToXML(sender As Object, e As EventArgs)
-
-    Public Event FlowsheetSavedToXML(sender As Object, e As EventArgs)
-
-    Public Event FlowsheetLoadingFromXML(sender As Object, e As EventArgs)
-
-    Public Event FlowsheetLoadedFromXML(sender As Object, e As EventArgs)
+    Public Shared Event ActiveSimulationChanged(sender As Object, e As EventArgs)
+    Public Shared Event ActiveSimulationClosed(sender As Object, e As EventArgs)
 
     Public SavingSimulation As Func(Of IFlowsheet, Boolean)
 
@@ -1096,7 +1061,6 @@ Public Class FormMain
             Me.SaveFileS365.Enabled = True
             Me.SaveToolStripMenuItem.Enabled = True
             Me.SaveAsToolStripMenuItem.Enabled = True
-            Me.ToolStripButton1.Enabled = True
             Me.CloseAllToolstripMenuItem.Enabled = True
             If Not Me.ActiveMdiChild Is Nothing Then
                 If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
@@ -1123,6 +1087,7 @@ Public Class FormMain
 
             FormMain.TranslateFormFunction?.Invoke(Me)
 
+            RaiseEvent ActiveSimulationChanged(Me, New EventArgs())
         End If
 
     End Sub
@@ -1216,7 +1181,6 @@ Public Class FormMain
                 End Sub
         End If
 
-        collabSubscription?.Invoke(ToolsTSMI)
     End Sub
 
     Sub CheckForUpdates()
@@ -2020,8 +1984,6 @@ Public Class FormMain
 
     Public Function LoadJSON(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "") As Interfaces.IFlowsheet
 
-        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
-
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         Dim excs As New Concurrent.ConcurrentBag(Of Exception)
@@ -2365,15 +2327,13 @@ Public Class FormMain
 
         form.ProcessScripts(Enums.Scripts.EventType.SimulationOpened, Enums.Scripts.ObjectType.Simulation, "")
 
-        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
+
 
         Return form
 
     End Function
 
     Public Function LoadXML(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
-
-        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
@@ -2430,12 +2390,6 @@ Public Class FormMain
         Dim form As FormFlowsheet = New FormFlowsheet()
 
         form.Options.VirtualFile = handler
-
-        If EnableUserDefinedLoadXMLRoutine Then
-            form.SignalRGuid = SignalRGuid
-            form.FileVersion = CurrentFileVersion
-            form.S365FileId = S365FileId
-        End If
 
         Settings.CAPEOPENMode = False
 
@@ -3012,8 +2966,6 @@ Public Class FormMain
         Application.DoEvents()
 
         form.ProcessScripts(Enums.Scripts.EventType.SimulationOpened, Enums.Scripts.ObjectType.Simulation, "")
-
-        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
 
         form.Options.EnabledUndoRedo = undoredoenabled
 
@@ -3780,36 +3732,14 @@ Public Class FormMain
                                    form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & mypath & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, MessageType.Information)
                                    'Me.ToolStripStatusLabel1.Text = ""
                                End Sub))
-
         Application.DoEvents()
+
 
     End Sub
 
     Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-        If isUserLoggedIn AndAlso EnableUserDefinedSaveXMLRoutine AndAlso UserDefinedSaveXMLRoutine IsNot Nothing Then
-
-            Dim activeSimulation As FormFlowsheet = Nothing
-
-            Dim mainForm = Application.OpenForms.OfType(Of FormFlowsheet)().FirstOrDefault()
-
-            If mainForm IsNot Nothing Then
-
-                If mainForm.InvokeRequired Then
-                    mainForm.Invoke(Sub()
-                                        activeSimulation = My.Application.ActiveSimulation
-                                    End Sub)
-                Else
-                    activeSimulation = My.Application.ActiveSimulation
-                End If
-            End If
-
-            UserDefinedSaveXMLRoutine.Invoke(handler, form, simulationfilename, closingSimulation, activeSimulation, dwsimVersion, savingToS365)
-            Exit Sub
-        End If
-
-        RaiseEvent FlowsheetSavingToXML(form, New EventArgs())
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
@@ -4035,11 +3965,11 @@ Public Class FormMain
             End If
         End If
 
+
+
         If Not IO.Path.GetExtension(handler.FullPath).ToLower.Contains("dwbcs") Then
             form.ProcessScripts(Scripts.EventType.SimulationSaved, Scripts.ObjectType.Simulation, "")
         End If
-
-        RaiseEvent FlowsheetSavedToXML(form, New EventArgs())
 
     End Sub
 
@@ -4257,10 +4187,6 @@ Public Class FormMain
 
     Function LoadAndExtractXMLZIP(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal forcommandline As Boolean = False, Optional fullpath As String = "") As Interfaces.IFlowsheet
 
-        If EnableUserDefinedLoadXMLZIPRoutine AndAlso UserDefinedLoadXMLZIPRoutine IsNot Nothing Then
-            Return UserDefinedLoadXMLZIPRoutine.Invoke(handler, ProgressFeedBack, forcommandline, fullpath, dwsimVersion)
-        End If
-
         Dim pathtosave As String = Path.Combine(My.Computer.FileSystem.SpecialDirectories.Temp, Guid.NewGuid().ToString())
 
         Directory.CreateDirectory(pathtosave)
@@ -4354,26 +4280,6 @@ Label_00CC:
     Sub SaveXMLZIP(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-        If isUserLoggedIn AndAlso EnableUserDefinedSaveXMLZIPRoutine AndAlso UserDefinedSaveXMLZIPRoutine IsNot Nothing Then
-
-            Dim activeSimulation As FormFlowsheet = Nothing
-
-            Dim mainForm = Application.OpenForms.OfType(Of FormFlowsheet)().FirstOrDefault()
-
-            If mainForm IsNot Nothing Then
-
-                If mainForm.InvokeRequired Then
-                    mainForm.Invoke(Sub()
-                                        activeSimulation = My.Application.ActiveSimulation
-                                    End Sub)
-                Else
-                    activeSimulation = My.Application.ActiveSimulation
-                End If
-            End If
-
-            UserDefinedSaveXMLZIPRoutine.Invoke(handler, form, closingSimulation, activeSimulation, dwsimVersion, savingToS365)
-            Exit Sub
-        End If
 
         Dim xmlfile As String = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), "xml")
 
@@ -4478,11 +4384,6 @@ Label_00CC:
     Sub LoadFile(handler As IVirtualFile, Optional fullpath As String = "")
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
-        If EnableUserDefinedLoadFileRoutine AndAlso UserDefinedLoadFileRoutine IsNot Nothing Then
-            UserDefinedLoadFileRoutine.Invoke(handler, fullpath, dwsimVersion)
-            Exit Sub
-        End If
-
         Me.WelcomePanel.Visible = False
         PainelDeBoasvindasToolStripMenuItem.Checked = False
 
@@ -4637,7 +4538,9 @@ Label_00CC:
         End Select
 
         floading.Close()
-
+        If OnFileLoaded IsNot Nothing Then
+            OnFileLoaded.Invoke(handler, fullpath, dwsimVersion)
+        End If
     End Sub
 
     Sub SaveBackup(handler As IVirtualFile)
@@ -4661,14 +4564,28 @@ Label_00CC:
         Return simulatePath.StartsWith("//Simulate 365 Dashboard")
     End Function
 
-    Sub SaveFileDialog(Optional dashboardpicker As Boolean = False)
+    Sub SaveFileDialog(Optional dashboardpicker As Boolean = False, Optional disableOverwriteQuestion As Boolean = False, Optional shouldOverwriteFile As Boolean = False)
 
         If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
 
             Dim form2 As FormFlowsheet = Me.ActiveMdiChild
 
             Dim filename = form2.Options.FilePath
-            Dim shouldOverwriteFile As Boolean = False
+
+            Dim isLoggedIn = UserService.GetInstance()._IsLoggedIn()
+
+            Dim isSaveAs = shouldOverwriteFile = False
+            Dim isSharedForCollaboration = False
+            Dim virtualFile = form2.FlowsheetOptions.VirtualFile
+
+            If TypeOf virtualFile Is S365File Then
+                Dim s365file As S365File = DirectCast(virtualFile, S365File)
+                isSharedForCollaboration = s365file.IsSharedForCollaboration
+            End If
+
+            If dashboardpicker And Not isLoggedIn Then
+                shouldOverwriteFile = False
+            End If
 
             Dim filePickerForm As IFilePicker
 
@@ -4677,7 +4594,7 @@ Label_00CC:
                 Try
                     Dim fname = Path.GetFileNameWithoutExtension(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
-                    If form2.Options.VirtualFile IsNot Nothing And IsSimulateFilePath(form2.Options.VirtualFile.FullPath) Then
+                    If isLoggedIn And virtualFile IsNot Nothing And IsSimulateFilePath(virtualFile.FullPath) And disableOverwriteQuestion = False Then
                         Dim shouldOverwriteExistingFileResult As DialogResult = MessageBox.Show("Do you want to overwrite the existing file?", "Save file", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
                         If (shouldOverwriteExistingFileResult = DialogResult.Yes) Then
@@ -4685,7 +4602,7 @@ Label_00CC:
                         End If
 
 
-                        filePickerForm.SuggestedDirectory = form2.Options.VirtualFile.ParentUniqueIdentifier
+                        filePickerForm.SuggestedDirectory = virtualFile.ParentUniqueIdentifier
                     End If
 
                 Catch ex As Exception
@@ -4697,23 +4614,23 @@ Label_00CC:
                     Dim fpath = Path.GetDirectoryName(form2.Options.FilePath)
                     filePickerForm.SuggestedFilename = fname
                     filePickerForm.SuggestedDirectory = fpath
-                    If TypeOf filePickerForm Is Simulate365.FormFactories.S365FilePickerForm Then
-                        filePickerForm.SuggestedDirectory = form2.Options.VirtualFile.ParentUniqueIdentifier
+                    If TypeOf filePickerForm Is Simulate365.FormFactories.S365FilePickerForm And disableOverwriteQuestion = False Then
+                        filePickerForm.SuggestedDirectory = virtualFile.ParentUniqueIdentifier
                     End If
                 Catch ex As Exception
                 End Try
             End If
 
             Dim handler As IVirtualFile = Nothing
-            If shouldOverwriteFile Then
-                handler = form2.Options.VirtualFile
+            If shouldOverwriteFile And IsCorrectVirtualFile(dashboardpicker, virtualFile) Then
+                handler = virtualFile
             Else
                 handler = filePickerForm.ShowSaveDialog(
                 New List(Of SharedClassesCSharp.FilePicker.FilePickerAllowedType) From
                 {New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Compressed XML Simulation File", "*.dwxmz"),
                 New SharedClassesCSharp.FilePicker.FilePickerAllowedType("XML Simulation File", "*.dwxml"),
                 New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Interchangeable PFD Simulation File", "*.pfdx"),
-                New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Mobile XML Simulation File", "*.xml")})
+                New SharedClassesCSharp.FilePicker.FilePickerAllowedType("Mobile XML Simulation File", "*.xml")}, isSaveAs, isSharedForCollaboration)
             End If
 
             If handler IsNot Nothing Then
@@ -4747,11 +4664,15 @@ Label_00CC:
                     Me.bgSaveFile.RunWorkerAsync()
                 End If
                 If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
-                    DirectCast(ActiveMdiChild, FormFlowsheet).FlowsheetOptions.VirtualFile = handler
+                    Dim flowsheet As FormFlowsheet = DirectCast(Me.ActiveMdiChild, FormFlowsheet)
+                    flowsheet.FlowsheetOptions.VirtualFile = handler
+                    flowsheet.Options.FilePath = handler.FullPath
+                    flowsheet.UpdateFormText()
+
                 End If
             End If
         Else
-            SaveFile(False)
+            SaveFile(False, dashboardpicker)
         End If
 
     End Sub
@@ -4861,11 +4782,6 @@ Label_00CC:
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
 
-        If EnableUserDefinedOpenRecentRoutine AndAlso UserDefinedOpenRecentRoutine IsNot Nothing Then
-            UserDefinedOpenRecentRoutine.Invoke(sender, e, dwsimVersion)
-            Exit Sub
-        End If
-
         Dim myLink As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
 
         If myLink.Text <> DWSIM.App.GetLocalString("vazio") Then
@@ -4969,9 +4885,11 @@ Label_00CC:
         If shouldSaveToDashboard = True Then
             If TypeOf file Is WindowsFile Then
                 Return False
+            Else
+                Return True
             End If
+            Return TypeOf file Is WindowsFile
         End If
-        Return True
     End Function
 
     Public Function SaveFile(ByVal saveasync As Boolean, Optional saveToDashboard As Boolean = False, Optional closing As Boolean = False, Optional closingSimulation As Boolean = False) As String
@@ -4980,8 +4898,23 @@ Label_00CC:
 
         Dim filePickerForm As IFilePicker = SharedClassesCSharp.FilePicker.FilePickerService.GetInstance().GetFilePicker()
 
+        If TypeOf ActiveMdiChild Is FormFlowsheet Then
+            Dim virtualFile = DirectCast(ActiveMdiChild, FormFlowsheet).FlowsheetOptions.VirtualFile
+            saveToDashboard = saveToDashboard Or TypeOf virtualFile Is S365File
+        End If
+
+
         If saveToDashboard Then
             filePickerForm = New Simulate365.FormFactories.S365FilePickerForm()
+        End If
+        Dim isLoggedIn = UserService.GetInstance()._IsLoggedIn()
+
+        'If user is not logged in, show filepicker dialog with message login to access this feature
+        If Not isLoggedIn And saveToDashboard Then
+            Dim tempfilePickerForm As S365FilePickerForm = New S365FilePickerForm()
+            AddHandler tempfilePickerForm.AfterUserLoggedIn, AddressOf TempFormPickerForm_AfterUserLoggedIn
+            tempfilePickerForm.ShowSaveDialog(New List(Of SharedClassesCSharp.FilePicker.FilePickerAllowedType))
+            Return Nothing
         End If
 
         Dim filename As String
@@ -5087,6 +5020,7 @@ Label_00CC:
                             Me.ActiveMdiChild.Text = handler.FullPath
                         End Using
                     End Using
+
                     Return handler.FullPath
                 End If
             ElseIf TypeOf Me.ActiveMdiChild Is FormUNIFACRegression Then
@@ -5106,11 +5040,17 @@ Label_00CC:
                 End If
             End If
         Else
-            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
         Return ""
 
     End Function
+
+    Private Sub TempFormPickerForm_AfterUserLoggedIn(sender As Object, e As EventArgs)
+        Dim formPickerForm As S365FilePickerForm = CType(sender, S365FilePickerForm)
+        RemoveHandler formPickerForm.AfterUserLoggedIn, AddressOf TempFormPickerForm_AfterUserLoggedIn
+        formPickerForm.Close()
+    End Sub
 
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click, SaveAsToolStripMenuItem.Click
 
@@ -5429,7 +5369,7 @@ Label_00CC:
     End Sub
 
     Private Sub SaveToDashboardTSMI_Click(sender As Object, e As EventArgs) Handles SaveToDashboardTSMI.Click
-        SaveFileDialog(True)
+        SaveFileDialog(True, True, True)
     End Sub
 
     Private Sub OpenFileS365_Click(sender As Object, e As EventArgs) Handles OpenFileS365.Click
@@ -5437,7 +5377,7 @@ Label_00CC:
     End Sub
 
     Private Sub SaveFileS365_Click(sender As Object, e As EventArgs) Handles SaveFileS365.Click
-        SaveFileDialog(True)
+        SaveFileDialog(True, True, True)
     End Sub
 
     Private Sub DashboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DashboardToolStripMenuItem.Click
@@ -5578,9 +5518,73 @@ Label_00CC:
         MessageBox.Show("Chave Pix copiada. Obrigado pelo apoio!", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
+    Private Sub onShareFileClick()
+        Dim shareFileForm As New ShareFileForm()
+        Dim openedFile As S365File = Nothing
+        Dim userService As UserService = UserService.GetInstance()
+        If userService._IsLoggedIn() = False Then
+            shareFileForm.ShowFileShareDialog("user_not_logged_in")
+        End If
+        'If user logs in, we show him next step
+        If userService._IsLoggedIn() = False Then
+            Return
+        End If
+
+        If Not Me.ActiveMdiChild Is Nothing Then
+            If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
+
+                Dim form2 As FormFlowsheet = Me.ActiveMdiChild
+
+                If form2.Options.VirtualFile Is Nothing Or Not IsCorrectVirtualFile(True, form2.Options.VirtualFile) Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotSaved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Return
+                End If
+
+                openedFile = form2.Options.VirtualFile
+                Dim user As UserDetailsModel = UserService.GetInstance().CurrentUser
+
+                If user.Id <> openedFile.OwnerId Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("ShareNotFileOwner"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Return
+                End If
+            End If
+
+            If openedFile?.FileUniqueIdentifier IsNot Nothing Then
+                shareFileForm.ShowFileShareDialog(openedFile.FileUniqueIdentifier)
+            Else
+                MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotSaved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
+            End If
+
+        Else
+            MessageBox.Show(DWSIM.App.GetLocalString("ShareSimulationNotOpened"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+    End Sub
+
+    Private Sub ShareFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShareFileToolStripMenuItem.Click
+        Me.onShareFileClick()
+    End Sub
+
+    Private Sub ToolStripButton6_Click(sender As Object, e As EventArgs) Handles ToolStripButton6.Click
+        Me.onShareFileClick()
+    End Sub
+
     Private Sub tsbInspector_CheckedChanged(sender As Object, e As EventArgs) Handles tsbInspector.CheckedChanged
         GlobalSettings.Settings.InspectorEnabled = tsbInspector.Checked
         FrmOptions.chkEnableInspector.Checked = tsbInspector.Checked
+    End Sub
+
+    Public Shared Sub RaiseActiveSimulationChanged(sender As Object, e As EventArgs)
+        RaiseEvent ActiveSimulationChanged(sender, e)
+    End Sub
+
+    Private Sub SaveAsToSimulate365DashboardToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsToSimulate365DashboardToolStripMenuItem.Click
+        SaveFileDialog(True, True, False)
+    End Sub
+
+    Public Shared Sub RaiseActiveSimulationClosed(sender As Object, e As EventArgs)
+        RaiseEvent ActiveSimulationClosed(sender, e)
     End Sub
 
 #End Region

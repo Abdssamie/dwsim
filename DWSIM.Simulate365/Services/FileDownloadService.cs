@@ -1,4 +1,5 @@
-﻿using DWSIM.Simulate365.Models;
+﻿using DWSIM.Simulate365.Enums;
+using DWSIM.Simulate365.Models;
 using DWSIM.UI.Web.Settings;
 using Newtonsoft.Json;
 using System;
@@ -21,6 +22,14 @@ namespace DWSIM.Simulate365.Services
             var client = GetDashboardClient(token);
             // Get drive item
             var stream = Task.Run(async () => await client.GetStreamAsync($"/api/files/download-by-path?filePath={simulatePath}")).Result;
+            return stream;
+        }
+        public static Stream GetFileByUniqueIdentifier(string fileUniqueIdentifier, AccessType accessType = AccessType.ReadOnly)
+        {
+            var token = UserService.GetInstance().GetUserToken();
+            var client = GetDashboardClient(token);
+            // Get drive item
+            var stream = Task.Run(async () => await client.GetStreamAsync($"/api/files/{fileUniqueIdentifier}/download?accessType={accessType}")).Result;
             return stream;
         }
 

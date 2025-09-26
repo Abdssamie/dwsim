@@ -41,6 +41,8 @@ Partial Class FormMain
         Me.AbrirDoDashboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.SaveToDashboardTSMI = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShareFileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveAsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
@@ -80,8 +82,9 @@ Partial Class FormMain
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbAutoSave = New System.Windows.Forms.ToolStripButton()
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
-        Me.SaveFileS365 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.SaveFileS365 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.tsbInspector = New System.Windows.Forms.ToolStripButton()
@@ -142,7 +145,7 @@ Partial Class FormMain
         'FileTSMI
         '
         resources.ApplyResources(Me.FileTSMI, "FileTSMI")
-        Me.FileTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.tsmiNewCompoundCreatorStudy, Me.tsmiNewCompoundWizard, Me.NovoEstudoDeRegressaoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.AbrirDoDashboardToolStripMenuItem, Me.toolStripSeparator, Me.SaveToDashboardTSMI, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.tsmiFOSSEE, Me.tsmiSamples, Me.tsFileSeparator, Me.ToolStripMenuItem1, Me.ExitToolStripMenuItem})
+        Me.FileTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.tsmiNewCompoundCreatorStudy, Me.tsmiNewCompoundWizard, Me.NovoEstudoDeRegressaoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.AbrirDoDashboardToolStripMenuItem, Me.toolStripSeparator, Me.SaveToDashboardTSMI, Me.SaveAsToSimulate365DashboardToolStripMenuItem, Me.ShareFileToolStripMenuItem, Me.SaveToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.tsmiFOSSEE, Me.tsmiSamples, Me.tsFileSeparator, Me.ToolStripMenuItem1, Me.ExitToolStripMenuItem})
         Me.FileTSMI.Name = "FileTSMI"
         Me.FileTSMI.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         '
@@ -198,6 +201,18 @@ Partial Class FormMain
         resources.ApplyResources(Me.SaveToDashboardTSMI, "SaveToDashboardTSMI")
         Me.SaveToDashboardTSMI.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
         Me.SaveToDashboardTSMI.Name = "SaveToDashboardTSMI"
+        '
+        'SaveAsToSimulate365DashboardToolStripMenuItem
+        '
+        resources.ApplyResources(Me.SaveAsToSimulate365DashboardToolStripMenuItem, "SaveAsToSimulate365DashboardToolStripMenuItem")
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.s365_logo_login
+        Me.SaveAsToSimulate365DashboardToolStripMenuItem.Name = "SaveAsToSimulate365DashboardToolStripMenuItem"
+        '
+        'ShareFileToolStripMenuItem
+        '
+        resources.ApplyResources(Me.ShareFileToolStripMenuItem, "ShareFileToolStripMenuItem")
+        Me.ShareFileToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.dwsim_s365_share1
+        Me.ShareFileToolStripMenuItem.Name = "ShareFileToolStripMenuItem"
         '
         'SaveToolStripMenuItem
         '
@@ -412,7 +427,7 @@ Partial Class FormMain
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.ToolStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.OpenFileS365, Me.ToolStripSeparator5, Me.tsbAutoSave, Me.SaveToolStripButton, Me.SaveFileS365, Me.ToolStripButton1, Me.ToolStripSeparator3, Me.ToolStripButton2, Me.tsbInspector, Me.ToolStripSeparator4, Me.ToolStripButton3, Me.ToolStripButton5, Me.ToolStripButton4, Me.ToolStripSeparator6, Me.tsbRegCO, Me.ToolStripSeparator8, Me.LoginButton, Me.LogoutDropdown, Me.CheckingCredentialsLabel})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.OpenFileS365, Me.ToolStripSeparator5, Me.SaveToolStripButton, Me.tsbAutoSave, Me.ToolStripButton1, Me.SaveFileS365, Me.ToolStripButton6, Me.ToolStripSeparator3, Me.ToolStripButton2, Me.tsbInspector, Me.ToolStripSeparator4, Me.ToolStripButton3, Me.ToolStripButton5, Me.ToolStripButton4, Me.ToolStripSeparator6, Me.tsbRegCO, Me.ToolStripSeparator8, Me.LoginButton, Me.LogoutDropdown, Me.CheckingCredentialsLabel})
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         '
@@ -456,6 +471,13 @@ Partial Class FormMain
         Me.SaveToolStripButton.Image = Global.DWSIM.My.Resources.Resources.icons8_save
         Me.SaveToolStripButton.Name = "SaveToolStripButton"
         '
+        'ToolStripButton1
+        '
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.icons8_save_as
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        '
         'SaveFileS365
         '
         resources.ApplyResources(Me.SaveFileS365, "SaveFileS365")
@@ -463,12 +485,12 @@ Partial Class FormMain
         Me.SaveFileS365.Image = Global.DWSIM.My.Resources.Resources.save_file_s365
         Me.SaveFileS365.Name = "SaveFileS365"
         '
-        'ToolStripButton1
+        'ToolStripButton6
         '
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
-        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.icons8_save_as
-        Me.ToolStripButton1.Name = "ToolStripButton1"
+        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
+        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.dwsim_s365_share1
+        Me.ToolStripButton6.Name = "ToolStripButton6"
         '
         'ToolStripSeparator3
         '
@@ -960,4 +982,7 @@ Partial Class FormMain
     Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
     Friend WithEvents ToolStripSplitButton1 As ToolStripDropDownButton
     Friend WithEvents ToolStripSplitButton2 As ToolStripDropDownButton
+    Friend WithEvents ShareFileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripButton6 As ToolStripButton
+    Friend WithEvents SaveAsToSimulate365DashboardToolStripMenuItem As ToolStripMenuItem
 End Class

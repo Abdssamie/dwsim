@@ -2054,7 +2054,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Não existem simulações a serem salvas.</value>
   </data>
   <data name="Noexistemsimulaesati" xml:space="preserve">
-    <value>Não existem simulações ativas.</value>
+    <value>Somente arquivos de simulação ativos podem ser salvos. Crie ou abra um arquivo antes de salvar.</value>
   </data>
   <data name="Noexistesoluonointer" xml:space="preserve">
     <value>Não existe solução no intervalo.</value>
@@ -5765,5 +5765,38 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Carregando</value>
+  </data>
+  <data name="ShareTypeNotSupported" xml:space="preserve">
+    <value>Este tipo de arquivo não é compatível para compartilhamento.</value>
+  </data>
+  <data name="SaveFileToShare" xml:space="preserve">
+    <value>Somente arquivos de simulação salvos podem ser compartilhados. Salve o arquivo no Simulate 365 Dashboard antes de compartilhar.</value>
+  </data>
+  <data name="ShareSimulationNotOpened" xml:space="preserve">
+    <value>Somente os arquivos abertos pelo Simulate 365 Dashboard podem ser compartilhados.</value>
+  </data>
+  <data name="ShareNotFileOwner" xml:space="preserve">
+    <value>Apenas o proprietário do arquivo pode compartilhá-lo.</value>
+  </data>
+  <data name="CollaborationAvailableOnlyOnSharedFile" xml:space="preserve">
+    <value>A colaboração está disponível apenas em arquivos compartilhados.</value>
+  </data>
+  <data name="NotSupportedCollaborationFileType" xml:space="preserve">
+    <value>Somente o fluxograma pode ser usado para colaboração.</value>
+  </data>
+  <data name="ShareFileToCollaborate" xml:space="preserve">
+    <value>A colaboração está disponível apenas em arquivos compartilhados.</value>
+  </data>
+  <data name="ShareSimulationNotSaved" xml:space="preserve">
+    <value>Somente os arquivos salvos no Simulate 365 Dashboard podem ser compartilhados.</value>
+  </data>
+  <data name="ToStartCollaboratingOpenOrShareFile" xml:space="preserve">
+    <value>A colaboração está disponível apenas em arquivos compartilhados. Compartilhe um arquivo ou abra um arquivo já compartilhado no Simulate 365 Dashboard para começar a colaborar.</value>
+  </data>
+  <data name="OnlyFlowsheetCanBeShared" xml:space="preserve">
+    <value>Somente o fluxograma pode ser usado para colaboração.</value>
+  </data>
+  <data name="LeavingCollaborationMessage" xml:space="preserve">
+    <value>Você realmente deseja criar uma cópia deste arquivo?  Se escolher Sim, você sairá da colaboração neste arquivo.</value>
   </data>
 </root>

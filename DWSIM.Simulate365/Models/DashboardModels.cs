@@ -34,6 +34,9 @@ namespace DWSIM.Simulate365.Models
 
         public FileSystemEntityType Type { get; set; }
         public List<TagResponseModel> Tags { get; set; }
+
+        public Guid OwnerId { get; set; }
+        public bool IsSharedForCollaboration { get; set; }
     }
 
     public class BreadcrumbItem
@@ -55,10 +58,18 @@ namespace DWSIM.Simulate365.Models
     public class UploadFileResponseModel
     {
         public string Filename { get; set; }
+
         public string OriginalFilename { get; set; }
+
         public Guid? ParentDirectoryUniqueIdentifier { get; set; }
+
         public Guid FileUniqueIdentifier { get; set; }
+        public string FileVersion { get; set; }
+
         public string SimulatePath { get; set; }
+
+        public Guid OwnerId { get; set; }
+        public bool IsSharedForCollaboration { get; set; }
     }
     public class FileExistsByPathPostModel
     {

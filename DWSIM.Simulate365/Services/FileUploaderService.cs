@@ -1,4 +1,5 @@
-﻿using DWSIM.Simulate365.Models;
+﻿using DWSIM.Simulate365.Enums;
+using DWSIM.Simulate365.Models;
 using DWSIM.UI.Web.Settings;
 using Microsoft.Graph;
 using Microsoft.IdentityModel.Tokens;
@@ -9,10 +10,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DWSIM.Simulate365.Services
 {
@@ -20,13 +23,37 @@ namespace DWSIM.Simulate365.Services
     {
         public static event EventHandler<BeforeUploadEventArgs> BeforeUpload;
 
-        public static S365File UploadFile(string fileUniqueIdentifier, string parentUniqueIdentifier, string filePath, string filename, string simulatePath, UploadConflictAction? conflictAction)
+        /// <summary>
+        /// Uploads file to Simulate 365 dashboard
+        /// </summary>
+        /// <param name="fileUniqueIdentifier">File uniqueId (GUID)</param>
+        /// <param name="parentUniqueIdentifier">Parent folder uniqueId (GUID)</param>
+        /// <param name="filePath">Pyhsical file location</param>
+        /// <param name="filename">Name of file</param>
+        /// <param name="simulatePath">Simulate 365 file path</param>
+        /// <param name="ownerId">File owner id (GUID), used for uploading changes in collaboration files,S365File-> OwnerId </param>
+        /// <param name="conflictAction">Conflict action when file exists</param>
+        /// <param name="currentVersion">Version number of file in Simulate 365</param>
+        /// <returns>S365File</returns>
+        public static S365File UploadFile(string fileUniqueIdentifier, string parentUniqueIdentifier, string filePath, string filename, string simulatePath, string ownerId, UploadConflictAction? conflictAction, long? fileVersion = null)
         {
             using (var fileStream = System.IO.File.OpenRead(filePath))
-                return UploadFile(fileUniqueIdentifier, parentUniqueIdentifier, fileStream, filename, simulatePath, conflictAction);
+                return UploadFile(fileUniqueIdentifier, parentUniqueIdentifier, fileStream, filename, simulatePath, ownerId, conflictAction, fileVersion);
         }
 
-        public static S365File UploadFile(string fileUniqueIdentifier, string parentUniqueIdentifier, Stream fileStream, string filename, string simulatePath, UploadConflictAction? conflictAction)
+        /// <summary>
+        /// Uploads file to Simulate 365 dashboard
+        /// </summary>
+        /// <param name="fileUniqueIdentifier">File uniqueId (GUID)</param>
+        /// <param name="parentUniqueIdentifier">Parent folder uniqueId (GUID)</param>
+        /// <param name="fileStream">File loaded into Stream</param>
+        /// <param name="filename">Name of file</param>
+        /// <param name="simulatePath">Simulate 365 file path</param>
+        /// <param name="ownerId">File owner id (GUID), used for uploading changes in collaboration files</param>
+        /// <param name="conflictAction">Conflict action when file exists</param>
+        /// <param name="currentVersion">Version number of file in Simulate 365</param>
+        /// <returns>S365File</returns>       
+        public static S365File UploadFile(string fileUniqueIdentifier, string parentUniqueIdentifier, Stream fileStream, string filename, string simulatePath, string ownerId, UploadConflictAction? conflictAction, long? fileVersion = null)
         {
             try
             {
@@ -41,14 +68,17 @@ namespace DWSIM.Simulate365.Services
                 var token = UserService.GetInstance().GetUserToken();
                 var client = GetDashboardClient(token);
 
-                var file = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, conflictAction)).Result;
+                var file = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, ownerId, conflictAction, fileVersion)).Result;
 
                 return new S365File(filename)
                 {
                     FileUniqueIdentifier = file.FileUniqueIdentifier.ToString(),
                     ParentUniqueIdentifier = parentUniqueIdentifier,
                     Filename = file.Filename,
-                    FullPath = file.SimulatePath
+                    FileVersion = file.FileVersion,
+                    FullPath = file.SimulatePath,
+                    OwnerId = file.OwnerId.ToString(),
+                    IsSharedForCollaboration = file.IsSharedForCollaboration
                 };
             }
             catch (Exception ex)
@@ -57,7 +87,7 @@ namespace DWSIM.Simulate365.Services
             }
         }
 
-        public static S365File UploadFileByFilePath(string simulatePath, Stream fileStream, UploadConflictAction? conflictAction)
+        public static S365File UploadFileByFilePath(string simulatePath, Stream fileStream, string ownerId, UploadConflictAction? conflictAction, long? fileVersion = null)
         {
             try
             {
@@ -83,23 +113,26 @@ namespace DWSIM.Simulate365.Services
 
                 var filename = Path.GetFileName(simulatePath) ?? string.Empty;
 
-                var fileResp = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, conflictAction)).Result;
+                var fileResp = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, ownerId, conflictAction, fileVersion)).Result;
 
                 return new S365File(filename)
                 {
                     FileUniqueIdentifier = fileResp.FileUniqueIdentifier.ToString(),
+                    FileVersion = fileResp.FileVersion,
                     ParentUniqueIdentifier = parentUniqueIdentifier,
                     Filename = fileResp.Filename,
-                    FullPath = fileResp.SimulatePath
+                    FullPath = fileResp.SimulatePath,
+                    OwnerId = fileResp.OwnerId.ToString(),
+                    IsSharedForCollaboration = fileResp.IsSharedForCollaboration
                 };
             }
             catch (Exception ex)
             {
                 throw new Exception("An error occurred while saving file to Simulate 365 Dashboard.", ex);
             }
-        }        
+        }
 
-        private static async Task<UploadFileResponseModel> UploadDocumentAsync(string parentUniqueIdentifier, string filename, Stream fileStream, UploadConflictAction? conflictAction)
+        private static async Task<UploadFileResponseModel> UploadDocumentAsync(string parentUniqueIdentifier, string filename, Stream fileStream, string ownerId, UploadConflictAction? conflictAction, long? fileVersion)
         {
             try
             {
@@ -114,6 +147,14 @@ namespace DWSIM.Simulate365.Services
                     if (!string.IsNullOrWhiteSpace(parentUniqueIdentifier))
                         content.Add(new StringContent(parentUniqueIdentifier), "ParentDirectoryUniqueId");
 
+                    if (!string.IsNullOrWhiteSpace(ownerId))
+                        content.Add(new StringContent(ownerId), "OwnerId");
+
+                    if (fileVersion.HasValue)
+                    {
+                        content.Add(new StringContent(fileVersion.ToString()), "FileVersion");
+                    }
+
                     content.Add(new StreamContent(fileStream), "files", filename);
 
                     // Send request
@@ -121,12 +162,17 @@ namespace DWSIM.Simulate365.Services
 
                     // Handle response
                     var responseContent = await response.Content.ReadAsStringAsync();
-                    var responseModel = JsonConvert.DeserializeObject<List<UploadFileResponseModel>>(responseContent);
+
+
+
                     if (!response.IsSuccessStatusCode)
                     {
                         var errorMessage = await response.Content.ReadAsStringAsync();
                         throw new Exception($"An error occurred while uploading file. Status code: {response.StatusCode}. Error:{errorMessage}");
                     }
+
+                    var responseModel = JsonConvert.DeserializeObject<List<UploadFileResponseModel>>(responseContent);
+
                     if (responseModel == null || responseModel.Count == 0)
                         throw new Exception("An error occurred while uploading file. Response is empty.");
 
@@ -139,11 +185,21 @@ namespace DWSIM.Simulate365.Services
             }
         }
 
-        private static FilesWithBreadcrumbsResponseModel GetFileByPath(string simulatePath)
+        private static FilesWithBreadcrumbsResponseModel GetFileByPath(string simulatePath, AccessType? accessType = AccessType.ReadOnly)
         {
             var token = UserService.GetInstance().GetUserToken();
             var client = GetDashboardClient(token);
-            var result = Task.Run(async () => await client.GetAsync($"/api/files/by-path?filePath={simulatePath}&includeBreadcrumbs=true")).Result;
+            var result = Task.Run(async () => await client.GetAsync($"/api/files/by-path?filePath={simulatePath}&includeBreadcrumbs=true&accessType={accessType}")).Result;
+            var resultContent = Task.Run(async () => await result.Content.ReadAsStringAsync()).Result;
+            var itemWithBreadcrumbs = JsonConvert.DeserializeObject<FilesWithBreadcrumbsResponseModel>(resultContent);
+            return itemWithBreadcrumbs;
+        }
+
+        public static FilesWithBreadcrumbsResponseModel GetFileByUniqueIdentifier(string fileUniqueIdentifier, AccessType? accessType = AccessType.ReadOnly)
+        {
+            var token = UserService.GetInstance().GetUserToken();
+            var client = GetDashboardClient(token);
+            var result = Task.Run(async () => await client.GetAsync($"/api/files/{fileUniqueIdentifier}/single?includeBreadcrumbs=true&accessType={accessType}")).Result;
             var resultContent = Task.Run(async () => await result.Content.ReadAsStringAsync()).Result;
             var itemWithBreadcrumbs = JsonConvert.DeserializeObject<FilesWithBreadcrumbsResponseModel>(resultContent);
             return itemWithBreadcrumbs;

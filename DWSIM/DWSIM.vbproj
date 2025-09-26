@@ -3290,6 +3290,9 @@
     <None Include="Resources\double_right_32px.png" />
     <None Include="Resources\DWSIM_splash_v9.png" />
     <None Include="Resources\discussion_forum_40px.png" />
+    <None Include="Resources\dwsim_s365_share.png" />
+    <None Include="Resources\Dwsim_s365_share.bmp" />
+    <None Include="Resources\dwsim_s365_share1.png" />
     <Content Include="Resources\es.png" />
     <None Include="Resources\Excel.png" />
     <None Include="Resources\Excel_copy1.jpg" />
@@ -3853,6 +3856,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tools\CompoundParameterTuning\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

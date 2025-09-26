@@ -1,4 +1,5 @@
-﻿using DWSIM.Simulate365.FormFactories;
+﻿using DWSIM.Simulate365.Enums;
+using DWSIM.Simulate365.FormFactories;
 using DWSIM.Simulate365.Models;
 using DWSIM.UI.Web.Settings;
 using Microsoft.Graph;
@@ -12,6 +13,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 
 namespace DWSIM.Simulate365.Services
 {
@@ -27,22 +29,29 @@ namespace DWSIM.Simulate365.Services
         public S365DashboardSaveFile SelectedSaveFile { get; private set; } = null;
         public S365File SelectedOpenFile { get; private set; } = null;
 
-        public void OpenFile(string fileUniqueIdentifier)
+        public string OpenFile(string fileUniqueIdentifier, int accessType)
         {
             try
             {
-                S3365DashboardFileOpenStarted?.Invoke(this, new EventArgs());
 
                 var token = UserService.GetInstance().GetUserToken();
                 var client = GetDashboardClient(token);
 
-                var result = Task.Run(async () => await client.GetAsync($"/api/files/{fileUniqueIdentifier}/single?includeBreadcrumbs=true")).Result;
+                var result = Task.Run(async () => await client.GetAsync($"/api/files/{fileUniqueIdentifier}/single?includeBreadcrumbs=true&accessType={accessType}")).Result;
+
+                if (!result.IsSuccessStatusCode)
+                {
+                    var errorMessage = Task.Run(async () => await result.Content.ReadAsStringAsync()).Result;
+                    return errorMessage;
+                }
+
+                S3365DashboardFileOpenStarted?.Invoke(this, new EventArgs());
                 var resultContent = Task.Run(async () => await result.Content.ReadAsStringAsync()).Result;
                 var itemWithBreadcrumbs = JsonConvert.DeserializeObject<FilesWithBreadcrumbsResponseModel>(resultContent);
 
                 var item = itemWithBreadcrumbs.File;
                 // Get drive item
-                var stream = Task.Run(async () => await client.GetStreamAsync($"/api/files/{fileUniqueIdentifier}/download")).Result;
+                var stream = Task.Run(async () => await client.GetStreamAsync($"/api/files/{fileUniqueIdentifier}/download?accessType={accessType}")).Result;
 
                 var extension = System.IO.Path.GetExtension(item.Name);
                 var tmpFilePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid().ToString()}{extension}");
@@ -60,10 +69,14 @@ namespace DWSIM.Simulate365.Services
                     Filename = item.Name,
                     ParentUniqueIdentifier = parentFolderBreadcrumb?.UniqueIdentifier.ToString() ?? string.Empty,
                     FileUniqueIdentifier = item.UniqueIdentifier.ToString(),
-                    FullPath = GetFullPath(itemWithBreadcrumbs.BreadcrumbItems,item)
+                    FileVersion = item.CurrentVersionNumber.ToString(),
+                    FullPath = GetFullPath(itemWithBreadcrumbs.BreadcrumbItems, item),
+                    OwnerId = item.OwnerId.ToString(),
+                    IsSharedForCollaboration = item.IsSharedForCollaboration
                 };
 
                 S3365DashboardFileOpened?.Invoke(this, this.SelectedOpenFile);
+                return null;
             }
             catch (Exception ex)
             {
@@ -142,6 +155,11 @@ namespace DWSIM.Simulate365.Services
             userService.ShowLogin();
         }
 
+        public string GetLeavingCollaborationFileMessage()
+        {
+            return "Do you really want to create a copy of this file?\n If you create a copy, you’ll leave collaboration on this file.";
+        }
+
         private HttpClient GetDashboardClient(string token)
         {
             var client = new HttpClient();
@@ -159,5 +177,6 @@ namespace DWSIM.Simulate365.Services
         public string ParentUniqueIdentifier { get; set; }
         public string SimulatePath { get; set; }
         public UploadConflictAction? ConflictAction { get; set; }
+        public bool IsSharedForCollaboration { get; set; }
     }
 }

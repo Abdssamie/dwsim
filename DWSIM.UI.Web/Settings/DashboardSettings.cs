@@ -10,9 +10,9 @@ namespace DWSIM.UI.Web.Settings
     public static class DashboardSettings
     {
         public static string DashboardServiceUrl = "https://dashboard-service.simulate365.com";
-        public static string ExcelRunnerServiceUrl = "https://excel-runner.azurewebsites.net";
-        public static string SensitivityStudiesServiceUrl = "https://sensitivity-studies.azurewebsites.net";
-        public static string TakeHomeExamsServiceUrl = "https://take-home-exams.azurewebsites.net";
+        public static string ExcelRunnerServiceUrl = "https://excel-runner-service.simulate365.com";
+        public static string SensitivityStudiesServiceUrl = "https://sensitivity-study-service.simulate365.com";
+        public static string TakeHomeExamsServiceUrl = "https://take-home-exams-service.simulate365.com";
         public static string Environment = "Production";
 
         static DashboardSettings()
@@ -26,6 +26,14 @@ namespace DWSIM.UI.Web.Settings
                 SensitivityStudiesServiceUrl = "https://sensitivity-study-service.staging.simulate365.com";
                 TakeHomeExamsServiceUrl = "https://take-home-exams-service.staging.simulate365.com";
                 Environment = "Staging";
+            }
+            if (!String.IsNullOrEmpty(s365Environment) && s365Environment.ToLowerInvariant() == "development")
+            {
+                DashboardServiceUrl = "https://localhost:7076";
+                ExcelRunnerServiceUrl = "";
+                SensitivityStudiesServiceUrl = "";
+                TakeHomeExamsServiceUrl = "";
+                Environment = "development";
             }
 
         }

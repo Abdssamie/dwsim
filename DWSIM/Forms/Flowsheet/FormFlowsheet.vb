@@ -32,6 +32,7 @@ Imports DWSIM.Thermodynamics.BaseClasses
 Imports System.Threading.Tasks
 Imports DWSIM.SharedClassesCSharp.FilePicker
 Imports DWSIM.SharedClassesCSharp.FilePicker.Windows
+Imports DWSIM.Simulate365.Models
 
 <ComSourceInterfaces(GetType(Interfaces.IFlowsheetNewMessageSentEvent)), ClassInterface(ClassInterfaceType.AutoDual)>
 <System.Serializable()>
@@ -147,7 +148,6 @@ Public Class FormFlowsheet
 
     Public Shared DoNotOpenSimulationWizard As Boolean = False
 
-    Public Property SignalRGuid As String
     Public Property FileVersion As Decimal = 0.00D
     Public Property S365FileId As String
 
@@ -205,18 +205,11 @@ Public Class FormFlowsheet
     End Sub
 
     Public Sub SetActive()
-
         My.Application.ActiveSimulation = Me
 
-        If FormMain.EnableUpdatesActiveSimulationUsersBadgeCount AndAlso FormMain.Update_ActiveSimulation_UsersBadge_Count IsNot Nothing Then
-
-            If Me.Options IsNot Nothing Then
-
-                FormMain.Update_ActiveSimulation_UsersBadge_Count(Me)
-
-            End If
+        If Me.Options IsNot Nothing Then
+            FormMain.RaiseActiveSimulationChanged(Me, New EventArgs())
         End If
-
     End Sub
 
     Private Sub FormChild_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
@@ -243,6 +236,7 @@ Public Class FormFlowsheet
 
     End Sub
 
+
     Private Sub FormChild_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         ExtensionMethods.ChangeDefaultFont(Me)
@@ -256,15 +250,6 @@ Public Class FormFlowsheet
             Me.ToolStrip1.ImageScalingSize = New Size(20 * Settings.DpiScale, 20 * Settings.DpiScale)
             Me.MenuStrip1.ImageScalingSize = New Size(20 * Settings.DpiScale, 20 * Settings.DpiScale)
 
-            If FormMain.EnableActiveUsersButton AndAlso FormMain.SetupActiveUsersButton IsNot Nothing Then
-                Dim tsb = FormMain.SetupActiveUsersButton(Me, Me.ToolStrip1)
-
-                If tsb IsNot Nothing Then
-                    If Not String.IsNullOrEmpty(SignalRGuid) AndAlso Not toolstripButtonDict.ContainsKey(SignalRGuid) Then
-                        toolstripButtonDict(SignalRGuid) = tsb
-                    End If
-                End If
-            End If
 
             For Each item In Me.ToolStrip1.Items
                 If TryCast(item, ToolStripButton) IsNot Nothing Then
@@ -739,6 +724,7 @@ Public Class FormFlowsheet
             My.Application.MainWindowForm.SaveToolStripButton.Enabled = True
             My.Application.MainWindowForm.SaveFileS365.Enabled = True
             My.Application.MainWindowForm.SaveToDashboardTSMI.Enabled = True
+            My.Application.MainWindowForm.ShareFileToolStripMenuItem.Enabled = True
             My.Application.MainWindowForm.SaveToolStripMenuItem.Enabled = True
             My.Application.MainWindowForm.SaveAsToolStripMenuItem.Enabled = True
             My.Application.MainWindowForm.ToolStripButton1.Enabled = True
@@ -777,28 +763,11 @@ Public Class FormFlowsheet
         If FormMain.IsPro Then Task.Delay(3000).ContinueWith(Sub() UIThread(Sub() ProcessTransition()))
 
 
-        If Not String.IsNullOrEmpty(Me.SignalRGuid) AndAlso toolstripButtonDict.ContainsKey(Me.SignalRGuid) Then
-
-            If Me.SignalRGuid IsNot Nothing Then
-                Dim sheetSignalRGuid As Guid = Guid.Parse(Me.SignalRGuid)
-
-                If sheetSignalRGuid <> Guid.Empty AndAlso
-                   FormMain.EnableNotificationBadge AndAlso
-                   FormMain.ShowNotificationBadge IsNot Nothing Then
-
-                    Dim tsb = toolstripButtonDict(Me.SignalRGuid)
-
-                    If Me.Options IsNot Nothing Then
-                        FormMain.ShowNotificationBadge(sheetSignalRGuid, Path.GetFileName(Me.FilePath), tsb)
-                    End If
-
-                End If
-            End If
-        End If
     End Sub
 
     Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
 
+        FormMain.RaiseActiveSimulationClosed(Me, New EventArgs())
         ReleaseResources()
 
     End Sub
@@ -884,6 +853,7 @@ Public Class FormFlowsheet
                 My.Application.MainWindowForm.SaveFileS365.Enabled = False
                 My.Application.MainWindowForm.SaveToolStripButton.Enabled = False
                 My.Application.MainWindowForm.SaveToDashboardTSMI.Enabled = False
+                My.Application.MainWindowForm.ShareFileToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.SaveToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.SaveAsToolStripMenuItem.Enabled = False
                 My.Application.MainWindowForm.ToolStripButton1.Enabled = False
@@ -892,6 +862,7 @@ Public Class FormFlowsheet
                 My.Application.MainWindowForm.SaveFileS365.Enabled = True
                 My.Application.MainWindowForm.SaveToolStripButton.Enabled = True
                 My.Application.MainWindowForm.SaveToDashboardTSMI.Enabled = True
+                My.Application.MainWindowForm.ShareFileToolStripMenuItem.Enabled = True
                 My.Application.MainWindowForm.SaveToolStripMenuItem.Enabled = True
                 My.Application.MainWindowForm.SaveAsToolStripMenuItem.Enabled = True
                 My.Application.MainWindowForm.ToolStripButton1.Enabled = True
@@ -1142,12 +1113,6 @@ Public Class FormFlowsheet
         If Me.m_overrideCloseQuestion = False Then
 
             Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Options.SimulationName & " (" & System.IO.Path.GetFileName(Me.Options.FilePath) & ") ...", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-
-            If Not x = MsgBoxResult.Cancel Then
-                If FormMain.EnableLeaveCollaborationGroup AndAlso FormMain.LeaveCollaborationGroup IsNot Nothing Then
-                    FormMain.LeaveCollaborationGroup(Me)
-                End If
-            End If
 
             If x = MsgBoxResult.Yes Then
 
