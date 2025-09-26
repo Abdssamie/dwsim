@@ -80,7 +80,7 @@ Namespace UnitOperations
 
         Public Property CalculateEquilibriumIntervalInSteps As Integer = 1
 
-        Public Property CalculateHeatBalance As Boolean = True
+        Public Property CalculateHeatBalance As Boolean = False
 
         Public Property PressureDrop_Static As Double = 0.0
 
@@ -262,12 +262,21 @@ Namespace UnitOperations
                                 AccumulationStreams.Add(as1)
                             Next
                         Next
-                        MessageBox.Show(String.Format("{0}: Dynamic state initialized successfully.", GraphicObject.Tag))
+                        MessageBox.Show(String.Format("{0}: Dynamic state initialized successfully.", GraphicObject.Tag), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Catch ex As Exception
-                        MessageBox.Show(String.Format("{0}: Error intializing dynamic state: {1}.", GraphicObject.Tag, ex.Message))
+                        MessageBox.Show(String.Format("{0}: Error intializing dynamic state: {1}.", GraphicObject.Tag, ex.Message), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End Sub
+
+            Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("FillWithStream"),
+                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
+            AddHandler button2.Click, Sub(s, e)
+                                          Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
+                                          fms.ShowDialog()
+                                      End Sub
+
             table.Controls.Add(button1)
+            table.Controls.Add(button2)
             table.Controls.Add(New Panel())
 
         End Sub
@@ -653,9 +662,9 @@ Namespace UnitOperations
                                         Else
                                             SR = ThermalProfile.SolarRadiationAbsorptionEfficiency * ThermalProfile.SolarRadiationValue_kWh_m2
                                         End If
-                                        SR *= 3600
+                                        SR *= 3600 'kJ/m2
                                         Dim Asec = Math.PI * .Comprimento / .Incrementos * .DE * 0.0254
-                                        Qrad = SR / timestep * Asec
+                                        Qrad = SR / timestep * Asec 'kJ/m2 / s * m2 = kW
                                         DQ += Qrad
                                         DQmax += Qrad
                                         results.Absorbed_Radiation = Qrad

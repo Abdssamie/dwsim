@@ -27,6 +27,10 @@ Namespace UnitOperations.Auxiliary.Pipe
         Protected m_collection As New Generic.SortedDictionary(Of Integer, PipeSection)
         Protected m_status As PipeEditorStatus = PipeEditorStatus.Definir
 
+        Public Property DefaultMaterial As String = "Carbon Steel"
+
+        Public Property DefaultDiameter = "XS / 80 / 80S (2.375 OD / 1.939 ID)"
+
         Public Property Sections() As Generic.SortedDictionary(Of Integer, PipeSection)
             Get
                 Return m_collection
@@ -80,7 +84,7 @@ Namespace UnitOperations.Auxiliary.Pipe
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As New System.Collections.Generic.List(Of System.Xml.Linq.XElement)
+            Dim elements = XMLSerializer.XMLSerializer.Serialize(Me)
             Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
 
             With elements
@@ -105,9 +109,9 @@ Namespace UnitOperations.Auxiliary.Pipe
         Protected m_tipo As String = ""
         Protected m_qtde As Integer
         Protected m_incrementos As Integer
-        Protected m_material As String = ""
+        Protected m_material As String = "Carbon Steel"
         Protected m_comprimento, m_elev As Double
-        Protected m_de, m_di As Double
+        Protected m_de As Double = 2.375, m_di As Double = 1.939
 
         Public Property PipeWallRugosity As Double = 0.0# 'm
 
