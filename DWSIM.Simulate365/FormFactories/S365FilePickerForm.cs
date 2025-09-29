@@ -50,11 +50,7 @@ namespace DWSIM.Simulate365.FormFactories
             _userService = UserService.GetInstance();
             _userService.OnUserLoggedIn += OnUserLoggedInEvent;
 
-            string configValue = ConfigurationManager.AppSettings["EnableCollaboration"];
-            if (!string.IsNullOrEmpty(configValue))
-            {
-                bool.TryParse(configValue, out CollaborationEnabled);
-            }
+            CollaborationEnabled = IsAssemblyLoaded("DWSIM.Collaboration.Csharp.Extensions");
         }
 
 
@@ -69,6 +65,17 @@ namespace DWSIM.Simulate365.FormFactories
                 _webUIForm?.RealoadPage();
             }
             //_webUIForm?.Navigate(_webUIForm?.InitialUrl);
+        }
+
+        private bool IsAssemblyLoaded(string assemblyName)
+        {
+            // Get all currently loaded assemblies in the current AppDomain
+            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+
+            // Check if any loaded assembly matches the name (with or without .dll extension)
+            return loadedAssemblies.Any(assembly =>
+                assembly.GetName().Name.Equals(assemblyName, StringComparison.OrdinalIgnoreCase) ||
+                assembly.FullName.StartsWith(assemblyName + ",", StringComparison.OrdinalIgnoreCase));
         }
 
         private void _filePickerService_S365DashboardFolderCreated(object sender, EventArgs e)
@@ -204,14 +211,8 @@ namespace DWSIM.Simulate365.FormFactories
                 queryParams.Add("directory", HttpUtility.UrlEncode(SuggestedDirectory));
             }
 
-            bool enableCollaboration = false;
-
-            string configValue = ConfigurationManager.AppSettings["EnableCollaboration"];
-            if (!string.IsNullOrEmpty(configValue))
-            {
-                bool.TryParse(configValue, out enableCollaboration);
-            }
-            if (enableCollaboration)
+           
+            if (CollaborationEnabled)
             {
                 queryParams.Add("collaboration", "true");
             }
