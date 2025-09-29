@@ -122,6 +122,14 @@ Public Class FormMain
     Public Shared Event ActiveSimulationChanged(sender As Object, e As EventArgs)
     Public Shared Event ActiveSimulationClosed(sender As Object, e As EventArgs)
 
+    Public Event FlowsheetSavingToXML(sender As Object, e As EventArgs)
+
+    Public Event FlowsheetSavedToXML(sender As Object, e As EventArgs)
+
+    Public Event FlowsheetLoadingFromXML(sender As Object, e As EventArgs)
+
+    Public Event FlowsheetLoadedFromXML(sender As Object, e As EventArgs)
+
     Public SavingSimulation As Func(Of IFlowsheet, Boolean)
 
     Public Shared WebView2Environment As Microsoft.Web.WebView2.Core.CoreWebView2Environment
@@ -1784,6 +1792,8 @@ Public Class FormMain
 
     Sub LoadMobileXML(handler As IVirtualFile)
 
+        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
+
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         Dim excs As New Concurrent.ConcurrentBag(Of Exception)
@@ -2013,6 +2023,8 @@ Public Class FormMain
 
         form.UpdateFormText()
 
+        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
+
         Application.DoEvents()
 
     End Sub
@@ -2034,6 +2046,8 @@ Public Class FormMain
         If Not ProgressFeedBack Is Nothing Then ProgressFeedBack.Invoke(5)
 
         Dim form As FormFlowsheet = New FormFlowsheet()
+
+        RaiseEvent FlowsheetLoadingFromXML(form, New EventArgs())
 
         form.Options.VirtualFile = handler
 
@@ -2362,13 +2376,15 @@ Public Class FormMain
 
         form.ProcessScripts(Enums.Scripts.EventType.SimulationOpened, Enums.Scripts.ObjectType.Simulation, "")
 
-
+        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
 
         Return form
 
     End Function
 
     Public Function LoadXML(handler As IVirtualFile, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
+
+        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
@@ -3004,11 +3020,15 @@ Public Class FormMain
 
         form.Options.EnabledUndoRedo = undoredoenabled
 
+        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
+
         Return form
 
     End Function
 
     Public Function LoadXML2(xdoc As XDocument, ProgressFeedBack As Action(Of Integer), Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False) As Interfaces.IFlowsheet
+
+        RaiseEvent FlowsheetLoadingFromXML(Me, New EventArgs())
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
@@ -3571,6 +3591,8 @@ Public Class FormMain
 
         form.Options.EnabledUndoRedo = undoredoenabled
 
+        RaiseEvent FlowsheetLoadedFromXML(form, New EventArgs())
+
         Return form
 
     End Function
@@ -3773,6 +3795,8 @@ Public Class FormMain
     End Sub
 
     Sub SaveXML(handler As IVirtualFile, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "", Optional closingSimulation As Boolean = False, Optional savingToS365 As Boolean = False)
+
+        RaiseEvent FlowsheetSavingToXML(form, New EventArgs())
 
         Dim isUserLoggedIn As Boolean = UserService.GetInstance()._IsLoggedIn()
 
@@ -4000,7 +4024,7 @@ Public Class FormMain
             End If
         End If
 
-
+        RaiseEvent FlowsheetSavedToXML(form, New EventArgs())
 
         If Not IO.Path.GetExtension(handler.FullPath).ToLower.Contains("dwbcs") Then
             form.ProcessScripts(Scripts.EventType.SimulationSaved, Scripts.ObjectType.Simulation, "")
@@ -4307,6 +4331,8 @@ Label_00CC:
     End Function
 
     Sub SaveJSON(handler As IVirtualFile, ByVal form As FormFlowsheet)
+
+        RaiseEvent FlowsheetSavingToXML(form, New EventArgs())
 
         File.WriteAllText(handler.FullPath, XFlowsheet.Exporter.Export(form))
 
