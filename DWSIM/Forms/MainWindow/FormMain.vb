@@ -58,6 +58,8 @@ Public Class FormMain
     Public FrmWelcome As FormWelcome
     Public FrmRec As FormRecoverFiles
 
+    Private SavingFileForm As FormLoadingSimulation
+
     Private dropdownlist As ArrayList
 
     Public CancelClosing As Boolean = False
@@ -272,6 +274,9 @@ Public Class FormMain
         AddHandler UserService.GetInstance().UserLoggedOut, AddressOf UserService_UserLoggedOut
         AddHandler UserService.GetInstance().ShowLoginForm, AddressOf UserService_ShowLoginForm
         AddHandler FileManagementService.GetInstance().OnSaveFileToDashboard, AddressOf FileManagementService_SaveFileToDashboard
+        AddHandler FileUploaderService.UploadStarted, AddressOf FileUploaderService_UploadStarted
+        AddHandler FileUploaderService.UploadCompleted, AddressOf FileUploaderService_UploadCompleted
+        AddHandler FileUploaderService.UploadFailed, AddressOf FileUploaderService_UploadFailed
 
 #If Not WINE32 Then
 
@@ -394,6 +399,36 @@ Public Class FormMain
         If EnableFlowsheetSolveCallbackHandler AndAlso RegisterFlowsheetSolveCallbackHandler IsNot Nothing Then
             RegisterFlowsheetSolveCallbackHandler.Invoke()
         End If
+    End Sub
+
+    Private Sub FileUploaderService_UploadFailed(sender As Object, e As Exception)
+        If Me.SavingFileForm IsNot Nothing Then
+            Me.UIThread(Sub()
+                            Me.SavingFileForm.Close()
+                            Me.SavingFileForm = Nothing
+                        End Sub)
+        End If
+    End Sub
+
+    Private Sub FileUploaderService_UploadCompleted(sender As Object, e As EventArgs)
+        If Me.SavingFileForm IsNot Nothing Then
+            Me.UIThread(Sub()
+                            Me.SavingFileForm.Close()
+                            Me.SavingFileForm = Nothing
+                        End Sub)
+        End If
+    End Sub
+
+    Private Sub FileUploaderService_UploadStarted(sender As Object, e As EventArgs)
+        If Me.SavingFileForm Is Nothing Then
+            Me.UIThread(Sub()
+                            Me.SavingFileForm = New FormLoadingSimulation
+                            SavingFileForm.Text = DWSIM.App.GetLocalString("Salvandosimulao") + "..."
+                            SavingFileForm.ProgressBar1.Value = 70
+                            Me.SavingFileForm.Show()
+                        End Sub)
+        End If
+
     End Sub
 
     Private Sub FileManagementService_SaveFileToDashboard(sender As Object, e As EventArgs)
@@ -4903,7 +4938,6 @@ Label_00CC:
             saveToDashboard = saveToDashboard Or TypeOf virtualFile Is S365File
         End If
 
-
         If saveToDashboard Then
             filePickerForm = New Simulate365.FormFactories.S365FilePickerForm()
         End If
@@ -4988,6 +5022,7 @@ Label_00CC:
                         End If
                     End If
                 End If
+
             ElseIf TypeOf Me.ActiveMdiChild Is FormCompoundCreator Then
                 Dim handler As IVirtualFile = filePickerForm.ShowSaveDialog(
                         New List(Of SharedClassesCSharp.FilePicker.FilePickerAllowedType) From

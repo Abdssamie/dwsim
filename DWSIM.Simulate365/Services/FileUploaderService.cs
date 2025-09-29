@@ -22,6 +22,9 @@ namespace DWSIM.Simulate365.Services
     public static class FileUploaderService
     {
         public static event EventHandler<BeforeUploadEventArgs> BeforeUpload;
+        public static event EventHandler UploadStarted;
+        public static event EventHandler UploadCompleted;
+        public static event EventHandler<Exception> UploadFailed;
 
         /// <summary>
         /// Uploads file to Simulate 365 dashboard
@@ -57,6 +60,7 @@ namespace DWSIM.Simulate365.Services
         {
             try
             {
+                UploadStarted?.Invoke(null, EventArgs.Empty);
                 // Invoke event handlers
                 var eventArgs = new BeforeUploadEventArgs();
                 BeforeUpload?.Invoke(null, eventArgs);
@@ -70,6 +74,7 @@ namespace DWSIM.Simulate365.Services
 
                 var file = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, ownerId, conflictAction, fileVersion)).Result;
 
+                UploadCompleted?.Invoke(null, EventArgs.Empty);
                 return new S365File(filename)
                 {
                     FileUniqueIdentifier = file.FileUniqueIdentifier.ToString(),
@@ -83,6 +88,7 @@ namespace DWSIM.Simulate365.Services
             }
             catch (Exception ex)
             {
+                UploadFailed?.Invoke(null, ex);
                 throw new Exception("An error occurred while saving file to Simulate 365 Dashboard.", ex);
             }
         }
@@ -91,6 +97,7 @@ namespace DWSIM.Simulate365.Services
         {
             try
             {
+                UploadStarted?.Invoke(null, EventArgs.Empty);
                 // Invoke event handlers
                 var eventArgs = new BeforeUploadEventArgs();
                 BeforeUpload?.Invoke(null, eventArgs);
@@ -115,6 +122,7 @@ namespace DWSIM.Simulate365.Services
 
                 var fileResp = Task.Run(async () => await UploadDocumentAsync(parentUniqueIdentifier, filename, fileStream, ownerId, conflictAction, fileVersion)).Result;
 
+                UploadCompleted?.Invoke(null, EventArgs.Empty);
                 return new S365File(filename)
                 {
                     FileUniqueIdentifier = fileResp.FileUniqueIdentifier.ToString(),
@@ -128,6 +136,7 @@ namespace DWSIM.Simulate365.Services
             }
             catch (Exception ex)
             {
+                UploadFailed?.Invoke(null, ex);
                 throw new Exception("An error occurred while saving file to Simulate 365 Dashboard.", ex);
             }
         }
