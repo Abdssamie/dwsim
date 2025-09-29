@@ -568,18 +568,17 @@ Namespace UnitOperations.Auxiliary.Pipe
         Public Property HTC_pipewall As Double = 0.0#
         Public Property HTC_insulation As Double = 0.0#
         Public Property HTC_external As Double = 0.0#
-
         Public Property Internal_Temperature As Double = 0.0
-
         Public Property Wall_Temperature As Double = 0.0
-
         Public Property Insulation_Temperature As Double = 0.0
-
         Public Property External_Temperature As Double = 0.0
-
         Public Property Absorbed_Radiation As Double = 0.0
-
         Public Property MachNumber As Double = 0.0
+        Public Property AveragePressure As Double = 0.0
+        Public Property FinalPressure As Double = 0.0
+        Public Property DynamicResidenceTime As Double = 0.0
+        Public Property DynamicInternalVolumetricFlowRate As Double = 0.0
+        Public Property DynamicInternalMassFlowRate As Double = 0.0
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements Interfaces.ICustomXMLSerialization.LoadData
 

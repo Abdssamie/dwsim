@@ -409,8 +409,6 @@ Namespace UnitOperations
             Dim sections_inverted = Profile.Sections.Values.ToList()
             sections_inverted.Reverse()
 
-            Dim currL As Double = sections_inverted.Select(Function(sc) sc.Comprimento).Sum()
-
             Dim k2 As Integer
 
             Dim ms_in, ms_out, current_as, ms_transition As MaterialStream
@@ -419,6 +417,8 @@ Namespace UnitOperations
             Dim substep_multpl = 1.0 / timestep_discretization
 
             For ti As Integer = 1 To timestep_discretization
+
+                Dim currL As Double = sections_inverted.Select(Function(sc) sc.Comprimento).Sum()
 
                 For Each segmento In sections_inverted
 
@@ -462,7 +462,7 @@ Namespace UnitOperations
 
                                                  ms_transition.SetMassFlow(mass_flow)
                                                  ms_transition.AssignSelfToPP()
-                                                 ms_transition.Calculate()
+                                                 ms_transition.Calculate(False, True)
 
                                                  With ms_transition
 
@@ -563,17 +563,32 @@ Namespace UnitOperations
 
                                              End Function
 
-                        Dim massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0000000001, ims1.GetMassFlow() * 10, 10, 0.01, 1000, Pdrop_function)
+                        Dim massflow, Pdrop_error As Double
 
-                        Dim Pdrop_error = Pdrop_function.Invoke(massflow * substep_multpl)
+                        If Pdrop_transition > 0.0 Then
+                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0000000001, ims1.GetMassFlow() * 10, 10, 0.01, 1000, Pdrop_function)
+                        ElseIf Pdrop_transition > 0.0 Then
+                            Debug.WriteLine("Negative Pdrop")
+                            massflow = 0.0
+                        Else
+                            massflow = 0.0
+                        End If
+
+                        Pdrop_error = Pdrop_function.Invoke(massflow * substep_multpl)
 
                         Dim results As New PipeResults()
 
                         With results
 
+                            .DynamicInternalMassFlowRate = current_as.GetMassFlow()
+                            .DynamicInternalVolumetricFlowRate = current_as.GetVolumetricFlow()
+                            .DynamicResidenceTime = (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4) * segmento.Comprimento / segmento.Incrementos / current_as.GetVolumetricFlow()
+
                             .Temperature_Initial = Tin
                             .Pressure_Initial = current_as.GetPressure()
                             .EnergyFlow_Initial = current_as.GetMassEnthalpy()
+                            .FinalPressure = current_as.GetPressure()
+                            .AveragePressure = current_as.GetPressure()
                             .Cpl = Cp_l
                             .Cpv = Cp_v
                             .Kl = K_l
@@ -703,22 +718,37 @@ Namespace UnitOperations
                         'update next accumulation stream
 
                         ms_transition.SetMassFlow(massflow * substep_multpl * timestep)
+                        ms_transition.AssignSelfToPP()
+                        ms_transition.Calculate()
 
-                        If k2 = 0 Then current_as = current_as.Add(ms_in)
+                        If ms_transition.GetMassFlow() / current_as.GetMassFlow() > 0.05 Then
+                            Debug.WriteLine("W changed a lot")
+                        End If
 
-                        current_as = current_as.Subtract(ms_transition)
+                        If k2 = 0 Then
+                            current_as = current_as.Add(ms_in)
+                        End If
 
-                        If k2 < n_inc Then ms_out = ms_out.Add(ms_transition)
+                        If k2 < n_inc Then
+                            current_as = current_as.Subtract(ms_transition)
+                            ms_out = ms_out.Add(ms_transition)
+                        End If
+
+                        If k2 = n_inc Then
+                            current_as = current_as.Subtract(ms_out)
+                        End If
 
                         current_as.AssignSelfToPP()
-                        current_as.Calculate(False, True)
+                        current_as.Calculate()
 
-                        ms_out.AssignSelfToPP()
-                        ms_out.Calculate(False, True)
-
-                        k2 -= 1
+                        If k2 < n_inc Then
+                            ms_out.AssignSelfToPP()
+                            ms_out.Calculate()
+                        End If
 
                     Next
+
+                    segmento.Results.Reverse()
 
                 Next
 
@@ -742,6 +772,8 @@ Namespace UnitOperations
 
                         current_as.AssignSelfToPP()
 
+                        Dim P1i = current_as.GetPressure()
+
                         Dim result = PropertyPackage.CalculateEquilibrium2(
                             FlashCalculationType.VolumeTemperature,
                             M1, current_as.GetTemperature(), current_as.GetPressure())
@@ -749,14 +781,16 @@ Namespace UnitOperations
                         P1 = result.CalculatedPressure
                         H1 = result.CalculatedEnthalpy
 
+                        If Math.Abs(P1 - P1i) / P1i > 0.05 Then
+                            Debug.WriteLine("P changed a lot")
+                        End If
+
                         current_as.SetPressure(P1)
                         current_as.SetMassEnthalpy(H1)
                         current_as.SpecType = StreamSpec.Pressure_and_Enthalpy
 
                         current_as.AssignSelfToPP()
                         current_as.Calculate()
-
-                        k2 -= 1
 
                     Next
 
@@ -2321,6 +2355,18 @@ Namespace UnitOperations
                         Dim sindex As Integer = prop.Split(",")(3) - 1
                         Dim sprop As String = prop.Split(",")(4)
                         Select Case sprop
+                            Case "DynamicInternalMassFlowRate"
+                                Return cv.ConvertFromSI(su.massflow, Profile.Sections(skey).Results(sindex).DynamicInternalMassFlowRate)
+                            Case "DynamicInternalVolumetricFlowRate"
+                                Return cv.ConvertFromSI(su.volumetricFlow, Profile.Sections(skey).Results(sindex).DynamicInternalVolumetricFlowRate)
+                            Case "DynamicResidenceTime"
+                                Return cv.ConvertFromSI(su.time, Profile.Sections(skey).Results(sindex).DynamicResidenceTime)
+                            Case "InitialPressure"
+                                Return cv.ConvertFromSI(su.pressure, Profile.Sections(skey).Results(sindex).Pressure_Initial)
+                            Case "FinalPressure"
+                                Return cv.ConvertFromSI(su.pressure, Profile.Sections(skey).Results(sindex).FinalPressure)
+                            Case "AveragePressure"
+                                Return cv.ConvertFromSI(su.pressure, Profile.Sections(skey).Results(sindex).AveragePressure)
                             Case "HeatTransfer"
                                 Return cv.ConvertFromSI(su.heatflow, Profile.Sections(skey).Results(sindex).HeatTransferred)
                             Case "HeatCapacityLiquid"
@@ -2441,7 +2487,7 @@ Namespace UnitOperations
                         Return cv.ConvertFromSI(su.deltaP, PressureDrop_Friction)
                     End If
                 Catch ex As Exception
-                    Return "Error"
+                    Return Double.NaN
                 End Try
             End If
 
@@ -2473,6 +2519,10 @@ Namespace UnitOperations
             For Each ps In Profile.Sections
                 Dim j As Integer = 1
                 For Each res In ps.Value.Results
+                    proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",InitialPressure")
+                    proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",FinalPressure")
+                    proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",AveragePressure")
+                    proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",HeatTransfer")
                     proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",HeatTransfer")
                     proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",HeatCapacityLiquid")
                     proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",HeatCapacityVapor")
@@ -2502,6 +2552,9 @@ Namespace UnitOperations
                     proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",VelocityVapor")
                     proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",ExternalTemperature")
                     proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",MachNumber")
+                    proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",DynamicResidenceTime")
+                    proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",DynamicInternalMassFlowRate")
+                    proplist.Add("HydraulicSegment," + ps.Key.ToString + ",Results," + j.ToString + ",DynamicInternalVolumetricFlowRate")
                     j += 1
                 Next
             Next
@@ -2648,6 +2701,14 @@ Namespace UnitOperations
                 If prop.Contains("Results") Then
                     Dim sprop As String = prop.Split(",")(4)
                     Select Case sprop
+                        Case "DynamicResidenceTime"
+                            Return su.time
+                        Case "DynamicInternalMassFlowRate"
+                            Return su.massflow
+                        Case "DynamicInternalVolumetricFlowRate"
+                            Return su.volumetricFlow
+                        Case "InitialPressure", "FinalPressure", "AveragePressure"
+                            Return su.pressure
                         Case "HeatTransfer"
                             Return su.heatflow
                         Case "HeatCapacityLiquid"
