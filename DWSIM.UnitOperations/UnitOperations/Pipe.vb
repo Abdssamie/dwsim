@@ -173,12 +173,6 @@ Namespace UnitOperations
             Return Newtonsoft.Json.JsonConvert.DeserializeObject(Of Pipe)(Newtonsoft.Json.JsonConvert.SerializeObject(Me))
         End Function
 
-        Public Overrides Sub CreateDynamicProperties()
-
-            AddDynamicProperty("Time step discretization", "Divides the current time step by this value for enhanced precision", 10, UnitOfMeasure.none, 1.GetType())
-
-        End Sub
-
         Public Shared Function GetStandardPipeSizes() As Dictionary(Of String, List(Of StandardPipeDiameter))
 
             Dim sizes As New Dictionary(Of String, List(Of StandardPipeDiameter))
@@ -294,6 +288,12 @@ Namespace UnitOperations
             table.Controls.Add(button1)
             table.Controls.Add(button2)
             table.Controls.Add(New Panel())
+
+        End Sub
+
+        Public Overrides Sub CreateDynamicProperties()
+
+            AddDynamicProperty("Time step discretization", "Divides the current time step by this value for enhanced precision", 10, UnitOfMeasure.none, 1.GetType())
 
         End Sub
 
