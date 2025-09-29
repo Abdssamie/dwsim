@@ -373,7 +373,7 @@
     <value />
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DWSIM.SharedClasses.ObjectEditorForm, DWSIM.SharedClasses, Version=9.0.4.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>DWSIM.SharedClasses.ObjectEditorForm, DWSIM.SharedClasses, Version=9.0.5.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="tbTtol.ToolTip2" xml:space="preserve">
     <value />

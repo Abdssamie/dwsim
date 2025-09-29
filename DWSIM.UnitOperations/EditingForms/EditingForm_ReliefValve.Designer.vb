@@ -1,4 +1,7 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿#If DEBUG Then
+
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class EditingForm_ReliefValve
 
     'Form overrides dispose to clean up the component list.
@@ -743,3 +746,5 @@ Partial Class EditingForm_ReliefValve
     Public WithEvents tbBPC As TextBox
     Public WithEvents tbVC As TextBox
 End Class
+
+#End If

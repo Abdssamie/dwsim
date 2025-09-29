@@ -62,9 +62,19 @@ Namespace UnitOperations
             OutletTemperature = 2
         End Enum
 
+#If DEBUG Then
+
         Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = True
 
         Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = True
+
+#Else
+
+        Public Overrides ReadOnly Property SupportsDynamicMode As Boolean = False
+
+        Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = False
+
+#End If
 
         Public Property UseGlobalWeather As Boolean = False
 
