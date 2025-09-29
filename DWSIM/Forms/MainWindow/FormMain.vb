@@ -5524,9 +5524,6 @@ Label_00CC:
         Dim userService As UserService = UserService.GetInstance()
         If userService._IsLoggedIn() = False Then
             shareFileForm.ShowFileShareDialog("user_not_logged_in")
-        End If
-        'If user logs in, we show him next step
-        If userService._IsLoggedIn() = False Then
             Return
         End If
 
