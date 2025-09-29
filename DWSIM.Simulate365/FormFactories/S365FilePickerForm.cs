@@ -26,7 +26,7 @@ namespace DWSIM.Simulate365.FormFactories
 
         private readonly UserService _userService;
 
-        private bool CollaborationEnabled;
+        public static bool CollaborationEnabled;
 
 
         #region Public events
@@ -48,9 +48,7 @@ namespace DWSIM.Simulate365.FormFactories
             _filePickerService.S365DashboardSaveFileClicked += FilePickerService_S365DashboardSaveFileClicked;
             _filePickerService.S365DashboardFolderCreated += _filePickerService_S365DashboardFolderCreated;
             _userService = UserService.GetInstance();
-            _userService.OnUserLoggedIn += OnUserLoggedInEvent;
-
-            CollaborationEnabled = IsAssemblyLoaded("DWSIM.Collaboration.Csharp.Extensions");
+            _userService.OnUserLoggedIn += OnUserLoggedInEvent;           
         }
 
 
@@ -65,18 +63,7 @@ namespace DWSIM.Simulate365.FormFactories
                 _webUIForm?.RealoadPage();
             }
             //_webUIForm?.Navigate(_webUIForm?.InitialUrl);
-        }
-
-        private bool IsAssemblyLoaded(string assemblyName)
-        {
-            // Get all currently loaded assemblies in the current AppDomain
-            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            // Check if any loaded assembly matches the name (with or without .dll extension)
-            return loadedAssemblies.Any(assembly =>
-                assembly.GetName().Name.Equals(assemblyName, StringComparison.OrdinalIgnoreCase) ||
-                assembly.FullName.StartsWith(assemblyName + ",", StringComparison.OrdinalIgnoreCase));
-        }
+        }       
 
         private void _filePickerService_S365DashboardFolderCreated(object sender, EventArgs e)
         {
