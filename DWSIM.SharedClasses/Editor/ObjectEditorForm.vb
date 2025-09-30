@@ -38,6 +38,27 @@ Public Class ObjectEditorForm
 
     End Sub
 
+    Public Overridable Sub ResetObjectReference(objects As List(Of ISimulationObject))
+
+        Dim objprop = Me.GetType().GetProperty("SimObject")
+        If objprop Is Nothing Then
+            objprop = Me.GetType().GetProperty("MatStream")
+            If objprop Is Nothing Then objprop = Me.GetType().GetProperty("VesselObject")
+        End If
+        If objprop IsNot Nothing Then
+            Dim SimObject As ISimulationObject = objprop.GetValue(Me)
+            Dim obj = objects.Where(Function(o) o.Name = SimObject.Name).FirstOrDefault()
+            objprop.SetValue(Me, obj)
+            Try
+                SimObject.f = Me
+            Catch ex As Exception
+            End Try
+            Dim method = Me.GetType().GetMethod("UpdateInfo")
+            If method IsNot Nothing Then method.Invoke(Me, Nothing)
+        End If
+
+    End Sub
+
     Protected Sub Editor_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
         If ((e.X <> Me.lastX) OrElse (e.Y <> Me.lastY)) Then
             Me.lastX = e.X

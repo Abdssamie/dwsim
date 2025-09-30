@@ -407,6 +407,7 @@ Public Class FormMain
         If EnableFlowsheetSolveCallbackHandler AndAlso RegisterFlowsheetSolveCallbackHandler IsNot Nothing Then
             RegisterFlowsheetSolveCallbackHandler.Invoke()
         End If
+
     End Sub
 
     Private Sub FileUploaderService_UploadFailed(sender As Object, e As Exception)

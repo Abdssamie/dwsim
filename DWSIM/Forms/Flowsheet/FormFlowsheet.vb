@@ -3885,6 +3885,8 @@ Public Class FormFlowsheet
 
         End Select
 
+        FixOpenEditFormsReferences()
+
         If excs.Count > 0 Then
 
         End If
@@ -4414,6 +4416,18 @@ Public Class FormFlowsheet
                             End Try
                         Next
                     End Sub)
+
+    End Sub
+
+    Public Sub FixOpenEditFormsReferences()
+
+        Dim objs = SimulationObjects.Values.ToList()
+        For Each content In dckPanel.Contents
+            If TypeOf content Is ObjectEditorForm Then
+                DirectCast(content, ObjectEditorForm).ResetObjectReference(objs)
+            End If
+        Next
+        objs = Nothing
 
     End Sub
 
