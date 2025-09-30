@@ -26,7 +26,7 @@ namespace DWSIM.Simulate365.FormFactories
 
         private readonly UserService _userService;
 
-        private bool CollaborationEnabled;
+        public static bool CollaborationEnabled;
 
 
         #region Public events
@@ -48,13 +48,7 @@ namespace DWSIM.Simulate365.FormFactories
             _filePickerService.S365DashboardSaveFileClicked += FilePickerService_S365DashboardSaveFileClicked;
             _filePickerService.S365DashboardFolderCreated += _filePickerService_S365DashboardFolderCreated;
             _userService = UserService.GetInstance();
-            _userService.OnUserLoggedIn += OnUserLoggedInEvent;
-
-            string configValue = ConfigurationManager.AppSettings["EnableCollaboration"];
-            if (!string.IsNullOrEmpty(configValue))
-            {
-                bool.TryParse(configValue, out CollaborationEnabled);
-            }
+            _userService.OnUserLoggedIn += OnUserLoggedInEvent;           
         }
 
 
@@ -69,7 +63,7 @@ namespace DWSIM.Simulate365.FormFactories
                 _webUIForm?.RealoadPage();
             }
             //_webUIForm?.Navigate(_webUIForm?.InitialUrl);
-        }
+        }       
 
         private void _filePickerService_S365DashboardFolderCreated(object sender, EventArgs e)
         {
@@ -204,14 +198,8 @@ namespace DWSIM.Simulate365.FormFactories
                 queryParams.Add("directory", HttpUtility.UrlEncode(SuggestedDirectory));
             }
 
-            bool enableCollaboration = false;
-
-            string configValue = ConfigurationManager.AppSettings["EnableCollaboration"];
-            if (!string.IsNullOrEmpty(configValue))
-            {
-                bool.TryParse(configValue, out enableCollaboration);
-            }
-            if (enableCollaboration)
+           
+            if (CollaborationEnabled)
             {
                 queryParams.Add("collaboration", "true");
             }
