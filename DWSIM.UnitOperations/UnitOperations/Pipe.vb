@@ -28,7 +28,7 @@ Imports DWSIM.Interfaces.Enums
 Imports DWSIM.Thermodynamics.PropertyPackages.Auxiliary
 Imports OxyPlot
 Imports OxyPlot.Axes
-
+Imports System.Dynamic
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
 Imports System.IO
 
@@ -366,7 +366,7 @@ Namespace UnitOperations
             Else
 
                 For Each astr In AccumulationStreams
-                    If astr.GetMassFlow <= 0.0 Then astr.SetMassFlow(0.0)
+                    If astr.GetMassFlow() <= 0.0 Then astr.SetMassFlow(0.0)
                 Next
 
                 For Each astr In AccumulationStreams
@@ -376,9 +376,6 @@ Namespace UnitOperations
                         Next
                     Next
                     astr.SetFlowsheet(FlowSheet)
-                    astr.PropertyPackage = PropertyPackage
-                    astr.PropertyPackage.CurrentMaterialStream = astr
-                    astr.Calculate()
                 Next
 
             End If
@@ -414,7 +411,11 @@ Namespace UnitOperations
             Dim ms_in, ms_out, current_as, ms_transition As MaterialStream
             Dim Pdrop_transition As Double
 
+            timestep_discretization = 1.0
+
             Dim substep_multpl = 1.0 / timestep_discretization
+
+            Dim bm As New MathOps.MathEx.BrentOpt.BrentMinimize
 
             For ti As Integer = 1 To timestep_discretization
 
@@ -566,23 +567,37 @@ Namespace UnitOperations
                         Dim massflow, Pdrop_error As Double
 
                         If Pdrop_transition > 0.0 Then
-                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0000000001, ims1.GetMassFlow() * 10, 10, 0.01, 1000, Pdrop_function)
-                        ElseIf Pdrop_transition > 0.0 Then
-                            Debug.WriteLine("Negative Pdrop")
+                            massflow = MathNet.Numerics.RootFinding.Brent.FindRoot(Pdrop_function, 0.001, current_as.GetMassFlow())
+                        ElseIf Pdrop_transition < 0.0 Then
+                            'Debug.WriteLine("Negative Pdrop")
                             massflow = 0.0
                         Else
                             massflow = 0.0
                         End If
 
-                        Pdrop_error = Pdrop_function.Invoke(massflow * substep_multpl)
+                        Pdrop_error = Pdrop_function.Invoke(massflow)
+
+                        If Math.Abs(Pdrop_error) > 1 Then
+                            'Debug.WriteLine("High Pdrop error")
+                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.00001, current_as.GetMassFlow(), 1000, 0.1, 10000, Pdrop_function)
+                            Pdrop_error = Pdrop_function.Invoke(massflow)
+                        End If
+
+                        If Math.Abs(Pdrop_error) > 1 Then
+                            'Debug.WriteLine("High Pdrop error")
+                        End If
+
+                        Pdrop_function.Invoke(massflow * substep_multpl)
 
                         Dim results As New PipeResults()
 
                         With results
 
-                            .DynamicInternalMassFlowRate = current_as.GetMassFlow()
-                            .DynamicInternalVolumetricFlowRate = current_as.GetVolumetricFlow()
-                            .DynamicResidenceTime = (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4) * segmento.Comprimento / segmento.Incrementos / current_as.GetVolumetricFlow()
+                            .DynamicInternalMassFlowRate = ms_transition.GetMassFlow()
+                            .DynamicInternalVolumetricFlowRate = ms_transition.GetVolumetricFlow()
+                            .DynamicResidenceTime = (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4) * segmento.Comprimento / segmento.Incrementos / ims1.GetVolumetricFlow()
+
+                            DirectCast(current_as.ExtraProperties, Object).TransitionMassFlowRate = .DynamicInternalMassFlowRate
 
                             .Temperature_Initial = Tin
                             .Pressure_Initial = current_as.GetPressure()
@@ -717,34 +732,37 @@ Namespace UnitOperations
 
                         'update next accumulation stream
 
-                        ms_transition.SetMassFlow(massflow * substep_multpl * timestep)
+                        ms_transition.SetMassFlow(massflow * substep_multpl)
                         ms_transition.AssignSelfToPP()
                         ms_transition.Calculate()
 
                         If ms_transition.GetMassFlow() / current_as.GetMassFlow() > 0.05 Then
-                            Debug.WriteLine("W changed a lot")
+                            'Debug.WriteLine("W changed a lot")
+                        End If
+                        If ms_transition.GetMassFlow() < 0 Then
+                            'Debug.WriteLine("negative TW")
                         End If
 
                         If k2 = 0 Then
-                            current_as = current_as.Add(ms_in)
+                            current_as = current_as.Add(ms_in, timestep)
                         End If
 
                         If k2 < n_inc Then
                             current_as = current_as.Subtract(ms_transition)
-                            ms_out = ms_out.Add(ms_transition)
+                            ms_out = ms_out.Add(ms_transition, timestep)
                         End If
 
                         If k2 = n_inc Then
-                            current_as = current_as.Subtract(ms_out)
+                            current_as = current_as.Subtract(ms_out, timestep)
                         End If
 
                         current_as.AssignSelfToPP()
                         current_as.Calculate()
 
-                        If k2 < n_inc Then
-                            ms_out.AssignSelfToPP()
-                            ms_out.Calculate()
-                        End If
+                        'If k2 < n_inc Then
+                        '    ms_out.AssignSelfToPP()
+                        '    ms_out.Calculate()
+                        'End If
 
                     Next
 
@@ -797,6 +815,12 @@ Namespace UnitOperations
                 Next
 
             Next
+
+            Console.Write(integrator.CurrentTime.ToLongTimeString() + vbTab)
+            For Each astream In AccumulationStreams
+                Console.Write(String.Format("{0:N1}/{1:N1}/{2:N1}", astream.GetPressure() / 100000, astream.GetMassFlow(), DirectCast(astream.ExtraProperties, Object).TransitionMassFlowRate) + vbTab)
+            Next
+            Console.Write(vbCrLf)
 
             oms1.AssignFromPhase(PhaseLabel.Mixture, AccumulationStreams.Last, False)
 

@@ -6016,6 +6016,7 @@ Public Class FormFlowsheet
 
     End Sub
 
+
     Public Sub UpdateMassAndEnergyBalance() Implements IFlowsheet.UpdateMassAndEnergyBalance
 
         Dim equipments = SimulationObjects.Values.Where(Function(o) TypeOf o Is UnitOpBaseClass And TypeOf o IsNot IIndicator)

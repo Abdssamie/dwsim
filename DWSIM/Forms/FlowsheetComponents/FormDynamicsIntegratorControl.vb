@@ -88,31 +88,32 @@ Public Class FormDynamicsIntegratorControl
             btnStepForward.Enabled = False
         End If
 
-        If Flowsheet.DynamicMode Then
-            If Not Running Then
-                ChartIsSetup = False
+        If Not Flowsheet.DynamicMode Then
+            Flowsheet.DynamicMode = True
+            Flowsheet.FormDynamics.chkDynamics.Checked = True
+            Flowsheet.ModoDinamicoAtivoToolStripMenuItem.Checked = True
+            Flowsheet.FormSurface.FControl.Invalidate()
+        End If
+
+        If Not Running Then
+            ChartIsSetup = False
+            Try
+                RunIntegrator(False, False, False, False)
+            Catch ex As Exception
+                Running = False
+                btnRun.BackgroundImage = My.Resources.icons8_play
+                Throw ex
+            End Try
+        Else
+            If Not Paused Then
                 Try
-                    RunIntegrator(False, False, False, False)
+                    RunIntegrator(False, False, True, False)
                 Catch ex As Exception
                     Running = False
                     btnRun.BackgroundImage = My.Resources.icons8_play
                     Throw ex
                 End Try
-            Else
-                If Not Paused Then
-                    Try
-                        RunIntegrator(False, False, True, False)
-                    Catch ex As Exception
-                        Running = False
-                        btnRun.BackgroundImage = My.Resources.icons8_play
-                        Throw ex
-                    End Try
-                End If
             End If
-        Else
-            Flowsheet.ShowMessage(DWSIM.App.GetLocalString("DynamicsDisabled"), Interfaces.IFlowsheet.MessageType.Warning)
-            Running = False
-            btnRun.BackgroundImage = My.Resources.icons8_play
         End If
 
     End Sub
