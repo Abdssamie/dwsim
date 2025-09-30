@@ -411,7 +411,7 @@ Namespace UnitOperations
             Dim ms_in, ms_out, current_as, ms_transition As MaterialStream
             Dim Pdrop_transition As Double
 
-            timestep_discretization = 1.0
+            'timestep_discretization = 1.0
 
             Dim substep_multpl = 1.0 / timestep_discretization
 
@@ -567,13 +567,15 @@ Namespace UnitOperations
                         Dim massflow, Pdrop_error As Double
 
                         If Pdrop_transition > 0.0 Then
-                            massflow = MathNet.Numerics.RootFinding.Brent.FindRoot(Pdrop_function, 0.001, current_as.GetMassFlow())
+                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.00001, current_as.GetMassFlow(), 10, 0.1, 10000, Pdrop_function)
                         ElseIf Pdrop_transition < 0.0 Then
                             'Debug.WriteLine("Negative Pdrop")
                             massflow = 0.0
                         Else
                             massflow = 0.0
                         End If
+
+                        massflow = 0.0
 
                         Pdrop_error = Pdrop_function.Invoke(massflow)
 
@@ -596,8 +598,6 @@ Namespace UnitOperations
                             .DynamicInternalMassFlowRate = ms_transition.GetMassFlow()
                             .DynamicInternalVolumetricFlowRate = ms_transition.GetVolumetricFlow()
                             .DynamicResidenceTime = (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4) * segmento.Comprimento / segmento.Incrementos / ims1.GetVolumetricFlow()
-
-                            DirectCast(current_as.ExtraProperties, Object).TransitionMassFlowRate = .DynamicInternalMassFlowRate
 
                             .Temperature_Initial = Tin
                             .Pressure_Initial = current_as.GetPressure()
@@ -756,13 +756,14 @@ Namespace UnitOperations
                             current_as = current_as.Subtract(ms_out, timestep)
                         End If
 
+                        DirectCast(current_as.ExtraProperties, Object).TransitionMassFlowRate = results.DynamicInternalMassFlowRate
+
                         current_as.AssignSelfToPP()
                         current_as.Calculate()
 
-                        'If k2 < n_inc Then
-                        '    ms_out.AssignSelfToPP()
-                        '    ms_out.Calculate()
-                        'End If
+                        AccumulationStreams(k2) = current_as
+
+                        If k2 >= 0 And k2 < n_inc Then AccumulationStreams(k2 + 1) = ms_out
 
                     Next
 
@@ -816,11 +817,11 @@ Namespace UnitOperations
 
             Next
 
-            Console.Write(integrator.CurrentTime.ToLongTimeString() + vbTab)
-            For Each astream In AccumulationStreams
-                Console.Write(String.Format("{0:N1}/{1:N1}/{2:N1}", astream.GetPressure() / 100000, astream.GetMassFlow(), DirectCast(astream.ExtraProperties, Object).TransitionMassFlowRate) + vbTab)
-            Next
-            Console.Write(vbCrLf)
+            'Console.Write(integrator.CurrentTime.ToLongTimeString() + vbTab)
+            'For Each astream In AccumulationStreams
+            '    Console.Write(String.Format("{0:N1}/{1:N1}/{2:N1}", astream.GetPressure() / 100000, astream.GetMassFlow(), DirectCast(astream.ExtraProperties, Object).TransitionMassFlowRate) + vbTab)
+            'Next
+            'Console.Write(vbCrLf)
 
             oms1.AssignFromPhase(PhaseLabel.Mixture, AccumulationStreams.Last, False)
 
