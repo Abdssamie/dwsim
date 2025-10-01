@@ -62,6 +62,20 @@ VERSION HISTORY / CHANGELOG
 
 The full changelog including souce code changes can be viewed at https://github.com/DanWBR/dwsim/commits/windows
 
+Version 9.0.5
+
+- Implemented Unit Operation state restore after error (Beta)
+- Implemented Hydrocarbon solubility in water for Nested Loops Immiscible Flash
+- Fixed an issue with Nested Loops Three-Phase Flash
+- Fixed an issue with Bulk Petroleum Characterization Tool (Classic UI)
+- Fixed an issue with Orifice Plate Unit Operation
+- Fixed issue with Flowsheet Unit Operation
+- Fixed issue #875: Conversion and Concentration Profile Tab missing from Results Section in PFR
+- Fixed issue #801: Buttons in Element Matrix editor is missing
+- Fixed issue #887: Error running a flowsheet block that uses a kinetics reaction script
+- Fixed issue #893: Option to Change Integration Step/ODE Solver Volume Step for PFR in macOS/Windows Cross Platform OS is not available
+- Other minor fixes and UI enhancements
+
 Version 9.0.4
 
 - Added ft3/h to volumetric units (#862)

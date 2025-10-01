@@ -304,11 +304,8 @@ Namespace UnitOperations
             End If
 
             Select Case Specification
-
                 Case Specmode.OutletPressure, Specmode.OutletTemperature
-
                     Throw New Exception("This calculation mode is not supported while in Dynamic Mode.")
-
             End Select
 
             Dim integratorID = FlowSheet.DynamicsManager.ScheduleList(FlowSheet.DynamicsManager.CurrentSchedule).CurrentIntegrator
@@ -358,17 +355,13 @@ Namespace UnitOperations
             Next
 
             If AccumulationStreams.Count = 0 Then
-
                 For i As Integer = 0 To NumberOfSections - 1
                     AccumulationStreams.Add(ims1.CloneXML())
                 Next
-
             Else
-
                 For Each astr In AccumulationStreams
                     If astr.GetMassFlow() <= 0.0 Then astr.SetMassFlow(0.0)
                 Next
-
                 For Each astr In AccumulationStreams
                     For Each p As Phase In astr.Phases.Values
                         For Each comp In p.Compounds.Values
@@ -377,7 +370,6 @@ Namespace UnitOperations
                     Next
                     astr.SetFlowsheet(FlowSheet)
                 Next
-
             End If
 
             Dim A, U, Cp_m, DQ, DQmax, dText_dL, Text, Tout, Tpe, Tin, Qvin, Qlin, Qsin, eta_phi, eta_r,
@@ -403,8 +395,7 @@ Namespace UnitOperations
 
             Dim countext As Integer = 0
 
-            Dim sections_inverted = Profile.Sections.Values.ToList()
-            sections_inverted.Reverse()
+            Dim sections = Profile.Sections.Values.ToList()
 
             Dim k2 As Integer
 
@@ -417,53 +408,52 @@ Namespace UnitOperations
 
             Dim bm As New MathOps.MathEx.BrentOpt.BrentMinimize
 
+            Dim TransitionStreams As List(Of MaterialStream)
+
             For ti As Integer = 1 To timestep_discretization
 
-                Dim currL As Double = sections_inverted.Select(Function(sc) sc.Comprimento).Sum()
+                TransitionStreams = New List(Of MaterialStream)
 
-                For Each segmento In sections_inverted
+                Dim currL As Double = sections.Select(Function(sc) sc.Comprimento).Sum()
+
+                For Each segmento In sections
 
                     segmento.Results.Clear()
 
                     Dim n_inc = segmento.Incrementos - 1
 
-                    For k2 = n_inc To 0 Step -1
+                    For k2 = 0 To n_inc
 
-                        currL -= segmento.Comprimento / segmento.Incrementos
+                        currL += segmento.Comprimento / segmento.Incrementos
+
+                        current_as = AccumulationStreams(k2)
 
                         If k2 = 0 Then
-
                             ms_out = AccumulationStreams(k2 + 1)
                             ms_in = ims1
-                            current_as = AccumulationStreams(k2)
-
                         ElseIf k2 = n_inc Then
-
                             ms_out = oms1
                             ms_in = AccumulationStreams(k2 - 1)
-                            current_as = AccumulationStreams(k2)
-
                         Else
-
                             ms_out = AccumulationStreams(k2 + 1)
                             ms_in = AccumulationStreams(k2 - 1)
-                            current_as = AccumulationStreams(k2)
-
                         End If
 
                         'calculate mass flow between sections
 
                         ms_transition = current_as.CloneXML()
 
+                        TransitionStreams.Add(ms_transition)
+
                         Pdrop_transition = current_as.GetPressure() - ms_out.GetPressure()
+
+                        If k2 = n_inc Then Pdrop_transition = 0.0
 
                         Dim Pdrop_function = Function(mass_flow)
 
                                                  'stream properties
 
-                                                 ms_transition.SetMassFlow(mass_flow)
-                                                 ms_transition.AssignSelfToPP()
-                                                 ms_transition.Calculate(False, True)
+                                                 ms_transition.SetMassFlow(((mass_flow + 0.0000000001) ^ 2) ^ 0.5)
 
                                                  With ms_transition
 
@@ -560,36 +550,32 @@ Namespace UnitOperations
                                                  dph = resv(3)
                                                  dpt = resv(4)
 
-                                                 Return Pdrop_transition - dpt
+                                                 Return Pdrop_transition - dpt * Math.Sign(mass_flow)
 
                                              End Function
 
                         Dim massflow, Pdrop_error As Double
 
-                        If Pdrop_transition > 0.0 Then
-                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.00001, current_as.GetMassFlow(), 10, 0.1, 10000, Pdrop_function)
-                        ElseIf Pdrop_transition < 0.0 Then
-                            'Debug.WriteLine("Negative Pdrop")
-                            massflow = 0.0
-                        Else
-                            massflow = 0.0
-                        End If
-
-                        massflow = 0.0
-
-                        Pdrop_error = Pdrop_function.Invoke(massflow)
-
-                        If Math.Abs(Pdrop_error) > 1 Then
-                            'Debug.WriteLine("High Pdrop error")
-                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.00001, current_as.GetMassFlow(), 1000, 0.1, 10000, Pdrop_function)
+                        If Math.Abs(Pdrop_transition) > 0.0 Then
+                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0, current_as.GetMassFlow(), 10, 0.01, 10000, Pdrop_function)
                             Pdrop_error = Pdrop_function.Invoke(massflow)
+                            If Pdrop_error ^ 2 > 100 Then
+                                Try
+                                    Dim ipopt_res = MathOps.MathEx.Optimization.IPOPTSolver.FindRoots(
+                                Function(xvec)
+                                    Dim fval = Pdrop_function(xvec(0))
+                                    Return fval ^ 2
+                                End Function, New Double() {current_as.GetMassFlow() * 0.1}, 100, 0.1, New Double() {0.0}, New Double() {current_as.GetMassFlow()})
+                                    massflow = ipopt_res(0)
+                                Catch ex As Exception
+                                    massflow = 0.0000000001
+                                End Try
+                            End If
+                            Pdrop_function.Invoke(massflow * substep_multpl)
+                        Else
+                            massflow = 0.0000000001
+                            Pdrop_function.Invoke(massflow)
                         End If
-
-                        If Math.Abs(Pdrop_error) > 1 Then
-                            'Debug.WriteLine("High Pdrop error")
-                        End If
-
-                        Pdrop_function.Invoke(massflow * substep_multpl)
 
                         Dim results As New PipeResults()
 
@@ -732,34 +718,38 @@ Namespace UnitOperations
 
                         'update next accumulation stream
 
-                        ms_transition.SetMassFlow(massflow * substep_multpl)
+                        ms_transition.SetMassFlow((massflow ^ 2) ^ 0.5 * substep_multpl)
                         ms_transition.AssignSelfToPP()
                         ms_transition.Calculate()
 
-                        If ms_transition.GetMassFlow() / current_as.GetMassFlow() > 0.05 Then
-                            'Debug.WriteLine("W changed a lot")
-                        End If
-                        If ms_transition.GetMassFlow() < 0 Then
-                            'Debug.WriteLine("negative TW")
-                        End If
+                    Next
+
+                    AccumulationStreams(0) = AccumulationStreams(0).Add(ims1, timestep * substep_multpl)
+
+                    For k2 = 0 To n_inc
+
+                        ms_transition = TransitionStreams(k2)
 
                         If k2 = 0 Then
-                            current_as = current_as.Add(ms_in, timestep)
+                            ms_out = AccumulationStreams(k2 + 1)
+                            ms_in = ims1
+                        ElseIf k2 = n_inc Then
+                            ms_out = oms1
+                            ms_in = AccumulationStreams(k2 - 1)
+                        Else
+                            ms_out = AccumulationStreams(k2 + 1)
+                            ms_in = AccumulationStreams(k2 - 1)
                         End If
+
+                        current_as = AccumulationStreams(k2)
 
                         If k2 < n_inc Then
-                            current_as = current_as.Subtract(ms_transition)
-                            ms_out = ms_out.Add(ms_transition, timestep)
+                            current_as = current_as.Subtract(ms_transition, timestep * substep_multpl)
+                            ms_out = ms_out.Add(ms_transition, timestep * substep_multpl)
                         End If
-
                         If k2 = n_inc Then
-                            current_as = current_as.Subtract(ms_out, timestep)
+                            current_as = current_as.Subtract(ms_out, timestep * substep_multpl)
                         End If
-
-                        DirectCast(current_as.ExtraProperties, Object).TransitionMassFlowRate = results.DynamicInternalMassFlowRate
-
-                        current_as.AssignSelfToPP()
-                        current_as.Calculate()
 
                         AccumulationStreams(k2) = current_as
 
@@ -767,19 +757,19 @@ Namespace UnitOperations
 
                     Next
 
-                    segmento.Results.Reverse()
-
                 Next
 
                 'update pressures
 
-                For Each segmento In sections_inverted
+                For Each segmento In sections
 
                     Dim n_inc = segmento.Incrementos - 1
 
-                    For k2 = n_inc To 0 Step -1
+                    For k2 = 0 To n_inc
 
                         current_as = AccumulationStreams(k2)
+
+                        Dim V = (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4) * segmento.Comprimento / segmento.Incrementos
 
                         'calculate new pressures
 
@@ -787,7 +777,10 @@ Namespace UnitOperations
 
                         'current segment pressure
 
-                        M1 = current_as.GetVolumetricFlow() / current_as.GetMolarFlow() 'm3/mol
+                        current_as.AssignSelfToPP()
+                        current_as.Calculate()
+
+                        M1 = V / current_as.GetMolarFlow() 'm3/mol
 
                         current_as.AssignSelfToPP()
 
@@ -817,11 +810,13 @@ Namespace UnitOperations
 
             Next
 
-            'Console.Write(integrator.CurrentTime.ToLongTimeString() + vbTab)
-            'For Each astream In AccumulationStreams
-            '    Console.Write(String.Format("{0:N1}/{1:N1}/{2:N1}", astream.GetPressure() / 100000, astream.GetMassFlow(), DirectCast(astream.ExtraProperties, Object).TransitionMassFlowRate) + vbTab)
-            'Next
-            'Console.Write(vbCrLf)
+            Console.Write(integrator.CurrentTime.ToLongTimeString() + vbTab)
+            For Each astream In AccumulationStreams
+                Console.Write(String.Format("{0:G4}/{1:G4}", astream.GetPressure() / 100000, astream.GetMassFlow()) + vbTab)
+            Next
+            Console.Write(vbCrLf)
+
+            ims1.SetPressure(AccumulationStreams.First.GetPressure())
 
             oms1.AssignFromPhase(PhaseLabel.Mixture, AccumulationStreams.Last, False)
 

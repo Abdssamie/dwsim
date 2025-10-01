@@ -8310,6 +8310,7 @@ Namespace Streams
         ''' </summary>
         ''' <param name="value">Flow in kg/s</param>
         Public Function SetMassFlow(value As Double) As String Implements IMaterialStream.SetMassFlow
+            Dim multiplier = value / Phases(0).Properties.massflow.GetValueOrDefault()
             Phases(0).Properties.massflow = value
             Phases(0).Properties.molarflow = value / Phases(0).Properties.molecularWeight * 1000
             Dim mixdens = Phases(0).Properties.density.GetValueOrDefault()
@@ -8324,6 +8325,22 @@ Namespace Streams
             For Each comp In Phases(0).Compounds.Values
                 comp.MolarFlow = Phases(0).Properties.molarflow * comp.MoleFraction.GetValueOrDefault()
             Next
+            If Not Double.IsNaN(multiplier) And Not Double.IsInfinity(multiplier) Then
+                For i = 1 To 7
+                    Phases(i).Properties.massflow *= multiplier
+                    Phases(i).Properties.molarflow *= multiplier
+                    Dim pdens = Phases(i).Properties.density.GetValueOrDefault()
+                    If Not Double.IsNaN(mixdens) And Not Double.IsInfinity(mixdens) Then
+                        Phases(i).Properties.volumetric_flow *= multiplier
+                    End If
+                    For Each comp In Phases(i).Compounds.Values
+                        comp.MassFlow *= multiplier
+                    Next
+                    For Each comp In Phases(0).Compounds.Values
+                        comp.MolarFlow *= multiplier
+                    Next
+                Next
+            End If
             DefinedFlow = FlowSpec.Mass
             AtEquilibrium = False
             If GraphicObject IsNot Nothing Then
