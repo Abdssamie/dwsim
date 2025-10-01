@@ -1,6 +1,8 @@
-﻿using DWSIM.Simulate365.Enums;
+﻿using DWSIM.Logging;
+using DWSIM.Simulate365.Enums;
 using DWSIM.Simulate365.Models;
 using DWSIM.UI.Web;
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -232,8 +234,8 @@ namespace DWSIM.Simulate365.Services
             }
             catch (Exception ex)
             {
-
-               return false;
+                Logger.LogError("An error occurred while refreshing user token.", ex);
+                return false;
             }
             
         }
