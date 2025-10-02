@@ -397,12 +397,10 @@ Namespace UnitOperations
 
             Dim sections = Profile.Sections.Values.ToList()
 
-            Dim k2 As Integer
-
             Dim ms_in, ms_out, current_as, ms_transition As MaterialStream
             Dim Pdrop_transition As Double
 
-            timestep_discretization = 1.0
+            'timestep_discretization = 1.0
 
             Dim substep_multpl = 1.0 / timestep_discretization
 
@@ -410,21 +408,23 @@ Namespace UnitOperations
 
             Dim TransitionStreams As List(Of MaterialStream)
 
+            Dim n_inc = AccumulationStreams.Count - 1
+
             For ti As Integer = 1 To timestep_discretization
 
                 TransitionStreams = New List(Of MaterialStream)
 
-                Dim currL As Double = sections.Select(Function(sc) sc.Comprimento).Sum()
+                Dim currL As Double = 0.0
+
+                Dim k2 As Integer = 0
+
+                AccumulationStreams(0) = AccumulationStreams(0).Add(ims1, timestep * substep_multpl)
 
                 For Each segmento In sections
 
                     segmento.Results.Clear()
 
-                    Dim n_inc = segmento.Incrementos - 1
-
-                    AccumulationStreams(n_inc) = AccumulationStreams(n_inc).Subtract(oms1, timestep * substep_multpl)
-
-                    For k2 = 0 To n_inc
+                    Do
 
                         currL += segmento.Comprimento / segmento.Incrementos
 
@@ -567,7 +567,10 @@ Namespace UnitOperations
                                 Function(xvec)
                                     Dim fval = Pdrop_function(xvec(0))
                                     Return fval ^ 2
-                                End Function, New Double() {ims1.GetMassFlow() * 0.1}, 100, 0.1, New Double() {-ims1.GetMassFlow()}, New Double() {ims1.GetMassFlow()})
+                                End Function, New Double() {
+                                                    ims1.GetMassFlow() * 0.1}, 100, 0.1,
+                                                    New Double() {-ims1.GetMassFlow()},
+                                                    New Double() {ims1.GetMassFlow()})
                                     massflow = ipopt_res(0)
                                 Catch ex As Exception
                                     massflow = 0.0000000001
@@ -725,11 +728,17 @@ Namespace UnitOperations
                         ms_transition.AssignSelfToPP()
                         ms_transition.Calculate()
 
-                    Next
+                        k2 += 1
 
-                    AccumulationStreams(0) = AccumulationStreams(0).Add(ims1, timestep * substep_multpl)
+                    Loop While k2 < n_inc + 1
 
-                    For k2 = 0 To n_inc
+                Next
+
+                k2 = 0
+
+                For Each segmento In sections
+
+                    Do
 
                         ms_transition = TransitionStreams(k2)
 
@@ -748,11 +757,11 @@ Namespace UnitOperations
 
                         If k2 < n_inc Then
                             If Convert.ToInt32(ms_transition.Annotation) = 1 Then
-                                current_as = current_as.Subtract(ms_transition, timestep * substep_multpl)
-                                ms_out = ms_out.Add(ms_transition, timestep * substep_multpl)
+                                current_as = current_as.Subtract(ms_transition, timestep)
+                                ms_out = ms_out.Add(ms_transition, timestep)
                             ElseIf Convert.ToInt32(ms_transition.Annotation) = -1 Then
-                                current_as = current_as.Add(ms_transition, timestep * substep_multpl)
-                                ms_out = ms_out.Subtract(ms_transition, timestep * substep_multpl)
+                                current_as = current_as.Add(ms_transition, timestep)
+                                ms_out = ms_out.Subtract(ms_transition, timestep)
                             End If
                         End If
 
@@ -760,17 +769,19 @@ Namespace UnitOperations
 
                         If k2 >= 0 And k2 < n_inc Then AccumulationStreams(k2 + 1) = ms_out
 
-                    Next
+                        k2 += 1
+
+                    Loop While k2 < n_inc + 1
 
                 Next
 
                 'update pressures
 
+                k2 = 0
+
                 For Each segmento In sections
 
-                    Dim n_inc = segmento.Incrementos - 1
-
-                    For k2 = 0 To n_inc
+                    Do
 
                         current_as = AccumulationStreams(k2)
 
@@ -798,10 +809,6 @@ Namespace UnitOperations
                         P1 = result.CalculatedPressure
                         H1 = result.CalculatedEnthalpy
 
-                        'If Math.Abs(P1 - P1i) / P1i > 0.05 Then
-                        '    Debug.WriteLine("P changed a lot")
-                        'End If
-
                         current_as.SetPressure(P1)
                         current_as.SetMassEnthalpy(H1)
                         current_as.SpecType = StreamSpec.Pressure_and_Enthalpy
@@ -809,9 +816,13 @@ Namespace UnitOperations
                         current_as.AssignSelfToPP()
                         current_as.Calculate()
 
-                    Next
+                        k2 += 1
+
+                    Loop While k2 < n_inc + 1
 
                 Next
+
+                AccumulationStreams(n_inc) = AccumulationStreams(n_inc).Subtract(oms1, timestep * substep_multpl)
 
             Next
 
