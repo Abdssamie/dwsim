@@ -402,7 +402,7 @@ Namespace UnitOperations
             Dim ms_in, ms_out, current_as, ms_transition As MaterialStream
             Dim Pdrop_transition As Double
 
-            'timestep_discretization = 1.0
+            timestep_discretization = 1.0
 
             Dim substep_multpl = 1.0 / timestep_discretization
 
@@ -421,6 +421,8 @@ Namespace UnitOperations
                     segmento.Results.Clear()
 
                     Dim n_inc = segmento.Incrementos - 1
+
+                    AccumulationStreams(n_inc) = AccumulationStreams(n_inc).Subtract(oms1, timestep * substep_multpl)
 
                     For k2 = 0 To n_inc
 
@@ -556,8 +558,8 @@ Namespace UnitOperations
 
                         Dim massflow, Pdrop_error As Double
 
-                        If Math.Abs(Pdrop_transition) > 0.0 Then
-                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(0.0, current_as.GetMassFlow(), 10, 0.01, 10000, Pdrop_function)
+                        If Math.Abs(Pdrop_transition) <> 0.0 Then
+                            massflow = MathOps.MathEx.BrentOpt.Brent.BrentOpt3(-ims1.GetMassFlow(), ims1.GetMassFlow(), 25, 0.01, 10000, Pdrop_function)
                             Pdrop_error = Pdrop_function.Invoke(massflow)
                             If Pdrop_error ^ 2 > 100 Then
                                 Try
@@ -565,7 +567,7 @@ Namespace UnitOperations
                                 Function(xvec)
                                     Dim fval = Pdrop_function(xvec(0))
                                     Return fval ^ 2
-                                End Function, New Double() {current_as.GetMassFlow() * 0.1}, 100, 0.1, New Double() {0.0}, New Double() {current_as.GetMassFlow()})
+                                End Function, New Double() {ims1.GetMassFlow() * 0.1}, 100, 0.1, New Double() {-ims1.GetMassFlow()}, New Double() {ims1.GetMassFlow()})
                                     massflow = ipopt_res(0)
                                 Catch ex As Exception
                                     massflow = 0.0000000001
@@ -718,6 +720,7 @@ Namespace UnitOperations
 
                         'update next accumulation stream
 
+                        ms_transition.Annotation = Math.Sign(massflow)
                         ms_transition.SetMassFlow((massflow ^ 2) ^ 0.5 * substep_multpl)
                         ms_transition.AssignSelfToPP()
                         ms_transition.Calculate()
@@ -744,11 +747,13 @@ Namespace UnitOperations
                         current_as = AccumulationStreams(k2)
 
                         If k2 < n_inc Then
-                            current_as = current_as.Subtract(ms_transition, timestep * substep_multpl)
-                            ms_out = ms_out.Add(ms_transition, timestep * substep_multpl)
-                        End If
-                        If k2 = n_inc Then
-                            current_as = current_as.Subtract(ms_out, timestep * substep_multpl)
+                            If Convert.ToInt32(ms_transition.Annotation) = 1 Then
+                                current_as = current_as.Subtract(ms_transition, timestep * substep_multpl)
+                                ms_out = ms_out.Add(ms_transition, timestep * substep_multpl)
+                            ElseIf Convert.ToInt32(ms_transition.Annotation) = -1 Then
+                                current_as = current_as.Add(ms_transition, timestep * substep_multpl)
+                                ms_out = ms_out.Subtract(ms_transition, timestep * substep_multpl)
+                            End If
                         End If
 
                         AccumulationStreams(k2) = current_as
@@ -793,9 +798,9 @@ Namespace UnitOperations
                         P1 = result.CalculatedPressure
                         H1 = result.CalculatedEnthalpy
 
-                        If Math.Abs(P1 - P1i) / P1i > 0.05 Then
-                            Debug.WriteLine("P changed a lot")
-                        End If
+                        'If Math.Abs(P1 - P1i) / P1i > 0.05 Then
+                        '    Debug.WriteLine("P changed a lot")
+                        'End If
 
                         current_as.SetPressure(P1)
                         current_as.SetMassEnthalpy(H1)
@@ -817,8 +822,12 @@ Namespace UnitOperations
             Console.Write(vbCrLf)
 
             ims1.SetPressure(AccumulationStreams.First.GetPressure())
+            oms1.SpecType = StreamSpec.Pressure_and_Enthalpy
+            oms1.AtEquilibrium = False
 
             oms1.AssignFromPhase(PhaseLabel.Mixture, AccumulationStreams.Last, False)
+            oms1.SpecType = StreamSpec.Pressure_and_Enthalpy
+            oms1.AtEquilibrium = False
 
             OutletTemperature = AccumulationStreams.Last.GetTemperature()
 
