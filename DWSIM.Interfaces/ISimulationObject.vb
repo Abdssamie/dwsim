@@ -293,4 +293,6 @@ Public Interface ISimulationObject
 
     Sub SetPropertyValue2(propname As String, arg1 As String, units As String, value As Object)
 
+    Function GetPropertyUnits2(propname As String, arg1 As String) As String
+
 End Interface

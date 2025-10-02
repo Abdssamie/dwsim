@@ -1864,6 +1864,17 @@ Namespace UnitOperations
 
         End Function
 
+        Public Overridable Function GetPropertyUnits2(propname As String, arg1 As String) As String Implements ISimulationObject.GetPropertyUnits2
+
+            Dim propcodes = GetProperties(PropertyType.ALL)
+            Dim propnames = GetProperties2().ToList()
+
+            Dim value = GetPropertyValue(propcodes(propnames.IndexOf(propname)))
+
+            Return GetPropertyValue(propcodes(propnames.IndexOf(propname)))
+
+        End Function
+
         Public Overridable Sub SetPropertyValue2(propname As String, arg1 As String, units As String, value As Object) Implements ISimulationObject.SetPropertyValue2
 
             Dim propcodes = GetProperties(PropertyType.ALL)

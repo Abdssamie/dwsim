@@ -2525,6 +2525,22 @@ Namespace UnitOperations
                         Return cv.ConvertFromSI(su.deltaP, PressureDrop_Static)
                     ElseIf prop.Equals("PressureDropFriction") Then
                         Return cv.ConvertFromSI(su.deltaP, PressureDrop_Friction)
+                    ElseIf prop.Contains("DynamicContents") Then
+                        If FlowSheet IsNot Nothing Then
+                            If FlowSheet.DynamicMode Then
+                                Try
+                                    Dim k = Integer.Parse(prop.Split(",")(0).Replace("DynamicContents", "")) - 1
+                                    Dim astr = AccumulationStreams(k)
+                                    Return astr.GetPropertyValue2(prop.Split(",")(1), "", astr.GetPropertyUnits2(prop.Split(",")(1), ""))
+                                Catch ex As Exception
+                                    Return Double.NaN
+                                End Try
+                            Else
+                                Return Double.NaN
+                            End If
+                        Else
+                            Return Double.NaN
+                        End If
                     End If
                 Catch ex As Exception
                     Return Double.NaN
@@ -2613,8 +2629,26 @@ Namespace UnitOperations
             proplist.Add("ThermalProfile,IncludeExternalHTC")
             proplist.Add("ThermalProfile,ExternalEnvironmentType")
             proplist.Add("ThermalProfile,ExternalEnvironmentVelocityOrDeepness")
+
+            If FlowSheet IsNot Nothing Then
+                If FlowSheet.DynamicMode Then
+                    If proptype <> PropertyType.WR Then
+                        Dim k = 1
+                        For Each astr In AccumulationStreams
+                            Dim aprops = astr.GetProperties2()
+                            For Each p In aprops
+                                proplist.Add("DynamicContents" + k.ToString() + "," + p)
+                            Next
+                            k += 1
+                        Next
+                    End If
+                End If
+            End If
+
             Return proplist.ToArray(GetType(System.String))
+
             proplist = Nothing
+
         End Function
 
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As Interfaces.IUnitsOfMeasure = Nothing) As Boolean
@@ -2865,6 +2899,22 @@ Namespace UnitOperations
                     Return su.deltaP
                 ElseIf prop.Equals("PressureDropFriction") Then
                     Return su.deltaP
+                ElseIf prop.Contains("DynamicContents") Then
+                    If FlowSheet IsNot Nothing Then
+                        If FlowSheet.DynamicMode Then
+                            Try
+                                Dim k = Integer.Parse(prop.Split(",")(0).Replace("DynamicContents", "")) - 1
+                                Dim astr = AccumulationStreams(k)
+                                Return astr.GetPropertyUnits2(prop.Split(",")(1), "")
+                            Catch ex As Exception
+                                Return Double.NaN
+                            End Try
+                        Else
+                            Return Double.NaN
+                        End If
+                    Else
+                        Return Double.NaN
+                    End If
                 Else
                     Return ""
                 End If
