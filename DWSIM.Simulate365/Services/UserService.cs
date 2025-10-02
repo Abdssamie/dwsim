@@ -45,6 +45,7 @@ namespace DWSIM.Simulate365.Services
 
         public event EventHandler<UserDetailsModel> UserDetailsLoaded;
         public event EventHandler<bool> AutoLoginInProgressChanged;
+        public event EventHandler<BeforeLogoutEventArgs> BeforeUserLoggedOut;
         public event EventHandler UserLoggedOut;
         public event EventHandler ShowLoginForm;
 
@@ -103,8 +104,14 @@ namespace DWSIM.Simulate365.Services
             return _singletonInstance;
         }
 
-        public static void Logout()
+        public void Logout()
         {
+            var eventArgs = new BeforeLogoutEventArgs();
+            BeforeUserLoggedOut?.Invoke(null, eventArgs);
+
+            if (eventArgs.Cancel)
+                return;
+
             _singletonInstance.ClearInstance();
             _singletonInstance.UserLoggedOut?.Invoke(_singletonInstance, new EventArgs());
         }
@@ -237,7 +244,7 @@ namespace DWSIM.Simulate365.Services
                 Logger.LogError("An error occurred while refreshing user token.", ex);
                 return false;
             }
-            
+
         }
 
     }

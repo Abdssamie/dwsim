@@ -279,6 +279,7 @@ Public Class FormMain
         ' On user details loaded
         AddHandler UserService.GetInstance().UserDetailsLoaded, AddressOf UserService_UserDetailsLoaded
         AddHandler UserService.GetInstance().AutoLoginInProgressChanged, AddressOf UserService_AutoLoginInProgress
+        AddHandler UserService.GetInstance().BeforeUserLoggedOut, AddressOf UserService_BeforeUserLoggedOut
         AddHandler UserService.GetInstance().UserLoggedOut, AddressOf UserService_UserLoggedOut
         AddHandler UserService.GetInstance().ShowLoginForm, AddressOf UserService_ShowLoginForm
         AddHandler FileManagementService.GetInstance().OnSaveFileToDashboard, AddressOf FileManagementService_SaveFileToDashboard
@@ -406,6 +407,32 @@ Public Class FormMain
 
         If EnableFlowsheetSolveCallbackHandler AndAlso RegisterFlowsheetSolveCallbackHandler IsNot Nothing Then
             RegisterFlowsheetSolveCallbackHandler.Invoke()
+        End If
+
+    End Sub
+
+    Private Sub UserService_BeforeUserLoggedOut(sender As Object, e As BeforeLogoutEventArgs)
+
+        Dim simulate365Flowsheets = Me.MdiChildren.Where(Function(x) TypeOf x Is FormFlowsheet AndAlso TypeOf DirectCast(x, FormFlowsheet).FlowsheetOptions.VirtualFile Is S365File).ToList()
+
+        If simulate365Flowsheets Is Nothing Or simulate365Flowsheets.Count = 0 Then
+            Return
+        End If
+
+        Dim result As DialogResult = MessageBox.Show(
+                    "Are you sure you want to logout, all flowsheets that are opened from Simulate 365 Dashboard will be closed?",
+                    "Confirm Logout",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2)
+
+        If result = DialogResult.No Then
+            e.Cancel = True
+        Else
+            For Each flowsheet In simulate365Flowsheets
+                DirectCast(flowsheet, FormFlowsheet).m_overrideCloseQuestion = True
+                flowsheet.Close()
+            Next
         End If
 
     End Sub
@@ -5398,7 +5425,7 @@ Label_00CC:
     End Sub
 
     Private Sub LogoutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogoutToolStripMenuItem.Click
-        UserService.Logout()
+        UserService.GetInstance().Logout()
     End Sub
 
     Private Sub LoggedInS365Button_Click(sender As Object, e As EventArgs)
