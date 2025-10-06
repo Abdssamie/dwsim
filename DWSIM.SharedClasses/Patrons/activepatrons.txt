@@ -1,7 +1,6 @@
 ﻿💎 AI4Tech
-🥈 Alexander Semenyak
-🥇 Macaw Energies
-🥈 Sukin Oh
+🌟 Alexander Semenyak
+🌟 Macaw Energies
 🌟 ABEQ
 🌟 Abishek Shrestha
 🌟 Adam Kovalovszki
@@ -51,6 +50,7 @@
 🌟 Simone Vidille
 🌟 Tech-Rudra
 🌟 Todd Flach
+🌟 Yoshihide Watabe
 Allan Almajose
 Adler Moura
 Alberto Baumeister
