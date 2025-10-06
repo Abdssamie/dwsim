@@ -209,7 +209,7 @@ Namespace UnitOperations
             Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("FillWithStream"),
                 .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
             AddHandler button2.Click, Sub(s, e)
-                                          AccumulationStream.SetFlowsheet(FlowSheet)
+                                          AccumulationStream?.SetFlowsheet(FlowSheet)
                                           Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
                                           fms.ShowDialog()
                                       End Sub

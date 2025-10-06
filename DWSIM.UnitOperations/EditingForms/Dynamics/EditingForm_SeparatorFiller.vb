@@ -61,7 +61,7 @@ Public Class EditingForm_SeparatorFiller
 
             tbResults.Text += "Updating Separator Pressure... OK" + vbCrLf
 
-            Dim astream As MaterialStream = DirectCast(SimObject.AccumulationStream.CloneXML(), MaterialStream)
+            Dim astream As MaterialStream = DirectCast(stream.CloneXML(), MaterialStream)
 
             tbResults.Text += "Cloning Accumulation Stream... OK" + vbCrLf
 
@@ -109,7 +109,13 @@ Public Class EditingForm_SeparatorFiller
                 Pipe.AccumulationStreams = New List(Of MaterialStream)
                 For Each seg In Pipe.Profile.Sections.Values
                     Dim idx As Integer
-                    For idx = 0 To seg.Results.Count - 2
+                    Dim max As Integer = 0
+                    If seg.TipoSegmento = "Tubulaosimples" Or seg.TipoSegmento = "" Or
+                        seg.TipoSegmento = "Straight Tube Section" Or seg.TipoSegmento = "Straight Tube" Or
+                        seg.TipoSegmento = "Tubulação Simples" Then
+                        max = seg.Incrementos - 2
+                    End If
+                    For idx = 0 To max
                         Dim res = seg.Results(idx)
                         Dim as1 As MaterialStream = stream.CloneXML()
                         as1.SetPressure(pressure)

@@ -256,8 +256,13 @@ Namespace UnitOperations
                         Dim ims1 = GetInletMaterialStream(0)
                         AccumulationStreams = New List(Of MaterialStream)
                         For Each seg In Profile.Sections.Values
-                            Dim idx As Integer
-                            For idx = 0 To seg.Results.Count - 2
+                            Dim max As Integer = 0
+                            If seg.TipoSegmento = "Tubulaosimples" Or seg.TipoSegmento = "" Or
+                                seg.TipoSegmento = "Straight Tube Section" Or seg.TipoSegmento = "Straight Tube" Or
+                                seg.TipoSegmento = "Tubulação Simples" Then
+                                max = seg.Incrementos - 2
+                            End If
+                            For idx = 0 To max
                                 Dim res = seg.Results(idx)
                                 Dim as1 As MaterialStream = ims1.CloneXML()
                                 as1.SetPressure(res.Pressure_Initial.Value)
@@ -420,11 +425,11 @@ Namespace UnitOperations
 
                 AccumulationStreams(0) = AccumulationStreams(0).Add(ims1, timestep * substep_multpl)
 
-                For Each segmento In sections
+                Do
 
-                    segmento.Results.Clear()
+                    For Each segmento In sections
 
-                    Do
+                        segmento.Results.Clear()
 
                         currL += segmento.Comprimento / segmento.Incrementos
 
@@ -507,7 +512,7 @@ Namespace UnitOperations
                                                  Else
                                                      If segmento.TipoSegmento.Contains("[27]") Then
                                                          'fixed deltaP
-                                                         segmento.Comprimento = 0.1 '10 cm default
+                                                         segmento.Comprimento = 0.5 '10 cm default
                                                          segmento.Incrementos = 1 'only one increment
                                                          segmento.Elevacao = 0
                                                          dph = 0
@@ -519,7 +524,7 @@ Namespace UnitOperations
                                                          resv(3) = 0
                                                          resv(4) = dpt
                                                      Else
-                                                         segmento.Comprimento = 0.1 '10 cm default
+                                                         segmento.Comprimento = 0.5 '10 cm default
                                                          segmento.Incrementos = 1 'only one increment
                                                          segmento.Elevacao = 0
                                                          resf = Kfit(segmento.TipoSegmento)
@@ -730,15 +735,15 @@ Namespace UnitOperations
 
                         k2 += 1
 
-                    Loop While k2 < n_inc + 1
+                    Next
 
-                Next
+                Loop While k2 < n_inc + 1
 
                 k2 = 0
 
-                For Each segmento In sections
+                Do
 
-                    Do
+                    For Each segmento In sections
 
                         ms_transition = TransitionStreams(k2)
 
@@ -771,17 +776,17 @@ Namespace UnitOperations
 
                         k2 += 1
 
-                    Loop While k2 < n_inc + 1
+                    Next
 
-                Next
+                Loop While k2 < n_inc + 1
 
                 'update pressures
 
                 k2 = 0
 
-                For Each segmento In sections
+                Do
 
-                    Do
+                    For Each segmento In sections
 
                         current_as = AccumulationStreams(k2)
 
@@ -818,9 +823,9 @@ Namespace UnitOperations
 
                         k2 += 1
 
-                    Loop While k2 < n_inc + 1
+                    Next
 
-                Next
+                Loop While k2 < n_inc + 1
 
                 AccumulationStreams(n_inc) = AccumulationStreams(n_inc).Subtract(oms1, timestep * substep_multpl)
 
