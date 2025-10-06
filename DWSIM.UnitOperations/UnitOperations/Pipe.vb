@@ -155,8 +155,8 @@ Namespace UnitOperations
                 Dim astr As New XElement("AccumulationStreams")
                 elements.Add(astr)
                 For Each mstream In AccumulationStreams
-                    astr.Add(New XElement("AccumulationStream", mstream.SaveData()))
-                Next
+                        astr.Add(New XElement("AccumulationStream", mstream.SaveData()))
+                    Next
             End If
 
             Return elements
@@ -853,7 +853,7 @@ Namespace UnitOperations
 
             DeltaQ = (AccumulationStreams.Last.GetMassEnthalpy() - ims1.GetMassEnthalpy()) * ims1.GetMassFlow()
 
-            es.SetEnergyFlow(DeltaQ.GetValueOrDefault())
+            es?.SetEnergyFlow(DeltaQ.GetValueOrDefault())
 
         End Sub
 

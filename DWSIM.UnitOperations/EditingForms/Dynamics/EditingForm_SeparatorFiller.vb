@@ -116,7 +116,6 @@ Public Class EditingForm_SeparatorFiller
                         max = seg.Incrementos - 2
                     End If
                     For idx = 0 To max
-                        Dim res = seg.Results(idx)
                         Dim as1 As MaterialStream = stream.CloneXML()
                         as1.SetPressure(pressure)
                         Dim D, L, V As Double
