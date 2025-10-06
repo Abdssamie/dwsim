@@ -511,6 +511,8 @@ Namespace GraphicObjects
 
         End Sub
 
+        Public Overridable Property ClipboardData As String = ""
+
         Public Property Editor As Object Implements IGraphicObject.Editor
 
         Public Property Rotation As Integer Implements IGraphicObject.Rotation
