@@ -3756,33 +3756,42 @@ Public Class FormFlowsheet
 
                 End If
 
-                data = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases").Elements.ToList
+                If xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases") IsNot Nothing Then
 
-                Collections.OPT_OptimizationCollection.Clear()
+                    data = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases").Elements.ToList
 
-                For Each xel As XElement In data
-                    Try
-                        Dim obj As New SharedClasses.Flowsheet.Optimization.OptimizationCase
-                        obj.LoadData(xel.Elements.ToList)
-                        Collections.OPT_OptimizationCollection.Add(obj)
-                    Catch ex As Exception
-                        excs.Add(New Exception("Error Loading Optimization Case Information", ex))
-                    End Try
-                Next
+                    Collections.OPT_OptimizationCollection.Clear()
 
-                data = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis").Elements.ToList
+                    For Each xel As XElement In data
+                        Try
+                            Dim obj As New SharedClasses.Flowsheet.Optimization.OptimizationCase
+                            obj.LoadData(xel.Elements.ToList)
+                            Collections.OPT_OptimizationCollection.Add(obj)
+                        Catch ex As Exception
+                            excs.Add(New Exception("Error Loading Optimization Case Information", ex))
+                        End Try
+                    Next
 
-                Collections.OPT_SensAnalysisCollection.Clear()
+                End If
 
-                For Each xel As XElement In data
-                    Try
-                        Dim obj As New SharedClasses.Flowsheet.Optimization.SensitivityAnalysisCase
-                        obj.LoadData(xel.Elements.ToList)
-                        Collections.OPT_SensAnalysisCollection.Add(obj)
-                    Catch ex As Exception
-                        excs.Add(New Exception("Error Loading Sensitivity Analysis Case Information", ex))
-                    End Try
-                Next
+                If xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis") IsNot Nothing Then
+
+                    data = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis").Elements.ToList
+
+                    Collections.OPT_SensAnalysisCollection.Clear()
+
+                    For Each xel As XElement In data
+                        Try
+                            Dim obj As New SharedClasses.Flowsheet.Optimization.SensitivityAnalysisCase
+                            obj.LoadData(xel.Elements.ToList)
+                            Collections.OPT_SensAnalysisCollection.Add(obj)
+                        Catch ex As Exception
+                            excs.Add(New Exception("Error Loading Sensitivity Analysis Case Information", ex))
+                        End Try
+                    Next
+
+                End If
+
 
                 If xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays") IsNot Nothing Then
 
