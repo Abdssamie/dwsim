@@ -310,7 +310,7 @@ Namespace UnitOperations
                 If Me.GraphicObject.InputConnectors(i).IsAttached Then
                     Dim imsx = GetInletMaterialStream(i)
                     If imsmix Is Nothing Then imsmix = imsx.CloneXML()
-                    imsmix = imsmix.Add(imsx)
+                    If Not Double.IsNaN(imsx.GetMassFlow()) AndAlso imsx.GetMassFlow() > 0 Then imsmix = imsmix.Add(imsx)
                 End If
             Next
 
@@ -353,7 +353,7 @@ Namespace UnitOperations
 
                 AccumulationStream.SetFlowsheet(FlowSheet)
 
-                If Not imsmix.AtEquilibrium Then
+                If Not imsmix.AtEquilibrium And imsmix.GetMassFlow() > 0 Then
                     imsmix.AssignSelfToPP()
                     imsmix.Calculate()
                 End If
@@ -366,17 +366,17 @@ Namespace UnitOperations
 
                 AccumulationStream.Calculate()
 
-                If Not oms1.AtEquilibrium Then
+                If Not oms1.AtEquilibrium And oms1.GetMassFlow() > 0 Then
                     oms1.AssignSelfToPP()
                     oms1.Calculate()
                 End If
 
-                If Not oms2.AtEquilibrium Then
+                If Not oms2.AtEquilibrium And oms2.GetMassFlow() > 0 Then
                     oms2.AssignSelfToPP()
                     oms2.Calculate()
                 End If
 
-                If Not omsr.AtEquilibrium Then
+                If Not omsr.AtEquilibrium And omsr.GetMassFlow() > 0 Then
                     omsr.AssignSelfToPP()
                     omsr.Calculate()
                 End If
@@ -387,7 +387,7 @@ Namespace UnitOperations
                     If omsr.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(omsr, timestep)
                 End If
 
-                If AccumulationStream.GetMassFlow <= 0.0 Then AccumulationStream.SetMassFlow(0.0)
+                If AccumulationStream.GetMassFlow() <= 0.0 Then AccumulationStream.SetMassFlow(0.0)
 
             End If
 

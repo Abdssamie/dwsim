@@ -8944,13 +8944,17 @@ Namespace Streams
                 Next
                 For Each sub1 In p.Compounds.Values
                     sub1.MassFraction = sub1.MassFlow.GetValueOrDefault / total
+                    If Not sub1.MassFraction.IsValidDouble() Then sub1.MassFraction = 0.0
                 Next
                 For Each sub1 In p.Compounds.Values
                     mass_div_mm += sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight
                 Next
                 For Each sub1 In p.Compounds.Values
                     sub1.MoleFraction = sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight / mass_div_mm
+                    If Not sub1.MoleFraction.IsValidDouble() Then sub1.MoleFraction = 0.0
                 Next
+                If Not total.IsValidDouble() Then total = 0.0
+                If Not totalm.IsValidDouble() Then totalm = 0.0
                 .Phases(0).Properties.massflow = total
                 .Phases(0).Properties.molarflow = totalm
                 .SpecType = StreamSpec.Temperature_and_Pressure

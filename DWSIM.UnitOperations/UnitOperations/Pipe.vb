@@ -155,8 +155,8 @@ Namespace UnitOperations
                 Dim astr As New XElement("AccumulationStreams")
                 elements.Add(astr)
                 For Each mstream In AccumulationStreams
-                        astr.Add(New XElement("AccumulationStream", mstream.SaveData()))
-                    Next
+                    astr.Add(New XElement("AccumulationStream", mstream.SaveData()))
+                Next
             End If
 
             Return elements
@@ -423,7 +423,9 @@ Namespace UnitOperations
 
                 Dim k2 As Integer = 0
 
-                AccumulationStreams(0) = AccumulationStreams(0).Add(ims1, timestep * substep_multpl)
+                If Not Double.IsNaN(ims1.GetMassFlow()) AndAlso ims1.GetMassFlow() > 0 Then
+                    AccumulationStreams(0) = AccumulationStreams(0).Add(ims1, timestep * substep_multpl)
+                End If
 
                 Do
 
@@ -762,11 +764,15 @@ Namespace UnitOperations
 
                         If k2 < n_inc Then
                             If Convert.ToInt32(ms_transition.Annotation) = 1 Then
-                                current_as = current_as.Subtract(ms_transition, timestep)
-                                ms_out = ms_out.Add(ms_transition, timestep)
+                                If Not Double.IsNaN(ms_transition.GetMassFlow()) AndAlso ms_transition.GetMassFlow() > 0 Then
+                                    current_as = current_as.Subtract(ms_transition, timestep)
+                                    ms_out = ms_out.Add(ms_transition, timestep)
+                                End If
                             ElseIf Convert.ToInt32(ms_transition.Annotation) = -1 Then
-                                current_as = current_as.Add(ms_transition, timestep)
-                                ms_out = ms_out.Subtract(ms_transition, timestep)
+                                If Not Double.IsNaN(ms_transition.GetMassFlow()) AndAlso ms_transition.GetMassFlow() > 0 Then
+                                    current_as = current_as.Add(ms_transition, timestep)
+                                    ms_out = ms_out.Subtract(ms_transition, timestep)
+                                End If
                             End If
                         End If
 
@@ -779,6 +785,10 @@ Namespace UnitOperations
                     Next
 
                 Loop While k2 < n_inc + 1
+
+                If Double.IsNaN(AccumulationStreams(n_inc).GetMassFlow()) Or AccumulationStreams(n_inc).GetMassFlow() = 0.0 Then
+                    AccumulationStreams(n_inc).SetMassFlow(0.0000000001)
+                End If
 
                 'update pressures
 
@@ -827,7 +837,12 @@ Namespace UnitOperations
 
                 Loop While k2 < n_inc + 1
 
-                AccumulationStreams(n_inc) = AccumulationStreams(n_inc).Subtract(oms1, timestep * substep_multpl)
+                If Not Double.IsNaN(oms1.GetMassFlow()) AndAlso oms1.GetMassFlow() > 0 Then
+                    AccumulationStreams(n_inc) = AccumulationStreams(n_inc).Subtract(oms1, timestep * substep_multpl)
+                    If Double.IsNaN(AccumulationStreams(n_inc).GetMassFlow()) Or AccumulationStreams(n_inc).GetMassFlow() = 0.0 Then
+                        AccumulationStreams(n_inc).SetMassFlow(0.0000000001)
+                    End If
+                End If
 
             Next
 
