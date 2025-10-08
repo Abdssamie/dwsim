@@ -845,18 +845,7 @@ Label_00CC:
 
             IObj?.SetCurrent()
 
-            If Not Initialized Then
-                If FileIsEmbedded Then
-                    Dim tmpfile As String = ""
-                    tmpfile = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), Path.GetExtension(EmbeddedFileName))
-                    FlowSheet.FileDatabaseProvider.ExportFile(EmbeddedFileName, tmpfile)
-                    Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(tmpfile, FlowSheet.GetNewInstance, FlowSheet)
-                    File.Delete(tmpfile)
-                Else
-                    Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(SimulationFile, FlowSheet.GetNewInstance, FlowSheet)
-                End If
-                Initialized = True
-            End If
+            InitializeInternalFlowsheet()
 
             If Initialized Then InitializeMappings()
 
@@ -1174,6 +1163,22 @@ Label_00CC:
 
         End Function
 
+        Public Sub InitializeInternalFlowsheet()
+            If Not Initialized Then
+                If FileIsEmbedded Then
+                    Dim tmpfile As String = ""
+                    tmpfile = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), Path.GetExtension(EmbeddedFileName))
+                    FlowSheet.FileDatabaseProvider.ExportFile(EmbeddedFileName, tmpfile)
+                    Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(tmpfile, FlowSheet.GetNewInstance, FlowSheet)
+                    File.Delete(tmpfile)
+                Else
+                    Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(SimulationFile, FlowSheet.GetNewInstance, FlowSheet)
+                End If
+                Initialized = True
+            End If
+        End Sub
+
+
         Public Overrides Function LoadData(data As List(Of XElement)) As Boolean
 
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
@@ -1189,6 +1194,17 @@ Label_00CC:
                         InitializeFlowsheet(SimulationFile, Me.Fsheet, FlowSheet)
                         Me.Initialized = True
                     End If
+                Else
+                    Dim tmpfile As String = ""
+                    Try
+                        tmpfile = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), Path.GetExtension(EmbeddedFileName))
+                        FlowSheet.FileDatabaseProvider.ExportFile(EmbeddedFileName, tmpfile)
+                        Fsheet = InitializeFlowsheet(tmpfile, FlowSheet.GetNewInstance, FlowSheet)
+                        Me.Initialized = True
+                    Catch ex As Exception
+                    Finally
+                        File.Delete(tmpfile)
+                    End Try
                 End If
             End If
 

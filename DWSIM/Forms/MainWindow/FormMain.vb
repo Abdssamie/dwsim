@@ -4308,6 +4308,7 @@ Label_00CC:
                 fs.Options.FilePath = handler.FullPath
             End If
             DirectCast(fs, FormFlowsheet).UpdateFormText()
+            File.Delete(fullname)
             If File.Exists(dbfile) Then
                 Try
                     fs.FileDatabaseProvider.LoadDatabase(dbfile)
@@ -4317,7 +4318,6 @@ Label_00CC:
                     File.Delete(dbfile)
                 End Try
             End If
-            File.Delete(fullname)
             Return fs
         Catch ex As Exception
             MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
