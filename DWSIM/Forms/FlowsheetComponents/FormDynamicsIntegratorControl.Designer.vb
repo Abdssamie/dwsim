@@ -35,6 +35,7 @@ Partial Class FormDynamicsIntegratorControl
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnStepBackwards = New System.Windows.Forms.Button()
         Me.btnStepForward = New System.Windows.Forms.Button()
+        Me.btnClearHistorian = New System.Windows.Forms.Button()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.btnLiveChart = New System.Windows.Forms.Button()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
@@ -124,6 +125,13 @@ Partial Class FormDynamicsIntegratorControl
         Me.ToolTip1.SetToolTip(Me.btnStepForward, resources.GetString("btnStepForward.ToolTip"))
         Me.btnStepForward.UseVisualStyleBackColor = True
         '
+        'btnClearHistorian
+        '
+        resources.ApplyResources(Me.btnClearHistorian, "btnClearHistorian")
+        Me.btnClearHistorian.Name = "btnClearHistorian"
+        Me.ToolTip1.SetToolTip(Me.btnClearHistorian, resources.GetString("btnClearHistorian.ToolTip"))
+        Me.btnClearHistorian.UseVisualStyleBackColor = True
+        '
         'ProgressBar1
         '
         resources.ApplyResources(Me.ProgressBar1, "ProgressBar1")
@@ -165,6 +173,7 @@ Partial Class FormDynamicsIntegratorControl
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
+        Me.Controls.Add(Me.btnClearHistorian)
         Me.Controls.Add(Me.btnStepForward)
         Me.Controls.Add(Me.btnStepBackwards)
         Me.Controls.Add(Me.FlowLayoutPanel1)
@@ -212,4 +221,5 @@ Partial Class FormDynamicsIntegratorControl
     Friend WithEvents Label2 As Label
     Friend WithEvents btnStepBackwards As Button
     Friend WithEvents btnStepForward As Button
+    Friend WithEvents btnClearHistorian As Button
 End Class

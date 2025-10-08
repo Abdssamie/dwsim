@@ -3074,6 +3074,7 @@
     <None Include="Resources\disk1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\time_machine_40px.png" />
     <None Include="Resources\website_bug_48px.png" />
     <None Include="Resources\test_tube_80px.png" />
     <None Include="Resources\show_property_48px.png" />

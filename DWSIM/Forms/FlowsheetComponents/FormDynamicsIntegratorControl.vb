@@ -22,7 +22,7 @@ Public Class FormDynamicsIntegratorControl
 
     Private FlowsheetClone As IFlowsheet
 
-    Private Historian As New Dictionary(Of Date, XDocument)
+    Private Historian As New Dictionary(Of Date, String)
 
     Private Sub FormDynamicsIntegratorControl_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -246,7 +246,9 @@ Public Class FormDynamicsIntegratorControl
 
         Try
 
-            Dim state = Historian(htime)
+            Dim state_zipped = Historian(htime)
+
+            Dim state = XDocument.Parse(state_zipped.Decompress())
 
             Flowsheet.RestoreSnapshot(state, SnapshotType.ObjectData)
 
@@ -393,7 +395,7 @@ Public Class FormDynamicsIntegratorControl
         FlowsheetClone = Flowsheet.Clone()
 
         If Not restarting And nstep = 0 Then
-            Historian = New Dictionary(Of Date, XDocument)()
+            Historian = New Dictionary(Of Date, String)
         End If
 
         Dim exceptions As New List(Of Exception)
@@ -441,6 +443,7 @@ Public Class FormDynamicsIntegratorControl
                                             Flowsheet.RunCodeOnUIThread(Sub()
                                                                             ProgressBar1.Value = i0
                                                                             lblCurrent.Text = New TimeSpan(0, 0, i0).ToString("c")
+                                                                            UpdateHistorianDisplaySize()
                                                                             Refresh()
                                                                         End Sub)
                                         End If
@@ -484,8 +487,12 @@ Public Class FormDynamicsIntegratorControl
 
                                         If nstep = 0 Then
 
-                                            If Not Historian.ContainsKey(integrator.CurrentTime) Then
-                                                Historian.Add(integrator.CurrentTime, Flowsheet.GetSnapshot(SnapshotType.ObjectData))
+                                            If Flowsheet.DynamicsManager.EnableHistorian And Not Historian.ContainsKey(integrator.CurrentTime) Then
+                                                Dim xdoc = Flowsheet.GetSnapshot(SnapshotType.ObjectData)
+                                                Historian.Add(integrator.CurrentTime, xdoc.ToString().Compress())
+                                                If Historian.Count > Flowsheet.DynamicsManager.MaxHistorianItems Then
+                                                    Historian.Remove(Historian.Keys.First())
+                                                End If
                                             End If
 
                                             StoreVariableValues(integrator, i, integrator.CurrentTime)
@@ -834,4 +841,21 @@ Public Class FormDynamicsIntegratorControl
     Private Sub btnStepForward_Click(sender As Object, e As EventArgs) Handles btnStepForward.Click
         RunIntegrator(False, True, False, False, 1)
     End Sub
+
+    Private Sub btnClearHistorian_Click(sender As Object, e As EventArgs) Handles btnClearHistorian.Click
+
+        Historian.Clear()
+
+        btnClearHistorian.Text = "Historian Size: 0 items / 0 MB"
+
+    End Sub
+
+    Public Sub UpdateHistorianDisplaySize()
+
+        Dim size = Historian.Values.Select(Function(s) (22 + s.Length * 2) / 1024.0 / 1024.0).Sum() 'mbytes
+
+        btnClearHistorian.Text = String.Format("Historian Size: {0} items / {1:N1} MB", Historian.Values.Count, size)
+
+    End Sub
+
 End Class
