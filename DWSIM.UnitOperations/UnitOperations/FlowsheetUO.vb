@@ -39,6 +39,7 @@ Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Tables
 Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Charts
 Imports System.Dynamic
 Imports System.Reflection
+Imports System.Threading
 
 Namespace UnitOperations.Auxiliary
 
@@ -1164,18 +1165,35 @@ Label_00CC:
         End Function
 
         Public Sub InitializeInternalFlowsheet()
+
             If Not Initialized Then
-                If FileIsEmbedded Then
-                    Dim tmpfile As String = ""
-                    tmpfile = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), Path.GetExtension(EmbeddedFileName))
-                    FlowSheet.FileDatabaseProvider.ExportFile(EmbeddedFileName, tmpfile)
-                    Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(tmpfile, FlowSheet.GetNewInstance, FlowSheet)
-                    File.Delete(tmpfile)
-                Else
-                    Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(SimulationFile, FlowSheet.GetNewInstance, FlowSheet)
-                End If
-                Initialized = True
+
+                Dim finished As Boolean = False
+
+                FlowSheet.RunCodeOnUIThread(Sub()
+                                                Try
+                                                    If FileIsEmbedded Then
+                                                        Dim tmpfile As String = ""
+                                                        tmpfile = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), Path.GetExtension(EmbeddedFileName))
+                                                        FlowSheet.FileDatabaseProvider.ExportFile(EmbeddedFileName, tmpfile)
+                                                        Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(tmpfile, FlowSheet.GetNewInstance(), FlowSheet)
+                                                        File.Delete(tmpfile)
+                                                    Else
+                                                        Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(SimulationFile, FlowSheet.GetNewInstance(), FlowSheet)
+                                                    End If
+                                                    Initialized = True
+                                                Catch ex As Exception
+                                                Finally
+                                                    finished = True
+                                                End Try
+                                            End Sub)
+
+                While Not finished
+                    Thread.Sleep(500)
+                End While
+
             End If
+
         End Sub
 
 
