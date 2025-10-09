@@ -73,3 +73,23 @@ xcopy "Common\samples\*" "..\DistPackages\Windows\samples\*" /E /Y /F /D
 xcopy "Common\samples\*" "..\DistPackages\Windows_32\samples\*" /E /Y /F /D
 xcopy "Common\samples\*" "..\DistPackages\Windows_Plus\samples\*" /E /Y /F /D
 xcopy "Common\samples\*" "..\DistPackages\Linux\samples\*" /E /Y /F /D
+
+del ..\DistPackages\Windows\plugins\FileHelpers.dll
+del ..\DistPackages\Windows_Plus\plugins\FileHelpers.dll
+del ..\DistPackages\Linux\plugins\FileHelpers.dll
+del ..\DistPackages\macOS\plugins\FileHelpers.dll
+
+del ..\DistPackages\Windows\plugins\netstandard.dll
+del ..\DistPackages\Windows_Plus\plugins\netstandard.dll
+del ..\DistPackages\Linux\plugins\netstandard.dll
+del ..\DistPackages\macOS\plugins\netstandard.dll
+
+del ..\DistPackages\Windows\plugins\System*.dll
+del ..\DistPackages\Windows_Plus\plugins\System*.dll
+del ..\DistPackages\Linux\plugins\System*.dll
+del ..\DistPackages\macOS\plugins\System*.dll
+
+del ..\DistPackages\Windows\plugins\Microsoft*.dll
+del ..\DistPackages\Windows_Plus\plugins\Microsoft*.dll
+del ..\DistPackages\Linux\plugins\Microsoft*.dll
+del ..\DistPackages\macOS\plugins\Microsoft*.dll
