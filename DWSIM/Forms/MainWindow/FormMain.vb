@@ -295,109 +295,111 @@ Public Class FormMain
         Dim extlist As List(Of IExtenderCollection) = GetExtenders(LoadExtenderDLLs())
 
         For Each extender In extlist
-            Dim d0 = Date.Now
-            sw.AppendLine(String.Format("[{0}] Loading {1}", Date.Now, extender.GetType().Assembly.GetName().Name))
-            Extenders.Add(extender.ID, extender)
-            Try
-                If extender.Level = ExtenderLevel.MainWindow Then
-                    If extender.Category <> ExtenderCategory.InitializationScript Then
-                        Dim newmenuitem As ToolStripMenuItem = Nothing
-                        If extender.Category = ExtenderCategory.NewItem Then
-                            For Each item As ToolStripMenuItem In MenuStrip1.Items
-                                If item.Text = extender.DisplayText Then
-                                    newmenuitem = item
-                                    Exit For
-                                End If
-                            Next
-                            If newmenuitem Is Nothing Then
-                                newmenuitem = New ToolStripMenuItem()
-                                newmenuitem.Text = extender.DisplayText
-                                newmenuitem.DisplayStyle = ToolStripItemDisplayStyle.Text
-                                If TypeOf extender Is IExtenderCollection2 Then
-                                    DirectCast(extender, IExtenderCollection2).SetMenuItem(newmenuitem)
+            If Not Extenders.ContainsKey(extender.ID) Then
+                Dim d0 = Date.Now
+                sw.AppendLine(String.Format("[{0}] Loading {1}", Date.Now, extender.GetType().Assembly.GetName().Name))
+                Extenders.Add(extender.ID, extender)
+                Try
+                    If extender.Level = ExtenderLevel.MainWindow Then
+                        If extender.Category <> ExtenderCategory.InitializationScript Then
+                            Dim newmenuitem As ToolStripMenuItem = Nothing
+                            If extender.Category = ExtenderCategory.NewItem Then
+                                For Each item As ToolStripMenuItem In MenuStrip1.Items
+                                    If item.Text = extender.DisplayText Then
+                                        newmenuitem = item
+                                        Exit For
+                                    End If
+                                Next
+                                If newmenuitem Is Nothing Then
+                                    newmenuitem = New ToolStripMenuItem()
+                                    newmenuitem.Text = extender.DisplayText
+                                    newmenuitem.DisplayStyle = ToolStripItemDisplayStyle.Text
+                                    If TypeOf extender Is IExtenderCollection2 Then
+                                        DirectCast(extender, IExtenderCollection2).SetMenuItem(newmenuitem)
+                                    End If
                                 End If
                             End If
-                        End If
-                        For Each item In extender.Collection
-                            item.SetMainWindow(Me)
-                            Dim exttsmi As New ToolStripMenuItem
-                            exttsmi.Text = item.DisplayText
-                            exttsmi.Image = item.DisplayImage
-                            AddHandler exttsmi.Click, Sub(s2, e2)
-                                                          item.Run()
-                                                      End Sub
-                            If TypeOf item Is IExtender2 Then
-                                DirectCast(item, IExtender2).SetMenuItem(exttsmi)
-                            End If
-                            Select Case extender.Category
-                                Case ExtenderCategory.File
-                                    If item.InsertAtPosition >= 0 Then
-                                        exttsmi.MergeAction = MergeAction.Insert
-                                        exttsmi.MergeIndex = item.InsertAtPosition
-                                        Try
-                                            FileTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
-                                        Catch ex As Exception
+                            For Each item In extender.Collection
+                                item.SetMainWindow(Me)
+                                Dim exttsmi As New ToolStripMenuItem
+                                exttsmi.Text = item.DisplayText
+                                exttsmi.Image = item.DisplayImage
+                                AddHandler exttsmi.Click, Sub(s2, e2)
+                                                              item.Run()
+                                                          End Sub
+                                If TypeOf item Is IExtender2 Then
+                                    DirectCast(item, IExtender2).SetMenuItem(exttsmi)
+                                End If
+                                Select Case extender.Category
+                                    Case ExtenderCategory.File
+                                        If item.InsertAtPosition >= 0 Then
+                                            exttsmi.MergeAction = MergeAction.Insert
+                                            exttsmi.MergeIndex = item.InsertAtPosition
+                                            Try
+                                                FileTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                            Catch ex As Exception
+                                                FileTSMI.DropDownItems.Add(exttsmi)
+                                            End Try
+                                        Else
                                             FileTSMI.DropDownItems.Add(exttsmi)
-                                        End Try
-                                    Else
-                                        FileTSMI.DropDownItems.Add(exttsmi)
-                                    End If
-                                Case ExtenderCategory.Edit
-                                    If item.InsertAtPosition >= 0 Then
-                                        exttsmi.MergeAction = MergeAction.Insert
-                                        exttsmi.MergeIndex = item.InsertAtPosition
-                                        EditTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
-                                    Else
-                                        EditTSMI.DropDownItems.Add(exttsmi)
-                                    End If
-                                Case ExtenderCategory.Tools
-                                    If item.InsertAtPosition >= 0 Then
-                                        exttsmi.MergeAction = MergeAction.Insert
-                                        exttsmi.MergeIndex = item.InsertAtPosition
-                                        Try
-                                            ToolsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
-                                        Catch ex As Exception
+                                        End If
+                                    Case ExtenderCategory.Edit
+                                        If item.InsertAtPosition >= 0 Then
+                                            exttsmi.MergeAction = MergeAction.Insert
+                                            exttsmi.MergeIndex = item.InsertAtPosition
+                                            EditTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                        Else
+                                            EditTSMI.DropDownItems.Add(exttsmi)
+                                        End If
+                                    Case ExtenderCategory.Tools
+                                        If item.InsertAtPosition >= 0 Then
+                                            exttsmi.MergeAction = MergeAction.Insert
+                                            exttsmi.MergeIndex = item.InsertAtPosition
+                                            Try
+                                                ToolsTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                            Catch ex As Exception
+                                                ToolsTSMI.DropDownItems.Add(exttsmi)
+                                            End Try
+                                        Else
                                             ToolsTSMI.DropDownItems.Add(exttsmi)
-                                        End Try
-                                    Else
-                                        ToolsTSMI.DropDownItems.Add(exttsmi)
-                                    End If
-                                Case ExtenderCategory.Help
-                                    If item.InsertAtPosition >= 0 Then
-                                        exttsmi.MergeAction = MergeAction.Insert
-                                        exttsmi.MergeIndex = item.InsertAtPosition
-                                        Try
-                                            HelpTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
-                                        Catch ex As Exception
+                                        End If
+                                    Case ExtenderCategory.Help
+                                        If item.InsertAtPosition >= 0 Then
+                                            exttsmi.MergeAction = MergeAction.Insert
+                                            exttsmi.MergeIndex = item.InsertAtPosition
+                                            Try
+                                                HelpTSMI.DropDownItems.Insert(item.InsertAtPosition, exttsmi)
+                                            Catch ex As Exception
+                                                HelpTSMI.DropDownItems.Add(exttsmi)
+                                            End Try
+                                        Else
                                             HelpTSMI.DropDownItems.Add(exttsmi)
-                                        End Try
-                                    Else
-                                        HelpTSMI.DropDownItems.Add(exttsmi)
-                                    End If
-                                Case ExtenderCategory.NewItem
-                                    newmenuitem?.DropDownItems.Add(exttsmi)
-                            End Select
-                        Next
-                        If newmenuitem IsNot Nothing AndAlso Not MenuStrip1.Items.Contains(newmenuitem) Then
-                            If TypeOf extender Is IExtenderCollection2 Then
-                                Dim insertidx = DirectCast(extender, IExtenderCollection2).InsertAtPosition
-                                newmenuitem.MergeAction = MergeAction.Insert
-                                newmenuitem.MergeIndex = insertidx
+                                        End If
+                                    Case ExtenderCategory.NewItem
+                                        newmenuitem?.DropDownItems.Add(exttsmi)
+                                End Select
+                            Next
+                            If newmenuitem IsNot Nothing AndAlso Not MenuStrip1.Items.Contains(newmenuitem) Then
+                                If TypeOf extender Is IExtenderCollection2 Then
+                                    Dim insertidx = DirectCast(extender, IExtenderCollection2).InsertAtPosition
+                                    newmenuitem.MergeAction = MergeAction.Insert
+                                    newmenuitem.MergeIndex = insertidx
+                                End If
+                                MenuStrip1.Items.Add(newmenuitem)
                             End If
-                            MenuStrip1.Items.Add(newmenuitem)
+                        Else
+                            For Each item In extender.Collection
+                                item.SetMainWindow(Me)
+                                item.Run()
+                            Next
                         End If
-                    Else
-                        For Each item In extender.Collection
-                            item.SetMainWindow(Me)
-                            item.Run()
-                        Next
                     End If
-                End If
-            Catch ex As Exception
-                Logging.Logger.LogError("Extender Initialization", ex)
-            End Try
-            Dim d1 = Date.Now
-            sw.AppendLine(String.Format("[{0}] Loaded {1} (took {2} seconds)", Date.Now, extender.GetType().Assembly.GetName().Name, (d1 - d0).TotalSeconds))
+                Catch ex As Exception
+                    Logging.Logger.LogError("Extender Initialization", ex)
+                End Try
+                Dim d1 = Date.Now
+                sw.AppendLine(String.Format("[{0}] Loaded {1} (took {2} seconds)", Date.Now, extender.GetType().Assembly.GetName().Name, (d1 - d0).TotalSeconds))
+            End If
         Next
 
         Console.WriteLine(sw.ToString())
