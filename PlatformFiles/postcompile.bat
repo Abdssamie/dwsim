@@ -93,3 +93,8 @@ del ..\DistPackages\Windows\plugins\Microsoft*.dll
 del ..\DistPackages\Windows_Plus\plugins\Microsoft*.dll
 del ..\DistPackages\Linux\plugins\Microsoft*.dll
 del ..\DistPackages\macOS\plugins\Microsoft*.dll
+
+del ..\DistPackages\Windows\plugins\*.xml
+del ..\DistPackages\Windows_Plus\plugins\*.xml
+del ..\DistPackages\Linux\plugins\*.xml
+del ..\DistPackages\macOS\plugins\*.xml
