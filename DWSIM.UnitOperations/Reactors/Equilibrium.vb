@@ -1103,6 +1103,7 @@ Namespace Reactors
             'initial estimates for reaction extents
 
             tms = ims.Clone()
+            tms.DefinedFlow = FlowSpec.Mass
             tms.SetFlowsheet(ims.FlowSheet)
 
             Me.ComponentConversions.Clear()

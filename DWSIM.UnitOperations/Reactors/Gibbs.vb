@@ -1211,6 +1211,7 @@ Namespace Reactors
             If c < 0 Then Throw New Exception("The list of reacting compounds is not defined.")
 
             tms = ims.Clone()
+            tms.DefinedFlow = FlowSpec.Mass
             tms.SetFlowsheet(ims.FlowSheet)
 
             Dim ids = tms.Phases(0).Compounds.Keys.ToList()
@@ -1700,8 +1701,7 @@ Namespace Reactors
                     .PropertyPackage.CurrentMaterialStream = ms
                     Hv = .PropertyPackage.DW_CalcEnthalpy(ms.GetOverallComposition(), T, P, PropertyPackages.State.Vapor)
                     .Phases(0).Properties.enthalpy = Hv
-                    .Phases(0).Properties.massflow = W * wv
-                    .DefinedFlow = FlowSpec.Mass
+                    .SetMassFlow(W * wv)
                 End With
             End If
 
@@ -1932,6 +1932,7 @@ Namespace Reactors
             If c < 0 Then Throw New Exception("The list of reacting compounds is not defined.")
 
             tms = ims.Clone()
+            tms.DefinedFlow = FlowSpec.Mass
             tms.SetFlowsheet(ims.FlowSheet)
 
             Dim te(els) As Double
