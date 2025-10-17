@@ -420,8 +420,8 @@ Public Class FormMain
         End If
 
         Dim result As DialogResult = MessageBox.Show(
-                    "Are you sure you want to logout, all flowsheets that are opened from Simulate 365 Dashboard will be closed?",
-                    "Confirm Logout",
+                    "Are you sure you want to sign out? All flowsheets opened from the Simulate 365 Dashboard will be closed.",
+                    "Sign Out",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question,
                     MessageBoxDefaultButton.Button2)
