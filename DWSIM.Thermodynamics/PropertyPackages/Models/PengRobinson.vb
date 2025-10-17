@@ -18,8 +18,6 @@
 Imports FileHelpers
 Imports DWSIM.Thermodynamics.PropertyPackages.ThermoPlugs.PR
 Imports DWSIM.MathOps.MathEx.PolySolve
-Imports Cudafy.Host
-Imports Cudafy
 
 Namespace PropertyPackages.Auxiliary
 
@@ -38,7 +36,7 @@ Namespace PropertyPackages.Auxiliary
 
         Public comment As String = ""
 
-        <FieldHidden> Public Owner As Object
+        <FieldHidden> <Xml.Serialization.XmlIgnore> <Newtonsoft.Json.JsonIgnore> Public Owner As Object
 
         Public Property kij As Double
             Get

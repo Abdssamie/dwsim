@@ -2,8 +2,44 @@
 Imports System.Globalization
 Imports DWSIM.Interfaces.Enums
 Imports System.Linq
+Imports System.IO
+Imports System.IO.Compression
+Imports System.Text
 
 Public Module General
+
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function Compress(ByVal text As String) As String
+        Dim buffer0() As Byte = Encoding.ASCII.GetBytes(text)
+        Dim memoryStream = New MemoryStream
+        Dim gZipStream = New GZipStream(memoryStream, CompressionMode.Compress, True)
+        gZipStream.Write(buffer0, 0, buffer0.Length)
+        memoryStream.Position = 0
+        Dim compressedData = New Byte((memoryStream.Length) - 1) {}
+        memoryStream.Read(compressedData, 0, compressedData.Length)
+        Dim gZipBuffer = New Byte(((compressedData.Length + 4)) - 1) {}
+        Buffer.BlockCopy(compressedData, 0, gZipBuffer, 4, compressedData.Length)
+        Buffer.BlockCopy(BitConverter.GetBytes(buffer0.Length), 0, gZipBuffer, 0, 4)
+        Return Convert.ToBase64String(gZipBuffer)
+    End Function
+
+    ''' <summary>
+    ''' Decompresses the string.
+    ''' </summary>
+    ''' <param name="compressedText">The compressed text.</param>
+    ''' <returns></returns>
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function Decompress(ByVal compressedText As String) As String
+        Dim gZipBuffer() As Byte = Convert.FromBase64String(compressedText)
+        Dim memoryStream = New MemoryStream
+        Dim dataLength As Integer = BitConverter.ToInt32(gZipBuffer, 0)
+        memoryStream.Write(gZipBuffer, 4, (gZipBuffer.Length - 4))
+        Dim buffer = New Byte((dataLength) - 1) {}
+        memoryStream.Position = 0
+        Dim gZipStream = New GZipStream(memoryStream, CompressionMode.Decompress)
+        gZipStream.Read(buffer, 0, buffer.Length)
+        Return Encoding.ASCII.GetString(buffer)
+    End Function
 
     <System.Runtime.CompilerServices.Extension()>
     Public Sub OpenURL(url As String)
@@ -208,7 +244,7 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Sub ValidateCellForDouble(dgv As DataGridView, e As DataGridViewCellValidatingEventArgs)
 
         Dim cell As DataGridViewCell = dgv.Rows(e.RowIndex).Cells(e.ColumnIndex)
@@ -226,14 +262,14 @@ Public Module General
 
     End Sub
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsValidDouble(obj As Object) As Boolean
 
         Return Double.TryParse(obj.ToString, New Double)
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsValidDouble(str As String) As Boolean
 
         Return Double.TryParse(str, New Double)
@@ -273,7 +309,7 @@ Public Module General
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToString(sourcearray As String(), ci As CultureInfo) As String
 
         Dim sb As String = ""
@@ -298,7 +334,7 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToArray(ByVal text As String, ci As CultureInfo, arraytype As Type) As Array
 
 #If WINE32 Then
@@ -355,7 +391,7 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Sub UIThread(control As Control, code As Action)
         If control.InvokeRequired Then
             control.BeginInvoke(code)
@@ -378,7 +414,7 @@ Public Module General
     '    Return New DrawingTools.Point(pt.X, pt.Y)
     'End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function GetUnits(control As System.Windows.Forms.GridItem) As String
         If control.Value.ToString().Split(" ").Length > 1 Then
             Return control.Value.ToString.Substring(control.Value.ToString.IndexOf(" "c) + 1, control.Value.ToString.Length - control.Value.ToString.IndexOf(" "c) - 1)
@@ -387,7 +423,7 @@ Public Module General
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function GetValue(control As System.Windows.Forms.GridItem) As Double
         Dim istring As Object
         If control.Value.ToString().Split(" ").Length > 1 Then
@@ -409,7 +445,7 @@ Public Module General
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function DropDownWidth(control As ListView) As Integer
         Dim maxWidth As Integer = 0, temp As Integer = 0
         For Each obj As Object In control.Items
@@ -421,7 +457,7 @@ Public Module General
         Return maxWidth
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function DropDownHeight(control As ListView) As Integer
         Dim Height As Integer = 0, temp As Integer = 0
         For Each obj As Object In control.Items
@@ -625,7 +661,7 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToArrayString(vector As String()) As String
 
         Dim retstr As String = "{ "
@@ -639,7 +675,7 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function ToArrayString(vector As Object()) As String
 
         Dim retstr As String = "{ "
@@ -765,7 +801,7 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsValid(d As Double) As Boolean
         If Double.IsNaN(d) Or Double.IsInfinity(d) Then Return False Else Return True
     End Function
@@ -782,7 +818,7 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsPositive(d As Double) As Boolean
         If d.IsValid() Then
             If d > 0.0# Then Return True Else Return False
@@ -791,7 +827,7 @@ Public Module General
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsPositive(d As Nullable(Of Double)) As Boolean
         If d.GetValueOrDefault.IsValid() Then
             If d.GetValueOrDefault > 0.0# Then Return True Else Return False
@@ -800,7 +836,7 @@ Public Module General
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsNegative(d As Double) As Boolean
         If d.IsValid() Then
             If d < 0.0# Then Return True Else Return False
@@ -809,7 +845,7 @@ Public Module General
         End If
     End Function
 
-    <System.Runtime.CompilerServices.Extension()> _
+    <System.Runtime.CompilerServices.Extension()>
     Public Function IsNegative(d As Nullable(Of Double)) As Boolean
         If d.GetValueOrDefault.IsValid() Then
             If d.GetValueOrDefault < 0.0# Then Return True Else Return False

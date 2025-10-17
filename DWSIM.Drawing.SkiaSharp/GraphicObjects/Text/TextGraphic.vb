@@ -29,6 +29,14 @@ Namespace GraphicObjects
         End Sub
 
 #End Region
+        Public Overrides Property ClipboardData As String
+            Get
+                Return Text
+            End Get
+            Set(value As String)
+                Text = value
+            End Set
+        End Property
 
         Public Property Text As String = "TEXT (double-click to edit)"
 

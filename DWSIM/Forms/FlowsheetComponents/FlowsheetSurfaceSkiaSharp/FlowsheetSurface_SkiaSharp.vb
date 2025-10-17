@@ -56,7 +56,6 @@ Public Class FlowsheetSurface_SkiaSharp
         FControl.Dock = DockStyle.Fill
         FControl.FlowsheetObject = Flowsheet
         FlowsheetSurface = FControl.FlowsheetSurface
-        FormMain.AnalyticsProvider?.RegisterEvent("Flowsheet Renderer", "Software", Nothing)
 
         FlowsheetSurface.Zoom = Settings.DpiScale * 2.0
 

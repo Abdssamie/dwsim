@@ -6,7 +6,12 @@
 
     Private Sub FlowsheetUOViewerForm_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        If fsuo.Fsheet IsNot Nothing Then
+        Try
+            fsuo.InitializeInternalFlowsheet()
+        Catch ex As Exception
+        End Try
+
+        If fsuo.Fsheet Is Nothing Then
             MessageBox.Show("Please select and setup the internal flowsheet so it can be displayed here.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If

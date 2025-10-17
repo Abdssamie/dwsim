@@ -46,18 +46,8 @@ Public Class EditingForm_Flowsheet_Editor
     Private Sub btnInitialize_Click(sender As Object, e As EventArgs) Handles btnInitialize.Click
 
         Try
-            If fsuo.FileIsEmbedded Then
-                Dim tmpfile As String = ""
-                tmpfile = Path.ChangeExtension(SharedClasses.Utility.GetTempFileName(), Path.GetExtension(fsuo.EmbeddedFileName))
-                fsuo.FlowSheet.FileDatabaseProvider.ExportFile(fsuo.EmbeddedFileName, tmpfile)
-                fsuo.Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(tmpfile, fsuo.FlowSheet.GetNewInstance, fsuo.FlowSheet)
-                File.Delete(tmpfile)
-            Else
-                fsuo.Fsheet = UnitOperations.Flowsheet.InitializeFlowsheet(fsuo.SimulationFile, fsuo.FlowSheet.GetNewInstance, fsuo.FlowSheet)
-            End If
-            fsuo.Initialized = True
+            fsuo.InitializeInternalFlowsheet()
         Catch ex As AggregateException
-            fsuo.FlowSheet.ShowMessage("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", IFlowsheet.MessageType.GeneralError)
             fsuo.FlowSheet.ShowMessage(ex.Message.ToString & ": " & ex.InnerException.ToString, IFlowsheet.MessageType.GeneralError)
             fsuo.Fsheet = Nothing
             fsuo.Initialized = False

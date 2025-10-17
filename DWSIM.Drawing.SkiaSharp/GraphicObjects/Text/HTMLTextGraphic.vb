@@ -33,6 +33,15 @@ Namespace GraphicObjects
 
 #End Region
 
+        Public Overrides Property ClipboardData As String
+            Get
+                Return Text
+            End Get
+            Set(value As String)
+                Text = value
+            End Set
+        End Property
+
         Public Property Text As String = "<html><body><p>Double-click to edit this text.</p></body></html>"
 
         Public Property Size As Double = 14.0#

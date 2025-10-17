@@ -121,6 +121,9 @@
     <value>00:00:00</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 14</value>
+  </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>52, 13</value>
   </data>
@@ -128,7 +131,7 @@
     <value>Schedule</value>
   </data>
   <data name="cbScenario.Location" type="System.Drawing.Point, System.Drawing">
-    <value>74, 13</value>
+    <value>74, 12</value>
   </data>
   <data name="cbScenario.Size" type="System.Drawing.Size, System.Drawing">
     <value>131, 21</value>
@@ -141,7 +144,7 @@
     <value>False</value>
   </data>
   <data name="btnViewResults.Location" type="System.Drawing.Point, System.Drawing">
-    <value>844, 11</value>
+    <value>747, 11</value>
   </data>
   <data name="btnViewResults.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 23</value>
@@ -150,13 +153,13 @@
     <value>View Results</value>
   </data>
   <data name="btnRealtime.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 11</value>
+    <value>297, 10</value>
   </data>
   <data name="btnRealtime.ToolTip" xml:space="preserve">
     <value>Real-Time</value>
   </data>
   <data name="btnStop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>326, 11</value>
+    <value>326, 10</value>
   </data>
   <data name="btnStop.ToolTip" xml:space="preserve">
     <value>Stop Execution</value>
@@ -166,7 +169,7 @@
     <value>Stretch</value>
   </data>
   <data name="btnRun.Location" type="System.Drawing.Point, System.Drawing">
-    <value>210, 11</value>
+    <value>210, 10</value>
   </data>
   <data name="btnRun.ToolTip" xml:space="preserve">
     <value>Run Schedule</value>
@@ -175,7 +178,7 @@
     <value>False</value>
   </data>
   <data name="btnStepBackwards.Location" type="System.Drawing.Point, System.Drawing">
-    <value>239, 11</value>
+    <value>239, 10</value>
   </data>
   <data name="btnStepBackwards.ToolTip" xml:space="preserve">
     <value>Step Backwards</value>
@@ -184,19 +187,25 @@
     <value>False</value>
   </data>
   <data name="btnStepForward.Location" type="System.Drawing.Point, System.Drawing">
-    <value>268, 11</value>
+    <value>268, 10</value>
   </data>
   <data name="btnStepForward.ToolTip" xml:space="preserve">
     <value>Step Forward</value>
+  </data>
+  <data name="btnClearHistorian.Location" type="System.Drawing.Point, System.Drawing">
+    <value>944, 11</value>
+  </data>
+  <data name="btnClearHistorian.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 23</value>
   </data>
   <data name="ProgressBar1.Location" type="System.Drawing.Point, System.Drawing">
     <value>535, 11</value>
   </data>
   <data name="ProgressBar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>291, 23</value>
+    <value>206, 23</value>
   </data>
   <data name="btnLiveChart.Location" type="System.Drawing.Point, System.Drawing">
-    <value>941, 11</value>
+    <value>844, 11</value>
   </data>
   <data name="btnLiveChart.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 23</value>
@@ -205,10 +214,10 @@
     <value>View Live Chart</value>
   </data>
   <data name="FlowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 17</value>
+    <value>358, 16</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1047, 47</value>
+    <value>1173, 47</value>
   </data>
   <data name="$this.TabText" xml:space="preserve">
     <value>Integrator Controls</value>

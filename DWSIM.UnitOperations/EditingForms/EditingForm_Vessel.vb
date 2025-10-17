@@ -402,7 +402,7 @@ Public Class EditingForm_Vessel
         If Loaded Then RequestCalc()
     End Sub
 
-    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbPressure.TextChanged, tbTemperature.TextChanged, tbThickness.TextChanged
+    Private Sub tb_TextChanged(sender As Object, e As EventArgs) Handles tbPressure.TextChanged, tbTemperature.TextChanged, tbThickness.TextChanged, tbDiam.TextChanged, tbHeight.TextChanged
 
         Dim tbox = DirectCast(sender, TextBox)
 

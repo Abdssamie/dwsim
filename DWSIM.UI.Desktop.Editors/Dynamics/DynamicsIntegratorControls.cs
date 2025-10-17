@@ -36,7 +36,7 @@ namespace DWSIM.UI.Desktop.Editors.Dynamics
 
         private static IFlowsheet FlowsheetClone;
 
-        private static Dictionary<DateTime, XDocument> Historian;
+        private static Dictionary<DateTime, String> Historian;
 
         public DynamicsIntegratorControl(DWSIM.UI.Desktop.Shared.Flowsheet fs)
             : base()
@@ -376,7 +376,7 @@ namespace DWSIM.UI.Desktop.Editors.Dynamics
 
             FlowsheetClone = Flowsheet.Clone();
 
-            Historian = new Dictionary<DateTime, XDocument>();
+            Historian = new Dictionary<DateTime, String>();
 
             var exceptions = new List<Exception>();
 
@@ -445,7 +445,7 @@ namespace DWSIM.UI.Desktop.Editors.Dynamics
 
                     if (exceptions.Count > 0) break;
 
-                    Historian.Add(integrator.CurrentTime, Flowsheet.GetSnapshot(SnapshotType.ObjectData));
+                    Historian.Add(integrator.CurrentTime, Flowsheet.GetSnapshot(SnapshotType.ObjectData).ToString().Compress());
 
                     StoreVariableValues(Flowsheet, (DynamicsManager.Integrator)integrator, j, integrator.CurrentTime);
 

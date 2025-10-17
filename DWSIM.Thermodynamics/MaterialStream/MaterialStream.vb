@@ -8310,6 +8310,7 @@ Namespace Streams
         ''' </summary>
         ''' <param name="value">Flow in kg/s</param>
         Public Function SetMassFlow(value As Double) As String Implements IMaterialStream.SetMassFlow
+            Dim multiplier = value / Phases(0).Properties.massflow.GetValueOrDefault()
             Phases(0).Properties.massflow = value
             Phases(0).Properties.molarflow = value / Phases(0).Properties.molecularWeight * 1000
             Dim mixdens = Phases(0).Properties.density.GetValueOrDefault()
@@ -8324,6 +8325,22 @@ Namespace Streams
             For Each comp In Phases(0).Compounds.Values
                 comp.MolarFlow = Phases(0).Properties.molarflow * comp.MoleFraction.GetValueOrDefault()
             Next
+            If Not Double.IsNaN(multiplier) And Not Double.IsInfinity(multiplier) Then
+                For i = 1 To 7
+                    Phases(i).Properties.massflow *= multiplier
+                    Phases(i).Properties.molarflow *= multiplier
+                    Dim pdens = Phases(i).Properties.density.GetValueOrDefault()
+                    If Not Double.IsNaN(mixdens) And Not Double.IsInfinity(mixdens) Then
+                        Phases(i).Properties.volumetric_flow *= multiplier
+                    End If
+                    For Each comp In Phases(i).Compounds.Values
+                        comp.MassFlow *= multiplier
+                    Next
+                    For Each comp In Phases(0).Compounds.Values
+                        comp.MolarFlow *= multiplier
+                    Next
+                Next
+            End If
             DefinedFlow = FlowSpec.Mass
             AtEquilibrium = False
             If GraphicObject IsNot Nothing Then
@@ -8927,13 +8944,17 @@ Namespace Streams
                 Next
                 For Each sub1 In p.Compounds.Values
                     sub1.MassFraction = sub1.MassFlow.GetValueOrDefault / total
+                    If Not sub1.MassFraction.IsValidDouble() Then sub1.MassFraction = 0.0
                 Next
                 For Each sub1 In p.Compounds.Values
                     mass_div_mm += sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight
                 Next
                 For Each sub1 In p.Compounds.Values
                     sub1.MoleFraction = sub1.MassFraction.GetValueOrDefault / sub1.ConstantProperties.Molar_Weight / mass_div_mm
+                    If Not sub1.MoleFraction.IsValidDouble() Then sub1.MoleFraction = 0.0
                 Next
+                If Not total.IsValidDouble() Then total = 0.0
+                If Not totalm.IsValidDouble() Then totalm = 0.0
                 .Phases(0).Properties.massflow = total
                 .Phases(0).Properties.molarflow = totalm
                 .SpecType = StreamSpec.Temperature_and_Pressure
@@ -8974,18 +8995,15 @@ Namespace Streams
 
                 Case PhaseLabel.Mixture
 
-                    Dim wfrac = 1.0
-                    Dim mfrac = 1.0
-
                     If Not SetW Then W = prevW
-                    SetMassFlow(W * wfrac)
-                    SetMassEnthalpy(H * wfrac)
+                    SetMassFlow(W)
+                    SetMassEnthalpy(H)
 
                     For Each sub1 In Me.Phases(0).Compounds.Values
                         sub1.MoleFraction = stream.Phases(0).Compounds(sub1.Name).MoleFraction.GetValueOrDefault
                         sub1.MassFraction = stream.Phases(0).Compounds(sub1.Name).MassFraction.GetValueOrDefault
-                        sub1.MolarFlow = M * mfrac * sub1.MoleFraction
-                        sub1.MassFlow = W * wfrac * sub1.MassFraction
+                        sub1.MolarFlow = M * sub1.MoleFraction
+                        sub1.MassFlow = W * sub1.MassFraction
                     Next
 
                 Case PhaseLabel.Vapor
@@ -8993,15 +9011,19 @@ Namespace Streams
                     Dim wfrac = stream.Phases(2).Properties.massfraction.GetValueOrDefault
                     Dim mfrac = stream.Phases(2).Properties.molarfraction.GetValueOrDefault
 
-                    If Not SetW Then W = prevW
-                    SetMassFlow(W * wfrac)
-
                     Dim Hv = stream.Phases(2).Properties.enthalpy
 
                     If Hv.HasValue Then
                         SetMassEnthalpy(Hv.Value)
                     Else
                         SetMassEnthalpy(H)
+                    End If
+
+                    If Not SetW Then
+                        W = prevW
+                        SetMassFlow(prevW)
+                    Else
+                        SetMassFlow(W * wfrac)
                     End If
 
                     For Each sub1 In Me.Phases(0).Compounds.Values
@@ -9016,15 +9038,19 @@ Namespace Streams
                     Dim wfrac = stream.Phases(1).Properties.massfraction.GetValueOrDefault
                     Dim mfrac = stream.Phases(1).Properties.molarfraction.GetValueOrDefault
 
-                    If Not SetW Then W = prevW
-                    SetMassFlow(W * wfrac)
-
                     Dim Hl = stream.Phases(1).Properties.enthalpy
 
                     If Hl.HasValue Then
                         SetMassEnthalpy(Hl.Value)
                     Else
                         SetMassEnthalpy(H)
+                    End If
+
+                    If Not SetW Then
+                        W = prevW
+                        SetMassFlow(prevW)
+                    Else
+                        SetMassFlow(W * wfrac)
                     End If
 
                     For Each sub1 In Me.Phases(0).Compounds.Values
@@ -9039,8 +9065,12 @@ Namespace Streams
                     Dim wfrac = stream.Phases(3).Properties.massfraction.GetValueOrDefault
                     Dim mfrac = stream.Phases(3).Properties.molarfraction.GetValueOrDefault
 
-                    If Not SetW Then W = prevW
-                    SetMassFlow(W * wfrac)
+                    If Not SetW Then
+                        W = prevW
+                        SetMassFlow(prevW)
+                    Else
+                        SetMassFlow(W * wfrac)
+                    End If
 
                     Dim Hl = stream.Phases(3).Properties.enthalpy
 
@@ -9062,8 +9092,12 @@ Namespace Streams
                     Dim wfrac = stream.Phases(4).Properties.massfraction.GetValueOrDefault
                     Dim mfrac = stream.Phases(4).Properties.molarfraction.GetValueOrDefault
 
-                    If Not SetW Then W = prevW
-                    SetMassFlow(W * wfrac)
+                    If Not SetW Then
+                        W = prevW
+                        SetMassFlow(prevW)
+                    Else
+                        SetMassFlow(W * wfrac)
+                    End If
 
                     Dim Hl = stream.Phases(4).Properties.enthalpy
 
@@ -9085,8 +9119,12 @@ Namespace Streams
                     Dim wfrac = stream.Phases(7).Properties.massfraction.GetValueOrDefault
                     Dim mfrac = stream.Phases(7).Properties.molarfraction.GetValueOrDefault
 
-                    If Not SetW Then W = prevW
-                    SetMassFlow(W * wfrac)
+                    If Not SetW Then
+                        W = prevW
+                        SetMassFlow(prevW)
+                    Else
+                        SetMassFlow(W * wfrac)
+                    End If
 
                     Dim Hs = stream.Phases(7).Properties.enthalpy
 

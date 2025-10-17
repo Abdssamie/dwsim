@@ -157,6 +157,16 @@ Namespace UnitOperations
 
             MyBase.LoadData(data)
 
+            Dim dimel = (From xel As XElement In data Select xel Where xel.Name = "Dimensions").FirstOrDefault
+            If Not dimel Is Nothing Then
+                Dimensions = New List(Of IDimension)
+                For Each xel In dimel.Elements
+                    Dim as1 As New SharedClasses.Dimension()
+                    as1.LoadData(xel.Elements.ToList)
+                    Dimensions.Add(as1)
+                Next
+            End If
+
             Dim ael = (From xel As XElement In data Select xel Where xel.Name = "AccumulationStream").FirstOrDefault
 
             If Not ael Is Nothing Then
@@ -195,6 +205,14 @@ Namespace UnitOperations
 
             If AccumulationStream IsNot Nothing Then
                 elements.Add(New XElement("AccumulationStream", AccumulationStream.SaveData()))
+            End If
+
+            If Dimensions IsNot Nothing Then
+                Dim dimel As New XElement("Dimensions")
+                elements.Add(dimel)
+                For Each dimension In Dimensions
+                    dimel.Add(New XElement("Dimension", DirectCast(dimension, SharedClasses.Dimension).SaveData()))
+                Next
             End If
 
             Return elements
