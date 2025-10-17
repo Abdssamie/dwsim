@@ -45,6 +45,10 @@ Public Class Manager
 
     Public Property RunSchedule As Func(Of String, Task) Implements IDynamicsManager.RunSchedule
 
+    Public Property EnableHistorian As Boolean = True Implements IDynamicsManager.EnableHistorian
+
+    Public Property MaxHistorianItems As Integer = 1000 Implements IDynamicsManager.MaxHistorianItems
+
     Public Function SaveData() As List(Of XElement) Implements ICustomXMLSerialization.SaveData
         Dim data = XMLSerializer.XMLSerializer.Serialize(Me)
         Dim e1 = New XElement("ScheduleList")
@@ -204,7 +208,7 @@ Public Class Manager
 
     End Function
 
-    Public Function GetPropertyValuesFromEvents(fs As IFlowsheet, currenttime As DateTime, history As Dictionary(Of DateTime, XDocument), eventset As IDynamicsEventSet) As List(Of Tuple(Of String, String, Double)) Implements IDynamicsManager.GetPropertyValuesFromEvents
+    Public Function GetPropertyValuesFromEvents(fs As IFlowsheet, currenttime As DateTime, history As Dictionary(Of DateTime, String), eventset As IDynamicsEventSet) As List(Of Tuple(Of String, String, Double)) Implements IDynamicsManager.GetPropertyValuesFromEvents
 
         Dim props As New List(Of Tuple(Of String, String, Double))
 
@@ -236,7 +240,7 @@ Public Class Manager
 
                         Case Enums.Dynamics.DynamicsEventTransitionReferenceType.InitialState
 
-                            state = history.Values.First()
+                            state = XDocument.Parse(history.Values.First().Decompress())
 
                             active = True
 
@@ -244,7 +248,7 @@ Public Class Manager
 
                             If i = 0 Then
 
-                                state = history.Values.First()
+                                state = XDocument.Parse(history.Values.First().Decompress())
 
                                 active = True
 
@@ -254,7 +258,7 @@ Public Class Manager
 
                                 If refevent.TimeStamp < currenttime Then active = True
 
-                                state = history.Where(Function(h) h.Key <= refevent.TimeStamp).OrderByDescending(Function(h) h.Key).FirstOrDefault().Value
+                                state = XDocument.Parse(history.Where(Function(h) h.Key <= refevent.TimeStamp).OrderByDescending(Function(h) h.Key).FirstOrDefault().Value.Decompress())
 
                             End If
 
@@ -268,7 +272,7 @@ Public Class Manager
 
                             refevent = eventset.Events(current.TransitionReferenceEventID)
 
-                            state = history.Where(Function(h) h.Key <= refevent.TimeStamp).OrderByDescending(Function(h) h.Key).FirstOrDefault().Value
+                            state = XDocument.Parse(history.Where(Function(h) h.Key <= refevent.TimeStamp).OrderByDescending(Function(h) h.Key).FirstOrDefault().Value.Decompress())
 
                             If refevent.TimeStamp <= currenttime Then active = True
 

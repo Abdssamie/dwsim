@@ -209,7 +209,7 @@ Namespace UnitOperations
             Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("FillWithStream"),
                 .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
             AddHandler button2.Click, Sub(s, e)
-                                          AccumulationStream.SetFlowsheet(FlowSheet)
+                                          AccumulationStream?.SetFlowsheet(FlowSheet)
                                           Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
                                           fms.ShowDialog()
                                       End Sub
@@ -240,7 +240,7 @@ Namespace UnitOperations
 
                 Dim pi = Math.PI
 
-                D = Dimensions(0).Value
+                D = Dimensions(0).Value / 1000
                 L = Dimensions(1).Value
                 DE = D + WallThickness
 
@@ -309,8 +309,8 @@ Namespace UnitOperations
             For i = 0 To 5
                 If Me.GraphicObject.InputConnectors(i).IsAttached Then
                     Dim imsx = GetInletMaterialStream(i)
-                    If imsmix Is Nothing Then imsmix = imsx.CloneXML
-                    imsmix = imsmix.Add(imsx)
+                    If imsmix Is Nothing Then imsmix = imsx.CloneXML()
+                    If Not Double.IsNaN(imsx.GetMassFlow()) AndAlso imsx.GetMassFlow() > 0 Then imsmix = imsmix.Add(imsx)
                 End If
             Next
 
@@ -352,17 +352,43 @@ Namespace UnitOperations
             Else
 
                 AccumulationStream.SetFlowsheet(FlowSheet)
+
+                If Not imsmix.AtEquilibrium And imsmix.GetMassFlow() > 0 Then
+                    imsmix.AssignSelfToPP()
+                    imsmix.Calculate()
+                End If
+
                 If imsmix.GetMassFlow() > 0 Then
                     AccumulationStream = AccumulationStream.Add(imsmix, timestep)
                 End If
+
                 AccumulationStream.PropertyPackage.CurrentMaterialStream = AccumulationStream
+
                 AccumulationStream.Calculate()
+
+                If Not oms1.AtEquilibrium And oms1.GetMassFlow() > 0 Then
+                    oms1.AssignSelfToPP()
+                    oms1.Calculate()
+                End If
+
+                If Not oms2.AtEquilibrium And oms2.GetMassFlow() > 0 Then
+                    oms2.AssignSelfToPP()
+                    oms2.Calculate()
+                End If
+
+                If Not omsr.AtEquilibrium And omsr.GetMassFlow() > 0 Then
+                    omsr.AssignSelfToPP()
+                    omsr.Calculate()
+                End If
+
                 If oms1.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(oms1, timestep)
                 If oms2.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(oms2, timestep)
                 If omsr IsNot Nothing Then
                     If omsr.GetMassFlow() > 0 Then AccumulationStream = AccumulationStream.Subtract(omsr, timestep)
                 End If
-                If AccumulationStream.GetMassFlow <= 0.0 Then AccumulationStream.SetMassFlow(0.0)
+
+                If AccumulationStream.GetMassFlow() <= 0.0 Then AccumulationStream.SetMassFlow(0.0)
+
             End If
 
             AccumulationStream.SetFlowsheet(FlowSheet)
@@ -501,7 +527,7 @@ Namespace UnitOperations
 
             Dim M = AccumulationStream.GetMolarFlow()
 
-            Dim Temperature = AccumulationStream.GetTemperature
+            Dim Temperature = AccumulationStream.GetTemperature()
 
             Pressure = AccumulationStream.GetPressure()
 
@@ -530,7 +556,7 @@ Namespace UnitOperations
 
                     AccumulationStream.SpecType = StreamSpec.Pressure_and_Enthalpy
 
-                    LiquidVolume = AccumulationStream.Phases(3).Properties.volumetric_flow.GetValueOrDefault
+                    LiquidVolume = AccumulationStream.Phases(1).Properties.volumetric_flow.GetValueOrDefault
 
                     RelativeLevel = LiquidVolume / Vol
 
@@ -576,15 +602,19 @@ Namespace UnitOperations
                     GetInletMaterialStream(i).SetPressure(Pressure)
                 End If
             Next
-            oms1.SetPressure(Pressure)
 
-            Dim liqdens = AccumulationStream.Phases(3).Properties.density.GetValueOrDefault
+            Dim liqdens = AccumulationStream.Phases(1).Properties.density.GetValueOrDefault
 
             oms2.SetPressure(Pressure + liqdens * 9.8 * RelativeLevel * Height)
 
             oms1.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
+            oms1.AtEquilibrium = False
 
-            oms2.AssignFromPhase(PhaseLabel.Liquid1, AccumulationStream, False)
+            omsr.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
+            omsr.AtEquilibrium = False
+
+            oms2.AssignFromPhase(PhaseLabel.LiquidMixture, AccumulationStream, False)
+            oms2.AtEquilibrium = False
 
         End Sub
 

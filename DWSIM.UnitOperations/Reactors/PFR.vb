@@ -779,6 +779,7 @@ Namespace Reactors
             End If
 
             ims = DirectCast(FlowSheet.SimulationObjects(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name), MaterialStream).Clone
+            ims.DefinedFlow = FlowSpec.Mass
 
             If dynamics Then ims = AccumulationStream
 

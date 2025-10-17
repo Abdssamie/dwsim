@@ -374,6 +374,8 @@ Namespace UnitOperations
 
             Dim Kvc As Double = 1.0
 
+            P1 = ims.GetPressure()
+
             Dim OpeningPct = (P1 - SetPointPressure) / (FullyOpenedPressure - SetPointPressure)
 
             If OpeningPct < 0.0 Then OpeningPct = 0.0

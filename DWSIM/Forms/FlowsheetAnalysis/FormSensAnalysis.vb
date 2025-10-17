@@ -304,16 +304,19 @@ Public Class FormSensAnalysis
             Me.cbObjIndVar1.SelectedItem.ToString <> DWSIM.App.GetLocalString("ReactionProperty") And
             Me.cbObjIndVar1.SelectedItem.ToString <> DWSIM.App.GetLocalString("Flowsheet Result") Then
             For Each prop As String In props
-                If form.GetTranslatedString1(prop) = Me.cbPropIndVar1.SelectedItem.ToString Then
-                    For Each obj As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
-                        If Me.cbObjIndVar1.SelectedItem.ToString = obj.GraphicObject.Tag Then
-                            Me.tbUnitIndVar1.Text = obj.GetPropertyUnit(prop, su)
-                            Me.tbCurrValIndVar1.Text = obj.GetPropertyValue(prop, su)
-                            If EnableAutoSave Then SaveForm(selectedsacase)
-                            Exit Sub
-                        End If
-                    Next
-                End If
+                Try
+                    If form.GetTranslatedString1(prop) = Me.cbPropIndVar1.SelectedItem.ToString Then
+                        For Each obj As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
+                            If Me.cbObjIndVar1.SelectedItem.ToString = obj.GraphicObject.Tag Then
+                                Me.tbUnitIndVar1.Text = obj.GetPropertyUnit(prop, su)
+                                Me.tbCurrValIndVar1.Text = obj.GetPropertyValue(prop, su)
+                                If EnableAutoSave Then SaveForm(selectedsacase)
+                                Exit Sub
+                            End If
+                        Next
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Else
             If EnableAutoSave Then SaveForm(selectedsacase)
@@ -327,14 +330,17 @@ Public Class FormSensAnalysis
             Me.cbObjIndVar2.SelectedItem.ToString <> DWSIM.App.GetLocalString("Flowsheet Result") Then
             For Each prop As String In props
                 If form.GetTranslatedString1(prop) = Me.cbPropIndVar2.SelectedItem.ToString Then
-                    For Each obj As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
-                        If Me.cbObjIndVar2.SelectedItem.ToString = obj.GraphicObject.Tag Then
-                            Me.tbUnitIndVar2.Text = obj.GetPropertyUnit(prop, su)
-                            Me.tbCurrValIndVar2.Text = obj.GetPropertyValue(prop, su)
-                            If EnableAutoSave Then SaveForm(selectedsacase)
-                            Exit Sub
-                        End If
-                    Next
+                    Try
+                        For Each obj As SharedClasses.UnitOperations.BaseClass In form.Collections.FlowsheetObjectCollection.Values
+                            If Me.cbObjIndVar2.SelectedItem.ToString = obj.GraphicObject.Tag Then
+                                Me.tbUnitIndVar2.Text = obj.GetPropertyUnit(prop, su)
+                                Me.tbCurrValIndVar2.Text = obj.GetPropertyValue(prop, su)
+                                If EnableAutoSave Then SaveForm(selectedsacase)
+                                Exit Sub
+                            End If
+                        Next
+                    Catch ex As Exception
+                    End Try
                 End If
             Next
         Else

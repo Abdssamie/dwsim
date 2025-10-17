@@ -222,6 +222,7 @@ xcopy "$(SolutionDir)DWSIM.Automation\bin\Release\*" "$(SolutionDir)DistPackages
 xcopy "$(SolutionDir)DWSIM.Automation\bin\Release\*" "$(SolutionDir)DistPackages\macOS\" /E /Y /F /D 2&gt;nul 1&gt;nul 4&gt;nul
 xcopy "$(SolutionDir)DWSIM.Automation\bin\Release\*" "$(SolutionDir)DistPackages\Linux\" /E /Y /F /D 2&gt;nul 1&gt;nul 4&gt;nul
 xcopy "$(SolutionDir)DWSIM.Automation\bin\Release\*" "$(SolutionDir)DistPackages\Windows_32\" /E /Y /F /D 2&gt;nul 1&gt;nul 4&gt;nul
+
 )</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Eto.Forms.2.8.3\build\Eto.Forms.targets" Condition="Exists('..\packages\Eto.Forms.2.8.3\build\Eto.Forms.targets')" />

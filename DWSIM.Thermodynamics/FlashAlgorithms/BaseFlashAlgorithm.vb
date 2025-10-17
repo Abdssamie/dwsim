@@ -455,22 +455,26 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
             Dim flashresult As New FlashCalculationResult
             Dim errval As Double
 
+            Dim Pfunc = Function(Pvec)
+                            Dim P = Pvec(0)
+                            flashresult = CalculateEquilibrium(FlashSpec.P, FlashSpec.T, P, T, PP, Vz, PrevKi, 0.0)
+                            Dim RHOL1, RHOL2, RHOV, VL2, VL1, VV As Double
+                            RHOL1 = PP.AUX_LIQDENS(T, flashresult.GetLiquidPhase1MoleFraction, P) / PP.AUX_MMM(flashresult.GetLiquidPhase1MoleFraction) * 1000 'mol/m3
+                            RHOL2 = PP.AUX_LIQDENS(T, flashresult.GetLiquidPhase2MoleFraction, P) / PP.AUX_MMM(flashresult.GetLiquidPhase2MoleFraction) * 1000 'mol/m3
+                            RHOV = PP.AUX_Z(flashresult.GetVaporPhaseMoleFractions, T, P, Interfaces.Enums.PhaseName.Vapor) * 8.314 * T / P 'mol/m3
+                            RHOV = 1 / RHOV 'kmol/m3
+                            VL1 = flashresult.GetLiquidPhase1MoleFraction / RHOL1
+                            VL2 = flashresult.GetLiquidPhase2MoleFraction / RHOL2
+                            VV = flashresult.GetVaporPhaseMoleFraction / RHOV
+                            If Double.IsInfinity(VL1) Or Double.IsNaN(VL1) Then VL1 = 0.0
+                            If Double.IsInfinity(VL2) Or Double.IsNaN(VL2) Then VL2 = 0.0
+                            If Double.IsInfinity(VV) Or Double.IsNaN(VV) Then VV = 0.0
+                            errval = ((Vspec - VV - VL1 - VL2) / Vspec)
+                            Return errval
+                        End Function
+
             simplex.ComputeMin(Function(Pvec)
-                                   Dim P = Pvec(0)
-                                   flashresult = CalculateEquilibrium(FlashSpec.P, FlashSpec.T, P, T, PP, Vz, PrevKi, 0.0)
-                                   Dim RHOL1, RHOL2, RHOV, VL2, VL1, VV As Double
-                                   RHOL1 = PP.AUX_LIQDENS(T, flashresult.GetLiquidPhase1MoleFraction, P) / PP.AUX_MMM(flashresult.GetLiquidPhase1MoleFraction) * 1000 'mol/m3
-                                   RHOL2 = PP.AUX_LIQDENS(T, flashresult.GetLiquidPhase2MoleFraction, P) / PP.AUX_MMM(flashresult.GetLiquidPhase2MoleFraction) * 1000 'mol/m3
-                                   RHOV = PP.AUX_Z(flashresult.GetVaporPhaseMoleFractions, T, P, Interfaces.Enums.PhaseName.Vapor) * 8.314 * T / P 'mol/m3
-                                   RHOV = 1 / RHOV 'kmol/m3
-                                   VL1 = flashresult.GetLiquidPhase1MoleFraction / RHOL1
-                                   VL2 = flashresult.GetLiquidPhase2MoleFraction / RHOL2
-                                   VV = flashresult.GetVaporPhaseMoleFraction / RHOV
-                                   If Double.IsInfinity(VL1) Or Double.IsNaN(VL1) Then VL1 = 0.0
-                                   If Double.IsInfinity(VL2) Or Double.IsNaN(VL2) Then VL2 = 0.0
-                                   If Double.IsInfinity(VV) Or Double.IsNaN(VV) Then VV = 0.0
-                                   errval = ((Vspec - VV - VL1 - VL2) / Vspec) ^ 2
-                                   Return errval
+                                   Return Pfunc.Invoke(Pvec) ^ 2
                                End Function, {var})
 
             Return flashresult

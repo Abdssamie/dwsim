@@ -394,6 +394,7 @@ Namespace Reactors
             'Clone inlet stream as initial estimation
 
             ims = DirectCast(FlowSheet.SimulationObjects(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name), MaterialStream).Clone
+            ims.DefinedFlow = FlowSpec.Mass
 
             If dynamics Then ims = AccumulationStream
 

@@ -40,8 +40,6 @@ Namespace GraphicObjects.Tables
 
         Protected m_items As Dictionary(Of String, List(Of NodeItem))
 
-        Public Property ClipboardData As String = ""
-
         Private TagsAndIDs As New Dictionary(Of String, String)
 
         <Xml.Serialization.XmlIgnore> Public Property Flowsheet As Interfaces.IFlowsheet

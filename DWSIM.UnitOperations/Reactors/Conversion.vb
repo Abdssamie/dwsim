@@ -405,6 +405,7 @@ Namespace Reactors
             Else
                 ims = GetInletMaterialStream(0).Clone()
             End If
+            ims.DefinedFlow = FlowSpec.Mass
 
             Dim Qin = 0.0
 

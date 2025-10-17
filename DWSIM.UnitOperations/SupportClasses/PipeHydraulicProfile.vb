@@ -65,7 +65,7 @@ Namespace UnitOperations.Auxiliary.Pipe
             Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
 
             Try
-                Me.Status = [Enum].Parse(Type.GetType("DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe.PipeEditorStatus"), (From xel2 As XElement In data Select xel2 Where xel2.Name = "Status").SingleOrDefault.Value)
+                Me.Status = [Enum].Parse(Type.GetType("DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe.PipeEditorStatus"), (From xel2 As XElement In data Select xel2 Where xel2.Name = "Status").FirstOrDefault().Value)
             Catch ex As Exception
                 Me.Status = PipeEditorStatus.OK
             End Try
