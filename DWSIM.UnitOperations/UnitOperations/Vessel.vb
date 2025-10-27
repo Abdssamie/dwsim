@@ -379,7 +379,7 @@ Namespace UnitOperations
                     oms2.Calculate()
                 End If
 
-                If Not omsr.AtEquilibrium And omsr.GetMassFlow() > 0 Then
+                If omsr IsNot Nothing AndAlso (Not omsr.AtEquilibrium And omsr.GetMassFlow() > 0) Then
                     omsr.AssignSelfToPP()
                     omsr.Calculate()
                 End If
@@ -613,8 +613,10 @@ Namespace UnitOperations
             oms1.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
             oms1.AtEquilibrium = False
 
-            omsr.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
-            omsr.AtEquilibrium = False
+            If omsr IsNot Nothing Then
+                omsr.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
+                omsr.AtEquilibrium = False
+            End If
 
             oms2.AssignFromPhase(PhaseLabel.LiquidMixture, AccumulationStream, False)
             oms2.AtEquilibrium = False
