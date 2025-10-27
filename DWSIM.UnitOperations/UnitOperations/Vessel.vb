@@ -309,8 +309,11 @@ Namespace UnitOperations
             For i = 0 To 5
                 If Me.GraphicObject.InputConnectors(i).IsAttached Then
                     Dim imsx = GetInletMaterialStream(i)
-                    If imsmix Is Nothing Then imsmix = imsx.CloneXML()
-                    If Not Double.IsNaN(imsx.GetMassFlow()) AndAlso imsx.GetMassFlow() > 0 Then imsmix = imsmix.Add(imsx)
+                    If imsmix Is Nothing Then 
+											imsmix = imsx.CloneXML()
+										Else
+	                    If Not Double.IsNaN(imsx.GetMassFlow()) AndAlso imsx.GetMassFlow() > 0 Then imsmix = imsmix.Add(imsx)
+										End If
                 End If
             Next
 
@@ -376,7 +379,7 @@ Namespace UnitOperations
                     oms2.Calculate()
                 End If
 
-                If Not omsr.AtEquilibrium And omsr.GetMassFlow() > 0 Then
+                If omsr IsNot Nothing AndAlso (Not omsr.AtEquilibrium And omsr.GetMassFlow() > 0) Then
                     omsr.AssignSelfToPP()
                     omsr.Calculate()
                 End If
@@ -610,8 +613,10 @@ Namespace UnitOperations
             oms1.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
             oms1.AtEquilibrium = False
 
-            omsr.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
-            omsr.AtEquilibrium = False
+            If omsr IsNot Nothing Then
+                omsr.AssignFromPhase(PhaseLabel.Vapor, AccumulationStream, False)
+                omsr.AtEquilibrium = False
+            End If
 
             oms2.AssignFromPhase(PhaseLabel.LiquidMixture, AccumulationStream, False)
             oms2.AtEquilibrium = False
@@ -1233,7 +1238,7 @@ Namespace UnitOperations
                 _U = _U + 1.0E+30
             End If
 
-            Return New Double() {1 / _U, U_int, U_parede} '[W/m².K]
+            Return New Double() {1 / _U, U_int, U_parede} '[W/mÂ².K]
 
         End Function
 
@@ -1307,7 +1312,7 @@ Namespace UnitOperations
                 _U = _U + 1.0E+30
             End If
 
-            Return New Double() {1 / _U, U_parede, U_isol, U_ext} '[W/m².K]
+            Return New Double() {1 / _U, U_parede, U_isol, U_ext} '[W/mÂ².K]
 
         End Function
 
