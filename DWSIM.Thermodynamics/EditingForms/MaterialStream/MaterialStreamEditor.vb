@@ -244,19 +244,21 @@ Public Class MaterialStreamEditor
             cbCompBasis.SelectedIndex = 0
 
             gridInputComposition.Rows.Clear()
-            gridInputComposition.Columns(1).CellTemplate.Style.Format = nff
+            Try
+                gridInputComposition.Columns(1).CellTemplate.Style.Format = nff
+                For Each cp In .FlowSheet.SelectedCompounds.Values
+                    Dim comp = .Phases(0).Compounds(cp.Name)
+                    gridInputComposition.Rows(gridInputComposition.Rows.Add(New Object() {comp.Name, comp.MoleFraction.GetValueOrDefault})).Cells(0).Style.BackColor = Drawing.Color.FromKnownColor(Drawing.KnownColor.Control)
+                Next
 
-            For Each cp In .FlowSheet.SelectedCompounds.Values
-                Dim comp = .Phases(0).Compounds(cp.Name)
-                gridInputComposition.Rows(gridInputComposition.Rows.Add(New Object() {comp.Name, comp.MoleFraction.GetValueOrDefault})).Cells(0).Style.BackColor = Drawing.Color.FromKnownColor(Drawing.KnownColor.Control)
-            Next
-
-            Dim sum As Double = 0.0#
-            For Each row As DataGridViewRow In gridInputComposition.Rows
-                sum += Double.Parse(row.Cells(1).Value)
-            Next
-            lblInputAmount.Text = "Total: " & sum.ToString(nf)
-            Me.lblInputAmount.ForeColor = Drawing.Color.Blue
+                Dim sum As Double = 0.0#
+                For Each row As DataGridViewRow In gridInputComposition.Rows
+                    sum += Double.Parse(row.Cells(1).Value)
+                Next
+                lblInputAmount.Text = "Total: " & sum.ToString(nf)
+                Me.lblInputAmount.ForeColor = Drawing.Color.Blue
+            Catch ex As Exception
+            End Try
 
             'property package
 
