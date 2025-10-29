@@ -24,6 +24,8 @@ namespace DWSIM.Simulate365.Services
 
         private static UserService _singletonInstance;
 
+        private readonly Task _initializationTask;
+
         private UserDetailsModel _currentUser = null;
         public EventHandler OnUserLoggedIn;
         public EventHandler<bool> AutoLoginInProgress;
@@ -68,32 +70,31 @@ namespace DWSIM.Simulate365.Services
 
                 AutoLoginInProgress += (s, e) => { AutoLoginInProgressChanged.Invoke(s, e); };
 
-                Task.Run(() => LoadUserDetails());
-            }
-            //Intended use to refresh token on page startup
-#pragma warning disable
-            if (!string.IsNullOrWhiteSpace(this._refreshToken))
-            {
-                RefreshToken();
-            }
+                _initializationTask = InitializeAsync();
 
-
-            refreshTokenTimer = new System.Timers.Timer();
-            refreshTokenTimer.Elapsed += async (sender, args) =>
-            {
-                if (this._accessTokenExpiresAt != DateTime.MinValue && this._accessTokenExpiresAt.AddMinutes(-5) < DateTime.Now)
+                refreshTokenTimer = new System.Timers.Timer();
+                refreshTokenTimer.Elapsed += async (sender, args) =>
                 {
-                    await GetInstance().RefreshToken();
-                }
-            };
-            refreshTokenTimer.AutoReset = true;
-            refreshTokenTimer.Interval = TimeSpan.FromMinutes(1).TotalMilliseconds;
-            refreshTokenTimer.Start();
+                    if (this._accessTokenExpiresAt != DateTime.MinValue && this._accessTokenExpiresAt.AddMinutes(-5) < DateTime.Now)
+                    {
+                        await GetInstance().RefreshToken();
+                    }
+                };
+                refreshTokenTimer.AutoReset = true;
+                refreshTokenTimer.Interval = TimeSpan.FromMinutes(1).TotalMilliseconds;
+                refreshTokenTimer.Start();
+            }
         }
 
         public bool _IsLoggedIn()
         {
-            return this._accessToken != null && this._accessTokenExpiresAt > DateTime.Now;
+            // If initialization is still running, we can't be sure about login status
+            if (!_initializationTask.IsCompleted)
+                return false;
+
+            return this._accessToken != null &&
+                   this._accessTokenExpiresAt > DateTime.Now &&
+                   _currentUser != null;
         }
 
         public static UserService GetInstance()
@@ -115,7 +116,22 @@ namespace DWSIM.Simulate365.Services
             _singletonInstance.ClearInstance();
             _singletonInstance.UserLoggedOut?.Invoke(_singletonInstance, new EventArgs());
         }
+        private async Task InitializeAsync()
+        {
+            if (!string.IsNullOrWhiteSpace(this._accessToken))
+            {
+                await LoadUserDetails();
+            }
 
+            if (!string.IsNullOrWhiteSpace(this._refreshToken))
+            {
+                await RefreshToken();
+            }
+        }
+        public async Task WaitForInitializationAsync()
+        {
+            await _initializationTask;
+        }
         private void ClearInstance()
         {
             _accessToken = null;
