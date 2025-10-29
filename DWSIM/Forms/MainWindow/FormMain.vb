@@ -1137,9 +1137,12 @@ Public Class FormMain
             Me.CloseAllToolstripMenuItem.Enabled = True
             If Not Me.ActiveMdiChild Is Nothing Then
                 If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
-                    ToolStripManager.Merge(DirectCast(ActiveMdiChild, FormFlowsheet).ToolStrip1, ToolStrip1)
-                    DirectCast(ActiveMdiChild, FormFlowsheet).ToolStrip1.Visible = False
-                    My.Application.ActiveSimulation = Me.ActiveMdiChild
+                    Try
+                        ToolStripManager.Merge(DirectCast(ActiveMdiChild, FormFlowsheet).ToolStrip1, ToolStrip1)
+                        DirectCast(ActiveMdiChild, FormFlowsheet).ToolStrip1.Visible = False
+                        My.Application.ActiveSimulation = Me.ActiveMdiChild
+                    Catch ex As Exception
+                    End Try
                 End If
             End If
 
@@ -1148,7 +1151,6 @@ Public Class FormMain
                 ToolStripManager.RevertMerge(ToolStrip1)
             Catch ex As Exception
             End Try
-
 #End If
 
             Try
