@@ -12,14 +12,7 @@ namespace DWSIM.UI.Web
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+       
 
         #region Windows Form Designer generated code
 
@@ -57,8 +50,7 @@ namespace DWSIM.UI.Web
             this.MinimizeBox = false;
             this.Name = "WebUIForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "WebUIForm";
-            this.Load += new System.EventHandler(this.WebUIForm_Load);
+            this.Text = "WebUIForm";           
             ((System.ComponentModel.ISupportInitialize)(this.webView)).EndInit();
             this.ResumeLayout(false);
 
