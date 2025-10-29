@@ -160,6 +160,12 @@
   <ItemGroup>
     <None Include="Resources\s365_logo_login.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DWSIM.Logging\DWSIM.Logging.csproj">
+      <Project>{B176A143-2822-4E7C-9280-CF4A615E1C35}</Project>
+      <Name>DWSIM.Logging</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
