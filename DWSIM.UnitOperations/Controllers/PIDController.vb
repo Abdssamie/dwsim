@@ -93,11 +93,11 @@ Namespace SpecialOps
 
         Public Property OutputAbs As Double = 0.0
 
-        Public Property PVHistory As New List(Of Double)
+        <Xml.Serialization.XmlIgnore> Public Property PVHistory As New List(Of Double)
 
-        Public Property MVHistory As New List(Of Double)
+        <Xml.Serialization.XmlIgnore> Public Property MVHistory As New List(Of Double)
 
-        Public Property SPHistory As New List(Of Double)
+        <Xml.Serialization.XmlIgnore> Public Property SPHistory As New List(Of Double)
 
         Public BaseSP As Nullable(Of Double)
 
