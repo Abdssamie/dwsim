@@ -1763,17 +1763,15 @@ Namespace Reactors
 
             End If
 
-            If ReactorOperationMode <> OperationMode.Adiabatic Then
-                'energy stream - update energy flow value (kW)
-                If GetInletEnergyStream(1) IsNot Nothing Then
-                    With GetInletEnergyStream(1)
-                        .EnergyFlow = Me.DeltaQ.GetValueOrDefault
-                        .GraphicObject.Calculated = True
-                        DRW?.AppendLine()
-                        DRW?.AppendLine(String.Format("Energy Stream: {0} kW", .EnergyFlow))
-                        DRW?.AppendLine()
-                    End With
-                End If
+            'energy stream - update energy flow value (kW)
+            If GetInletEnergyStream(1) IsNot Nothing Then
+                With GetInletEnergyStream(1)
+                    .EnergyFlow = Me.DeltaQ.GetValueOrDefault
+                    .GraphicObject.Calculated = True
+                    DRW?.AppendLine()
+                    DRW?.AppendLine(String.Format("Energy Stream: {0} kW", .EnergyFlow))
+                    DRW?.AppendLine()
+                End With
             End If
 
             StoreDebugReport(DRW)

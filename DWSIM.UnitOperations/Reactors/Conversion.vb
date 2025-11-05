@@ -973,6 +973,14 @@ Namespace Reactors
                         .GraphicObject.Calculated = True
                     End With
                 End If
+            Else
+                If GetOutletEnergyStream(2) IsNot Nothing Then
+                    'energy stream - update energy flow value (kW)
+                    With GetOutletEnergyStream(2)
+                        .EnergyFlow = 0.0
+                        .GraphicObject.Calculated = True
+                    End With
+                End If
             End If
 
             IObj?.Close()
