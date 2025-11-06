@@ -752,6 +752,11 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
 
                             End If
 
+                        Else
+
+                            Throw New Exception(String.Format("{0}: Unable to calculate PH Flash with P = {1} and H = {2}, molar fractions = {3}",
+                                    PP.ComponentName, P, H, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
+
                         End If
 
                     End Try
@@ -877,6 +882,11 @@ out:        WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iteration
                                     PP.ComponentName, P, S, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
 
                     End If
+
+                Else
+
+                    Throw New Exception(String.Format("{0}: Unable to calculate PS Flash with P = {1} and S = {2}, molar fractions = {3}",
+                                    PP.ComponentName, P, S, Vz.ToArrayString(PP.RET_VNAMES(), "G3")))
 
                 End If
 
