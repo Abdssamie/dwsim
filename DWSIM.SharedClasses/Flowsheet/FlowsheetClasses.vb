@@ -311,6 +311,8 @@ Namespace DWSIM.Flowsheet
 
         Public Property RestoreUnitOperationStateAfterError As Boolean = False Implements IFlowsheetOptions.RestoreUnitOperationStateAfterError
 
+        Public Property DynamicModeEnabled As Boolean = False Implements IFlowsheetOptions.DynamicModeEnabled
+
     End Class
 
     <System.Serializable()> Public Class FlowsheetResults

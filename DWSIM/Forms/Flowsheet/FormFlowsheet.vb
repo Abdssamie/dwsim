@@ -4777,6 +4777,7 @@ Public Class FormFlowsheet
         Me.DynamicMode = ModoDinamicoAtivoToolStripMenuItem.Checked
         Me.FormDynamics.chkDynamics.Checked = Me.DynamicMode
         Me.tsbDynamics.Checked = Me.DynamicMode
+        Options.DynamicModeEnabled = DynamicMode
         FormSurface.FControl.Invalidate()
     End Sub
 
@@ -4799,9 +4800,10 @@ Public Class FormFlowsheet
     End Sub
 
     Private Sub ToolStripButton2_CheckedChanged(sender As Object, e As EventArgs) Handles tsbDynamics.CheckedChanged
-        Me.DynamicMode = tsbDynamics.Checked
-        Me.FormDynamics.chkDynamics.Checked = Me.DynamicMode
-        Me.ModoDinamicoAtivoToolStripMenuItem.Checked = Me.DynamicMode
+        DynamicMode = tsbDynamics.Checked
+        FormDynamics.chkDynamics.Checked = Me.DynamicMode
+        ModoDinamicoAtivoToolStripMenuItem.Checked = Me.DynamicMode
+        Options.DynamicModeEnabled = DynamicMode
         FormSurface.FControl.Invalidate()
     End Sub
 
@@ -6068,6 +6070,34 @@ Public Class FormFlowsheet
         Next
 
         Results.ResidualMassBalance = totalM
+
+    End Sub
+
+    Public Sub SetDynamicMode(dynamicModeEnabled As Boolean)
+
+        If dynamicModeEnabled Then
+            DynamicMode = True
+            Options.DynamicModeEnabled = True
+            UIThread(Sub()
+                         FormDynamics.chkDynamics.Text = DWSIM.App.GetLocalString("Deactivate")
+                         FormDynamics.lblStatus.Text = DWSIM.App.GetLocalString("DynEnabled")
+                         FormDynamics.chkDynamics.ForeColor = Color.White
+                         FormDynamics.chkDynamics.BackColor = Color.DarkGreen
+                         ModoDinamicoAtivoToolStripMenuItem.Checked = True
+                         tsbDynamics.Checked = True
+                     End Sub)
+        Else
+            DynamicMode = False
+            Options.DynamicModeEnabled = False
+            UIThread(Sub()
+                         FormDynamics.chkDynamics.Text = DWSIM.App.GetLocalString("Activate")
+                         FormDynamics.lblStatus.Text = DWSIM.App.GetLocalString("DynDisabled")
+                         FormDynamics.chkDynamics.ForeColor = Color.White
+                         FormDynamics.chkDynamics.BackColor = Color.DarkRed
+                         ModoDinamicoAtivoToolStripMenuItem.Checked = False
+                         tsbDynamics.Checked = False
+                     End Sub)
+        End If
 
     End Sub
 

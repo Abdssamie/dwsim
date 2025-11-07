@@ -469,10 +469,11 @@ Namespace UnitOperations
                                 massfrac_liq = ims.Phases(1).Properties.massflow.GetValueOrDefault / ims.Phases(0).Properties.massflow.GetValueOrDefault
 
                                 If Double.IsNaN(massfrac_gas) Or Double.IsNaN(massfrac_liq) Then
-                                    Throw New Exception("Please define the inlet stream with an initial mass flow so the valve can read its composition.")
+                                    Wi = 0.0
+                                Else
+                                    Wi = WTwoPhase(Kvc, P1 / 100000.0, P2 / 100000.0, rhog, rhol, k, Pv / 100000.0, Pc / 100000.0, massfrac_gas, massfrac_liq)
                                 End If
 
-                                Wi = WTwoPhase(Kvc, P1 / 100000.0, P2 / 100000.0, rhog, rhol, k, Pv / 100000.0, Pc / 100000.0, massfrac_gas, massfrac_liq)
                             End If
                         ElseIf CalcMode = CalculationMode.Kv_Steam Then
                             If P2 > P1 / 2 Then
@@ -604,6 +605,7 @@ Namespace UnitOperations
                             comp.MolarFlow = comp.MassFlow / comp.ConstantProperties.Molar_Weight * 1000
                             i += 1
                         Next
+                        .SetMassFlow(Wi)
                     End With
 
                     With ims
@@ -614,6 +616,7 @@ Namespace UnitOperations
                             comp.MolarFlow = comp.MassFlow / comp.ConstantProperties.Molar_Weight * 1000
                             i += 1
                         Next
+                        .SetMassFlow(Wi)
                     End With
 
             End Select
@@ -688,7 +691,7 @@ Namespace UnitOperations
             Dim dP_choke
 
             dP_choke = FL ^ 2 * (P1 - F_F(Pv, Pc) * Pv)
-            If dP_choke < (P1 - P2) Then
+            If dP_choke > 0 And dP_choke < (P1 - P2) Then
                 P2 = P1 - dP_choke
             End If
 
@@ -699,7 +702,7 @@ Namespace UnitOperations
             Dim dP_choke
 
             dP_choke = FL ^ 2 * (P1 - F_F(Pv, Pc) * Pv)
-            If dP_choke < (P1 - P2) Then
+            If dP_choke > 0 And dP_choke < (P1 - P2) Then
                 P2 = P1 - dP_choke
             End If
             WLiquid = Kv * FP * (rho * 999.1 * (P1 - P2)) ^ 0.5

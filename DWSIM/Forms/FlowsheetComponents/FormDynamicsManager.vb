@@ -114,6 +114,7 @@ Public Class FormDynamicsManager
             chkDynamics.Text = DWSIM.App.GetLocalString("Deactivate")
             lblStatus.Text = DWSIM.App.GetLocalString("DynEnabled")
             Flowsheet.DynamicMode = True
+            Flowsheet.Options.DynamicModeEnabled = True
             chkDynamics.ForeColor = Color.White
             chkDynamics.BackColor = Color.DarkGreen
             Flowsheet.ModoDinamicoAtivoToolStripMenuItem.Checked = True
@@ -122,6 +123,7 @@ Public Class FormDynamicsManager
             chkDynamics.Text = DWSIM.App.GetLocalString("Activate")
             lblStatus.Text = DWSIM.App.GetLocalString("DynDisabled")
             Flowsheet.DynamicMode = False
+            Flowsheet.Options.DynamicModeEnabled = False
             chkDynamics.ForeColor = Color.White
             chkDynamics.BackColor = Color.DarkRed
             Flowsheet.ModoDinamicoAtivoToolStripMenuItem.Checked = False

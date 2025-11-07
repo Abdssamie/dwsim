@@ -155,4 +155,6 @@ Public Interface IFlowsheetOptions
 
     Property RestoreUnitOperationStateAfterError As Boolean
 
+    Property DynamicModeEnabled As Boolean
+
 End Interface

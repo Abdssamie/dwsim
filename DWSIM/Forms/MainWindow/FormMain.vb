@@ -3024,6 +3024,8 @@ Public Class FormMain
             form.Show()
             form.Activate()
 
+            form.SetDynamicMode(form.Options.DynamicModeEnabled)
+
             form.FrmStSim1.CurrentFlowsheet = form
             form.FrmStSim1.Init(True)
 
