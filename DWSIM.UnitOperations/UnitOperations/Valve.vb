@@ -468,6 +468,10 @@ Namespace UnitOperations
                                 massfrac_gas = ims.Phases(2).Properties.massflow.GetValueOrDefault / ims.Phases(0).Properties.massflow.GetValueOrDefault
                                 massfrac_liq = ims.Phases(1).Properties.massflow.GetValueOrDefault / ims.Phases(0).Properties.massflow.GetValueOrDefault
 
+                                If Double.IsNaN(massfrac_gas) Or Double.IsNaN(massfrac_liq) Then
+                                    Throw New Exception("Please define the inlet stream with an initial mass flow so the valve can read its composition.")
+                                End If
+
                                 Wi = WTwoPhase(Kvc, P1 / 100000.0, P2 / 100000.0, rhog, rhol, k, Pv / 100000.0, Pc / 100000.0, massfrac_gas, massfrac_liq)
                             End If
                         ElseIf CalcMode = CalculationMode.Kv_Steam Then
