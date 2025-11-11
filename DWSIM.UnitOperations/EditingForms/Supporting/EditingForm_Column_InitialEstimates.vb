@@ -370,16 +370,20 @@ Public Class EditingForm_Column_InitialEstimates
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
-        Dim i, j As Integer
-        For i = 0 To dc.NumberOfStages - 1
-            dgvv.Rows(i).Cells(1).Value = Format(cv.ConvertFromSI(su.temperature, dc.Tf(i)), nf)
-            dgvv.Rows(i).Cells(2).Value = Format(cv.ConvertFromSI(su.molarflow, dc.Vf(i)), nf)
-            dgvv.Rows(i).Cells(3).Value = Format(cv.ConvertFromSI(su.molarflow, dc.Lf(i)), nf)
-            For j = 0 To dc.compids.Count - 1
-                dgvcl.Rows(i).Cells(j + 1).Value = Format(dc.xf(i)(j), nf)
-                dgvcv.Rows(i).Cells(j + 1).Value = Format(dc.yf(i)(j), nf)
+        Try
+            Dim i, j As Integer
+            For i = 0 To dc.NumberOfStages - 1
+                dgvv.Rows(i).Cells(1).Value = Format(cv.ConvertFromSI(su.temperature, dc.Tf(i)), nf)
+                dgvv.Rows(i).Cells(2).Value = Format(cv.ConvertFromSI(su.molarflow, dc.Vf(i)), nf)
+                dgvv.Rows(i).Cells(3).Value = Format(cv.ConvertFromSI(su.molarflow, dc.Lf(i)), nf)
+                For j = 0 To dc.compids.Count - 1
+                    dgvcl.Rows(i).Cells(j + 1).Value = Format(dc.xf(i)(j), nf)
+                    dgvcv.Rows(i).Cells(j + 1).Value = Format(dc.yf(i)(j), nf)
+                Next
             Next
-        Next
+        Catch ex As Exception
+            MessageBox.Show("Error", "It seems that there is no valid solution to read from. Please solve the column first.", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub ToolStripButton28_Click(sender As Object, e As EventArgs) Handles ToolStripButton28.Click
