@@ -136,7 +136,7 @@ Namespace UnitOperations
 
                 Dim SelectedObject = GetFlowsheet.SimulationObjects.Values.Where(Function(x) x.Name = SelectedObjectID).FirstOrDefault
 
-                Dim currentvalue = SystemsOfUnits.Converter.ConvertFromSI(SelectedPropertyUnits, SelectedObject.GetPropertyValue(SelectedProperty))
+                Dim currentvalue = SelectedObject.GetPropertyValue(SelectedProperty)
 
                 Return currentvalue
 

@@ -1377,7 +1377,7 @@ Namespace PropertyPackages
                                 Pmax = CoolProp.Props1SI(GetCoolPropName(vn(i)), "PMAX")
                                 'If P > Pmin And P < Pmax Then
                                 Tb = Me.AUX_TSATi(P, i)
-                                If T < Tb And Abs(T - Tb) >= 0.01 And T > Tmin Then
+                                If T < Tb And Abs(T - Tb) >= 0.01 And T >= Tmin Then
                                     vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, GetCoolPropName(vn(i))) / 1000
                                 ElseIf Abs(T - Tb) < 0.01 Then
                                     Try
@@ -1459,7 +1459,7 @@ Namespace PropertyPackages
                                     p3 = CoolProp.PropsSI("H", "T", x3, "P", P, GetCoolPropName(vn(i))) / 1000
                                     p4 = CoolProp.PropsSI("H", "T", x4, "P", P, GetCoolPropName(vn(i))) / 1000
                                     p5 = CoolProp.PropsSI("H", "T", x5, "P", P, GetCoolPropName(vn(i))) / 1000
-                                    vk(i) = MathNet.Numerics.Interpolate.RationalWithPoles(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}).Interpolate(T)
+                                    vk(i) = MathNet.Numerics.Interpolate.Linear(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}).Interpolate(T)
                                 End If
                                 'Else
                                 '    WriteWarningMessage("CoolProp Warning: unable to calculate Enthalpy for " & vn(i) & " at T = " & T & " K and P = " & P & " Pa.")
