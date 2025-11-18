@@ -596,6 +596,7 @@ Namespace UnitOperations
                         .Phases(0).Properties.temperature = Ti
                         .Phases(0).Properties.pressure = P2
                         .Phases(0).Properties.enthalpy = H2
+                        .SetFlashSpec("PH")
                         Dim comp As BaseClasses.Compound
                         Dim i As Integer = 0
                         For Each comp In .Phases(0).Compounds.Values

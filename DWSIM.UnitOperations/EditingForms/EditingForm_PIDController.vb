@@ -109,6 +109,31 @@ Public Class EditingForm_PIDController
 
             tbWG.Text = SimObject.WindupGuard
 
+            If .Active Then
+
+                tbOut1.Text = .PTerm.ToString(nf)
+                tbOut2.Text = (.Ki * .ITerm).ToString(nf)
+                tbOut3.Text = (.Kd * .DTerm).ToString(nf)
+
+                Dim total As Double
+
+                If Not .ReverseActing Then
+                    total = (1.0 - .Output) * .BaseSP.GetValueOrDefault()
+                Else
+                    total = (1.0 + .Output) * .BaseSP.GetValueOrDefault()
+                End If
+
+                tbOut4.Text = total.ToString(nf)
+
+            Else
+
+                tbOut1.Text = ""
+                tbOut2.Text = ""
+                tbOut3.Text = ""
+                tbOut4.Text = ""
+
+            End If
+
             'annotation
 
             Try

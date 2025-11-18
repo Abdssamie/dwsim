@@ -71,6 +71,12 @@ Partial Class EditingForm_PIDController
         Me.tbSetPoint = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
+        Me.tbOut3 = New System.Windows.Forms.TextBox()
+        Me.tbOut2 = New System.Windows.Forms.TextBox()
+        Me.tbOut1 = New System.Windows.Forms.TextBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.tbOut4 = New System.Windows.Forms.TextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
         Me.GroupBoxLinkedObjects.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -309,7 +315,7 @@ Partial Class EditingForm_PIDController
         resources.ApplyResources(Me.rtbAnnotations, "rtbAnnotations")
         Me.rtbAnnotations.Name = "rtbAnnotations"
         Me.rtbAnnotations.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil Microsoft " &
-    "Sans Serif;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.22621}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\" &
+    "Sans Serif;}}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "{\*\generator Riched20 10.0.26100}\viewkind4\uc1 " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "\pard\f0\fs17\" &
     "par" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "}" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.rtbAnnotations.ShowRedo = False
         Me.rtbAnnotations.ShowUndo = False
@@ -319,6 +325,12 @@ Partial Class EditingForm_PIDController
         'GroupBoxParameters
         '
         resources.ApplyResources(Me.GroupBoxParameters, "GroupBoxParameters")
+        Me.GroupBoxParameters.Controls.Add(Me.Label21)
+        Me.GroupBoxParameters.Controls.Add(Me.tbOut4)
+        Me.GroupBoxParameters.Controls.Add(Me.Label20)
+        Me.GroupBoxParameters.Controls.Add(Me.tbOut3)
+        Me.GroupBoxParameters.Controls.Add(Me.tbOut2)
+        Me.GroupBoxParameters.Controls.Add(Me.tbOut1)
         Me.GroupBoxParameters.Controls.Add(Me.Button1)
         Me.GroupBoxParameters.Controls.Add(Me.tbWG)
         Me.GroupBoxParameters.Controls.Add(Me.Label18)
@@ -485,6 +497,52 @@ Partial Class EditingForm_PIDController
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
+        'tbOut3
+        '
+        resources.ApplyResources(Me.tbOut3, "tbOut3")
+        Me.tbOut3.Name = "tbOut3"
+        Me.tbOut3.ReadOnly = True
+        Me.ToolTipChangeTag.SetToolTip(Me.tbOut3, resources.GetString("tbOut3.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.tbOut3, resources.GetString("tbOut3.ToolTip1"))
+        '
+        'tbOut2
+        '
+        resources.ApplyResources(Me.tbOut2, "tbOut2")
+        Me.tbOut2.Name = "tbOut2"
+        Me.tbOut2.ReadOnly = True
+        Me.ToolTipChangeTag.SetToolTip(Me.tbOut2, resources.GetString("tbOut2.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.tbOut2, resources.GetString("tbOut2.ToolTip1"))
+        '
+        'tbOut1
+        '
+        resources.ApplyResources(Me.tbOut1, "tbOut1")
+        Me.tbOut1.Name = "tbOut1"
+        Me.tbOut1.ReadOnly = True
+        Me.ToolTipChangeTag.SetToolTip(Me.tbOut1, resources.GetString("tbOut1.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.tbOut1, resources.GetString("tbOut1.ToolTip1"))
+        '
+        'Label20
+        '
+        resources.ApplyResources(Me.Label20, "Label20")
+        Me.Label20.Name = "Label20"
+        Me.ToolTipValues.SetToolTip(Me.Label20, resources.GetString("Label20.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label20, resources.GetString("Label20.ToolTip1"))
+        '
+        'tbOut4
+        '
+        resources.ApplyResources(Me.tbOut4, "tbOut4")
+        Me.tbOut4.Name = "tbOut4"
+        Me.tbOut4.ReadOnly = True
+        Me.ToolTipChangeTag.SetToolTip(Me.tbOut4, resources.GetString("tbOut4.ToolTip"))
+        Me.ToolTipValues.SetToolTip(Me.tbOut4, resources.GetString("tbOut4.ToolTip1"))
+        '
+        'Label21
+        '
+        resources.ApplyResources(Me.Label21, "Label21")
+        Me.Label21.Name = "Label21"
+        Me.ToolTipValues.SetToolTip(Me.Label21, resources.GetString("Label21.ToolTip"))
+        Me.ToolTipChangeTag.SetToolTip(Me.Label21, resources.GetString("Label21.ToolTip1"))
+        '
         'EditingForm_PIDController
         '
         resources.ApplyResources(Me, "$this")
@@ -555,4 +613,10 @@ Partial Class EditingForm_PIDController
     Public WithEvents tbWG As TextBox
     Public WithEvents Label18 As Label
     Friend WithEvents Button1 As Button
+    Public WithEvents Label21 As Label
+    Public WithEvents tbOut4 As TextBox
+    Public WithEvents Label20 As Label
+    Public WithEvents tbOut3 As TextBox
+    Public WithEvents tbOut2 As TextBox
+    Public WithEvents tbOut1 As TextBox
 End Class

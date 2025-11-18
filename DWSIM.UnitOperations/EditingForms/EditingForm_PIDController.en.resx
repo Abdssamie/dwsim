@@ -132,13 +132,13 @@
     <value>129, 241</value>
   </data>
   <data name="cbTargetUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="cbTargetType.Location" type="System.Drawing.Point, System.Drawing">
     <value>129, 214</value>
   </data>
   <data name="cbTargetType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -156,13 +156,13 @@
     <value>129, 104</value>
   </data>
   <data name="cbSourceUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="cbSourceType.Location" type="System.Drawing.Point, System.Drawing">
     <value>129, 77</value>
   </data>
   <data name="cbSourceType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -198,13 +198,13 @@
     <value>129, 187</value>
   </data>
   <data name="cbTargetProp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="cbTargetObj.Location" type="System.Drawing.Point, System.Drawing">
     <value>129, 160</value>
   </data>
   <data name="cbTargetObj.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 13</value>
@@ -222,13 +222,13 @@
     <value>129, 50</value>
   </data>
   <data name="cbSourceProp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="cbSourceObj.Location" type="System.Drawing.Point, System.Drawing">
     <value>129, 23</value>
   </data>
   <data name="cbSourceObj.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 21</value>
+    <value>214, 21</value>
   </data>
   <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 13</value>
@@ -237,10 +237,13 @@
     <value>Manipulated Object</value>
   </data>
   <data name="GroupBoxLinkedObjects.Size" type="System.Drawing.Size, System.Drawing">
-    <value>390, 297</value>
+    <value>376, 297</value>
   </data>
   <data name="GroupBoxLinkedObjects.Text" xml:space="preserve">
     <value>Linked Objects</value>
+  </data>
+  <data name="GroupBox5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>376, 50</value>
   </data>
   <data name="GroupBox5.Text" xml:space="preserve">
     <value>General Info</value>
@@ -249,7 +252,10 @@
     <value>129, 19</value>
   </data>
   <data name="lblTag.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 20</value>
+    <value>214, 20</value>
+  </data>
+  <data name="chkActive.Location" type="System.Drawing.Point, System.Drawing">
+    <value>349, 18</value>
   </data>
   <data name="chkActive.ToolTip" xml:space="preserve">
     <value>Active/Inactive</value>
@@ -260,23 +266,105 @@
   <data name="Label11.Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>376, 137</value>
+  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="rtbAnnotations.Size" type="System.Drawing.Size, System.Drawing">
+    <value>370, 118</value>
+  </data>
   <data name="GroupBoxParameters.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="Label21.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Label21.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label21.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
+  <data name="Label21.Text" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="tbOut4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="tbOut4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 20</value>
+  </data>
+  <data name="tbOut4.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="Label20.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="Label20.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label20.Text" xml:space="preserve">
+    <value>Abs. Output</value>
+  </data>
+  <data name="tbOut3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="tbOut3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 20</value>
+  </data>
+  <data name="tbOut3.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="tbOut2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="tbOut2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 20</value>
+  </data>
+  <data name="tbOut2.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
+  <data name="tbOut1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="tbOut1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 20</value>
+  </data>
+  <data name="tbOut1.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
   </data>
   <data name="Button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>340, 225</value>
+    <value>237, 224</value>
+  </data>
+  <data name="Button1.ToolTip" xml:space="preserve">
+    <value>Size PID</value>
   </data>
   <data name="tbWG.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="tbWG.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 314</value>
+    <value>149, 320</value>
+  </data>
+  <data name="tbWG.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
+  </data>
+  <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 325</value>
   </data>
   <data name="Label18.Size" type="System.Drawing.Size, System.Drawing">
     <value>81, 13</value>
@@ -294,7 +382,10 @@
     <value>Top, Right</value>
   </data>
   <data name="tbOutputMax.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 181</value>
+    <value>149, 181</value>
+  </data>
+  <data name="tbOutputMax.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="Label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 13</value>
@@ -306,7 +397,10 @@
     <value>Top, Right</value>
   </data>
   <data name="tbOutputMin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 155</value>
+    <value>149, 155</value>
+  </data>
+  <data name="tbOutputMin.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 13</value>
@@ -324,7 +418,10 @@
     <value>Top, Right</value>
   </data>
   <data name="tbOffset.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 113</value>
+    <value>149, 113</value>
+  </data>
+  <data name="tbOffset.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 118</value>
@@ -333,25 +430,37 @@
     <value>Top, Right</value>
   </data>
   <data name="tbKd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 277</value>
+    <value>149, 277</value>
+  </data>
+  <data name="tbKd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="tbKi.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="tbKi.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 251</value>
+    <value>149, 251</value>
+  </data>
+  <data name="tbKi.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="tbKp.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="tbKp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 225</value>
+    <value>149, 225</value>
+  </data>
+  <data name="tbKp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="tbSetPoint.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="tbSetPoint.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 87</value>
+    <value>149, 87</value>
+  </data>
+  <data name="tbSetPoint.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 92</value>
@@ -362,12 +471,20 @@
   <data name="Label3.Text" xml:space="preserve">
     <value>Set-Point</value>
   </data>
+  <data name="GroupBoxParameters.Size" type="System.Drawing.Size, System.Drawing">
+    <value>376, 352</value>
+  </data>
   <data name="GroupBoxParameters.Text" xml:space="preserve">
     <value>Parameters</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>396, 873</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>EditingForm_PIDController2</value>

@@ -700,16 +700,7 @@ Namespace SpecialOps
 
         End Sub
 
-
-        Public Overrides Sub Calculate(Optional args As Object = Nothing)
-
-            ' Calculates PID value for given reference feedback
-            ' u(t) = K_p e(t) + K_i \int_{0}^{t} e(t)dt + K_d {de}/{dt}
-
-            Dim integratorID = FlowSheet.DynamicsManager.ScheduleList(FlowSheet.DynamicsManager.CurrentSchedule).CurrentIntegrator
-            Dim integrator = FlowSheet.DynamicsManager.IntegratorList(integratorID)
-
-            Dim timestep = integrator.IntegrationStep.TotalSeconds
+        Public Sub UpdateVars()
 
             Dim ControlledObject = GetFlowsheet.SimulationObjects.Values.Where(Function(x) x.Name = ControlledObjectData.ID).SingleOrDefault
 
@@ -723,15 +714,32 @@ Namespace SpecialOps
 
             PVValue = CurrentValue
 
+            MVValue = CurrentManipulatedValue
+
+        End Sub
+
+
+        Public Overrides Sub Calculate(Optional args As Object = Nothing)
+
+            ' Calculates PID value for given reference feedback
+            ' u(t) = K_p e(t) + K_i \int_{0}^{t} e(t)dt + K_d {de}/{dt}
+
+            Dim integratorID = FlowSheet.DynamicsManager.ScheduleList(FlowSheet.DynamicsManager.CurrentSchedule).CurrentIntegrator
+            Dim integrator = FlowSheet.DynamicsManager.IntegratorList(integratorID)
+
+            Dim timestep = integrator.IntegrationStep.TotalSeconds
+
+            UpdateVars()
+
             If BaseSP Is Nothing Then BaseSP = Math.Abs(AdjustValue)
 
             SPHistory.Add(AdjustValue / BaseSP)
 
-            PVHistory.Add(CurrentValue / BaseSP)
+            PVHistory.Add(PVValue / BaseSP)
 
             LastError = CurrentError
 
-            CurrentError = (CurrentValue - AdjustValue) / BaseSP
+            CurrentError = (PVValue - AdjustValue) / BaseSP
 
             CumulativeError += Math.Abs(CurrentError)
 

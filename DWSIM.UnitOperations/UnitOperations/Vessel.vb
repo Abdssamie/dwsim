@@ -278,6 +278,31 @@ Namespace UnitOperations
 
         End Function
 
+        Public Overrides Function GetDynamicVolume() As Double
+
+            Return CalculateVolume()
+
+        End Function
+
+        Public Overrides Function GetDynamicResidenceTime() As Double
+            If GetDynamicProperty("Volume") IsNot Nothing Then
+                Try
+                    Dim q As Double = 0.0
+                    For Each inlet In GraphicObject.InputConnectors
+                        If inlet.IsAttached And inlet.Type = GraphicObjects.ConType.ConIn Then
+                            q += Convert.ToDouble(inlet.AttachedConnector.AttachedFrom.Owner.GetPropertyValue("PROP_MS_4"))
+                        End If
+                    Next
+                    Dim v = CalculateVolume()
+                    Return v / q
+                Catch ex As Exception
+                    Return Double.NaN
+                End Try
+            Else
+                Return Double.NaN
+            End If
+        End Function
+
         Private prevM, currentM As Double
 
         Public Overrides Sub RunDynamicModel()
@@ -309,13 +334,15 @@ Namespace UnitOperations
             For i = 0 To 5
                 If Me.GraphicObject.InputConnectors(i).IsAttached Then
                     Dim imsx = GetInletMaterialStream(i)
-                    If imsmix Is Nothing Then 
-											imsmix = imsx.CloneXML()
-										Else
-	                    If Not Double.IsNaN(imsx.GetMassFlow()) AndAlso imsx.GetMassFlow() > 0 Then imsmix = imsmix.Add(imsx)
-										End If
+                    If imsmix Is Nothing Then
+                        imsmix = imsx.CloneXML()
+                    Else
+                        If Not Double.IsNaN(imsx.GetMassFlow()) AndAlso imsx.GetMassFlow() > 0 Then imsmix = imsmix.Add(imsx)
+                    End If
                 End If
             Next
+
+
 
             Dim Vol = CalculateVolume()
 
