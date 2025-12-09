@@ -41,6 +41,8 @@ Partial Class FormReacKinetic
         Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
         Me.rdRevArr = New System.Windows.Forms.RadioButton()
         Me.rdRevUD = New System.Windows.Forms.RadioButton()
+        Me.KryptonLabel12 = New System.Windows.Forms.Label()
+        Me.cbVelUnit = New System.Windows.Forms.ComboBox()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.rdFwdArr = New System.Windows.Forms.RadioButton()
         Me.rdFwdUD = New System.Windows.Forms.RadioButton()
@@ -59,9 +61,7 @@ Partial Class FormReacKinetic
         Me.tbTmax = New System.Windows.Forms.TextBox()
         Me.KryptonLabel11 = New System.Windows.Forms.Label()
         Me.tbTmin = New System.Windows.Forms.TextBox()
-        Me.cbVelUnit = New System.Windows.Forms.ComboBox()
         Me.KryptonLabel8 = New System.Windows.Forms.Label()
-        Me.KryptonLabel12 = New System.Windows.Forms.Label()
         Me.KryptonLabel7 = New System.Windows.Forms.Label()
         Me.cbConcUnit = New System.Windows.Forms.ComboBox()
         Me.KryptonLabel4 = New System.Windows.Forms.Label()
@@ -120,7 +120,9 @@ Partial Class FormReacKinetic
         Me.GroupBox2.Controls.Add(Me.tbCompBase)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel9)
         Me.GroupBox2.Controls.Add(Me.tbTmax)
+        Me.GroupBox2.Controls.Add(Me.KryptonLabel12)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel11)
+        Me.GroupBox2.Controls.Add(Me.cbVelUnit)
         Me.GroupBox2.Controls.Add(Me.tbTmin)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel8)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel7)
@@ -192,8 +194,6 @@ Partial Class FormReacKinetic
         Me.gbKinetics.Controls.Add(Me.tbRevUE)
         Me.gbKinetics.Controls.Add(Me.tbFwdUE)
         Me.gbKinetics.Controls.Add(Me.FlowLayoutPanel2)
-        Me.gbKinetics.Controls.Add(Me.KryptonLabel12)
-        Me.gbKinetics.Controls.Add(Me.cbVelUnit)
         Me.gbKinetics.Controls.Add(Me.FlowLayoutPanel1)
         Me.gbKinetics.Controls.Add(Me.tbRevE)
         Me.gbKinetics.Controls.Add(Me.KryptonLabel15)
@@ -252,6 +252,18 @@ Partial Class FormReacKinetic
         Me.rdRevUD.Name = "rdRevUD"
         Me.rdRevUD.TabStop = True
         Me.rdRevUD.UseVisualStyleBackColor = True
+        '
+        'KryptonLabel12
+        '
+        resources.ApplyResources(Me.KryptonLabel12, "KryptonLabel12")
+        Me.KryptonLabel12.Name = "KryptonLabel12"
+        '
+        'cbVelUnit
+        '
+        resources.ApplyResources(Me.cbVelUnit, "cbVelUnit")
+        Me.cbVelUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbVelUnit.DropDownWidth = 121
+        Me.cbVelUnit.Name = "cbVelUnit"
         '
         'FlowLayoutPanel1
         '
@@ -350,22 +362,10 @@ Partial Class FormReacKinetic
         resources.ApplyResources(Me.tbTmin, "tbTmin")
         Me.tbTmin.Name = "tbTmin"
         '
-        'cbVelUnit
-        '
-        resources.ApplyResources(Me.cbVelUnit, "cbVelUnit")
-        Me.cbVelUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbVelUnit.DropDownWidth = 121
-        Me.cbVelUnit.Name = "cbVelUnit"
-        '
         'KryptonLabel8
         '
         resources.ApplyResources(Me.KryptonLabel8, "KryptonLabel8")
         Me.KryptonLabel8.Name = "KryptonLabel8"
-        '
-        'KryptonLabel12
-        '
-        resources.ApplyResources(Me.KryptonLabel12, "KryptonLabel12")
-        Me.KryptonLabel12.Name = "KryptonLabel12"
         '
         'KryptonLabel7
         '
