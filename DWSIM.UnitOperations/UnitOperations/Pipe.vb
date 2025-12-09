@@ -2707,9 +2707,9 @@ Namespace UnitOperations
                             Case "Elevation"
                                 Profile.Sections(skey).Elevacao = cv.ConvertToSI(su.distance, propval)
                             Case "InternalDiameter"
-                                Profile.Sections(skey).DI = cv.Convert(su.diameter, "in", propval)
+                                Profile.Sections(skey).DI = cv.Convert(su.diameter, "in", propval) * 1000
                             Case "ExternalDiameter"
-                                Profile.Sections(skey).DE = cv.Convert(su.diameter, "in", propval)
+                                Profile.Sections(skey).DE = cv.Convert(su.diameter, "in", propval) * 1000
                             Case "Sections"
                                 Profile.Sections(skey).Incrementos = propval
                         End Select
