@@ -80,7 +80,7 @@ Namespace PropertyPackages
             If Not CurrentMaterialStream.Phases(0).Compounds.Keys.Contains("Water") Then
                 Throw New Exception("Steam Tables Property Package is meant to be used with Water streams only.")
             Else
-                If Not CurrentMaterialStream.Phases(0).Compounds("Water").MoleFraction.GetValueOrDefault() > 0.99 Then
+                If CurrentMaterialStream.Phases(0).Compounds("Water").MoleFraction.GetValueOrDefault() < 0.99 And CurrentMaterialStream.Phases(0).Properties.molarfraction.GetValueOrDefault() > 0.0 Then
                     Throw New Exception("Stream has Water but it is not the only compound with a significant amount.")
                 End If
             End If
