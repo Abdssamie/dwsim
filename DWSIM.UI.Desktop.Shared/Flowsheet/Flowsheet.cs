@@ -64,6 +64,14 @@ namespace DWSIM.UI.Desktop.Shared
 
         public override void UpdateInterface()
         {
+            // Skip UI updates in automation/headless mode (for server deployments, APIs, LLM integration)
+            if (GlobalSettings.Settings.AutomationMode)
+                return;
+
+            // Skip UI updates if Eto.Forms Application not initialized (headless operation)
+            if (Application.Instance == null)
+                return;
+
             Application.Instance.Invoke(() =>
             {
                 if (FlowsheetForm != null) FlowsheetForm.Invalidate();
