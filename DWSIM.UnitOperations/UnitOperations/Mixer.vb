@@ -158,7 +158,7 @@ Namespace UnitOperations
                 Where(Function(c3) c3.GetMassFlow() > 0).SingleOrDefault()
 
                 GetOutletMaterialStream(0).AssignFromPhase(PhaseLabel.Mixture, SS, True)
-                GetOutletMaterialStream(0).AtEquilibrium = True
+                GetOutletMaterialStream(0).AtEquilibrium = False
 
             Else
 
