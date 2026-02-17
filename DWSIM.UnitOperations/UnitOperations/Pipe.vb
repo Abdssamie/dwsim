@@ -707,8 +707,8 @@ Namespace UnitOperations
                                         If Math.Abs(DQ) > Math.Abs(DQmax) Then DQ = DQmax
 
                                         results.Internal_Temperature = DQ / (current_as.GetMassFlow() * substep_multpl / timestep * Cp_m) + Tin
-                                        results.Wall_Temperature = results.Internal_Temperature + DQ / (results.HTC_pipewall * Math.PI * (Math.Log(.DE / .DI) * .DI * 0.0254) * .Comprimento / .Incrementos)
-                                        results.Insulation_Temperature = results.Wall_Temperature + DQ / (results.HTC_insulation * Math.PI * (Math.Log((.DE + ThermalProfile.Espessura / 0.0254) / .DE) * .DE * 0.0254) * .Comprimento / .Incrementos)
+                                        results.Wall_Temperature = results.Internal_Temperature + DQ * 1000 / (results.HTC_pipewall * Math.PI * .DI * 0.0254 * .Comprimento / .Incrementos)
+                                        results.Insulation_Temperature = results.Wall_Temperature + DQ * 1000 / (results.HTC_insulation * Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos)
 
                                     Else
                                         DQ = 0.0#
@@ -1375,9 +1375,8 @@ Namespace UnitOperations
                                                 If Math.Abs(DQ) > Math.Abs(DQmax) Then DQ = DQmax
 
                                                 results.Internal_Temperature = (Tout + Tin) / 2
-                                                results.Wall_Temperature = results.Internal_Temperature + DQ / (results.HTC_pipewall * Math.PI * (Math.Log(.DE / .DI) * .DI * 0.0254) * .Comprimento / .Incrementos)
-                                                results.Insulation_Temperature = results.Wall_Temperature + DQ / (results.HTC_insulation * Math.PI * (Math.Log((.DE + ThermalProfile.Espessura / 0.0254) / .DE) * .DE * 0.0254) * .Comprimento / .Incrementos)
-
+                                                results.Wall_Temperature = results.Internal_Temperature + DQ * 1000 / (results.HTC_pipewall * Math.PI * .DI * 0.0254 * .Comprimento / .Incrementos)
+                                                results.Insulation_Temperature = results.Wall_Temperature + DQ * 1000 / (results.HTC_insulation * Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos)
                                             Else
                                                 DQ = 0.0#
                                                 DQmax = 0.0#
@@ -2102,7 +2101,7 @@ Namespace UnitOperations
 
             If parede = True Then
 
-                U_parede = k_parede(materialparede, T, section) / (Math.Log(Dext / Dint) * Dint)
+                U_parede = k_parede(materialparede, T, section) / (Math.Log(Dext / Dint) * Dint / 2)
                 If Dext = Dint Then U_parede = 0.0#
 
             End If
@@ -2114,7 +2113,7 @@ Namespace UnitOperations
             If isolamento = True Then
 
                 esp_isol = ThermalProfile.Espessura 'm
-                U_isol = ThermalProfile.Condtermica / (Math.Log((Dext + 2 * esp_isol) / Dext) * Dext)
+                U_isol = ThermalProfile.Condtermica / (Math.Log((Dext + 2 * esp_isol) / Dext) * Dext / 2)
 
             End If
 
