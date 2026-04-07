@@ -16,6 +16,12 @@ Public Interface IUnitOperationExtension
 
     Property Description As String
 
+    Property Author As String
+
+    Property Website As String
+
+    Function NewInstance() As IUnitOperationExtension
+
     Sub Run(UnitOperation As IUnitOperation)
 
     Sub ReleaseResources()

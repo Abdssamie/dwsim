@@ -82,6 +82,7 @@ Namespace UnitOperations
                 Try
                     MyBase.Solve()
                     UpdateDimensionsList()
+                    AttachExtensions.ForEach(Sub(ext) Try: ext.Run(Me) Catch ex As Exception: Logging.Logger.LogError("Unit Operation Extension Execution", ex) End Try)
                 Catch ex As Exception
                     LoadData(cstate)
                     Throw ex
@@ -89,6 +90,7 @@ Namespace UnitOperations
             Else
                 MyBase.Solve()
                 UpdateDimensionsList()
+                AttachExtensions.ForEach(Sub(ext) Try: ext.Run(Me) Catch ex As Exception: Logging.Logger.LogError("Unit Operation Extension Execution", ex) End Try)
             End If
         End Sub
 

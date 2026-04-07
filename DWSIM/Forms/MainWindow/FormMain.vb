@@ -289,11 +289,17 @@ Public Class FormMain
 
 #If Not WINE32 Then
 
+        'load unit operation extensions
+
+        Dim dlls = LoadExtenderDLLs()
+
+        GetUnitOperationExtensions(dlls)
+
         'load extenders
 
         Dim sw As New StringBuilder()
 
-        Dim extlist As List(Of IExtenderCollection) = GetExtenders(LoadExtenderDLLs())
+        Dim extlist As List(Of IExtenderCollection) = GetExtenders(dlls)
 
         For Each extender In extlist
             If Not Extenders.ContainsKey(extender.ID) Then
@@ -861,6 +867,31 @@ Public Class FormMain
         Console.WriteLine(sw.ToString())
 
         Return col
+
+    End Function
+
+     Function GetUnitOperationExtensions(ByVal alist As List(Of Assembly)) As List(Of IUnitOperationExtension)
+
+        Dim availableTypes As New List(Of Type)()
+
+        For Each currentAssembly As Assembly In alist
+            Try
+                availableTypes.AddRange(currentAssembly.GetExportedTypes())
+            Catch ex As Exception
+                Logging.Logger.LogError("Extender Loading (MainForm)", ex)
+            End Try
+        Next
+
+        Dim extList As List(Of Type) = availableTypes.FindAll(Function(t) t.GetInterfaces().Contains(GetType(Interfaces.IUnitOperationExtension)))
+
+        For Each ext In extList
+            Try
+                Dim uoext = TryCast(Activator.CreateInstance(ext), IUnitOperationExtension)
+                FormFlowsheet.AvailableUnitOperationExtensions.Add(uoext.Name, uoext)
+            Catch ex As Exception
+                Logging.Logger.LogError("Unit Operation Extension Loading (MainForm)", ex)
+            End Try
+        Next
 
     End Function
 
