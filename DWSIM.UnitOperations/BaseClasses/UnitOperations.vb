@@ -54,7 +54,17 @@ Namespace UnitOperations
 
         Public Overridable ReadOnly Property SupportsRestoreStateAfterError As Boolean = True
 
+        Private _AttachedExtensions As List(Of IUnitOperationExtension)
+
         Public Property AttachedExtensions As List(Of IUnitOperationExtension) Implements IUnitOperation.AttachedExtensions
+            Get
+                If _AttachedExtensions Is Nothing Then _AttachedExtensions = New List(Of IUnitOperationExtension)
+                Return _AttachedExtensions
+            End Get
+            Set(value As List(Of IUnitOperationExtension))
+                _AttachedExtensions = value
+            End Set
+        End Property
 
         Public Sub New()
 
@@ -82,7 +92,7 @@ Namespace UnitOperations
                 Try
                     MyBase.Solve()
                     UpdateDimensionsList()
-                    AttachExtensions.ForEach(Sub(ext) Try: ext.Run(Me) Catch ex As Exception: Logging.Logger.LogError("Unit Operation Extension Execution", ex) End Try)
+                    AttachedExtensions.ForEach(Sub(ext) Try: ext.Run(Me) Catch ex As Exception: Logging.Logger.LogError("Unit Operation Extension Execution", ex) End Try)
                 Catch ex As Exception
                     LoadData(cstate)
                     Throw ex
@@ -90,7 +100,7 @@ Namespace UnitOperations
             Else
                 MyBase.Solve()
                 UpdateDimensionsList()
-                AttachExtensions.ForEach(Sub(ext) Try: ext.Run(Me) Catch ex As Exception: Logging.Logger.LogError("Unit Operation Extension Execution", ex) End Try)
+                AttachedExtensions.ForEach(Sub(ext) Try: ext.Run(Me) Catch ex As Exception: Logging.Logger.LogError("Unit Operation Extension Execution", ex) End Try)
             End If
         End Sub
 
