@@ -381,6 +381,8 @@ Public Interface IFlowsheet
 
     Property AvailableSimulationObjects As Dictionary(Of String, ISimulationObject)
 
+    Property AvailableUnitOperationExtensions As Dictionary(Of String, IUnitOperationExtension)
+
     Function GetSnapshot(type As Enums.SnapshotType, Optional obj As ISimulationObject = Nothing) As XDocument
 
     Sub RestoreSnapshot(data As XDocument, type As Enums.SnapshotType)
