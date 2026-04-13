@@ -749,12 +749,6 @@
     <Compile Include="Forms\FormAddUtility.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormUnitOperationExtensionManager.Designer.vb">
-      <DependentUpon>FormUnitOperationExtensionManager.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormUnitOperationExtensionManager.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\FormBrowser.Designer.vb">
       <DependentUpon>FormBrowser.vb</DependentUpon>
     </Compile>

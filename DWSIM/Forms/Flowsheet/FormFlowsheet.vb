@@ -113,8 +113,6 @@ Public Class FormFlowsheet
 
     Public ChartCollection As New Dictionary(Of String, IChart)
 
-    Public Shared Property AvailableUnitOperationExtensions As New Dictionary(Of String, IUnitOperationExtension) Implements IFlowsheet.AvailableUnitOperationExtensions
-
     Public Property ParticleSizeDistributions As List(Of ISolidParticleSizeDistribution) = New List(Of ISolidParticleSizeDistribution) Implements IFlowsheet.ParticleSizeDistributions
 
     Public Property MessagesLog As New List(Of String) Implements IFlowsheet.MessagesLog

@@ -87,8 +87,6 @@ Imports DWSIM.ExtensionMethods
 
     Public Property InternalUnitOperations As New Dictionary(Of String, IUnitOperation)
 
-    Public Property AvailableUnitOperationExtensions As New Dictionary(Of String, IUnitOperationExtension) Implements IFlowsheet.AvailableUnitOperationExtensions
-
     Public Property GHGEmissionCompositions As Dictionary(Of String, IGHGComposition) = New Dictionary(Of String, IGHGComposition) Implements IFlowsheet.GHGEmissionCompositions
 
     Private loaded As Boolean = False
