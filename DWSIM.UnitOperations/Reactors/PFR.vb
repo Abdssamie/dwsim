@@ -528,7 +528,7 @@ Namespace Reactors
 
             Dim es As EnergyStream = GetInletEnergyStream(1)
 
-            ResidenceTime = Volume / ims1.GetVolumetricFlow()
+            ResidenceTime = Volume * CatalystVoidFraction / ims1.GetVolumetricFlow()
 
             If ResidenceTime < timestep Then
 
@@ -788,7 +788,7 @@ Namespace Reactors
             ims.SetFlowsheet(Me.FlowSheet)
             ims.PreferredFlashAlgorithmTag = Me.PreferredFlashAlgorithmTag
 
-            If Not dynamics Then ResidenceTime = Volume / ims.Phases(0).Properties.volumetric_flow.GetValueOrDefault
+            If Not dynamics Then ResidenceTime = Volume * CatalystVoidFraction / ims.Phases(0).Properties.volumetric_flow.GetValueOrDefault
 
             Me.Reactions.Clear()
             Me.ReactionsSequence.Clear()
@@ -1066,6 +1066,9 @@ Namespace Reactors
                         i = i + 1
                     Next
 
+                    Dim vfrac As Double = 1.0
+                    If CatalystVoidFraction > 0 And CatalystLoading > 0 Then vfrac = CatalystVoidFraction
+
                     'converge temperature
 
                     Dim esolv As IExternalODESolver = Nothing
@@ -1090,13 +1093,15 @@ Namespace Reactors
                                                          End Function, N.Count, 0.0, vc0)
                                     IObj2?.SetCurrent
                                     If dynamics Then
-                                        esolv.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                            vc = y
-                                                                                                        End Sub, 0.00000001)
+                                        esolv.Solve(vc0, 0.0#, 0.01 * deltaV * vfrac * Volume, deltaV * vfrac * Volume,
+                                                    Sub(x As Double, y As Double())
+                                                        vc = y
+                                                    End Sub, 0.00000001)
                                     Else
-                                        esolv.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                            vc = y
-                                                                                                        End Sub, 0.00000001)
+                                        esolv.Solve(vc0, 0.0#, 0.01 * deltaV * vfrac * Volume, deltaV * vfrac * Volume,
+                                                    Sub(x As Double, y As Double())
+                                                        vc = y
+                                                    End Sub, 0.00000001)
                                     End If
                                 Else
 
@@ -1106,52 +1111,60 @@ Namespace Reactors
                                             odesolver.InitializeODEs(AddressOf ODEFunc, N.Count, 0.0, vc0)
                                             IObj2?.SetCurrent
                                             If dynamics Then
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * vfrac * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             Else
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * vfrac * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             End If
                                         Case 1
                                             Dim odesolver = New DotNumerics.ODE.OdeExplicitRungeKutta45()
                                             odesolver.InitializeODEs(AddressOf ODEFunc, N.Count, 0.0, vc0)
                                             IObj2?.SetCurrent
                                             If dynamics Then
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * vfrac * deltaV * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             Else
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * vfrac * deltaV * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             End If
                                         Case 2
                                             Dim odesolver = New DotNumerics.ODE.OdeAdamsMoulton()
                                             odesolver.InitializeODEs(AddressOf ODEFunc, N.Count, 0.0, vc0)
                                             IObj2?.SetCurrent
                                             If dynamics Then
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * vfrac * deltaV * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             Else
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * vfrac * deltaV * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             End If
                                         Case 3
                                             Dim odesolver = New DotNumerics.ODE.OdeGearsBDF()
                                             odesolver.InitializeODEs(AddressOf ODEFunc, N.Count, 0.0, vc0)
                                             IObj2?.SetCurrent
                                             If dynamics Then
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * vfrac * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             Else
-                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * Volume, deltaV * Volume, Sub(x As Double, y As Double())
-                                                                                                                        vc = y
-                                                                                                                    End Sub)
+                                                odesolver.Solve(vc0, 0.0#, 0.01 * deltaV * vfrac * Volume, deltaV * vfrac * Volume,
+                                                                Sub(x As Double, y As Double())
+                                                                    vc = y
+                                                                End Sub)
                                             End If
                                     End Select
 
