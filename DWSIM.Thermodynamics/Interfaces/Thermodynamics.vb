@@ -1,4 +1,4 @@
-﻿'    DWSIM/DTL Interface  Methods
+'    DWSIM/DTL Interface  Methods
 '    Copyright 2012-2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DTL.
@@ -1339,7 +1339,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -1350,7 +1350,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -1440,7 +1440,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -1451,7 +1451,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -1543,7 +1543,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -1554,7 +1554,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -1646,7 +1646,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -1657,7 +1657,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -1749,7 +1749,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -1760,7 +1760,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -1849,7 +1849,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -1860,7 +1860,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -1945,7 +1945,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -1956,7 +1956,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -2043,7 +2043,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -2054,7 +2054,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -2141,7 +2141,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -2152,7 +2152,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)
@@ -2239,7 +2239,7 @@ Namespace CalculatorInterface
             pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
 
             Dim labels As String() = Nothing
-            Dim statuses As eCapePhaseStatus() = Nothing
+            Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
 
             ms.GetPresentPhases(labels, statuses)
 
@@ -2250,7 +2250,7 @@ Namespace CalculatorInterface
             Dim i, j As Integer
             i = 0
             For Each l As String In labels
-                If statuses(i) = eCapePhaseStatus.CAPE_ATEQUILIBRIUM Then
+                If statuses(i) = CapeOpen.CapePhaseStatus.CAPE_ATEQUILIBRIUM Then
                     fractions(0, i) = labels(i)
                     ms.GetSinglePhaseProp("phasefraction", labels(i), "Mole", res)
                     fractions(1, i) = res(0)

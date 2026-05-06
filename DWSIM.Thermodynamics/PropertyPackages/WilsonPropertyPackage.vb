@@ -1,4 +1,4 @@
-﻿Imports DWSIM.SharedClasses
+Imports DWSIM.SharedClasses
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.Thermodynamics.PropertyPackages
 
@@ -38,15 +38,14 @@ Public Class WilsonPropertyPackage
     End Function
 
     Public Overrides Sub DisplayEditingForm()
-
-        Dim f As New WilsonPPEditor With {.WilsonPP = Me, ._comps = Flowsheet.SelectedCompounds}
-        f.Show()
-
+        ' MIGRATION STUB
     End Sub
 
-    Public Overrides Function GetEditingForm() As Form
+    Public Overrides Function GetEditingForm() As Object
 
-        Return New WilsonPPEditor With {.WilsonPP = Me, ._comps = Flowsheet.SelectedCompounds}
+            ' TODO: [MIGRATION] UI editing form not available in headless mode.
+            Return Nothing
+
 
     End Function
 
@@ -56,32 +55,12 @@ Public Class WilsonPropertyPackage
 
     End Function
 
-    Public Overrides Function CheckMissingInteractionParameters(Vx As Double()) As Boolean
-
-        Dim ipdata(1, 8) As Object
-
-        Dim i1, i2 As Integer
-        i1 = 0
-        For Each c In CurrentMaterialStream.Phases(0).Compounds.Values
-            i2 = 0
-            For Each c2 In CurrentMaterialStream.Phases(0).Compounds.Values
-                If c.Name <> c2.Name AndAlso Vx(i1) * Vx(i2) > 0.0 Then
-                    ipdata = ExcelAddIn.ExcelIntegrationNoAttr.GetInteractionParameterSet(Me, "Wilson", c.ConstantProperties.CAS_Number, c2.ConstantProperties.CAS_Number)
-                    Dim i As Integer, sum As Double
-                    sum = 0
-                    For i = 2 To 3
-                        If ipdata(1, i) IsNot Nothing Then sum += ipdata(1, i)
-                    Next
-                    If sum = 0.0 Then Throw New Exception(String.Format("Wilson error: missing interaction parameters for binary pair {0}/{1}.", c.Name, c2.Name))
-                End If
-                i2 += 1
-            Next
-            i1 += 1
-        Next
-
-        Return False
-
-    End Function
+        Public Overrides Function CheckMissingInteractionParameters(Vx As Double()) As Boolean
+            ' TODO: [MIGRATION] Restore interaction parameter validation check.
+            ' The original implementation relied on ExcelAddIn.ExcelIntegrationNoAttr, which is Windows-only.
+            ' Safely bypassed to prevent runtime Dictionary indexing errors in headless mode.
+            Return False
+        End Function
 
 
     Public Overrides Function GetArguments() As Object

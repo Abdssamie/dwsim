@@ -122,10 +122,12 @@ Namespace Charts
                 .FontSize = 12,
                 .Title = ytitle
             })
-            model.LegendFontSize = 11
-            model.LegendPlacement = OxyPlot.LegendPlacement.Outside
-            model.LegendOrientation = OxyPlot.LegendOrientation.Vertical
-            model.LegendPosition = OxyPlot.LegendPosition.BottomCenter
+            Dim legend1 As New OxyPlot.Legends.Legend()
+            legend1.LegendFontSize = 11
+            legend1.LegendPlacement = OxyPlot.Legends.LegendPlacement.Outside
+            legend1.LegendOrientation = OxyPlot.Legends.LegendOrientation.Vertical
+            legend1.LegendPosition = OxyPlot.Legends.LegendPosition.BottomCenter
+            model.Legends.Add(legend1)
             model.TitleHorizontalAlignment = OxyPlot.TitleHorizontalAlignment.CenteredWithinView
             model.Title = ""
             model.Subtitle = ""

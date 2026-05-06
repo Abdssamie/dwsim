@@ -1,4 +1,4 @@
-﻿'    Peng-Robinson-Stryjek-Vera 2 w/ Margules Mixing Rules Property Package 
+'    Peng-Robinson-Stryjek-Vera 2 w/ Margules Mixing Rules Property Package 
 '    Copyright 2012-2024 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -68,20 +68,13 @@ Namespace PropertyPackages
         End Function
 
         Public Overrides Sub DisplayEditingForm()
+        ' MIGRATION STUB
+    End Sub
 
-            If GlobalSettings.Settings.CAPEOPENMode Then
-                Dim f As New FormConfigPRSV2() With {._pp = Me, ._comps = _selectedcomps.ToDictionary(Of String, Interfaces.ICompoundConstantProperties)(Function(k) k.Key, Function(k) k.Value)}
-                f.ShowDialog()
-            Else
-                Dim f As New FormConfigPRSV2() With {._pp = Me, ._comps = Flowsheet.SelectedCompounds}
-                f.ShowDialog()
-            End If
+        Public Overrides Function GetEditingForm() As Object
 
-        End Sub
-
-        Public Overrides Function GetEditingForm() As System.Windows.Forms.Form
-
-            Return New FormConfigPRSV2() With {._pp = Me, ._comps = Flowsheet.SelectedCompounds}
+            ' TODO: [MIGRATION] UI editing form not available in headless mode.
+            Return Nothing
 
         End Function
 

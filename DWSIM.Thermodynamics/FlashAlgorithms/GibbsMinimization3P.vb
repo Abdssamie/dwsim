@@ -27,7 +27,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
         Inherits FlashAlgorithm
 
-        Private _IObj As InspectorItem
+        Private _IObj As Inspector.InspectorItem
 
         Private _nl As New NestedLoops
         Private _nl3p As New NestedLoops3PV3

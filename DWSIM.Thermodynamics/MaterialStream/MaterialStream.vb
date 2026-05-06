@@ -1,4 +1,4 @@
-﻿'    Material Stream Implementation
+'    Material Stream Implementation
 '    Copyright 2008-2024 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -51,7 +51,8 @@ Namespace Streams
 
         Implements Interfaces.IMaterialStream
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As MaterialStreamEditor
+         ' TODO: [MIGRATION] MaterialStreamEditor is a UI form - not available in headless mode.
+        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As Object
 
         <NonSerialized> <Xml.Serialization.XmlIgnore> Public _pp As PropertyPackages.PropertyPackage
 
@@ -6640,22 +6641,8 @@ Namespace Streams
 
         Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New MaterialStreamEditor With {.MatStream = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New MaterialStreamEditor With {.MatStream = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.UpdateInfo()
-                    f.Activate()
-                End If
-            End If
+
+            ' TODO: [MIGRATION] Material stream editing form not available in headless mode.
 
         End Sub
 
@@ -6670,7 +6657,7 @@ Namespace Streams
         Public Property EditorState As String = "{}"
 
         Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.material_stream
+            Return Nothing
         End Function
 
         Public Overrides Function GetIconBitmapBytes() As Byte()

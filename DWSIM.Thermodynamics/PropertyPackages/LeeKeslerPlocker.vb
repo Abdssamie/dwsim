@@ -1,4 +1,4 @@
-﻿'    Lee-Kesler-Plöcker Property Package 
+'    Lee-Kesler-Plöcker Property Package 
 '    Copyright 2010 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -67,20 +67,13 @@ Namespace PropertyPackages
         End Function
 
         Public Overrides Sub DisplayEditingForm()
+        ' MIGRATION STUB
+    End Sub
 
-            If GlobalSettings.Settings.CAPEOPENMode Then
-                Dim f As New FormConfigLKP() With {._pp = Me, ._comps = _selectedcomps.ToDictionary(Of String, Interfaces.ICompoundConstantProperties)(Function(k) k.Key, Function(k) k.Value)}
-                f.ShowDialog()
-            Else
-                Dim f As New FormConfigLKP() With {._pp = Me, ._comps = Flowsheet.SelectedCompounds}
-                f.ShowDialog()
-            End If
+        Public Overrides Function GetEditingForm() As Object
 
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-
-            Return New FormConfigLKP() With {._pp = Me, ._comps = Flowsheet.SelectedCompounds}
+            ' TODO: [MIGRATION] UI editing form not available in headless mode.
+            Return Nothing
 
         End Function
 

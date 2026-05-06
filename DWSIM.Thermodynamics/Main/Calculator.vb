@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports Cudafy.Translator
 Imports Cudafy
 Imports Cudafy.Host
@@ -10,7 +10,8 @@ Public Class Calculator
     Public Shared _ResourceManager As System.Resources.ResourceManager
     Public Shared Culture As Globalization.CultureInfo
 
-    Public Shared ExcelLogForm As LogForm
+    ''' <summary>Headless stub: ExcelInterface log form is a UI concern.</summary>
+    Public Shared ExcelLogForm As Object = Nothing
 
     Shared Sub WriteToConsole(text As String, level As Integer)
         If level <= Settings.DebugLevel Then Console.WriteLine("[Thread ID: " + Threading.Thread.CurrentThread.ManagedThreadId.ToString + "][" + Date.Now.ToString + "] " + text)

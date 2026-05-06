@@ -1,4 +1,4 @@
-﻿'    Petroleum Assay Characterization Quality Check
+'    Petroleum Assay Characterization Quality Check
 '    Copyright 2018 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -20,8 +20,6 @@ Imports System.Text
 Imports DWSIM.Interfaces
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses.Utilities.PetroleumCharacterization.Assay
-Imports Eto.Forms
-Imports DWSIM.UI.Shared.Common
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
 
@@ -32,8 +30,6 @@ Public Class QualityCheck
 
     Private _report As New StringBuilder
     Private _compounds As New List(Of ICompoundConstantProperties)
-    Private _dlgresult As DialogResult
-
     Sub New(assay As Assay, ms As MaterialStream)
         _assay = assay
         _ms = ms
@@ -243,49 +239,8 @@ Public Class QualityCheck
 
     End Function
 
-    Function DisplayForm(displaycompoundviewer As Action(Of ConstantProperties), positiveanswer As Action) As DialogResult
-
-        Dim co1 = UI.Shared.Common.GetDefaultContainer()
-        co1.Tag = "Quality Check Report"
-        Dim co2 = UI.Shared.Common.GetDefaultContainer()
-        co2.Tag = "Pseudocompound Properties"
-
-        Dim myform = UI.Shared.Common.GetDefaultTabbedForm("Petroleum Characterization Quality Check", 750, 600, {co1, co2})
-
-        co1.CreateAndAddLabelRow("Quality Check Report")
-        co1.CreateAndAddMultilineMonoSpaceTextBoxRow(_report.ToString, 400, True, Nothing)
-        co1.CreateAndAddLabelRow2("Analyze the report and the properties of the generated pseudocompounds.")
-        co1.CreateAndAddLabelRow2("Click 'Yes' if you want to proceed adding the compounds to the simulation.")
-        co1.CreateAndAddLabelRow2("If you're not satisfied with the generated properties, click 'No', select a different set of property methods and parameters and try again.")
-        co1.CreateAndAddLabelAndTwoButtonsRow("", "No", Nothing, "Yes", Nothing,
-                                              Sub()
-                                                  _dlgresult = DialogResult.No
-                                                  myform.Close()
-                                              End Sub,
-                                              Sub()
-                                                  _dlgresult = DialogResult.Yes
-                                                  myform.Close()
-                                              End Sub)
-
-        co2.CreateAndAddLabelRow3("Pseudocompounds")
-
-        For Each c In _compounds
-            co2.CreateAndAddLabelAndButtonRow(c.Name, "View Properties",
-                                              Nothing,
-                                              Sub()
-                                                  displaycompoundviewer(c)
-                                              End Sub)
-        Next
-
-        _dlgresult = DialogResult.No
-
-        AddHandler myform.Closed, Sub()
-                                      If _dlgresult = DialogResult.Yes Then positiveanswer.Invoke
-                                  End Sub
-
-        myform.Topmost = True
-        myform.Show()
-
+    Function DisplayForm(displaycompoundviewer As Action(Of ConstantProperties), positiveanswer As Action) As Object
+        Throw New NotSupportedException("DisplayForm is not supported in headless mode.")
     End Function
 
 End Class

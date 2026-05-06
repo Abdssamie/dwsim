@@ -799,7 +799,7 @@ Final3:
 
         End Function
 
-        Private Sub PopulateWithDefaultText(iobj As InspectorItem)
+        Private Sub PopulateWithDefaultText(iobj As Inspector.InspectorItem)
 
             iobj?.Paragraphs.Add("Enthalpies, entropies and heat capacities are calculated by the 
                             Lee-Kesler model through the following equations:")

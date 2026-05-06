@@ -1,6 +1,8 @@
 ﻿Option Strict Off
 Option Explicit On
 
+Imports System.Runtime.InteropServices
+
 Public Class lpsolve55
 
     'lpsolve version 5 routines
@@ -419,15 +421,24 @@ Public Class lpsolve55
         If Right(buf, 1) <> "\" Then
             buf = buf & "\"
         End If
-        buf = buf & "lpsolve55"
-        On Error Resume Next
-        Init = (Len(Dir(buf, FileAttribute.Normal)) > 0)
+        ' TODO: [MIGRATION] Support cross-platform native library loading for lpsolve55
+        Dim dllFile As String = "lpsolve55.dll"
+        If RuntimeInformation.IsOSPlatform(OSPlatform.Linux) Then dllFile = "liblpsolve55.so"
+        If RuntimeInformation.IsOSPlatform(OSPlatform.OSX) Then dllFile = "liblpsolve55.dylib"
+
+        Init = System.IO.File.Exists(System.IO.Path.Combine(dllPath, dllFile))
         If Init Then
             If Not bEnvChanged Then
                 bEnvChanged = True
-                Path = GetEnvironmentVariable("PATH")
-                If InStr(1, Path & ";", dllPath & ";", CompareMethod.Text) = 0 Then
-                    SetEnvironmentVariable("PATH", dllPath & ";" & Path)
+                Dim pathVar As String = "PATH"
+                Dim separator As String = ";"
+                If Not RuntimeInformation.IsOSPlatform(OSPlatform.Windows) Then
+                    pathVar = "LD_LIBRARY_PATH"
+                    separator = ":"
+                End If
+                Path = GetEnvironmentVariable(pathVar)
+                If String.IsNullOrEmpty(Path) OrElse Not Path.Contains(dllPath) Then
+                    SetEnvironmentVariable(pathVar, dllPath & separator & Path)
                 End If
             End If
         End If

@@ -1,4 +1,3 @@
-﻿Imports System.Windows.Forms
 Imports System.Globalization
 Imports DWSIM.Interfaces.Enums
 Imports System.Linq
@@ -243,25 +242,6 @@ Public Module General
         Return newvector
 
     End Function
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Sub ValidateCellForDouble(dgv As DataGridView, e As DataGridViewCellValidatingEventArgs)
-
-        Dim cell As DataGridViewCell = dgv.Rows(e.RowIndex).Cells(e.ColumnIndex)
-
-        If cell.FormattedValue = e.FormattedValue Then Exit Sub
-
-        e.Cancel = Not e.FormattedValue.ToString.IsValidDouble
-
-        If e.Cancel Then
-            If Not dgv.EditingControl Is Nothing Then dgv.EditingControl.ForeColor = Drawing.Color.Red
-            My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Exclamation)
-        Else
-            cell.Style.ForeColor = Drawing.Color.Blue
-        End If
-
-    End Sub
-
     <System.Runtime.CompilerServices.Extension()>
     Public Function IsValidDouble(obj As Object) As Boolean
 
@@ -319,7 +299,7 @@ Public Module General
 
                 For Each obj As Object In sourcearray
                     If TypeOf obj Is Double Then
-                        sb += Double.Parse(obj).ToString(ci) + ","
+                        sb += CDbl(obj).ToString(ci) + ","
                     Else
                         sb += obj.ToString + ","
                     End If
@@ -391,81 +371,10 @@ Public Module General
 
     End Function
 
-    <System.Runtime.CompilerServices.Extension()>
-    Public Sub UIThread(control As Control, code As Action)
-        If control.InvokeRequired Then
-            control.BeginInvoke(code)
-        Else
-            code.Invoke()
-        End If
-    End Sub
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Sub UIThreadInvoke(control As Control, code As Action)
-        If control.InvokeRequired Then
-            control.BeginInvoke(code)
-        Else
-            code.Invoke()
-        End If
-    End Sub
-
     '<System.Runtime.CompilerServices.Extension()> _
     'Public Function ToDTPoint(pt As System.Drawing.Point) As DrawingTools.Point
     '    Return New DrawingTools.Point(pt.X, pt.Y)
     'End Function
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Function GetUnits(control As System.Windows.Forms.GridItem) As String
-        If control.Value.ToString().Split(" ").Length > 1 Then
-            Return control.Value.ToString.Substring(control.Value.ToString.IndexOf(" "c) + 1, control.Value.ToString.Length - control.Value.ToString.IndexOf(" "c) - 1)
-        Else
-            Return ""
-        End If
-    End Function
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Function GetValue(control As System.Windows.Forms.GridItem) As Double
-        Dim istring As Object
-        If control.Value.ToString().Split(" ").Length > 1 Then
-            istring = control.Value.ToString().Split(" ")(0)
-            If Double.TryParse(istring.ToString, New Double) Then
-                Return Convert.ToDouble(istring)
-            Else
-                Return Double.NaN
-            End If
-        ElseIf control.Value.ToString().Split(" ").Length = 1 Then
-            istring = control.Value
-            If Double.TryParse(istring.ToString, New Double) Then
-                Return Convert.ToDouble(control.Value)
-            Else
-                Return Double.NaN
-            End If
-        Else
-            Return Double.NaN
-        End If
-    End Function
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Function DropDownWidth(control As ListView) As Integer
-        Dim maxWidth As Integer = 0, temp As Integer = 0
-        For Each obj As Object In control.Items
-            temp = TextRenderer.MeasureText(obj.ToString(), control.Font).Width
-            If temp > maxWidth Then
-                maxWidth = temp
-            End If
-        Next
-        Return maxWidth
-    End Function
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Function DropDownHeight(control As ListView) As Integer
-        Dim Height As Integer = 0, temp As Integer = 0
-        For Each obj As Object In control.Items
-            temp = TextRenderer.MeasureText(obj.ToString(), control.Font).Height
-            Height += temp
-        Next
-        Return Height
-    End Function
 
     <System.Runtime.CompilerServices.Extension()>
     Public Function ToArrayString(vector As Double()) As String
@@ -583,7 +492,7 @@ Public Module General
     Public Function ToDoubleWithSeparator(s As String, sep As String) As Double
         Dim nstring As String = s.Replace(sep, ".")
         If Double.TryParse(nstring, Globalization.NumberStyles.Any, Globalization.CultureInfo.InvariantCulture, New Double) Then
-            Return Double.Parse(nstring, NumberStyles.Any - NumberStyles.AllowThousands, Globalization.CultureInfo.InvariantCulture)
+            Return Double.Parse(nstring, CType(NumberStyles.Any - NumberStyles.AllowThousands, NumberStyles), Globalization.CultureInfo.InvariantCulture)
         Else
             Return 0.0#
         End If
@@ -594,7 +503,7 @@ Public Module General
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
-        Return Double.Parse(s.Replace(",", "."), NumberStyles.Any - NumberStyles.AllowThousands, ci)
+        Return Double.Parse(s.Replace(",", "."), CType(NumberStyles.Any - NumberStyles.AllowThousands, NumberStyles), ci)
 
     End Function
 
@@ -603,7 +512,7 @@ Public Module General
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
-        Return Single.Parse(s.Replace(",", "."), NumberStyles.Any - NumberStyles.AllowThousands, ci)
+        Return Single.Parse(s.Replace(",", "."), CType(NumberStyles.Any - NumberStyles.AllowThousands, NumberStyles), ci)
 
     End Function
 
@@ -612,8 +521,8 @@ Public Module General
 
         Dim ci As CultureInfo = CultureInfo.CurrentCulture
 
-        If Double.TryParse(s, NumberStyles.Any - NumberStyles.AllowThousands, ci, New Double) Then
-            Return Double.Parse(s, NumberStyles.Any - NumberStyles.AllowThousands, ci)
+        If Double.TryParse(s, CType(NumberStyles.Any - NumberStyles.AllowThousands, NumberStyles), ci, New Double) Then
+            Return Double.Parse(s, CType(NumberStyles.Any - NumberStyles.AllowThousands, NumberStyles), ci)
         Else
             Return 0.0
         End If
@@ -720,84 +629,6 @@ Public Module General
     Public Function ToString(vector As Double(), numberformat As String) As String()
 
         Return vector.Select(Function(d) d.ToString(numberformat, CultureInfo.InvariantCulture)).ToArray()
-
-    End Function
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Sub PasteData(dgv As DataGridView, Optional ByVal addnewline As Boolean = True)
-
-        PasteData2(dgv, Clipboard.GetText(), addnewline)
-
-    End Sub
-
-    <System.Runtime.CompilerServices.Extension()>
-    Public Sub PasteData2(dgv As DataGridView, data As String, Optional ByVal addnewline As Boolean = True)
-
-        Dim tArr() As String
-        Dim arT() As String
-        Dim i, ii As Integer
-        Dim c, cc, r As Integer
-
-        Dim sep = New String() {Environment.NewLine}
-
-        tArr = Clipboard.GetText().Split(sep, StringSplitOptions.RemoveEmptyEntries)
-
-        If dgv.SelectedCells.Count > 0 Then
-            r = dgv.SelectedCells(0).RowIndex
-            c = dgv.SelectedCells(0).ColumnIndex
-        Else
-            r = 0
-            c = 0
-        End If
-        For i = 0 To tArr.Length - 1
-            If tArr(i) <> "" Then
-                arT = tArr(i).Split(vbTab)
-                For ii = 0 To arT.Length - 1
-                    If r > dgv.Rows.Count - 1 Then
-                        If addnewline Then dgv.Rows.Add()
-                        dgv.Rows(0).Cells(0).Selected = True
-                    End If
-                Next
-                r = r + 1
-            End If
-        Next
-        If dgv.SelectedCells.Count > 0 Then
-            r = dgv.SelectedCells(0).RowIndex
-            c = dgv.SelectedCells(0).ColumnIndex
-        Else
-            r = 0
-            c = 0
-        End If
-        For i = 0 To tArr.Length - 1
-            If tArr(i) <> "" Then
-                arT = tArr(i).Split(New Char() {vbTab, ";"})
-                cc = c
-                For ii = 0 To arT.Length - 1
-                    Try
-                        cc = GetNextVisibleCol(dgv, cc)
-                        If cc > dgv.ColumnCount - 1 Then Exit For
-                        If Not dgv.Item(cc, r).ReadOnly Then
-                            dgv.Item(cc, r).Value = arT(ii).TrimStart
-                        End If
-                        cc = cc + 1
-                    Catch ex As Exception
-                    End Try
-                Next
-                r = r + 1
-            End If
-        Next
-
-    End Sub
-
-    Function GetNextVisibleCol(dgv As DataGridView, stidx As Integer) As Integer
-
-        Dim i As Integer
-
-        For i = stidx To dgv.ColumnCount - 1
-            If dgv.Columns(i).Visible Then Return i
-        Next
-
-        Return Nothing
 
     End Function
 

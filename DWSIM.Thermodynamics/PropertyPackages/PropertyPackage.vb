@@ -764,18 +764,12 @@ Namespace PropertyPackages
 
         Function ObjectCopy(ByVal obj As Object) As Object
 
-            Dim objMemStream As New MemoryStream()
-            Dim objBinaryFormatter As New BinaryFormatter(Nothing, New StreamingContext(StreamingContextStates.Clone))
-
-            objBinaryFormatter.Serialize(objMemStream, obj)
-
-            objMemStream.Seek(0, SeekOrigin.Begin)
-
-            objBinaryFormatter.Binder = New DeserializationBinder()
-
-            ObjectCopy = objBinaryFormatter.Deserialize(objMemStream)
-
-            objMemStream.Close()
+            Dim settings As New Newtonsoft.Json.JsonSerializerSettings() With {
+                .TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All,
+                .PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects
+            }
+            Dim json As String = Newtonsoft.Json.JsonConvert.SerializeObject(obj, settings)
+            Return Newtonsoft.Json.JsonConvert.DeserializeObject(json, settings)
 
         End Function
 
@@ -3764,37 +3758,126 @@ redirect2:                  IObj?.SetCurrent()
 
                 Next
 
-            End If
+                Dim erequest As New AI.ConvergenceAssistant.Classes.PhaseEnvelopeRequest With {
+                    .CompoundNames = Vn.ToArray(),
+                    .ModelName = ComponentName,
+                    .MolarComposition = Vz
+                }
 
-            Dim erequest As New AI.ConvergenceAssistant.Classes.PhaseEnvelopeRequest With {
-                .CompoundNames = Vn.ToArray(),
-                .ModelName = ComponentName,
-                .MolarComposition = Vz
-            }
+                Dim eresult = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetPhaseEnvelope(erequest)
 
-            Dim eresult = DWSIM.SharedClasses.AI.ConvergenceAssistant.SolutionProvider?.GetPhaseEnvelope(erequest)
+                If eresult IsNot Nothing Then
 
-            If eresult IsNot Nothing Then
+                    For i = 0 To eresult.BubbleTemperatures.Count - 1
+                        TVB.Add(eresult.BubbleTemperatures(i))
+                        PB.Add(eresult.BubblePressures(i))
+                        HB.Add(Me.DW_CalcEnthalpy(Vz, TVB.Last(), PB.Last(), State.Liquid))
+                        SB.Add(Me.DW_CalcEntropy(Vz, TVB.Last(), PB.Last(), State.Liquid))
+                        VB.Add(1 / Me.AUX_LIQDENS(TVB.Last(), Vz, PB.Last(), PB.Last()) * Me.AUX_MMM(Phase.Mixture))
+                    Next
 
-                For i = 0 To eresult.BubbleTemperatures.Count - 1
-                    TVB.Add(eresult.BubbleTemperatures(i))
-                    PB.Add(eresult.BubblePressures(i))
-                    HB.Add(Me.DW_CalcEnthalpy(Vz, TVB.Last(), PB.Last(), State.Liquid))
-                    SB.Add(Me.DW_CalcEntropy(Vz, TVB.Last(), PB.Last(), State.Liquid))
-                    VB.Add(1 / Me.AUX_LIQDENS(TVB.Last(), Vz, PB.Last(), PB.Last()) * Me.AUX_MMM(Phase.Mixture))
-                Next
+                    For i = 0 To eresult.DewTemperatures.Count - 1
+                        TVD.Add(eresult.DewTemperatures(i))
+                        PO.Add(eresult.DewPressures(i))
+                        HO.Add(Me.DW_CalcEnthalpy(Vz, TVD.Last(), PO.Last(), State.Vapor))
+                        SO.Add(Me.DW_CalcEntropy(Vz, TVD.Last(), PO.Last(), State.Vapor))
+                        VO.Add(1 / Me.AUX_VAPDENS(TVD.Last(), PO.Last()) * Me.AUX_MMM(Phase.Mixture))
+                    Next
 
-                For i = 0 To eresult.DewTemperatures.Count - 1
-                    TVD.Add(eresult.DewTemperatures(i))
-                    PO.Add(eresult.DewPressures(i))
-                    HO.Add(Me.DW_CalcEnthalpy(Vz, TVD.Last(), PO.Last(), State.Liquid))
-                    SO.Add(Me.DW_CalcEntropy(Vz, TVD.Last(), PO.Last(), State.Liquid))
-                    VO.Add(1 / Me.AUX_LIQDENS(TVB.Last(), Vz, PO.Last(), PO.Last()) * Me.AUX_MMM(Phase.Mixture))
-                Next
+                    If eresult.CriticalPoints IsNot Nothing Then
+                        CP.Add(New Object() {eresult.CriticalPoints(0)(0), eresult.CriticalPoints(0)(1), eresult.CriticalPoints(0)(2)})
+                    Else
 
-                If eresult.CriticalPoints IsNot Nothing Then
+                        If TypeOf Me Is PengRobinsonPropertyPackage Then
+                            If n > 0 Then
+                                CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                                If CP.Count = 0 Then CP = New Utilities.TCP.Methods().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
+                                If CP.Count > 0 Then
+                                    Dim cp0 = CP(0)
+                                    TCR = cp0(0)
+                                    PCR = cp0(1)
+                                    VCR = cp0(2)
+                                    stopAtCP = True
+                                Else
+                                    TCR = Me.AUX_TCM(Phase.Mixture)
+                                    PCR = Me.AUX_PCM(Phase.Mixture)
+                                    VCR = Me.AUX_VCM(Phase.Mixture)
+                                    recalcCP = True
+                                End If
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                CP.Add(New Object() {TCR, PCR, VCR})
+                            End If
+                        ElseIf TypeOf Me Is PengRobinson1978PropertyPackage Then
+                            If n > 0 Then
+                                CP = New Utilities.TCP.Methods_PR78().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                                If CP.Count = 0 Then CP = New Utilities.TCP.Methods_SRK().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
+                                If CP.Count > 0 Then
+                                    Dim cp0 = CP(0)
+                                    TCR = cp0(0)
+                                    PCR = cp0(1)
+                                    VCR = cp0(2)
+                                    stopAtCP = True
+                                Else
+                                    TCR = Me.AUX_TCM(Phase.Mixture)
+                                    PCR = Me.AUX_PCM(Phase.Mixture)
+                                    VCR = Me.AUX_VCM(Phase.Mixture)
+                                    recalcCP = True
+                                End If
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                CP.Add(New Object() {TCR, PCR, VCR})
+                            End If
+                        ElseIf TypeOf Me Is SRKPropertyPackage Then
+                            If n > 0 Then
+                                CP = New Utilities.TCP.Methods_SRK().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij2)
+                                If CP.Count = 0 Then CP = New Utilities.TCP.Methods_SRK().CRITPT_PR(Vm2, VTc2, VPc2, VVc2, Vw2, VKij3)
+                                If CP.Count > 0 Then
+                                    Dim cp0 = CP(0)
+                                    TCR = cp0(0)
+                                    PCR = cp0(1)
+                                    VCR = cp0(2)
+                                    stopAtCP = True
+                                Else
+                                    TCR = Me.AUX_TCM(Phase.Mixture)
+                                    PCR = Me.AUX_PCM(Phase.Mixture)
+                                    VCR = Me.AUX_VCM(Phase.Mixture)
+                                    recalcCP = True
+                                End If
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                CP.Add(New Object() {TCR, PCR, VCR})
+                            End If
+                        Else
+                            If n > 0 Then
+                                CP = New ArrayList(DW_CalculateCriticalPoints())
+                                If CP.Count > 0 Then
+                                    Dim cp0 = CP(0)
+                                    TCR = cp0(0)
+                                    PCR = cp0(1)
+                                    VCR = cp0(2)
+                                    stopAtCP = True
+                                Else
+                                    TCR = Me.AUX_TCM(Phase.Mixture)
+                                    PCR = Me.AUX_PCM(Phase.Mixture)
+                                    VCR = Me.AUX_VCM(Phase.Mixture)
+                                    recalcCP = True
+                                End If
+                            Else
+                                TCR = Me.AUX_TCM(Phase.Mixture)
+                                PCR = Me.AUX_PCM(Phase.Mixture)
+                                VCR = Me.AUX_VCM(Phase.Mixture)
+                                CP.Add(New Object() {TCR, PCR, VCR})
+                            End If
+                        End If
 
-                    CP.Add(New Object() {eresult.CriticalPoints(0)(0), eresult.CriticalPoints(0)(1), eresult.CriticalPoints(0)(2)})
+                    End If
 
                 Else
 
@@ -5146,47 +5229,8 @@ redirect2:                  IObj?.SetCurrent()
 
             If PropertyOverrides.Count > 0 Then
 
-                Dim engine As ScriptEngine
-                Dim scope As ScriptScope
-
-                engine = IronPython.Hosting.Python.CreateEngine()
-                engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
-                engine.Runtime.LoadAssembly(GetType(BaseClasses.ConstantProperties).Assembly)
-                scope = engine.CreateScope()
-                scope.SetVariable("flowsheet", CurrentMaterialStream.Flowsheet)
-                scope.SetVariable("this", Me)
-                scope.SetVariable("matstr", CurrentMaterialStream)
-                scope.SetVariable("T", CurrentMaterialStream.Phases(0).Properties.temperature.GetValueOrDefault)
-                scope.SetVariable("P", CurrentMaterialStream.Phases(0).Properties.pressure.GetValueOrDefault)
-
-                For Each item In PropertyOverrides
-
-                    Dim source As Microsoft.Scripting.Hosting.ScriptSource = engine.CreateScriptSourceFromString(item.Value, Microsoft.Scripting.SourceCodeKind.Statements)
-                    Try
-                        Dim phasename As String = item.Key.Split("/")(0)
-                        Dim propname As String = item.Key.Split("/")(1)
-                        Dim phase = CurrentMaterialStream.GetPhase(phasename)
-                        scope.SetVariable("currval", phase.Properties.GetType.GetProperty(propname).GetValue(phase.Properties))
-                        scope.SetVariable("phase", phase)
-                        source.Execute(scope)
-                        Dim value = scope.GetVariable("propval")
-                        phase.Properties.GetType.GetProperty(propname).SetValue(phase.Properties, New Nullable(Of Double)(Convert.ToDouble(value)))
-                    Catch ex As Exception
-                        Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
-                        Dim gobj = DirectCast(CurrentMaterialStream, MaterialStream).GraphicObject
-                        If gobj IsNot Nothing Then
-                            Throw New Exception("[" & Tag & " / " & gobj.Tag & "] Error calculating overriden Property '" & item.Key & "': " & ops.FormatException(ex).ToString)
-                        Else
-                            Throw New Exception("[" & Tag & "] Error calculating overriden property '" & item.Key & "': " & ops.FormatException(ex).ToString)
-                        End If
-                    Finally
-                        source = Nothing
-                    End Try
-
-                Next
-
-                engine = Nothing
-                scope = Nothing
+                ' TODO: [MIGRATION] IronPython script overrides are not supported in the .NET 8 headless engine.
+                Throw New NotSupportedException("IronPython script overrides are not supported in headless mode.")
 
             End If
 
@@ -11908,8 +11952,7 @@ Final3:
         ''' available it returns an error.</summary>
         ''' <remarks></remarks>
         Public Overridable Sub Edit() Implements CapeOpen.ICapeUtilities.Edit
-            Dim cf As New FormConfigCAPEOPENPPackage With {._pp = Me}
-            cf.ShowDialog()
+            Throw New NotSupportedException("CAPE-OPEN UI forms are not supported in headless mode.")
         End Sub
 
         ''' <summary>
@@ -12076,88 +12119,10 @@ Final3:
 
             Try
 
-                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+                ' TODO: [MIGRATION] CAPE-OPEN BinaryFormatter persistence not supported in headless mode.
+                ' This COM-specific path is Windows-only and irrelevant to the Linux engine layer.
+                Throw New NotSupportedException("CAPE-OPEN binary stream persistence is not supported in headless/Linux mode.")
 
-                Dim domain As AppDomain = AppDomain.CurrentDomain
-                AddHandler domain.AssemblyResolve, New ResolveEventHandler(AddressOf MyResolveEventHandler)
-
-                ' Read the length of the string  
-                Dim arrLen As Byte() = New [Byte](3) {}
-                pStm.Read(arrLen, arrLen.Length, IntPtr.Zero)
-
-                ' Calculate the length  
-                Dim cb As Integer = BitConverter.ToInt32(arrLen, 0)
-
-                ' Read the stream to get the string    
-                Dim bytes As Byte() = New Byte(cb - 1) {}
-                Dim pcb As New IntPtr()
-                pStm.Read(bytes, bytes.Length, pcb)
-                If System.Runtime.InteropServices.Marshal.IsComObject(pStm) Then System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm)
-
-                ' Deserialize byte array    
-
-                Dim myarr As ArrayList
-
-                Using memoryStream As New System.IO.MemoryStream(bytes)
-
-                    myarr = mySerializer.Deserialize(memoryStream)
-
-                End Using
-
-                _availablecomps = myarr(0)
-                _selectedcomps = myarr(1)
-                '_ioquick = myarr(2)
-
-                Dim xmldoc = XDocument.Parse(myarr(6))
-                Dim fadata As List(Of XElement) = xmldoc.Element("Data").Elements.ToList
-                Try
-                    _FlashAlgorithm = ReturnInstance(fadata.Where(Function(x) x.Name = "Type").FirstOrDefault.Value)
-                    DirectCast(_FlashAlgorithm, Interfaces.ICustomXMLSerialization).LoadData(fadata)
-                Catch ex As Exception
-                End Try
-
-                Select Case Me.ComponentName
-                    Case "Peng-Robinson (PR)"
-                        CType(Me, PengRobinsonPropertyPackage).m_pr = myarr(7)
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2)"
-                        CType(Me, PRSV2PropertyPackage).m_pr = myarr(7)
-                    Case "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)"
-                        CType(Me, PRSV2VLPropertyPackage).m_pr = myarr(7)
-                    Case "Soave-Redlich-Kwong (SRK)"
-                        CType(Me, SRKPropertyPackage).m_pr = myarr(7)
-                    Case "Peng-Robinson / Lee-Kesler (PR/LK)"
-                        CType(Me, PengRobinsonLKPropertyPackage).m_pr = myarr(7)
-                        CType(Me, PengRobinsonLKPropertyPackage).m_lk = myarr(8)
-                    Case "UNIFAC"
-                        CType(Me, UNIFACPropertyPackage).m_pr = myarr(7)
-                    Case "UNIFAC-LL"
-                        CType(Me, UNIFACLLPropertyPackage).m_pr = myarr(7)
-                    Case "NRTL"
-                        CType(Me, NRTLPropertyPackage).m_pr = myarr(7)
-                        CType(Me, NRTLPropertyPackage).m_uni = myarr(8)
-                    Case "UNIQUAC"
-                        CType(Me, UNIQUACPropertyPackage).m_pr = myarr(7)
-                        CType(Me, UNIQUACPropertyPackage).m_uni = myarr(8)
-                    Case "Modified UNIFAC (Dortmund)"
-                        CType(Me, MODFACPropertyPackage).m_pr = myarr(7)
-                    Case "Chao-Seader"
-                        CType(Me, ChaoSeaderPropertyPackage).m_pr = myarr(7)
-                        CType(Me, ChaoSeaderPropertyPackage).m_lk = myarr(8)
-                        CType(Me, ChaoSeaderPropertyPackage).m_cs = myarr(9)
-                    Case "Grayson-Streed"
-                        CType(Me, GraysonStreedPropertyPackage).m_pr = myarr(7)
-                        CType(Me, GraysonStreedPropertyPackage).m_lk = myarr(8)
-                        CType(Me, GraysonStreedPropertyPackage).m_cs = myarr(9)
-                    Case "Lee-Kesler-Plöcker"
-                        CType(Me, LKPPropertyPackage).m_pr = myarr(7)
-                        CType(Me, LKPPropertyPackage).m_lk = myarr(8)
-                    Case "Raoult's Law", "IAPWS-IF97 Steam Tables"
-                End Select
-
-                myarr = Nothing
-                mySerializer = Nothing
-
-                RemoveHandler domain.AssemblyResolve, New ResolveEventHandler(AddressOf MyResolveEventHandler)
 
             Catch p_Ex As System.Exception
 
@@ -12228,11 +12193,10 @@ Final3:
 
                 End With
 
-                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
-                Dim mstr As New MemoryStream
-                mySerializer.Serialize(mstr, props)
-                Dim bytes As Byte() = mstr.ToArray()
-                mstr.Close()
+                ' TODO: [MIGRATION] CAPE-OPEN BinaryFormatter persistence not supported in headless mode.
+                Throw New NotSupportedException("CAPE-OPEN binary stream persistence is not supported in headless/Linux mode.")
+                Dim bytes As Byte() = Array.Empty(Of Byte)()
+                Dim mstr As New MemoryStream(bytes)
 
                 ' construct length (separate into two separate bytes)    
 
@@ -13431,212 +13395,35 @@ Final3:
 
         End Sub
 
-        Public Overridable Function GetEditingForm() As System.Windows.Forms.Form
+        Public Overridable Function GetEditingForm() As Object
 
-            Return New FormConfigPropertyPackage() With {._pp = Me, ._comps = Flowsheet.SelectedCompounds}
+            ' TODO: [MIGRATION] Property Package editing form is a UI concern; not available in headless mode.
+            Return Nothing
 
         End Function
 
         Public Sub DisplayFlashConfigForm()
-            Dim fset As New FlashAlgorithmConfig
-            fset.Settings = FlashSettings
-            fset.PropPack = Me
-            If Settings.IsRunningOnMono() Then
-                fset.ShowDialog()
-            Else
-                fset.Show()
-            End If
         End Sub
 
         Public Overridable Sub DisplayGroupedEditingForm() Implements IPropertyPackage.DisplayGroupedEditingForm
-
-            If TypeOf Me Is CAPEOPENPropertyPackage Then
-
-                DisplayEditingForm()
-
-            Else
-
-                Dim eform = GetEditingForm()
-                eform.TopLevel = False
-                eform.FormBorderStyle = FormBorderStyle.None
-                eform.Dock = DockStyle.Fill
-                eform.Visible = True
-
-                Dim fset As New FlashAlgorithmConfig
-                fset.Settings = FlashSettings
-                fset.PropPack = Me
-                fset.TopLevel = False
-                fset.FormBorderStyle = FormBorderStyle.None
-                fset.Dock = DockStyle.Fill
-                fset.Visible = True
-
-                Dim pform = New PropertyPackageSettingsEditingControl(Me) With {.Dock = DockStyle.Fill}
-
-                Dim peditor As New Thermodynamics.FormGroupedPPConfigWindows()
-                peditor.Flowsheet = Flowsheet
-                peditor.PropertyPackage = Me
-
-                peditor.TabPageBIPs.Controls.Add(eform)
-                peditor.TabPageFlash.Controls.Add(fset)
-                peditor.TabPageProps.Controls.Add(pform)
-
-                peditor.Text += " (" & Tag & ") [" + ComponentName + "]"
-
-                AddHandler peditor.FormClosing, Sub(s2, e2)
-                                                    fset.FlashAlgorithmConfig_FormClosing(s2, e2)
-                                                End Sub
-
-                If Settings.IsRunningOnMono() Then
-                    peditor.ShowDialog()
-                Else
-                    If Flowsheet IsNot Nothing Then
-                        Flowsheet.DisplayForm(peditor)
-                    Else
-                        peditor.Show()
-                    End If
-                End If
-
-            End If
-
+            ' TODO: [MIGRATION] Grouped editing form is a WinForms UI concern; not available in headless mode.
         End Sub
 
-
         Public Function DisplayAdvancedEditingForm() As Object Implements IPropertyPackage.DisplayAdvancedEditingForm
-
-            Dim form = GetAdvancedEditingForm()
-
-            Dim sf = GlobalSettings.Settings.DpiScale
-
-            If GlobalSettings.Settings.OldUI Then
-                form.Topmost = True
-                form.Show()
-                form.Center()
-                ExtensionMethods.Eto.Extensions2.SetFontAndPadding(form)
-                form.Width += 25 * sf
-                form.Height += 70 * sf
-                Return form
-            Else
-                form.Topmost = True
-                form.Show()
-                Return form
-            End If
-
+            Return Nothing
         End Function
 
-        Public Function GetAdvancedEditingForm() As Eto.Forms.Form
-
-            Dim containers = GetAdvancedEditingContainers()
-
-            Dim sf = GlobalSettings.Settings.DpiScale
-
-            If GlobalSettings.Settings.OldUI Then
-                Dim form = sui.GetDefaultEditorForm("Advanced Property Package Settings", 700 * sf, 600 * sf, containers(1))
-                form.Topmost = True
-                Return form
-            Else
-                Dim form = sui.GetDefaultTabbedForm("Advanced Property Package Settings", 700, 600, {containers(0), containers(1)})
-                form.Topmost = True
-                Return form
-            End If
-
-
+        Public Function GetAdvancedEditingForm() As Object
+            Return Nothing
         End Function
 
-        Public Function GetAdvancedEditingContainers() As Eto.Forms.DynamicLayout()
-
-            Dim sf = GlobalSettings.Settings.DpiScale
-
-            Dim container1 = sui.GetDefaultContainer()
-
-            container1.Tag = "Advanced Settings"
-            container1.CreateAndAddLabelRow("Forced Solids")
-            container1.CreateAndAddLabelRow2("Select the compounds which will be forcedly put into the solid phase." & vbCrLf &
-                                             "This setting will work only with the Nested Loops SVLE (Eutetic) Flash Algorithm.")
-
-            For Each comp In Flowsheet.SelectedCompounds.Values
-                container1.CreateAndAddCheckBoxRow(comp.Name, ForcedSolids.Contains(comp.Name),
-                                                   Sub(sender, e)
-                                                       If sender.Checked.GetValueOrDefault Then
-                                                           If Not ForcedSolids.Contains(comp.Name) Then ForcedSolids.Add(comp.Name)
-                                                       Else
-                                                           If ForcedSolids.Contains(comp.Name) Then ForcedSolids.Remove(comp.Name)
-                                                       End If
-                                                   End Sub)
-            Next
-
-            Dim container2 = sui.GetDefaultContainer()
-
-            container2.Tag = "Property Overrides"
-            container2.CreateAndAddLabelRow("Override Phase Properties")
-            container2.CreateAndAddLabelRow2("You can write a python script to override calculated phase properties." & vbCrLf &
-                                             "Select the Phase/Property pair and write the override script. Your script must contain a variable named 'propval' which will hold the override value." & vbCrLf & vbCrLf &
-                                             "Available variables:" & vbCrLf & vbCrLf &
-                                             "'flowsheet': the Flowsheet Object" & vbCrLf &
-                                             "'this': the Property Package itself" & vbCrLf &
-                                             "'matstr': the currently associated Material Stream" & vbCrLf &
-                                             "'phase': the current phase object" & vbCrLf &
-                                             "'currval': the current property value" & vbCrLf &
-                                             "'T': temperature (K) of the currently associated Material Stream" & vbCrLf &
-                                             "'P': pressure (Pa) of the currently associated Material Stream")
-
-            Dim phases = New String() {"Mixture", "Vapor", "OverallLiquid", "Liquid1", "Liquid2", "Solid"}
-
-            Dim pprops = Type.GetType("DWSIM.Thermodynamics.BaseClasses.PhaseProperties").GetProperties()
-
-            Dim plist As New List(Of String)
-
-            plist.Add("")
-            For Each p In phases
-                For Each prop In pprops
-                    plist.Add(p & "/" & prop.Name)
-                Next
-            Next
-
-            Dim codeeditor As New Eto.Forms.Controls.Scintilla.Shared.ScintillaControl() With {.Height = 300, .Width = 670}
-
-            If GlobalSettings.Settings.OldUI Then
-                codeeditor.Height *= sf
-                codeeditor.Width *= sf
-            End If
-
-            Dim dd = container2.CreateAndAddDropDownRow("Phase/Property", plist, 0,
-                                               Sub(sender, e)
-                                                   If PropertyOverrides.ContainsKey(sender.SelectedKey) Then
-                                                       codeeditor.ScriptText = PropertyOverrides(sender.SelectedKey)
-                                                   Else
-                                                       codeeditor.ScriptText = ""
-                                                   End If
-                                               End Sub)
-
-            container2.CreateAndAddEmptySpace()
-            container2.CreateAndAddControlRow(codeeditor)
-            container2.CreateAndAddLabelAndButtonRow("Update/Save Override Script", "Save", Nothing,
-                                             Sub(sender, e)
-                                                 If Not PropertyOverrides.ContainsKey(dd.SelectedKey) Then
-                                                     PropertyOverrides.Add(dd.SelectedKey, "")
-                                                 End If
-                                                 PropertyOverrides(dd.SelectedKey) = codeeditor.ScriptText
-                                             End Sub)
-            container2.CreateAndAddLabelAndButtonRow("Clear/Remove Override Script", "Clear", Nothing,
-                                             Sub(sender, e)
-                                                 codeeditor.ScriptText = ""
-                                                 If PropertyOverrides.ContainsKey(dd.SelectedKey) Then
-                                                     PropertyOverrides.Remove(dd.SelectedKey)
-                                                 End If
-                                             End Sub)
-            container2.CreateAndAddLabelAndButtonRow("View SI Units for Phase Properties", "View Units", Nothing,
-                                                     Sub(sender, e)
-                                                         Process.Start("https://github.com/DanWBR/dwsim6/blob/windows/DWSIM.SharedClasses/UnitsOfMeasure/SystemsOfUnits.vb#L278")
-                                                     End Sub)
-
-            Return New Eto.Forms.DynamicLayout() {container1, container2}
-
+        Public Function GetAdvancedEditingContainers() As Object
+            Return Nothing
         End Function
 
-        Public Overridable Function GetDisplayIcon() As Drawing.Bitmap
-
-            Return My.Resources.DWSIM_ico_64
-
+        Public Overridable Function GetDisplayIcon() As Object
+            ' TODO: [MIGRATION] Icon display is a UI concern; not available in headless mode.
+            Return Nothing
         End Function
 
         <JsonIgnore> <XmlIgnore> Property Flowsheet As IFlowsheet Implements IPropertyPackage.Flowsheet

@@ -33,7 +33,7 @@ Namespace PropertyPackages
 
         Public CompoundAliases As New Dictionary(Of String, List(Of String))
 
-        <NonSerialized> Private _IObj As InspectorItem
+        <NonSerialized> Private _IObj As Inspector.InspectorItem
 
         Public Overrides ReadOnly Property Popular As Boolean = True
 

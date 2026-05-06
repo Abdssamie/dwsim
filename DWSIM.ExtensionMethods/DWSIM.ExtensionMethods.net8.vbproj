@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>DWSIM.ExtensionMethods</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>DWSIM.ExtensionMethods</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Exclude WinForms-only and OxyPlot UI files -->
+    <Compile Remove="DataGridView.vb" />
+    <Compile Remove="DropDownWidth.vb" />
+    <Compile Remove="Form.vb" />
+    <Compile Remove="OxyPlotExtensions.vb" />
+    <Compile Remove="My Project\**" />
+    <EmbeddedResource Remove="My Project\**" />
+    <None Remove="My Project\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj" />
+    <ProjectReference Include="..\DWSIM.Math\DWSIM.MathOps.vbproj" />
+    <ProjectReference Include="..\DWSIM.Math.DotNumerics\DWSIM.MathOps.DotNumerics.csproj" />
+    <ProjectReference Include="..\DWSIM.GlobalSettings\DWSIM.GlobalSettings.vbproj" />
+    <ProjectReference Include="..\DWSIM.SharedClasses\DWSIM.SharedClasses.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Ciloci.Flee">
+      <HintPath>..\DWSIM\References\Ciloci.Flee.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

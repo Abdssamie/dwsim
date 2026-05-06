@@ -72,10 +72,6 @@ Namespace UnitOperations
 
         Public Overridable Property Visible As Boolean = True
 
-        <NonSerialized()> <Xml.Serialization.XmlIgnore> Public LaunchExternalPropertyEditor() As Action(Of ISimulationObject)
-
-        <NonSerialized()> <Xml.Serialization.XmlIgnore> Public ExtraPropertiesEditor As Form
-
         Public Property OverrideCalculationRoutine As Boolean = False
 
         <System.NonSerialized()> <Xml.Serialization.XmlIgnore> Public CalculationRoutineOverride As Action
@@ -530,57 +526,22 @@ Namespace UnitOperations
 
         End Sub
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public fd As DynamicsPropertyEditor
-
+        ' fd removed for headless engine
         Public Overridable Sub DisplayDynamicsEditForm() Implements ISimulationObject.DisplayDynamicsEditForm
-
-            If fd Is Nothing Then
-                fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                fd.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(fd)
-            Else
-                If fd.IsDisposed Then
-                    fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                    fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                    fd.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(fd)
-                Else
-                    fd.Activate()
-                End If
-            End If
-
         End Sub
 
         Public Sub UpdateDynamicsEditForm() Implements ISimulationObject.UpdateDynamicsEditForm
-
-            If fd IsNot Nothing Then
-                If Not fd.IsDisposed Then
-                    fd.UIThread(Sub() fd.UpdateInfo())
-                End If
-            End If
-
         End Sub
 
-        Public Sub CloseDynamicsEditForm() Implements ISimulationObject.CloseDynamicsEditForm
-
-            If fd IsNot Nothing Then
-                If Not fd.IsDisposed Then
-                    fd.Close()
-                    fd = Nothing
-                End If
-            End If
-
+        Public Sub CloseDynamicsEditForm()
         End Sub
 
         Public MustOverride Sub DisplayEditForm() Implements ISimulationObject.DisplayEditForm
 
         Public MustOverride Sub UpdateEditForm() Implements ISimulationObject.UpdateEditForm
 
-        Public Overridable Function GetEditingForm() As Form Implements ISimulationObject.GetEditingForm
-
+        Public Overridable Function GetEditingForm() As Object
             Return Nothing
-
         End Function
 
 
@@ -929,7 +890,7 @@ Namespace UnitOperations
             Return FlowSheet
         End Function
 
-        Public MustOverride Sub CloseEditForm() Implements ISimulationObject.CloseEditForm
+        Public MustOverride Sub CloseEditForm()
 
         Public MustOverride Function CloneXML() As Object Implements ISimulationObject.CloneXML
 
@@ -1281,7 +1242,7 @@ Namespace UnitOperations
                 st.AppendLine(l)
             Next
 
-            Clipboard.SetText(st.ToString())
+            ' Removed for headless engine
 
             DT.Clear()
             DT.Dispose()
@@ -1322,41 +1283,9 @@ Namespace UnitOperations
         End Sub
 
         Public Sub DisplayExtraPropertiesEditForm() Implements ISimulationObject.DisplayExtraPropertiesEditForm
-
-            Dim col1 = DirectCast(ExtraProperties, IDictionary(Of String, Object))
-            Dim col2 = DirectCast(ExtraPropertiesDescriptions, IDictionary(Of String, Object))
-            Dim count As Integer = 0
-            For Each prop In col1
-                If Not col2.ContainsKey(prop.Key) Then
-                    count += 1
-                End If
-            Next
-
-            If count > 0 Then
-                If ExtraPropertiesEditor Is Nothing Then
-                    ExtraPropertiesEditor = New FormExtraProperties With {.SimObject = Me}
-                    Me.FlowSheet.DisplayForm(ExtraPropertiesEditor)
-                Else
-                    If ExtraPropertiesEditor.IsDisposed Then
-                        ExtraPropertiesEditor = New FormExtraProperties With {.SimObject = Me}
-                        ExtraPropertiesEditor.Tag = "ObjectEditor"
-                        Me.FlowSheet.DisplayForm(ExtraPropertiesEditor)
-                    Else
-                        DirectCast(ExtraPropertiesEditor, FormExtraProperties).Activate()
-                    End If
-                End If
-            End If
-
         End Sub
 
         Public Sub UpdateExtraPropertiesEditForm() Implements ISimulationObject.UpdateExtraPropertiesEditForm
-
-            If ExtraPropertiesEditor IsNot Nothing Then
-                If Not ExtraPropertiesEditor.IsDisposed Then
-                    ExtraPropertiesEditor.UIThread(Sub() DirectCast(ExtraPropertiesEditor, FormExtraProperties).UpdateValues())
-                End If
-            End If
-
         End Sub
 
         Public Function GetDebugWriter() As StringBuilder

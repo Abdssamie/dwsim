@@ -809,9 +809,9 @@ Namespace MathEx.SysLin
             Dim strError As String = ""
 
             Console.WriteLine("Solving linear set of equations A.x = y with A" & _
-              vbNewLine & yves.ToString(sA) & _
-              vbNewLine & "y" & _
-              vbNewLine & yves.ToString(sY))
+              System.Environment.NewLine & yves.ToString(sA) & _
+              System.Environment.NewLine & "y" & _
+              System.Environment.NewLine & yves.ToString(sY))
 
             If SVDDecomposition(sA, sU, sW, sV, strError) = False Then
                 'MsgBox("Algebra.Solve: SVD gives error '" & strError & "'", MsgBoxStyle.Critical + MsgBoxStyle.OkOnly)
@@ -1754,14 +1754,14 @@ Namespace MathEx.SysLin
         End Sub
 
         Public Overloads Shared Function ToString(ByVal sM(,) As Single) As String
-            Dim strText As String = vbNewLine
+            Dim strText As String = System.Environment.NewLine
             Dim i, j, iHiRow, iHiCol As Integer
             GetBounds(sM, iHiRow, iHiCol)
             For i = 0 To iHiRow
                 For j = 0 To iHiCol - 1
                     strText = strText & sM(i, j).ToString & " "
                 Next j
-                strText = strText & sM(i, iHiCol).ToString & vbNewLine
+                strText = strText & sM(i, iHiCol).ToString & System.Environment.NewLine
             Next i
             Return strText
         End Function
@@ -1773,7 +1773,7 @@ Namespace MathEx.SysLin
             For i = 0 To iHiCol - 1
                 strText = strText & sV(i).ToString & " "
             Next i
-            strText = vbNewLine & strText & sV(iHiCol).ToString
+            strText = System.Environment.NewLine & strText & sV(iHiCol).ToString
             Return strText
         End Function
     End Class

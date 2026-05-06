@@ -327,16 +327,11 @@ Namespace Utilities.PetroleumCharacterization.Assay
 
         Function ObjectCopy(ByVal obj As Assay) As Assay
 
-            Dim objMemStream As New MemoryStream(50000)
-            Dim objBinaryFormatter As New BinaryFormatter(Nothing, New StreamingContext(StreamingContextStates.Clone))
-
-            objBinaryFormatter.Serialize(objMemStream, obj)
-
-            objMemStream.Seek(0, SeekOrigin.Begin)
-
-            ObjectCopy = objBinaryFormatter.Deserialize(objMemStream)
-
-            objMemStream.Close()
+            Dim settings As New Newtonsoft.Json.JsonSerializerSettings With {
+                .TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All
+            }
+            Dim json As String = Newtonsoft.Json.JsonConvert.SerializeObject(obj, settings)
+            Return Newtonsoft.Json.JsonConvert.DeserializeObject(json, obj.GetType(), settings)
 
         End Function
 

@@ -81,16 +81,8 @@ Namespace PropertyPackages
         End Function
 
         Public Overrides Sub DisplayEditingForm()
-
-            If GlobalSettings.Settings.CAPEOPENMode Then
-                Dim f As New FormConfigPropertyPackage() With {._pp = Me, ._comps = _selectedcomps.ToDictionary(Of String, Interfaces.ICompoundConstantProperties)(Function(k) k.Key, Function(k) k.Value)}
-                f.ShowDialog()
-            Else
-                Dim f As New FormConfigPropertyPackage() With {._pp = Me, ._comps = Flowsheet.SelectedCompounds}
-                f.ShowDialog()
-            End If
-
-        End Sub
+        ' MIGRATION STUB
+    End Sub
 
         Public Overrides Sub ConfigParameters()
 

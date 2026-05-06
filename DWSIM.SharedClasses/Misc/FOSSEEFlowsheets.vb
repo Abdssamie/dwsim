@@ -184,21 +184,7 @@ Public Class FOSSEEFlowsheets
             Console.WriteLine("Error deleting " & fpath2 & ": " & ex.ToString)
         End Try
 
-        If abstractfile <> "" Then
-            Task.Factory.StartNew(Sub()
-                                      Dim p = Process.Start(abstractfile)
-                                      p?.WaitForExit()
-                                      If MessageBox.Show(String.Format("Delete Abstract File '{0}'?", abstractfile), "Delete Abstract File", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                                          Try
-                                              File.Delete(abstractfile)
-                                              MessageBox.Show("Abstract File deleted successfully.", "DWSIM")
-                                          Catch ex As Exception
-                                              MessageBox.Show(ex.Message, "Error deleting Abstract File")
-                                          End Try
-                                      End If
-                                  End Sub)
-        End If
-
+        ' UI interaction removed for headless engine
         Return xdoc
 
     End Function

@@ -1,4 +1,4 @@
-﻿'    Ideal Electrolyte Solution Property Package 
+'    Ideal Electrolyte Solution Property Package 
 '    Copyright 2023 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -50,19 +50,13 @@ Namespace PropertyPackages
         End Sub
 
         Public Overrides Sub DisplayEditingForm()
+        ' MIGRATION STUB
+    End Sub
 
-            If GlobalSettings.Settings.CAPEOPENMode Then
+        Public Overrides Function GetEditingForm() As Object
 
-            Else
-                Dim f As New FormConfigDH() With {._form = Flowsheet, ._pp = Me, ._comps = Flowsheet.SelectedCompounds}
-                f.ShowDialog()
-            End If
-
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-
-            Return New FormConfigDH() With {._form = Flowsheet, ._pp = Me, ._comps = Flowsheet.SelectedCompounds}
+            ' TODO: [MIGRATION] UI editing form not available in headless mode.
+            Return Nothing
 
         End Function
 

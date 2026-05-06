@@ -92,17 +92,13 @@ Namespace PropertyPackages
         End Sub
 
         Public Overrides Sub DisplayEditingForm()
+        ' MIGRATION STUB
+    End Sub
 
-            If Me._phasemappings Is Nothing Then CreatePhaseMappings()
+        Public Overrides Function GetEditingForm() As Object
 
-            Dim f As New FormConfigCAPEOPENPPSocket With {.pp = Me, ._form = Flowsheet}
-            f.Show()
-
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-
-            Return New FormConfigCAPEOPENPPSocket() With {.pp = Me, ._form = Flowsheet}
+            ' TODO: [MIGRATION] UI editing form not available in headless mode.
+            Return Nothing
 
         End Function
 

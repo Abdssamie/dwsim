@@ -1,4 +1,4 @@
-﻿'    CoolProp Property Package
+'    CoolProp Property Package
 '    Copyright 2014 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
@@ -72,14 +72,13 @@ Namespace PropertyPackages
         End Sub
 
         Public Overrides Sub DisplayEditingForm()
-            Dim f As New FormConfigCoolPropIncompMixture
-            f.pp = Me
-            f.ShowDialog()
-        End Sub
+        ' MIGRATION STUB
+    End Sub
 
-        Public Overrides Function GetEditingForm() As Form
+        Public Overrides Function GetEditingForm() As Object
 
-            Return New FormConfigCoolPropIncompMixture() With {.pp = Me}
+            ' TODO: [MIGRATION] UI editing form not available in headless mode.
+            Return Nothing
 
         End Function
 

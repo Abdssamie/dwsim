@@ -1,4 +1,4 @@
-﻿Imports CapeOpen
+Imports CapeOpen
 Imports DWSIM.Thermodynamics.PropertyPackages
 Imports Cudafy
 Imports System.Runtime.InteropServices
@@ -152,17 +152,12 @@ Public Class CAPEOPENManager
 
             folderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
 
-            Application.EnableVisualStyles()
-
-            My.Application.ChangeCulture("en")
-            My.Application.ChangeUICulture("en")
-
             _params = New ParameterCollection()
 
             'load settings
 
             Try
-                Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
+                Dim inifile As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
                 If File.Exists(inifile) Then GlobalSettings.Settings.LoadExcelSettings(inifile)
             Catch ex As Exception
             End Try
@@ -170,9 +165,6 @@ Public Class CAPEOPENManager
             'handler for unhandled exceptions
 
             Try
-                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)
-
-                AddHandler Application.ThreadException, AddressOf UnhandledException
 
                 AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf UnhandledException2
 
@@ -198,14 +190,6 @@ Public Class CAPEOPENManager
 
     Private Sub UnhandledException(ByVal sender As Object, ByVal e As System.Threading.ThreadExceptionEventArgs)
 
-        Try
-            Dim frmEx As New FormUnhandledException
-            frmEx.TextBox1.Text = e.Exception.ToString
-            frmEx.ex = e.Exception
-            frmEx.ShowDialog()
-        Finally
-        End Try
-
         If Settings.CAPEOPENMode Then
             Dim hcode As Integer = 0
             Dim comEx As COMException = New COMException(e.Exception.Message.ToString, e.Exception)
@@ -216,14 +200,6 @@ Public Class CAPEOPENManager
     End Sub
 
     Private Sub UnhandledException2(ByVal sender As Object, ByVal e As System.UnhandledExceptionEventArgs)
-
-        Try
-            Dim frmEx As New FormUnhandledException
-            frmEx.TextBox1.Text = e.ExceptionObject.ToString
-            frmEx.ex = e.ExceptionObject
-            frmEx.ShowDialog()
-        Catch ex As Exception
-        End Try
 
         If Settings.CAPEOPENMode Then
             Dim hcode As Integer = 0
@@ -358,7 +334,7 @@ Public Class CAPEOPENManager
         key.SetValue("Name", "DWSIM Property Package Manager")
         key.SetValue("Description", "DWSIM CAPE-OPEN Property Package Manager")
         key.SetValue("CapeVersion", "1.1")
-        key.SetValue("ComponentVersion", My.Application.Info.Version.ToString)
+        key.SetValue("ComponentVersion", Assembly.GetExecutingAssembly().GetName().Version.ToString())
         key.SetValue("VendorURL", "http://dwsim.inforside.com.br")
         key.SetValue("HelpURL", "http://dwsim.inforside.com.br")
         key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2017 Daniel Wagner.")

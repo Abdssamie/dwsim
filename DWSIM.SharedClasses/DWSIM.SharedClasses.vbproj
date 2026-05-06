@@ -1,78 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{30E167D2-5B5A-453A-A92C-18FF3BBB6691}</ProjectGuid>
-    <OutputType>Library</OutputType>
     <RootNamespace>DWSIM.SharedClasses</RootNamespace>
-    <AssemblyName>DWSIM.SharedClasses</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>false</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DWSIM.SharedClasses.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>Full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DWSIM.SharedClasses.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugSymbols>true</DebugSymbols>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>DWSIM.SharedClasses.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>DWSIM.SharedClasses.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>Full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Editor\**" />
+    <EmbeddedResource Remove="Editor\**" />
+    <None Remove="Editor\**" />
+    <Compile Remove="My Project\**" />
+    <EmbeddedResource Remove="My Project\**" />
+    <None Remove="My Project\**" />
+    <Compile Remove="Misc\MAPI.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Eto.Forms" Version="2.8.3" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.70" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OxyPlot.Core" Version="2.1.2" />
+  </ItemGroup>
+
   <ItemGroup>
     <Reference Include="CapeOpen">
       <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
@@ -80,44 +29,17 @@
     <Reference Include="Ciloci.Flee">
       <HintPath>..\DWSIM\References\Ciloci.Flee.dll</HintPath>
     </Reference>
-    <Reference Include="Eto, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Eto.Forms.2.8.3\lib\netstandard2.0\Eto.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.70.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.70\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
-      <HintPath>..\packages\OxyPlot.Core.2.0.0-unstable1035\lib\net45\OxyPlot.dll</HintPath>
-    </Reference>
-    <Reference Include="SpinningProgress">
-      <HintPath>..\DWSIM\References\SpinningProgress.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Management" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj" />
+    <ProjectReference Include="..\DWSIM.Logging\DWSIM.Logging.csproj" />
+    <ProjectReference Include="..\DWSIM.Serializers.XML\DWSIM.XMLSerializer.vbproj" />
+    <ProjectReference Include="..\DWSIM.GlobalSettings\DWSIM.GlobalSettings.vbproj" />
+  </ItemGroup>
+
   <ItemGroup>
     <Import Include="DWSIM.Interfaces" />
-    <Import Include="DWSIM.SharedClasses" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
@@ -125,201 +47,8 @@
     <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
-    <Import Include="System.Windows.Forms" />
     <Import Include="System.Xml.Linq" />
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BaseClass\ConnectionPortInfo.vb" />
-    <Compile Include="BaseClass\FlowsheetBag.vb" />
-    <Compile Include="BaseClass\SimulationObjectBaseClasses.vb" />
-    <Compile Include="Dimensions\Dimension.vb" />
-    <Compile Include="Editor\DynamicsPropertyEditor.Designer.vb">
-      <DependentUpon>DynamicsPropertyEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Editor\DynamicsPropertyEditor.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editor\FormCustomCalcOrder.designer.vb">
-      <DependentUpon>FormCustomCalcOrder.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Editor\FormCustomCalcOrder.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editor\FormExtraProperties.designer.vb">
-      <DependentUpon>FormExtraProperties.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Editor\FormExtraProperties.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editor\InspectorReportBar.Designer.vb">
-      <DependentUpon>InspectorReportBar.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Editor\InspectorReportBar.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Editor\ListViewWithReordering.designer.vb">
-      <DependentUpon>ListViewWithReordering.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Editor\ListViewWithReordering.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Editor\ObjectEditorForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Editor\WaitForm.Designer.vb">
-      <DependentUpon>WaitForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Editor\WaitForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExceptionProcessing\ComponentNotFoundException.vb" />
-    <Compile Include="ExceptionProcessing\ExceptionProcessing.vb" />
-    <Compile Include="Flowsheet\FlowsheetClasses.vb" />
-    <Compile Include="Flowsheet\Optimization.vb" />
-    <Compile Include="Flowsheet\SensitivityAnalysis.vb" />
-    <Compile Include="GHGEmissions\GHGEmissions.vb" />
-    <Compile Include="IronPythonSnippets\IronPythonSnippets.vb" />
-    <Compile Include="Misc\FOSSEEFlowsheets.vb" />
-    <Compile Include="Misc\AssayClass.vb" />
-    <Compile Include="Misc\Crypto.vb" />
-    <Compile Include="Misc\CapeOpenObjInfo.vb" />
-    <Compile Include="Misc\CCapeCollection.vb" />
-    <Compile Include="Misc\ComIStreamWrapper.vb" />
-    <Compile Include="Misc\ExpressionParser.vb" />
-    <Compile Include="Misc\ExtensionMethods.vb" />
-    <Compile Include="Misc\MAPI.vb" />
-    <Compile Include="Misc\MiscClasses.vb" />
-    <Compile Include="Misc\SpreadsheetCell.vb" />
-    <Compile Include="Misc\TabularData.vb" />
-    <Compile Include="Misc\UndoRedo.vb" />
-    <Compile Include="Misc\Utilities.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="AI\AIConvergenceAssistant.vb" />
-    <Compile Include="Patrons\Patrons.vb" />
-    <Compile Include="SimulationCharts\Charts.vb" />
-    <Compile Include="TaskHelper\TaskHelper.vb" />
-    <Compile Include="UnitsOfMeasure\SystemsOfUnits.vb" />
-    <Compile Include="UpdateCheck\UpdateCheck.vb" />
-    <Compile Include="Weather\WeatherData.vb" />
-    <Compile Include="Weather\WeatherProvider.vb" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Editor\DynamicsPropertyEditor.en.resx">
-      <DependentUpon>DynamicsPropertyEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\DynamicsPropertyEditor.resx">
-      <DependentUpon>DynamicsPropertyEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\FormCustomCalcOrder.resx">
-      <DependentUpon>FormCustomCalcOrder.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\FormExtraProperties.en.resx">
-      <DependentUpon>FormExtraProperties.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\FormExtraProperties.resx">
-      <DependentUpon>FormExtraProperties.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\InspectorReportBar.en.resx">
-      <DependentUpon>InspectorReportBar.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\InspectorReportBar.resx">
-      <DependentUpon>InspectorReportBar.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\ObjectEditorForm.resx">
-      <DependentUpon>ObjectEditorForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Editor\WaitForm.resx">
-      <DependentUpon>WaitForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj">
-      <Project>{50bfd69a-487e-4b38-86ea-48acd85a0eb1}</Project>
-      <Name>DWSIM.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DWSIM.Logging\DWSIM.Logging.csproj">
-      <Project>{b176a143-2822-4e7c-9280-cf4a615e1c35}</Project>
-      <Name>DWSIM.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DWSIM.Serializers.XML\DWSIM.XMLSerializer.vbproj">
-      <Project>{6c232866-a87b-409a-8a02-39f2ff218561}</Project>
-      <Name>DWSIM.XMLSerializer</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\DWSIM.Controls.DockPanel\WinFormsUI\DWSIM.Controls.DockPanel.csproj">
-      <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
-      <Name>DWSIM.Controls.DockPanel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DWSIM.GlobalSettings\DWSIM.GlobalSettings.vbproj">
-      <Project>{725c8134-9fe3-43aa-9b33-d9046657fb2a}</Project>
-      <Name>DWSIM.GlobalSettings</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Resources\location_pin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\canvas_size.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="IronPythonSnippets\IronPythonSnippets.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\icons8-spy_male.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Patrons\activepatrons.txt" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\Eto.Forms.2.8.3\build\Eto.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Eto.Forms.2.8.3\build\Eto.Forms.targets'))" />
-  </Target>
-  <Import Project="..\packages\Eto.Forms.2.8.3\build\Eto.Forms.targets" Condition="Exists('..\packages\Eto.Forms.2.8.3\build\Eto.Forms.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
