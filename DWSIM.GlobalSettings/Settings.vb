@@ -318,9 +318,9 @@ Public Class Settings
 
         If Not Directory.Exists(configfiledir) Then Directory.CreateDirectory(configfiledir)
 
-        If configfile = "" Then configfile = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
+        If configfile = "" Then configfile = AppContext.BaseDirectory + Path.DirectorySeparatorChar + "dwsim.ini"
 
-        If Not File.Exists(configfile) Then File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile)
+        If Not File.Exists(configfile) Then File.Copy(AppContext.BaseDirectory + Path.DirectorySeparatorChar + "default.ini", configfile)
 
         Dim doc As New Nini.Ini.IniDocument(configfile, Nini.Ini.IniFileType.WindowsStyle)
         Dim source As New IniConfigSource(doc)
@@ -373,10 +373,10 @@ Public Class Settings
     Shared Sub SaveExcelSettings(Optional ByVal configfile As String = "")
 
         If configfile = "" Then
-            configfile = My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "dwsim.ini"
-            File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "default.ini", configfile, True)
+            configfile = AppContext.BaseDirectory + Path.DirectorySeparatorChar + "dwsim.ini"
+            File.Copy(AppContext.BaseDirectory + Path.DirectorySeparatorChar + "default.ini", configfile, True)
         Else
-            File.Copy(My.Application.Info.DirectoryPath + Path.DirectorySeparatorChar + "excelcompat.ini", configfile, True)
+            File.Copy(AppContext.BaseDirectory + Path.DirectorySeparatorChar + "excelcompat.ini", configfile, True)
         End If
 
         Dim source As New IniConfigSource(configfile)
