@@ -215,10 +215,6 @@ Public Interface ISimulationObject
 
     Function GetDisplayDescription() As String
 
-    Sub CloseDynamicsEditForm()
-
-    Sub CloseEditForm()
-
     Function CloneXML() As Object
 
     Function CloneJSON() As Object
@@ -276,8 +272,6 @@ Public Interface ISimulationObject
     Sub SetCanUsePreviousResults(value As Boolean)
 
     Sub CheckDirtyStatus()
-
-    Function GetEditingForm() As System.Windows.Forms.Form
 
     Function GetPreferredGraphicObjectWidth() As Double
 

@@ -14,7 +14,7 @@ Public Interface IFileDatabaseProvider
 
     Function GetFileStream(filename As String) As IO.MemoryStream
 
-    Function GetFileAsImage(filename As String) As Drawing.Image
+    Function GetFileAsImage(filename As String) As Object
 
     Function GetFileAsText(filename As String) As String
 

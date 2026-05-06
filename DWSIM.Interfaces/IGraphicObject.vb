@@ -94,10 +94,6 @@ Public Interface IGraphicObject
 
     Property Extensions As Dictionary(Of String, IGraphicObjectExtension)
 
-    Sub DisplayControlPanelModeEditor()
-
-    Property ControlPanelModeEditorDisplayDelegate As Action
-
     Property DrawMode As Integer
 
     Property FontStyle As FontStyle
@@ -105,8 +101,6 @@ Public Interface IGraphicObject
     Property Flowsheet As IFlowsheet
 
     Function GetPointValue(type As PointValueType, Xref As Integer, Yref As Integer, args As List(Of Object)) As Double
-
-    Function GetIconAsBitmap() As System.Drawing.Bitmap
 
     Function GetIconAsStream() As IO.MemoryStream
 
