@@ -1,5 +1,4 @@
 ﻿using DWSIM.Interfaces;
-using DWSIM.SharedClassesCSharp.FilePicker.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace DWSIM.SharedClassesCSharp.FilePicker
         }
 
 
-        private Func<IFilePicker> _filePickerFactory = () => new WindowsFilePicker();
+        private Func<IFilePicker> _filePickerFactory = null;
         public void SetFilePickerFactory(Func<IFilePicker> filePickerFactory)
         {
             _filePickerFactory = filePickerFactory;
@@ -33,8 +32,12 @@ namespace DWSIM.SharedClassesCSharp.FilePicker
 
         public IFilePicker GetFilePicker()
         {
-            //return new WindowsFilePicker();
-            //return new Simulate365FilePicker();
+            if (_filePickerFactory == null)
+            {
+                // TODO: Implement a better cross-platform file picker that doesn't depend on Windows.Forms.
+                // For now, platform-specific UI must register a factory.
+                throw new Exception("FilePicker factory not set. Platform-specific UI must register a factory.");
+            }
             return _filePickerFactory();
         }
     }

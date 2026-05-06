@@ -1,218 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{50BFD69A-487E-4B38-86EA-48ACD85A0EB1}</ProjectGuid>
-    <OutputType>Library</OutputType>
     <RootNamespace>DWSIM.Interfaces</RootNamespace>
-    <AssemblyName>DWSIM.Interfaces</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DWSIM.Interfaces.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>Full</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DWSIM.Interfaces.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugSymbols>true</DebugSymbols>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>DWSIM.Interfaces.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>DWSIM.Interfaces.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>Full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="LiteDB, Version=5.0.21.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiteDB.5.0.21\lib\net45\LiteDB.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.6.0\lib\netstandard2.0\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Compile Remove="My Project\**" />
+    <EmbeddedResource Remove="My Project\**" />
+    <None Remove="My Project\**" />
   </ItemGroup>
+
   <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Data" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
     <Import Include="System.Runtime.InteropServices" />
-    <Import Include="System.Xml.Linq" />
-    <Import Include="System.Threading.Tasks" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Enums.vb" />
-    <Compile Include="FilePicker\IVirtualFile.vb" />
-    <Compile Include="FilePicker\IFilePickerAllowedType.vb" />
-    <Compile Include="IAdditionalSolidPhaseProperties.vb" />
-    <Compile Include="IAnalyticsProvider.vb" />
-    <Compile Include="IANNModel.vb" />
-    <Compile Include="IAttachedUtility.vb" />
-    <Compile Include="IBidirectionalSolver.vb" />
-    <Compile Include="IChart.vb" />
-    <Compile Include="IConnectionPortInfo.vb" />
-    <Compile Include="IAIAssistedConvergence.vb" />
-    <Compile Include="IDimension.vb" />
-    <Compile Include="IEnergyStream.vb" />
-    <Compile Include="IFlowsheetResults.vb" />
-    <Compile Include="IFlowsheetSolveCallback.vb" />
-    <Compile Include="IFlowsheetSolver.vb" />
-    <Compile Include="IFlowsheetTransitionRestore.vb" />
-    <Compile Include="IGHGEmissions.vb" />
-    <Compile Include="IProductInformation.vb" />
-    <Compile Include="ICompound.vb" />
-    <Compile Include="ICompoundConstantProperties.vb" />
-    <Compile Include="ICustomXMLSerialization.vb" />
-    <Compile Include="IDynamicsCauseAndEffectItem.vb" />
-    <Compile Include="IDynamicsCauseAndEffectMatrix.vb" />
-    <Compile Include="IDynamicsEvent.vb" />
-    <Compile Include="IDynamicsEventSet.vb" />
-    <Compile Include="IDynamicsManager.vb" />
-    <Compile Include="IDynamicsMonitoredVariable.vb" />
-    <Compile Include="IDynamicsSchedule.vb" />
-    <Compile Include="IExternalSolver.vb" />
-    <Compile Include="IFileDatabaseProvider.vb" />
-    <Compile Include="IFlashAlgorithm.vb" />
-    <Compile Include="IFlowsheet.vb" />
-    <Compile Include="IFlowsheetEvents.vb" />
-    <Compile Include="IFlowsheetOptions.vb" />
-    <Compile Include="IGraphicObject.vb" />
-    <Compile Include="IIndicator.vb" />
-    <Compile Include="IDynamicsIntegrator.vb" />
-    <Compile Include="IInput.vb" />
-    <Compile Include="IMaterialStream.vb" />
-    <Compile Include="IExtender.vb" />
-    <Compile Include="IPersistStream.vb" />
-    <Compile Include="IPhase.vb" />
-    <Compile Include="IPhaseProperties.vb" />
-    <Compile Include="IPoint.vb" />
-    <Compile Include="IPropertyPackage.vb" />
-    <Compile Include="IPropertyPackageMethods.vb" />
-    <Compile Include="IReaction.vb" />
-    <Compile Include="IReactionSet.vb" />
-    <Compile Include="IReactionSetBase.vb" />
-    <Compile Include="IReactionStoichBase.vb" />
-    <Compile Include="IScript.vb" />
-    <Compile Include="IExternalUnitOperation.vb" />
-    <Compile Include="ISolidParticleSizeDistribution.vb" />
-    <Compile Include="ISpecialOps.vb" />
-    <Compile Include="ISimulationObject.vb" />
-    <Compile Include="ISplashScreen.vb" />
-    <Compile Include="ISwitch.vb" />
-    <Compile Include="ITabularData.vb" />
-    <Compile Include="IUndoRedoAction.vb" />
-    <Compile Include="IUnitOperation.vb" />
-    <Compile Include="IUnitsOfMeasure.vb" />
-    <Compile Include="IUtilityPlugin.vb" />
-    <Compile Include="IWatchItem.vb" />
-    <Compile Include="IWeatherProvider.vb" />
-    <Compile Include="IWelcomeScreen.vb" />
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <PackageReference Include="LiteDB" Version="5.0.21" />
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="FilePicker\IFilePicker.vb" />
-    <Compile Include="FilePicker\IFilePickerService.vb" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

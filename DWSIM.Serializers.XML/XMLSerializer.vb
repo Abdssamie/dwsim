@@ -18,7 +18,7 @@
 
 Imports System.Globalization
 Imports System.Reflection
-Imports System.Drawing
+Imports System.Linq
 Imports DWSIM.Interfaces
 
 Public Class XMLSerializer
@@ -43,7 +43,7 @@ Public Class XMLSerializer
                 If prop.CanWrite And prop.CanRead Then
                     Dim propname As String = prop.Name
                     Dim properties = obj.GetType().GetProperties().Where(Function(p) p.Name = prop.Name)
-                    Dim attributes As Object() = properties(0).GetCustomAttributes(True)
+                    Dim attributes As Object() = properties.First().GetCustomAttributes(True)
                     For Each attr As Attribute In attributes
                         If TypeOf attr Is System.Xml.Serialization.XmlIgnoreAttribute Then
                             skip = True
@@ -110,33 +110,33 @@ Public Class XMLSerializer
                                     Dim val As String = xel.Value
                                     If Not val Is Nothing Then obj.GetType.GetProperty(prop.Name).SetValue(obj, [Enum].Parse(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing).GetType, val), Nothing)
                                 End If
-                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Font Then
-                                Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
-                                Try
-                                    Dim val As Font = New FontConverter().ConvertFromInvariantString(xel.Value)
-                                    obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
-                                Catch ex As Exception
-                                    obj.GetType.GetProperty(prop.Name).SetValue(obj, New Font("Arial", 8), Nothing)
-                                End Try
-                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Color Then
-                                Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
-                                If Not xel Is Nothing Then
-                                    Dim val As Color = ColorTranslator.FromHtml(xel.Value)
-                                    obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
-                                End If
+                            'ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Font Then
+                            '    Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
+                            '    Try
+                            '        Dim val As Font = New FontConverter().ConvertFromInvariantString(xel.Value)
+                            '        obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
+                            '    Catch ex As Exception
+                            '        obj.GetType.GetProperty(prop.Name).SetValue(obj, New Font("Arial", 8), Nothing)
+                            '    End Try
+                            'ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Color Then
+                            '    Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
+                            '    If Not xel Is Nothing Then
+                            '        Dim val As Color = ColorTranslator.FromHtml(xel.Value)
+                            '        obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
+                            '    End If
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is SkiaSharp.SKColor Then
                                 Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
                                 If Not xel Is Nothing Then
                                     Dim val As SkiaSharp.SKColor = SkiaSharp.SKColors.Black
                                     If SkiaSharp.SKColor.TryParse(xel.Value, val) Then
                                         val = SkiaSharp.SKColor.Parse(xel.Value)
-                                    Else
-                                        Dim val2 As Color
-                                        Try
-                                            val2 = Color.FromName(xel.Value)
-                                            val = New SkiaSharp.SKColor(val2.R, val2.G, val2.B, val2.A)
-                                        Catch ex As Exception
-                                        End Try
+                                    'Else
+                                    '    Dim val2 As Color
+                                    '    Try
+                                    '        val2 = Color.FromName(xel.Value)
+                                    '        val = New SkiaSharp.SKColor(val2.R, val2.G, val2.B, val2.A)
+                                    '    Catch ex As Exception
+                                    '    End Try
                                     End If
                                     obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
                                 End If
@@ -295,33 +295,33 @@ Public Class XMLSerializer
                                 Dim val As String = xel.Value
                                 If Not val Is Nothing Then obj.GetType.GetField(prop.Name).SetValue(obj, [Enum].Parse(obj.GetType.GetField(prop.Name).GetValue(obj).GetType, val))
                             End If
-                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Font Then
-                            Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
-                            If Not xel Is Nothing Then
-                                Try
-                                    Dim val As Font = New FontConverter().ConvertFromInvariantString(xel.Value)
-                                    obj.GetType.GetField(prop.Name).SetValue(obj, val)
-                                Catch ex As Exception
-                                    obj.GetType.GetField(prop.Name).SetValue(obj, New Font("Arial", 8))
-                                End Try
-                            End If
-                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
-                            Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
-                            Dim val As Color = ColorTranslator.FromHtml(xel.Value)
-                            obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                        'ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Font Then
+                        '    Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
+                        '    If Not xel Is Nothing Then
+                        '        Try
+                        '            Dim val As Font = New FontConverter().ConvertFromInvariantString(xel.Value)
+                        '            obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                        '        Catch ex As Exception
+                        '            obj.GetType.GetField(prop.Name).SetValue(obj, New Font("Arial", 8))
+                        '        End Try
+                        '    End If
+                        'ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
+                        '    Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
+                        '    Dim val As Color = ColorTranslator.FromHtml(xel.Value)
+                        '    obj.GetType.GetField(prop.Name).SetValue(obj, val)
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is SkiaSharp.SKColor Then
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
                             If Not xel Is Nothing Then
                                 Dim val As SkiaSharp.SKColor = SkiaSharp.SKColors.Black
                                 If SkiaSharp.SKColor.TryParse(xel.Value, val) Then
                                     val = SkiaSharp.SKColor.Parse(xel.Value)
-                                Else
-                                    Dim val2 As Color
-                                    Try
-                                        val2 = Color.FromName(xel.Value)
-                                        val = New SkiaSharp.SKColor(val2.R, val2.G, val2.B, val2.A)
-                                    Catch ex As Exception
-                                    End Try
+                                'Else
+                                '    Dim val2 As Color
+                                '    Try
+                                '        val2 = Color.FromName(xel.Value)
+                                '        val = New SkiaSharp.SKColor(val2.R, val2.G, val2.B, val2.A)
+                                '    Catch ex As Exception
+                                '    End Try
                                 End If
                                 obj.GetType.GetField(prop.Name).SetValue(obj, val)
                             End If
@@ -377,7 +377,7 @@ Public Class XMLSerializer
                     skip = False
                     Dim propname As String = prop.Name
                     Dim properties = obj.GetType().GetProperties().Where(Function(p) p.Name = prop.Name)
-                    Dim attributes As Object() = properties(0).GetCustomAttributes(True)
+                    Dim attributes As Object() = properties.First().GetCustomAttributes(True)
                     For Each attr As Attribute In attributes
                         If TypeOf attr Is System.Xml.Serialization.XmlIgnoreAttribute Then
                             skip = True
@@ -391,9 +391,9 @@ Public Class XMLSerializer
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is ArrayList Then
                                 .Add(New XElement(prop.Name, ArrayToString(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing), ci)))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Single Then
-                                .Add(New XElement(prop.Name, Single.Parse(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)).ToString("R", ci)))
+                                .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing), Single).ToString("R", ci)))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Double Then
-                                .Add(New XElement(prop.Name, Double.Parse(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)).ToString("R", ci)))
+                                .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing), Double).ToString("R", ci)))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Nullable(Of Double) Then
                                 .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing), Nullable(Of Double)).GetValueOrDefault.ToString("R", ci)))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Nullable(Of Single) Then
@@ -408,10 +408,10 @@ Public Class XMLSerializer
                                 .Add(New XElement(prop.Name, obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is [Enum] Then
                                 .Add(New XElement(prop.Name, obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)))
-                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Font Then
-                                .Add(New XElement(prop.Name, New FontConverter().ConvertToInvariantString(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
-                            ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Color Then
-                                .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
+                            'ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Font Then
+                            '    .Add(New XElement(prop.Name, New FontConverter().ConvertToInvariantString(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
+                            'ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Color Then
+                            '    .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is SkiaSharp.SKColor Then
                                 .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing), SkiaSharp.SKColor).ToString))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Byte Then
@@ -477,7 +477,7 @@ Public Class XMLSerializer
                     skip = False
                     Dim propname As String = prop.Name
                     Dim properties = obj.GetType().GetFields().Where(Function(p) p.Name = prop.Name)
-                    Dim attributes As Object() = properties(0).GetCustomAttributes(True)
+                    Dim attributes As Object() = properties.First().GetCustomAttributes(True)
                     For Each attr As Attribute In attributes
                         If TypeOf attr Is System.Xml.Serialization.XmlIgnoreAttribute Then
                             skip = True
@@ -507,10 +507,10 @@ Public Class XMLSerializer
                             .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is [Enum] Then
                             .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
-                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Font Then
-                            .Add(New XElement(prop.Name, New FontConverter().ConvertToInvariantString(obj.GetType.GetField(prop.Name).GetValue(obj))))
-                        ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
-                            .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetField(prop.Name).GetValue(obj))))
+                        'ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Font Then
+                        '    .Add(New XElement(prop.Name, New FontConverter().ConvertToInvariantString(obj.GetType.GetField(prop.Name).GetValue(obj))))
+                        'ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
+                        '    .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetField(prop.Name).GetValue(obj))))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is SkiaSharp.SKColor Then
                             .Add(New XElement(prop.Name, DirectCast(obj.GetType.GetField(prop.Name).GetValue(obj), SkiaSharp.SKColor).ToString))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Byte Then
@@ -536,7 +536,7 @@ Public Class XMLSerializer
 
             For Each obj As Object In sourcearray
                 If TypeOf obj Is Double Then
-                    sb += Double.Parse(obj).ToString("R", ci) + ","
+                    sb += DirectCast(obj, Double).ToString("R", ci) + ","
                 Else
                     sb += obj.ToString + ","
                 End If
@@ -559,7 +559,7 @@ Public Class XMLSerializer
 
                 For Each obj As Object In sourcearray
                     If TypeOf obj Is Double Then
-                        sb += Double.Parse(obj).ToString("R", ci) + ","
+                        sb += DirectCast(obj, Double).ToString("R", ci) + ","
                     Else
                         sb += obj.ToString + ","
                     End If
