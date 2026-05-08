@@ -23,6 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Patrons\activepatrons.txt" LogicalName="DWSIM.SharedClasses.activepatrons.txt" />
+    <EmbeddedResource Include="IronPythonSnippets\IronPythonSnippets.xml" LogicalName="DWSIM.SharedClasses.IronPythonSnippets.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="CapeOpen">
       <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
     </Reference>

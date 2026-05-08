@@ -404,42 +404,7 @@ namespace DWSIM.Automation
 
             Settings.CalculatorActivated = true;
 
-            Task<List<Exception>> st = new Task<List<Exception>>(() =>
-            {
-                return FlowsheetSolver.FlowsheetSolver.SolveFlowsheet(this, GlobalSettings.Settings.SolverMode);
-            });
-
-            st.ContinueWith((t) =>
-            {
-                Settings.CalculatorStopRequested = false;
-                Settings.CalculatorBusy = false;
-                Settings.TaskCancellationTokenSource = new System.Threading.CancellationTokenSource();
-            });
-
-            try
-            {
-                st.Start(TaskScheduler.Default);
-                st.Wait();
-                return st.Result;
-            }
-            catch (AggregateException aex)
-            {
-                foreach (Exception ex2 in aex.InnerExceptions)
-                {
-                    ShowMessage(ex2.ToString(), IFlowsheet.MessageType.GeneralError);
-                }
-                Settings.CalculatorBusy = false;
-                Settings.TaskCancellationTokenSource = new System.Threading.CancellationTokenSource();
-                return new List<Exception>(aex.InnerExceptions);
-            }
-            catch (Exception ex)
-            {
-                ShowMessage(ex.ToString(), IFlowsheet.MessageType.GeneralError);
-                Settings.CalculatorBusy = false;
-                Settings.TaskCancellationTokenSource = new System.Threading.CancellationTokenSource();
-                return new List<Exception> { ex };
-            }
-
+            return FlowsheetSolver.FlowsheetSolver.SolveFlowsheet(this, GlobalSettings.Settings.SolverMode);
         }
 
         public override void SetMessageListener(Action<string, IFlowsheet.MessageType> act)

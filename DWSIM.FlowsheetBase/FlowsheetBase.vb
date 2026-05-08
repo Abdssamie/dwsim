@@ -54,7 +54,7 @@ Imports DWSIM.ExtensionMethods
 
     Public Property MessagesLog As New List(Of String) Implements IFlowsheet.MessagesLog
 
-    Private FlowsheetSurface As Object = Nothing 'New GraphicsSurface
+    Private FlowsheetSurface As New FlowsheetSurfaceStub()
 
     Public SensAnalysisCollection As New List(Of Optimization.SensitivityAnalysisCase)
 
@@ -4058,6 +4058,8 @@ Label_00CC:
                 End If
             End If
         Next
+
+        Return Nothing
 
     End Function
 

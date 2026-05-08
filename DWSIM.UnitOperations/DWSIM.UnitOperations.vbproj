@@ -42,6 +42,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\**\*" LogicalName="DWSIM.UnitOperations.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj" />
     <ProjectReference Include="..\DWSIM.Thermodynamics\DWSIM.Thermodynamics.vbproj" />
     <ProjectReference Include="..\DWSIM.Math\DWSIM.MathOps.vbproj" />

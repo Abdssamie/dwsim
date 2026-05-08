@@ -609,11 +609,11 @@ namespace DWSIM.Automation
         }
 
         [DispId(6)]
-        public void CalculateFlowsheet2(IFlowsheet flowsheet)
+        public List<Exception> CalculateFlowsheet2(IFlowsheet flowsheet)
         {
             Settings.CalculatorActivated = true;
             Settings.SolverBreakOnException = true;
-            ((Flowsheet2)flowsheet).SolveFlowsheet2();
+            return ((Flowsheet2)flowsheet).SolveFlowsheet2();
         }
 
         [DispId(7)]

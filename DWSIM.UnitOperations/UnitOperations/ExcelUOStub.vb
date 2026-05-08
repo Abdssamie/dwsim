@@ -9,6 +9,10 @@ Namespace UnitOperations
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.UserModels
 
+        Public Sub New()
+            MyBase.New()
+        End Sub
+
         Public Sub New(name As String, description As String)
             MyBase.New()
             Me.ComponentName = name

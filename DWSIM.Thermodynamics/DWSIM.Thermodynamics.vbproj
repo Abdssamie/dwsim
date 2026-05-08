@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Assets\**\*" LogicalName="DWSIM.Thermodynamics.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj" />
     <ProjectReference Include="..\DWSIM.Math\DWSIM.MathOps.vbproj" />
     <ProjectReference Include="..\DWSIM.Math.SwarmOps\DWSIM.MathOps.SwarmOps.csproj" />

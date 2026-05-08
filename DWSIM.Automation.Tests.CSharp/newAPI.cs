@@ -66,15 +66,22 @@ namespace DWSIM.Automation.Tests.CSharp
 
             // request a calculation
 
-            interf.CalculateFlowsheet2(sim);
+            var errors = interf.CalculateFlowsheet2(sim);
+            if (errors.Count > 0)
+            {
+                foreach (var ex in errors) Console.WriteLine("Error: " + ex.Message);
+            }
+
+            Console.WriteLine("Outlet Temperature: " + m3.GetPropertyValue("PROP_MS_0").ToString() + " K");
+            Console.WriteLine("Outlet Mass Flow: " + m3.GetPropertyValue("PROP_MS_2").ToString() + " kg/s");
 
             // save file
 
-            string fileNameToSave = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "mixer.dwxmz");
+            string fileNameToSave = Path.Combine(Directory.GetCurrentDirectory(), "mixer.dwxmz");
             interf.SaveFlowsheet(sim, fileNameToSave, true); //use true for dwxmz
 
-            Console.WriteLine("Done! press any key to close.");
-            Console.ReadKey();
+            Console.WriteLine("Done!");
+            // Console.ReadKey();
 
         }
     }
