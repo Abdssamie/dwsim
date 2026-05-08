@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using DWSIM.Interfaces;
 using System.Runtime.InteropServices;
-using DWSIM.UI.Desktop.Shared;
 using System.Xml.Linq;
 using System.IO;
 using System.Reflection;
-using DWSIM.SharedClassesCSharp.FilePicker.Windows;
 using DWSIM.GlobalSettings;
 using System.Linq;
 using DWSIM.Interfaces.Enums;
@@ -18,7 +16,6 @@ using DWSIM.Thermodynamics.AdvancedEOS;
 using CapeOpen;
 using DWSIM.Thermodynamics.BaseClasses;
 using System.Resources;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DWSIM.Automation
 {
@@ -43,36 +40,29 @@ namespace DWSIM.Automation
     public class Automation : AutomationInterface
     {
 
-        FormMain fm = null;
-
         public Automation()
         {
             GlobalSettings.Settings.AutomationMode = true;
-            fm = new FormMain();
         }
 
         public Interfaces.IFlowsheet LoadFlowsheet(string filepath)
         {
+            var fs = new Flowsheet2(null, null);
+            fs.Initialize();
             if (System.IO.Path.GetExtension(filepath).ToLower().Contains("dwxmz"))
             {
-                return fm.LoadAndExtractXMLZIP(new WindowsFile(filepath), null, true);
+                fs.LoadZippedXML(filepath);
             }
             else
             {
-                return fm.LoadXML(new WindowsFile(filepath), null, "", true);
+                fs.LoadFromXML(XDocument.Load(filepath));
             }
+            return fs;
         }
 
         public void SaveFlowsheet(IFlowsheet flowsheet, string filepath, bool compressed)
         {
-            if (compressed)
-            {
-                fm.SaveXMLZIP(new WindowsFile(filepath), (FormFlowsheet)flowsheet);
-            }
-            else
-            {
-                fm.SaveXML(new WindowsFile(filepath), (FormFlowsheet)flowsheet);
-            }
+            ((Flowsheet2)flowsheet).SaveSimulation(filepath);
         }
 
         public void CalculateFlowsheet(IFlowsheet flowsheet, ISimulationObject sender)
@@ -111,40 +101,34 @@ namespace DWSIM.Automation
 
         public IFlowsheet CreateFlowsheet()
         {
-            return new FormFlowsheet();
+            var fs = new Flowsheet2(null, null);
+            fs.Initialize();
+            return fs;
         }
 
         public void ReleaseResources()
         {
-            if (fm != null && !fm.IsDisposed)
-            {
-                fm.Dispose();
-                fm = null;
-            }
         }
 
         public object GetMainWindow()
         {
-            return fm;
+            return null;
         }
     }
+
 
     [Guid("22694b87-1ba6-4341-81dd-8d33f48643d7"), ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
     public class Automation2 : AutomationInterface
     {
 
-        Eto.Forms.Application app;
-        UI.Forms.Flowsheet fm;
+        Flowsheet2 fm;
 
         public Automation2()
         {
             GlobalSettings.Settings.AutomationMode = true;
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.AssemblyResolve += new ResolveEventHandler(LoadAssembly);
-            app = UI.Desktop.Program.MainApp(null);
-            app.Attach(this);
-            FlowsheetBase.FlowsheetBase.AddPropPacks();
         }
 
         static Assembly LoadAssembly(object sender, ResolveEventArgs args)
@@ -164,20 +148,20 @@ namespace DWSIM.Automation
         public Interfaces.IFlowsheet LoadFlowsheet(string filepath)
         {
             GlobalSettings.Settings.AutomationMode = true;
-            fm = new UI.Forms.Flowsheet();
+            fm = new Flowsheet2(null, null);
+            fm.Initialize();
             LoadSimulation(filepath);
-            return fm.FlowsheetObject;
+            return fm;
         }
 
         public void ReleaseResources()
         {
-            fm?.Dispose();
             fm = null;
         }
 
         public void SaveFlowsheet(IFlowsheet flowsheet, string filepath, bool compressed)
         {
-            fm.FlowsheetObject = (Flowsheet)flowsheet;
+            fm = (Flowsheet2)flowsheet;
             fm.SaveSimulation(filepath);
         }
 
@@ -185,7 +169,7 @@ namespace DWSIM.Automation
         {
             GlobalSettings.Settings.CalculatorActivated = true;
             GlobalSettings.Settings.SolverBreakOnException = true;
-            fm.FlowsheetObject.SolveFlowsheet2();
+            ((Flowsheet2)flowsheet).SolveFlowsheet2();
         }
 
         public List<Exception> CalculateFlowsheet2(IFlowsheet flowsheet)
@@ -206,19 +190,18 @@ namespace DWSIM.Automation
         {
             if (System.IO.Path.GetExtension(path).ToLower() == ".dwxmz")
             {
-                var xdoc = fm.FlowsheetObject.LoadZippedXML(path);
-                xdoc = null;
+                fm.LoadZippedXML(path);
             }
             else if (System.IO.Path.GetExtension(path).ToLower() == ".dwxml")
             {
-                fm.FlowsheetObject.LoadFromXML(XDocument.Load(path));
+                fm.LoadFromXML(XDocument.Load(path));
             }
             else if (System.IO.Path.GetExtension(path).ToLower() == ".xml")
             {
-                fm.FlowsheetObject.LoadFromMXML(XDocument.Load(path));
+                fm.LoadFromMXML(XDocument.Load(path));
             }
-            fm.FlowsheetObject.FilePath = path;
-            fm.FlowsheetObject.FlowsheetOptions.FilePath = path;
+            fm.FilePath = path;
+            fm.FlowsheetOptions.FilePath = path;
         }
 
         public void SaveFlowsheet2(IFlowsheet flowsheet, string filepath)
@@ -229,15 +212,17 @@ namespace DWSIM.Automation
         public IFlowsheet CreateFlowsheet()
         {
             GlobalSettings.Settings.AutomationMode = true;
-            fm = new UI.Forms.Flowsheet();
-            return fm.FlowsheetObject;
+            fm = new Flowsheet2(null, null);
+            fm.Initialize();
+            return fm;
         }
 
         public object GetMainWindow()
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
+
 
     [Guid("62486815-2330-4CDE-8962-41F576B0C2B8"), ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
@@ -764,7 +749,7 @@ namespace DWSIM.Automation
                             if (item is IExtender5) load = ((IExtender5)item).LoadInAutomationMode;
                             if (load)
                             {
-                                item.SetMainWindow(null);
+                                // item.SetMainWindow(null); // Not available in headless mode
                                 item.Run();
                             }
                         }

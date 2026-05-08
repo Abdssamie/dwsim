@@ -5,11 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DefineConstants>$(DefineConstants);HEADLESS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
+    <PackageReference Include="iTextSharp-LGPL" Version="4.1.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,19 +24,19 @@
     <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj" />
     <ProjectReference Include="..\DWSIM.SharedClassesCSharp\DWSIM.SharedClassesCSharp.csproj" />
     <ProjectReference Include="..\DWSIM.SharedClasses\DWSIM.SharedClasses.vbproj" />
-    <ProjectReference Include="..\DWSIM.Simulate365\DWSIM.Simulate365.csproj" />
     <ProjectReference Include="..\DWSIM.Thermodynamics.AdvancedEOS.GERG2008\DWSIM.Thermodynamics.AdvancedEOS.GERG2008.vbproj" />
     <ProjectReference Include="..\DWSIM.Thermodynamics.AdvancedEOS.PCSAFT\DWSIM.Thermodynamics.AdvancedEOS.PCSAFT2.vbproj" />
     <ProjectReference Include="..\DWSIM.Thermodynamics.AdvancedEOS.PRSRKTDep\DWSIM.Thermodynamics.AdvancedEOS.PRSRKTDep.vbproj" />
-    <ProjectReference Include="..\DWSIM.Thermodynamics.ReaktoroPropertyPackage\DWSIM.Thermodynamics.ReaktoroPropertyPackage.vbproj" />
     <ProjectReference Include="..\DWSIM.Thermodynamics\DWSIM.Thermodynamics.vbproj" />
     <ProjectReference Include="..\DWSIM.UnitOperations\DWSIM.UnitOperations.vbproj" />
-    <!-- Removed UI projects and the main DWSIM project reference for headless separation -->
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="CapeOpen">
       <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
+    </Reference>
+    <Reference Include="unvell.ReoGrid">
+      <HintPath>..\DWSIM\References\ReoGrid.WinForms\unvell.ReoGrid.dll</HintPath>
     </Reference>
   </ItemGroup>
 

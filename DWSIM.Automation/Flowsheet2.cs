@@ -11,9 +11,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+#if !HEADLESS
 using unvell.ReoGrid;
 using unvell.ReoGrid.DataFormat;
 using unvell.ReoGrid.Formula;
+#endif
 using static DWSIM.Interfaces.Enums.Scripts;
 
 namespace DWSIM.Automation
@@ -26,7 +28,11 @@ namespace DWSIM.Automation
 
         private Action updateUIaction;
 
+#if !HEADLESS
         private IWorkbook Spreadsheet;
+#else
+        private object Spreadsheet;
+#endif
 
         public override bool SupressMessages { get; set; } = false;
 
@@ -37,6 +43,7 @@ namespace DWSIM.Automation
 
             LoadSpreadsheetData = new Action<XDocument>((xdoc) =>
             {
+#if !HEADLESS
                 if (xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet") != null)
                 {
                     var rgfdataelement = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("RGFData");
@@ -59,10 +66,12 @@ namespace DWSIM.Automation
                         }
                     }
                 }
+#endif
             });
 
             SaveSpreadsheetData = new Action<XDocument>((xdoc) =>
             {
+#if !HEADLESS
                 xdoc.Element("DWSIM_Simulation_Data").Add(new XElement("Spreadsheet"));
                 xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Add(new XElement("RGFData"));
                 var tmpfile = SharedClasses.Utility.GetTempFileName();
@@ -77,6 +86,7 @@ namespace DWSIM.Automation
                     File.Delete(tmpfile2);
                 }
                 xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("RGFData").Value = Newtonsoft.Json.JsonConvert.SerializeObject(sdict);
+#endif
             });
 
             RetrieveSpreadsheetData = new Func<string, List<string[]>>((range) =>
@@ -105,6 +115,7 @@ namespace DWSIM.Automation
         {
 
             var list = new List<string[]>();
+#if !HEADLESS
             var slist = new List<string>();
 
             var rdata = Spreadsheet.Worksheets[0].GetRangeData(new RangePosition(range));
@@ -118,7 +129,7 @@ namespace DWSIM.Automation
                 }
                 list.Add(slist.ToArray());
             }
-
+#endif
             return list;
         }
 
@@ -126,6 +137,7 @@ namespace DWSIM.Automation
         {
 
             var list = new List<string[]>();
+#if !HEADLESS
             var slist = new List<string>();
 
             var rdata = Spreadsheet.Worksheets[0].GetRangeData(new RangePosition(range));
@@ -148,13 +160,13 @@ namespace DWSIM.Automation
                 }
                 list.Add(slist.ToArray());
             }
-
+#endif
             return list;
         }
 
         private void SetCustomSpreadsheetFunctions()
         {
-
+#if !HEADLESS
             FormulaExtension.CustomFunctions["GETNAME"] = (cell, args) =>
             {
                 try
@@ -300,15 +312,16 @@ namespace DWSIM.Automation
                 else
                     return "INVALID ARGS";
             };
+#endif
         }
 
         public void Init()
         {
 
             Initialize();
-
+#if !HEADLESS
             Spreadsheet = unvell.ReoGrid.ReoGridControl.CreateMemoryWorkbook();
-
+#endif
             SetCustomSpreadsheetFunctions();
 
         }
