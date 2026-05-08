@@ -44,13 +44,13 @@
 
   <ItemGroup>
     <Reference Include="CapeOpen">
-      <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
+      <HintPath>..\References\CapeOpen.dll</HintPath>
     </Reference>
     <Reference Include="Ciloci.Flee">
-      <HintPath>..\DWSIM\References\Ciloci.Flee.dll</HintPath>
+      <HintPath>..\References\Ciloci.Flee.dll</HintPath>
     </Reference>
     <Reference Include="Cureos.Numerics">
-      <HintPath>..\DWSIM\References\Cureos.Numerics.dll</HintPath>
+      <HintPath>..\References\Cureos.Numerics.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿Imports DWSIM.DrawingTools.Point
+﻿Imports DWSIM.SharedClasses
 Imports System.Linq
 
 Namespace MathEx

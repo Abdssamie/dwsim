@@ -53,34 +53,32 @@
     <ProjectReference Include="..\DWSIM.SharedClassesCSharp\DWSIM.SharedClassesCSharp.csproj" />
     <ProjectReference Include="..\DWSIM.GlobalSettings\DWSIM.GlobalSettings.vbproj" />
     <ProjectReference Include="..\DWSIM.Serializers.XML\DWSIM.XMLSerializer.vbproj" />
-    <ProjectReference Include="..\DWSIM.Inspector\DWSIM.Inspector.vbproj" />
     <ProjectReference Include="..\DWSIM.ExtensionMethods\DWSIM.ExtensionMethods.vbproj" />
     <ProjectReference Include="..\DWSIM.FlowsheetSolver\DWSIM.FlowsheetSolver.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="CapeOpen">
-      <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
+      <HintPath>..\References\CapeOpen.dll</HintPath>
     </Reference>
     <Reference Include="Interop.CAPEOPEN110">
-      <HintPath>..\DWSIM\References\Interop.CAPEOPEN110.dll</HintPath>
+      <HintPath>..\References\Interop.CAPEOPEN110.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Ciloci.Flee">
-      <HintPath>..\DWSIM\References\Ciloci.Flee.dll</HintPath>
+      <HintPath>..\References\Ciloci.Flee.dll</HintPath>
     </Reference>
     <Reference Include="Jolt">
-      <HintPath>..\DWSIM\References\Jolt.dll</HintPath>
+      <HintPath>..\References\Jolt.dll</HintPath>
     </Reference>
     <Reference Include="Python.Runtime">
-      <HintPath>..\DWSIM\References\Python.Runtime.dll</HintPath>
+      <HintPath>..\References\Python.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
     <Import Include="DWSIM.ExtensionMethods" />
     <Import Include="DWSIM.GlobalSettings" />
-    <Import Include="DWSIM.Inspector" />
     <Import Include="DWSIM.Interfaces" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />

@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <Reference Include="Ciloci.Flee">
-      <HintPath>..\DWSIM\References\Ciloci.Flee.dll</HintPath>
+      <HintPath>..\References\Ciloci.Flee.dll</HintPath>
     </Reference>
   </ItemGroup>
 

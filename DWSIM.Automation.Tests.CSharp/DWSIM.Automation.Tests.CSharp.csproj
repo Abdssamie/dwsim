@@ -27,10 +27,7 @@
 
   <ItemGroup>
     <Reference Include="CapeOpen">
-      <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
-    </Reference>
-    <Reference Include="unvell.ReoGrid">
-      <HintPath>..\DWSIM\References\ReoGrid.WinForms\unvell.ReoGrid.dll</HintPath>
+      <HintPath>..\References\CapeOpen.dll</HintPath>
     </Reference>
   </ItemGroup>
 

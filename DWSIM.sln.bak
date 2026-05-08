@@ -167,7 +167,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DWSIM.ExtensionMethods.Eto"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DWSIM.MathOps.SimpsonIntegrator", "DWSIM.MathOps.SimpsonIntegrator\DWSIM.MathOps.SimpsonIntegrator.csproj", "{86AF29BB-4CB1-4818-98A3-031D0711625D}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DWSIM.DrawingTools.Point", "DWSIM.DrawingTools.Point\DWSIM.DrawingTools.Point.vbproj", "{0F6737EB-DB5A-4872-BEF8-5EF10B4F1C1C}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DWSIM.SharedClasses", "DWSIM.SharedClasses\DWSIM.SharedClasses.vbproj", "{0F6737EB-DB5A-4872-BEF8-5EF10B4F1C1C}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DWSIM.Inspector", "DWSIM.Inspector\DWSIM.Inspector.vbproj", "{E4E37BFA-063F-4DBA-A1BF-294D392C2CA4}"
 EndProject

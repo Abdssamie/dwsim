@@ -16,23 +16,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Eto.Forms" Version="2.8.3" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.70" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="OxyPlot.Core" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Patrons\activepatrons.txt" LogicalName="DWSIM.SharedClasses.activepatrons.txt" />
+    <EmbeddedResource Include="Patrons/activepatrons.txt" LogicalName="DWSIM.SharedClasses.activepatrons.txt" />
     <EmbeddedResource Include="IronPythonSnippets\IronPythonSnippets.xml" LogicalName="DWSIM.SharedClasses.IronPythonSnippets.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="CapeOpen">
-      <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
+      <HintPath>..\References\CapeOpen.dll</HintPath>
     </Reference>
     <Reference Include="Ciloci.Flee">
-      <HintPath>..\DWSIM\References\Ciloci.Flee.dll</HintPath>
+      <HintPath>..\References\Ciloci.Flee.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -1,9 +1,9 @@
-﻿Imports Cudafy
+﻿'Imports Cudafy
 Imports System.Threading
-Imports Nini.Config
+'Imports Nini.Config
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports Python.Runtime
+'Imports Python.Runtime
 
 Public Class Settings
 
@@ -208,232 +208,26 @@ Public Class Settings
     End Function
 
     Public Shared Sub InitializePythonEnvironment(Optional ByVal pythonpath As String = "")
-
-        If Not Settings.PythonInitialized Then
-
-            If Settings.RunningPlatform() = Platform.Windows Then
-
-                If pythonpath = "" Then
-                    pythonpath = Settings.PythonPath
-                End If
-
-                If Not Directory.Exists(pythonpath) Then
-                    Throw New Exception("Please define the path to a valid Python distribution in General Settings and try again.")
-                End If
-
-                Try
-                    SetPythonPath(pythonpath)
-                    PythonEngine.PythonHome = pythonpath
-                    PythonEngine.Initialize()
-                    PythonEngine.BeginAllowThreads()
-                    PythonInitialized = True
-                    DWSIM.Logging.Logger.LogInfo("Python Path set to " + pythonpath)
-                Catch ex As Exception
-                    DWSIM.Logging.Logger.LogError("Python Initialization Error", ex)
-                    Throw ex
-                End Try
-
-            Else
-
-                If pythonpath = "" Then
-                    pythonpath = Settings.PythonPath
-                End If
-
-                If Not File.Exists(pythonpath) Then
-                    Throw New Exception("Please define the path to a valid Python distribution in General Settings and try again.")
-                End If
-
-                Try
-                    Runtime.PythonDLL = pythonpath
-                    PythonEngine.Initialize()
-                    PythonEngine.BeginAllowThreads()
-                    PythonInitialized = True
-                    DWSIM.Logging.Logger.LogInfo("Python Library Path set to " + pythonpath)
-                Catch ex As Exception
-                    DWSIM.Logging.Logger.LogError("Python Initialization Error", ex)
-                    Throw ex
-                End Try
-
-            End If
-
-
-        End If
-
+        ' Headless Stub
     End Sub
 
     Public Shared Sub ShutdownPythonEnvironment()
-
-        If PythonInitialized Then
-            Try
-                PythonEngine.Shutdown()
-            Catch ex As Exception
-                DWSIM.Logging.Logger.LogError("Python Shutdown Error", ex)
-            End Try
-            PythonInitialized = False
-        End If
-
+        ' Headless Stub
     End Sub
 
     Private Shared Sub SetPythonPath(Optional ByVal pythonpath As String = "")
-
-        If RunningPlatform() = Platform.Windows Then
-
-            Dim ppath As String = GlobalSettings.Settings.PythonPath
-            If pythonpath <> "" Then ppath = pythonpath
-
-            If ppath = "" Then
-                Throw New Exception("Python Binaries Path is not defined correctly.")
-            End If
-
-            Dim append As String = ppath + ";" + Path.Combine(ppath, "Library", "bin") + ";"
-
-            Dim p1 As String = append + Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine)
-            ' Set Path
-            Environment.SetEnvironmentVariable("PATH", p1, EnvironmentVariableTarget.Process)
-            ' Set PythonHome
-            Environment.SetEnvironmentVariable("PYTHONHOME", ppath, EnvironmentVariableTarget.Process)
-            ' Set PythonPath
-            Environment.SetEnvironmentVariable("PYTHONPATH", Path.Combine(p1, "Lib"), EnvironmentVariableTarget.Process)
-
-            'set PYDLL
-            Dim pydll = Directory.GetFiles(ppath, "python3*.dll")
-            If pydll.Count > 0 Then
-                Environment.SetEnvironmentVariable("PYTHONNET_PYDLL", pydll(1), EnvironmentVariableTarget.Process)
-                Runtime.PythonDLL = pydll(1)
-                DWSIM.Logging.Logger.LogInfo("Python Runtime DLL path set to " + pydll(1))
-            Else
-                Throw New Exception("Could not find Python DLL in the defined Python path.")
-            End If
-
-            AddDllDirectory(ppath)
-            AddDllDirectory(Path.Combine(ppath, "Library", "bin"))
-
-        End If
-
-    End Sub
-
-    Shared Sub LoadExcelSettings(Optional ByVal configfile As String = "")
-
-        Dim configfiledir = GetConfigFileDir()
-
-        If Not Directory.Exists(configfiledir) Then Directory.CreateDirectory(configfiledir)
-
-        If configfile = "" Then configfile = AppContext.BaseDirectory + Path.DirectorySeparatorChar + "dwsim.ini"
-
-        If Not File.Exists(configfile) Then File.Copy(AppContext.BaseDirectory + Path.DirectorySeparatorChar + "default.ini", configfile)
-
-        Dim doc As New Nini.Ini.IniDocument(configfile, Nini.Ini.IniFileType.WindowsStyle)
-        Dim source As New IniConfigSource(doc)
-        Dim col As String()
-
-        UserDatabases.Clear()
-
-        With source
-            col = .Configs("UserDatabases").GetValues()
-            For Each str As String In col
-                UserDatabases.Add(str)
-            Next
-        End With
-
-        UserInteractionsDatabases.Clear()
-
-        With source
-            col = .Configs("UserInteractionsDatabases").GetValues()
-            For Each str As String In col
-                UserInteractionsDatabases.Add(str)
-            Next
-        End With
-
-        EnableParallelProcessing = source.Configs("Misc").GetBoolean("EnableParallelProcessing", False)
-        MaxDegreeOfParallelism = source.Configs("Misc").GetInt("MaxDegreeOfParallelism", -1)
-        UseSIMDExtensions = source.Configs("Misc").GetBoolean("UseSIMDExtensions", True)
-
-        EnableGPUProcessing = source.Configs("Misc").GetBoolean("EnableGPUProcessing", False)
-        SelectedGPU = source.Configs("Misc").GetString("SelectedGPU", "")
-        CudafyTarget = source.Configs("Misc").GetInt("CudafyTarget", 0)
-        CudafyDeviceID = source.Configs("Misc").GetInt("CudafyDeviceID", 0)
-
-        If source.Configs("ExcelAddIn") Is Nothing Then source.AddConfig("ExcelAddIn")
-
-        ExcelErrorHandlingMode = source.Configs("ExcelAddIn").GetInt("ExcelErrorHandlingMode", 0)
-        ExcelFlashSettings = source.Configs("ExcelAddIn").GetString("ExcelFlashSettings", "")
-
-        If source.Configs("OSInfo") Is Nothing Then source.AddConfig("OSInfo")
-
-        CurrentPlatform = source.Configs("OSInfo").GetString("Platform")
-        CurrentEnvironment = source.Configs("OSInfo").GetInt("Environment", 0)
-
-        If source.Configs("OctaveBridge") Is Nothing Then source.AddConfig("OctaveBridge")
-
-        OctavePath = source.Configs("OctaveBridge").GetString("OctavePath", "")
-        OctaveTimeoutInMinutes = source.Configs("OctaveBridge").GetFloat("OctaveProcessTimeout", 15)
-
-    End Sub
-
-    Shared Sub SaveExcelSettings(Optional ByVal configfile As String = "")
-
-        If configfile = "" Then
-            configfile = AppContext.BaseDirectory + Path.DirectorySeparatorChar + "dwsim.ini"
-            File.Copy(AppContext.BaseDirectory + Path.DirectorySeparatorChar + "default.ini", configfile, True)
-        Else
-            File.Copy(AppContext.BaseDirectory + Path.DirectorySeparatorChar + "excelcompat.ini", configfile, True)
-        End If
-
-        Dim source As New IniConfigSource(configfile)
-
-        source.Configs("Misc").Set("EnableParallelProcessing", Settings.EnableParallelProcessing)
-        source.Configs("Misc").Set("MaxDegreeOfParallelism", Settings.MaxDegreeOfParallelism)
-        source.Configs("Misc").Set("EnableGPUProcessing", Settings.EnableGPUProcessing)
-        source.Configs("Misc").Set("SelectedGPU", Settings.SelectedGPU)
-        source.Configs("Misc").Set("CudafyTarget", Settings.CudafyTarget)
-        source.Configs("Misc").Set("CudafyDeviceID", Settings.CudafyDeviceID)
-        source.Configs("Misc").Set("UseSIMDExtensions", Settings.UseSIMDExtensions)
-
-        If source.Configs("ExcelAddIn") Is Nothing Then source.AddConfig("ExcelAddIn")
-
-        source.Configs("ExcelAddIn").Set("ExcelErrorHandlingMode", Settings.ExcelErrorHandlingMode)
-        source.Configs("ExcelAddIn").Set("ExcelFlashSettings", Settings.ExcelFlashSettings)
-
-        If source.Configs("OSInfo") Is Nothing Then source.AddConfig("OSInfo")
-
-        source.Configs("OSInfo").Set("Platform", GetPlatform)
-        source.Configs("OSInfo").Set("Environment", GetEnvironment)
-
-        If source.Configs("OctaveBridge") Is Nothing Then source.AddConfig("OctaveBridge")
-
-        source.Configs("OctaveBridge").Set("OctavePath", OctavePath)
-        source.Configs("OctaveBridge").Set("OctaveProcessTimeout", OctaveTimeoutInMinutes)
-
-        Try
-            For Each spath In UserDatabases
-                source.Configs("UserDatabases").Set(IO.Path.GetFileNameWithoutExtension(spath), spath)
-            Next
-        Catch ex As Exception
-        End Try
-
-        Try
-            For Each spath In UserInteractionsDatabases
-                source.Configs("UserInteractionsDatabases").Set(IO.Path.GetFileNameWithoutExtension(spath), spath)
-            Next
-        Catch ex As Exception
-        End Try
-
-        source.Save(configfile)
-
+        ' Headless Stub
     End Sub
 
     Public Shared Function GetEnvironment() As Integer
-
         If Environment.Is64BitProcess Then
             Return 64
         Else
             Return 32
         End If
-
     End Function
 
     Public Shared Function GetPlatform() As String
-
         If RunningPlatform() = Platform.Windows Then
             Return "Windows"
         ElseIf RunningPlatform() = Platform.Linux Then
@@ -443,7 +237,6 @@ Public Class Settings
         Else
             Return "None"
         End If
-
     End Function
 
     Public Shared Function RunningPlatform() As Platform
@@ -467,7 +260,7 @@ Public Class Settings
         Return Not Type.GetType("Mono.Runtime") Is Nothing
     End Function
 
-    Shared Function GetConfigFileDir() As String
+    Public Shared Function GetConfigFileDir() As String
         Dim configfiledir As String = ""
         If Settings.RunningPlatform = Platform.Mac Then
             configfiledir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Documents", "DWSIM Application Data") & Path.DirectorySeparatorChar
@@ -477,276 +270,25 @@ Public Class Settings
         Return configfiledir
     End Function
 
+    Shared Sub LoadExcelSettings(Optional ByVal configfile As String = "")
+        ' Headless Stub
+        UserDatabases.Clear()
+        UserInteractionsDatabases.Clear()
+    End Sub
+
+    Shared Sub SaveExcelSettings(Optional ByVal configfile As String = "")
+        ' Headless Stub
+    End Sub
+
     Shared Sub LoadSettings(Optional ByVal configfile As String = "")
-
-        Dim configfiledir = GetConfigFileDir()
-
-        If Not Directory.Exists(configfiledir) Then Directory.CreateDirectory(configfiledir)
-
-        If configfile = "" Then configfile = configfiledir & "dwsim.ini" Else configfile = configfiledir & configfile
-
-        If Not File.Exists(configfile) Then File.WriteAllText(configfile, "")
-
-        Dim source As New IniConfigSource(configfile)
-        Dim col() As String
-
+        ' Headless Stub
         MostRecentFiles = New List(Of String)
-
-        If source.Configs("RecentFiles") Is Nothing Then source.AddConfig("RecentFiles")
-
-        With source
-            col = .Configs("RecentFiles").GetValues()
-            For Each Str As String In col
-                MostRecentFiles.Add(Str)
-            Next
-        End With
-
         UserDatabases = New List(Of String)
-
-        If source.Configs("UserDatabases") Is Nothing Then source.AddConfig("UserDatabases")
-
-        With source
-            col = .Configs("UserDatabases").GetValues()
-            For Each Str As String In col
-                UserDatabases.Add(Str)
-            Next
-        End With
-
         UserInteractionsDatabases = New List(Of String)
-
-        If source.Configs("UserInteractionsDatabases") Is Nothing Then source.AddConfig("UserInteractionsDatabases")
-
-        With source
-            col = .Configs("UserInteractionsDatabases").GetValues()
-            For Each Str As String In col
-                UserInteractionsDatabases.Add(Str)
-            Next
-        End With
-
-        If source.Configs("Backup") Is Nothing Then source.AddConfig("Backup")
-
-        EnableBackupCopies = source.Configs("Backup").GetBoolean("EnableBackupCopies", True)
-        BackupInterval = source.Configs("Backup").GetInt("BackupInterval", 3)
-
-        If source.Configs("Localization") Is Nothing Then source.AddConfig("Localization")
-
-        CultureInfo = source.Configs("Localization").Get("CultureInfo", "en")
-
-        'ChemSepDatabasePath = source.Configs("Databases").Get("ChemSepDBPath", "")
-        'ReplaceComps = source.Configs("Databases").GetBoolean("ReplaceComps", True)
-
-        If source.Configs("UserUnits") Is Nothing Then source.AddConfig("UserUnits")
-
-        UserUnits = source.Configs("UserUnits").Get("UserUnits", "{ }")
-        'ShowTips = source.Configs("Misc").GetBoolean("ShowTips", True)
-        'RedirectOutput = source.Configs("Misc").GetBoolean("RedirectConsoleOutput", False)
-
-        If source.Configs("Misc") Is Nothing Then source.AddConfig("Misc")
-
-        EnableParallelProcessing = source.Configs("Misc").GetBoolean("EnableParallelProcessing", True)
-        MaxDegreeOfParallelism = source.Configs("Misc").GetInt("MaxDegreeOfParallelism", -1)
-        EnableGPUProcessing = source.Configs("Misc").GetBoolean("EnableGPUProcessing", False)
-        SelectedGPU = source.Configs("Misc").Get("SelectedGPU", "")
-        CudafyTarget = source.Configs("Misc").GetInt("CudafyTarget", 1)
-        CudafyDeviceID = source.Configs("Misc").GetInt("CudafyDeviceID", 0)
-
-        DebugLevel = source.Configs("Misc").GetInt("DebugLevel", 0)
-        SolverMode = source.Configs("Misc").GetInt("SolverMode", 1)
-        ServiceBusConnectionString = source.Configs("Misc").Get("ServiceBusConnectionString", "")
-        ServerIPAddress = source.Configs("Misc").Get("ServerIPAddress", "")
-        ServerPort = source.Configs("Misc").Get("ServerPort", 0)
-        SolverTimeoutSeconds = source.Configs("Misc").GetInt("SolverTimeoutSeconds", 300)
-
-        SaveExistingFile = source.Configs("Misc").GetBoolean("SaveBackupFile", True)
-        MaxThreadMultiplier = source.Configs("Misc").GetInt("MaxThreadMultiplier", 8)
-        UseSIMDExtensions = source.Configs("Misc").GetBoolean("UseSIMDExtensions", False)
-
-        CurrentVersion = source.Configs("Misc").Get("CurrentVersion", "")
-
-        InspectorEnabled = source.Configs("Misc").GetBoolean("InspectorEnabled", False)
-        ClearInspectorHistoryOnNewCalculationRequest = source.Configs("Misc").GetBoolean("ClearInspectorHistoryOnNewCalculationRequest", True)
-
-        EditorFontSize = source.Configs("Misc").GetInt("EditorFontSize", -1)
-
-        EditorTextBoxFixedSize = source.Configs("Misc").GetBoolean("EditorTextBoxFixedSize", True)
-
-        EditOnSelect = source.Configs("Misc").GetBoolean("EditOnSelect", True)
-
-        CallSolverOnEditorPropertyChanged = source.Configs("Misc").GetBoolean("CallSolverOnEditorPropertyChanged", True)
-
-        UIScalingFactor = source.Configs("Misc").GetDouble("UIScalingFactor", 1.0)
-
-        LinuxDisplayDPI = source.Configs("Misc").GetDouble("LinuxDisplayDPI", 96.0)
-
-        ObjectEditor = source.Configs("Misc").GetInt("ObjectEditor", 0)
-
-        EnableCustomTouchBar = source.Configs("Misc").GetBoolean("EnableCustomTouchBar", True)
-
-        CheckForUpdates = source.Configs("Misc").GetBoolean("CheckForUpdates", True)
-
-        'CloseFormsOnDeselecting = source.Configs("Misc").GetBoolean("CloseFormsOnDeselecting", True)
-
-        'autom = source.Configs("Misc").GetBoolean("AutoUpdate", True)
-
-        'DefaultEditorLocation = source.Configs("Misc").GetInt("DefaultEditorLocation", 8)
-        'EnableMultipleObjectEditors = source.Configs("Misc").GetBoolean("EnableMultipleObjectEditors", True)
-        'SimulationUpgradeWarning = source.Configs("Misc").GetBoolean("SimulationUpgradeWarning", True)
-
-        HideSolidPhaseFromCAPEOPENComponents = source.Configs("Misc").GetBoolean("HideSolidPhase_COInterface", False)
-        'IgnoreCompoundPropertiesOnLoad = source.Configs("Misc").GetBoolean("IgnoreCompoundConstantPropertyDatainXMLFile", False)
-
-        If source.Configs("OctaveBridge") Is Nothing Then source.AddConfig("OctaveBridge")
-
-        OctavePath = source.Configs("OctaveBridge").GetString("OctavePath", "")
-        OctaveTimeoutInMinutes = source.Configs("OctaveBridge").GetFloat("OctaveProcessTimeout", 15)
-
-        If source.Configs("PythonBridge") Is Nothing Then source.AddConfig("PythonBridge")
-
-        PythonPath = source.Configs("PythonBridge").GetString("PythonPath", "")
-        PythonTimeoutInMinutes = source.Configs("PythonBridge").GetFloat("PythonProcessTimeout", 1)
-
-        If source.Configs("OSInfo") Is Nothing Then source.AddConfig("OSInfo")
-
-        CurrentPlatform = source.Configs("OSInfo").GetString("Platform", GetPlatform())
-        CurrentEnvironment = source.Configs("OSInfo").GetInt("Environment", GetEnvironment())
-
-        If source.Configs("UserUnits") Is Nothing Then source.AddConfig("UserUnits")
-
-        UserUnits = source.Configs("UserUnits").GetString("UserUnits", "{ }")
-
-        If source.Configs("PlatformRenderers") Is Nothing Then source.AddConfig("PlatformRenderers")
-
-        WindowsRenderer = [Enum].Parse(WindowsRenderer.GetType(), source.Configs("PlatformRenderers").GetString("Windows", "WPF"))
-        LinuxRenderer = [Enum].Parse(LinuxRenderer.GetType(), source.Configs("PlatformRenderers").GetString("Linux", "Gtk2"))
-        MacOSRenderer = [Enum].Parse(MacOSRenderer.GetType(), source.Configs("PlatformRenderers").GetString("Mac", "MonoMac"))
-        FlowsheetRenderer = [Enum].Parse(FlowsheetRenderer.GetType(), source.Configs("PlatformRenderers").GetString("FlowsheetRenderer", "CPU"))
-
     End Sub
 
     Shared Sub SaveSettings(Optional ByVal configfile As String = "")
-
-        Dim configfiledir = GetConfigFileDir()
-
-        If Not Directory.Exists(configfiledir) Then Directory.CreateDirectory(configfiledir)
-
-        If configfile = "" Then configfile = configfiledir & "dwsim.ini" Else configfile = configfiledir & configfile
-
-        If Not File.Exists(configfile) Then File.WriteAllText(configfile, "")
-
-        Dim source As New IniConfigSource(configfile)
-
-        If source.Configs("RecentFiles") Is Nothing Then source.AddConfig("RecentFiles")
-
-        For Each Str As String In MostRecentFiles
-            source.Configs("RecentFiles").Set(MostRecentFiles.IndexOf(Str), Str)
-        Next
-
-        If source.Configs("UserDatabases") Is Nothing Then source.AddConfig("UserDatabases")
-
-        For Each Str As String In UserDatabases
-            source.Configs("UserDatabases").Set(UserDatabases.IndexOf(Str), Str)
-        Next
-
-        If source.Configs("UserInteractionsDatabases") Is Nothing Then source.AddConfig("UserInteractionsDatabases")
-
-        For Each Str As String In UserInteractionsDatabases
-            source.Configs("UserInteractionsDatabases").Set(UserInteractionsDatabases.IndexOf(Str), Str)
-        Next
-
-        If source.Configs("Backup") Is Nothing Then source.AddConfig("Backup")
-
-        source.Configs("Backup").Set("EnableBackupCopies", EnableBackupCopies)
-        source.Configs("Backup").Set("BackupInterval", BackupInterval)
-
-        If source.Configs("Localization") Is Nothing Then source.AddConfig("Localization")
-
-        source.Configs("Localization").Set("CultureInfo", CultureInfo)
-
-        'source.Configs("Databases").Set("ChemSepDBPath", ChemSepDatabasePath)
-        'source.Configs("Databases").Set("ReplaceComps", ReplaceComps)
-
-        'source.Configs("Misc").Set("ShowTips", ShowTips)
-        'source.Configs("Misc").Set("RedirectConsoleOutput", RedirectOutput)
-
-        If source.Configs("Misc") Is Nothing Then source.AddConfig("Misc")
-
-        source.Configs("Misc").Set("Misc", CultureInfo)
-
-        source.Configs("Misc").Set("EnableParallelProcessing", EnableParallelProcessing)
-        source.Configs("Misc").Set("MaxDegreeOfParallelism", MaxDegreeOfParallelism)
-        source.Configs("Misc").Set("EnableGPUProcessing", EnableGPUProcessing)
-        source.Configs("Misc").Set("SelectedGPU", SelectedGPU)
-        source.Configs("Misc").Set("CudafyTarget", CudafyTarget)
-        source.Configs("Misc").Set("CudafyDeviceID", CudafyDeviceID)
-
-        source.Configs("Misc").Set("DebugLevel", DebugLevel)
-        source.Configs("Misc").Set("SolverMode", SolverMode)
-        source.Configs("Misc").Set("ServiceBusConnectionString", ServiceBusConnectionString)
-        source.Configs("Misc").Set("ServerIPAddress", ServerIPAddress)
-        source.Configs("Misc").Set("ServerPort", ServerPort)
-        source.Configs("Misc").Set("SolverTimeoutSeconds", SolverTimeoutSeconds)
-        source.Configs("Misc").Set("SaveBackupFile", SaveExistingFile)
-        source.Configs("Misc").Set("MaxThreadMultiplier", MaxThreadMultiplier)
-        source.Configs("Misc").Set("UseSIMDExtensions", UseSIMDExtensions)
-
-        source.Configs("Misc").Set("CurrentVersion", CurrentVersion)
-
-        source.Configs("Misc").Set("InspectorEnabled", InspectorEnabled)
-        source.Configs("Misc").Set("ClearInspectorHistoryOnNewCalculationRequest", ClearInspectorHistoryOnNewCalculationRequest)
-
-        source.Configs("Misc").Set("EditorFontSize", EditorFontSize)
-        source.Configs("Misc").Set("EditorTextBoxFixedSize", EditorTextBoxFixedSize)
-        source.Configs("Misc").Set("EditOnSelect", EditOnSelect)
-        source.Configs("Misc").Set("CallSolverOnEditorPropertyChanged", CallSolverOnEditorPropertyChanged)
-
-        source.Configs("Misc").Set("UIScalingFactor", UIScalingFactor)
-
-        source.Configs("Misc").Set("LinuxDisplayDPI", LinuxDisplayDPI)
-
-        source.Configs("Misc").Set("ObjectEditor", ObjectEditor)
-
-        source.Configs("Misc").Set("EnableCustomTouchBar", EnableCustomTouchBar)
-
-        source.Configs("Misc").Set("CheckForUpdates", CheckForUpdates)
-
-        'source.Configs("Misc").Set("CloseFormsOnDeselecting", CloseFormsOnDeselecting)
-        'source.Configs("Misc").Set("AutoUpdate", AutomaticUpdates)
-
-        'source.Configs("Misc").Set("DefaultEditorLocation", DefaultEditorLocation)
-        'source.Configs("Misc").Set("EnableMultipleObjectEditors", EnableMultipleObjectEditors)
-        'source.Configs("Misc").Set("SimulationUpgradeWarning", SimulationUpgradeWarning)
-
-        'source.Configs("Misc").Set("HideSolidPhase_COInterface", HideSolidPhase_CO)
-        'source.Configs("Misc").Set("IgnoreCompoundConstantPropertyDatainXMLFile", IgnoreCompoundPropertiesOnLoad)
-
-        If source.Configs("OctaveBridge") Is Nothing Then source.AddConfig("OctaveBridge")
-
-        source.Configs("OctaveBridge").Set("OctavePath", OctavePath)
-        source.Configs("OctaveBridge").Set("OctaveProcessTimeout", OctaveTimeoutInMinutes)
-
-        If source.Configs("PythonBridge") Is Nothing Then source.AddConfig("PythonBridge")
-
-        source.Configs("PythonBridge").Set("PythonPath", PythonPath)
-        source.Configs("PythonBridge").Set("PythonProcessTimeout", PythonTimeoutInMinutes)
-
-        If source.Configs("OSInfo") Is Nothing Then source.AddConfig("OSInfo")
-
-        source.Configs("OSInfo").Set("Platform", CurrentPlatform)
-        source.Configs("OSInfo").Set("Environment", CurrentEnvironment)
-
-        If source.Configs("UserUnits") Is Nothing Then source.AddConfig("UserUnits")
-
-        source.Configs("UserUnits").Set("UserUnits", UserUnits)
-
-        If source.Configs("PlatformRenderers") Is Nothing Then source.AddConfig("PlatformRenderers")
-
-        source.Configs("PlatformRenderers").Set("Windows", WindowsRenderer)
-        source.Configs("PlatformRenderers").Set("Linux", LinuxRenderer)
-        source.Configs("PlatformRenderers").Set("Mac", MacOSRenderer)
-        source.Configs("PlatformRenderers").Set("FlowsheetRenderer", FlowsheetRenderer)
-
-        source.Save()
-
+        ' Headless Stub
     End Sub
 
 End Class

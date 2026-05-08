@@ -18,15 +18,15 @@
 
   <ItemGroup>
     <Reference Include="Cudafy.NET">
-      <HintPath>..\DWSIM\References\Cudafy.NET.dll</HintPath>
+      <HintPath>..\References\Cudafy.NET.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Nini">
-      <HintPath>..\DWSIM\References\Nini.dll</HintPath>
+      <HintPath>..\References\Nini.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Python.Runtime">
-      <HintPath>..\DWSIM\References\Python.Runtime.dll</HintPath>
+      <HintPath>..\References\Python.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

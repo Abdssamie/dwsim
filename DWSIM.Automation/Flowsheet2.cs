@@ -1,4 +1,4 @@
-﻿using DWSIM.ExtensionMethods;
+using DWSIM.ExtensionMethods;
 using DWSIM.GlobalSettings;
 using DWSIM.Interfaces;
 using ICSharpCode.SharpZipLib.Zip;
@@ -11,11 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-#if !HEADLESS
-using unvell.ReoGrid;
-using unvell.ReoGrid.DataFormat;
-using unvell.ReoGrid.Formula;
-#endif
 using static DWSIM.Interfaces.Enums.Scripts;
 
 namespace DWSIM.Automation
@@ -28,11 +23,7 @@ namespace DWSIM.Automation
 
         private Action updateUIaction;
 
-#if !HEADLESS
-        private IWorkbook Spreadsheet;
-#else
         private object Spreadsheet;
-#endif
 
         public override bool SupressMessages { get; set; } = false;
 
@@ -43,50 +34,12 @@ namespace DWSIM.Automation
 
             LoadSpreadsheetData = new Action<XDocument>((xdoc) =>
             {
-#if !HEADLESS
-                if (xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet") != null)
-                {
-                    var rgfdataelement = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("RGFData");
-                    if (rgfdataelement != null)
-                    {
-                        string rgfdata = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("RGFData").Value;
-                        rgfdata = rgfdata.Replace("Calibri", "Arial").Replace("10.25", "10");
-                        Dictionary<string, string> sdict = new Dictionary<string, string>();
-                        sdict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(rgfdata);
-                        Spreadsheet.RemoveWorksheet(0);
-                        foreach (var item in sdict)
-                        {
-                            var tmpfile = SharedClasses.Utility.GetTempFileName();
-                            var sheet = Spreadsheet.CreateWorksheet(item.Key);
-                            Spreadsheet.Worksheets.Add(sheet);
-                            var xmldoc = Newtonsoft.Json.JsonConvert.DeserializeXmlNode(item.Value);
-                            xmldoc.Save(tmpfile);
-                            sheet.LoadRGF(tmpfile);
-                            File.Delete(tmpfile);
-                        }
-                    }
-                }
-#endif
+                // Pure Headless: Spreadsheet logic removed
             });
 
             SaveSpreadsheetData = new Action<XDocument>((xdoc) =>
             {
-#if !HEADLESS
-                xdoc.Element("DWSIM_Simulation_Data").Add(new XElement("Spreadsheet"));
-                xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Add(new XElement("RGFData"));
-                var tmpfile = SharedClasses.Utility.GetTempFileName();
-                Dictionary<string, string> sdict = new Dictionary<string, string>();
-                foreach (var sheet in Spreadsheet.Worksheets)
-                {
-                    var tmpfile2 = SharedClasses.Utility.GetTempFileName();
-                    sheet.SaveRGF(tmpfile2);
-                    var xmldoc = new XmlDocument();
-                    xmldoc.Load(tmpfile2);
-                    sdict.Add(sheet.Name, Newtonsoft.Json.JsonConvert.SerializeXmlNode(xmldoc));
-                    File.Delete(tmpfile2);
-                }
-                xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("RGFData").Value = Newtonsoft.Json.JsonConvert.SerializeObject(sdict);
-#endif
+                // Pure Headless: Spreadsheet logic removed
             });
 
             RetrieveSpreadsheetData = new Func<string, List<string[]>>((range) =>
@@ -113,215 +66,23 @@ namespace DWSIM.Automation
 
         private List<string[]> GetSpreadsheetDataFromRange(string range)
         {
-
-            var list = new List<string[]>();
-#if !HEADLESS
-            var slist = new List<string>();
-
-            var rdata = Spreadsheet.Worksheets[0].GetRangeData(new RangePosition(range));
-
-            for (var i = 0; i < rdata.GetLength(0); i++)
-            {
-                slist = new List<string>();
-                for (var j = 0; j < rdata.GetLength(1); j++)
-                {
-                    slist.Add(rdata[i, j] != null ? rdata[i, j].ToString() : "");
-                }
-                list.Add(slist.ToArray());
-            }
-#endif
-            return list;
+            return new List<string[]>();
         }
 
         private List<string[]> GetSpreadsheetFormatFromRange(string range)
         {
-
-            var list = new List<string[]>();
-#if !HEADLESS
-            var slist = new List<string>();
-
-            var rdata = Spreadsheet.Worksheets[0].GetRangeData(new RangePosition(range));
-
-            for (var i = 0; i < rdata.GetLength(0); i++)
-            {
-                slist = new List<string>();
-                for (var j = 0; j < rdata.GetLength(1); j++)
-                {
-                    var format = Spreadsheet.Worksheets[0].Cells[i, j].DataFormat;
-                    if (format == CellDataFormatFlag.Number)
-                    {
-                        var args = (NumberDataFormatter.NumberFormatArgs)(Spreadsheet.Worksheets[0].Cells[i, j].DataFormatArgs);
-                        slist.Add("N" + args.DecimalPlaces);
-                    }
-                    else
-                    {
-                        slist.Add("");
-                    }
-                }
-                list.Add(slist.ToArray());
-            }
-#endif
-            return list;
+            return new List<string[]>();
         }
 
         private void SetCustomSpreadsheetFunctions()
         {
-#if !HEADLESS
-            FormulaExtension.CustomFunctions["GETNAME"] = (cell, args) =>
-            {
-                try
-                {
-                    return SimulationObjects[args[0].ToString()].GraphicObject.Tag;
-                }
-                catch (Exception ex)
-                {
-                    return "ERROR: " + ex.Message;
-                }
-            };
-
-            FormulaExtension.CustomFunctions["GETPROPVAL"] = (cell, args) =>
-            {
-                if (args.Length == 2)
-                {
-                    try
-                    {
-                        return SimulationObjects[args[0].ToString()].GetPropertyValue(args[1].ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR: " + ex.Message;
-                    }
-                }
-                else if (args.Length == 3)
-                {
-                    try
-                    {
-                        var obj = SimulationObjects[args[0].ToString()];
-                        var val = obj.GetPropertyValue(args[1].ToString());
-                        return General.ConvertUnits(double.Parse(val.ToString()), obj.GetPropertyUnit(args[1].ToString()), args[2].ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR: " + ex.Message;
-                    }
-                }
-                else
-                    return "INVALID ARGS";
-            };
-
-            FormulaExtension.CustomFunctions["SETPROPVAL"] = (cell, args) =>
-            {
-                if (args.Length == 3)
-                {
-                    try
-                    {
-                        var ws = cell.Worksheet;
-                        var wcell = ws.Cells[ws.RowCount - 1, ws.ColumnCount - 1];
-                        wcell.Data = null;
-                        wcell.Formula = args[2].ToString().Trim('"');
-                        Evaluator.Evaluate(wcell);
-                        var val = wcell.Data;
-                        if (wcell.Data == null)
-                        {
-                            val = wcell.Formula;
-                        }
-                        SimulationObjects[args[0].ToString()].SetPropertyValue(args[1].ToString(), val);
-                        wcell.Formula = null;
-                        wcell.Data = null;
-                        return string.Format("EXPORT OK [{0}, {1} = {2}]", SimulationObjects[args[0].ToString()].GraphicObject.Tag, args[1].ToString(), val);
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR: " + ex.Message;
-                    }
-                }
-                else if (args.Length == 4)
-                {
-                    try
-                    {
-                        var obj = SimulationObjects[args[0].ToString()];
-                        var prop = args[1].ToString();
-                        var ws = cell.Worksheet;
-                        var wcell = ws.Cells[ws.RowCount - 1, ws.ColumnCount - 1];
-                        wcell.Formula = args[2].ToString().Trim('"');
-                        Evaluator.Evaluate(wcell);
-                        var val = wcell.Data;
-                        wcell.Formula = "";
-                        wcell.Data = "";
-                        var units = args[3].ToString();
-                        var newval = General.ConvertUnits(double.Parse(val.ToString()), units, obj.GetPropertyUnit(prop));
-                        obj.SetPropertyValue(prop, newval);
-                        return string.Format("EXPORT OK [{0}, {1} = {2} {3}]", obj.GraphicObject.Tag, prop, val, units);
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR: " + ex.Message;
-                    }
-                }
-                else
-                    return "INVALID ARGS";
-            };
-
-            FormulaExtension.CustomFunctions["GETPROPUNITS"] = (cell, args) =>
-            {
-                if (args.Length == 2)
-                {
-                    try
-                    {
-                        return SimulationObjects[args[0].ToString()].GetPropertyUnit(args[1].ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR: " + ex.Message;
-                    }
-                }
-                else
-                    return "INVALID ARGS";
-            };
-
-            FormulaExtension.CustomFunctions["GETOBJID"] = (cell, args) =>
-            {
-                if (args.Length == 1)
-                {
-                    try
-                    {
-                        return GetFlowsheetSimulationObject(args[0].ToString()).Name;
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR: " + ex.Message;
-                    }
-                }
-                else
-                    return "INVALID ARGS";
-            };
-
-            FormulaExtension.CustomFunctions["GETOBJNAME"] = (cell, args) =>
-            {
-                if (args.Length == 1)
-                {
-                    try
-                    {
-                        return SimulationObjects[args[0].ToString()].GraphicObject.Tag;
-                    }
-                    catch (Exception ex)
-                    {
-                        return "ERROR: " + ex.Message;
-                    }
-                }
-                else
-                    return "INVALID ARGS";
-            };
-#endif
+            // Pure Headless: Spreadsheet functions removed
         }
 
         public void Init()
         {
 
             Initialize();
-#if !HEADLESS
-            Spreadsheet = unvell.ReoGrid.ReoGridControl.CreateMemoryWorkbook();
-#endif
             SetCustomSpreadsheetFunctions();
 
         }
@@ -538,11 +299,6 @@ namespace DWSIM.Automation
                     File.Delete(xmlfile);
                 }
                 catch { }
-                //try
-                //{
-                //    File.Delete(dbfile);
-                //}
-                //catch { }
             }
             else if (System.IO.Path.GetExtension(path).ToLower() == ".dwxml")
             {

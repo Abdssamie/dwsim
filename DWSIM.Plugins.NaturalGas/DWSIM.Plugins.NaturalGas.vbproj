@@ -107,11 +107,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CapeOpen">
-      <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
+      <HintPath>..\References\CapeOpen.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Cureos.Numerics">
-      <HintPath>..\DWSIM\References\Cureos.Numerics.dll</HintPath>
+      <HintPath>..\References\Cureos.Numerics.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Eto, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">

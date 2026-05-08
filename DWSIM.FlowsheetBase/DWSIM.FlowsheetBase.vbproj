@@ -45,16 +45,16 @@
 
   <ItemGroup>
     <Reference Include="AODL">
-      <HintPath>..\DWSIM\References\AODL.dll</HintPath>
+      <HintPath>..\References\AODL.dll</HintPath>
     </Reference>
     <Reference Include="CapeOpen">
-      <HintPath>..\DWSIM\References\CapeOpen.dll</HintPath>
+      <HintPath>..\References\CapeOpen.dll</HintPath>
     </Reference>
     <Reference Include="Interop.CAPEOPEN110">
-      <HintPath>..\DWSIM\References\Interop.CAPEOPEN110.dll</HintPath>
+      <HintPath>..\References\Interop.CAPEOPEN110.dll</HintPath>
     </Reference>
     <Reference Include="Python.Runtime">
-      <HintPath>..\DWSIM\References\Python.Runtime.dll</HintPath>
+      <HintPath>..\References\Python.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -13,19 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DWSIM.Inspector\DWSIM.Inspector.vbproj" />
     <ProjectReference Include="..\DWSIM.Serializers.XML\DWSIM.XMLSerializer.vbproj" />
     <ProjectReference Include="..\DWSIM.ExtensionMethods\DWSIM.ExtensionMethods.vbproj" />
     <ProjectReference Include="..\DWSIM.GlobalSettings\DWSIM.GlobalSettings.vbproj" />
     <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj" />
     <ProjectReference Include="..\DWSIM.Math\DWSIM.MathOps.vbproj" />
     <ProjectReference Include="..\DWSIM.SharedClasses\DWSIM.SharedClasses.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Cudafy.NET">
-      <HintPath>..\DWSIM\References\Cudafy.NET.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

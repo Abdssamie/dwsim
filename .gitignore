@@ -111,7 +111,7 @@ TCPServer/bin/Debug/*
 /DWSIM.Inspector/.vs
 /DWSIM.SharedClasses/.vs
 /DWSIM.Thermodynamics.ReaktoroPropertyPackage/.vs
-/DWSIM.DrawingTools.Point/.vs
+/DWSIM.SharedClasses/.vs
 /DWSIM.DrawingTools.SkiaSharp.Tests/.vs
 /DWSIM.ExtensionMethods/.vs
 /DWSIM.FlowsheetBase/.vs

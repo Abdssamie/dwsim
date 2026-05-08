@@ -20,15 +20,15 @@
 
   <ItemGroup>
     <Reference Include="Cureos.Numerics">
-      <HintPath>..\DWSIM\References\Cureos.Numerics.dll</HintPath>
+      <HintPath>..\References\Cureos.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="Mapack">
-      <HintPath>..\DWSIM\References\Mapack.dll</HintPath>
+      <HintPath>..\References\Mapack.dll</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DWSIM.DrawingTools.Point\DWSIM.DrawingTools.Point.vbproj" />
+    <ProjectReference Include="..\DWSIM.SharedClasses\DWSIM.SharedClasses.vbproj" />
   </ItemGroup>
 
 </Project>

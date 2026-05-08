@@ -27,8 +27,8 @@
 - [x] **DWSIM.Automation**
   - [x] Converted to SDK-style (.NET 8)
   - [x] Linked against headless `FlowsheetBase`
-  - [x] Implemented `HEADLESS` conditional compilation for spreadsheet components
-  - [x] Removed dependencies on `Eto.Forms` and `FormMain`
+  - [x] Removed dependencies on `unvell.ReoGrid` and spreadsheet logic
+  - [x] Transitioned from `#if HEADLESS` to pure code omission
 - [ ] **DWSIM.API** (New)
   - [ ] ASP.NET Core wrapper for Linux deployment
 
@@ -36,7 +36,7 @@
 
 - [x] **DWSIM.Automation.Tests.CSharp**
   - [x] Verified core solver integrity on Linux (Load/Connect/Solve/Save)
-  - [x] Confirmed thermodynamic calculation results (PR Property Package)
+  - [x] Confirmed thermodynamic calculation results (334.3 K / 350 kg/s)
 - [ ] **Benchmarking**
   - [ ] Benchmark against legacy Windows version
 
@@ -44,5 +44,6 @@
 
 - [x] Define migration standards in `AGENTS.md`
 - [x] Maintain 100% Linux compilation for migrated packages
-- [x] Surgical decoupling using `#if HEADLESS` to preserve original logic
+- [x] Pure code omission/stubbing (Removed all `#if HEADLESS` blocks)
 - [x] Fixed resource loading via flattened manifest names in SDK projects
+- [x] Consolidated all legacy DLLs into root-level `/References` folder

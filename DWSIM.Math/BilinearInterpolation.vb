@@ -1,4 +1,4 @@
-﻿Imports DWSIM.DrawingTools.Point
+﻿Imports DWSIM.SharedClasses
 
 Public Class BilinearInterpolation
 
