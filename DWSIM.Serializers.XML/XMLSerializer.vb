@@ -159,7 +159,7 @@ Public Class XMLSerializer
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is TimeSpan Then
                                 Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
                                 If Not xel Is Nothing Then
-                                    Dim val As TimeSpan = TimeSpan.FromMilliseconds(xel.Value)
+                                    Dim val As TimeSpan = TimeSpan.FromMilliseconds(CDbl(xel.Value))
                                     obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
                                 End If
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is OxyPlot.OxyColor Then
@@ -344,7 +344,7 @@ Public Class XMLSerializer
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is TimeSpan Then
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).FirstOrDefault
                             If Not xel Is Nothing Then
-                                Dim val As TimeSpan = TimeSpan.FromMilliseconds(xel.Value)
+                                Dim val As TimeSpan = TimeSpan.FromMilliseconds(CDbl(xel.Value))
                                 obj.GetType.GetField(prop.Name).SetValue(obj, val)
                             End If
                         End If

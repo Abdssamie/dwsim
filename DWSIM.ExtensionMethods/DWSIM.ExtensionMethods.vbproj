@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>DWSIM.ExtensionMethods</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>DWSIM.ExtensionMethods</AssemblyName>
   </PropertyGroup>
 

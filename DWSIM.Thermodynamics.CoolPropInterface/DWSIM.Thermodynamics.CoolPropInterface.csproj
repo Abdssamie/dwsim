@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>CoolPropInterface</RootNamespace>
     <AssemblyName>DWSIM.Thermodynamics.CoolPropInterface</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
