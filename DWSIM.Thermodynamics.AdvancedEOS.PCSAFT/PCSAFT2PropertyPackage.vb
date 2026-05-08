@@ -5,7 +5,6 @@ Imports DWSIM.ExtensionMethods
 Imports DWSIM.Thermodynamics.PropertyPackages.Auxiliary
 Imports System.IO
 Imports FileHelpers
-Imports System.Windows.Forms
 
 Namespace DWSIM.Thermodynamics.AdvancedEOS
 
@@ -181,15 +180,15 @@ Namespace DWSIM.Thermodynamics.AdvancedEOS
 
         Public Overrides Sub DisplayEditingForm()
 
-            Dim f As New FormConfig() With {.PP = Me}
+            'Dim f As New FormConfig() With {.PP = Me}
 
-            f.ShowDialog()
+            'f.ShowDialog()
 
         End Sub
 
-        Public Overrides Function GetEditingForm() As Form
+        Public Overrides Function GetEditingForm() As Object
 
-            Return New FormConfig() With {.PP = Me}
+            Return Nothing
 
         End Function
 
@@ -315,7 +314,7 @@ Namespace DWSIM.Thermodynamics.AdvancedEOS
                 Case "surfacetension"
                     Me.CurrentMaterialStream.Phases(0).Properties.surfaceTension = Me.AUX_SURFTM(T)
                 Case Else
-                    Dim ex As Exception = New CapeOpen.CapeThrmPropertyNotAvailableException
+                    Dim ex As Exception = New Global.CapeOpen.CapeThrmPropertyNotAvailableException
                     ThrowCAPEException(ex, "Error", ex.Message, "ICapeThermoMaterial", ex.Source, ex.StackTrace, "CalcSinglePhaseProp/CalcTwoPhaseProp/CalcProp", ex.GetHashCode)
             End Select
 

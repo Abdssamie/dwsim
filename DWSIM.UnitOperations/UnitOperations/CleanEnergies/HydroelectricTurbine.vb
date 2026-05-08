@@ -1,12 +1,9 @@
 ﻿Imports System.IO
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
-Imports DWSIM.DrawingTools.Point
 Imports DWSIM.Interfaces.Enums
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.UnitOperations.UnitOperations
 Imports Eto.Forms
 Imports DWSIM.UI.Shared.Common
-Imports SkiaSharp
 Imports System.Globalization
 
 Namespace UnitOperations
@@ -17,9 +14,9 @@ Namespace UnitOperations
 
         Private ImagePath As String = ""
 
-        Private Image As SKImage
+        Private Image As Object
 
-        <Xml.Serialization.XmlIgnore> Public f As EditingForm_HydroelectricTurbine
+        <Xml.Serialization.XmlIgnore> Public f As Object
 
         Public Overrides Property Prefix As String = "HT-"
 
@@ -53,31 +50,6 @@ Namespace UnitOperations
 
 
         Public Overrides Sub Draw(g As Object)
-
-            Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
-
-            If Image Is Nothing Then
-
-                ImagePath = SharedClasses.Utility.GetTempFileName()
-                My.Resources.icons8_hydroelectric.Save(ImagePath)
-
-                Using streamBG = New FileStream(ImagePath, FileMode.Open)
-                    Using bitmap = SKBitmap.Decode(streamBG)
-                        Image = SKImage.FromBitmap(bitmap)
-                    End Using
-                End Using
-
-                Try
-                    File.Delete(ImagePath)
-                Catch ex As Exception
-                End Try
-
-            End If
-
-            Using p As New SKPaint With {.IsAntialias = GlobalSettings.Settings.DrawingAntiAlias, .FilterQuality = SKFilterQuality.High}
-                canvas.DrawImage(Image, New SKRect(GraphicObject.X, GraphicObject.Y, GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height), p)
-            End Using
-
         End Sub
 
         Public Overrides Sub CreateConnectors()
@@ -88,26 +60,26 @@ Namespace UnitOperations
             x = GraphicObject.X
             y = GraphicObject.Y
 
-            Dim myIC1 As New ConnectionPoint
+            Dim myIC1 As New Object
 
-            myIC1.Position = New Point(x, y + h / 2)
+            myIC1.Position = New Object()
             myIC1.Type = ConType.ConIn
             myIC1.Direction = ConDir.Right
 
-            Dim myOC1 As New ConnectionPoint
-            myOC1.Position = New Point(x + w, y + h / 2)
+            Dim myOC1 As New Object
+            myOC1.Position = New Object()
             myOC1.Type = ConType.ConOut
             myOC1.Direction = ConDir.Right
 
-            Dim myOC2 As New ConnectionPoint
-            myOC2.Position = New Point(x + w / 2, y + h)
+            Dim myOC2 As New Object
+            myOC2.Position = New Object()
             myOC2.Type = ConType.ConOut
             myOC2.Direction = ConDir.Down
             myOC2.Type = ConType.ConEn
 
             With GraphicObject.InputConnectors
                 If .Count = 1 Then
-                    .Item(0).Position = New Point(x, y + h / 2)
+                    .Item(0).Position = New Object()
                 Else
                     .Add(myIC1)
                 End If
@@ -116,8 +88,8 @@ Namespace UnitOperations
 
             With GraphicObject.OutputConnectors
                 If .Count = 2 Then
-                    .Item(0).Position = New Point(x + w, y + h / 2)
-                    .Item(1).Position = New Point(x + w / 2, y + h)
+                    .Item(0).Position = New Object()
+                    .Item(1).Position = New Object()
                 Else
                     .Add(myOC1)
                     .Add(myOC2)
@@ -131,41 +103,6 @@ Namespace UnitOperations
         End Sub
 
         Public Overrides Sub PopulateEditorPanel(ctner As Object)
-
-
-            Dim container As DynamicLayout = ctner
-
-            Dim su = GetFlowsheet().FlowsheetOptions.SelectedUnitSystem
-            Dim nf = GetFlowsheet().FlowsheetOptions.NumberFormat
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Static Head ({0})", su.distance),
-                                             StaticHead, Sub(tb, e)
-                                                             If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                                 StaticHead = tb.Text.ToDoubleFromInvariant().ConvertToSI(su.distance)
-                                                             End If
-                                                         End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Inlet Velocity ({0})", su.velocity),
-                                             InletVelocity, Sub(tb, e)
-                                                                If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                                    InletVelocity = tb.Text.ToDoubleFromInvariant().ConvertToSI(su.velocity)
-                                                                End If
-                                                            End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Outlet Velocity ({0})", su.velocity),
-                                             OutletVelocity, Sub(tb, e)
-                                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                                     OutletVelocity = tb.Text.ToDoubleFromInvariant().ConvertToSI(su.velocity)
-                                                                 End If
-                                                             End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Efficiency ({0})", "%"),
-                                             Efficiency, Sub(tb, e)
-                                                             If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                                 Efficiency = tb.Text.ToDoubleFromInvariant()
-                                                             End If
-                                                         End Sub)
-
         End Sub
 
         Public Overrides Function GetStructuredReport() As List(Of Tuple(Of ReportItemType, String()))
@@ -206,46 +143,6 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
-
-            If f Is Nothing Then
-                f = New EditingForm_HydroelectricTurbine With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_HydroelectricTurbine With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    If f.InvokeRequired Then f.BeginInvoke(Sub() f.UpdateInfo()) Else f.UpdateInfo()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub CloseEditForm()
-
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-
-        End Sub
 
         Public Overrides Function ReturnInstance(typename As String) As Object
 
@@ -253,17 +150,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Function GetIconBitmap() As Object
 
-            Return My.Resources.icons8_hydroelectric
-
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.icons8_hydroelectric.png")
-
-        End Function
 
         Public Overrides Function CloneXML() As Object
 

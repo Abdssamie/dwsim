@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_EnergyStream
+Partial Class Object
     Inherits SharedClasses.ObjectEditorForm
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_EnergyStream
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_EnergyStream))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.lblTag = New System.Windows.Forms.TextBox()
         Me.chkActive = New System.Windows.Forms.CheckBox()
@@ -80,7 +80,7 @@ Partial Class EditingForm_EnergyStream
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTip1.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -207,7 +207,7 @@ Partial Class EditingForm_EnergyStream
         'btnDisconnectOutlet1
         '
         resources.ApplyResources(Me.btnDisconnectOutlet1, "btnDisconnectOutlet1")
-        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet1.Name = "btnDisconnectOutlet1"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet1, resources.GetString("btnDisconnectOutlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet1, resources.GetString("btnDisconnectOutlet1.ToolTip1"))
@@ -217,7 +217,7 @@ Partial Class EditingForm_EnergyStream
         'btnDisconnect1
         '
         resources.ApplyResources(Me.btnDisconnect1, "btnDisconnect1")
-        Me.btnDisconnect1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect1.Name = "btnDisconnect1"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect1, resources.GetString("btnDisconnect1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect1, resources.GetString("btnDisconnect1.ToolTip1"))
@@ -265,7 +265,7 @@ Partial Class EditingForm_EnergyStream
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_EnergyStream
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -273,7 +273,7 @@ Partial Class EditingForm_EnergyStream
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBoxParameters)
-        Me.Name = "EditingForm_EnergyStream"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip2"))

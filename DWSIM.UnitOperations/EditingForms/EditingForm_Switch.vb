@@ -1,4 +1,4 @@
-﻿Public Class EditingForm_Switch
+﻿Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -6,7 +6,7 @@
 
     Public Loaded As Boolean = False
 
-    Private Sub EditingForm_DigitalGauge_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpdateInfo()
 

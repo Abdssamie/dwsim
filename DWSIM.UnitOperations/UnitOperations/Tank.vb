@@ -20,7 +20,6 @@
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.Interfaces.Enums
@@ -55,7 +54,6 @@ Namespace UnitOperations
 
         End Sub
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_Tank
 
         Protected m_dp As Nullable(Of Double)
         Protected m_DQ As Nullable(Of Double)
@@ -142,59 +140,9 @@ Namespace UnitOperations
         End Sub
 
         Public Overrides Sub DisplayDynamicsEditForm()
-
-            If fd Is Nothing Then
-                fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                fd.Tag = "ObjectEditor"
-                fd.UpdateCallBack = Sub(table)
-                                        AddButtonsToDynEditor(table)
-                                    End Sub
-                Me.FlowSheet.DisplayForm(fd)
-            Else
-                If fd.IsDisposed Then
-                    fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                    fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                    fd.Tag = "ObjectEditor"
-                    fd.UpdateCallBack = Sub(table)
-                                            AddButtonsToDynEditor(table)
-                                        End Sub
-                    Me.FlowSheet.DisplayForm(fd)
-                Else
-                    fd.Activate()
-                End If
-            End If
-
         End Sub
 
-        Private Sub AddButtonsToDynEditor(table As TableLayoutPanel)
-
-            Dim button1 As New Button With {.Text = FlowSheet.GetTranslatedString("ViewAccumulationStream"),
-                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button1.Click, Sub(s, e)
-                                          AccumulationStream.SetFlowsheet(FlowSheet)
-                                          Dim fms As New MaterialStreamEditor With {
-                                          .MatStream = AccumulationStream,
-                                          .IsAccumulationStream = True,
-                                          .Text = Me.GraphicObject.Tag + ": " + FlowSheet.GetTranslatedString("AccumulationStream")}
-                                          FlowSheet.DisplayForm(fms)
-                                      End Sub
-            Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("Fill With Inlet Stream"),
-              .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button2.Click, Sub(s, e)
-                                          Dim Height As Double = GetDynamicProperty("Height")
-                                          Dim LiquidHeight As Double = GetDynamicProperty("Liquid Level")
-                                          AccumulationStream.SetFlowsheet(FlowSheet)
-                                          AccumulationStream.AssignFromPhase(PhaseLabel.Mixture, GetInletMaterialStream(0), False)
-                                          AccumulationStream.SetVolumetricFlow(LiquidHeight / Height * Volume)
-                                          AccumulationStream.Calculate()
-                                          FlowSheet.ShowMessage("Tank contents successfully defined from inlet stream.", IFlowsheet.MessageType.Information)
-                                      End Sub
-
-            table.Controls.Add(button1)
-            table.Controls.Add(button2)
-            table.Controls.Add(New Panel())
-
+        Private Sub AddButtonsToDynEditor(table As Object)
         End Sub
 
         Private prevM, currentM As Double
@@ -482,61 +430,7 @@ Namespace UnitOperations
             End If
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_Tank With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_Tank With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-            If f Is Nothing Then
-                f = New EditingForm_Tank With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Return f
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_Tank With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Return f
-                Else
-                    Return Nothing
-                End If
-            End If
-        End Function
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.tank
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.tank.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("TANK_Desc")
@@ -546,14 +440,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("TANK_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

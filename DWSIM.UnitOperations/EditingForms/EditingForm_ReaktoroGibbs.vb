@@ -1,9 +1,8 @@
-﻿Imports System.Drawing
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClassesCSharp.FilePicker
 Imports DWSIM.UnitOperations.Reactors
 
-Public Class EditingForm_ReaktoroGibbs
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -15,7 +14,7 @@ Public Class EditingForm_ReaktoroGibbs
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_WaterElectrolyzer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
 
@@ -117,7 +116,7 @@ Public Class EditingForm_ReaktoroGibbs
             CheckBox3.Checked = .LiquidPhase
             CheckBox4.Checked = .MineralPhase
 
-            Dim cbComps As New DataGridViewComboBoxCell
+            Dim cbComps As New Object
 
             cbComps.Items.Add("")
             cbComps.Items.AddRange(.FlowSheet.SelectedCompounds.Keys.ToArray())
@@ -220,7 +219,7 @@ Public Class EditingForm_ReaktoroGibbs
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End If
                 If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
@@ -248,7 +247,7 @@ Public Class EditingForm_ReaktoroGibbs
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End If
                 If gobj.OutputConnectors(0).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(0).AttachedConnector.AttachedTo)
@@ -275,7 +274,7 @@ Public Class EditingForm_ReaktoroGibbs
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End If
                 If gobj.OutputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(index).AttachedConnector.AttachedTo)
@@ -502,7 +501,7 @@ Public Class EditingForm_ReaktoroGibbs
                 SimObject.CompoundNames(comp) = value
 
             Catch ex As Exception
-
+'
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             End Try
@@ -523,10 +522,10 @@ Public Class EditingForm_ReaktoroGibbs
                     Try
                         Using img = SkiaSharp.Views.Desktop.Extensions.ToSKImage(bmp)
                             SimObject.EmbeddedImageData = DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.EmbeddedImageGraphic.ImageToBase64(img, SkiaSharp.SKEncodedImageFormat.Png)
-                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
+'                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
                         End Using
                     Catch ex As Exception
-                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
+'                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
                     End Try
                 End Using
             End Using
@@ -567,7 +566,7 @@ Public Class EditingForm_ReaktoroGibbs
                 SimObject.ExternalDatabaseFileName = handler.Filename
                 SimObject.ExternalDatabaseContents = text
             Catch ex As Exception
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End If
 

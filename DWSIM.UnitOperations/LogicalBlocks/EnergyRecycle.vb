@@ -20,7 +20,6 @@
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.Interfaces.Enums
@@ -32,7 +31,6 @@ Namespace SpecialOps
 
         Inherits UnitOperations.SpecialOpBaseClass
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_EnergyRecycle
 
         Protected m_ConvPar As ConvergenceParametersE
         Protected m_ConvHist As ConvergenceHistoryE
@@ -267,14 +265,7 @@ SS:             Enew = Me.ConvergenceHistory.Energy
             End With
 
             If Me.IterationCount >= Me.MaximumIterations Then
-                Dim msgres As MsgBoxResult = MessageBox.Show(FlowSheet.GetTranslatedString("Onmeromximodeiteraes"), _
-                                Me.GraphicObject.Tag & " - " & FlowSheet.GetTranslatedString("Nmeromximodeiteraesa3"), _
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                If msgres = MsgBoxResult.No Then
-                    GoTo final
-                Else
-                    Me.IterationCount = 0
-                End If
+                GoTo final
             End If
 
             Me.IterationCount += 1
@@ -420,43 +411,7 @@ final:          Me.IterationsTaken = Me.IterationCount.ToString
             End If
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_EnergyRecycle With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_EnergyRecycle With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.erecycle
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.erecycle.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("ERECY_Desc")
@@ -466,14 +421,6 @@ final:          Me.IterationsTaken = Me.IterationCount.ToString
             Return ResMan.GetLocalString("ERECY_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

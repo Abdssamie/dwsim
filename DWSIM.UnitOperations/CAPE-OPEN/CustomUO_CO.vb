@@ -20,7 +20,6 @@
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.Interfaces.Enums
@@ -30,10 +29,7 @@ Imports CapeOpen
 Imports System.Runtime.Serialization.Formatters
 Imports System.Linq
 Imports System.ComponentModel
-Imports System.Drawing.Design
 Imports Microsoft.Scripting.Hosting
-Imports System.Drawing.Text
-Imports System.Drawing
 Imports DWSIM.Interfaces.Interfaces2
 Imports Python.Runtime
 
@@ -87,11 +83,11 @@ Namespace UnitOperations.CAPEOPENWrappers
             Dim fontnames As New List(Of String)
 
             ' Get the installed fonts collection.
-            Dim installed_fonts As New InstalledFontCollection
+            Dim installed_fonts As New Object
             ' Get an array of the system's font familiies.
-            Dim font_families() As FontFamily = installed_fonts.Families()
+            Dim font_families() As Object = installed_fonts.Families()
             ' Display the font families.
-            For Each font_family As FontFamily In font_families
+            For Each font_family As Object In font_families
                 fontnames.Add(font_family.Name)
             Next font_family
 
@@ -224,7 +220,7 @@ Namespace UnitOperations.CAPEOPENWrappers
                     scope = Nothing
                     source = Nothing
                     _lastrun = "Error executing script: " & ops.FormatException(ex).ToString
-                    MessageBox.Show(_lastrun, Me.ComponentName)
+'                    MessageBox.Show(_lastrun, Me.ComponentName)
                     Throw New CapeOpen.CapeSolvingErrorException(_lastrun, ex)
 
                 Finally
@@ -262,7 +258,7 @@ Namespace UnitOperations.CAPEOPENWrappers
                     Catch ex As Exception
 
                         _lastrun = "Error executing script: " & ex.ToString()
-                        MessageBox.Show(_lastrun, Me.ComponentName)
+'                        MessageBox.Show(_lastrun, Me.ComponentName)
                         Throw New CapeOpen.CapeSolvingErrorException(_lastrun, ex)
 
                     End Try
@@ -305,7 +301,7 @@ Namespace UnitOperations.CAPEOPENWrappers
                         Catch ex As Exception
 
                             _lastrun = "Error executing script: " & ex.ToString()
-                            MessageBox.Show(_lastrun, Me.ComponentName)
+'                            MessageBox.Show(_lastrun, Me.ComponentName)
                             Throw New CapeOpen.CapeSolvingErrorException(_lastrun, ex)
 
                         Finally
@@ -325,7 +321,7 @@ Namespace UnitOperations.CAPEOPENWrappers
 
         Public Overrides Sub Edit()
 
-            Dim edform As New EditingForm_CustomUO_ScriptEditor
+            Dim edform As New Object
             With edform
                 .CAPEOPEN = True
                 _fontname = DirectCast(Me.Parameters(1), OptionParameter).Value

@@ -26,12 +26,10 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.Interfaces.Interfaces2
 Imports DWSIM.Interfaces.Enums.GraphicObjects
-Imports DWSIM.DrawingTools
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
 Imports DWSIM.Interfaces.Enums
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
 Imports System.Threading
 
 Namespace UnitOperations
@@ -40,10 +38,9 @@ Namespace UnitOperations
 
         Inherits UnitOperations.UnitOpBaseClass
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_CAPEOPENUO
 
         <System.NonSerialized()> Private _couo As Object
-        <System.NonSerialized()> Private _form As Form_CapeOpenSelector
+        <System.NonSerialized()> Private _form As Object
 
         Private m_reactionSetID As String = "DefaultSet"
         Private m_reactionSetName As String = ""
@@ -96,7 +93,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Sub New(ByVal name As String, ByVal description As String, ByVal gobj As IGraphicObject, Optional ByVal chemsep As Boolean = False)
+        Public Sub New(ByVal name As String, ByVal description As String, ByVal gobj As Object, Optional ByVal chemsep As Boolean = False)
 
             Me.New()
 
@@ -113,31 +110,9 @@ Namespace UnitOperations
                     Instantiate(False)
 
                 Else
-
-                    Dim frmwait As New FormLS
-
-                    frmwait.Text = "Add ChemSep Column"
-                    frmwait.Label1.Text = "Scanning Registry for ChemSep's Location..."
-                    frmwait.StartPosition = FormStartPosition.CenterScreen
-                    frmwait.Opacity = 1.0#
-
-                    Application.DoEvents()
-
-                    frmwait.Show()
-
                     Task.Factory.StartNew(Sub()
-                                              Dim colist = Form_CapeOpenSelector.SearchCOUOS(True)
-                                              Dim cs = colist.Where(Function(x) x.Name.ToLower.Contains("chemsep")).SingleOrDefault
-                                              If Not cs Is Nothing Then
-                                                  _seluo = cs
-                                              Else
-                                                  Me.FlowSheet.ShowMessage("Error creating ChemSep column: ChemSep is not installed or cannot be accessed by DWSIM.", IFlowsheet.MessageType.GeneralError)
-                                              End If
                                           End Sub).ContinueWith(Sub()
-                                                                    frmwait.UIThreadInvoke(Sub()
-                                                                                               frmwait.Close()
-                                                                                               Instantiate(True)
-                                                                                           End Sub)
+                                                                    Instantiate(True)
                                                                 End Sub)
                 End If
 
@@ -191,7 +166,7 @@ Namespace UnitOperations
                     Try
                         If _couo Is Nothing Then _couo = Activator.CreateInstance(t)
                     Catch ex As Exception
-                        MessageBox.Show("Error creating CAPE-OPEN Unit Operation instance." & vbCrLf & ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show("Error creating CAPE-OPEN Unit Operation instance." & vbCrLf & ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
 
@@ -214,7 +189,7 @@ Namespace UnitOperations
                         _restorefromcollections = False
                     Catch ex As Exception
                         'couldn't restore data from IStream. Will restore using port and parameter collections instead.
-                        MessageBox.Show(Me.GraphicObject.Tag + ": Error restoring persisted data from CAPE-OPEN Object - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(Me.GraphicObject.Tag + ": Error restoring persisted data from CAPE-OPEN Object - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         _restorefromcollections = True
                     End Try
                 Else
@@ -226,8 +201,8 @@ Namespace UnitOperations
                             _restorefromcollections = False
                         Catch ex As Exception
                             Dim ecu As CapeOpen.ECapeUser = _couo
-                            MessageBox.Show(Me.ComponentName + ": error loading CAPE-OPEN Unit Operation - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            MessageBox.Show(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description)
+'                            MessageBox.Show(Me.ComponentName + ": error loading CAPE-OPEN Unit Operation - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                            MessageBox.Show(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description)
                             _restorefromcollections = True
                         End Try
                     End If
@@ -300,7 +275,7 @@ Namespace UnitOperations
 
         Sub ShowForm()
 
-            _form = New Form_CapeOpenSelector
+            _form = New Object
             _form.ShowDialog(Me.FlowSheet)
             Me._seluo = _form._seluo
             If _seluo.Name.ToLower.Contains("chemsep") Then
@@ -524,7 +499,7 @@ Namespace UnitOperations
             For Each p As UnitPort In _ports
                 Select Case p.direction
                     Case CapePortDirection.CAPE_INLET
-                        Me.GraphicObject.InputConnectors.Add(New ConnectionPoint())
+                        Me.GraphicObject.InputConnectors.Add(New Object())
                         With Me.GraphicObject.InputConnectors(Me.GraphicObject.InputConnectors.Count - 1)
                             Select Case p.portType
                                 Case CapePortType.CAPE_ENERGY
@@ -532,11 +507,11 @@ Namespace UnitOperations
                                 Case CapePortType.CAPE_MATERIAL
                                     .Type = ConType.ConIn
                             End Select
-                            .Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
+'                            .Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
                             .ConnectorName = p.ComponentName
                         End With
                     Case CapePortDirection.CAPE_OUTLET
-                        Me.GraphicObject.OutputConnectors.Add(New ConnectionPoint())
+                        Me.GraphicObject.OutputConnectors.Add(New Object())
                         With Me.GraphicObject.OutputConnectors(Me.GraphicObject.OutputConnectors.Count - 1)
                             Select Case p.portType
                                 Case CapePortType.CAPE_ENERGY
@@ -544,7 +519,7 @@ Namespace UnitOperations
                                 Case CapePortType.CAPE_MATERIAL
                                     .Type = ConType.ConOut
                             End Select
-                            .Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + +(Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
+'                            .Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + +(Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
                             .ConnectorName = p.ComponentName
                         End With
                 End Select
@@ -594,7 +569,7 @@ Namespace UnitOperations
                         Dim myport As ICapeUnitPort = myports.Item(i)
                         Select Case myport.direction
                             Case CapePortDirection.CAPE_INLET
-                                Me.GraphicObject.InputConnectors.Add(New ConnectionPoint())
+                                Me.GraphicObject.InputConnectors.Add(New Object())
                                 With Me.GraphicObject.InputConnectors(Me.GraphicObject.InputConnectors.Count - 1)
                                     Select Case myport.portType
                                         Case CapePortType.CAPE_ENERGY
@@ -602,7 +577,7 @@ Namespace UnitOperations
                                         Case CapePortType.CAPE_MATERIAL
                                             .Type = ConType.ConIn
                                     End Select
-                                    .Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
+'                                    .Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
                                     .ConnectorName = id.ComponentName
                                 End With
                                 Try
@@ -613,7 +588,7 @@ Namespace UnitOperations
                                 If cnobj IsNot Nothing Then
                                     objid = CType(cnobj, ICapeIdentification).ComponentName
                                     myport.Disconnect()
-                                    Dim gobj As IGraphicObject = FlowSheet.GraphicObjects(objid)
+                                    Dim gobj As Object = FlowSheet.GraphicObjects(objid)
                                     Select Case myport.portType
                                         Case CapePortType.CAPE_MATERIAL
                                             Me.FlowSheet.ConnectObjects(gobj, Me.GraphicObject, 0, Me.GraphicObject.InputConnectors.Count - 1)
@@ -623,7 +598,7 @@ Namespace UnitOperations
                                     myport.Connect(Me.FlowSheet.GetFlowsheetSimulationObject(gobj.Tag))
                                 End If
                             Case CapePortDirection.CAPE_OUTLET
-                                Me.GraphicObject.OutputConnectors.Add(New ConnectionPoint())
+                                Me.GraphicObject.OutputConnectors.Add(New Object())
                                 With Me.GraphicObject.OutputConnectors(Me.GraphicObject.OutputConnectors.Count - 1)
                                     Select Case myport.portType
                                         Case CapePortType.CAPE_ENERGY
@@ -631,7 +606,7 @@ Namespace UnitOperations
                                         Case CapePortType.CAPE_MATERIAL
                                             .Type = ConType.ConOut
                                     End Select
-                                    .Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + (Me.GraphicObject.OutputConnectors.Count) / (nop - 1) * Me.GraphicObject.Height / 2)
+'                                    .Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + (Me.GraphicObject.OutputConnectors.Count) / (nop - 1) * Me.GraphicObject.Height / 2)
                                     .ConnectorName = id.ComponentName
                                 End With
                                 Try
@@ -642,7 +617,7 @@ Namespace UnitOperations
                                 If cnobj IsNot Nothing Then
                                     objid = CType(cnobj, ICapeIdentification).ComponentName
                                     myport.Disconnect()
-                                    Dim gobj As IGraphicObject = FlowSheet.GraphicObjects(objid)
+                                    Dim gobj As Object = FlowSheet.GraphicObjects(objid)
                                     Select Case myport.portType
                                         Case CapePortType.CAPE_MATERIAL
                                             Me.FlowSheet.ConnectObjects(Me.GraphicObject, gobj, Me.GraphicObject.OutputConnectors.Count - 1, 0)
@@ -695,11 +670,11 @@ Namespace UnitOperations
                                         Case CapePortType.CAPE_MATERIAL
                                             .Type = ConType.ConIn
                                     End Select
-                                    .Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip) * Me.GraphicObject.Height / 2)
+'                                    .Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip) * Me.GraphicObject.Height / 2)
                                     .ConnectorName = id.ComponentName
                                 End With
                                 Try
-                                    Dim gobj As IGraphicObject = Me.GraphicObject.InputConnectors(ic).AttachedConnector.AttachedFrom
+                                    Dim gobj As Object = Me.GraphicObject.InputConnectors(ic).AttachedConnector.AttachedFrom
                                     myport.Connect(FlowSheet.GetFlowsheetSimulationObject(gobj.Tag))
                                 Catch ex As Exception
                                 End Try
@@ -712,11 +687,11 @@ Namespace UnitOperations
                                         Case CapePortType.CAPE_MATERIAL
                                             .Type = ConType.ConOut
                                     End Select
-                                    .Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + (Me.GraphicObject.OutputConnectors.Count) / (nop) * Me.GraphicObject.Height / 2)
+'                                    .Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + (Me.GraphicObject.OutputConnectors.Count) / (nop) * Me.GraphicObject.Height / 2)
                                     .ConnectorName = id.ComponentName
                                 End With
                                 Try
-                                    Dim gobj As IGraphicObject = Me.GraphicObject.OutputConnectors(oc).AttachedConnector.AttachedTo
+                                    Dim gobj As Object = Me.GraphicObject.OutputConnectors(oc).AttachedConnector.AttachedTo
                                     myport.Connect(Me.FlowSheet.GetFlowsheetSimulationObject(gobj.Tag))
                                 Catch ex As Exception
                                 End Try
@@ -1247,43 +1222,7 @@ Namespace UnitOperations
 
 #End Region
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_CAPEOPENUO With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_CAPEOPENUO With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.uo_co_32
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.uo_co_32.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("COUO_Desc")
@@ -1293,14 +1232,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("COUO_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

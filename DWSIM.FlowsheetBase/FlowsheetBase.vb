@@ -1,23 +1,23 @@
 ﻿Imports System.Globalization
 Imports System.Reflection
 Imports DWSIM.Interfaces
-Imports DWSIM.Drawing.SkiaSharp
+'Imports DWSIM.Drawing.SkiaSharp
 Imports DWSIM.SharedClasses
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.FlowsheetSolver
 Imports DWSIM.Interfaces.Enums.GraphicObjects
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes
+'Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes
 Imports DWSIM.UnitOperations.SpecialOps
 Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.UnitOperations.Reactors
 Imports DWSIM.Thermodynamics.PropertyPackages
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
+'Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
 Imports DWSIM.Thermodynamics
 Imports DWSIM.UnitOperations.Streams
 Imports DWSIM.Thermodynamics.Streams
 Imports ICSharpCode.SharpZipLib.Zip
 Imports System.IO
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Tables
+'Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Tables
 Imports Python.Runtime
 Imports Microsoft.Scripting.Hosting
 Imports System.Text
@@ -26,7 +26,7 @@ Imports System.Dynamic
 Imports DWSIM.Interfaces.Enums
 Imports DWSIM.GlobalSettings
 Imports DWSIM.Thermodynamics.AdvancedEOS
-Imports SkiaSharp
+'Imports SkiaSharp
 Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports DWSIM.ExtensionMethods
@@ -54,7 +54,7 @@ Imports DWSIM.ExtensionMethods
 
     Public Property MessagesLog As New List(Of String) Implements IFlowsheet.MessagesLog
 
-    Private FlowsheetSurface As New GraphicsSurface
+    Private FlowsheetSurface As Object = Nothing 'New GraphicsSurface
 
     Public SensAnalysisCollection As New List(Of Optimization.SensitivityAnalysisCase)
 
@@ -133,10 +133,9 @@ Imports DWSIM.ExtensionMethods
     End Sub
 
     Public Sub AddGraphicObject(obj As IGraphicObject) Implements IFlowsheet.AddGraphicObject
-        FlowsheetSurface.DrawingObjects.Add(obj)
+        'If FlowsheetSurface IsNot Nothing Then FlowsheetSurface.DrawingObjects.Add(obj)
         GraphicObjects.Add(obj.Name, obj)
     End Sub
-
     Public Function AddObject(t As Enums.GraphicObjects.ObjectType, xcoord As Integer, ycoord As Integer, tag As String) As ISimulationObject Implements IFlowsheet.AddObject
         Dim id = Me.AddObjectToSurface(t, xcoord, ycoord, tag)
         Return Me.SimulationObjects(id)
@@ -164,12 +163,12 @@ Imports DWSIM.ExtensionMethods
 
     Public Sub ConnectObjects(gobjfrom As IGraphicObject, gobjto As IGraphicObject, fromidx As Integer, toidx As Integer) Implements IFlowsheet.ConnectObjects
         RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
-        FlowsheetSurface.ConnectObject(CType(gobjfrom, GraphicObject), CType(gobjto, GraphicObject), fromidx, toidx)
+        If FlowsheetSurface IsNot Nothing Then FlowsheetSurface.ConnectObject(gobjfrom, gobjto, fromidx, toidx)
     End Sub
 
     Public Sub DisconnectObjects(gobjfrom As IGraphicObject, gobjto As IGraphicObject) Implements IFlowsheet.DisconnectObjects
         RegisterSnapshot(SnapshotType.ObjectAddedOrRemoved)
-        FlowsheetSurface.DisconnectObject(CType(gobjfrom, GraphicObject), CType(gobjto, GraphicObject), False)
+        If FlowsheetSurface IsNot Nothing Then FlowsheetSurface.DisconnectObject(gobjfrom, gobjto, False)
     End Sub
 
     Public Sub DeleteSelectedObject(ByVal sender As System.Object, ByVal e As System.EventArgs, gobj As IGraphicObject, Optional ByVal confirmation As Boolean = True, Optional ByVal triggercalc As Boolean = False) Implements IFlowsheet.DeleteSelectedObject
@@ -1048,7 +1047,7 @@ Imports DWSIM.ExtensionMethods
                 myObj.GraphicObject = myGobj
                 SimulationObjects.Add(myGobj.Name, myObj)
 
-                GraphicObjectControlPanelModeEditors.SetInputDelegate(myGobj, myObj)
+                'GraphicObjectControlPanelModeEditors.SetInputDelegate(gobj, obj)
 
             Case ObjectType.Controller_PID
 
@@ -1064,7 +1063,7 @@ Imports DWSIM.ExtensionMethods
                 myObj.GraphicObject = myGobj
                 SimulationObjects.Add(myGobj.Name, myObj)
 
-                GraphicObjectControlPanelModeEditors.SetPIDDelegate(myGobj, myObj)
+                'GraphicObjectControlPanelModeEditors.SetPIDDelegate(myGobj, myObj)
 
             Case ObjectType.Controller_Python
 
@@ -1674,7 +1673,7 @@ Imports DWSIM.ExtensionMethods
                 If id <> "" Then gObj.Name = id
                 GraphicObjects.Add(gObj.Name, myEUO)
                 'OBJETO DWSIM
-                Dim myCOEUO As ExcelUO = New ExcelUO(myEUO.Name, "ExcelUnitOp")
+                Dim myCOEUO As DWSIM.UnitOperations.UnitOperations.ExcelUO = New DWSIM.UnitOperations.UnitOperations.ExcelUO(myEUO.Name, "ExcelUnitOp")
                 myCOEUO.GraphicObject = myEUO
                 SimulationObjects.Add(myEUO.Name, myCOEUO)
 
@@ -2190,7 +2189,7 @@ Imports DWSIM.ExtensionMethods
 
     End Sub
 
-    Public Sub ConnectObject(ByRef gObjFrom As GraphicObject, ByRef gObjTo As GraphicObject, Optional ByVal fidx As Integer = -1, Optional ByVal tidx As Integer = -1)
+    Public Sub ConnectObject(ByRef gObjFrom As IGraphicObject, ByRef gObjTo As IGraphicObject, Optional ByVal fidx As Integer = -1, Optional ByVal tidx As Integer = -1)
 
         ConnectObjects(gObjFrom, gObjTo, fidx, tidx)
 
@@ -2198,14 +2197,14 @@ Imports DWSIM.ExtensionMethods
 
     Public Sub DeleteObject(ByVal tag As String, Optional ByVal confirmation As Boolean = True)
 
-        Dim gobj As GraphicObject = GetFlowsheetGraphicObject(tag)
+        Dim gobj As IGraphicObject = GetFlowsheetGraphicObject(tag)
 
         If Not gobj Is Nothing Then
-            FlowsheetSurface.SelectedObject = gobj
+            If FlowsheetSurface IsNot Nothing Then FlowsheetSurface.SelectedObject = gobj
             DeleteSelectedObject(Me, New EventArgs(), gobj, confirmation)
         ElseIf GraphicObjects.ContainsKey(tag) Then
             gobj = GraphicObjects(tag)
-            FlowsheetSurface.SelectedObject = gobj
+            If FlowsheetSurface IsNot Nothing Then FlowsheetSurface.SelectedObject = gobj
             DeleteSelectedObject(Me, New EventArgs(), gobj, confirmation)
         End If
 
@@ -2410,7 +2409,7 @@ Imports DWSIM.ExtensionMethods
                     End If
                 End If
                 Dim gobj As IGraphicObject = (From go As IGraphicObject In
-                                    FlowsheetSurface.DrawingObjects Where go.Name = id).SingleOrDefault
+                                    GraphicObjects.Values Where go.Name = id).SingleOrDefault
                 obj.GraphicObject = gobj
                 gobj.Owner = obj
                 obj.SetFlowsheet(Me)
@@ -2431,9 +2430,8 @@ Imports DWSIM.ExtensionMethods
                             End If
                         End If
                     ElseIf TypeOf obj Is Input Then
-                        GraphicObjectControlPanelModeEditors.SetInputDelegate(gobj, obj)
-                    ElseIf TypeOf obj Is PIDController Then
-                        GraphicObjectControlPanelModeEditors.SetPIDDelegate(gobj, obj)
+                        'GraphicObjectControlPanelModeEditors.SetInputDelegate(gobj, obj)
+                    ElseIf TypeOf obj Is PIDController Then                        'GraphicObjectControlPanelModeEditors.SetPIDDelegate(gobj, obj)
                     End If
                 End If
                 objlist.Add(obj)
@@ -2696,7 +2694,7 @@ Imports DWSIM.ExtensionMethods
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
 
-        For Each go As GraphicObject In FlowsheetSurface.DrawingObjects
+        For Each go As IGraphicObject In GraphicObjects.Values
             If Not go.IsConnector Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
         Next
 
@@ -2750,20 +2748,20 @@ Imports DWSIM.ExtensionMethods
 
         Dim flsconfig As New System.Text.StringBuilder()
 
-        If Not GlobalSettings.Settings.AutomationMode Then
-
-            With flsconfig
-                .Append(FlowsheetSurface.Zoom.ToString(ci) & ";")
-                .Append("0;")
-                .Append("0")
-            End With
-
-            xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("FlowsheetView"))
-            xel = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView")
-
-            xel.Add(flsconfig.ToString)
-
-        End If
+        'If Not GlobalSettings.Settings.AutomationMode Then
+        '
+        '    With flsconfig
+        '        .Append(FlowsheetSurface.Zoom.ToString(ci) & ";")
+        '        .Append("0;")
+        '        .Append("0")
+        '    End With
+        '
+        '    xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("FlowsheetView"))
+        '    xel = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView")
+        '
+        '    xel.Add(flsconfig.ToString)
+        '
+        'End If
 
         xel = xdoc.Element("DWSIM_Simulation_Data")
 
@@ -2892,7 +2890,7 @@ Imports DWSIM.ExtensionMethods
                     obj.X += shift
                     obj.Y += shift
                     If pkey <> "" Then
-                        objcount = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Select go Where go.Tag.Equals(obj.Tag)).Count
+                        objcount = (From go As IGraphicObject In GraphicObjects.Values Select go Where go.Tag.Equals(obj.Tag)).Count
                         If objcount > 0 Then obj.Tag += "_copy"
                     End If
                     If TypeOf obj Is TableGraphic Then
@@ -2926,7 +2924,7 @@ Imports DWSIM.ExtensionMethods
                     End If
                     obj.Flowsheet = Me
                     If Not TypeOf obj Is TableGraphic Then
-                        FlowsheetSurface.DrawingObjects.Add(obj)
+                        'GraphicObjects.Values.Add(obj)
                         GraphicObjects.Add(obj.Name, obj)
                     End If
                 End If
@@ -2940,8 +2938,8 @@ Imports DWSIM.ExtensionMethods
             Try
                 Dim id As String = pkey & xel.Element("Name").Value
                 If id <> "" Then
-                    Dim obj As IGraphicObject = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Where go.Name = id).SingleOrDefault
-                    If obj Is Nothing Then obj = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Where go.Name = xel.Element("Name").Value).SingleOrDefault
+                    Dim obj As IGraphicObject = (From go As IGraphicObject In GraphicObjects.Values Where go.Name = id).SingleOrDefault
+                    If obj Is Nothing Then obj = (From go As IGraphicObject In GraphicObjects.Values Where go.Name = xel.Element("Name").Value).SingleOrDefault
                     If Not obj Is Nothing Then
                         If xel.Element("InputConnectors") IsNot Nothing Then
                             Dim i As Integer = 0
@@ -2950,7 +2948,7 @@ Imports DWSIM.ExtensionMethods
                                     obj.InputConnectors(i).ConnectorName = pkey & xel2.@AttachedFromObjID & "|" & xel2.@AttachedFromConnIndex
                                     obj.InputConnectors(i).Type = CType([Enum].Parse(obj.InputConnectors(i).Type.GetType, xel2.@ConnType), ConType)
                                     If reconnectinlets Then
-                                        Dim objFrom As IGraphicObject = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Where go.Name = xel2.@AttachedFromObjID).SingleOrDefault
+                                        Dim objFrom As IGraphicObject = (From go As IGraphicObject In GraphicObjects.Values Where go.Name = xel2.@AttachedFromObjID).SingleOrDefault
                                         If Not objFrom Is Nothing Then
                                             If Not objFrom.OutputConnectors(CInt(xel2.@AttachedFromConnIndex)).IsAttached Then
                                                 FlowsheetSurface.ConnectObject(CType(objFrom, GraphicObject), CType(obj, GraphicObject), CInt(xel2.@AttachedFromConnIndex), CInt(xel2.@AttachedToConnIndex))
@@ -2972,15 +2970,15 @@ Imports DWSIM.ExtensionMethods
             Try
                 Dim id As String = pkey & xel.Element("Name").Value
                 If id <> "" Then
-                    Dim obj As IGraphicObject = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Where go.Name = id).SingleOrDefault
+                    Dim obj As IGraphicObject = (From go As IGraphicObject In GraphicObjects.Values Where go.Name = id).SingleOrDefault
                     If Not obj Is Nothing Then
                         If xel.Element("OutputConnectors") IsNot Nothing Then
                             For Each xel2 As XElement In xel.Element("OutputConnectors").Elements
                                 If CBool(xel2.@IsAttached) = True Then
                                     Dim objToID = pkey & xel2.@AttachedToObjID
                                     If objToID <> "" Then
-                                        Dim objTo As IGraphicObject = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Where go.Name = objToID).SingleOrDefault
-                                        If objTo Is Nothing Then objTo = (From go As IGraphicObject In FlowsheetSurface.DrawingObjects Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
+                                        Dim objTo As IGraphicObject = (From go As IGraphicObject In GraphicObjects.Values Where go.Name = objToID).SingleOrDefault
+                                        If objTo Is Nothing Then objTo = (From go As IGraphicObject In GraphicObjects.Values Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
                                         Dim fromidx As Integer = -1
                                         Dim cp As IConnectionPoint = (From cp2 As IConnectionPoint In objTo.InputConnectors Select cp2 Where cp2.ConnectorName.Split("|"c)(0) = obj.Name).SingleOrDefault
                                         If cp Is Nothing Then cp = (From cp2 As IConnectionPoint In objTo.InputConnectors Select cp2 Where cp2.ConnectorName.Split("|"c)(0) = xel2.@AttachedToObjID).SingleOrDefault
@@ -2998,9 +2996,9 @@ Imports DWSIM.ExtensionMethods
                                     Dim objToID = pkey & xel2.@AttachedToObjID
                                     If objToID <> "" Then
                                         Dim objTo As IGraphicObject = (From go As IGraphicObject In
-                                                                                   FlowsheetSurface.DrawingObjects Where go.Name = objToID).SingleOrDefault
+                                                                                   GraphicObjects.Values Where go.Name = objToID).SingleOrDefault
                                         If objTo Is Nothing Then obj = (From go As IGraphicObject In
-                                                                                    FlowsheetSurface.DrawingObjects Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
+                                                                                    GraphicObjects.Values Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
                                         If Not obj Is Nothing And Not objTo Is Nothing Then FlowsheetSurface.ConnectObject(CType(obj, GraphicObject), CType(objTo, GraphicObject), -1, CInt(xel2.@AttachedToConnIndex))
                                     End If
                                 End If
@@ -3034,7 +3032,7 @@ Imports DWSIM.ExtensionMethods
                     If TypeOf obj Is TableGraphic Then
                         DirectCast(obj, TableGraphic).Flowsheet = Me
                         If obj.Name = "" Then obj.Name = obj.Tag
-                        FlowsheetSurface.DrawingObjects.Add(obj)
+                        'GraphicObjects.Values.Add(obj)
                         GraphicObjects.Add(obj.Name, obj)
                     End If
                 End If
@@ -3223,10 +3221,10 @@ Imports DWSIM.ExtensionMethods
 
         SimulationObjects.Clear()
         GraphicObjects.Clear()
-        FlowsheetSurface.DrawingObjects.Clear()
+        'GraphicObjects.Values.Clear()
         SelectedCompounds.Clear()
         Options = New SharedClasses.DWSIM.Flowsheet.FlowsheetVariables()
-        FlowsheetSurface.Zoom = 1.0#
+        'FlowsheetSurface.Zoom = 1.0#
 
     End Sub
 
@@ -3549,10 +3547,10 @@ Label_00CC:
                                      BOPP.ComponentName = "Black Oil"
                                      plist.Add(BOPP)
 
-                                     Dim GERGPP As GERG2008PropertyPackage = New GERG2008PropertyPackage()
+                                     Dim GERGPP As Global.DWSIM.Thermodynamics.AdvancedEOS.GERG2008PropertyPackage = New Global.DWSIM.Thermodynamics.AdvancedEOS.GERG2008PropertyPackage()
                                      plist.Add(GERGPP)
 
-                                     Dim PCSAFTPP As PCSAFT2PropertyPackage = New PCSAFT2PropertyPackage()
+                                     Dim PCSAFTPP As Global.DWSIM.Thermodynamics.AdvancedEOS.PCSAFT2PropertyPackage = New Global.DWSIM.Thermodynamics.AdvancedEOS.PCSAFT2PropertyPackage()
                                      plist.Add(PCSAFTPP)
 
                                  End Sub)
@@ -3567,16 +3565,15 @@ Label_00CC:
 
         Dim t13 = TaskHelper.Run(Sub()
 
-                                     Dim PR78Adv As PengRobinson1978AdvancedPropertyPackage = New PengRobinson1978AdvancedPropertyPackage()
+                                     Dim PR78Adv As Global.DWSIM.Thermodynamics.AdvancedEOS.PengRobinson1978AdvancedPropertyPackage = New Global.DWSIM.Thermodynamics.AdvancedEOS.PengRobinson1978AdvancedPropertyPackage()
                                      plist.Add(PR78Adv)
 
                                  End Sub)
 
         Dim t14 = TaskHelper.Run(Sub()
 
-                                     Dim SRKAdv As SoaveRedlichKwongAdvancedPropertyPackage = New SoaveRedlichKwongAdvancedPropertyPackage()
+                                     Dim SRKAdv As Global.DWSIM.Thermodynamics.AdvancedEOS.SoaveRedlichKwongAdvancedPropertyPackage = New Global.DWSIM.Thermodynamics.AdvancedEOS.SoaveRedlichKwongAdvancedPropertyPackage()
                                      plist.Add(SRKAdv)
-
                                  End Sub)
 
         Task.WaitAll(t1, t2, t3, t4, t6, t7, t8, t9, t10, t11, t12, t13, t14)
@@ -3764,7 +3761,7 @@ Label_00CC:
 
         engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
         engine.Runtime.LoadAssembly(GetType(Thermodynamics.BaseClasses.ConstantProperties).Assembly)
-        engine.Runtime.LoadAssembly(GetType(Drawing.SkiaSharp.GraphicsSurface).Assembly)
+        'engine.Runtime.LoadAssembly(GetType(Drawing.SkiaSharp.GraphicsSurface).Assembly)
         engine.Runtime.IO.SetOutput(New FlowsheetLogTextStream(Me), UTF8Encoding.UTF8)
         scope = engine.CreateScope()
         scope.SetVariable("Plugins", UtilityPlugins)
@@ -3930,13 +3927,13 @@ Label_00CC:
 
         Dim olist As List(Of String) = objects
 
-        RunCodeOnUIThread(Sub()
-                              Dim frm As New SharedClasses.FormCustomCalcOrder
-                              frm.Flowsheet = Me
-                              frm.ItemList = objects
-                              frm.ShowDialog()
-                              olist = frm.NewItemList
-                          End Sub)
+        'RunCodeOnUIThread(Sub()
+        '                      Dim frm As New SharedClasses.FormCustomCalcOrder
+        '                      frm.Flowsheet = Me
+        '                      frm.ItemList = objects
+        '                      frm.ShowDialog()
+        '                      olist = frm.NewItemList
+        '                  End Sub)
 
         Return olist
 
@@ -4696,9 +4693,9 @@ Label_00CC:
                                     End If
                                 End If
                             ElseIf TypeOf obj Is Input Then
-                                GraphicObjectControlPanelModeEditors.SetInputDelegate(obj.GraphicObject, obj)
+                                'GraphicObjectControlPanelModeEditors.SetInputDelegate(obj.GraphicObject, obj)
                             ElseIf TypeOf obj Is PIDController Then
-                                GraphicObjectControlPanelModeEditors.SetPIDDelegate(obj.GraphicObject, obj)
+                                'GraphicObjectControlPanelModeEditors.SetInputDelegate(gobj, obj)
                             End If
                         Next
 
@@ -4774,9 +4771,9 @@ Label_00CC:
                             If Not t Is Nothing Then obj = Activator.CreateInstance(t)
                             If obj Is Nothing Then
                                 If xel.Element("Type").Value.Contains("OxyPlotGraphic") Then
-                                    obj = CType(Drawing.SkiaSharp.Extended.Shared.ReturnInstance(xel.Element("Type").Value.Replace("Shapes", "Charts")), GraphicObject)
+                                    obj = CType(Extended.Shared.ReturnInstance(xel.Element("Type").Value.Replace("Shapes", "Charts")), GraphicObject)
                                 Else
-                                    obj = CType(GraphicObject.ReturnInstance(xel.Element("Type").Value), GraphicObject)
+                                    obj = CType(Extended.Shared.ReturnInstance(xel.Element("Type").Value), GraphicObject)
                                 End If
                             End If
                             If Not obj Is Nothing Then
@@ -4792,7 +4789,7 @@ Label_00CC:
                                 ElseIf TypeOf obj Is Shapes.RigorousColumnGraphic Or TypeOf obj Is Shapes.AbsorptionColumnGraphic Or TypeOf obj Is Shapes.CAPEOPENGraphic Then
                                     obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                     obj.PositionConnectors()
-                                ElseIf TypeOf obj Is Shapes.ExternalUnitOperationGraphic Then
+                                ElseIf TypeOf obj Is ExternalUnitOperationGraphic Then
                                     Dim euo = AvailableExternalUnitOperations.Values.Where(Function(x) x.Description = obj.Description).FirstOrDefault
                                     If euo IsNot Nothing Then
                                         obj.Owner = euo
@@ -5052,9 +5049,8 @@ Label_00CC:
                                         End If
                                     End If
                                 ElseIf TypeOf obj Is Input Then
-                                    GraphicObjectControlPanelModeEditors.SetInputDelegate(gobj, obj)
-                                ElseIf TypeOf obj Is PIDController Then
-                                    GraphicObjectControlPanelModeEditors.SetPIDDelegate(gobj, obj)
+                                    'GraphicObjectControlPanelModeEditors.SetInputDelegate(gobj, obj)
+                                ElseIf TypeOf obj Is PIDController Then                                    'GraphicObjectControlPanelModeEditors.SetPIDDelegate(gobj, obj)
                                 End If
                             End If
                             objlist.Add(obj)
@@ -5460,7 +5456,7 @@ Label_00CC:
             Try
                 If extender.Level = ExtenderLevel.FlowsheetWindow Then
                     For Each item In extender.Collection
-                        item.SetMainWindow(Nothing)
+                        'item.SetMainWindow(Nothing)
                         item.SetFlowsheet(Me)
                         item.Run()
                     Next
@@ -5496,4 +5492,3 @@ Label_00CC:
 #End Region
 
 End Class
-

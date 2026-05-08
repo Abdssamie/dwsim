@@ -196,7 +196,6 @@ Namespace Reactors
                 engine = IronPython.Hosting.Python.CreateEngine(opts)
                 engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
                 engine.Runtime.LoadAssembly(GetType(Thermodynamics.BaseClasses.ConstantProperties).Assembly)
-                engine.Runtime.LoadAssembly(GetType(Drawing.SkiaSharp.GraphicsSurface).Assembly)
                 scope = engine.CreateScope()
             End If
 

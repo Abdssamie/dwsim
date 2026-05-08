@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Flowsheet_Editor
+Partial Class Object
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class EditingForm_Flowsheet_Editor
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Flowsheet_Editor))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -215,21 +215,21 @@ Partial Class EditingForm_Flowsheet_Editor
         'ToolStripButton3
         '
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.Nothing.add
         resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
         '
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
+        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.Nothing.delete
         resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'ToolStripButton6
         '
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton6.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.tag_blue
+        Me.ToolStripButton6.Image = Global.DWSIM.UnitOperations.Nothing.tag_blue
         resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.Name = "ToolStripButton6"
         '
@@ -280,21 +280,21 @@ Partial Class EditingForm_Flowsheet_Editor
         'ToolStripButton1
         '
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.Nothing.add
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
+        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.Nothing.delete
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton5
         '
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton5.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.tag_blue
+        Me.ToolStripButton5.Image = Global.DWSIM.UnitOperations.Nothing.tag_blue
         resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
@@ -380,7 +380,7 @@ Partial Class EditingForm_Flowsheet_Editor
         resources.ApplyResources(Me.lblInit, "lblInit")
         Me.lblInit.Name = "lblInit"
         '
-        'EditingForm_Flowsheet_Editor
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -389,7 +389,7 @@ Partial Class EditingForm_Flowsheet_Editor
         Me.Controls.Add(Me.TabControl1)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Name = "EditingForm_Flowsheet_Editor"
+        Me.Name = "Object"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)

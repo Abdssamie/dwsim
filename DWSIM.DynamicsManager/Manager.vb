@@ -129,10 +129,10 @@ Public Class Manager
             .Title = String.Format("Time ({0})", su.time)
         })
 
-        model.LegendFontSize = 10
-        model.LegendPlacement = LegendPlacement.Outside
-        model.LegendOrientation = LegendOrientation.Horizontal
-        model.LegendPosition = LegendPosition.BottomCenter
+'        model.LegendFontSize = 10
+'        model.LegendPlacement = LegendPlacement.Outside
+'        model.LegendOrientation = LegendOrientation.Horizontal
+'        model.LegendPosition = LegendPosition.BottomCenter
         model.TitleHorizontalAlignment = TitleHorizontalAlignment.CenteredWithinView
 
         If integrator.MonitoredVariableValues.Count = 0 Then
@@ -180,7 +180,7 @@ Public Class Manager
 
         i = 0
         For Each l In values
-            model.AddLineSeries(xavals, l, names(i))
+'            model.AddLineSeries(xavals, l, names(i))
             DirectCast(model.Series(model.Series.Count - 1), LineSeries).Tag = integrator.MonitoredVariables(i).ID
             DirectCast(model.Series(model.Series.Count - 1), LineSeries).YAxisKey = integrator.MonitoredVariables(i).ID
             i += 1

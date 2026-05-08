@@ -1,8 +1,7 @@
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe
-Imports System.Drawing
 
-Public Class EditingForm_Pipe_ResultsChart
+Public Class Object
 
     Inherits UserControl
 

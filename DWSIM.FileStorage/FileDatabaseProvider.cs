@@ -86,24 +86,9 @@ namespace DWSIM.FileStorage
         /// </summary>
         /// <param name="filename">Image file name in the database.</param>
         /// <returns>A System.Drawing.Image object.</returns>
-        public System.Drawing.Image GetFileAsImage(string filename)
+        public object GetFileAsImage(string filename)
         {
-            var fname = Path.GetFileName(filename);
-            var file = DB.FileStorage.FindById(fname);
-            if (file != null)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyTo(ms);
-                    ms.Position = 0;
-                    var image = System.Drawing.Image.FromStream(ms);
-                    return image;
-                }
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -111,24 +96,9 @@ namespace DWSIM.FileStorage
         /// </summary>
         /// <param name="filename">Image file name in the database.</param>
         /// <returns>An Eto.Drawing.Bitmap object.</returns>
-        public Eto.Drawing.Bitmap GetFileAsEtoBitmap(string filename)
+        public object GetFileAsEtoBitmap(string filename)
         {
-            var fname = Path.GetFileName(filename);
-            var file = DB.FileStorage.FindById(fname);
-            if (file != null)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyTo(ms);
-                    ms.Position = 0;
-                    var image = new Eto.Drawing.Bitmap(ms);
-                    return image;
-                }
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>

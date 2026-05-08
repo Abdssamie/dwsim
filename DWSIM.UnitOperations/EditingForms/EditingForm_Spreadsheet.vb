@@ -1,4 +1,3 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
@@ -6,7 +5,7 @@ Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.SharedClassesCSharp.FilePicker
 
-Public Class EditingForm_SpreadsheetUO
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -17,7 +16,7 @@ Public Class EditingForm_SpreadsheetUO
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
 
@@ -37,8 +36,8 @@ Public Class EditingForm_SpreadsheetUO
         If Host.Items.Where(Function(x) x.Name.Contains(SimObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = SimObject
                                                             iwindow.Show(DockPanel)
@@ -217,13 +216,13 @@ Public Class EditingForm_SpreadsheetUO
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.InputConnectors(4).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(4).AttachedConnector.AttachedFrom, gobj)
                         flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, 4)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
                 UpdateInfo()
@@ -402,13 +401,13 @@ Public Class EditingForm_SpreadsheetUO
             Dim flowsheet = SimObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Try
                     If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                     flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -431,13 +430,13 @@ Public Class EditingForm_SpreadsheetUO
             Dim flowsheet = SimObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Try
                     If gobj.OutputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(index).AttachedConnector.AttachedTo)
                     flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, index, 0)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -451,7 +450,7 @@ Public Class EditingForm_SpreadsheetUO
         Dim filePickerForm As IFilePicker = FilePickerService.GetInstance().GetFilePicker()
 
         If Not TypeOf filePickerForm Is DWSIM.SharedClassesCSharp.FilePicker.Windows.WindowsFilePicker Then
-            MessageBox.Show("Sorry, this feature is not available. Try using an embedded file instead.")
+'            MessageBox.Show("Sorry, this feature is not available. Try using an embedded file instead.")
             Exit Sub
         End If
 
@@ -478,7 +477,7 @@ Public Class EditingForm_SpreadsheetUO
                     Process.Start(New ProcessStartInfo("xdg-open", TbFileName.Text) With {.UseShellExecute = False})
                 End If
             Else
-                MessageBox.Show(SimObject.FlowSheet.GetTranslatedString("Oarquivonoexisteoufo"), SimObject.FlowSheet.GetTranslatedString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(SimObject.FlowSheet.GetTranslatedString("Oarquivonoexisteoufo"), SimObject.FlowSheet.GetTranslatedString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
             SimObject.ParamsLoaded = False
         End If
@@ -489,7 +488,7 @@ Public Class EditingForm_SpreadsheetUO
         Dim filePickerForm As IFilePicker = FilePickerService.GetInstance().GetFilePicker()
 
         If Not TypeOf filePickerForm Is DWSIM.SharedClassesCSharp.FilePicker.Windows.WindowsFilePicker Then
-            MessageBox.Show("Sorry, this feature is not available. Try using an embedded file instead.")
+'            MessageBox.Show("Sorry, this feature is not available. Try using an embedded file instead.")
             Exit Sub
         End If
 
@@ -505,11 +504,11 @@ Public Class EditingForm_SpreadsheetUO
         If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             Dim s As String = OpenFileDialog1.FileName
             If IO.Path.GetExtension(s).ToLower = ".ods" Then
-                FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.ods", s)
+                FileCopy(My.Nothing.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.ods", s)
             ElseIf IO.Path.GetExtension(s).ToLower = ".xls" Then
-                FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.xls", s)
+                FileCopy(My.Nothing.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.xls", s)
             Else
-                FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.xlsx", s)
+                FileCopy(My.Nothing.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.xlsx", s)
             End If
             TbFileName.Text = s
             SimObject.ParamsLoaded = False

@@ -3,11 +3,11 @@ Imports DWSIM.Interfaces.Enums
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.Thermodynamics.Streams
 
-Public Class EditingForm_SeparatorFiller
+Public Class Object
 
     Public SimObject As UnitOperations.UnitOpBaseClass
 
-    Private Sub EditingForm_SeparatorFiller_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Dim units = SimObject.FlowSheet.FlowsheetOptions.SelectedUnitSystem
         Dim nf = SimObject.FlowSheet.FlowsheetOptions.NumberFormat

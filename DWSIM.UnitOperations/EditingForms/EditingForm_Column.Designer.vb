@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Column
+Partial Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -24,7 +24,7 @@ Partial Class EditingForm_Column
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Column))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -156,7 +156,7 @@ Partial Class EditingForm_Column
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTip1.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -206,7 +206,7 @@ Partial Class EditingForm_Column
         'btnConfigurePP
         '
         resources.ApplyResources(Me.btnConfigurePP, "btnConfigurePP")
-        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.cog
+        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.cog
         Me.btnConfigurePP.Name = "btnConfigurePP"
         Me.ToolTip1.SetToolTip(Me.btnConfigurePP, resources.GetString("btnConfigurePP.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnConfigurePP, resources.GetString("btnConfigurePP.ToolTip1"))
@@ -982,13 +982,13 @@ Partial Class EditingForm_Column
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_Column
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.TabContainerAll)
         Me.Controls.Add(Me.GroupBox5)
-        Me.Name = "EditingForm_Column"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip2"))
@@ -1075,8 +1075,8 @@ Partial Class EditingForm_Column
     Friend WithEvents TabConnections As TabPage
     Friend WithEvents TabPage4 As TabPage
     Friend WithEvents chkNoCondenser As CheckBox
-    Friend WithEvents PanelCondenser As Panel
-    Friend WithEvents PanelReboiler As Panel
+    Friend WithEvents PanelCondenser As Object
+    Friend WithEvents PanelReboiler As Object
     Friend WithEvents chkNoReboiler As CheckBox
     Public WithEvents TabContainerAll As TabControl
     Friend WithEvents TabPage6 As TabPage
@@ -1091,14 +1091,14 @@ Partial Class EditingForm_Column
     Public WithEvents tbColPDrop As TextBox
     Public WithEvents cbColPDrop As ComboBox
     Public WithEvents Label18 As Label
-    Public WithEvents btnViewReport As Button
+    Public WithEvents btnViewReport As Object
     Public WithEvents chkCreateConvReport As CheckBox
-    Public WithEvents btnViewPropertiesReport As Button
+    Public WithEvents btnViewPropertiesReport As Object
     Public WithEvents cbTS As ComboBox
     Public WithEvents tbTS As TextBox
     Public WithEvents Label17 As Label
     Public WithEvents cbInitialEstimatesProvider As ComboBox
     Public WithEvents lbl1 As Label
-    Friend WithEvents btnTestConvergence As Button
+    Friend WithEvents btnTestConvergence As Object
     Public WithEvents Label20 As Label
 End Class

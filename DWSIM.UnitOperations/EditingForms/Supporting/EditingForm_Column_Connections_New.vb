@@ -2,7 +2,7 @@
 Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.SepOps
 
-Public Class EditingForm_Column_Connections_New
+Public Class Object
 
     Public rc As UnitOperations.Column
 
@@ -10,7 +10,7 @@ Public Class EditingForm_Column_Connections_New
 
     Private stageNames, stageIDs As List(Of String)
 
-    Public ownerform As EditingForm_Column
+    Public ownerform As Object
 
     Sub UpdateInfo()
 
@@ -169,9 +169,9 @@ Public Class EditingForm_Column_Connections_New
         stageNames.Insert(0, "")
         stageIDs.Insert(0, "")
 
-        Dim cbMS As New DataGridViewComboBoxCell
-        Dim cbES As New DataGridViewComboBoxCell
-        Dim cbST As New DataGridViewComboBoxCell
+        Dim cbMS As New Object
+        Dim cbES As New Object
+        Dim cbST As New Object
 
         cbMS.Items.Add("")
         Try
@@ -279,7 +279,7 @@ Public Class EditingForm_Column_Connections_New
             End If
         Next
 
-        Dim cbSDP As New DataGridViewComboBoxCell
+        Dim cbSDP As New Object
         cbSDP.Items.Add("Liquid")
         cbSDP.Items.Add("Vapor")
 

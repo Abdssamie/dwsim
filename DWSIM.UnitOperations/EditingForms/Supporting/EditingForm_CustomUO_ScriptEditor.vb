@@ -18,15 +18,11 @@
 
 Imports System.IO
 Imports System.Reflection
-Imports System.Drawing.Text
-Imports ScintillaNET
 Imports System.Xml.Linq
 Imports System.Linq
-Imports System.Windows.Forms
-Imports System.Drawing
 Imports DWSIM.SharedClassesCSharp.FilePicker
 
-<System.Serializable()> Public Class EditingForm_CustomUO_ScriptEditor
+<System.Serializable()> Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -83,9 +79,9 @@ Imports DWSIM.SharedClassesCSharp.FilePicker
 
         If Not CAPEOPEN Then
 
-            Dim calculatorassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
-            Dim unitopassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
-            Dim fsolverassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
+            Dim calculatorassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
+            Dim unitopassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
+            Dim fsolverassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
 
             reader.Add(New Jolt.XmlDocCommentReader(Assembly.GetExecutingAssembly()))
             reader.Add(New Jolt.XmlDocCommentReader(calculatorassembly))
@@ -103,11 +99,11 @@ Imports DWSIM.SharedClassesCSharp.FilePicker
         If Not CAPEOPEN Then Me.txtScript.Text = ScriptUO.ScriptText
 
         ' Get the installed fonts collection.
-        Dim installed_fonts As New InstalledFontCollection
+        Dim installed_fonts As New Object
         ' Get an array of the system's font familiies.
-        Dim font_families() As FontFamily = installed_fonts.Families()
+        Dim font_families() As Object = installed_fonts.Families()
         ' Display the font families.
-        For Each font_family As FontFamily In font_families
+        For Each font_family As Object In font_families
             tscb1.Items.Add(font_family.Name)
         Next font_family
 
@@ -147,7 +143,6 @@ Imports DWSIM.SharedClassesCSharp.FilePicker
 
                     Dim tsmi3 = New ToolStripMenuItem() With {.Text = snippet.Name & " (" & snippet.Scope & ")", .Tag = snippet.Snippet}
 
-                    AddHandler tsmi3.Click, Sub()
 
                                                 txtScript.InsertText(txtScript.CurrentPosition, tsmi3.Tag.ToString)
 
@@ -168,11 +163,11 @@ Imports DWSIM.SharedClassesCSharp.FilePicker
     Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click
         If Me.txtScript.Text <> "" Then
             If Not CAPEOPEN Then
-                If MessageBox.Show(ScriptUO.FlowSheet.GetTranslatedString("DesejaSalvaroScriptAtual"), ScriptUO.FlowSheet.GetTranslatedString("Ateno"), MessageBoxButtons.YesNo) = DialogResult.Yes Then
+'                If MessageBox.Show(ScriptUO.FlowSheet.GetTranslatedString("DesejaSalvaroScriptAtual"), ScriptUO.FlowSheet.GetTranslatedString("Ateno"), MessageBoxButtons.YesNo) = DialogResult.Yes Then
                     SaveToolStripButton_Click(sender, e)
                 End If
             Else
-                If MessageBox.Show("Save current script?", "Save changes", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+'                If MessageBox.Show("Save current script?", "Save changes", MessageBoxButtons.YesNo) = DialogResult.Yes Then
                     SaveToolStripButton_Click(sender, e)
                 End If
             End If
@@ -337,7 +332,7 @@ Imports DWSIM.SharedClassesCSharp.FilePicker
         End If
     End Sub
 
-    Private Sub EditingForm_CustomUO_ScriptEditor_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub Object(sender As Object, e As EventArgs) Handles Me.Shown
         If CAPEOPEN Then
             ToolStripTextBox1.Text = pythonpath
             ToolStripComboBox1.SelectedItem = interpreter

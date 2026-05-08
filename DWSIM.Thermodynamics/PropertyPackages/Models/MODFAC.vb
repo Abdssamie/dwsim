@@ -175,9 +175,9 @@ Namespace PropertyPackages.Auxiliary
 
             IObj?.Paragraphs.Add("This model [7] is similar to the Modified UNIFAC (Dortmund), with 
                                 new modified UNIFAC parameters reported for 89 main groups and 
-                                984 group鉾roup interactions using critically evaluated phase 
-                                equilibrium data including vapor僕iquid equilibrium (VLE), 
-                                liquid僕iquid equilibrium (LLE), solid僕iquid equilibrium (SLE), 
+                                984 groupﾂ鉾roup interactions using critically evaluated phase 
+                                equilibrium data including vaporﾂ僕iquid equilibrium (VLE), 
+                                liquidﾂ僕iquid equilibrium (LLE), solidﾂ僕iquid equilibrium (SLE), 
                                 excess enthalpy (HE), infinite dilution activity coefficient 
                                 (AINF) and excess heat capacity (CPE) data. A new algorithmic 
                                 framework for quality assessment of phase equilibrium data was 

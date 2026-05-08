@@ -1,5 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports DWSIM.Interfaces
+﻿Imports DWSIM.Interfaces
 Imports DWSIM.Interfaces.Enums
 Imports DWSIM.Thermodynamics.PropertyPackages
 
@@ -36,19 +35,19 @@ Namespace DWSIM.Thermodynamics.AdvancedEOS
 
         Public Overrides Sub DisplayEditingForm()
 
-            If GlobalSettings.Settings.CAPEOPENMode Then
-                Dim f As New FormConfig() With {._pp = Me, ._comps = _selectedcomps.ToDictionary(Of String, Interfaces.ICompoundConstantProperties)(Function(k) k.Key, Function(k) k.Value)}
-                f.ShowDialog()
-            Else
-                Dim f As New FormConfig() With {._form = Me.Flowsheet, ._pp = Me, ._comps = Flowsheet.SelectedCompounds}
-                f.ShowDialog()
-            End If
+            'If GlobalSettings.Settings.CAPEOPENMode Then
+            '    Dim f As New FormConfig() With {._pp = Me, ._comps = _selectedcomps.ToDictionary(Of String, Interfaces.ICompoundConstantProperties)(Function(k) k.Key, Function(k) k.Value)}
+            '    f.ShowDialog()
+            'Else
+            '    Dim f As New FormConfig() With {._form = Me.Flowsheet, ._pp = Me, ._comps = Flowsheet.SelectedCompounds}
+            '    f.ShowDialog()
+            'End If
 
         End Sub
 
-        Public Overrides Function GetEditingForm() As Form
+        Public Overrides Function GetEditingForm() As Object
 
-            Return New FormConfig() With {._form = Me.Flowsheet, ._pp = Me, ._comps = Flowsheet.SelectedCompounds}
+            Return Nothing
 
         End Function
 

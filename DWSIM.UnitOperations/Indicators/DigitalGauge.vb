@@ -28,7 +28,6 @@ Namespace UnitOperations
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.Indicators
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_DigitalGauge
 
         Public Property DecimalDigits As Integer = 2 Implements IIndicator.DecimalDigits
 
@@ -166,59 +165,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_DigitalGauge With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_DigitalGauge With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-            If f Is Nothing Then
-                f = New EditingForm_DigitalGauge With {.SimObject = Me}
-                f.Tag = "ObjectEditor"
-                Return f
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_DigitalGauge With {.SimObject = Me}
-                    f.Tag = "ObjectEditor"
-                    Return f
-                Else
-                    Return Nothing
-                End If
-            End If
-        End Function
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.digital_display1
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.digital_display.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("DG_Desc")
@@ -228,14 +175,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("DG_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

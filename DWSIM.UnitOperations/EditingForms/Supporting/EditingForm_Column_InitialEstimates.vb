@@ -20,10 +20,9 @@ Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.IO
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.SepOps
-Imports System.Drawing
 Imports DWSIM.SharedClassesCSharp.FilePicker
 
-Public Class EditingForm_Column_InitialEstimates
+Public Class Object
 
     Inherits UserControl
 
@@ -257,7 +256,7 @@ Public Class EditingForm_Column_InitialEstimates
                 loaded = True
 
             Catch ex As Exception
-                MessageBox.Show(ex.Message)
+'                MessageBox.Show(ex.Message)
             End Try
         End If
 
@@ -280,7 +279,7 @@ Public Class EditingForm_Column_InitialEstimates
                     End Using
                 End Using
             Catch ex As Exception
-                MessageBox.Show(ex.Message)
+'                MessageBox.Show(ex.Message)
             End Try
         End If
 
@@ -382,7 +381,7 @@ Public Class EditingForm_Column_InitialEstimates
                 Next
             Next
         Catch ex As Exception
-            MessageBox.Show("Error", "It seems that there is no valid solution to read from. Please solve the column first.", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'            MessageBox.Show("Error", "It seems that there is no valid solution to read from. Please solve the column first.", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 

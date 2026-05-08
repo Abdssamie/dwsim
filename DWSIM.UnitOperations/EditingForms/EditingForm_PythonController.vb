@@ -1,6 +1,6 @@
 ﻿Imports su = DWSIM.SharedClasses.SystemsOfUnits
 
-Public Class EditingForm_PythonController
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -11,7 +11,7 @@ Public Class EditingForm_PythonController
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpdateInfo()
         txtScript.SetEditorStyle("Consolas", 10, False, False)
@@ -153,7 +153,7 @@ Public Class EditingForm_PythonController
             Next
 
             SimObject.ManipulatedObject = SimObject.FlowSheet.SimulationObjects(SimObject.ManipulatedObjectData.ID)
-            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PythonControllerGraphic).ConnectedToMv = SimObject.ManipulatedObject.GraphicObject
+'            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PythonControllerGraphic).ConnectedToMv = SimObject.ManipulatedObject.GraphicObject
 
         End If
 
@@ -196,7 +196,7 @@ Public Class EditingForm_PythonController
             Next
 
             SimObject.ControlledObject = SimObject.FlowSheet.SimulationObjects(SimObject.ControlledObjectData.ID)
-            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PythonControllerGraphic).ConnectedToCv = SimObject.ControlledObject.GraphicObject
+'            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PythonControllerGraphic).ConnectedToCv = SimObject.ControlledObject.GraphicObject
 
         End If
 

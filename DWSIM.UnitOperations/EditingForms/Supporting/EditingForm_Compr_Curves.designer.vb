@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_CompressorExpander_Curves
+Partial Class Object
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class EditingForm_CompressorExpander_Curves
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_CompressorExpander_Curves))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
@@ -44,27 +44,27 @@ Partial Class EditingForm_CompressorExpander_Curves
         'ToolStripButton1
         '
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
-        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.Nothing.add
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
-        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
+        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.Nothing.delete
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'tsbExport
         '
         resources.ApplyResources(Me.tsbExport, "tsbExport")
         Me.tsbExport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsbExport.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.arrow_up
+        Me.tsbExport.Image = Global.DWSIM.UnitOperations.Nothing.arrow_up
         Me.tsbExport.Name = "tsbExport"
         '
         'tsbImport
         '
         resources.ApplyResources(Me.tsbImport, "tsbImport")
         Me.tsbImport.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsbImport.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.arrow_down
+        Me.tsbImport.Image = Global.DWSIM.UnitOperations.Nothing.arrow_down
         Me.tsbImport.Name = "tsbImport"
         '
         'TabControl1
@@ -80,14 +80,14 @@ Partial Class EditingForm_CompressorExpander_Curves
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'EditingForm_CompressorExpander_Curves
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "EditingForm_CompressorExpander_Curves"
+        Me.Name = "Object"
         Me.ShowInTaskbar = False
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()

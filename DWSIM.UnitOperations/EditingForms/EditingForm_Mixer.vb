@@ -1,7 +1,6 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 
-Public Class EditingForm_Mixer
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -24,8 +23,8 @@ Public Class EditingForm_Mixer
         If Host.Items.Where(Function(x) x.Name.Contains(MixerObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = MixerObject
                                                             iwindow.Show(DockPanel)
@@ -147,13 +146,13 @@ Public Class EditingForm_Mixer
             Dim flowsheet = MixerObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Try
                     If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                     flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -173,13 +172,13 @@ Public Class EditingForm_Mixer
             Dim flowsheet = MixerObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Try
                     If gobj.OutputConnectors(0).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                     flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, 0, 0)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()

@@ -1,6 +1,6 @@
 ﻿Imports su = DWSIM.SharedClasses.SystemsOfUnits
 
-Public Class EditingForm_Adjust
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -11,12 +11,12 @@ Public Class EditingForm_Adjust
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Public cp As EditingForm_Adjust_ControlPanel
+    Public cp As Object
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        cp = New EditingForm_Adjust_ControlPanel With {.myADJ = SimObject}
-        cp.Dock = DockStyle.Fill
+        cp = New Object()
+        cp.Dock = 0
         gbControlPanel.Controls.Add(cp)
 
         UpdateInfo()
@@ -180,7 +180,7 @@ Public Class EditingForm_Adjust
                 Next
 
                 SimObject.ManipulatedObject = SimObject.FlowSheet.SimulationObjects(SimObject.ManipulatedObjectData.ID)
-                DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.AdjustGraphic).ConnectedToMv = SimObject.ManipulatedObject.GraphicObject
+'                DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.AdjustGraphic).ConnectedToMv = SimObject.ManipulatedObject.GraphicObject
 
             End If
 
@@ -225,7 +225,7 @@ Public Class EditingForm_Adjust
                 Next
 
                 SimObject.ControlledObject = SimObject.FlowSheet.SimulationObjects(SimObject.ControlledObjectData.ID)
-                DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.AdjustGraphic).ConnectedToCv = SimObject.ControlledObject.GraphicObject
+'                DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.AdjustGraphic).ConnectedToCv = SimObject.ControlledObject.GraphicObject
 
             End If
 
@@ -381,7 +381,7 @@ Public Class EditingForm_Adjust
             Next
 
             SimObject.ReferenceObject = SimObject.FlowSheet.SimulationObjects(SimObject.ReferencedObjectData.ID)
-            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.AdjustGraphic).ConnectedToRv = SimObject.ReferenceObject.GraphicObject
+'            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.AdjustGraphic).ConnectedToRv = SimObject.ReferenceObject.GraphicObject
 
         End If
 

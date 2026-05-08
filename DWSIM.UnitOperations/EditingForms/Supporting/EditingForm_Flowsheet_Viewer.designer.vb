@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Flowsheet_Viewer
+Partial Class Object
     Inherits SharedClasses.ObjectEditorForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,18 +22,18 @@ Partial Class EditingForm_Flowsheet_Viewer
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Flowsheet_Viewer))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.SuspendLayout()
         '
-        'EditingForm_Flowsheet_Viewer
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.HideOnClose = True
-        Me.Name = "EditingForm_Flowsheet_Viewer"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+        Me.Name = "Object"
+'        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         Me.ResumeLayout(False)
 
     End Sub

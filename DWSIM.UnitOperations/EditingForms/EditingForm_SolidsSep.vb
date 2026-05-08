@@ -1,11 +1,9 @@
-﻿Imports System.Drawing
-Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports DWSIM.SharedClassesCSharp.FilePicker
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 
-Public Class EditingForm_SolidsSep
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -16,7 +14,7 @@ Public Class EditingForm_SolidsSep
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpdateInfo()
 
@@ -36,8 +34,8 @@ Public Class EditingForm_SolidsSep
         If Host.Items.Where(Function(x) x.Name.Contains(SimObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = SimObject
                                                             iwindow.Show(DockPanel)
@@ -166,13 +164,13 @@ Public Class EditingForm_SolidsSep
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                         flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
                 UpdateInfo()
@@ -197,13 +195,13 @@ Public Class EditingForm_SolidsSep
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.OutputConnectors(0).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, 0, 0)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
                 UpdateInfo()
@@ -228,13 +226,13 @@ Public Class EditingForm_SolidsSep
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.OutputConnectors(0).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, index, 0)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
                 UpdateInfo()
@@ -352,10 +350,10 @@ Public Class EditingForm_SolidsSep
                     Try
                         Using img = SkiaSharp.Views.Desktop.Extensions.ToSKImage(bmp)
                             SimObject.EmbeddedImageData = DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.EmbeddedImageGraphic.ImageToBase64(img, SkiaSharp.SKEncodedImageFormat.Png)
-                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
+'                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
                         End Using
                     Catch ex As Exception
-                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
+'                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
                     End Try
                 End Using
             End Using

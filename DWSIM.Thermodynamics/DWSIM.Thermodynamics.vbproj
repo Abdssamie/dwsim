@@ -32,7 +32,7 @@
     <ProjectReference Include="..\DWSIM.MathOps.Mapack\DWSIM.MathOps.Mapack.csproj" />
     <ProjectReference Include="..\DWSIM.GlobalSettings\DWSIM.GlobalSettings.vbproj" />
     <ProjectReference Include="..\DWSIM.Serializers.XML\DWSIM.XMLSerializer.vbproj" />
-    <ProjectReference Include="..\DWSIM.ExtensionMethods\DWSIM.ExtensionMethods.net8.vbproj" />
+    <ProjectReference Include="..\DWSIM.ExtensionMethods\DWSIM.ExtensionMethods.vbproj" />
     <ProjectReference Include="..\DWSIM.Math.DotNumerics\DWSIM.MathOps.DotNumerics.csproj" />
     <ProjectReference Include="..\DWSIM.Thermodynamics.CoolPropInterface\DWSIM.Thermodynamics.CoolPropInterface.csproj" />
     <ProjectReference Include="..\DWSIM.SharedClassesCSharp\DWSIM.SharedClassesCSharp.csproj" />

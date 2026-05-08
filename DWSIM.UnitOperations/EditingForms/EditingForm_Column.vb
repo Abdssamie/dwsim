@@ -1,14 +1,12 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 Imports DWSIM.UnitOperations.UnitOperations
-Imports System.Drawing
 Imports DWSIM.UnitOperations.UnitOperations.Column
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.SepOps
 Imports DWSIM.SharedClasses
 
-Public Class EditingForm_Column
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -16,7 +14,7 @@ Public Class EditingForm_Column
 
     Public Loaded As Boolean = False
 
-    Dim reditor As EditingForm_Column_Results
+    Dim reditor As Object
     Dim fr, fr2 As ReportViewer
 
     Dim units As SharedClasses.SystemsOfUnits.Units
@@ -24,7 +22,7 @@ Public Class EditingForm_Column
 
     Friend tab1, tab2 As Integer
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
 
@@ -44,8 +42,8 @@ Public Class EditingForm_Column
         If Host.Items.Where(Function(x) x.Name.Contains(SimObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = SimObject
                                                             iwindow.Show(DockPanel)
@@ -285,19 +283,19 @@ Public Class EditingForm_Column
             'tabs
 
             TabStages.Controls.Clear()
-            Dim seditor As New EditingForm_Column_Stages With {.dc = Me.SimObject}
-            seditor.Dock = DockStyle.Fill
+            Dim seditor As New Object()
+            seditor.Dock = 0
             TabStages.Controls.Add(seditor)
 
             TabConnections.Controls.Clear()
-            Dim ceditor As New EditingForm_Column_Connections_New With {.rc = Me.SimObject, .ownerform = Me}
-            ceditor.Dock = DockStyle.Fill
+            Dim ceditor As New Object()
+            ceditor.Dock = 0
             TabConnections.Controls.Add(ceditor)
             ceditor.UpdateInfo()
 
             InitialEstimatesPanel.Controls.Clear()
-            Dim ieditor As New EditingForm_Column_InitialEstimates With {.dc = Me.SimObject}
-            ieditor.Dock = DockStyle.Fill
+            Dim ieditor As New Object()
+            ieditor.Dock = 0
             InitialEstimatesPanel.Controls.Add(ieditor)
 
             'results
@@ -436,10 +434,10 @@ Public Class EditingForm_Column
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnResults.Click
 
-        If reditor Is Nothing Then reditor = New EditingForm_Column_Results With {.dc = Me.SimObject}
+        If reditor Is Nothing Then reditor = New Object()
         reditor.Text = SimObject.GetDisplayName() & ": " & SimObject.GraphicObject.Tag
         reditor.TabText = reditor.Text
-        reditor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+'        reditor.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         SimObject.FlowSheet.DisplayForm(reditor)
 
     End Sub
@@ -873,7 +871,6 @@ Public Class EditingForm_Column
 
         Dim fw As New WaitForm()
 
-        AddHandler fw.btnCancel.Click, Sub()
                                            GlobalSettings.Settings.TaskCancellationTokenSource.Cancel()
                                        End Sub
 
@@ -887,11 +884,11 @@ Public Class EditingForm_Column
                 GlobalSettings.Settings.TaskCancellationTokenSource.Token).
                 ContinueWith(Sub(t)
                                  If t.Exception IsNot Nothing Then
-                                     MessageBox.Show("Failed to converge: " + t.Exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                                     MessageBox.Show("Failed to converge: " + t.Exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                  ElseIf t.IsCanceled Then
-                                     MessageBox.Show("Test cancelled by the user.", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+'                                     MessageBox.Show("Test cancelled by the user.", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                  Else
-                                     MessageBox.Show("Converged successfully.", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
+'                                     MessageBox.Show("Converged successfully.", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
                                  End If
                                  fw.UIThread(Sub()
                                                  fw.Close()

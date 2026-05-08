@@ -755,7 +755,7 @@ The techniques used comprise global optimization methods and interval analysis, 
 prohibitive for more complex problems.")
 
             IObj?.Paragraphs.Add("The essential difference between stability analysis for two-phase (vapour/liquid) and multiphase problems 
-is that selection of two trial phase compositions (with subsequent local minimization) is adequate and feasible — in the first case, whereas
+is that selection of two trial phase compositions (with subsequent local minimization) is adequate and feasible Â— in the first case, whereas
 even selection of as many trial phases as the number of components in the mixture may not be sufficient in the latter. For mixtures containing 
 10 or more components, converging the tangent plane distance minimization for a large number of individual initial estimates represents a 
 substantial effort, and we therefore suggest the use of a screening procedure rather than a full search. The outcome of the screening procedure 

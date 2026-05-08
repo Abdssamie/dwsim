@@ -17,9 +17,8 @@
 
 Imports DWSIM.UnitOperations.UnitOperations
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
-Imports System.Drawing
 
-Public Class EditingForm_Column_Stages
+Public Class Object
 
     Inherits UserControl
 

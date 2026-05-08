@@ -6639,32 +6639,10 @@ Namespace Streams
             Validate()
         End Sub
 
-        Public Overrides Sub DisplayEditForm()
-
-
-            ' TODO: [MIGRATION] Material stream editing form not available in headless mode.
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
 
         Public Property EditorState As String = "{}"
 
-        Public Overrides Function GetIconBitmap() As Object
-            Return Nothing
-        End Function
 
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.Thermodynamics.material_stream.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return Calculator.GetLocalString("MSTR_Desc")
@@ -6715,14 +6693,6 @@ Namespace Streams
 
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Sub CalcPhaseMassComposition(dwp As PropertyPackages.Phase)
 

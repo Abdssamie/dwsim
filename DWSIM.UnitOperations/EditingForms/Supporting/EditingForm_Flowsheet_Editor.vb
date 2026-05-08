@@ -1,13 +1,11 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 Imports DWSIM.UnitOperations.UnitOperations
 Imports System.Linq
-Imports System.Drawing
 Imports System.IO
 
-Public Class EditingForm_Flowsheet_Editor
+Public Class Object
 
     Public fsuo As UnitOperations.Flowsheet
 
@@ -73,7 +71,7 @@ Public Class EditingForm_Flowsheet_Editor
         Dim i As Integer
         Dim connectedfrom, connectedto As String
 
-        Dim cb As New DataGridViewComboBoxCell
+        Dim cb As New Object
 
         cb.Items.Add("")
         For Each mstr In fsuo.Fsheet.GraphicObjects.Values.Where(Function(x) x.ObjectType = ObjectType.MaterialStream)
@@ -140,7 +138,7 @@ Public Class EditingForm_Flowsheet_Editor
         Me.fsuo.InitializeMappings()
 
         Dim complist = Me.fsuo.Fsheet.SelectedCompounds.Values.ToArray
-        Dim cb As New DataGridViewComboBoxCell
+        Dim cb As New Object
 
         For Each c In complist
             cb.Items.Add(c.Name)
@@ -157,7 +155,7 @@ Public Class EditingForm_Flowsheet_Editor
 
     Sub UpdateProps()
 
-        Dim cbc2 = New DataGridViewComboBoxCell
+        Dim cbc2 = New Object
         cbc2.Sorted = True
         cbc2.MaxDropDownItems = 10
         cbc2.Items.Add("")
@@ -173,7 +171,7 @@ Public Class EditingForm_Flowsheet_Editor
             For Each ip In fsuo.InputParams.Values
                 If fsuo.Fsheet.SimulationObjects.ContainsKey(ip.ObjectID) Then
                     .Add(New Object() {ip.ID, fsuo.Fsheet.SimulationObjects(ip.ObjectID).GraphicObject.Tag, fsuo.FlowSheet.GetTranslatedString(ip.ObjectProperty)})
-                    Dim cbc As DataGridViewComboBoxCell = .Item(.Count - 1).Cells(2)
+                    Dim cbc As Object = .Item(.Count - 1).Cells(2)
                     cbc.Items.Clear()
                     Dim props As String()
                     props = Me.ReturnProperties(.Item(.Count - 1).Cells(1).Value, False)
@@ -190,7 +188,7 @@ Public Class EditingForm_Flowsheet_Editor
             For Each ip In fsuo.OutputParams.Values
                 If fsuo.Fsheet.SimulationObjects.ContainsKey(ip.ObjectID) Then
                     .Add(New Object() {ip.ID, fsuo.Fsheet.SimulationObjects(ip.ObjectID).GraphicObject.Tag, fsuo.FlowSheet.GetTranslatedString(ip.ObjectProperty)})
-                    Dim cbc As DataGridViewComboBoxCell = .Item(.Count - 1).Cells(2)
+                    Dim cbc As Object = .Item(.Count - 1).Cells(2)
                     cbc.Items.Clear()
                     Dim props As String()
                     props = Me.ReturnProperties(.Item(.Count - 1).Cells(1).Value, True)
@@ -273,7 +271,7 @@ Public Class EditingForm_Flowsheet_Editor
                                                                                                    .ObjectProperty = ""})
                         End If
                     End If
-                    Dim cbc As DataGridViewComboBoxCell = Me.dgvInputPars.Rows(e.RowIndex).Cells(e.ColumnIndex + 1)
+                    Dim cbc As Object = Me.dgvInputPars.Rows(e.RowIndex).Cells(e.ColumnIndex + 1)
                     cbc.Items.Clear()
                     With cbc.Items
                         If Me.dgvInputPars.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString <> "" Then
@@ -321,7 +319,7 @@ Public Class EditingForm_Flowsheet_Editor
                                                                                                    .ObjectProperty = ""})
                         End If
                     End If
-                    Dim cbc As DataGridViewComboBoxCell = Me.dgvOutputPars.Rows(e.RowIndex).Cells(e.ColumnIndex + 1)
+                    Dim cbc As Object = Me.dgvOutputPars.Rows(e.RowIndex).Cells(e.ColumnIndex + 1)
                     cbc.Items.Clear()
                     With cbc.Items
                         If Me.dgvOutputPars.Rows(e.RowIndex).Cells(e.ColumnIndex).Value.ToString <> "" Then

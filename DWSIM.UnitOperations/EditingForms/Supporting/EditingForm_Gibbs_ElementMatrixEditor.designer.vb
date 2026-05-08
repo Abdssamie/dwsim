@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_Gibbs_ElementMatrixEditor
+Partial Class Object
     Inherits System.Windows.Forms.UserControl
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class EditingForm_Gibbs_ElementMatrixEditor
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Gibbs_ElementMatrixEditor))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.grid = New System.Windows.Forms.DataGridView()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
@@ -58,34 +58,34 @@ Partial Class EditingForm_Gibbs_ElementMatrixEditor
         'ToolStripButton1
         '
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
-        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.Nothing.add
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
-        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
+        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.Nothing.delete
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton3
         '
         resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
-        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disk
+        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.Nothing.disk
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
         '
         resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
-        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
-        'EditingForm_Gibbs_ElementMatrixEditor
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.ToolStrip1)
-        Me.Name = "EditingForm_Gibbs_ElementMatrixEditor"
+        Me.Name = "Object"
         Me.GroupBox1.ResumeLayout(False)
         CType(Me.grid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip1.ResumeLayout(False)

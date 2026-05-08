@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Pipe_ResultsChart
+Partial Class Object
     Inherits System.Windows.Forms.UserControl
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_Pipe_ResultsChart
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Pipe_ResultsChart))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.ComboBox2 = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -94,13 +94,13 @@ Partial Class EditingForm_Pipe_ResultsChart
         Me.ZedGraphControl1.ScrollMinY = 0R
         Me.ZedGraphControl1.ScrollMinY2 = 0R
         '
-        'EditingForm_Pipe_ResultsChart
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Name = "EditingForm_Pipe_ResultsChart"
+        Me.Name = "Object"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)

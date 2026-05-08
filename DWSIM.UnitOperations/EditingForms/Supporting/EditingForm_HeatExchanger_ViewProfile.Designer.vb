@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_HeatExchanger_ViewProfile
+Partial Class Object
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_HeatExchanger_ViewProfile
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_HeatExchanger_ViewProfile))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
@@ -117,13 +117,13 @@ Partial Class EditingForm_HeatExchanger_ViewProfile
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
         '
-        'EditingForm_HeatExchanger_ViewProfile
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.FaTabStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "EditingForm_HeatExchanger_ViewProfile"
+        Me.Name = "Object"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()

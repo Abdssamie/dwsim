@@ -1,4 +1,4 @@
-﻿Public Class EditingForm_Flowsheet_Viewer
+﻿Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -12,7 +12,7 @@
         End Try
 
         If fsuo.Fsheet Is Nothing Then
-            MessageBox.Show("Please select and setup the internal flowsheet so it can be displayed here.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'            MessageBox.Show("Please select and setup the internal flowsheet so it can be displayed here.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
 

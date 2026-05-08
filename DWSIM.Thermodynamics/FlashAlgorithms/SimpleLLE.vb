@@ -66,7 +66,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides ReadOnly Property Description As String
             Get
                 If GlobalSettings.Settings.CurrentCulture = "pt-BR" Then
-                    Return "Algoritmo Flash para c·lculo de equilÌbrio entre duas fases lÌquidas"
+                    Return "Algoritmo Flash para c√°lculo de equil√≠brio entre duas fases l√≠quidas"
                 Else
                     Return "Flash Algorithm for simple Liquid-Liquid equilibrium calculations"
                 End If

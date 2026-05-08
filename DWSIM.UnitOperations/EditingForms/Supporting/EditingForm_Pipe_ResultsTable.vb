@@ -1,7 +1,7 @@
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe
 
-Public Class EditingForm_Pipe_ResultsTable
+Public Class Object
 
     Inherits UserControl
 
@@ -18,7 +18,7 @@ Public Class EditingForm_Pipe_ResultsTable
         With Me.DataGridView1.Columns
             .Item(0).HeaderText = Replace(.Item(0).HeaderText, "(m)", "(" & su.distance & ")")
             .Item(2).HeaderText = Replace(.Item(2).HeaderText, "(kPa)", "(" & su.pressure & ")")
-            .Item(3).HeaderText = Replace(.Item(3).HeaderText, "(°C)", "(" & su.temperature & ")")
+            .Item(3).HeaderText = Replace(.Item(3).HeaderText, "(Â°C)", "(" & su.temperature & ")")
             .Item(4).HeaderText = Replace(.Item(4).HeaderText, "(m/s)", "(" & su.velocity & ")")
             .Item(5).HeaderText = Replace(.Item(5).HeaderText, "(m/s)", "(" & su.velocity & ")")
             .Item(7).HeaderText = Replace(.Item(7).HeaderText, "(kW)", "(" & su.heatflow & ")")

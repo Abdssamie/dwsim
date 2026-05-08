@@ -1,6 +1,6 @@
 ﻿Imports su = DWSIM.SharedClasses.SystemsOfUnits
 
-Public Class EditingForm_PIDController
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -11,7 +11,7 @@ Public Class EditingForm_PIDController
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpdateInfo()
 
@@ -208,7 +208,7 @@ Public Class EditingForm_PIDController
             Next
 
             SimObject.ManipulatedObject = SimObject.FlowSheet.SimulationObjects(SimObject.ManipulatedObjectData.ID)
-            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PIDControllerGraphic).ConnectedToMv = SimObject.ManipulatedObject.GraphicObject
+'            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PIDControllerGraphic).ConnectedToMv = SimObject.ManipulatedObject.GraphicObject
 
         End If
 
@@ -255,7 +255,7 @@ Public Class EditingForm_PIDController
             Next
 
             SimObject.ControlledObject = SimObject.FlowSheet.SimulationObjects(SimObject.ControlledObjectData.ID)
-            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PIDControllerGraphic).ConnectedToCv = SimObject.ControlledObject.GraphicObject
+'            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.PIDControllerGraphic).ConnectedToCv = SimObject.ControlledObject.GraphicObject
 
         End If
 

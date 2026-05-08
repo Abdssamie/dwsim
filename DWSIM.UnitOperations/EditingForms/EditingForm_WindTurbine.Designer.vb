@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_WindTurbine
+Partial Class Object
 
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_WindTurbine
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_WindTurbine))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.rtbAnnotations = New Extended.Windows.Forms.RichTextBoxExtended()
         Me.GroupBoxResults = New System.Windows.Forms.GroupBox()
@@ -92,7 +92,7 @@ Partial Class EditingForm_WindTurbine
         '
         'rtbAnnotations
         '
-        Me.rtbAnnotations.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.rtbAnnotations.Dock = System.Windows.Forms.0
         Me.rtbAnnotations.Location = New System.Drawing.Point(3, 16)
         Me.rtbAnnotations.Name = "rtbAnnotations"
         Me.rtbAnnotations.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil\fcharset0 " &
@@ -527,7 +527,7 @@ Partial Class EditingForm_WindTurbine
         '
         Me.chkActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkActive.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.chkActive.Location = New System.Drawing.Point(359, 43)
         Me.chkActive.Name = "chkActive"
@@ -594,7 +594,7 @@ Partial Class EditingForm_WindTurbine
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_WindTurbine
+        'Object
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -606,8 +606,8 @@ Partial Class EditingForm_WindTurbine
         Me.Controls.Add(Me.GroupBoxConnections)
         Me.Controls.Add(Me.GroupBox5)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Name = "EditingForm_WindTurbine"
-        Me.Text = "EditingForm_WindTurbine"
+        Me.Name = "Object"
+        Me.Text = "Object"
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBoxResults.ResumeLayout(False)
         Me.GroupBoxResults.PerformLayout()
@@ -640,8 +640,8 @@ Partial Class EditingForm_WindTurbine
     Public WithEvents tbWindSpeed As TextBox
     Public WithEvents Label3 As Label
     Public WithEvents GroupBoxConnections As GroupBox
-    Public WithEvents btnCreateAndConnectEnergy As Button
-    Public WithEvents btnDisconnectEnergy As Button
+    Public WithEvents btnCreateAndConnectEnergy As Object
+    Public WithEvents btnDisconnectEnergy As Object
     Public WithEvents Label14 As Label
     Public WithEvents cbEnergy As ComboBox
     Public WithEvents GroupBox5 As GroupBox

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_PythonController
+Partial Class Object
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -22,7 +22,7 @@ Partial Class EditingForm_PythonController
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_PythonController))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBoxLinked = New System.Windows.Forms.GroupBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.cbTargetUnits = New System.Windows.Forms.ComboBox()
@@ -50,7 +50,7 @@ Partial Class EditingForm_PythonController
         Me.Label11 = New System.Windows.Forms.Label()
         Me.GroupBoxParameters = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtScript = New ScintillaNET.Scintilla()
+        Me.txtScript = New Object()
         Me.chkControllerActive = New System.Windows.Forms.CheckBox()
         Me.ToolTipChangeTag = New System.Windows.Forms.ToolTip(Me.components)
         Me.GroupBoxLinked.SuspendLayout()
@@ -263,7 +263,7 @@ Partial Class EditingForm_PythonController
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTipValues.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -321,14 +321,14 @@ Partial Class EditingForm_PythonController
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_PythonController
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.GroupBoxLinked)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBoxParameters)
-        Me.Name = "EditingForm_PythonController"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.GroupBoxLinked.ResumeLayout(False)
@@ -369,6 +369,6 @@ Partial Class EditingForm_PythonController
     Public WithEvents Label13 As Label
     Friend WithEvents ToolTipChangeTag As ToolTip
     Friend WithEvents chkControllerActive As CheckBox
-    Friend WithEvents txtScript As ScintillaNET.Scintilla
+    Friend WithEvents txtScript As Object
     Public WithEvents Label1 As Label
 End Class

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_LevelGauge
+Partial Class Object
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -22,7 +22,7 @@ Partial Class EditingForm_LevelGauge
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_LevelGauge))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBoxMonProp = New System.Windows.Forms.GroupBox()
         Me.chkDisplayPercent = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -217,7 +217,7 @@ Partial Class EditingForm_LevelGauge
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTipValues.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -320,14 +320,14 @@ Partial Class EditingForm_LevelGauge
         Me.ToolTipChangeTag.SetToolTip(Me.chkVeryLow, resources.GetString("chkVeryLow.ToolTip1"))
         Me.chkVeryLow.UseVisualStyleBackColor = True
         '
-        'EditingForm_LevelGauge
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.GroupBoxAlarms)
         Me.Controls.Add(Me.GroupBoxMonProp)
         Me.Controls.Add(Me.GroupBox5)
-        Me.Name = "EditingForm_LevelGauge"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.GroupBoxMonProp.ResumeLayout(False)

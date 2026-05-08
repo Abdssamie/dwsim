@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_ShortcutColumn
+Partial Class Object
     Inherits SharedClasses.ObjectEditorForm
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_ShortcutColumn
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_ShortcutColumn))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -125,7 +125,7 @@ Partial Class EditingForm_ShortcutColumn
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTip1.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -187,7 +187,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnConfigurePP
         '
         resources.ApplyResources(Me.btnConfigurePP, "btnConfigurePP")
-        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.cog
+        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.cog
         Me.btnConfigurePP.Name = "btnConfigurePP"
         Me.ToolTip1.SetToolTip(Me.btnConfigurePP, resources.GetString("btnConfigurePP.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnConfigurePP, resources.GetString("btnConfigurePP.ToolTip1"))
@@ -467,7 +467,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnCreateAndConnectEnergy2
         '
         resources.ApplyResources(Me.btnCreateAndConnectEnergy2, "btnCreateAndConnectEnergy2")
-        Me.btnCreateAndConnectEnergy2.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectEnergy2.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectEnergy2.Name = "btnCreateAndConnectEnergy2"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectEnergy2, resources.GetString("btnCreateAndConnectEnergy2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectEnergy2, resources.GetString("btnCreateAndConnectEnergy2.ToolTip1"))
@@ -477,7 +477,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnDisconnectEnergy2
         '
         resources.ApplyResources(Me.btnDisconnectEnergy2, "btnDisconnectEnergy2")
-        Me.btnDisconnectEnergy2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectEnergy2.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectEnergy2.Name = "btnDisconnectEnergy2"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectEnergy2, resources.GetString("btnDisconnectEnergy2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectEnergy2, resources.GetString("btnDisconnectEnergy2.ToolTip1"))
@@ -505,7 +505,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnCreateAndConnectEnergy1
         '
         resources.ApplyResources(Me.btnCreateAndConnectEnergy1, "btnCreateAndConnectEnergy1")
-        Me.btnCreateAndConnectEnergy1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectEnergy1.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectEnergy1.Name = "btnCreateAndConnectEnergy1"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectEnergy1, resources.GetString("btnCreateAndConnectEnergy1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectEnergy1, resources.GetString("btnCreateAndConnectEnergy1.ToolTip1"))
@@ -515,7 +515,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnCreateAndConnectOutlet2
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet2, "btnCreateAndConnectOutlet2")
-        Me.btnCreateAndConnectOutlet2.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet2.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet2.Name = "btnCreateAndConnectOutlet2"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet2, resources.GetString("btnCreateAndConnectOutlet2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet2, resources.GetString("btnCreateAndConnectOutlet2.ToolTip1"))
@@ -525,7 +525,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnDisconnectEnergy1
         '
         resources.ApplyResources(Me.btnDisconnectEnergy1, "btnDisconnectEnergy1")
-        Me.btnDisconnectEnergy1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectEnergy1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectEnergy1.Name = "btnDisconnectEnergy1"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectEnergy1, resources.GetString("btnDisconnectEnergy1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectEnergy1, resources.GetString("btnDisconnectEnergy1.ToolTip1"))
@@ -535,7 +535,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnDisconnectOutlet2
         '
         resources.ApplyResources(Me.btnDisconnectOutlet2, "btnDisconnectOutlet2")
-        Me.btnDisconnectOutlet2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet2.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet2.Name = "btnDisconnectOutlet2"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet2, resources.GetString("btnDisconnectOutlet2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet2, resources.GetString("btnDisconnectOutlet2.ToolTip1"))
@@ -581,7 +581,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnCreateAndConnectOutlet1
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet1, "btnCreateAndConnectOutlet1")
-        Me.btnCreateAndConnectOutlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet1.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet1.Name = "btnCreateAndConnectOutlet1"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet1, resources.GetString("btnCreateAndConnectOutlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet1, resources.GetString("btnCreateAndConnectOutlet1.ToolTip1"))
@@ -591,7 +591,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnCreateAndConnectInlet1
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet1, "btnCreateAndConnectInlet1")
-        Me.btnCreateAndConnectInlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet1.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet1.Name = "btnCreateAndConnectInlet1"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet1, resources.GetString("btnCreateAndConnectInlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet1, resources.GetString("btnCreateAndConnectInlet1.ToolTip1"))
@@ -601,7 +601,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnDisconnectOutlet1
         '
         resources.ApplyResources(Me.btnDisconnectOutlet1, "btnDisconnectOutlet1")
-        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet1.Name = "btnDisconnectOutlet1"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet1, resources.GetString("btnDisconnectOutlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet1, resources.GetString("btnDisconnectOutlet1.ToolTip1"))
@@ -611,7 +611,7 @@ Partial Class EditingForm_ShortcutColumn
         'btnDisconnectInlet1
         '
         resources.ApplyResources(Me.btnDisconnectInlet1, "btnDisconnectInlet1")
-        Me.btnDisconnectInlet1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectInlet1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectInlet1.Name = "btnDisconnectInlet1"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectInlet1, resources.GetString("btnDisconnectInlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectInlet1, resources.GetString("btnDisconnectInlet1.ToolTip1"))
@@ -710,7 +710,7 @@ Partial Class EditingForm_ShortcutColumn
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_ShortcutColumn
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -719,7 +719,7 @@ Partial Class EditingForm_ShortcutColumn
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBoxParameters)
-        Me.Name = "EditingForm_ShortcutColumn"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip2"))

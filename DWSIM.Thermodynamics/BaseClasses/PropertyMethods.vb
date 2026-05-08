@@ -26,7 +26,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Calculates the Critical Temperature of a petroleum fraction with Riazi-Daubert method (1985).
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Critical Temperature of the fraction, K.</returns>
         ''' <remarks>Recommended for molecular weights between 70 and 300.</remarks>
         Public Shared Function Tc_RiaziDaubert(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -40,7 +40,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Calculates Critical Pressure of a petroleum fraction with Riazi-Daubert method (1985).
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Critical Pressure of the fraction, Pa.</returns>
         ''' <remarks>Recommended for molecular weights between 70 and 300.</remarks>
         Public Shared Function Pc_RiaziDaubert(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -54,7 +54,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Calculates the Critical Temperature of a petroleum fraction with Riazi's method (2005).
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Critical Temperature of the fraction, K.</returns>
         ''' <remarks>Recommended for molecular weights higher than 300.</remarks>
         Public Shared Function Tc_Riazi(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -68,7 +68,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Calculates Critical Pressure of a petroleum fraction with Riazi method (2005).
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Critical Pressure of the fraction, Pa.</returns>
         ''' <remarks>Recommended for molecular weights between 70 and 300.</remarks>
         Public Shared Function Pc_Riazi(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -82,7 +82,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Calculates the Critical Temperature of a petroleum fraction with Lee-Kesler method (1976).
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Critical Temperature of the fraction, K.</returns>
         ''' <remarks>Recommended method.</remarks>
         Public Shared Function Tc_LeeKesler(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -93,7 +93,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Calculates Critical Pressure of a petroleum fraction with Lee-Kesler's method (1976).
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Critical Pressure of the fraction, Pa.</returns>
         ''' <remarks>Recommended for molecular weights between 70 and 300.</remarks>
         Public Shared Function Pc_LeeKesler(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -106,7 +106,7 @@ Namespace PetroleumCharacterization.Methods
         ''' <param name="A">A-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <param name="B">B-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <returns>Critical Temperature of the fraction, K.</returns>
-        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10³ Pa).</remarks>
+        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10Â³ Pa).</remarks>
         Public Shared Function Tc_Farah(ByVal A As Double, ByVal B As Double) As Double
             Return 731.968 + 291.952 * A - 704.998 * B
         End Function
@@ -118,7 +118,7 @@ Namespace PetroleumCharacterization.Methods
         ''' <param name="B">B-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
         ''' <returns>Critical Temperature of the fraction, K.</returns>
-        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10³ Pa).</remarks>
+        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10Â³ Pa).</remarks>
         Public Shared Function Tc_Farah(ByVal A As Double, ByVal B As Double, ByVal PEMe As Double) As Double
             Return 104.0061 + 38.75 * A - 41.6097 * B + 0.7831 * PEMe
         End Function
@@ -128,10 +128,10 @@ Namespace PetroleumCharacterization.Methods
         ''' </summary>
         ''' <param name="A">A-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <param name="B">B-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
         ''' <returns>Critical Temperature of the fraction, K.</returns>
-        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10³ Pa).</remarks>
+        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10Â³ Pa).</remarks>
         Public Shared Function Tc_Farah(ByVal A As Double, ByVal B As Double, ByVal d15 As Double, ByVal PEMe As Double) As Double
             Return 196.793 + 90.205 * A - 221.051 * B + 309.534 * d15 + 0.524 * PEMe
         End Function
@@ -142,7 +142,7 @@ Namespace PetroleumCharacterization.Methods
         ''' <param name="A">A-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <param name="B">B-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <returns>Critical Pressure of the fraction, Pa.</returns>
-        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10³ Pa).</remarks>
+        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10Â³ Pa).</remarks>
         Public Shared Function Pc_Farah(ByVal A As Double, ByVal B As Double) As Double
             Return Exp(20.0056 - 9.8758 * Log(A) + 12.2326 * Log(B))
         End Function
@@ -154,7 +154,7 @@ Namespace PetroleumCharacterization.Methods
         ''' <param name="B">B-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
         ''' <returns>Critical Pressure of the fraction, Pa.</returns>
-        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10³ Pa).</remarks>
+        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10Â³ Pa).</remarks>
         Public Shared Function Pc_Farah(ByVal A As Double, ByVal B As Double, ByVal PEMe As Double) As Double
             Return Exp(11.2037 - 0.5484 * A + 1.9242 * B + 510.1272 / PEMe)
         End Function
@@ -164,10 +164,10 @@ Namespace PetroleumCharacterization.Methods
         ''' </summary>
         ''' <param name="A">A-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <param name="B">B-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
         ''' <returns>Critical Pressure of the fraction, Pa.</returns>
-        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10³ Pa).</remarks>
+        ''' <remarks>Recommended for MW between 72 and 500 kg/kmol (Tc = 450~900 K, Pc = 680~4100x10Â³ Pa).</remarks>
         Public Shared Function Pc_Farah(ByVal A As Double, ByVal B As Double, ByVal PEMe As Double, ByVal d15 As Double) As Double
             Return Exp(28.7605 + 0.7158 * Log(A) - 0.2796 * Log(B) + 2.3129 * Log(d15) - 2.4027 * Log(PEMe))
         End Function
@@ -200,7 +200,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Winn's correlation (1957) for calculation of the molecular weight of petroleum fractions.
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Molecular weight of the fraction.</returns>
         ''' <remarks></remarks>
         Public Shared Function MW_Winn(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -211,9 +211,9 @@ Namespace PetroleumCharacterization.Methods
         ''' Riazi's correlation (1986) for calculation of the molecular weight of petroleum fractions.
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Molecular weight of the fraction.</returns>
-        ''' <remarks>For light and medium fractions (PEMe 36~560 °C, d15 0.9688~0.63).</remarks>
+        ''' <remarks>For light and medium fractions (PEMe 36~560 Â°C, d15 0.9688~0.63).</remarks>
         Public Shared Function MW_Riazi(ByVal PEMe As Double, ByVal d15 As Double) As Double
             Dim t1 As Double
             t1 = 0.0002097 * PEMe - 7.78712 * d15 + 0.00208476 * PEMe * d15
@@ -223,9 +223,9 @@ Namespace PetroleumCharacterization.Methods
         ''' <summary>
         ''' Riazi's correlation (1986) for calculation of the molecular weight of petroleum fractions.
         ''' </summary>
-        ''' <param name="v37">Kinematic viscosity of the fraction at 37.8 °C.</param>
-        ''' <param name="v98">Kinematic viscosity of the fraction at 98.9 °C.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="v37">Kinematic viscosity of the fraction at 37.8 Â°C.</param>
+        ''' <param name="v98">Kinematic viscosity of the fraction at 98.9 Â°C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Molecular weight of the fraction.</returns>
         ''' <remarks>For heavy fractions.</remarks>
         Public Shared Function MW_Riazi(ByVal v37 As Double, ByVal v98 As Double, ByVal d15 As Double) As Double
@@ -236,7 +236,7 @@ Namespace PetroleumCharacterization.Methods
         ''' Lee-Kesler correlation (1974) for calculation of the molecular weight of petroleum fractions.
         ''' </summary>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Molecular weight of the fraction.</returns>
         ''' <remarks>For PEMe less than 750 K.</remarks>
         Public Shared Function MW_LeeKesler(ByVal PEMe As Double, ByVal d15 As Double) As Double
@@ -263,7 +263,7 @@ Namespace PetroleumCharacterization.Methods
         ''' </summary>
         ''' <param name="A">A-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
         ''' <param name="B">B-Parameter of the Walther-ASTM viscosity-temperature equation.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
         ''' <returns>Critical Temperature of the fraction, K.</returns>
         ''' <remarks>Recommended for MW between 72 and 500 kg/kmol.</remarks>
@@ -274,9 +274,9 @@ Namespace PetroleumCharacterization.Methods
         ''' <summary>
         ''' 'Abbott's method (1971) for calculation of viscosity of petroleum fractions.
         ''' </summary>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <returns>Kinematic viscosity at 37.8 °C, in m2/s.</returns>
+        ''' <returns>Kinematic viscosity at 37.8 Â°C, in m2/s.</returns>
         ''' <remarks></remarks>
         Public Shared Function Visc37_Abbott(ByVal PEMe As Double, ByVal d15 As Double) As Double
 
@@ -292,9 +292,9 @@ Namespace PetroleumCharacterization.Methods
         ''' <summary>
         ''' 'Abbott's method (1971) for calculation of viscosity of petroleum fractions.
         ''' </summary>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <param name="PEMe">Median Boiling Point of the fraction, K.</param>
-        ''' <returns>Kinematic viscosity at 98.9 °C, in m2/s.</returns>
+        ''' <returns>Kinematic viscosity at 98.9 Â°C, in m2/s.</returns>
         ''' <remarks></remarks>
         Public Shared Function Visc98_Abbott(ByVal PEMe As Double, ByVal d15 As Double) As Double
 
@@ -312,7 +312,7 @@ Namespace PetroleumCharacterization.Methods
         ''' </summary>
         ''' <param name="T">Temperature in Kelvin.</param>
         ''' <param name="T50ASTM">Temperature relative to 50% vaporized in the ASTM D86 distillation curve.</param>
-        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 °C.</param>
+        ''' <param name="d15">Specific Gravity of the fraction at 15,6/15,6 Â°C.</param>
         ''' <returns>Viscosity of the petroleum fraction at specified T, in m2/s.</returns>
         ''' <remarks></remarks>
         Public Shared Function ViscT_Beg_Amin(ByVal T As Double, ByVal T50ASTM As Double, ByVal d15 As Double) As Double
@@ -432,11 +432,11 @@ Namespace PetroleumCharacterization.Methods
         End Function
 
         ''' <summary>
-        ''' Specific gravity at 15,6 °C from viscosity data.
+        ''' Specific gravity at 15,6 Â°C from viscosity data.
         ''' </summary>
-        ''' <param name="v37">Kinematic viscosity at 37,8 °C, in m2/s.</param>
-        ''' <param name="v98">Kinematic viscosity at 98,9 °C, in m2/s.</param>
-        ''' <returns>Specific gravity at 15,6 °C.</returns>
+        ''' <param name="v37">Kinematic viscosity at 37,8 Â°C, in m2/s.</param>
+        ''' <param name="v98">Kinematic viscosity at 98,9 Â°C, in m2/s.</param>
+        ''' <returns>Specific gravity at 15,6 Â°C.</returns>
         ''' <remarks>Author unknown.</remarks>
         Public Shared Function d15_v37v98(ByVal v37 As Double, ByVal v98 As Double) As Double
             Dim vc37, vc98 As Double
@@ -474,10 +474,10 @@ Namespace PetroleumCharacterization.Methods
         End Function
 
         ''' <summary>
-        ''' Specific gravity at 15,6 °C by Riazi and Al-Sahhaf's method (1996)
+        ''' Specific gravity at 15,6 Â°C by Riazi and Al-Sahhaf's method (1996)
         ''' </summary>
         ''' <param name="MW">Molecular weight of the fraction.</param>
-        ''' <returns>Specific gravity at 15,6 °C.</returns>
+        ''' <returns>Specific gravity at 15,6 Â°C.</returns>
         ''' <remarks>For SCN groups.</remarks>
         Public Shared Function d15_Riazi(ByVal MW As Double) As Double
             Return 1.07 - Math.Exp(3.56073 - 2.93886 * MW ^ 0.1)

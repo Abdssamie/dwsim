@@ -1,11 +1,11 @@
 ﻿Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports unvell.ReoGrid
-Imports WeifenLuo.WinFormsUI.Docking
+'Imports WeifenLuo.WinFormsUI.Docking
 
 #If DEBUG Then
 
 
-Public Class EditingForm_ReliefValve
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -17,7 +17,7 @@ Public Class EditingForm_ReliefValve
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_ReliefValve_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         SetupGrid()
 
@@ -65,7 +65,7 @@ Public Class EditingForm_ReliefValve
                                     SimObject.OpeningKvRelDataTableX.Add(datax.ToString().ToDoubleFromCurrent())
                                     SimObject.OpeningKvRelDataTableY.Add(datay.ToString().ToDoubleFromCurrent())
                                 Catch ex As Exception
-                                    MessageBox.Show(String.Format("Error on data table: {0}", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                                    MessageBox.Show(String.Format("Error on data table: {0}", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                 End Try
                             End If
                         Next
@@ -85,8 +85,8 @@ Public Class EditingForm_ReliefValve
         If Host.Items.Where(Function(x) x.Name.Contains(SimObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = SimObject
                                                             iwindow.Show(DockPanel)
@@ -294,13 +294,13 @@ Public Class EditingForm_ReliefValve
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                     Try
                         flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
                 UpdateInfo()
@@ -325,13 +325,13 @@ Public Class EditingForm_ReliefValve
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.OutputConnectors(0).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, 0, 0)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
                 UpdateInfo()
@@ -408,7 +408,7 @@ Public Class EditingForm_ReliefValve
         utility.AttachedTo = SimObject
 
         With DirectCast(utility, DockContent)
-            .ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+'            .ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         End With
 
         SimObject.AttachedUtilities.Add(utility)
@@ -424,7 +424,7 @@ Public Class EditingForm_ReliefValve
 
         For Each item In SimObject.AttachedUtilities
             Dim ts As New ToolStripMenuItem(item.Name)
-            AddHandler ts.Click, Sub()
+
                                      Dim f = DirectCast(item, DockContent)
                                      If f.Visible Then
                                          f.Select()

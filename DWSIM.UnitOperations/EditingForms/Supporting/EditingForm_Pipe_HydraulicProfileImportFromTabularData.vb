@@ -2,14 +2,14 @@
 Imports unvell.ReoGrid
 Imports DWSIM.ExtensionMethods
 
-Public Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
+Public Class Object
 
     Public PipeObject As UnitOperations.Pipe
 
     Private Fittings As New List(Of String)
     Private Materials As New List(Of String)({"Raw Steel", "Carbon Steel", "Cast Iron", "Stainless Steel", "PVC", "PVC+PRFV", "Commercial Copper", "User-defined"})
 
-    Private Sub EditingForm_Pipe_HydraulicProfileImportFromTabularData_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ChangeDefaultFont()
 
@@ -64,7 +64,7 @@ Public Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
+'
         Dim mres = MessageBox.Show("This will replace the current hydraulic profile with data from the table. Proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If mres = DialogResult.Yes Then
@@ -182,7 +182,7 @@ Public Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
                 slist.Add(psec)
 
             Catch ex As Exception
-
+'
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             End Try
@@ -199,11 +199,11 @@ Public Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
             Next
             PipeObject.Profile.Status = PipeEditorStatus.OK
             PipeObject.UpdateEditForm()
-
+'
             MessageBox.Show(String.Format("{0} sections parsed. Hydraulic profile updated successfully.", slist.Count), "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Else
-
+'
             MessageBox.Show("No sections parsed. Current profile remains unchanged.", "Attention", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         End If

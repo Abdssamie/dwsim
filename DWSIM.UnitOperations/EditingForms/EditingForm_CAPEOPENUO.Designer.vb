@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_CAPEOPENUO
+Partial Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -24,7 +24,7 @@ Partial Class EditingForm_CAPEOPENUO
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_CAPEOPENUO))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -137,7 +137,7 @@ Partial Class EditingForm_CAPEOPENUO
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTip1.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -199,7 +199,7 @@ Partial Class EditingForm_CAPEOPENUO
         'btnConfigurePP
         '
         resources.ApplyResources(Me.btnConfigurePP, "btnConfigurePP")
-        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.cog
+        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.cog
         Me.btnConfigurePP.Name = "btnConfigurePP"
         Me.ToolTip1.SetToolTip(Me.btnConfigurePP, resources.GetString("btnConfigurePP.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnConfigurePP, resources.GetString("btnConfigurePP.ToolTip1"))
@@ -717,7 +717,7 @@ Partial Class EditingForm_CAPEOPENUO
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_CAPEOPENUO
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -728,7 +728,7 @@ Partial Class EditingForm_CAPEOPENUO
         Me.Controls.Add(Me.GroupBoxConnections)
         Me.Controls.Add(Me.GroupBoxVariables)
         Me.Controls.Add(Me.GroupBoxPropertyPackage)
-        Me.Name = "EditingForm_CAPEOPENUO"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip2"))
@@ -812,6 +812,6 @@ Partial Class EditingForm_CAPEOPENUO
     Public WithEvents DataGridViewButtonColumn4 As DataGridViewButtonColumn
     Friend WithEvents ToolTipChangeTag As ToolTip
     Public WithEvents GroupBoxIcon As GroupBox
-    Public WithEvents Button2 As Button
+    Public WithEvents Button2 As Object
     Public WithEvents chkUseEmbeddedImage As CheckBox
 End Class

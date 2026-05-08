@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_Adjust_ControlPanel
+Partial Class Object
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -22,7 +22,7 @@ Partial Class EditingForm_Adjust_ControlPanel
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Adjust_ControlPanel))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.btnParar = New System.Windows.Forms.Button()
         Me.btnIniciar = New System.Windows.Forms.Button()
@@ -259,13 +259,13 @@ Partial Class EditingForm_Adjust_ControlPanel
         Me.Panel1.Controls.Add(Me.GroupBox3)
         Me.Panel1.Name = "Panel1"
         '
-        'EditingForm_Adjust_ControlPanel
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.Panel1)
         Me.DoubleBuffered = True
-        Me.Name = "EditingForm_Adjust_ControlPanel"
+        Me.Name = "Object"
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -304,6 +304,6 @@ Partial Class EditingForm_Adjust_ControlPanel
     Public WithEvents tbMin As System.Windows.Forms.TextBox
     Public WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents KryptonLabel1 As System.Windows.Forms.Label
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As Object
     Friend WithEvents ComboBox1 As ComboBox
 End Class

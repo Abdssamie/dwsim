@@ -16,10 +16,8 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
-Imports System.Drawing
 
 <System.Serializable()> Public Class PipeHydraulicProfileEditor
 
@@ -51,8 +49,8 @@ Imports System.Drawing
 
     Dim ThisExe As Reflection.Assembly = Reflection.Assembly.GetExecutingAssembly
     Dim ThisExeName As String = ThisExe.GetName.Name
-    Public WithEvents CBTemplate As New DataGridViewComboBoxCell()
-    Public WithEvents CBMat As New DataGridViewComboBoxCell()
+    Public WithEvents CBTemplate As New Object()
+    Public WithEvents CBMat As New Object()
 
     Protected m_profile As PipeProfile
 
@@ -268,28 +266,28 @@ Imports System.Drawing
         '
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.Nothing.add
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.arrow_up
+        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.Nothing.arrow_up
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton3
         '
         resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
+        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.Nothing.delete
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
         '
         resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.cross
+        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.Nothing.cross
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'ToolStripSeparator1
@@ -301,7 +299,7 @@ Imports System.Drawing
         '
         resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton5.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.ToolStripButton5.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripSeparator2
@@ -325,7 +323,7 @@ Imports System.Drawing
         resources.ApplyResources(Me.tsbImportFromTable, "tsbImportFromTable")
         Me.tsbImportFromTable.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.tsbImportFromTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbImportFromTable.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.table_80px
+        Me.tsbImportFromTable.Image = Global.DWSIM.UnitOperations.Nothing.table_80px
         Me.tsbImportFromTable.Name = "tsbImportFromTable"
         '
         'TabControl1
@@ -682,8 +680,8 @@ Imports System.Drawing
         GridMalha.Rows(9).HeaderCell.Value = PipeOp.FlowSheet.GetTranslatedString("External Diameter")
         GridMalha.Rows(10).HeaderCell.Value = PipeOp.FlowSheet.GetTranslatedString("Internal Diameter")
 
-        CBTemplate = New DataGridViewComboBoxCell()
-        CBMat = New DataGridViewComboBoxCell()
+        CBTemplate = New Object()
+        CBMat = New Object()
 
         linha_atual = New String() {}
 
@@ -980,8 +978,8 @@ Imports System.Drawing
 
         Me.GridMalha.Columns.Add("C" & Me.GridMalha.Columns.Count + 1, "Null")
 
-        CBTemplate = New DataGridViewComboBoxCell()
-        CBMat = New DataGridViewComboBoxCell()
+        CBTemplate = New Object()
+        CBMat = New Object()
 
         With CBTemplate
             .FlatStyle = FlatStyle.Popup
@@ -1063,8 +1061,8 @@ Imports System.Drawing
         col1.Dispose()
         col2.Dispose()
 
-        CBTemplate = New DataGridViewComboBoxCell()
-        CBMat = New DataGridViewComboBoxCell()
+        CBTemplate = New Object()
+        CBMat = New Object()
 
         With CBTemplate
             .FlatStyle = FlatStyle.Popup
@@ -1140,7 +1138,7 @@ Imports System.Drawing
     Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
 
         Dim inf As DialogResult
-
+'
         inf = MessageBox.Show(PipeOp.FlowSheet.GetTranslatedString("CliqueemOKparalimparamalha"), PipeOp.FlowSheet.GetTranslatedString("Limparmalha"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, False)
 
         If inf = Windows.Forms.DialogResult.OK Then
@@ -1172,8 +1170,8 @@ Imports System.Drawing
             GridMalha.Rows(9).HeaderCell.Value = PipeOp.FlowSheet.GetTranslatedString("Dexternoin").Replace("(in.)", "(" & Units.diameter & ")")
             GridMalha.Rows(10).HeaderCell.Value = PipeOp.FlowSheet.GetTranslatedString("Dinternoin").Replace("(in.)", "(" & Units.diameter & ")")
 
-            Dim CBTemplate As New DataGridViewComboBoxCell()
-            Dim CBMat As New DataGridViewComboBoxCell()
+            Dim CBTemplate As New Object()
+            Dim CBMat As New Object()
 
             Dim l As Integer
             Dim linha_atual As String() = New String() {}
@@ -1277,7 +1275,7 @@ Imports System.Drawing
             Else
                 ToolStripLabel2.Text = PipeOp.FlowSheet.GetTranslatedString("Erronasecao") & " " & column.Index + 1
                 RaiseEvent StatusChanged(e, PipeEditorStatus.Erro)
-                MessageBox.Show(parsingresult, PipeOp.FlowSheet.GetTranslatedString("Erronasecao") & " " & column.Index + 1, MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(parsingresult, PipeOp.FlowSheet.GetTranslatedString("Erronasecao") & " " & column.Index + 1, MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
         Next
@@ -1566,7 +1564,7 @@ Imports System.Drawing
 
     Private Sub tsbImportFromTable_Click(sender As Object, e As EventArgs) Handles tsbImportFromTable.Click
 
-        Dim ft As New EditingForm_Pipe_HydraulicProfileImportFromTabularData With {.PipeObject = PipeOp}
+        Dim ft As New Object()
         ft.ShowDialog()
 
     End Sub
@@ -1590,7 +1588,7 @@ Imports System.Drawing
                     If e.RowIndex = 1 Then
                         GridMalha_CurrentCellChanged(sender, e)
                         If loaded And GridMalha.CurrentCell.Value.ToString().Contains("[27]") Then
-                            MessageBox.Show(String.Format("Fixed pressure drops must be entered in the internal diameter field using the current units ({0}).", Units.deltaP), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+'                            MessageBox.Show(String.Format("Fixed pressure drops must be entered in the internal diameter field using the current units ({0}).", Units.deltaP), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         End If
                     End If
                     Dim material = GridMalha.Rows(4).Cells(e.ColumnIndex).Value.ToString()

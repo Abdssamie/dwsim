@@ -61,7 +61,6 @@ Namespace UnitOperations
 
         Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = True
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_Valve
 
         Protected m_dp As Double?
         Protected m_dt As Double?
@@ -1434,43 +1433,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_Valve With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_Valve With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.valve
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.valve.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("VALVE_Desc")
@@ -1480,14 +1443,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("VALVE_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

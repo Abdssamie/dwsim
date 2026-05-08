@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Form_CapeOpenSelector
+Partial Class Object
     Inherits System.Windows.Forms.Form
 
     'NOTE: The following procedure is required by the Windows Form Designer
@@ -7,7 +7,7 @@ Partial Class Form_CapeOpenSelector
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_CapeOpenSelector))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -127,7 +127,7 @@ Partial Class Form_CapeOpenSelector
         'BackgroundWorker1
         '
         '
-        'Form_CapeOpenSelector
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -150,7 +150,7 @@ Partial Class Form_CapeOpenSelector
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ListBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "Form_CapeOpenSelector"
+        Me.Name = "Object"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.ResumeLayout(False)

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_PIDController
+Partial Class Object
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -22,7 +22,7 @@ Partial Class EditingForm_PIDController
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_PIDController))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBoxLinkedObjects = New System.Windows.Forms.GroupBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.cbTargetUnits = New System.Windows.Forms.ComboBox()
@@ -288,7 +288,7 @@ Partial Class EditingForm_PIDController
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTipValues.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -358,7 +358,7 @@ Partial Class EditingForm_PIDController
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.lightning
+        Me.Button1.Image = Global.DWSIM.UnitOperations.Nothing.lightning
         Me.Button1.Name = "Button1"
         Me.ToolTipValues.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip1"))
@@ -543,7 +543,7 @@ Partial Class EditingForm_PIDController
         Me.ToolTipValues.SetToolTip(Me.Label21, resources.GetString("Label21.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.Label21, resources.GetString("Label21.ToolTip1"))
         '
-        'EditingForm_PIDController
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -551,7 +551,7 @@ Partial Class EditingForm_PIDController
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBoxParameters)
-        Me.Name = "EditingForm_PIDController"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.GroupBoxLinkedObjects.ResumeLayout(False)
@@ -612,7 +612,7 @@ Partial Class EditingForm_PIDController
     Friend WithEvents chkReverse As CheckBox
     Public WithEvents tbWG As TextBox
     Public WithEvents Label18 As Label
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Button1 As Object
     Public WithEvents Label21 As Label
     Public WithEvents tbOut4 As TextBox
     Public WithEvents Label20 As Label

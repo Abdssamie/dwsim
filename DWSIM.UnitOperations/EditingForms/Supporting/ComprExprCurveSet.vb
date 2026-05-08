@@ -1,4 +1,3 @@
-﻿Imports System.Drawing
 
 Public Class ComprExprCurveSet
 

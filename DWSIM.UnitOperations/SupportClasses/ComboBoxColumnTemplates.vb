@@ -33,9 +33,9 @@ Namespace UnitOperations.Auxiliary.DGVCBSelectors
             dc = col
         End Sub
 
-        Function GetMaterialStreamInSelector() As DataGridViewComboBoxCell
+        Function GetMaterialStreamInSelector() As Object
 
-            Dim dgcbc As New DataGridViewComboBoxCell
+            Dim dgcbc As New Object
             dgcbc.Sorted = True
 
             With dgcbc.Items
@@ -50,9 +50,9 @@ Namespace UnitOperations.Auxiliary.DGVCBSelectors
 
         End Function
 
-        Function GetMaterialStreamOutSelector() As DataGridViewComboBoxCell
+        Function GetMaterialStreamOutSelector() As Object
 
-            Dim dgcbc As New DataGridViewComboBoxCell
+            Dim dgcbc As New Object
             dgcbc.Sorted = True
 
             With dgcbc.Items
@@ -72,9 +72,9 @@ Namespace UnitOperations.Auxiliary.DGVCBSelectors
 
         End Function
 
-        Function GetEnergyStreamInSelector() As DataGridViewComboBoxCell
+        Function GetEnergyStreamInSelector() As Object
 
-            Dim dgcbc As New DataGridViewComboBoxCell
+            Dim dgcbc As New Object
             dgcbc.Sorted = True
 
             With dgcbc.Items
@@ -92,9 +92,9 @@ Namespace UnitOperations.Auxiliary.DGVCBSelectors
 
         End Function
 
-        Function GetEnergyStreamOutSelector() As DataGridViewComboBoxCell
+        Function GetEnergyStreamOutSelector() As Object
 
-            Dim dgcbc As New DataGridViewComboBoxCell
+            Dim dgcbc As New Object
             dgcbc.Sorted = True
 
             With dgcbc.Items
@@ -112,9 +112,9 @@ Namespace UnitOperations.Auxiliary.DGVCBSelectors
 
         End Function
 
-        Function GetSideDrawTypeSelector() As DataGridViewComboBoxCell
+        Function GetSideDrawTypeSelector() As Object
 
-            Dim dgcbc As New DataGridViewComboBoxCell
+            Dim dgcbc As New Object
             dgcbc.Sorted = True
 
             With dgcbc.Items

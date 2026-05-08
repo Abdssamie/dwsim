@@ -32,7 +32,6 @@ Namespace SpecialOps
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.Controllers
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_PIDController
 
         <Xml.Serialization.XmlIgnore> Public Property ControlPanel As Object Implements IControllableObject.ControlPanel
 
@@ -542,61 +541,7 @@ Namespace SpecialOps
             End If
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_PIDController With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_PIDController With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-            If f Is Nothing Then
-                f = New EditingForm_PIDController With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Return f
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_PIDController With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Return f
-                Else
-                    Return Nothing
-                End If
-            End If
-        End Function
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.control_panel1
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.control_panel.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("PID_Desc")
@@ -606,14 +551,6 @@ Namespace SpecialOps
             Return ResMan.GetLocalString("PID_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get
@@ -830,16 +767,16 @@ Namespace SpecialOps
                 .Title = "MV",
                 .Key = "1"
             })
-
-            model.LegendFontSize = 10
-            model.LegendPlacement = LegendPlacement.Outside
-            model.LegendOrientation = LegendOrientation.Horizontal
-            model.LegendPosition = LegendPosition.BottomCenter
+'
+'            model.LegendFontSize = 10
+'            model.LegendPlacement = LegendPlacement.Outside
+'            model.LegendOrientation = LegendOrientation.Horizontal
+'            model.LegendPosition = LegendPosition.BottomCenter
             model.TitleHorizontalAlignment = TitleHorizontalAlignment.CenteredWithinView
-
-            model.AddLineSeries(xavals, PVHistory, "PV")
-            model.AddLineSeries(xavals, SPHistory, "SP")
-            model.AddLineSeries(xavals, MVHistory, "MV")
+'
+'            model.AddLineSeries(xavals, PVHistory, "PV")
+'            model.AddLineSeries(xavals, SPHistory, "SP")
+'            model.AddLineSeries(xavals, MVHistory, "MV")
 
             DirectCast(model.Series.Item(2), LineSeries).YAxisKey = "1"
 

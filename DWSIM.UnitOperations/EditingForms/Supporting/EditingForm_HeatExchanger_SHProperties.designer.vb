@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_HeatExchanger_SHProperties
+Partial Class Object
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class EditingForm_HeatExchanger_SHProperties
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_HeatExchanger_SHProperties))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.cbBaffleOrientation = New System.Windows.Forms.ComboBox()
@@ -413,7 +413,7 @@ Partial Class EditingForm_HeatExchanger_SHProperties
         resources.ApplyResources(Me.PictureBox2, "PictureBox2")
         Me.PictureBox2.BackColor = System.Drawing.Color.White
         Me.PictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.Straight_tube_heat_exchanger_1_pass
+        Me.PictureBox2.Image = Global.DWSIM.UnitOperations.Nothing.Straight_tube_heat_exchanger_1_pass
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.TabStop = False
         '
@@ -422,11 +422,11 @@ Partial Class EditingForm_HeatExchanger_SHProperties
         resources.ApplyResources(Me.PictureBox1, "PictureBox1")
         Me.PictureBox1.BackColor = System.Drawing.Color.White
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.Straight_tube_heat_exchanger_2_pass
+        Me.PictureBox1.Image = Global.DWSIM.UnitOperations.Nothing.Straight_tube_heat_exchanger_2_pass
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
         '
-        'EditingForm_HeatExchanger_SHProperties
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -436,7 +436,7 @@ Partial Class EditingForm_HeatExchanger_SHProperties
         Me.Controls.Add(Me.GroupBox1)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "EditingForm_HeatExchanger_SHProperties"
+        Me.Name = "Object"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)

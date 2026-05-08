@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_FlowsheetUO
+Partial Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -24,7 +24,7 @@ Partial Class EditingForm_FlowsheetUO
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_FlowsheetUO))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -186,7 +186,7 @@ Partial Class EditingForm_FlowsheetUO
         'chkActive
         '
         resources.ApplyResources(Me.chkActive, "chkActive")
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.Name = "chkActive"
         Me.ToolTip1.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.chkActive, resources.GetString("chkActive.ToolTip1"))
@@ -245,7 +245,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet10
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet10, "btnCreateAndConnectOutlet10")
-        Me.btnCreateAndConnectOutlet10.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet10.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet10.Name = "btnCreateAndConnectOutlet10"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet10, resources.GetString("btnCreateAndConnectOutlet10.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet10, resources.GetString("btnCreateAndConnectOutlet10.ToolTip1"))
@@ -255,7 +255,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet9
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet9, "btnCreateAndConnectOutlet9")
-        Me.btnCreateAndConnectOutlet9.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet9.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet9.Name = "btnCreateAndConnectOutlet9"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet9, resources.GetString("btnCreateAndConnectOutlet9.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet9, resources.GetString("btnCreateAndConnectOutlet9.ToolTip1"))
@@ -265,7 +265,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet8
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet8, "btnCreateAndConnectOutlet8")
-        Me.btnCreateAndConnectOutlet8.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet8.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet8.Name = "btnCreateAndConnectOutlet8"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet8, resources.GetString("btnCreateAndConnectOutlet8.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet8, resources.GetString("btnCreateAndConnectOutlet8.ToolTip1"))
@@ -275,7 +275,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet10
         '
         resources.ApplyResources(Me.btnDisconnectOutlet10, "btnDisconnectOutlet10")
-        Me.btnDisconnectOutlet10.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet10.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet10.Name = "btnDisconnectOutlet10"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet10, resources.GetString("btnDisconnectOutlet10.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet10, resources.GetString("btnDisconnectOutlet10.ToolTip1"))
@@ -285,7 +285,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet9
         '
         resources.ApplyResources(Me.btnDisconnectOutlet9, "btnDisconnectOutlet9")
-        Me.btnDisconnectOutlet9.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet9.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet9.Name = "btnDisconnectOutlet9"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet9, resources.GetString("btnDisconnectOutlet9.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet9, resources.GetString("btnDisconnectOutlet9.ToolTip1"))
@@ -295,7 +295,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet8
         '
         resources.ApplyResources(Me.btnDisconnectOutlet8, "btnDisconnectOutlet8")
-        Me.btnDisconnectOutlet8.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet8.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet8.Name = "btnDisconnectOutlet8"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet8, resources.GetString("btnDisconnectOutlet8.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet8, resources.GetString("btnDisconnectOutlet8.ToolTip1"))
@@ -305,7 +305,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet7
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet7, "btnCreateAndConnectOutlet7")
-        Me.btnCreateAndConnectOutlet7.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet7.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet7.Name = "btnCreateAndConnectOutlet7"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet7, resources.GetString("btnCreateAndConnectOutlet7.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet7, resources.GetString("btnCreateAndConnectOutlet7.ToolTip1"))
@@ -315,7 +315,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet7
         '
         resources.ApplyResources(Me.btnDisconnectOutlet7, "btnDisconnectOutlet7")
-        Me.btnDisconnectOutlet7.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet7.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet7.Name = "btnDisconnectOutlet7"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet7, resources.GetString("btnDisconnectOutlet7.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet7, resources.GetString("btnDisconnectOutlet7.ToolTip1"))
@@ -325,7 +325,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet10
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet10, "btnCreateAndConnectInlet10")
-        Me.btnCreateAndConnectInlet10.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet10.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet10.Name = "btnCreateAndConnectInlet10"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet10, resources.GetString("btnCreateAndConnectInlet10.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet10, resources.GetString("btnCreateAndConnectInlet10.ToolTip1"))
@@ -335,7 +335,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet9
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet9, "btnCreateAndConnectInlet9")
-        Me.btnCreateAndConnectInlet9.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet9.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet9.Name = "btnCreateAndConnectInlet9"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet9, resources.GetString("btnCreateAndConnectInlet9.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet9, resources.GetString("btnCreateAndConnectInlet9.ToolTip1"))
@@ -345,7 +345,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet8
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet8, "btnCreateAndConnectInlet8")
-        Me.btnCreateAndConnectInlet8.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet8.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet8.Name = "btnCreateAndConnectInlet8"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet8, resources.GetString("btnCreateAndConnectInlet8.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet8, resources.GetString("btnCreateAndConnectInlet8.ToolTip1"))
@@ -355,7 +355,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet7
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet7, "btnCreateAndConnectInlet7")
-        Me.btnCreateAndConnectInlet7.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet7.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet7.Name = "btnCreateAndConnectInlet7"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet7, resources.GetString("btnCreateAndConnectInlet7.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet7, resources.GetString("btnCreateAndConnectInlet7.ToolTip1"))
@@ -365,7 +365,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect10
         '
         resources.ApplyResources(Me.btnDisconnect10, "btnDisconnect10")
-        Me.btnDisconnect10.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect10.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect10.Name = "btnDisconnect10"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect10, resources.GetString("btnDisconnect10.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect10, resources.GetString("btnDisconnect10.ToolTip1"))
@@ -375,7 +375,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect9
         '
         resources.ApplyResources(Me.btnDisconnect9, "btnDisconnect9")
-        Me.btnDisconnect9.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect9.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect9.Name = "btnDisconnect9"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect9, resources.GetString("btnDisconnect9.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect9, resources.GetString("btnDisconnect9.ToolTip1"))
@@ -385,7 +385,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect8
         '
         resources.ApplyResources(Me.btnDisconnect8, "btnDisconnect8")
-        Me.btnDisconnect8.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect8.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect8.Name = "btnDisconnect8"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect8, resources.GetString("btnDisconnect8.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect8, resources.GetString("btnDisconnect8.ToolTip1"))
@@ -395,7 +395,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect7
         '
         resources.ApplyResources(Me.btnDisconnect7, "btnDisconnect7")
-        Me.btnDisconnect7.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect7.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect7.Name = "btnDisconnect7"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect7, resources.GetString("btnDisconnect7.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect7, resources.GetString("btnDisconnect7.ToolTip1"))
@@ -405,7 +405,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet6
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet6, "btnCreateAndConnectOutlet6")
-        Me.btnCreateAndConnectOutlet6.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet6.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet6.Name = "btnCreateAndConnectOutlet6"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet6, resources.GetString("btnCreateAndConnectOutlet6.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet6, resources.GetString("btnCreateAndConnectOutlet6.ToolTip1"))
@@ -415,7 +415,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet5
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet5, "btnCreateAndConnectOutlet5")
-        Me.btnCreateAndConnectOutlet5.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet5.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet5.Name = "btnCreateAndConnectOutlet5"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet5, resources.GetString("btnCreateAndConnectOutlet5.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet5, resources.GetString("btnCreateAndConnectOutlet5.ToolTip1"))
@@ -425,7 +425,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet4
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet4, "btnCreateAndConnectOutlet4")
-        Me.btnCreateAndConnectOutlet4.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet4.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet4.Name = "btnCreateAndConnectOutlet4"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet4, resources.GetString("btnCreateAndConnectOutlet4.ToolTip1"))
@@ -435,7 +435,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet6
         '
         resources.ApplyResources(Me.btnDisconnectOutlet6, "btnDisconnectOutlet6")
-        Me.btnDisconnectOutlet6.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet6.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet6.Name = "btnDisconnectOutlet6"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet6, resources.GetString("btnDisconnectOutlet6.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet6, resources.GetString("btnDisconnectOutlet6.ToolTip1"))
@@ -445,7 +445,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet5
         '
         resources.ApplyResources(Me.btnDisconnectOutlet5, "btnDisconnectOutlet5")
-        Me.btnDisconnectOutlet5.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet5.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet5.Name = "btnDisconnectOutlet5"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet5, resources.GetString("btnDisconnectOutlet5.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet5, resources.GetString("btnDisconnectOutlet5.ToolTip1"))
@@ -455,7 +455,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet4
         '
         resources.ApplyResources(Me.btnDisconnectOutlet4, "btnDisconnectOutlet4")
-        Me.btnDisconnectOutlet4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet4.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet4.Name = "btnDisconnectOutlet4"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet4, resources.GetString("btnDisconnectOutlet4.ToolTip1"))
@@ -465,7 +465,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet3
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet3, "btnCreateAndConnectOutlet3")
-        Me.btnCreateAndConnectOutlet3.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet3.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet3.Name = "btnCreateAndConnectOutlet3"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet3, resources.GetString("btnCreateAndConnectOutlet3.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet3, resources.GetString("btnCreateAndConnectOutlet3.ToolTip1"))
@@ -475,7 +475,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet2
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet2, "btnCreateAndConnectOutlet2")
-        Me.btnCreateAndConnectOutlet2.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet2.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet2.Name = "btnCreateAndConnectOutlet2"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet2, resources.GetString("btnCreateAndConnectOutlet2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet2, resources.GetString("btnCreateAndConnectOutlet2.ToolTip1"))
@@ -485,7 +485,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectOutlet1
         '
         resources.ApplyResources(Me.btnCreateAndConnectOutlet1, "btnCreateAndConnectOutlet1")
-        Me.btnCreateAndConnectOutlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet1.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet1.Name = "btnCreateAndConnectOutlet1"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectOutlet1, resources.GetString("btnCreateAndConnectOutlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectOutlet1, resources.GetString("btnCreateAndConnectOutlet1.ToolTip1"))
@@ -495,7 +495,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet6
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet6, "btnCreateAndConnectInlet6")
-        Me.btnCreateAndConnectInlet6.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet6.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet6.Name = "btnCreateAndConnectInlet6"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet6, resources.GetString("btnCreateAndConnectInlet6.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet6, resources.GetString("btnCreateAndConnectInlet6.ToolTip1"))
@@ -505,7 +505,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet5
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet5, "btnCreateAndConnectInlet5")
-        Me.btnCreateAndConnectInlet5.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet5.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet5.Name = "btnCreateAndConnectInlet5"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet5, resources.GetString("btnCreateAndConnectInlet5.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet5, resources.GetString("btnCreateAndConnectInlet5.ToolTip1"))
@@ -515,7 +515,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet4
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet4, "btnCreateAndConnectInlet4")
-        Me.btnCreateAndConnectInlet4.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet4.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet4.Name = "btnCreateAndConnectInlet4"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet4, resources.GetString("btnCreateAndConnectInlet4.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet4, resources.GetString("btnCreateAndConnectInlet4.ToolTip1"))
@@ -525,7 +525,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet3
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet3, "btnCreateAndConnectInlet3")
-        Me.btnCreateAndConnectInlet3.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet3.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet3.Name = "btnCreateAndConnectInlet3"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet3, resources.GetString("btnCreateAndConnectInlet3.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet3, resources.GetString("btnCreateAndConnectInlet3.ToolTip1"))
@@ -535,7 +535,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet2
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet2, "btnCreateAndConnectInlet2")
-        Me.btnCreateAndConnectInlet2.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet2.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet2.Name = "btnCreateAndConnectInlet2"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet2, resources.GetString("btnCreateAndConnectInlet2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet2, resources.GetString("btnCreateAndConnectInlet2.ToolTip1"))
@@ -545,7 +545,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnCreateAndConnectInlet1
         '
         resources.ApplyResources(Me.btnCreateAndConnectInlet1, "btnCreateAndConnectInlet1")
-        Me.btnCreateAndConnectInlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet1.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet1.Name = "btnCreateAndConnectInlet1"
         Me.ToolTip1.SetToolTip(Me.btnCreateAndConnectInlet1, resources.GetString("btnCreateAndConnectInlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnCreateAndConnectInlet1, resources.GetString("btnCreateAndConnectInlet1.ToolTip1"))
@@ -555,7 +555,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet3
         '
         resources.ApplyResources(Me.btnDisconnectOutlet3, "btnDisconnectOutlet3")
-        Me.btnDisconnectOutlet3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet3.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet3.Name = "btnDisconnectOutlet3"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet3, resources.GetString("btnDisconnectOutlet3.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet3, resources.GetString("btnDisconnectOutlet3.ToolTip1"))
@@ -565,7 +565,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet2
         '
         resources.ApplyResources(Me.btnDisconnectOutlet2, "btnDisconnectOutlet2")
-        Me.btnDisconnectOutlet2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet2.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet2.Name = "btnDisconnectOutlet2"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet2, resources.GetString("btnDisconnectOutlet2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet2, resources.GetString("btnDisconnectOutlet2.ToolTip1"))
@@ -575,7 +575,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnectOutlet1
         '
         resources.ApplyResources(Me.btnDisconnectOutlet1, "btnDisconnectOutlet1")
-        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet1.Name = "btnDisconnectOutlet1"
         Me.ToolTip1.SetToolTip(Me.btnDisconnectOutlet1, resources.GetString("btnDisconnectOutlet1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnectOutlet1, resources.GetString("btnDisconnectOutlet1.ToolTip1"))
@@ -585,7 +585,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect6
         '
         resources.ApplyResources(Me.btnDisconnect6, "btnDisconnect6")
-        Me.btnDisconnect6.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect6.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect6.Name = "btnDisconnect6"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect6, resources.GetString("btnDisconnect6.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect6, resources.GetString("btnDisconnect6.ToolTip1"))
@@ -595,7 +595,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect5
         '
         resources.ApplyResources(Me.btnDisconnect5, "btnDisconnect5")
-        Me.btnDisconnect5.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect5.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect5.Name = "btnDisconnect5"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect5, resources.GetString("btnDisconnect5.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect5, resources.GetString("btnDisconnect5.ToolTip1"))
@@ -605,7 +605,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect4
         '
         resources.ApplyResources(Me.btnDisconnect4, "btnDisconnect4")
-        Me.btnDisconnect4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect4.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect4.Name = "btnDisconnect4"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect4, resources.GetString("btnDisconnect4.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect4, resources.GetString("btnDisconnect4.ToolTip1"))
@@ -615,7 +615,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect3
         '
         resources.ApplyResources(Me.btnDisconnect3, "btnDisconnect3")
-        Me.btnDisconnect3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect3.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect3.Name = "btnDisconnect3"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect3, resources.GetString("btnDisconnect3.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect3, resources.GetString("btnDisconnect3.ToolTip1"))
@@ -625,7 +625,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect2
         '
         resources.ApplyResources(Me.btnDisconnect2, "btnDisconnect2")
-        Me.btnDisconnect2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect2.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect2.Name = "btnDisconnect2"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect2, resources.GetString("btnDisconnect2.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect2, resources.GetString("btnDisconnect2.ToolTip1"))
@@ -635,7 +635,7 @@ Partial Class EditingForm_FlowsheetUO
         'btnDisconnect1
         '
         resources.ApplyResources(Me.btnDisconnect1, "btnDisconnect1")
-        Me.btnDisconnect1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect1.Name = "btnDisconnect1"
         Me.ToolTip1.SetToolTip(Me.btnDisconnect1, resources.GetString("btnDisconnect1.ToolTip"))
         Me.ToolTipChangeTag.SetToolTip(Me.btnDisconnect1, resources.GetString("btnDisconnect1.ToolTip1"))
@@ -1361,7 +1361,7 @@ Partial Class EditingForm_FlowsheetUO
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_FlowsheetUO
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -1369,7 +1369,7 @@ Partial Class EditingForm_FlowsheetUO
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBoxConnections)
         Me.Controls.Add(Me.GroupBoxLinkedVars)
-        Me.Name = "EditingForm_FlowsheetUO"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip1"))
         Me.ToolTipChangeTag.SetToolTip(Me, resources.GetString("$this.ToolTip2"))

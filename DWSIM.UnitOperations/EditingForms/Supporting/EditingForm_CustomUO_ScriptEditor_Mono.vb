@@ -18,11 +18,8 @@
 
 Imports System.IO
 
-Imports System.Drawing.Text
-Imports System.Drawing
-Imports System.Windows.Forms
 
-<System.Serializable()> Public Class EditingForm_CustomUO_ScriptEditor_Mono
+<System.Serializable()> Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -52,11 +49,11 @@ Imports System.Windows.Forms
         End If
 
         ' Get the installed fonts collection.
-        Dim installed_fonts As New InstalledFontCollection
+        Dim installed_fonts As New Object
         ' Get an array of the system's font familiies.
-        Dim font_families() As FontFamily = installed_fonts.Families()
+        Dim font_families() As Object = installed_fonts.Families()
         ' Display the font families.
-        For Each font_family As FontFamily In font_families
+        For Each font_family As Object In font_families
             tscb1.Items.Add(font_family.Name)
         Next font_family
 
@@ -73,7 +70,7 @@ Imports System.Windows.Forms
 
     Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click
         If Me.txtScript.Text <> "" Then
-            If MessageBox.Show(ScriptUO.FlowSheet.GetTranslatedString("DesejaSalvaroScriptAtual"), ScriptUO.FlowSheet.GetTranslatedString("Ateno"), MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+'            If MessageBox.Show(ScriptUO.FlowSheet.GetTranslatedString("DesejaSalvaroScriptAtual"), ScriptUO.FlowSheet.GetTranslatedString("Ateno"), MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
                 SaveToolStripButton_Click(sender, e)
             End If
         End If

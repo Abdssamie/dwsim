@@ -2278,7 +2278,7 @@ Namespace DWSIM.Thermodynamics.AdvancedEOS
                 B2(i) = B(i + 1)
             Next
 
-            Dim result = DWSIM.MathOps.MathEx.SysLin.rsolve.rmatrixsolve(A2, B2, B2.Length, solution2)
+            Dim result = Global.DWSIM.MathOps.MathEx.SysLin.rsolve.rmatrixsolve(A2, B2, B2.Length, solution2)
 
             solution2.Take(solution2.Length - 1).ToArray.CopyTo(solution, 1)
 

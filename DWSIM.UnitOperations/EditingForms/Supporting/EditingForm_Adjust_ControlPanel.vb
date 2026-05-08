@@ -1,9 +1,7 @@
 ﻿Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
-Imports System.Windows.Forms
-Imports System.Drawing
 Imports DWSIM.ExtensionMethods
 
-Public Class EditingForm_Adjust_ControlPanel
+Public Class Object
 
     Inherits UserControl
 
@@ -293,7 +291,7 @@ Public Class EditingForm_Adjust_ControlPanel
                                                             UIThread(Sub() funcfinish.Invoke())
                                                             If t.Exception IsNot Nothing Then
                                                                 funcrestore.Invoke(mvVal0)
-                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
+'                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
                                                                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
                                                             End If
                                                         End Sub)
@@ -313,7 +311,7 @@ Public Class EditingForm_Adjust_ControlPanel
                                                             UIThread(Sub() funcfinish.Invoke())
                                                             If t.Exception IsNot Nothing Then
                                                                 funcrestore.Invoke(mvVal0)
-                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
+'                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
                                                                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
                                                             End If
                                                         End Sub)
@@ -334,7 +332,7 @@ Public Class EditingForm_Adjust_ControlPanel
                                                             UIThread(Sub() funcfinish.Invoke())
                                                             If t.Exception IsNot Nothing Then
                                                                 funcrestore.Invoke(mvVal0)
-                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
+'                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
                                                                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
                                                             End If
                                                         End Sub)
@@ -354,7 +352,7 @@ Public Class EditingForm_Adjust_ControlPanel
                                                             UIThread(Sub() funcfinish.Invoke())
                                                             If t.Exception IsNot Nothing Then
                                                                 funcrestore.Invoke(mvVal0)
-                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
+'                                                                MessageBox.Show(t.Exception.Message, formC.GetTranslatedString("Erro"),
                                                                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
                                                             End If
                                                         End Sub)

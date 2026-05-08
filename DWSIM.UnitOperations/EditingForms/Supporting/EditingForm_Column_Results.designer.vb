@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Column_Results
+Partial Class Object
     Inherits SharedClasses.ObjectEditorForm
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_Column_Results
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Column_Results))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -628,42 +628,42 @@ Partial Class EditingForm_Column_Results
         '
         resources.ApplyResources(Me.TSB_Print, "TSB_Print")
         Me.TSB_Print.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_Print.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.printer
+        Me.TSB_Print.Image = Global.DWSIM.UnitOperations.Nothing.printer
         Me.TSB_Print.Name = "TSB_Print"
         '
         'TSB_PrinterSetup
         '
         resources.ApplyResources(Me.TSB_PrinterSetup, "TSB_PrinterSetup")
         Me.TSB_PrinterSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_PrinterSetup.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.printer_add
+        Me.TSB_PrinterSetup.Image = Global.DWSIM.UnitOperations.Nothing.printer_add
         Me.TSB_PrinterSetup.Name = "TSB_PrinterSetup"
         '
         'TSB_PageSetup
         '
         resources.ApplyResources(Me.TSB_PageSetup, "TSB_PageSetup")
         Me.TSB_PageSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_PageSetup.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.page_white_gear
+        Me.TSB_PageSetup.Image = Global.DWSIM.UnitOperations.Nothing.page_white_gear
         Me.TSB_PageSetup.Name = "TSB_PageSetup"
         '
         'TSB_Preview
         '
         resources.ApplyResources(Me.TSB_Preview, "TSB_Preview")
         Me.TSB_Preview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_Preview.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.page_white_magnify
+        Me.TSB_Preview.Image = Global.DWSIM.UnitOperations.Nothing.page_white_magnify
         Me.TSB_Preview.Name = "TSB_Preview"
         '
         'TSB_Copy
         '
         resources.ApplyResources(Me.TSB_Copy, "TSB_Copy")
         Me.TSB_Copy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.TSB_Copy.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.copy
+        Me.TSB_Copy.Image = Global.DWSIM.UnitOperations.Nothing.copy
         Me.TSB_Copy.Name = "TSB_Copy"
         '
         'PrintDialog1
         '
         Me.PrintDialog1.UseEXDialog = True
         '
-        'EditingForm_Column_Results
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -671,7 +671,7 @@ Partial Class EditingForm_Column_Results
         Me.Controls.Add(Me.ToolStrip1)
         Me.DoubleBuffered = True
         Me.HideOnClose = True
-        Me.Name = "EditingForm_Column_Results"
+        Me.Name = "Object"
         Me.ToolTipValues.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         CType(Me.Content, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Content.ResumeLayout(False)

@@ -1,10 +1,8 @@
-﻿Imports System.Windows.Forms
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
-Imports System.Drawing
 Imports System.IO
 Imports DWSIM.SharedClassesCSharp.FilePicker
 
-Public Class EditingForm_Pump_Curves
+Public Class Object
 
     Public selectedpump As UnitOperations.Pump
     Private headunit, powerunit, effunit, flowunit As String
@@ -255,7 +253,7 @@ Public Class EditingForm_Pump_Curves
                         End If
                     Next
                 Catch ex As Exception
-                    MessageBox.Show("Error parsing table data.", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show("Error parsing table data.", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
 
                 Select Case dg.Name
@@ -541,7 +539,7 @@ Public Class EditingForm_Pump_Curves
         End If
     End Sub
 
-    Private Sub EditingForm_Pump_Curves_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ChangeDefaultFont()
 
@@ -568,7 +566,7 @@ Public Class EditingForm_Pump_Curves
                 selectedpump.PumpCurveSet = data
                 PumpCurvesEditorForm_Load(sender, e)
             Catch ex As Exception
-                MessageBox.Show(selectedpump.GetFlowsheet.GetTranslatedString("ErrorAddingComponent") & " " & ex.Message,
+'                MessageBox.Show(selectedpump.GetFlowsheet.GetTranslatedString("ErrorAddingComponent") & " " & ex.Message,
                                 selectedpump.GetFlowsheet.GetTranslatedString("Erro"),
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error)
@@ -593,7 +591,7 @@ Public Class EditingForm_Pump_Curves
                     End Using
                 End Using
             Catch ex As Exception
-                MessageBox.Show(selectedpump.GetFlowsheet.GetTranslatedString("Erroaosalvararquivo") & " " & ex.Message,
+'                MessageBox.Show(selectedpump.GetFlowsheet.GetTranslatedString("Erroaosalvararquivo") & " " & ex.Message,
                                 selectedpump.GetFlowsheet.GetTranslatedString("Erro"),
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error)

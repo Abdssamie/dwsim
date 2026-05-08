@@ -1,4 +1,4 @@
-﻿Public Class EditingForm_LevelGauge
+﻿Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -8,7 +8,7 @@
 
     Friend tab1, tab2 As Integer
 
-    Private Sub EditingForm_LevelGauge_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpdateInfo()
 

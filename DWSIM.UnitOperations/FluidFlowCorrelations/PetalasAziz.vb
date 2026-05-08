@@ -25,8 +25,8 @@ Namespace FlowPackages
         Inherits FPBaseClass
 
         'INPUT Variables
-        Protected DensL As Single  'Liquid density (lb/ft³)
-        Protected DensG As Single  'Gas density (lb/ft³)
+        Protected DensL As Single  'Liquid density (lb/ftÂ³)
+        Protected DensG As Single  'Gas density (lb/ftÂ³)
         Protected Sigma As Single  'Gas/Liquid interfacial tension (dyne/cm)
         Protected VsL As Single    'Liquid superficial velocity (ft/sec)
         Protected VsG As Single    'Gas superficial velocity (ft/sec)
@@ -87,8 +87,8 @@ Namespace FlowPackages
             Else
 
                 'INPUT Variables
-                'Liquid density (lb/ft³)
-                'Gas density (lb/ft³)
+                'Liquid density (lb/ftÂ³)
+                'Gas density (lb/ftÂ³)
                 'Gas/Liquid interfacial tension (dyne/cm)
                 'Liquid superficial velocity (ft/sec)
                 'Gas superficial velocity (ft/sec)

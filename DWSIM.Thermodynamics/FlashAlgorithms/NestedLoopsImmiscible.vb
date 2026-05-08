@@ -49,7 +49,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides ReadOnly Property Description As String
             Get
                 If GlobalSettings.Settings.CurrentCulture = "pt-BR" Then
-                    Return "Algoritmo Nested Loops VLLE simplificado para c·lculos de equilÌbrio entre ¡gua e Hidrocarbonetos."
+                    Return "Algoritmo Nested Loops VLLE simplificado para c√°lculos de equil√≠brio entre √Ågua e Hidrocarbonetos."
                 Else
                     Return "Simplified Nested Loops VLLE Flash Algorithm for Hydrocarbon-Water equilibrium calculations."
                 End If

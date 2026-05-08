@@ -1,4 +1,3 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
@@ -6,9 +5,8 @@ Imports DWSIM.UnitOperations.UnitOperations
 Imports CapeOpen
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.CapeOpen
 Imports DWSIM.SharedClassesCSharp.FilePicker
-Imports System.Drawing
 
-Public Class EditingForm_CAPEOPENUO
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -20,7 +18,7 @@ Public Class EditingForm_CAPEOPENUO
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ChangeDefaultFont()
 
@@ -85,8 +83,8 @@ Public Class EditingForm_CAPEOPENUO
         If Host.Items.Where(Function(x) x.Name.Contains(SimObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = SimObject
                                                             iwindow.Show(DockPanel)
@@ -401,7 +399,7 @@ Public Class EditingForm_CAPEOPENUO
         Dim gobj = SimObject.GraphicObject
 
         If obj.GraphicObject.OutputConnectors(0).IsAttached Then
-            MessageBox.Show(fs.GetTranslatedString("Todasasconexespossve"), fs.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'            MessageBox.Show(fs.GetTranslatedString("Todasasconexespossve"), fs.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
         Dim cpoint = gobj.InputConnectors.Where(Function(x) x.ConnectorName = p.ComponentName).FirstOrDefault
@@ -420,7 +418,7 @@ Public Class EditingForm_CAPEOPENUO
         Dim gobj = SimObject.GraphicObject
 
         If obj.GraphicObject.InputConnectors(0).IsAttached Then
-            MessageBox.Show(fs.GetTranslatedString("Todasasconexespossve"), fs.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'            MessageBox.Show(fs.GetTranslatedString("Todasasconexespossve"), fs.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
         Dim cpoint = gobj.OutputConnectors.Where(Function(x) x.ConnectorName = p.ComponentName).FirstOrDefault
@@ -591,10 +589,10 @@ Public Class EditingForm_CAPEOPENUO
                     Try
                         Using img = SkiaSharp.Views.Desktop.Extensions.ToSKImage(bmp)
                             SimObject.EmbeddedImageData = DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.EmbeddedImageGraphic.ImageToBase64(img, SkiaSharp.SKEncodedImageFormat.Png)
-                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
+'                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
                         End Using
                     Catch ex As Exception
-                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
+'                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
                     End Try
                 End Using
             End Using

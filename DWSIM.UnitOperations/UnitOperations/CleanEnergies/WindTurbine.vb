@@ -1,10 +1,7 @@
 ﻿Imports System.IO
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
-Imports DWSIM.DrawingTools.Point
 Imports DWSIM.Interfaces.Enums
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.UnitOperations.UnitOperations
-Imports SkiaSharp
 Imports Eto.Forms
 Imports DWSIM.UI.Shared.Common
 Imports System.Globalization
@@ -16,11 +13,11 @@ Namespace UnitOperations
 
         Inherits CleanEnergyUnitOpBase
 
-        <Xml.Serialization.XmlIgnore> Public f As EditingForm_WindTurbine
+        <Xml.Serialization.XmlIgnore> Public f As Object
 
         Private ImagePath As String = ""
 
-        Private Image As SKImage
+        Private Image As Object
 
         Private calc As DWSIM.Thermodynamics.CalculatorInterface.Calculator
 
@@ -94,31 +91,6 @@ Namespace UnitOperations
         End Sub
 
         Public Overrides Sub Draw(g As Object)
-
-            Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
-
-            If Image Is Nothing Then
-
-                ImagePath = SharedClasses.Utility.GetTempFileName()
-                My.Resources.icons8_wind_turbine.Save(ImagePath)
-
-                Using streamBG = New FileStream(ImagePath, FileMode.Open)
-                    Using bitmap = SKBitmap.Decode(streamBG)
-                        Image = SKImage.FromBitmap(bitmap)
-                    End Using
-                End Using
-
-                Try
-                    File.Delete(ImagePath)
-                Catch ex As Exception
-                End Try
-
-            End If
-
-            Using p As New SKPaint With {.IsAntialias = GlobalSettings.Settings.DrawingAntiAlias, .FilterQuality = SKFilterQuality.High}
-                canvas.DrawImage(Image, New SKRect(GraphicObject.X, GraphicObject.Y, GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height), p)
-            End Using
-
         End Sub
 
         Public Overrides Sub CreateConnectors()
@@ -129,15 +101,15 @@ Namespace UnitOperations
             x = GraphicObject.X
             y = GraphicObject.Y
 
-            Dim myOC1 As New ConnectionPoint
-            myOC1.Position = New Point(x + w, y + h / 2.0)
+            Dim myOC1 As New Object
+            myOC1.Position = New Object()
             myOC1.Type = ConType.ConOut
             myOC1.Direction = ConDir.Right
             myOC1.Type = ConType.ConEn
 
             With GraphicObject.OutputConnectors
                 If .Count = 1 Then
-                    .Item(0).Position = New Point(x + w, y + h / 2.0)
+                    .Item(0).Position = New Object()
                 Else
                     .Add(myOC1)
                 End If
@@ -149,69 +121,6 @@ Namespace UnitOperations
         End Sub
 
         Public Overrides Sub PopulateEditorPanel(ctner As Object)
-
-
-            Dim container As DynamicLayout = ctner
-
-            Dim su = GetFlowsheet().FlowsheetOptions.SelectedUnitSystem
-            Dim nf = GetFlowsheet().FlowsheetOptions.NumberFormat
-
-            container.CreateAndAddCheckBoxRow("Use Global Weather Conditions", Not UseUserDefinedWeather,
-                                        Sub(chk, e)
-                                            UseUserDefinedWeather = Not chk.Checked
-                                        End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Wind Speed ({0})", su.velocity), UserDefinedWindSpeed,
-                                             Sub(tb, e)
-                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                     UserDefinedWindSpeed = tb.Text.ToDoubleFromInvariant().ConvertToSI(su.velocity)
-                                                 End If
-                                             End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Air Temperature ({0})", su.temperature), UserDefinedAirTemperature,
-                                             Sub(tb, e)
-                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                     UserDefinedAirTemperature = tb.Text.ToDoubleFromInvariant().ConvertToSI(su.temperature)
-                                                 End If
-                                             End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Air Pressure ({0})", su.pressure), UserDefinedAirPressure,
-                                             Sub(tb, e)
-                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                     UserDefinedAirPressure = tb.Text.ToDoubleFromInvariant().ConvertToSI(su.pressure)
-                                                 End If
-                                             End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Relative Humidity ({0})", "%"), UserDefinedRelativeHumidity,
-                                             Sub(tb, e)
-                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                     UserDefinedRelativeHumidity = tb.Text.ToDoubleFromInvariant()
-                                                 End If
-                                             End Sub)
-
-            container.CreateAndAddEmptySpace()
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Disk Area ({0})", su.area), DiskArea,
-                                             Sub(tb, e)
-                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                     DiskArea = tb.Text.ToDoubleFromInvariant().ConvertToSI(su.area)
-                                                 End If
-                                             End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, String.Format("Efficiency ({0})", "%"), Efficiency,
-                                             Sub(tb, e)
-                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                     Efficiency = tb.Text.ToDoubleFromInvariant()
-                                                 End If
-                                             End Sub)
-
-            container.CreateAndAddTextBoxRow(nf, "Number of Units", NumberOfTurbines,
-                                             Sub(tb, e)
-                                                 If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                     NumberOfTurbines = tb.Text.ToDoubleFromInvariant()
-                                                 End If
-                                             End Sub)
-
         End Sub
 
         Public Overrides Function GetReport(su As IUnitsOfMeasure, ci As CultureInfo, nf As String) As String
@@ -238,46 +147,6 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
-
-            If f Is Nothing Then
-                f = New EditingForm_WindTurbine With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_WindTurbine With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    If f.InvokeRequired Then f.BeginInvoke(Sub() f.UpdateInfo()) Else f.UpdateInfo()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub CloseEditForm()
-
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-
-        End Sub
 
         Public Overrides Function ReturnInstance(typename As String) As Object
 
@@ -285,17 +154,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Function GetIconBitmap() As Object
 
-            Return My.Resources.icons8_wind_turbine
-
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.icons8_wind_turbine.png")
-
-        End Function
 
         Public Overrides Function CloneXML() As Object
 

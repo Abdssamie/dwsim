@@ -78,8 +78,6 @@ Namespace Reactors
         Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = True
 
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_ReactorCSTR
-
         <System.NonSerialized()> Dim ims As MaterialStream
 
         Public Property ResidenceTimeL As Double = 0.0# 'Liquid/Solid residence time
@@ -635,7 +633,7 @@ Namespace Reactors
                             End If
 
                             For Each comp As Compound In ims.Phases(1).Compounds.Values
-                                C.Add(comp.Name, comp.Molarity) 'C: mol/m³
+                                C.Add(comp.Name, comp.Molarity) 'C: mol/mÂ³
                             Next
 
                         Case ReactionPhase.Vapor
@@ -647,7 +645,7 @@ Namespace Reactors
                             End If
 
                             For Each comp As Compound In ims.Phases(2).Compounds.Values
-                                C.Add(comp.Name, comp.Molarity) 'C: mol/m³
+                                C.Add(comp.Name, comp.Molarity) 'C: mol/mÂ³
                             Next
 
                         Case ReactionPhase.Mixture
@@ -655,7 +653,7 @@ Namespace Reactors
                             Qr = Me.Volume + Me.Headspace
 
                             For Each comp As Compound In ims.Phases(0).Compounds.Values
-                                C.Add(comp.Name, comp.MolarFlow / Q) 'C: mol/m³
+                                C.Add(comp.Name, comp.MolarFlow / Q) 'C: mol/mÂ³
                             Next
 
                         Case ReactionPhase.Solid
@@ -667,7 +665,7 @@ Namespace Reactors
                             End If
 
                             For Each comp As Compound In ims.Phases(7).Compounds.Values
-                                C.Add(comp.Name, comp.MolarFlow / QS) 'C: mol/m³
+                                C.Add(comp.Name, comp.MolarFlow / QS) 'C: mol/mÂ³
                             Next
 
                         Case ReactionPhase.Vapor_Solid
@@ -679,21 +677,21 @@ Namespace Reactors
                             End If
 
                             For Each comp As Compound In ims.Phases(2).Compounds.Values
-                                C.Add(comp.Name, comp.MolarFlow / (QV + QS)) 'C: mol/m³
+                                C.Add(comp.Name, comp.MolarFlow / (QV + QS)) 'C: mol/mÂ³
                             Next
 
                             For Each comp As Compound In ims.Phases(7).Compounds.Values
-                                C(comp.Name) += comp.MolarFlow / (QV + QS) 'C: mol/m³
+                                C(comp.Name) += comp.MolarFlow / (QV + QS) 'C: mol/mÂ³
                             Next
 
                         Case ReactionPhase.Liquid_Solid
 
                             For Each comp As Compound In ims.Phases(1).Compounds.Values
-                                C.Add(comp.Name, comp.MolarFlow / (QL + QS)) 'C: mol/m³
+                                C.Add(comp.Name, comp.MolarFlow / (QL + QS)) 'C: mol/mÂ³
                             Next
 
                             For Each comp As Compound In ims.Phases(7).Compounds.Values
-                                C(comp.Name) += comp.MolarFlow / (QL + QS) 'C: mol/m³
+                                C(comp.Name) += comp.MolarFlow / (QL + QS) 'C: mol/mÂ³
                             Next
 
                     End Select
@@ -1389,43 +1387,7 @@ out:        Dim ms1, ms2 As MaterialStream
             End If
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_ReactorCSTR With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_ReactorCSTR With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources._cstr
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.cstr.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("CSTR_Desc")
@@ -1435,14 +1397,6 @@ out:        Dim ms1, ms2 As MaterialStream
             Return ResMan.GetLocalString("CSTR_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

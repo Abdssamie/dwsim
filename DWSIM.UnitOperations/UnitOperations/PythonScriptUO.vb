@@ -20,7 +20,6 @@
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.Interfaces.Enums
@@ -30,11 +29,8 @@ Imports CapeOpen
 Imports System.Runtime.Serialization.Formatters
 Imports System.Linq
 Imports System.ComponentModel
-Imports System.Drawing.Design
 Imports Microsoft.Scripting.Hosting
 Imports Python.Runtime
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
-Imports DWSIM.Drawing.SkiaSharp
 
 Namespace UnitOperations
 
@@ -52,10 +48,9 @@ Namespace UnitOperations
             PythonNET = 1
         End Enum
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_CustomUO
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public fs As EditingForm_CustomUO_ScriptEditor
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public fsmono As EditingForm_CustomUO_ScriptEditor_Mono
+        <NonSerialized> <Xml.Serialization.XmlIgnore> Public fs As Object
+        <NonSerialized> <Xml.Serialization.XmlIgnore> Public fsmono As Object
 
         <NonSerialized> <Xml.Serialization.XmlIgnore> Private engine As ScriptEngine
 
@@ -248,8 +243,6 @@ Namespace UnitOperations
                 engine = IronPython.Hosting.Python.CreateEngine()
                 engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
                 engine.Runtime.LoadAssembly(GetType(BaseClasses.ConstantProperties).Assembly)
-                engine.Runtime.LoadAssembly(GetType(GraphicObject).Assembly)
-                engine.Runtime.LoadAssembly(GetType(GraphicsSurface).Assembly)
                 scope = engine.CreateScope()
                 scope.SetVariable("Flowsheet", FlowSheet)
                 scope.SetVariable("Me", Me)
@@ -503,35 +496,16 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
-
-            If f Is Nothing Then
-                f = New EditingForm_CustomUO With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_CustomUO With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
 
         Public Sub DisplayScriptEditorForm()
 
             If Thermodynamics.Calculator.IsRunningOnMono Then
                 If fsmono Is Nothing Then
-                    fsmono = New EditingForm_CustomUO_ScriptEditor_Mono With {.ScriptUO = Me}
+                    fsmono = New Object()
                     Me.FlowSheet.DisplayForm(fsmono)
                 Else
                     If fsmono.IsDisposed Then
-                        fsmono = New EditingForm_CustomUO_ScriptEditor_Mono With {.ScriptUO = Me}
+                        fsmono = New Object()
                         Me.FlowSheet.DisplayForm(fsmono)
                     Else
                         fsmono.Activate()
@@ -539,11 +513,11 @@ Namespace UnitOperations
                 End If
             Else
                 If fs Is Nothing Then
-                    fs = New EditingForm_CustomUO_ScriptEditor With {.ScriptUO = Me}
+                    fs = New Object()
                     Me.FlowSheet.DisplayForm(fs)
                 Else
                     If fs.IsDisposed Then
-                        fs = New EditingForm_CustomUO_ScriptEditor With {.ScriptUO = Me}
+                        fs = New Object()
                         Me.FlowSheet.DisplayForm(fs)
                     Else
                         fs.Activate()
@@ -553,23 +527,7 @@ Namespace UnitOperations
 
         End Sub
 
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
 
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.python_script
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.python_script.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("IPUO_Desc")
@@ -579,14 +537,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("IPUO_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

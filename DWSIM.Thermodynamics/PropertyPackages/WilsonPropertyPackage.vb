@@ -41,13 +41,6 @@ Public Class WilsonPropertyPackage
         ' MIGRATION STUB
     End Sub
 
-    Public Overrides Function GetEditingForm() As Object
-
-            ' TODO: [MIGRATION] UI editing form not available in headless mode.
-            Return Nothing
-
-
-    End Function
 
     Public Overrides Function GetModel() As Object
 

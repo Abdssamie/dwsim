@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Win32
-Imports System.Windows.Forms
 
-Public Class Form_CapeOpenSelector
+Public Class Object
 
     Private _couos As New List(Of UnitOperations.Auxiliary.CapeOpen.CapeOpenUnitOpInfo)
     Public _seluo As UnitOperations.Auxiliary.CapeOpen.CapeOpenUnitOpInfo
@@ -14,17 +13,17 @@ Public Class Form_CapeOpenSelector
 
         frmwait.Text = "CAPE-OPEN Unit Operation Socket"
         frmwait.Label1.Text = "Scanning Registry for CAPE-OPEN Unit Operations"
-        frmwait.StartPosition = FormStartPosition.CenterScreen
+        frmwait.StartPosition = 0
         frmwait.Opacity = 1.0#
 
         Me.Enabled = False
 
-        Application.DoEvents()
+        Nothing()
 
         frmwait.Show(Me)
 
         While Me.BackgroundWorker1.IsBusy
-            Application.DoEvents()
+            Nothing()
         End While
 
         frmwait.Close()

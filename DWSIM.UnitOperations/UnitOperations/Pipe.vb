@@ -20,7 +20,6 @@
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe
 Imports DWSIM.Thermodynamics.BaseClasses
@@ -54,7 +53,6 @@ Namespace UnitOperations
         Inherits UnitOperations.UnitOpBaseClass
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.PressureChangers
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_Pipe
 
         Public Enum Specmode
             Length = 0
@@ -221,79 +219,9 @@ Namespace UnitOperations
         End Function
 
         Public Overrides Sub DisplayDynamicsEditForm()
-
-            If fd Is Nothing Then
-                fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                fd.Tag = "ObjectEditor"
-                fd.UpdateCallBack = Sub(table)
-                                        AddButtonsToDynEditor(table)
-                                    End Sub
-                Me.FlowSheet.DisplayForm(fd)
-            Else
-                If fd.IsDisposed Then
-                    fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                    fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                    fd.Tag = "ObjectEditor"
-                    fd.UpdateCallBack = Sub(table)
-                                            AddButtonsToDynEditor(table)
-                                        End Sub
-                    Me.FlowSheet.DisplayForm(fd)
-                Else
-                    fd.Activate()
-                End If
-            End If
-
         End Sub
 
-        Private Sub AddButtonsToDynEditor(table As TableLayoutPanel)
-
-            Dim button1 As New Button With {.Text = FlowSheet.GetTranslatedString("Initialize from Steady-State solution"),
-                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button1.Click,
-                Sub(s, e)
-                    Try
-                        Dim ims1 = GetInletMaterialStream(0)
-                        AccumulationStreams = New List(Of MaterialStream)
-                        For Each seg In Profile.Sections.Values
-                            Dim max As Integer = 0
-                            If seg.TipoSegmento = "Tubulaosimples" Or seg.TipoSegmento = "" Or
-                                seg.TipoSegmento = "Straight Tube Section" Or seg.TipoSegmento = "Straight Tube" Or
-                                seg.TipoSegmento = "Tubulação Simples" Then
-                                max = seg.Incrementos - 2
-                            End If
-                            For idx = 0 To max
-                                Dim res = seg.Results(idx)
-                                Dim as1 As MaterialStream = ims1.CloneXML()
-                                as1.SetPressure(res.Pressure_Initial.Value)
-                                as1.SetTemperature(res.Temperature_Initial.Value)
-                                Dim D, L, V As Double
-                                D = seg.DI * 0.0254
-                                L = seg.Comprimento / seg.Incrementos
-                                V = Math.PI * D ^ 2 * L / 4 'segment volume
-                                as1.SetVolumetricFlow(V)
-                                as1.AssignSelfToPP()
-                                as1.Calculate(False, True)
-                                AccumulationStreams.Add(as1)
-                            Next
-                        Next
-                        MessageBox.Show(String.Format("{0}: Dynamic state initialized successfully.", GraphicObject.Tag), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    Catch ex As Exception
-                        MessageBox.Show(String.Format("{0}: Error intializing dynamic state: {1}.", GraphicObject.Tag, ex.Message), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
-                End Sub
-
-            Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("FillWithStream"),
-                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button2.Click, Sub(s, e)
-                                          Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
-                                          fms.ShowDialog()
-                                      End Sub
-
-            table.Controls.Add(button1)
-            table.Controls.Add(button2)
-            table.Controls.Add(New Panel())
-
+        Private Sub AddButtonsToDynEditor(table As Object)
         End Sub
 
         Public Overrides Sub CreateDynamicProperties()
@@ -2940,43 +2868,7 @@ Namespace UnitOperations
             End If
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_Pipe With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_Pipe With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.pipe_segment
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.pipe_segment.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("PIPE_Desc")
@@ -2986,14 +2878,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("PIPE_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get
@@ -3355,54 +3239,54 @@ Namespace UnitOperations
                 .Position = AxisPosition.Left,
                 .FontSize = 10
             })
-
-            model.LegendFontSize = 11
-            model.LegendPlacement = LegendPlacement.Outside
-            model.LegendOrientation = LegendOrientation.Horizontal
-            model.LegendPosition = LegendPosition.BottomCenter
+'
+'            model.LegendFontSize = 11
+'            model.LegendPlacement = LegendPlacement.Outside
+'            model.LegendOrientation = LegendOrientation.Horizontal
+'            model.LegendPosition = LegendPosition.BottomCenter
             model.TitleHorizontalAlignment = TitleHorizontalAlignment.CenteredWithinView
 
             Dim px = PopulateData(0)
 
             Select Case name
                 Case "Temperature Profile"
-                    model.AddLineSeries(px, PopulateData(3))
+'                    model.AddLineSeries(px, PopulateData(3))
                     model.Axes(1).Title = "Temperature (" + su.temperature + ")"
                 Case "Pressure Profile"
-                    model.AddLineSeries(px, PopulateData(2))
+'                    model.AddLineSeries(px, PopulateData(2))
                     model.Axes(1).Title = "Pressure (" + su.pressure + ")"
                 Case "Heat Flow Profile"
-                    model.AddLineSeries(px, PopulateData(6))
+'                    model.AddLineSeries(px, PopulateData(6))
                     model.Axes(1).Title = "Heat Flow (" + su.heatflow + ")"
                 Case "Liquid Velocity Profile"
-                    model.AddLineSeries(px, PopulateData(4))
+'                    model.AddLineSeries(px, PopulateData(4))
                     model.Axes(1).Title = "Velocity (" + su.velocity + ")"
                 Case "Vapor Velocity Profile"
-                    model.AddLineSeries(px, PopulateData(5))
+'                    model.AddLineSeries(px, PopulateData(5))
                     model.Axes(1).Title = "Velocity (" + su.velocity + ")"
                 Case "Inclination Profile"
-                    model.AddLineSeries(px, PopulateData(1))
+'                    model.AddLineSeries(px, PopulateData(1))
                     model.Axes(1).Title = "Elevation (" + su.distance + ")"
                 Case "Liquid Holdup Profile"
-                    model.AddLineSeries(px, PopulateData(7))
+'                    model.AddLineSeries(px, PopulateData(7))
                     model.Axes(1).Title = "Holdup"
                 Case "Overall HTC Profile"
-                    model.AddLineSeries(px, PopulateData(8))
+'                    model.AddLineSeries(px, PopulateData(8))
                     model.Axes(1).Title = "Heat Transfer Coefficient (" + su.heat_transf_coeff + ")"
                 Case "Internal HTC Profile"
-                    model.AddLineSeries(px, PopulateData(9))
+'                    model.AddLineSeries(px, PopulateData(9))
                     model.Axes(1).Title = "Heat Transfer Coefficient (" + su.heat_transf_coeff + ")"
                 Case "Wall k/L Profile"
-                    model.AddLineSeries(px, PopulateData(10))
+'                    model.AddLineSeries(px, PopulateData(10))
                     model.Axes(1).Title = "Heat Transfer Coefficient (" + su.heat_transf_coeff + ")"
                 Case "Insulation k/L Profile"
-                    model.AddLineSeries(px, PopulateData(11))
+'                    model.AddLineSeries(px, PopulateData(11))
                     model.Axes(1).Title = "Heat Transfer Coefficient (" + su.heat_transf_coeff + ")"
                 Case "External HTC Profile"
-                    model.AddLineSeries(px, PopulateData(12))
+'                    model.AddLineSeries(px, PopulateData(12))
                     model.Axes(1).Title = "Heat Transfer Coefficient (" + su.heat_transf_coeff + ")"
                 Case "External Temperature Profile"
-                    model.AddLineSeries(px, PopulateData(13))
+'                    model.AddLineSeries(px, PopulateData(13))
                     model.Axes(1).Title = "External Temperature (" + su.temperature + ")"
             End Select
 

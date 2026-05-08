@@ -84,7 +84,6 @@ Namespace UnitOperations
         Dim BeV, BSGV, BSLV As Double
         Public AV, DV As Double
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_Vessel
 
         <NonSerialized> <Xml.Serialization.XmlIgnore> Public MixedStream As MaterialStream
 
@@ -168,56 +167,9 @@ Namespace UnitOperations
         End Sub
 
         Public Overrides Sub DisplayDynamicsEditForm()
-
-            If fd Is Nothing Then
-                fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                fd.Tag = "ObjectEditor"
-                fd.UpdateCallBack = Sub(table)
-                                        AddButtonsToDynEditor(table)
-                                    End Sub
-                Me.FlowSheet.DisplayForm(fd)
-            Else
-                If fd.IsDisposed Then
-                    fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                    fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                    fd.Tag = "ObjectEditor"
-                    fd.UpdateCallBack = Sub(table)
-                                            AddButtonsToDynEditor(table)
-                                        End Sub
-                    Me.FlowSheet.DisplayForm(fd)
-                Else
-                    fd.Activate()
-                End If
-            End If
-
         End Sub
 
-        Private Sub AddButtonsToDynEditor(table As TableLayoutPanel)
-
-            Dim button1 As New Button With {.Text = FlowSheet.GetTranslatedString("ViewAccumulationStream"),
-                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button1.Click, Sub(s, e)
-                                          AccumulationStream.SetFlowsheet(FlowSheet)
-                                          Dim fms As New MaterialStreamEditor With {
-                                          .MatStream = AccumulationStream,
-                                          .IsAccumulationStream = True,
-                                          .Text = Me.GraphicObject.Tag + ": " + FlowSheet.GetTranslatedString("AccumulationStream")}
-                                          FlowSheet.DisplayForm(fms)
-                                      End Sub
-
-            Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("FillWithStream"),
-                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button2.Click, Sub(s, e)
-                                          AccumulationStream?.SetFlowsheet(FlowSheet)
-                                          Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
-                                          fms.ShowDialog()
-                                      End Sub
-
-            table.Controls.Add(button1)
-            table.Controls.Add(button2)
-            table.Controls.Add(New Panel())
-
+        Private Sub AddButtonsToDynEditor(table As Object)
         End Sub
 
         Public Function CalculateVolume() As Double
@@ -1494,43 +1446,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_Vessel With {.VesselObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_Vessel With {.VesselObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.separator
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.separator.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("VESSEL_Desc")
@@ -1540,14 +1456,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("VESSEL_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
+Partial Class Object
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Pipe_HydraulicProfileImportFromTabularData))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.gbTable = New System.Windows.Forms.GroupBox()
         Me.grid1 = New unvell.ReoGrid.ReoGridControl()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -48,7 +48,7 @@ Partial Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
         '
         Me.grid1.BackColor = System.Drawing.Color.White
         Me.grid1.ColumnHeaderContextMenuStrip = Nothing
-        Me.grid1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.grid1.Dock = System.Windows.Forms.0
         Me.grid1.LeadHeaderContextMenuStrip = Nothing
         Me.grid1.Location = New System.Drawing.Point(3, 16)
         Me.grid1.Name = "grid1"
@@ -92,7 +92,7 @@ Partial Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
         Me.Button2.Text = "Close"
         Me.Button2.UseVisualStyleBackColor = True
         '
-        'EditingForm_Pipe_HydraulicProfileImportFromTabularData
+        'Object
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -102,8 +102,8 @@ Partial Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.gbTable)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "EditingForm_Pipe_HydraulicProfileImportFromTabularData"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Name = "Object"
+        Me.StartPosition = System.Windows.Forms.0
         Me.Text = "Import Pipe Profile from Tabular Data"
         Me.gbTable.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -113,7 +113,7 @@ Partial Class EditingForm_Pipe_HydraulicProfileImportFromTabularData
 
     Friend WithEvents gbTable As GroupBox
     Friend WithEvents grid1 As unvell.ReoGrid.ReoGridControl
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Button1 As Object
     Friend WithEvents Label1 As Label
-    Friend WithEvents Button2 As Button
+    Friend WithEvents Button2 As Object
 End Class

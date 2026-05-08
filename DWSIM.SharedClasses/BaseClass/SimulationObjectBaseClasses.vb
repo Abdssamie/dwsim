@@ -289,11 +289,17 @@ Namespace UnitOperations
             Return Me.GetType.Assembly.GetName.Version
         End Function
 
-        Public MustOverride Function GetDisplayName() As String Implements ISimulationObject.GetDisplayName
+        Public Overridable Function GetDisplayName() As String Implements ISimulationObject.GetDisplayName
+            Return ComponentName
+        End Function
 
-        Public MustOverride Function GetDisplayDescription() As String Implements ISimulationObject.GetDisplayDescription
+        Public Overridable Function GetDisplayDescription() As String Implements ISimulationObject.GetDisplayDescription
+            Return ComponentDescription
+        End Function
 
-        Public MustOverride Function GetIconBitmap() As Object Implements ISimulationObject.GetIconBitmap
+        Public Overridable Function GetIconBitmap() As Object Implements ISimulationObject.GetIconBitmap
+            Return Nothing
+        End Function
 
         Public Overridable Function GetIconBitmapBytes() As Byte() Implements ISimulationObject.GetIconBitmapBytes
 
@@ -530,15 +536,23 @@ Namespace UnitOperations
         Public Overridable Sub DisplayDynamicsEditForm() Implements ISimulationObject.DisplayDynamicsEditForm
         End Sub
 
-        Public Sub UpdateDynamicsEditForm() Implements ISimulationObject.UpdateDynamicsEditForm
+        Public Overridable Sub UpdateDynamicsEditForm() Implements ISimulationObject.UpdateDynamicsEditForm
         End Sub
 
-        Public Sub CloseDynamicsEditForm()
+        Public Overridable Sub CloseDynamicsEditForm()
         End Sub
 
-        Public MustOverride Sub DisplayEditForm() Implements ISimulationObject.DisplayEditForm
+        Public Overridable Sub DisplayEditForm() Implements ISimulationObject.DisplayEditForm
+        End Sub
 
-        Public MustOverride Sub UpdateEditForm() Implements ISimulationObject.UpdateEditForm
+        Public Overridable Sub UpdateEditForm() Implements ISimulationObject.UpdateEditForm
+        End Sub
+
+        Public Overridable Sub DisplayExtraPropertiesEditForm() Implements ISimulationObject.DisplayExtraPropertiesEditForm
+        End Sub
+
+        Public Overridable Sub UpdateExtraPropertiesEditForm() Implements ISimulationObject.UpdateExtraPropertiesEditForm
+        End Sub
 
         Public Overridable Function GetEditingForm() As Object
             Return Nothing
@@ -890,7 +904,9 @@ Namespace UnitOperations
             Return FlowSheet
         End Function
 
-        Public MustOverride Sub CloseEditForm()
+        Public Overridable Sub CloseEditForm()
+
+        End Sub
 
         Public MustOverride Function CloneXML() As Object Implements ISimulationObject.CloneXML
 
@@ -1280,12 +1296,6 @@ Namespace UnitOperations
 
         Public Overridable Sub CreateDynamicProperties() Implements ISimulationObject.CreateDynamicProperties
 
-        End Sub
-
-        Public Sub DisplayExtraPropertiesEditForm() Implements ISimulationObject.DisplayExtraPropertiesEditForm
-        End Sub
-
-        Public Sub UpdateExtraPropertiesEditForm() Implements ISimulationObject.UpdateExtraPropertiesEditForm
         End Sub
 
         Public Function GetDebugWriter() As StringBuilder

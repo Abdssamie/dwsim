@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Column_Connections_New
+Partial Class Object
     Inherits System.Windows.Forms.UserControl
 
     'UserControl overrides dispose to clean up the component list.
@@ -79,7 +79,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
-        Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl1.Dock = System.Windows.Forms.0
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -103,7 +103,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.TabControl2.Controls.Add(Me.TabPage5)
         Me.TabControl2.Controls.Add(Me.TabPage6)
         Me.TabControl2.Controls.Add(Me.TabPage7)
-        Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControl2.Dock = System.Windows.Forms.0
         Me.TabControl2.Location = New System.Drawing.Point(3, 3)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
@@ -128,7 +128,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.gridFeeds.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridFeeds.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridFeeds.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.c1, Me.c2})
-        Me.gridFeeds.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridFeeds.Dock = System.Windows.Forms.0
         Me.gridFeeds.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.gridFeeds.Location = New System.Drawing.Point(3, 3)
         Me.gridFeeds.Name = "gridFeeds"
@@ -171,7 +171,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.gridProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridProducts.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.DataGridViewTextBoxColumn1, Me.DataGridViewComboBoxColumn1})
-        Me.gridProducts.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridProducts.Dock = System.Windows.Forms.0
         Me.gridProducts.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.gridProducts.Location = New System.Drawing.Point(3, 3)
         Me.gridProducts.Name = "gridProducts"
@@ -213,7 +213,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.gridDuties.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridDuties.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridDuties.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column4, Me.DataGridViewTextBoxColumn3, Me.DataGridViewComboBoxColumn3})
-        Me.gridDuties.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridDuties.Dock = System.Windows.Forms.0
         Me.gridDuties.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.gridDuties.Location = New System.Drawing.Point(0, 0)
         Me.gridDuties.Name = "gridDuties"
@@ -255,7 +255,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.gridSideDraws.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridSideDraws.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridSideDraws.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column5, Me.DataGridViewTextBoxColumn2, Me.DataGridViewComboBoxColumn2})
-        Me.gridSideDraws.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridSideDraws.Dock = System.Windows.Forms.0
         Me.gridSideDraws.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.gridSideDraws.Location = New System.Drawing.Point(0, 0)
         Me.gridSideDraws.Name = "gridSideDraws"
@@ -298,7 +298,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.gridAssociations.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridAssociations.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridAssociations.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column6, Me.DataGridViewTextBoxColumn4, Me.Column1, Me.DataGridViewComboBoxColumn4})
-        Me.gridAssociations.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridAssociations.Dock = System.Windows.Forms.0
         Me.gridAssociations.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.gridAssociations.Location = New System.Drawing.Point(3, 3)
         Me.gridAssociations.Name = "gridAssociations"
@@ -347,7 +347,7 @@ Partial Class EditingForm_Column_Connections_New
         Me.gridSideDrawSpecs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridSideDrawSpecs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridSideDrawSpecs.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column7, Me.DataGridViewTextBoxColumn5, Me.DataGridViewComboBoxColumn5, Me.DataGridViewTextBoxColumn6})
-        Me.gridSideDrawSpecs.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridSideDrawSpecs.Dock = System.Windows.Forms.0
         Me.gridSideDrawSpecs.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
         Me.gridSideDrawSpecs.Location = New System.Drawing.Point(3, 3)
         Me.gridSideDrawSpecs.Name = "gridSideDrawSpecs"
@@ -378,12 +378,12 @@ Partial Class EditingForm_Column_Connections_New
         Me.DataGridViewTextBoxColumn6.HeaderText = "Molar Flow"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         '
-        'EditingForm_Column_Connections_New
+        'Object
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.TabControl1)
-        Me.Name = "EditingForm_Column_Connections_New"
+        Me.Name = "Object"
         Me.Size = New System.Drawing.Size(402, 393)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)

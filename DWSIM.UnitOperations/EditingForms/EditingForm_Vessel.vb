@@ -1,10 +1,9 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
-Imports WeifenLuo.WinFormsUI.Docking
+'Imports WeifenLuo.WinFormsUI.Docking
 Imports DWSIM.UnitOperations.UnitOperations
 
-Public Class EditingForm_Vessel
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -35,8 +34,8 @@ Public Class EditingForm_Vessel
         If Host.Items.Where(Function(x) x.Name.Contains(VesselObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = VesselObject
                                                             iwindow.Show(DockPanel)
@@ -130,7 +129,7 @@ Public Class EditingForm_Vessel
 
             PanelThermalProfileEditor.Controls.Clear()
             Dim teditor As New VesselThermalProfileEditor With {.Profile = VesselObject.ThermalProperties, .form = VesselObject.FlowSheet}
-            teditor.Dock = DockStyle.Fill
+            teditor.Dock = 0
             PanelThermalProfileEditor.Controls.Add(teditor)
 
             chkDoRigorousHB.Checked = VesselObject.CalculateRigorousHeatBalance
@@ -218,13 +217,13 @@ Public Class EditingForm_Vessel
             Dim flowsheet = VesselObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                 Try
                     flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -245,13 +244,13 @@ Public Class EditingForm_Vessel
             Dim flowsheet = VesselObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 If gobj.OutputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(index).AttachedConnector.AttachedTo)
                 Try
                     flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, index, 0)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -350,7 +349,7 @@ Public Class EditingForm_Vessel
                 Dim flowsheet = VesselObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End If
                 If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
@@ -586,7 +585,7 @@ Public Class EditingForm_Vessel
         utility.AttachedTo = VesselObject
 
         With DirectCast(utility, DockContent)
-            .ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+'            .ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         End With
 
         VesselObject.AttachedUtilities.Add(utility)
@@ -602,7 +601,7 @@ Public Class EditingForm_Vessel
 
         For Each item In VesselObject.AttachedUtilities
             Dim ts As New ToolStripMenuItem(item.Name)
-            AddHandler ts.Click, Sub()
+
                                      Dim f = DirectCast(item, DockContent)
                                      If f.Visible Then
                                          f.Select()

@@ -1,7 +1,6 @@
 ﻿Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
-Imports System.Drawing
 
-Public Class EditingForm_HeatExchanger_ViewProfile
+Public Class Object
 
     Public hx As UnitOperations.HeatExchanger
 
@@ -10,7 +9,7 @@ Public Class EditingForm_HeatExchanger_ViewProfile
 
     Dim loaded As Boolean = False
 
-    Private Sub EditingForm_HeatExchanger_ViewProfile_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         nf = hx.FlowSheet.FlowsheetOptions.NumberFormat
         su = hx.FlowSheet.FlowsheetOptions.SelectedUnitSystem

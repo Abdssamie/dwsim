@@ -1,11 +1,8 @@
 ﻿Imports System.IO
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
-Imports DWSIM.DrawingTools.Point
 Imports DWSIM.Interfaces.Enums
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.UnitOperations.UnitOperations
 Imports Python.Runtime
-Imports SkiaSharp
 
 Namespace UnitOperations.Auxiliary
 
@@ -68,9 +65,9 @@ Namespace UnitOperations
 
         Private ImagePath As String = ""
 
-        Private Image As SKImage
+        Private Image As Object
 
-        <Xml.Serialization.XmlIgnore> Public f As EditingForm_OPEMFC
+        <Xml.Serialization.XmlIgnore> Public f As Object
 
         Public Property OPEMPath As String = "main\python-3.9.4.amd64"
 
@@ -106,33 +103,10 @@ Namespace UnitOperations
 
         Public MustOverride Function ReturnInstance(typename As String) As Object Implements IExternalUnitOperation.ReturnInstance
 
-        Public MustOverride Sub AddDefaultInputParameters()
+        Public Overridable Sub AddDefaultInputParameters()
+        End Sub
 
         Public Sub Draw(g As Object) Implements IExternalUnitOperation.Draw
-
-            Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
-
-            If Image Is Nothing Then
-
-                ImagePath = SharedClasses.Utility.GetTempFileName()
-                DirectCast(GetIconBitmap(), System.Drawing.Bitmap).Save(ImagePath)
-
-                Using streamBG = New FileStream(ImagePath, FileMode.Open)
-                    Using bitmap = SKBitmap.Decode(streamBG)
-                        Image = SKImage.FromBitmap(bitmap)
-                    End Using
-                End Using
-
-                Try
-                    File.Delete(ImagePath)
-                Catch ex As Exception
-                End Try
-
-            End If
-
-            Using p As New SKPaint With {.IsAntialias = GlobalSettings.Settings.DrawingAntiAlias, .FilterQuality = SKFilterQuality.High}
-                canvas.DrawImage(Image, New SKRect(GraphicObject.X, GraphicObject.Y, GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height), p)
-            End Using
 
         End Sub
 
@@ -144,36 +118,36 @@ Namespace UnitOperations
             x = GraphicObject.X
             y = GraphicObject.Y
 
-            Dim myIC1 As New ConnectionPoint
+            Dim myIC1 As New Object
 
-            myIC1.Position = New Point(x, y + h / 3)
+            myIC1.Position = New Object()
             myIC1.Type = ConType.ConIn
             myIC1.Direction = ConDir.Right
 
-            Dim myIC2 As New ConnectionPoint
+            Dim myIC2 As New Object
 
-            myIC2.Position = New Point(x, y + 2 * h / 3)
+            myIC2.Position = New Object()
             myIC2.Type = ConType.ConIn
             myIC2.Direction = ConDir.Right
 
-            Dim myOC1 As New ConnectionPoint
-            myOC1.Position = New Point(x + w, y + h / 2)
+            Dim myOC1 As New Object
+            myOC1.Position = New Object()
             myOC1.Type = ConType.ConOut
             myOC1.Direction = ConDir.Right
 
-            Dim myOC2 As New ConnectionPoint
-            myOC2.Position = New Point(x + w / 2, y + h)
+            Dim myOC2 As New Object
+            myOC2.Position = New Object()
             myOC2.Type = ConType.ConOut
             myOC2.Direction = ConDir.Down
             myOC2.Type = ConType.ConEn
 
             With GraphicObject.InputConnectors
                 If .Count = 1 Then
-                    .Item(0).Position = New Point(x, y + h / 2)
+                    .Item(0).Position = New Object()
                     .Add(myIC2)
                 ElseIf .Count = 2 Then
-                    .Item(0).Position = New Point(x, y + h / 3)
-                    .Item(1).Position = New Point(x, y + 2 * h / 3)
+                    .Item(0).Position = New Object()
+                    .Item(1).Position = New Object()
                 Else
                     .Add(myIC1)
                     .Add(myIC2)
@@ -184,8 +158,8 @@ Namespace UnitOperations
 
             With GraphicObject.OutputConnectors
                 If .Count = 2 Then
-                    .Item(0).Position = New Point(x + w, y + h / 2)
-                    .Item(1).Position = New Point(x + w / 2, y + h)
+                    .Item(0).Position = New Object()
+                    .Item(1).Position = New Object()
                 Else
                     .Add(myOC1)
                     .Add(myOC2)
@@ -279,46 +253,6 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
-
-            If f Is Nothing Then
-                f = New EditingForm_OPEMFC With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_OPEMFC With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    If f.InvokeRequired Then f.BeginInvoke(Sub() f.UpdateInfo()) Else f.UpdateInfo()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub CloseEditForm()
-
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-
-        End Sub
 
         Public Function ToList(pythonlist As Object) As List(Of Double)
 
@@ -336,7 +270,8 @@ Namespace UnitOperations
 
         End Function
 
-        Public MustOverride Sub PopulateEditorPanel(container As Object) Implements IExternalUnitOperation.PopulateEditorPanel
+        Public Overridable Sub PopulateEditorPanel(container As Object) Implements IExternalUnitOperation.PopulateEditorPanel
+        End Sub
 
         Public Overrides Function GetProperties(proptype As PropertyType) As String()
 

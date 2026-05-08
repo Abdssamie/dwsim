@@ -30,7 +30,7 @@ Namespace My
 
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)> _
     Private Shared Sub AutoSaveSettings(sender As Global.System.Object, e As Global.System.EventArgs)
-        If My.Application.SaveMySettingsOnExit Then
+        If My.Nothing Then
             My.Settings.Save()
         End If
     End Sub
@@ -44,7 +44,7 @@ Namespace My
                If Not addedHandler Then
                     SyncLock addedHandlerLockObject
                         If Not addedHandler Then
-                            AddHandler My.Application.Shutdown, AddressOf AutoSaveSettings
+                            AddHandler My.Nothing, AddressOf AutoSaveSettings
                             addedHandler = True
                         End If
                     End SyncLock

@@ -2,8 +2,6 @@
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.UnitOperations.UnitOperations.Valve
-Imports SkiaSharp
-Imports SkiaSharp.Views.Desktop
 
 Namespace UnitOperations
 
@@ -125,21 +123,18 @@ Namespace UnitOperations
 
 #Region "Automatic Drawing Support"
 
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.Relief_Valve_48px
-        End Function
 
         Private Image As SkiaSharp.SKImage
 
         'this function draws the object on the flowsheet
         Public Sub Draw(g As Object) Implements Interfaces.IExternalUnitOperation.Draw
 
-            Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
+            Dim canvas As Object = g
 
             CreateConnectors()
             GraphicObject.UpdateStatus()
 
-            Dim myPen As New SKPaint()
+            Dim myPen As New Object()
             With myPen
                 .Color = GraphicObject.LineColor
                 .StrokeWidth = GraphicObject.LineWidth
@@ -152,7 +147,7 @@ Namespace UnitOperations
             Dim Height = GraphicObject.Height
             Dim Width = GraphicObject.Width
 
-            Dim gp As New SKPath()
+            Dim gp As New Object()
 
             gp.MoveTo(Convert.ToInt32(X + 0.2 * Width), Convert.ToInt32(Y + Height))
             gp.LineTo(Convert.ToInt32(X + 0.5 * Width), Convert.ToInt32(Y + 0.5 * Height))
@@ -169,7 +164,7 @@ Namespace UnitOperations
 
                     'default
 
-                    Dim gradPen As New SKPaint()
+                    Dim gradPen As New Object()
                     With gradPen
                         .Color = GraphicObject.LineColor.WithAlpha(50)
                         .StrokeWidth = GraphicObject.LineWidth
@@ -193,7 +188,6 @@ Namespace UnitOperations
                     'b/w
 
                     With myPen
-                        .Color = SKColors.Black
                         .StrokeWidth = GraphicObject.LineWidth
                         .IsStroke = True
                         .IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
@@ -212,7 +206,7 @@ Namespace UnitOperations
                     'load the icon image on memory
                     If Image Is Nothing Then
 
-                        Using bitmap = My.Resources.Relief_Valve_48px.ToSKBitmap()
+                        Using bitmap = Nothing.ToSKBitmap()
                             Image = SkiaSharp.SKImage.FromBitmap(bitmap)
                         End Using
 
@@ -232,10 +226,7 @@ Namespace UnitOperations
 
             If GraphicObject.InputConnectors.Count = 0 Then
 
-                Dim port1 As New Drawing.SkiaSharp.GraphicObjects.ConnectionPoint()
-
-                port1.IsEnergyConnector = False
-                port1.Type = Interfaces.Enums.GraphicObjects.ConType.ConIn
+                Dim port1 As New Object()
                 port1.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + 0.5 * GraphicObject.Width, GraphicObject.Y + GraphicObject.Height)
                 port1.ConnectorName = "Inlet Port"
                 port1.Direction = Enums.GraphicObjects.ConDir.Up
@@ -252,7 +243,7 @@ Namespace UnitOperations
 
             If GraphicObject.OutputConnectors.Count = 0 Then
 
-                Dim port3 As New Drawing.SkiaSharp.GraphicObjects.ConnectionPoint()
+                Dim port3 As New Object()
 
                 port3.IsEnergyConnector = False
                 port3.Type = Interfaces.Enums.GraphicObjects.ConType.ConOut
@@ -276,61 +267,7 @@ Namespace UnitOperations
 
 #Region "Classic UI and Cross-Platform UI Editor Support"
 
-        <Xml.Serialization.XmlIgnore> Public editwindow As EditingForm_ReliefValve
-
-        'display the editor on the classic user interface
-        Public Overrides Sub DisplayEditForm()
-
-            If editwindow Is Nothing Then
-
-                editwindow = New EditingForm_ReliefValve() With {.SimObject = Me}
-
-            Else
-
-                If editwindow.IsDisposed Then
-                    editwindow = New EditingForm_ReliefValve() With {.SimObject = Me}
-                End If
-
-            End If
-
-            FlowSheet.DisplayForm(editwindow)
-
-        End Sub
-
-        'this updates the editor window on classic ui
-        Public Overrides Sub UpdateEditForm()
-
-            If editwindow IsNot Nothing Then
-
-                If editwindow.InvokeRequired Then
-
-                    editwindow.Invoke(Sub()
-                                          editwindow?.UpdateInfo()
-                                      End Sub)
-
-                Else
-
-                    editwindow?.UpdateInfo()
-
-                End If
-
-            End If
-
-        End Sub
-
-        'this closes the editor on classic ui
-        Public Overrides Sub CloseEditForm()
-
-            editwindow?.Close()
-
-        End Sub
-
-        'returns the editing form
-        Public Overrides Function GetEditingForm() As Form
-
-            Return Nothing
-
-        End Function
+        <Xml.Serialization.XmlIgnore> Public editwindow As Object
 
         'this function display the properties on the cross-platform user interface
         Public Sub PopulateEditorPanel(container As Object) Implements Interfaces.IExternalUnitOperation.PopulateEditorPanel

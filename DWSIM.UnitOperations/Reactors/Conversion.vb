@@ -40,8 +40,6 @@ Namespace Reactors
         Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = False
 
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_ReactorConvEqGibbs
-
         Public Sub New()
             MyBase.New()
         End Sub
@@ -117,56 +115,9 @@ Namespace Reactors
         End Sub
 
         Public Overrides Sub DisplayDynamicsEditForm()
-
-            If fd Is Nothing Then
-                fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                fd.Tag = "ObjectEditor"
-                fd.UpdateCallBack = Sub(table)
-                                        AddButtonsToDynEditor(table)
-                                    End Sub
-                Me.FlowSheet.DisplayForm(fd)
-            Else
-                If fd.IsDisposed Then
-                    fd = New DynamicsPropertyEditor With {.SimObject = Me}
-                    fd.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
-                    fd.Tag = "ObjectEditor"
-                    fd.UpdateCallBack = Sub(table)
-                                            AddButtonsToDynEditor(table)
-                                        End Sub
-                    Me.FlowSheet.DisplayForm(fd)
-                Else
-                    fd.Activate()
-                End If
-            End If
-
         End Sub
 
-        Private Sub AddButtonsToDynEditor(table As TableLayoutPanel)
-
-            Dim button1 As New Button With {.Text = FlowSheet.GetTranslatedString("ViewAccumulationStream"),
-                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button1.Click, Sub(s, e)
-                                          AccumulationStream.SetFlowsheet(FlowSheet)
-                                          Dim fms As New MaterialStreamEditor With {
-                                          .MatStream = AccumulationStream,
-                                          .IsAccumulationStream = True,
-                                          .Text = Me.GraphicObject.Tag + ": " + FlowSheet.GetTranslatedString("AccumulationStream")}
-                                          FlowSheet.DisplayForm(fms)
-                                      End Sub
-
-            Dim button2 As New Button With {.Text = FlowSheet.GetTranslatedString("FillWithStream"),
-                .Dock = DockStyle.Bottom, .AutoSize = True, .AutoSizeMode = AutoSizeMode.GrowAndShrink}
-            AddHandler button2.Click, Sub(s, e)
-                                          AccumulationStream.SetFlowsheet(FlowSheet)
-                                          Dim fms As New EditingForm_SeparatorFiller With {.SimObject = Me}
-                                          fms.ShowDialog()
-                                      End Sub
-
-            table.Controls.Add(button1)
-            table.Controls.Add(button2)
-            table.Controls.Add(New Panel())
-
+        Private Sub AddButtonsToDynEditor(table As Object)
         End Sub
         Public Overrides Sub CreateDynamicProperties()
 
@@ -1199,43 +1150,7 @@ Namespace Reactors
             End If
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_ReactorConvEqGibbs With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_ReactorConvEqGibbs With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.reactor_conversion
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.reactor_conversion.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("CONV_Desc")
@@ -1245,14 +1160,6 @@ Namespace Reactors
             Return ResMan.GetLocalString("CONV_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

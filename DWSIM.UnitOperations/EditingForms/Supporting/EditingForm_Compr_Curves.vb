@@ -1,16 +1,15 @@
-﻿Imports System.Drawing
 Imports System.IO
 Imports DWSIM.SharedClassesCSharp.FilePicker
 Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.PumpOps
 
-Public Class EditingForm_CompressorExpander_Curves
+Public Class Object
 
     Public simobj As ISimulationObject
 
     Public loaded As Boolean = False
 
-    Private Sub EditingForm_CompressorExpander_Curves_Load(sender As Object, e As EventArgs) Handles MyBase.Shown
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Shown
 
         Using g1 = Me.CreateGraphics()
 
@@ -46,7 +45,7 @@ Public Class EditingForm_CompressorExpander_Curves
 
                 editor.curvedata = item.Value
                 editor.speed = item.Key
-                editor.Dock = DockStyle.Fill
+                editor.Dock = 0
                 editor.Populate()
 
                 Dim tab1 As New TabPage(item.Key.ToString & " rpm")
@@ -70,7 +69,7 @@ Public Class EditingForm_CompressorExpander_Curves
 
                 editor.curvedata = item.Value
                 editor.speed = item.Key
-                editor.Dock = DockStyle.Fill
+                editor.Dock = 0
                 editor.Populate()
 
                 Dim tab1 As New TabPage(item.Key.ToString & " rpm")
@@ -89,7 +88,7 @@ Public Class EditingForm_CompressorExpander_Curves
 
     End Sub
 
-    Private Sub EditingForm_CompressorExpander_Curves_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+    Private Sub Object(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
 
         Try
@@ -119,7 +118,7 @@ Public Class EditingForm_CompressorExpander_Curves
             End If
 
         Catch ex As Exception
-
+'
             MessageBox.Show(ex.Message,
                             simobj.GetFlowsheet.GetTranslatedString("Erro"),
                             MessageBoxButtons.OK,
@@ -145,7 +144,7 @@ Public Class EditingForm_CompressorExpander_Curves
 
             editor.curvedata = curves
             editor.speed = speed
-            'editor.Dock = DockStyle.Fill
+            'editor.Dock = 0
             editor.Populate()
 
             Dim tab1 As New TabPage(speed & " rpm")
@@ -173,7 +172,7 @@ Public Class EditingForm_CompressorExpander_Curves
             editor.speed = speed
             editor.Populate()
 
-            'editor.Dock = DockStyle.Fill
+            'editor.Dock = 0
 
             Dim tab1 As New TabPage(speed & " rpm")
             tab1.AutoScroll = True
@@ -190,7 +189,7 @@ Public Class EditingForm_CompressorExpander_Curves
         If TabControl1.TabPages.Count = 1 Then
             Exit Sub
         End If
-
+'
         If MessageBox.Show(simobj.GetFlowsheet.GetTranslatedString("ConfirmOperation"),
                            simobj.GetFlowsheet.GetTranslatedString("Attention"),
                            MessageBoxButtons.YesNo,
@@ -220,7 +219,7 @@ Public Class EditingForm_CompressorExpander_Curves
                 End If
                 Populate()
             Catch ex As Exception
-                MessageBox.Show(simobj.GetFlowsheet.GetTranslatedString("ErrorAddingComponent") & " " & ex.Message,
+'                MessageBox.Show(simobj.GetFlowsheet.GetTranslatedString("ErrorAddingComponent") & " " & ex.Message,
                                 simobj.GetFlowsheet.GetTranslatedString("Erro"),
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error)
@@ -258,7 +257,7 @@ Public Class EditingForm_CompressorExpander_Curves
                     End Using
                 End If
             Catch ex As Exception
-                MessageBox.Show(simobj.GetFlowsheet.GetTranslatedString("Erroaosalvararquivo") & " " & ex.Message,
+'                MessageBox.Show(simobj.GetFlowsheet.GetTranslatedString("Erroaosalvararquivo") & " " & ex.Message,
                                 simobj.GetFlowsheet.GetTranslatedString("Erro"),
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error)
@@ -267,7 +266,7 @@ Public Class EditingForm_CompressorExpander_Curves
 
     End Sub
 
-    Private Sub EditingForm_CompressorExpander_Curves_Load_1(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ChangeDefaultFont()
 

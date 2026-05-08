@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_OPEMFC
+Partial Class Object
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -30,7 +30,7 @@ Partial Class EditingForm_OPEMFC
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_OPEMFC))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBoxParameters = New System.Windows.Forms.GroupBox()
         Me.gridInput = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -103,7 +103,7 @@ Partial Class EditingForm_OPEMFC
         Me.gridInput.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.gridInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridInput.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.Column2, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5})
-        Me.gridInput.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridInput.Dock = System.Windows.Forms.0
         Me.gridInput.Location = New System.Drawing.Point(3, 16)
         Me.gridInput.Margin = New System.Windows.Forms.Padding(0)
         Me.gridInput.Name = "gridInput"
@@ -162,7 +162,7 @@ Partial Class EditingForm_OPEMFC
         '
         'Button4
         '
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Button4.Dock = System.Windows.Forms.0
         Me.Button4.Location = New System.Drawing.Point(3, 215)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(380, 23)
@@ -172,7 +172,7 @@ Partial Class EditingForm_OPEMFC
         '
         'Button2
         '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Button2.Dock = System.Windows.Forms.0
         Me.Button2.Location = New System.Drawing.Point(3, 238)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(380, 23)
@@ -187,7 +187,7 @@ Partial Class EditingForm_OPEMFC
         Me.gridOutput.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.gridOutput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridOutput.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.Column3, Me.DataGridViewTextBoxColumn2, Me.Column1})
-        Me.gridOutput.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridOutput.Dock = System.Windows.Forms.0
         Me.gridOutput.Location = New System.Drawing.Point(3, 16)
         Me.gridOutput.Margin = New System.Windows.Forms.Padding(0)
         Me.gridOutput.Name = "gridOutput"
@@ -233,7 +233,7 @@ Partial Class EditingForm_OPEMFC
         '
         'Button3
         '
-        Me.Button3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Button3.Dock = System.Windows.Forms.0
         Me.Button3.Location = New System.Drawing.Point(3, 261)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(380, 23)
@@ -255,7 +255,7 @@ Partial Class EditingForm_OPEMFC
         '
         'rtbAnnotations
         '
-        Me.rtbAnnotations.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.rtbAnnotations.Dock = System.Windows.Forms.0
         Me.rtbAnnotations.Location = New System.Drawing.Point(3, 16)
         Me.rtbAnnotations.Name = "rtbAnnotations"
         Me.rtbAnnotations.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil Microsoft " &
@@ -500,7 +500,7 @@ Partial Class EditingForm_OPEMFC
         '
         Me.chkActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkActive.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.chkActive.Location = New System.Drawing.Point(357, 43)
         Me.chkActive.Name = "chkActive"
@@ -578,7 +578,7 @@ Partial Class EditingForm_OPEMFC
         Me.Button1.Text = "OPEM Amphlett Model Information"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'EditingForm_OPEMFC
+        'Object
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -591,7 +591,7 @@ Partial Class EditingForm_OPEMFC
         Me.Controls.Add(Me.GroupBoxConnections)
         Me.Controls.Add(Me.GroupBox5)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Name = "EditingForm_OPEMFC"
+        Me.Name = "Object"
         Me.GroupBoxParameters.ResumeLayout(False)
         CType(Me.gridInput, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBoxResults.ResumeLayout(False)
@@ -609,14 +609,14 @@ Partial Class EditingForm_OPEMFC
     Public WithEvents GroupBox4 As GroupBox
     Public WithEvents rtbAnnotations As Extended.Windows.Forms.RichTextBoxExtended
     Public WithEvents GroupBoxConnections As GroupBox
-    Public WithEvents btnCreateAndConnectEnergy As Button
-    Public WithEvents btnDisconnectEnergy As Button
-    Public WithEvents btnCreateAndConnectOutlet1 As Button
+    Public WithEvents btnCreateAndConnectEnergy As Object
+    Public WithEvents btnDisconnectEnergy As Object
+    Public WithEvents btnCreateAndConnectOutlet1 As Object
     Public WithEvents Label14 As Label
-    Public WithEvents btnCreateAndConnectInlet1 As Button
+    Public WithEvents btnCreateAndConnectInlet1 As Object
     Public WithEvents cbEnergy As ComboBox
-    Public WithEvents btnDisconnectOutlet1 As Button
-    Public WithEvents btnDisconnect1 As Button
+    Public WithEvents btnDisconnectOutlet1 As Object
+    Public WithEvents btnDisconnect1 As Object
     Public WithEvents Label7 As Label
     Public WithEvents cbOutlet1 As ComboBox
     Public WithEvents cbInlet1 As ComboBox
@@ -638,14 +638,14 @@ Partial Class EditingForm_OPEMFC
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button4 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Object
+    Friend WithEvents Button4 As Object
+    Friend WithEvents Button3 As Object
+    Friend WithEvents Button2 As Object
     Public WithEvents GroupBoxParameters As GroupBox
     Public WithEvents GroupBoxResults As GroupBox
-    Public WithEvents btnCreateAndConnectInlet2 As Button
-    Public WithEvents btnDisconnect2 As Button
+    Public WithEvents btnCreateAndConnectInlet2 As Object
+    Public WithEvents btnDisconnect2 As Object
     Public WithEvents cbInlet2 As ComboBox
     Public WithEvents Label1 As Label
 End Class

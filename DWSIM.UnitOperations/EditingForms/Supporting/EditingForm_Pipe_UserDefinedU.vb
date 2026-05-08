@@ -1,8 +1,7 @@
-﻿Imports System.Drawing
 Imports unvell.ReoGrid
 Imports unvell.ReoGrid.DataFormat
 
-Public Class EditingForm_Pipe_UserDefinedU
+Public Class Object
 
     Private Loaded As Boolean = False
 
@@ -10,7 +9,7 @@ Public Class EditingForm_Pipe_UserDefinedU
 
     Public Flowsheet As IFlowsheet
 
-    Private Sub EditingForm_Pipe_UserDefinedU_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.ChangeDefaultFont()
 
@@ -76,7 +75,7 @@ Public Class EditingForm_Pipe_UserDefinedU
                                     Profile.UserDefinedU_Temp.Add(data2.ToString().ToDoubleFromCurrent().ConvertToSI(units.temperature))
                                     Profile.UserDefinedU_U.Add(data3.ToString().ToDoubleFromCurrent().ConvertToSI(units.heat_transf_coeff))
                                 Catch ex As Exception
-                                    MessageBox.Show(String.Format("Error on data table: {0}", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                                    MessageBox.Show(String.Format("Error on data table: {0}", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                                 End Try
                             End If
                         Next

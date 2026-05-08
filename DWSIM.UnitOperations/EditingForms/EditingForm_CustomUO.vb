@@ -1,12 +1,10 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.SharedClassesCSharp.FilePicker
-Imports System.Drawing
 
-Public Class EditingForm_CustomUO
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -17,7 +15,7 @@ Public Class EditingForm_CustomUO
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
 
@@ -37,8 +35,8 @@ Public Class EditingForm_CustomUO
         If Host.Items.Where(Function(x) x.Name.Contains(SimObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = SimObject
                                                             iwindow.Show(DockPanel)
@@ -224,7 +222,7 @@ Public Class EditingForm_CustomUO
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End If
 
@@ -249,7 +247,7 @@ Public Class EditingForm_CustomUO
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
                 End If
 
@@ -483,13 +481,13 @@ Public Class EditingForm_CustomUO
             Dim flowsheet = SimObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Try
                     If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                     flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -511,13 +509,13 @@ Public Class EditingForm_CustomUO
             Dim flowsheet = SimObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Try
                     If gobj.OutputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(index).AttachedConnector.AttachedTo)
                     flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, index, 0)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -550,7 +548,7 @@ Public Class EditingForm_CustomUO
                 Try
                     SimObject.InputVariables.Add(row.Cells(0).Value, row.Cells(1).Value)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message)
+'                    MessageBox.Show(ex.Message)
                 End Try
             Next
         End If
@@ -581,7 +579,7 @@ Public Class EditingForm_CustomUO
                 Try
                     SimObject.InputStringVariables.Add(row.Cells(0).Value, row.Cells(1).Value)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message)
+'                    MessageBox.Show(ex.Message)
                 End Try
             Next
         End If
@@ -625,17 +623,17 @@ Public Class EditingForm_CustomUO
                     Try
                         Using img = SkiaSharp.Views.Desktop.Extensions.ToSKImage(bmp)
                             SimObject.EmbeddedImageData = DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.EmbeddedImageGraphic.ImageToBase64(img, SkiaSharp.SKEncodedImageFormat.Png)
-                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
+'                            MessageBox.Show("Image data read successfully.", "DWSIM", MessageBoxButtons.OK)
                         End Using
                     Catch ex As Exception
-                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
+'                        MessageBox.Show("Error reading image data.", "DWSIM", MessageBoxButtons.OK)
                     End Try
                 End Using
             End Using
         End If
     End Sub
 
-    Private Sub EditingForm_CustomUO_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+    Private Sub Object(sender As Object, e As EventArgs) Handles Me.Shown
 
         Me.AutoScrollPosition = New System.Drawing.Point(0, 0)
 

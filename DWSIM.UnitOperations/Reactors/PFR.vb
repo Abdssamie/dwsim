@@ -108,8 +108,6 @@ Namespace Reactors
         Public Overrides ReadOnly Property HasPropertiesForDynamicMode As Boolean = True
 
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_ReactorPFR
-
         Private VolumeFraction As Double = 1.0
 
         Public Property NumberOfTubes As Integer = 1
@@ -1917,43 +1915,7 @@ Namespace Reactors
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_ReactorPFR With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_ReactorPFR With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.pfr
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.pfr.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("PFR_Desc")
@@ -1963,14 +1925,6 @@ Namespace Reactors
             Return ResMan.GetLocalString("PFR_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get
@@ -2155,11 +2109,11 @@ Namespace Reactors
                 .FontSize = 10,
                 .Title = "Length (" + su.distance + ")"
             })
-
-            model.LegendFontSize = 9
-            model.LegendPlacement = LegendPlacement.Outside
-            model.LegendOrientation = LegendOrientation.Horizontal
-            model.LegendPosition = LegendPosition.BottomCenter
+'
+'            model.LegendFontSize = 9
+'            model.LegendPlacement = LegendPlacement.Outside
+'            model.LegendOrientation = LegendOrientation.Horizontal
+'            model.LegendPosition = LegendPosition.BottomCenter
             model.TitleHorizontalAlignment = TitleHorizontalAlignment.CenteredWithinView
 
             Dim vx As New List(Of Double)(), vy As New List(Of Double)()
@@ -2197,7 +2151,7 @@ Namespace Reactors
                     })
 
                     color = OxyColors.Blue
-                    model.AddLineSeries(SystemsOfUnits.Converter.ConvertArrayFromSI(su.distance, vx.ToArray()), SystemsOfUnits.Converter.ConvertArrayFromSI(su.temperature, vya(ComponentConversions.Count).ToArray()), color)
+'                    model.AddLineSeries(SystemsOfUnits.Converter.ConvertArrayFromSI(su.distance, vx.ToArray()), SystemsOfUnits.Converter.ConvertArrayFromSI(su.temperature, vya(ComponentConversions.Count).ToArray()), color)
                     model.Series(model.Series.Count - 1).Title = "Temperature"
                     DirectCast(model.Series(model.Series.Count - 1), OxyPlot.Series.LineSeries).YAxisKey = "temp"
 
@@ -2213,7 +2167,7 @@ Namespace Reactors
                     })
 
                     color = OxyColors.Green
-                    model.AddLineSeries(SystemsOfUnits.Converter.ConvertArrayFromSI(su.distance, vx.ToArray()), SystemsOfUnits.Converter.ConvertArrayFromSI(su.pressure, vya(ComponentConversions.Count + 1).ToArray()), color)
+'                    model.AddLineSeries(SystemsOfUnits.Converter.ConvertArrayFromSI(su.distance, vx.ToArray()), SystemsOfUnits.Converter.ConvertArrayFromSI(su.pressure, vya(ComponentConversions.Count + 1).ToArray()), color)
                     model.Series(model.Series.Count - 1).Title = "Pressure"
                     DirectCast(model.Series(model.Series.Count - 1), OxyPlot.Series.LineSeries).YAxisKey = "press"
 
@@ -2251,7 +2205,7 @@ Namespace Reactors
                             Case Else
                                 color = OxyColor.FromRgb(New Random(j).Next(0, 255), New Random(j + 100).Next(0, 255), New Random(j - 100).Next(0, 255))
                         End Select
-                        model.AddLineSeries(SystemsOfUnits.Converter.ConvertArrayFromSI(su.distance, vx.ToArray()), SystemsOfUnits.Converter.ConvertArrayFromSI(su.molar_conc, vya(j).ToArray()), color)
+'                        model.AddLineSeries(SystemsOfUnits.Converter.ConvertArrayFromSI(su.distance, vx.ToArray()), SystemsOfUnits.Converter.ConvertArrayFromSI(su.molar_conc, vya(j).ToArray()), color)
                         model.Series(model.Series.Count - 1).Title = vn(j)
                         DirectCast(model.Series(model.Series.Count - 1), OxyPlot.Series.LineSeries).YAxisKey = "conc"
                     Next

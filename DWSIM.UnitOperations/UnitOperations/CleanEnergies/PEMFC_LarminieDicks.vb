@@ -43,11 +43,6 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Function GetIconBitmap() As Object
-
-            Return My.Resources.fuel_cell
-
-        End Function
 
         Public Overrides Function CloneXML() As Object
 

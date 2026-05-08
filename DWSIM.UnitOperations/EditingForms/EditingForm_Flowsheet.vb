@@ -1,11 +1,10 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 Imports DWSIM.UnitOperations.UnitOperations
 Imports DWSIM.SharedClassesCSharp.FilePicker
 
-Public Class EditingForm_FlowsheetUO
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -16,7 +15,7 @@ Public Class EditingForm_FlowsheetUO
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
 
@@ -431,13 +430,13 @@ Public Class EditingForm_FlowsheetUO
             Dim flowsheet = SimObject.FlowSheet
 
             If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Try
                     If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                     flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -462,7 +461,7 @@ Public Class EditingForm_FlowsheetUO
                     If gobj.OutputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(index).AttachedConnector.AttachedTo)
                     flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, index, 0)
                 Catch ex As Exception
-                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -491,7 +490,7 @@ Public Class EditingForm_FlowsheetUO
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnOpenControlPanel.Click
 
-        Dim f As New EditingForm_Flowsheet_Editor() With {.fsuo = SimObject}
+        Dim f As New Object()
         f.ShowDialog(Me)
 
     End Sub
@@ -512,14 +511,14 @@ Public Class EditingForm_FlowsheetUO
                 SimObject.SimulationFile = handler.FullPath
             End If
         Else
-            MessageBox.Show("Sorry, this feature is not available. Try using an embedded flowsheet instead.")
+'            MessageBox.Show("Sorry, this feature is not available. Try using an embedded flowsheet instead.")
         End If
 
     End Sub
 
     Private Sub btnViewFlowsheet_Click(sender As Object, e As EventArgs) Handles btnViewFlowsheet.Click
 
-        Dim selectionControl As New EditingForm_Flowsheet_Viewer
+        Dim selectionControl As New Object
 
         selectionControl.Text = SimObject.GraphicObject.Tag
         selectionControl.TabText = SimObject.GraphicObject.Tag

@@ -1,6 +1,5 @@
 ﻿Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.Pipe
-Imports System.Drawing
 
 Public Class PipeThermalProfileEditor
 
@@ -344,7 +343,7 @@ Public Class PipeThermalProfileEditor
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim fu As New EditingForm_Pipe_UserDefinedU
+        Dim fu As New Object
         fu.Profile = Profile
         fu.Flowsheet = form
         fu.ShowDialog()

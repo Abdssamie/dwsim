@@ -20,7 +20,6 @@ Imports System.Runtime.InteropServices
 Imports CapeOpen
 Imports DWSIM.Interfaces.Interfaces2
 Imports DWSIM.Thermodynamics
-Imports System.Windows.Forms
 Imports System.Runtime.Serialization.Formatters
 Imports System.IO
 
@@ -42,13 +41,11 @@ Namespace UnitOperations.CAPEOPENWrappers
 
         Public Overridable Shadows Sub Initialize() Implements ICapeUtilities.Initialize
 
-            My.Application.ChangeUICulture("en")
-
             'handler for unhandled exceptions
 
             Try
-                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)
-                AddHandler Application.ThreadException, AddressOf UnhandledException
+'                Nothing(UnhandledExceptionMode.CatchException)
+'                AddHandler Nothing, AddressOf UnhandledException
                 AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf UnhandledException2
             Catch ex As Exception
 
@@ -81,7 +78,7 @@ Namespace UnitOperations.CAPEOPENWrappers
         Private Sub UnhandledException(ByVal sender As Object, ByVal e As System.Threading.ThreadExceptionEventArgs)
 
             Try
-                Dim frmEx As New FormUnhandledException
+                Dim frmEx As New Object
                 frmEx.TextBox1.Text = e.Exception.ToString
                 frmEx.ex = e.Exception
                 frmEx.ShowDialog()
@@ -93,7 +90,7 @@ Namespace UnitOperations.CAPEOPENWrappers
         Private Sub UnhandledException2(ByVal sender As Object, ByVal e As System.UnhandledExceptionEventArgs)
 
             Try
-                Dim frmEx As New FormUnhandledException
+                Dim frmEx As New Object
                 frmEx.TextBox1.Text = e.ExceptionObject.ToString
                 frmEx.ex = e.ExceptionObject
                 frmEx.ShowDialog()
@@ -153,8 +150,12 @@ Namespace UnitOperations.CAPEOPENWrappers
 
                 Dim myarr As ArrayList
 
-                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
-                myarr = mySerializer.Deserialize(memoryStream)
+#Disable Warning SYSLIB0011
+                #Disable Warning SYSLIB0011
+                                Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
+                                mySerializer.Serialize(pStm, myarr)
+                #Enable Warning SYSLIB0011
+#Enable Warning SYSLIB0011
 
                 For i As Integer = 0 To myarr.Count - 1
                     If TypeOf Parameters(i) Is RealParameter Then
@@ -174,8 +175,8 @@ Namespace UnitOperations.CAPEOPENWrappers
                 RemoveHandler domain.AssemblyResolve, New ResolveEventHandler(AddressOf MyResolveEventHandler)
 
             Catch p_Ex As System.Exception
-
-                System.Windows.Forms.MessageBox.Show(p_Ex.ToString())
+'
+                Console.WriteLine(p_Ex.ToString())
 
             End Try
 
@@ -203,11 +204,8 @@ Namespace UnitOperations.CAPEOPENWrappers
 
             End With
 
-            Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
-            Dim mstr As New MemoryStream
-            mySerializer.Serialize(mstr, props)
-            Dim bytes As Byte() = mstr.ToArray()
-            mstr.Close()
+            Dim json = Newtonsoft.Json.JsonConvert.SerializeObject(props)
+            Dim bytes As Byte() = System.Text.Encoding.UTF8.GetBytes(json)
 
             ' construct length (separate into two separate bytes)    
 
@@ -220,8 +218,8 @@ Namespace UnitOperations.CAPEOPENWrappers
                 If System.Runtime.InteropServices.Marshal.IsComObject(pStm) Then System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm)
 
             Catch p_Ex As System.Exception
-
-                System.Windows.Forms.MessageBox.Show(p_Ex.ToString())
+'
+                Console.WriteLine(p_Ex.ToString())
 
             End Try
 

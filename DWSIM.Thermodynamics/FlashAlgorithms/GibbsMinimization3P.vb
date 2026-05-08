@@ -89,7 +89,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides ReadOnly Property Description As String
             Get
                 If GlobalSettings.Settings.CurrentCulture = "pt-BR" Then
-                    Return "Encontra as fases em equilíbrio e suas composições através da minimização da Energia Livre de Gibbs."
+                    Return "Encontra as fases em equilÃ­brio e suas composiÃ§Ãµes atravÃ©s da minimizaÃ§Ã£o da Energia Livre de Gibbs."
                 Else
                     Return "Finds the equilibrium phases and their compositions through a Free Gibbs energy minimization procedure."
                 End If
@@ -145,7 +145,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             IObj?.Paragraphs.Add("<m>Q = \sum\limits_{k=1}^{F}{\sum\limits_{i=1}^{C}{n_{ik}\ln f_{ik} }}</m>")
 
-            IObj?.Paragraphs.Add("A straightforward approach is to use the molar amounts in phases 1 to F — 1 as the independent variables, eliminating the nt•F by means of the overall material balance, i.e.,")
+            IObj?.Paragraphs.Add("A straightforward approach is to use the molar amounts in phases 1 to F Â— 1 as the independent variables, eliminating the ntÂ•F by means of the overall material balance, i.e.,")
 
             IObj?.Paragraphs.Add("<m>n_{iF}=z_i-\sum\limits_{k=1}^{F-1}{n_{ik}} </m>")
 

@@ -8,10 +8,10 @@ using DWSIM.Interfaces;
 using System.Threading.Tasks;
 using DWSIM.Thermodynamics.PropertyPackages;
 using System.Runtime.InteropServices;
-using s = DWSIM.UI.Shared.Common;
+//using s = DWSIM.UI.Shared.Common;
 using System.Diagnostics;
 using DWSIM.Interfaces.Enums;
-using DWSIM.ExtensionMethods.Eto;
+//using DWSIM.ExtensionMethods.Eto;
 
 namespace DWSIM.Thermodynamics.ThermoC
 {
@@ -144,246 +144,17 @@ namespace DWSIM.Thermodynamics.ThermoC
 
         public override void DisplayEditingForm()
         {
-            var f = GetForm();
-            f.Show();
-            DWSIM.UI.Shared.Common.Center(f);
+            //var f = GetForm();
+            //f.Show();
+            //DWSIM.UI.Shared.Common.Center(f);
         }
 
-        public Eto.Forms.Form GetForm()
+        /* public Eto.Forms.Form GetForm()
         {
-
-            if (GlobalSettings.Settings.CAPEOPENMode) new Eto.Forms.Application(Eto.Platforms.WinForms).Attach();
-
-            var container = s.GetDefaultContainer();
-            container.Tag = "Settings";
-
-            var models = ThermoCS.Helpers.GetModelNames();
-
-            Eto.Forms.DropDown modelselector = null;
-            Eto.Forms.DropDown mixruleselector = null;
-
-            Eto.Forms.TextArea modelfiles = null;
-            Eto.Forms.TextArea mixrulefiles = null;
-
-            var mixrules = ThermoCS.Helpers.GetModelSupportedMixingRules(Model);
-
-            bool adding = false;
-
-            s.CreateAndAddLabelRow(container, "Parameters");
-
-            s.CreateAndAddCheckBoxRow(container, "Use Lee-Kesler model for caloric properties", UseLeeKeslerEnthalpy, (sender, e) => UseLeeKeslerEnthalpy = sender.Checked.GetValueOrDefault());
-
-            s.CreateAndAddDescriptionRow(container, "Enables or disables usage of the Lee-Kesler model to calculate Enthalpy, Entropy and Heat Capacities.");
-
-            s.CreateAndAddLabelRow(container, "Model Selection");
-
-            modelselector = s.CreateAndAddDropDownRow(container, "Model", models, models.IndexOf(Model), (sender, e) =>
-            {
-                comphash = "";
-                Model = models[sender.SelectedIndex];
-                mixrules = ThermoCS.Helpers.GetModelSupportedMixingRules(Model);
-                mixrules.Insert(0, "");
-                adding = true;
-                mixruleselector.Items.Clear();
-                mixruleselector.Items.AddRange(mixrules.Select(x => new Eto.Forms.ListItem() { Key = x, Text = x }));
-                if (mixrules.Contains(MixRule))
-                {
-                    mixruleselector.SelectedKey = MixRule;
-                }
-                else
-                {
-                    mixruleselector.SelectedIndex = 0;
-                }
-                adding = false;
-                modelfiles.Text = String.Join("\n", ThermoCS.Helpers.GetModelSupportedCompounds(Model));
-            });
-
-            s.CreateAndAddLabelRow2(container, "Supported Compounds");
-
-            modelfiles = s.CreateAndAddMultilineTextBoxRow(container, String.Join("\n", ThermoCS.Helpers.GetModelSupportedCompounds(Model)), true, false, null);
-            modelfiles.Height = 200;
-
-            s.CreateAndAddLabelAndButtonRow(container, "Model Description", "View", null, (sender, e) =>
-            {
-                var fwv = s.GetDefaultEditorForm("ThermoC: " + Model + " EOS", 800, 600, new Eto.Forms.WebView { Url = new Uri(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ThermoCS", "html", "eos", Model + ".html"), UriKind.Absolute) }, true);
-                fwv.Show();
-            });
-
-            s.CreateAndAddLabelRow(container, "Mixing Rule Selection");
-
-            mixruleselector = s.CreateAndAddDropDownRow(container, "Mixing Rule", mixrules, mixrules.IndexOf(MixRule), (sender, e) =>
-            {
-                comphash = "";
-                if (!adding)
-                {
-                    var mxrl = ThermoCS.Helpers.GetModelSupportedMixingRules(Model);
-                    mxrl.Insert(0, "");
-                    MixRule = mxrl[sender.SelectedIndex];
-                    mixrulefiles.Text = String.Join("\n", ThermoCS.Helpers.GetMixRuleParameterFiles(Model, MixRule));
-                }
-            });
-
-            s.CreateAndAddLabelRow2(container, "Available Binary Parameter Files");
-
-            mixrulefiles = s.CreateAndAddMultilineTextBoxRow(container, "", true, false, null);
-            mixrulefiles.Text = String.Join("\n", ThermoCS.Helpers.GetMixRuleParameterFiles(Model, MixRule));
-            mixrulefiles.Height = 200;
-
-            var container2 = s.GetDefaultContainer();
-            container2.Tag = "About";
-
-            s.CreateAndAddLabelRow(container2, "About the ThermoC Bridge");
-            s.CreateAndAddLabelRow2(container2, "The ThermoC Bridge is a software which connects to the ThermoC software package and exposes its models to DWSIM as a Property Package.");
-            s.CreateAndAddLabelRow2(container2, "ThermoC Bridge is Copyright (c) 2017-2020 Daniel Wagner.");
-            s.CreateAndAddLabelRow2(container2, "ThermoC Software Package is Copyright (c) Ulrich K. Deiters.");
-            s.CreateAndAddLabelRow(container2, "Literature");
-            s.CreateAndAddLabelRow2(container2, "1. U. K. Deiters, “A modular program for the calculation of thermodynamic properties of fluids”, Chem. Eng. Technol. 23 (2000) 581–584.\n2. U. K. Deiters and Th. Kraska, High-Pressure Fluid Phase Equilibria—Phenomenology and Computation, Elsevier, Amsterdam 2012.");
-            s.CreateAndAddLabelRow(container2, "Contact Information");
-            s.CreateAndAddLabelRow2(container2, "Prof. Dr. Ulrich K. Deiters\nInstitute of Physical Chemistry, University of Cologne\nLuxemburger Str. 116, D-50939 Köln\nTel. +49 (0)221 470-4543, Fax +49 (0)221 470-4900");
-            s.CreateAndAddLabelAndButtonRow(container2, "Send e-mail to Prof. Ulrich", "ulrich.deiters@uni-koeln.de", null, (sender, e) => Process.Start("mailto:ulrich.deiters@uni-koeln.de"));
-            s.CreateAndAddLabelAndButtonRow(container2, "Send e-mail to Daniel Wagner", "dwsim@inforside.com.br", null, (sender, e) => Process.Start("mailto:dwsim@inforside.com.br"));
-            s.CreateAndAddButtonRow(container2, "Visit the ThermoC website for more information", null, (sender, e) => Process.Start("http://thermoc.uni-koeln.de/index2.html"));
-            s.CreateAndAddButtonRow(container2, "View ThermoC README file", null, (sender, e) =>
-            {
-                var file = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ThermoCS", "README.txt");
-                if (ThermoCS.PlatformCheck.RunningPlatform() == ThermoCS.PlatformCheck.Platform.Windows)
-                {
-                    Process.Start(file);
-                }
-                else if (ThermoCS.PlatformCheck.RunningPlatform() == ThermoCS.PlatformCheck.Platform.Linux)
-                {
-                    Process.Start("xdg-open", file);
-                }
-                else
-                {
-                    Process.Start("open", file);
-                }
-            });
-
-            var container3 = s.GetDefaultContainer();
-            container3.Tag = "Utilities";
-
-            s.CreateAndAddLabelRow(container3, "ThermoC Programs");
-            s.CreateAndAddLabelRow2(container3, "These are the ThermoC main programs, which you can use to perform additional calculations and regress model parameters.");
-
-            var applist = new Dictionary<string, string>();
-
-            applist.Add("charact1", "Brown's characteristic curves (Joule inversion, Boyle, Joule-Thomson inversion curves)");
-            applist.Add("check1", "Consistency test for user-supplied EOS modules");
-            applist.Add("checkN", "Consistency test for mixture modules");
-            applist.Add("crit2", "Critical curves of binary mixtures");
-            applist.Add("difflimit1", "Binary diffusion coefficient at zero concentration");
-            applist.Add("expandN", "Adiabatic expansion curves");
-            applist.Add("ffe1", "Vapour pressure curve of a pure fluid");
-            applist.Add("ffe2", "VLE, LLE for binary mixtures (obsolete)");
-            applist.Add("ffeN", "VLE, LLE for multi-component mixtures");
-            applist.Add("mixN", "Temperature and volume change upon isenthalpic-isobaric or isenthalpic-isentropic mixing of pure fluids");
-            applist.Add("phase2", "VLE, LLE, SLE, SGE of binary mixtures (combines ffe2 and sfe2, but uses another search algorithm)");
-            applist.Add("reduc1", "Calculation of pure-fluid EOS parameters from exp. data");
-            applist.Add("reduc2", "EOS cross parameter estimation for binary mixtures");
-            applist.Add("reduc3", "EOS pure-fluid parameter estimation from mixture data");
-            applist.Add("rsfe1", "Dehydration of a solid compound (and analogous reactions)");
-            applist.Add("sfe1", "Sublimation pressure curve of a pure fluid");
-            applist.Add("sfe2", "SLE, SGE for binary mixtures");
-            applist.Add("sle1", "Melting pressure curve of a pure compound");
-            applist.Add("spinodal1", "Spinodal curve of a pure compound");
-            applist.Add("spinodal2", "Spinodal curves of binary mixtures");
-            applist.Add("surf1", "Surface tension (from viscosity)");
-            applist.Add("transit2", "Solid/fluid flash of binary mixture; transitiometer simulation");
-            applist.Add("virN", "Virial coefficients of pure fluids or mixtures");
-            applist.Add("visco1", "Viscosity of pure fluids (friction theory)");
-            applist.Add("viscofit1", "Fitting of friction theory parameters");
-            applist.Add("xthN", "Single phase properties of fluids (including excess properties)");
-            applist.Add("xth1s", "Thermodynamic properties of a single solid phase");
-            applist.Add("xth1id", "Single phase properties of impure solids");
-
-            foreach (var item in applist)
-            {
-                s.CreateAndAddBoldLabelAndButtonRow(container3, item.Key, "Open", null, (sender, e) =>
-                {
-                    var startInfo = new ProcessStartInfo();
-                    switch (ThermoCS.PlatformCheck.RunningPlatform())
-                    {
-                        case ThermoCS.PlatformCheck.Platform.Windows:
-                            startInfo.WorkingDirectory = Environment.CurrentDirectory;
-                            startInfo.FileName = Environment.CurrentDirectory + "\\ThermoCS\\" + item.Key + ".exe";
-                            if (item.Key.Contains("1"))
-                            {
-                                startInfo.Arguments = Model;
-                            }
-                            else
-                            {
-                                startInfo.Arguments = Model + " " + MixRule;
-                            }
-                            Eto.Forms.MessageBox.Show("Model: " + Model + "\n" + "Mixing Rule: " + MixRule, "Starting utility '" + item.Key + "'...", Eto.Forms.MessageBoxButtons.OK, Eto.Forms.MessageBoxType.Information);
-                            break;
-                        case ThermoCS.PlatformCheck.Platform.Linux:
-                            var currdir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                            var ldc = "LD_LIBRARY_PATH=" + currdir + "/ThermoCS/; export LD_LIBRARY_PATH";
-                            var scriptl = new StringBuilder();
-                            scriptl.AppendLine("#!/bin/bash");
-                            scriptl.AppendLine("cd '" + currdir + "'");
-                            scriptl.AppendLine(ldc);
-                            //scriptl.AppendLine("chmod +x ThermoCS/" + item.Key);
-                            if (item.Key.Contains("1"))
-                            {
-                                scriptl.AppendLine("echo 'model: " + Model + "'");
-                                scriptl.AppendLine("./ThermoCS/" + item.Key + " " + Model);
-                            }
-                            else
-                            {
-                                scriptl.AppendLine("echo 'model: " + Model + "'");
-                                scriptl.AppendLine("echo 'mixing rule: " + MixRule + "'");
-                                scriptl.AppendLine("./ThermoCS/" + item.Key + " " + Model + " " + MixRule);
-                            }
-                            var filepathl = Path.GetTempFileName();
-                            File.WriteAllText(filepathl, scriptl.ToString());
-                            Process.Start("/bin/bash", "-c \" chmod +x " + filepathl + " \"");
-                            startInfo.WindowStyle = ProcessWindowStyle.Normal;
-                            startInfo.FileName = "xterm";
-                            startInfo.Arguments = "-e '" + filepathl + "'";
-                            break;
-                        case ThermoCS.PlatformCheck.Platform.Mac:
-                            var basedir = Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)).Parent.FullName;
-                            var ldcosx = "export DYLD_LIBRARY_PATH=" + basedir + "/Contents/MonoBundle/ThermoCS/";
-                            var script = new StringBuilder();
-                            script.AppendLine("#!/bin/bash");
-                            script.AppendLine("cd '" + basedir + "'");
-                            script.AppendLine(ldcosx);
-                            script.AppendLine("chmod +x Contents/MonoBundle/ThermoCS/" + item.Key);
-                            if (item.Key.Contains("1"))
-                            {
-                                script.AppendLine("echo 'model: " + Model + "'");
-                                script.AppendLine("./Contents/MonoBundle/ThermoCS/" + item.Key + " " + Model);
-                            }
-                            else
-                            {
-                                script.AppendLine("echo 'model: " + Model + "'");
-                                script.AppendLine("echo 'mixing rule: " + MixRule + "'");
-                                script.AppendLine("./Contents/MonoBundle/ThermoCS/" + item.Key + " " + Model + " " + MixRule);
-                            }
-                            var filepath = Path.GetTempFileName();
-                            File.WriteAllText(filepath, script.ToString());
-                            Process.Start("/bin/bash", "-c \" chmod +x " + filepath + " \"");
-                            startInfo.WindowStyle = ProcessWindowStyle.Normal;
-                            startInfo.FileName = "open";
-                            startInfo.Arguments = "-a Terminal.app " + filepath;
-                            break;
-                    }
-                    Process proc = Process.Start(startInfo);
-                });
-                s.CreateAndAddLabelRow2(container3, item.Value);
-            }
-
-            var sf = GlobalSettings.Settings.DpiScale;
-
-            var f = s.GetDefaultTabbedForm("Edit ThermoC Property Package", (int)(500 * sf), (int)(650 * sf), 
-                new Eto.Forms.DynamicLayout[] { container, container3, container2 });
-            if (GlobalSettings.Settings.CAPEOPENMode) f.Topmost = true;
-            f.SetFontAndPadding();
+...
             return f;
             
-        }
+        } */
 
         [System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute]
         public Object CalculateProperty(ThermoProperty prop, double[] vx, string state, Double param1, Double param2, Double param3, Double param4)

@@ -1,6 +1,5 @@
 Imports DWSIM.UnitOperations.UnitOperations
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
-Imports System.Drawing
 
 '    Copyright 2008 Daniel Wagner O. de Medeiros
 '
@@ -19,7 +18,7 @@ Imports System.Drawing
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Public Class EditingForm_Column_Results
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 

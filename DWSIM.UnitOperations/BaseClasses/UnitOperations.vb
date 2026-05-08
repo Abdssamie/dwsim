@@ -139,15 +139,7 @@ Namespace UnitOperations
                     xdoc.Element("Data").Element("LastUpdated").Remove()
                     Dim currentdata = xdoc.ToString()
 
-                    Dim myDiff = DiffBuilder.Compare(Org.XmlUnit.Builder.Input.FromString(currentdata))
-                    myDiff.WithTest(Org.XmlUnit.Builder.Input.FromString(LastSolutionInputSnapshot))
-                    Dim result = myDiff.Build()
-
-                    If result.HasDifferences() Then
-                        SetDirtyStatus(True)
-                    Else
-                        SetDirtyStatus(False)
-                    End If
+                    SetDirtyStatus(True)
 
                     xdoc = Nothing
 

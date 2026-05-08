@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_HydroelectricTurbine
+Partial Class Object
 
 
     'Form overrides dispose to clean up the component list.
@@ -29,7 +29,7 @@ Partial Class EditingForm_HydroelectricTurbine
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_HydroelectricTurbine))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.GroupBoxParameters = New System.Windows.Forms.GroupBox()
         Me.gridInput = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -92,7 +92,7 @@ Partial Class EditingForm_HydroelectricTurbine
         Me.gridInput.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.gridInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridInput.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5})
-        Me.gridInput.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridInput.Dock = System.Windows.Forms.0
         Me.gridInput.Location = New System.Drawing.Point(3, 16)
         Me.gridInput.Margin = New System.Windows.Forms.Padding(0)
         Me.gridInput.Name = "gridInput"
@@ -145,7 +145,7 @@ Partial Class EditingForm_HydroelectricTurbine
         Me.gridOutput.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.gridOutput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridOutput.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.Column1})
-        Me.gridOutput.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridOutput.Dock = System.Windows.Forms.0
         Me.gridOutput.Location = New System.Drawing.Point(3, 16)
         Me.gridOutput.Margin = New System.Windows.Forms.Padding(0)
         Me.gridOutput.Name = "gridOutput"
@@ -195,7 +195,7 @@ Partial Class EditingForm_HydroelectricTurbine
         '
         'rtbAnnotations
         '
-        Me.rtbAnnotations.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.rtbAnnotations.Dock = System.Windows.Forms.0
         Me.rtbAnnotations.Location = New System.Drawing.Point(3, 16)
         Me.rtbAnnotations.Name = "rtbAnnotations"
         Me.rtbAnnotations.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil Microsoft " &
@@ -392,7 +392,7 @@ Partial Class EditingForm_HydroelectricTurbine
         '
         Me.chkActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkActive.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.chkActive.Location = New System.Drawing.Point(373, 43)
         Me.chkActive.Name = "chkActive"
@@ -459,7 +459,7 @@ Partial Class EditingForm_HydroelectricTurbine
         Me.ToolTipChangeTag.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
         Me.ToolTipChangeTag.ToolTipTitle = "Info"
         '
-        'EditingForm_HydroelectricTurbine
+        'Object
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -471,8 +471,8 @@ Partial Class EditingForm_HydroelectricTurbine
         Me.Controls.Add(Me.GroupBoxConnections)
         Me.Controls.Add(Me.GroupBox5)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Name = "EditingForm_HydroelectricTurbine"
-        Me.Text = "EditingForm_HydroelectricTurbine"
+        Me.Name = "Object"
+        Me.Text = "Object"
         Me.GroupBoxParameters.ResumeLayout(False)
         CType(Me.gridInput, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBoxResults.ResumeLayout(False)
@@ -490,14 +490,14 @@ Partial Class EditingForm_HydroelectricTurbine
     Public WithEvents GroupBox4 As GroupBox
     Public WithEvents rtbAnnotations As Extended.Windows.Forms.RichTextBoxExtended
     Public WithEvents GroupBoxConnections As GroupBox
-    Public WithEvents btnCreateAndConnectEnergy As Button
-    Public WithEvents btnDisconnectEnergy As Button
-    Public WithEvents btnCreateAndConnectOutlet1 As Button
+    Public WithEvents btnCreateAndConnectEnergy As Object
+    Public WithEvents btnDisconnectEnergy As Object
+    Public WithEvents btnCreateAndConnectOutlet1 As Object
     Public WithEvents Label14 As Label
-    Public WithEvents btnCreateAndConnectInlet1 As Button
+    Public WithEvents btnCreateAndConnectInlet1 As Object
     Public WithEvents cbEnergy As ComboBox
-    Public WithEvents btnDisconnectOutlet1 As Button
-    Public WithEvents btnDisconnect1 As Button
+    Public WithEvents btnDisconnectOutlet1 As Object
+    Public WithEvents btnDisconnect1 As Object
     Public WithEvents Label7 As Label
     Public WithEvents cbOutlet1 As ComboBox
     Public WithEvents cbInlet1 As ComboBox

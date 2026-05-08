@@ -1,11 +1,9 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 Imports DWSIM.UnitOperations.UnitOperations
-Imports System.Drawing
 
-Public Class EditingForm_Pipe
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -16,7 +14,7 @@ Public Class EditingForm_Pipe
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
 
@@ -36,8 +34,8 @@ Public Class EditingForm_Pipe
         If Host.Items.Where(Function(x) x.Name.Contains(SimObject.GraphicObject.Tag)).Count > 0 Then
             If InspReportBar Is Nothing Then
                 InspReportBar = New SharedClasses.InspectorReportBar
-                InspReportBar.Dock = DockStyle.Bottom
-                AddHandler InspReportBar.Button1.Click, Sub()
+                InspReportBar.Dock = 0
+
                                                             Dim iwindow As New Inspector.Window2
                                                             iwindow.SelectedObject = SimObject
                                                             iwindow.Show(DockPanel)
@@ -146,12 +144,12 @@ Public Class EditingForm_Pipe
 
             PanelHydEditor.Controls.Clear()
             Dim heditor As New PipeHydraulicProfileEditor With {.PipeOp = Me.SimObject}
-            heditor.Dock = DockStyle.Fill
+            heditor.Dock = 0
             PanelHydEditor.Controls.Add(heditor)
 
             TabPage6.Controls.Clear()
             Dim teditor As New PipeThermalProfileEditor With {.Profile = Me.SimObject.ThermalProfile, .form = SimObject.FlowSheet}
-            teditor.Dock = DockStyle.Fill
+            teditor.Dock = 0
             TabPage6.Controls.Add(teditor)
 
             'results
@@ -162,13 +160,13 @@ Public Class EditingForm_Pipe
             gridResults.Rows.Add(New Object() {.FlowSheet.GetTranslatedString("RConvPGridItem3"), su.Converter.ConvertFromSI(units.heatflow, .DeltaQ.GetValueOrDefault).ToString(nf), units.heatflow})
 
             TabPage2.Controls.Clear()
-            Dim tview As New EditingForm_Pipe_ResultsTable With {.PipeOp = Me.SimObject}
-            tview.Dock = DockStyle.Fill
+            Dim tview As New Object()
+            tview.Dock = 0
             TabPage2.Controls.Add(tview)
 
             TabPage3.Controls.Clear()
-            Dim cview As New EditingForm_Pipe_ResultsChart With {.PipeOp = Me.SimObject}
-            cview.Dock = DockStyle.Fill
+            Dim cview As New Object()
+            cview.Dock = 0
             TabPage3.Controls.Add(cview)
 
             'property package
@@ -245,13 +243,13 @@ Public Class EditingForm_Pipe
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.OutputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.InputConnectors(index).IsAttached Then flowsheet.DisconnectObjects(gobj.InputConnectors(index).AttachedConnector.AttachedFrom, gobj)
                         flowsheet.ConnectObjects(flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, gobj, 0, index)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -275,13 +273,13 @@ Public Class EditingForm_Pipe
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.OutputConnectors(0).IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.OutputConnectors(0).AttachedConnector.AttachedTo)
                         flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, 0, 0)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -305,13 +303,13 @@ Public Class EditingForm_Pipe
                 Dim flowsheet = SimObject.FlowSheet
 
                 If flowsheet.GetFlowsheetSimulationObject(text).GraphicObject.InputConnectors(0).IsAttached Then
-                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                    MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Else
                     Try
                         If gobj.EnergyConnector.IsAttached Then flowsheet.DisconnectObjects(gobj, gobj.EnergyConnector.AttachedConnector.AttachedTo)
                         flowsheet.ConnectObjects(gobj, flowsheet.GetFlowsheetSimulationObject(text).GraphicObject, 0, 0)
                     Catch ex As Exception
-                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+'                        MessageBox.Show(ex.Message, flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End If
             UpdateInfo()
@@ -504,13 +502,13 @@ Public Class EditingForm_Pipe
 
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
 
-        Dim heditor As New EditingForm_Pipe_ResultsTable With {.PipeOp = Me.SimObject}
-        heditor.Dock = DockStyle.Fill
-
+        Dim heditor As New Object()
+        heditor.Dock = 0
+'
         Dim form As New WeifenLuo.WinFormsUI.Docking.DockContent With {.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document,
             .Text = SimObject.GraphicObject.Tag + " - Results",
             .TabText = .Text,
-            .Icon = My.Resources.DWSIM_Icon_4}
+            .Icon = Nothing}
 
         form.Controls.Add(heditor)
 
@@ -520,13 +518,13 @@ Public Class EditingForm_Pipe
 
     Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
 
-        Dim heditor As New EditingForm_Pipe_ResultsChart With {.PipeOp = Me.SimObject}
-        heditor.Dock = DockStyle.Fill
-
+        Dim heditor As New Object()
+        heditor.Dock = 0
+'
         Dim form As New WeifenLuo.WinFormsUI.Docking.DockContent With {.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document,
             .Text = SimObject.GraphicObject.Tag + " - Results",
             .TabText = .Text,
-            .Icon = My.Resources.DWSIM_Icon_4}
+            .Icon = Nothing}
 
         form.Controls.Add(heditor)
 
@@ -542,10 +540,10 @@ Public Class EditingForm_Pipe
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
         Dim f As New Form With {.Text = SimObject.GraphicObject.Tag + ": Hydraulic Profile Editor", .FormBorderStyle = FormBorderStyle.SizableToolWindow,
-                                .Width = 1024 * Settings.DpiScale, .Height = 400 * Settings.DpiScale, .StartPosition = FormStartPosition.CenterScreen}
+                                .Width = 1024 * Settings.DpiScale, .Height = 400 * Settings.DpiScale, .StartPosition = 0}
 
         Dim heditor As New PipeHydraulicProfileEditor With {.PipeOp = Me.SimObject}
-        heditor.Dock = DockStyle.Fill
+        heditor.Dock = 0
         f.Controls.Add(heditor)
 
         f.ShowDialog()

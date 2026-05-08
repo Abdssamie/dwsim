@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_CustomUO_ScriptEditor_Mono
+Partial Class Object
     Inherits SharedClasses.ObjectEditorForm
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor_Mono
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_CustomUO_ScriptEditor_Mono))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -138,14 +138,14 @@ Partial Class EditingForm_CustomUO_ScriptEditor_Mono
         '
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.Nothing.add
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton3
         '
         resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
+        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.Nothing.delete
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
@@ -153,7 +153,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor_Mono
         resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.cross
+        Me.ToolStripButton4.Image = Global.DWSIM.UnitOperations.Nothing.cross
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'ToolStripSeparator4
@@ -165,7 +165,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor_Mono
         '
         resources.ApplyResources(Me.btnDebug, "btnDebug")
         Me.btnDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnDebug.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.control_play
+        Me.btnDebug.Image = Global.DWSIM.UnitOperations.Nothing.control_play
         Me.btnDebug.Name = "btnDebug"
         '
         'ToolStripSeparator3
@@ -183,7 +183,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor_Mono
         '
         resources.ApplyResources(Me.APIHelptsbutton, "APIHelptsbutton")
         Me.APIHelptsbutton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.APIHelptsbutton.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.script_code
+        Me.APIHelptsbutton.Image = Global.DWSIM.UnitOperations.Nothing.script_code
         Me.APIHelptsbutton.Name = "APIHelptsbutton"
         '
         'ofd1
@@ -258,15 +258,15 @@ Partial Class EditingForm_CustomUO_ScriptEditor_Mono
         Me.ListBox1.Name = "ListBox1"
         Me.ListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         '
-        'EditingForm_CustomUO_ScriptEditor_Mono
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
         Me.Controls.Add(Me.FaTabStrip2)
         Me.Controls.Add(Me.ToolStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "EditingForm_CustomUO_ScriptEditor_Mono"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+        Me.Name = "Object"
+'        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.ToolStrip1.ResumeLayout(False)

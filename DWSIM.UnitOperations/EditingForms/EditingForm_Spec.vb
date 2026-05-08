@@ -1,9 +1,8 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 
-Public Class EditingForm_Spec
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -14,7 +13,7 @@ Public Class EditingForm_Spec
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpdateInfo()
 
@@ -168,7 +167,7 @@ Public Class EditingForm_Spec
                 Next
 
                 SimObject.SourceObject = SimObject.FlowSheet.SimulationObjects(SimObject.SourceObjectData.ID)
-            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.SpecGraphic).ConnectedToSv = SimObject.SourceObject.GraphicObject
+'            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.SpecGraphic).ConnectedToSv = SimObject.SourceObject.GraphicObject
 
         End If
 
@@ -215,7 +214,7 @@ Public Class EditingForm_Spec
                 Next
 
                 SimObject.TargetObject = SimObject.FlowSheet.SimulationObjects(SimObject.TargetObjectData.ID)
-            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.SpecGraphic).ConnectedToTv = SimObject.TargetObject.GraphicObject
+'            DirectCast(SimObject.GraphicObject, DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes.SpecGraphic).ConnectedToTv = SimObject.TargetObject.GraphicObject
 
         End If
 

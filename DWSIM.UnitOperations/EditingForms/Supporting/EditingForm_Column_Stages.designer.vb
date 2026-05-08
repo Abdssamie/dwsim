@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_Column_Stages
+Partial Class Object
     Inherits System.Windows.Forms.UserControl
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class EditingForm_Column_Stages
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Column_Stages))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
@@ -34,14 +34,14 @@ Partial Class EditingForm_Column_Stages
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Object1 = New System.Windows.Forms.Object()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.tbGlobalEff = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel1.SuspendLayout()
+        Me.Object1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -55,28 +55,28 @@ Partial Class EditingForm_Column_Stages
         '
         resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.copy
+        Me.ToolStripButton1.Image = Global.DWSIM.UnitOperations.Nothing.copy
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.paste_plain
+        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.Nothing.paste_plain
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton5
         '
         resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton5.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.cross
+        Me.ToolStripButton5.Image = Global.DWSIM.UnitOperations.Nothing.cross
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripButton3
         '
         resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.arrow_in1
+        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.Nothing.arrow_in1
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'dgv1
@@ -123,12 +123,12 @@ Partial Class EditingForm_Column_Stages
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
         '
-        'TableLayoutPanel1
+        'Object1
         '
-        resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
-        Me.TableLayoutPanel1.Controls.Add(Me.dgv1, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Panel1, 0, 1)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        resources.ApplyResources(Me.Object1, "Object1")
+        Me.Object1.Controls.Add(Me.dgv1, 0, 0)
+        Me.Object1.Controls.Add(Me.Panel1, 0, 1)
+        Me.Object1.Name = "Object1"
         '
         'Panel1
         '
@@ -154,17 +154,17 @@ Partial Class EditingForm_Column_Stages
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
         '
-        'EditingForm_Column_Stages
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
-        Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.Controls.Add(Me.Object1)
         Me.Controls.Add(Me.ToolStrip1)
-        Me.Name = "EditingForm_Column_Stages"
+        Me.Name = "Object"
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.Object1.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
@@ -176,10 +176,10 @@ Partial Class EditingForm_Column_Stages
     Public WithEvents ToolStripButton5 As System.Windows.Forms.ToolStripButton
     Public WithEvents dgv1 As System.Windows.Forms.DataGridView
     Public WithEvents ToolStripButton3 As System.Windows.Forms.ToolStripButton
-    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Object1 As Object
+    Friend WithEvents Panel1 As Object
     Friend WithEvents tbGlobalEff As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Button1 As Object
     Friend WithEvents Label1 As Label
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn

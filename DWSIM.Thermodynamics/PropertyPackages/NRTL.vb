@@ -69,12 +69,6 @@ Namespace PropertyPackages
         ' MIGRATION STUB
     End Sub
 
-        Public Overrides Function GetEditingForm() As Object
-
-            ' TODO: [MIGRATION] UI editing form not available in headless mode.
-            Return Nothing
-
-        End Function
 
         Public Overrides Function CheckMissingInteractionParameters(Vx As Double()) As Boolean
             ' TODO: [MIGRATION] Restore interaction parameter validation check.

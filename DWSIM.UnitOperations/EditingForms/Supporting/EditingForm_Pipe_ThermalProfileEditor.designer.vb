@@ -426,7 +426,7 @@ Partial Class PipeThermalProfileEditor
     Public WithEvents lblTAGUnits2 As System.Windows.Forms.Label
     Public WithEvents TextBoxTAG2 As System.Windows.Forms.TextBox
     Public WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Button1 As Object
     Public WithEvents chkUserDefU As CheckBox
     Public WithEvents chkSolarIrradiationGlobal As CheckBox
     Public WithEvents chkIncludeSolarIrradiation As CheckBox

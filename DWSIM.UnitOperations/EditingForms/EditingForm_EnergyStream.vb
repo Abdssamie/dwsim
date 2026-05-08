@@ -1,9 +1,8 @@
-﻿Imports System.Windows.Forms
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports DWSIM.SharedClasses.UnitOperations
 Imports su = DWSIM.SharedClasses.SystemsOfUnits
 
-Public Class EditingForm_EnergyStream
+Public Class Object
 
     Inherits SharedClasses.ObjectEditorForm
 
@@ -14,7 +13,7 @@ Public Class EditingForm_EnergyStream
     Dim units As SharedClasses.SystemsOfUnits.Units
     Dim nf As String
 
-    Private Sub EditingForm_HeaterCooler_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Object(sender As Object, e As EventArgs) Handles MyBase.Load
 
         UpdateInfo()
 
@@ -204,7 +203,7 @@ Public Class EditingForm_EnergyStream
                 End If
                 i += 1
             Next
-
+'
             MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
 
         End If
@@ -229,7 +228,7 @@ Public Class EditingForm_EnergyStream
                 End If
                 i += 1
             Next
-
+'
             MessageBox.Show(flowsheet.GetTranslatedString("Todasasconexespossve"), flowsheet.GetTranslatedString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
 
         End If

@@ -23,13 +23,11 @@ Imports Mapack
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports DWSIM.Interfaces.Enums
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary.SepOps
 Imports DWSIM.MathOps
-Imports DWSIM.DrawingTools
 Imports OxyPlot
 Imports OxyPlot.Axes
 Imports DotNumerics.Optimization
@@ -1329,15 +1327,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.col_dc_32
-        End Function
 
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.col_dc_32.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("CDEST_Desc")
@@ -1765,15 +1755,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.col_abs_32
-        End Function
 
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.col_abs_32.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("CABS_Desc")
@@ -1881,7 +1863,6 @@ Namespace UnitOperations
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.Columns
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_Column
 
         Public Enum ColType
             DistillationColumn = 0
@@ -2644,37 +2625,37 @@ Namespace UnitOperations
                         Case StreamInformation.Behavior.Feed
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
                             If Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.InputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+'                                Me.GraphicObject.InputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.InputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+'                                Me.GraphicObject.InputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             End If
                         Case StreamInformation.Behavior.Distillate
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                             If Not Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.3 * Me.GraphicObject.Height)
                             End If
                         Case StreamInformation.Behavior.BottomsLiquid
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                             If Not Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.98 * Me.GraphicObject.Height)
                             End If
                         Case StreamInformation.Behavior.OverheadVapor
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                             If Not Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.02 * Me.GraphicObject.Height)
                             End If
                         Case StreamInformation.Behavior.Sidedraw
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                             If Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             End If
                     End Select
                 Catch ex As Exception
@@ -2688,23 +2669,23 @@ Namespace UnitOperations
                         Case StreamInformation.Behavior.Distillate
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                             If Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.08 * Me.GraphicObject.Height)
                             End If
                         Case StreamInformation.Behavior.BottomsLiquid
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
                             If Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + 0.825 * Me.GraphicObject.Height)
                             End If
                         Case StreamInformation.Behavior.InterExchanger
                             idx = FlowSheet.GraphicObjects(strinfo.StreamID).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                             If Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.OutputConnectors(idx).Position = New Point.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+'                                Me.GraphicObject.OutputConnectors(idx).Position = New Object.Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             End If
                     End Select
                 Catch ex As Exception
@@ -2759,7 +2740,7 @@ Namespace UnitOperations
 
             IObj?.SetCurrent()
 
-            IObj?.Paragraphs.Add("For any stage in a countercurrent cascade, assume (1) phase equilibrium is achieved at each stage, (2) no chemical reactions occur, and (3) entrainment of liquid drops in vapor and occlusion of vapor bubbles in liquid are negligible. Figure 1 represents such a stage for the vapor–liquid case, where the stages are numbered down from the top. The same representation applies to liquid–liquid extraction if the higher-density liquid phases are represented by liquid streams and the lower-density liquid phases are represented by vapor streams.")
+            IObj?.Paragraphs.Add("For any stage in a countercurrent cascade, assume (1) phase equilibrium is achieved at each stage, (2) no chemical reactions occur, and (3) entrainment of liquid drops in vapor and occlusion of vapor bubbles in liquid are negligible. Figure 1 represents such a stage for the vaporÂ–liquid case, where the stages are numbered down from the top. The same representation applies to liquidÂ–liquid extraction if the higher-density liquid phases are represented by liquid streams and the lower-density liquid phases are represented by vapor streams.")
 
             IObj?.Paragraphs.Add(InspectorItem.GetImageHTML("image1.jpg"))
 
@@ -2773,23 +2754,23 @@ Namespace UnitOperations
 
             IObj?.Paragraphs.Add("Associated with each general stage are the following indexed equations expressed in terms of the variable set in Figure 1. However, variables other than those shown in Figure 1 can be used, e.g. component flow rates can replace mole fractions, and sidestream flow rates can be expressed as fractions of interstage flow rates. The equations are referred to as MESH equations, after Wang and Henke.")
 
-            IObj?.Paragraphs.Add("M equations—Material balance for each component (C equations for each stage).")
+            IObj?.Paragraphs.Add("M equationsÂ—Material balance for each component (C equations for each stage).")
 
             IObj?.Paragraphs.Add("<m>M_{i,j}=L_{j-1}x_{i,j-1}+V_{j+1}y_{i,j+1}+F_jz_{i,j}-(L_j+U_j)x_{i,j}-(V_j+W_j)y_{i,j}</m>")
 
-            IObj?.Paragraphs.Add("E equations—phase-Equilibrium relation for each component (C equations for each stage),")
+            IObj?.Paragraphs.Add("E equationsÂ—phase-Equilibrium relation for each component (C equations for each stage),")
 
             IObj?.Paragraphs.Add("<m>E_{i,j}=y_{i,j}-K_{i,j}x_{i,j}=0</m>")
 
             IObj?.Paragraphs.Add("where <mi>K_{i,j}</mi> is the phase-equilibrium ratio or K-value.")
 
-            IObj?.Paragraphs.Add("S equations—mole-fraction Summations (one for each stage),")
+            IObj?.Paragraphs.Add("S equationsÂ—mole-fraction Summations (one for each stage),")
 
             IObj?.Paragraphs.Add("<m>(S_y)_j=\sum\limits_{i=1}^{C}{y_{i,j}}-1=0</m>")
 
             IObj?.Paragraphs.Add("<m>(S_x)_j=\sum\limits_{i=1}^{C}{x_{i,j}} -1=0</m>")
 
-            IObj?.Paragraphs.Add("H equation—energy balance (one for each stage).")
+            IObj?.Paragraphs.Add("H equationÂ—energy balance (one for each stage).")
 
             IObj?.Paragraphs.Add("<m>H_j=L_{j-1}h_{L_{j-1}}+V_{j+1}h_{V_{j+1}}+F_jh_{F_j}-(L_j+U_j)h_{L_j}-(V_j+W_j)h_{V_j}-Q_j=0</m>")
 
@@ -3712,7 +3693,7 @@ Namespace UnitOperations
 
             IObj?.SetCurrent()
 
-            IObj?.Paragraphs.Add("For any stage in a countercurrent cascade, assume (1) phase equilibrium is achieved at each stage, (2) no chemical reactions occur, and (3) entrainment of liquid drops in vapor and occlusion of vapor bubbles in liquid are negligible. Figure 1 represents such a stage for the vapor–liquid case, where the stages are numbered down from the top. The same representation applies to liquid–liquid extraction if the higher-density liquid phases are represented by liquid streams and the lower-density liquid phases are represented by vapor streams.")
+            IObj?.Paragraphs.Add("For any stage in a countercurrent cascade, assume (1) phase equilibrium is achieved at each stage, (2) no chemical reactions occur, and (3) entrainment of liquid drops in vapor and occlusion of vapor bubbles in liquid are negligible. Figure 1 represents such a stage for the vaporÂ–liquid case, where the stages are numbered down from the top. The same representation applies to liquidÂ–liquid extraction if the higher-density liquid phases are represented by liquid streams and the lower-density liquid phases are represented by vapor streams.")
 
             IObj?.Paragraphs.Add(InspectorItem.GetImageHTML("image1.jpg"))
 
@@ -3726,23 +3707,23 @@ Namespace UnitOperations
 
             IObj?.Paragraphs.Add("Associated with each general stage are the following indexed equations expressed in terms of the variable set in Figure 1. However, variables other than those shown in Figure 1 can be used, e.g. component flow rates can replace mole fractions, and sidestream flow rates can be expressed as fractions of interstage flow rates. The equations are referred to as MESH equations, after Wang and Henke.")
 
-            IObj?.Paragraphs.Add("M equations—Material balance for each component (C equations for each stage).")
+            IObj?.Paragraphs.Add("M equationsÂ—Material balance for each component (C equations for each stage).")
 
             IObj?.Paragraphs.Add("<m>M_{i,j}=L_{j-1}x_{i,j-1}+V_{j+1}y_{i,j+1}+F_jz_{i,j}-(L_j+U_j)x_{i,j}-(V_j+W_j)y_{i,j}</m>")
 
-            IObj?.Paragraphs.Add("E equations—phase-Equilibrium relation for each component (C equations for each stage),")
+            IObj?.Paragraphs.Add("E equationsÂ—phase-Equilibrium relation for each component (C equations for each stage),")
 
             IObj?.Paragraphs.Add("<m>E_{i,j}=y_{i,j}-K_{i,j}x_{i,j}=0</m>")
 
             IObj?.Paragraphs.Add("where <mi>K_{i,j}</mi> is the phase-equilibrium ratio or K-value.")
 
-            IObj?.Paragraphs.Add("S equations—mole-fraction Summations (one for each stage),")
+            IObj?.Paragraphs.Add("S equationsÂ—mole-fraction Summations (one for each stage),")
 
             IObj?.Paragraphs.Add("<m>(S_y)_j=\sum\limits_{i=1}^{C}{y_{i,j}}-1=0</m>")
 
             IObj?.Paragraphs.Add("<m>(S_x)_j=\sum\limits_{i=1}^{C}{x_{i,j}} -1=0</m>")
 
-            IObj?.Paragraphs.Add("H equation—energy balance (one for each stage).")
+            IObj?.Paragraphs.Add("H equationÂ—energy balance (one for each stage).")
 
             IObj?.Paragraphs.Add("<m>H_j=L_{j-1}h_{L_{j-1}}+V_{j+1}h_{V_{j+1}}+F_jh_{F_j}-(L_j+U_j)h_{L_j}-(V_j+W_j)h_{V_j}-Q_j=0</m>")
 
@@ -5586,42 +5567,6 @@ Namespace UnitOperations
 
         End Sub
 
-        Public Overrides Sub DisplayEditForm()
-
-            If f Is Nothing Then
-                f = New EditingForm_Column With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_Column With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides Function GetChartModelNames() As List(Of String)
 
@@ -5655,27 +5600,27 @@ Namespace UnitOperations
                 .MajorStep = 1.0,
                 .MinorStep = 0.5
             })
-
-            model.LegendFontSize = 11
-            model.LegendPlacement = LegendPlacement.Outside
-            model.LegendOrientation = LegendOrientation.Horizontal
-            model.LegendPosition = LegendPosition.BottomCenter
+'
+'            model.LegendFontSize = 11
+'            model.LegendPlacement = LegendPlacement.Outside
+'            model.LegendOrientation = LegendOrientation.Horizontal
+'            model.LegendPosition = LegendPosition.BottomCenter
             model.TitleHorizontalAlignment = TitleHorizontalAlignment.CenteredWithinView
 
             Dim py = PopulateColumnData(0)
 
             Select Case name
                 Case "Temperature Profile"
-                    model.AddLineSeries(PopulateColumnData(2), py)
+'                    model.AddLineSeries(PopulateColumnData(2), py)
                     model.Axes(0).Title = "Temperature (" + su.temperature + ")"
                 Case "Pressure Profile"
-                    model.AddLineSeries(PopulateColumnData(1), py)
+'                    model.AddLineSeries(PopulateColumnData(1), py)
                     model.Axes(0).Title = "Pressure (" + su.pressure + ")"
                 Case "Vapor Flow Profile"
-                    model.AddLineSeries(PopulateColumnData(3), py)
+'                    model.AddLineSeries(PopulateColumnData(3), py)
                     model.Axes(0).Title = "Molar Flow (" + su.molarflow + ")"
                 Case "Liquid Flow Profile"
-                    model.AddLineSeries(PopulateColumnData(4), py)
+'                    model.AddLineSeries(PopulateColumnData(4), py)
                     model.Axes(0).Title = "Molar Flow (" + su.molarflow + ")"
             End Select
 

@@ -1,7 +1,7 @@
 ﻿Imports DWSIM.UnitOperations.UnitOperations
 Imports cv = DWSIM.SharedClasses.SystemsOfUnits.Converter
 
-Public Class EditingForm_HeatExchanger_SHProperties
+Public Class Object
 
     Public hx As UnitOperations.HeatExchanger
 

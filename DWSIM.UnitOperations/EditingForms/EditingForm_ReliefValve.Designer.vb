@@ -2,7 +2,7 @@
 
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_ReliefValve
+Partial Class Object
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -121,7 +121,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.grid1.BackColor = System.Drawing.Color.White
         Me.grid1.ColumnHeaderContextMenuStrip = Nothing
-        Me.grid1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.grid1.Dock = System.Windows.Forms.0
         Me.grid1.LeadHeaderContextMenuStrip = Nothing
         Me.grid1.Location = New System.Drawing.Point(3, 16)
         Me.grid1.Name = "grid1"
@@ -218,7 +218,7 @@ Partial Class EditingForm_ReliefValve
         'btnCreateAndConnectOutlet1
         '
         Me.btnCreateAndConnectOutlet1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCreateAndConnectOutlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectOutlet1.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectOutlet1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnCreateAndConnectOutlet1.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnCreateAndConnectOutlet1.Location = New System.Drawing.Point(323, 50)
@@ -230,7 +230,7 @@ Partial Class EditingForm_ReliefValve
         'btnCreateAndConnectInlet1
         '
         Me.btnCreateAndConnectInlet1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCreateAndConnectInlet1.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_lightning
+        Me.btnCreateAndConnectInlet1.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.bullet_lightning
         Me.btnCreateAndConnectInlet1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.btnCreateAndConnectInlet1.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnCreateAndConnectInlet1.Location = New System.Drawing.Point(323, 23)
@@ -242,7 +242,7 @@ Partial Class EditingForm_ReliefValve
         'btnDisconnectOutlet1
         '
         Me.btnDisconnectOutlet1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnectOutlet1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnectOutlet1.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnDisconnectOutlet1.Location = New System.Drawing.Point(350, 50)
         Me.btnDisconnectOutlet1.Name = "btnDisconnectOutlet1"
@@ -254,7 +254,7 @@ Partial Class EditingForm_ReliefValve
         'btnDisconnect1
         '
         Me.btnDisconnect1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnDisconnect1.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.disconnect
+        Me.btnDisconnect1.Image = Global.DWSIM.UnitOperations.Nothing.disconnect
         Me.btnDisconnect1.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnDisconnect1.Location = New System.Drawing.Point(350, 23)
         Me.btnDisconnect1.Name = "btnDisconnect1"
@@ -327,7 +327,7 @@ Partial Class EditingForm_ReliefValve
         'btnUtils
         '
         Me.btnUtils.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnUtils.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_sparkle
+        Me.btnUtils.Image = Global.DWSIM.UnitOperations.Nothing.bullet_sparkle
         Me.btnUtils.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnUtils.Location = New System.Drawing.Point(349, 18)
         Me.btnUtils.Name = "btnUtils"
@@ -349,7 +349,7 @@ Partial Class EditingForm_ReliefValve
         '
         Me.chkActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkActive.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.chkActive.Location = New System.Drawing.Point(349, 43)
         Me.chkActive.Name = "chkActive"
@@ -425,7 +425,7 @@ Partial Class EditingForm_ReliefValve
         'btnConfigurePP
         '
         Me.btnConfigurePP.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.cog
+        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.cog
         Me.btnConfigurePP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.btnConfigurePP.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnConfigurePP.Location = New System.Drawing.Point(349, 26)
@@ -465,14 +465,14 @@ Partial Class EditingForm_ReliefValve
         'AddUtilityTSMI
         '
         Me.AddUtilityTSMI.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.sizingtsmi})
-        Me.AddUtilityTSMI.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.AddUtilityTSMI.Image = Global.DWSIM.UnitOperations.Nothing.add
         Me.AddUtilityTSMI.Name = "AddUtilityTSMI"
         Me.AddUtilityTSMI.Size = New System.Drawing.Size(143, 22)
         Me.AddUtilityTSMI.Text = "Attach Utility"
         '
         'sizingtsmi
         '
-        Me.sizingtsmi.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.cog
+        Me.sizingtsmi.Image = Global.DWSIM.UnitOperations.Nothing.cog
         Me.sizingtsmi.Name = "sizingtsmi"
         Me.sizingtsmi.Size = New System.Drawing.Size(277, 22)
         Me.sizingtsmi.Text = "Pressure Safety Valve Sizing/Evaluation"
@@ -662,7 +662,7 @@ Partial Class EditingForm_ReliefValve
         Me.Label1.TabIndex = 15
         Me.Label1.Text = "Set-Point Pressure"
         '
-        'EditingForm_ReliefValve
+        'Object
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -673,9 +673,9 @@ Partial Class EditingForm_ReliefValve
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox3)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Name = "EditingForm_ReliefValve"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
-        Me.Text = "EditingForm_ReliefValve"
+        Me.Name = "Object"
+'        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
+        Me.Text = "Object"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.gbTable.ResumeLayout(False)
@@ -692,7 +692,7 @@ Partial Class EditingForm_ReliefValve
 
     End Sub
 
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel1 As Object
     Friend WithEvents gbTable As GroupBox
     Friend WithEvents grid1 As unvell.ReoGrid.ReoGridControl
     Public WithEvents Label4 As Label
@@ -702,16 +702,16 @@ Partial Class EditingForm_ReliefValve
     Public WithEvents cbOpeningKvRelType As ComboBox
     Public WithEvents Label10 As Label
     Public WithEvents GroupBoxConnections As GroupBox
-    Public WithEvents btnCreateAndConnectOutlet1 As Button
-    Public WithEvents btnCreateAndConnectInlet1 As Button
-    Public WithEvents btnDisconnectOutlet1 As Button
-    Public WithEvents btnDisconnect1 As Button
+    Public WithEvents btnCreateAndConnectOutlet1 As Object
+    Public WithEvents btnCreateAndConnectInlet1 As Object
+    Public WithEvents btnDisconnectOutlet1 As Object
+    Public WithEvents btnDisconnect1 As Object
     Public WithEvents Label7 As Label
     Public WithEvents cbOutlet1 As ComboBox
     Public WithEvents cbInlet1 As ComboBox
     Public WithEvents Label19 As Label
     Public WithEvents GroupBox5 As GroupBox
-    Public WithEvents btnUtils As Button
+    Public WithEvents btnUtils As Object
     Public WithEvents lblTag As TextBox
     Public WithEvents chkActive As CheckBox
     Public WithEvents lblConnectedTo As Label
@@ -720,7 +720,7 @@ Partial Class EditingForm_ReliefValve
     Public WithEvents Label12 As Label
     Public WithEvents Label11 As Label
     Public WithEvents GroupBox3 As GroupBox
-    Public WithEvents btnConfigurePP As Button
+    Public WithEvents btnConfigurePP As Object
     Public WithEvents cbPropPack As ComboBox
     Public WithEvents Label9 As Label
     Public WithEvents ToolTip1 As ToolTip

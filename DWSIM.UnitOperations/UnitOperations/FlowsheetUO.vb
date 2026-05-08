@@ -21,7 +21,6 @@ Imports System.Globalization
 Imports System.Linq
 Imports System.Xml.Linq
 Imports DWSIM.Thermodynamics.PropertyPackages
-Imports DWSIM.DrawingTools
 Imports DWSIM.Thermodynamics.BaseClasses
 Imports System.IO
 Imports System.Threading.Tasks
@@ -29,14 +28,9 @@ Imports DWSIM.SharedClasses.Flowsheet
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.SharedClasses.UnitOperations
 Imports DWSIM.Interfaces.Enums
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Tables
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Charts
 Imports System.Dynamic
 Imports System.Reflection
 Imports System.Threading
@@ -75,7 +69,6 @@ Namespace UnitOperations
 
         Public Overrides Property ObjectClass As SimulationObjectClass = SimulationObjectClass.UserModels
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_FlowsheetUO
 
         Public Property SimulationFile As String = ""
         <System.Xml.Serialization.XmlIgnore> Public Property Initialized As Boolean = False
@@ -170,7 +163,7 @@ Namespace UnitOperations
 
         Shared Function ExtractXML(ByVal zippath As String) As String
 
-            Dim pathtosave As String = My.Computer.FileSystem.SpecialDirectories.Temp + Path.DirectorySeparatorChar
+            Dim pathtosave As String = System.IO.Path.GetTempPath() + Path.DirectorySeparatorChar
             Dim fullname As String = ""
 
             Using stream As ICSharpCode.SharpZipLib.Zip.ZipInputStream = New ICSharpCode.SharpZipLib.Zip.ZipInputStream(File.OpenRead(zippath))
@@ -323,7 +316,7 @@ Label_00CC:
                             obj = Resolver.ReturnInstance(xel.Element("Type").Value)
                         End If
                     End If
-                    Dim gobj As IGraphicObject = fs.GraphicObjects(id)
+                    Dim gobj As Object = fs.GraphicObjects(id)
                     obj.GraphicObject = gobj
                     obj.GraphicObject.Owner = obj
                     obj.SetFlowsheet(fs)
@@ -355,26 +348,26 @@ Label_00CC:
                         Dim so2 As SpecialOps.Adjust = so
                         If fs.SimulationObjects.ContainsKey(so2.ManipulatedObjectData.ID) Then
                             so2.ManipulatedObject = fs.SimulationObjects(so2.ManipulatedObjectData.ID)
-                            DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToMv = so2.ManipulatedObject.GraphicObject
+'                            DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToMv = so2.ManipulatedObject.GraphicObject
                         End If
                         If fs.SimulationObjects.ContainsKey(so2.ControlledObjectData.ID) Then
                             so2.ControlledObject = fs.SimulationObjects(so2.ControlledObjectData.ID)
-                            DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToCv = so2.ControlledObject.GraphicObject
+'                            DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToCv = so2.ControlledObject.GraphicObject
                         End If
                         If fs.SimulationObjects.ContainsKey(so2.ReferencedObjectData.ID) Then
                             so2.ReferenceObject = fs.SimulationObjects(so2.ReferencedObjectData.ID)
-                            DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToRv = so2.ReferenceObject.GraphicObject
+'                            DirectCast(so2.GraphicObject, AdjustGraphic).ConnectedToRv = so2.ReferenceObject.GraphicObject
                         End If
                     End If
                     If TryCast(so, SpecialOps.Spec) IsNot Nothing Then
                         Dim so2 As SpecialOps.Spec = so
                         If fs.SimulationObjects.ContainsKey(so2.TargetObjectData.ID) Then
                             so2.TargetObject = fs.SimulationObjects(so2.TargetObjectData.ID)
-                            DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToTv = so2.TargetObject.GraphicObject
+'                            DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToTv = so2.TargetObject.GraphicObject
                         End If
                         If fs.SimulationObjects.ContainsKey(so2.SourceObjectData.ID) Then
                             so2.SourceObject = fs.SimulationObjects(so2.SourceObjectData.ID)
-                            DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToSv = so2.SourceObject.GraphicObject
+'                            DirectCast(so2.GraphicObject, SpecGraphic).ConnectedToSv = so2.SourceObject.GraphicObject
                         End If
                     End If
                     If TryCast(so, CapeOpenUO) IsNot Nothing Then
@@ -426,7 +419,7 @@ Label_00CC:
                                 Dim propname = xel.Element("Name").Value
                                 Dim proptype = xel.Element("PropertyType").Value
                                 Dim assembly1 As Assembly = Nothing
-                                For Each assembly In My.Application.Info.LoadedAssemblies
+                                For Each assembly In System.AppDomain.CurrentDomain.GetAssemblies()
                                     If proptype.Contains(assembly.GetName().Name) Then
                                         assembly1 = assembly
                                         Exit For
@@ -563,15 +556,11 @@ Label_00CC:
                     xel.Element("ObjectType").Value = xel.Element("ObjectType").Value.Replace("OT_Reciclo", "OT_Recycle")
                     xel.Element("ObjectType").Value = xel.Element("ObjectType").Value.Replace("GO_Texto", "GO_Text")
                     xel.Element("ObjectType").Value = xel.Element("ObjectType").Value.Replace("GO_Figura", "GO_Image")
-                    Dim obj As GraphicObject = Nothing
+                    Dim obj As Object = Nothing
                     Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
                     If Not t Is Nothing Then obj = Activator.CreateInstance(t)
                     If obj Is Nothing Then
-                        If xel.Element("Type").Value.Contains("OxyPlotGraphic") Then
-                            obj = CType(Drawing.SkiaSharp.Extended.Shared.ReturnInstance(xel.Element("Type").Value.Replace("Shapes", "Charts")), GraphicObject)
-                        Else
-                            obj = CType(DWSIM.Drawing.SkiaSharp.GraphicObjects.GraphicObject.ReturnInstance(xel.Element("Type").Value), GraphicObject)
-                        End If
+                        obj = Nothing
                     End If
                     If Not obj Is Nothing Then
                         obj.LoadData(xel.Elements.ToList)
@@ -580,21 +569,16 @@ Label_00CC:
                         obj.Y += shift
                         If pkey <> "" Then
                             searchtext = obj.Tag.Split("(")(0).Trim()
-                            objcount = (From go As IGraphicObject In fs.GraphicObjects.Values Select go Where go.Tag.Equals(obj.Tag)).Count
+                            objcount = (From go In fs.GraphicObjects.Values Select go Where go.Tag.Equals(obj.Tag)).Count
                             If objcount > 0 Then obj.Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                         End If
-                        If TypeOf obj Is TableGraphic Then
-                            DirectCast(obj, TableGraphic).Flowsheet = fs
-                        ElseIf TypeOf obj Is MasterTableGraphic Then
-                            DirectCast(obj, MasterTableGraphic).Flowsheet = fs
-                        ElseIf TypeOf obj Is SpreadsheetTableGraphic Then
-                            DirectCast(obj, SpreadsheetTableGraphic).Flowsheet = fs
-                        ElseIf TypeOf obj Is OxyPlotGraphic Then
-                            DirectCast(obj, OxyPlotGraphic).Flowsheet = fs
-                        ElseIf TypeOf obj Is RigorousColumnGraphic Or TypeOf obj Is AbsorptionColumnGraphic Or TypeOf obj Is CAPEOPENGraphic Then
+                        If False Then
+                        ElseIf TypeOf obj Is Object Then
+                            ' skip table graphic
+                        ElseIf TypeOf obj Is Object Then
                             obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                             obj.PositionConnectors()
-                        ElseIf TypeOf obj Is ExternalUnitOperationGraphic Then
+                        ElseIf TypeOf obj Is Object Then
                             Dim euo = mainfs.AvailableExternalUnitOperations.Values.Where(Function(x) x.Description = obj.Description).FirstOrDefault
                             If euo IsNot Nothing Then
                                 obj.Owner = euo
@@ -618,8 +602,8 @@ Label_00CC:
                 Try
                     Dim id As String = pkey & xel.Element("Name").Value
                     If id <> "" Then
-                        Dim obj As GraphicObject = (From go As GraphicObject In fs.GraphicObjects.Values Where go.Name = id).SingleOrDefault
-                        If obj Is Nothing Then obj = (From go As GraphicObject In fs.GraphicObjects.Values Where go.Name = xel.Element("Name").Value).SingleOrDefault
+                        Dim obj As Object = (From go In fs.GraphicObjects.Values Where go.Name = id).SingleOrDefault
+                        If obj Is Nothing Then obj = (From go In fs.GraphicObjects.Values Where go.Name = xel.Element("Name").Value).SingleOrDefault
                         If Not obj Is Nothing Then
                             Dim i As Integer = 0
                             For Each xel2 As XElement In xel.Element("InputConnectors").Elements
@@ -627,7 +611,7 @@ Label_00CC:
                                     obj.InputConnectors(i).ConnectorName = pkey & xel2.@AttachedFromObjID & "|" & xel2.@AttachedFromConnIndex
                                     obj.InputConnectors(i).Type = [Enum].Parse(obj.InputConnectors(i).Type.GetType, xel2.@ConnType)
                                     If reconnectinlets Then
-                                        Dim objFrom As GraphicObject = (From go As GraphicObject In fs.GraphicObjects.Values Where go.Name = xel2.@AttachedFromObjID).SingleOrDefault
+                                        Dim objFrom As Object = (From go In fs.GraphicObjects.Values Where go.Name = xel2.@AttachedFromObjID).SingleOrDefault
                                         If Not objFrom Is Nothing Then
                                             If Not objFrom.OutputConnectors(xel2.@AttachedFromConnIndex).IsAttached Then
                                                 fs.ConnectObjects(objFrom, obj, xel2.@AttachedFromConnIndex, xel2.@AttachedToConnIndex)
@@ -648,20 +632,33 @@ Label_00CC:
                 Try
                     Dim id As String = pkey & xel.Element("Name").Value
                     If id <> "" Then
-                        Dim obj As GraphicObject = (From go As GraphicObject In
+                        Dim obj As Object = (From go As Object In
                                                                 fs.GraphicObjects.Values Where go.Name = id).SingleOrDefault
                         If Not obj Is Nothing Then
                             For Each xel2 As XElement In xel.Element("OutputConnectors").Elements
                                 If xel2.@IsAttached = True Then
                                     Dim objToID = pkey & xel2.@AttachedToObjID
                                     If objToID <> "" Then
-                                        Dim objTo As GraphicObject = (From go As GraphicObject In
+                                        Dim objTo As Object = (From go In
                                                                                         fs.GraphicObjects.Values Where go.Name = objToID).SingleOrDefault
-                                        If objTo Is Nothing Then objTo = (From go As GraphicObject In
+                                        If objTo Is Nothing Then objTo = (From go In
                                                                                         fs.GraphicObjects.Values Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
                                         Dim fromidx As Integer = -1
-                                        Dim cp As IConnectionPoint = (From cp2 As IConnectionPoint In objTo.InputConnectors Select cp2 Where cp2.ConnectorName.Split("|")(0) = obj.Name).SingleOrDefault
-                                        If cp Is Nothing Then cp = (From cp2 As IConnectionPoint In objTo.InputConnectors Select cp2 Where cp2.ConnectorName.Split("|")(0) = xel2.@AttachedToObjID).SingleOrDefault
+                                        Dim cp As Object = Nothing
+                                        For Each cp2 As Object In objTo.InputConnectors
+                                            If cp2.ConnectorName.Split("|")(0) = obj.Name Then
+                                                cp = cp2
+                                                Exit For
+                                            End If
+                                        Next
+                                        If cp Is Nothing Then
+                                            For Each cp2 As Object In objTo.InputConnectors
+                                                If cp2.ConnectorName.Split("|")(0) = xel2.@AttachedToObjID Then
+                                                    cp = cp2
+                                                    Exit For
+                                                End If
+                                            Next
+                                        End If
                                         If Not cp Is Nothing Then
                                             fromidx = cp.ConnectorName.Split("|")(1)
                                         End If
@@ -673,9 +670,9 @@ Label_00CC:
                                 If xel2.@IsAttached = True Then
                                     Dim objToID = pkey & xel2.@AttachedToObjID
                                     If objToID <> "" Then
-                                        Dim objTo As GraphicObject = (From go As GraphicObject In
+                                        Dim objTo As Object = (From go In
                                                                                         fs.GraphicObjects.Values Where go.Name = objToID).SingleOrDefault
-                                        If objTo Is Nothing Then obj = (From go As GraphicObject In
+                                        If objTo Is Nothing Then obj = (From go In
                                                                                         fs.GraphicObjects.Values Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
                                         If Not obj Is Nothing And Not objTo Is Nothing Then fs.ConnectObjects(obj, objTo, -1, xel2.@AttachedToConnIndex)
                                     End If
@@ -763,9 +760,9 @@ Label_00CC:
                     xel = xdoc.Element("DWSIM_Simulation_Data").Element("GeneralInfo")
 
                     xel.RemoveAll()
-                    xel.Add(New XElement("BuildVersion", My.Application.Info.Version.ToString))
-                    xel.Add(New XElement("BuildDate", CType("01/01/2000", DateTime).AddDays(My.Application.Info.Version.Build).AddSeconds(My.Application.Info.Version.Revision * 2)))
-                    xel.Add(New XElement("OSInfo", My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"))
+                    xel.Add(New XElement("BuildVersion", "8.0.0.0"))
+                    xel.Add(New XElement("BuildDate", CType("01/01/2000", DateTime).AddDays(1).AddSeconds(1 * 2)))
+                    xel.Add(New XElement("OSInfo", "Linux"))
                     xel.Add(New XElement("SavedOn", Date.Now))
 
                     xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
@@ -1312,61 +1309,7 @@ Label_00CC:
 
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_FlowsheetUO With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_FlowsheetUO With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-            If f Is Nothing Then
-                f = New EditingForm_FlowsheetUO With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Return f
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_FlowsheetUO With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Return f
-                Else
-                    Return Nothing
-                End If
-            End If
-        End Function
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.flowsheet_block
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.flowsheet_block.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("FLOWS_Desc")
@@ -1376,14 +1319,6 @@ Label_00CC:
             Return ResMan.GetLocalString("FLOWS_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

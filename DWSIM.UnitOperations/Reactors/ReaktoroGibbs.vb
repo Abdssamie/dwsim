@@ -11,13 +11,9 @@ Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.Thermodynamics
 Imports scaler = DotNumerics.Scaling.Scaler
 Imports DWSIM.MathOps
-Imports SkiaSharp
 Imports System.IO
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects
-Imports DWSIM.DrawingTools.Point
 Imports DWSIM.Interfaces.Enums.GraphicObjects
 Imports Python.Runtime
-Imports DWSIM.Drawing.SkiaSharp.GraphicObjects.Shapes
 Imports System.Text
 
 Namespace Reactors
@@ -30,13 +26,12 @@ Namespace Reactors
 
         Private ImagePath As String = ""
 
-        Private Image As SKImage
+        Private Image As Object
 
         Public Property EmbeddedImageData As String = ""
 
         Public Property UseEmbeddedImage As Boolean = False
 
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_ReaktoroGibbs
 
         Public Property DatabaseName As String = "supcrt07.xml"
 
@@ -150,7 +145,7 @@ Namespace Reactors
 
             End If
 
-            Dim libpath = DWSIM.Thermodynamics.ReaktoroPropertyPackage.ReaktoroLoader.Initialize()
+            Dim libpath = ""
 
             Dim msin = GetInletMaterialStream(0)
             Dim msout = GetOutletMaterialStream(0)
@@ -375,114 +370,10 @@ Namespace Reactors
 
         End Sub
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_ReaktoroGibbs With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_ReaktoroGibbs With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
 
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetEditingForm() As Form
-            If f Is Nothing Then
-                f = New EditingForm_ReaktoroGibbs With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Return f
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_ReaktoroGibbs With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Return f
-                Else
-                    Return Nothing
-                End If
-            End If
-        End Function
-
-        Public Overrides Function GetIconBitmap() As Object
-
-            Return My.Resources.reactor_reaktoro
-
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.reactor_reaktoro.png")
-
-        End Function
 
         Public Sub Draw(g As Object) Implements IExternalUnitOperation.Draw
-
-            Dim canvas As SKCanvas = DirectCast(g, SKCanvas)
-
-            If UseEmbeddedImage = True AndAlso EmbeddedImageData <> "" Then
-
-                Dim p As New SKPaint
-                With p
-                    p.IsAntialias = GlobalSettings.Settings.DrawingAntiAlias
-                    p.FilterQuality = SKFilterQuality.High
-                End With
-
-                Using image As SKImage = EmbeddedImageGraphic.Base64ToImage(EmbeddedImageData)
-                    canvas.DrawImage(image, New SKRect(GraphicObject.X, GraphicObject.Y, GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height), p)
-                End Using
-
-            Else
-
-                If Image Is Nothing Then
-
-                    ImagePath = SharedClasses.Utility.GetTempFileName()
-                    My.Resources.reactor_reaktoro.Save(ImagePath)
-
-                    Using streamBG = New FileStream(ImagePath, FileMode.Open)
-                        Using bitmap = SKBitmap.Decode(streamBG)
-                            Image = SKImage.FromBitmap(bitmap)
-                        End Using
-                    End Using
-
-                    Try
-                        File.Delete(ImagePath)
-                    Catch ex As Exception
-                    End Try
-
-                End If
-
-                Using p As New SKPaint With {.IsAntialias = GlobalSettings.Settings.DrawingAntiAlias, .FilterQuality = SKFilterQuality.High}
-                    canvas.DrawImage(Image, New SKRect(GraphicObject.X, GraphicObject.Y, GraphicObject.X + GraphicObject.Width, GraphicObject.Y + GraphicObject.Height), p)
-                End Using
-
-            End If
 
         End Sub
 
@@ -494,26 +385,26 @@ Namespace Reactors
             x = GraphicObject.X
             y = GraphicObject.Y
 
-            Dim myIC1 As New ConnectionPoint
+            Dim myIC1 As New Object
 
-            myIC1.Position = New Point(x, y + h / 2)
+            myIC1.Position = New Object()
             myIC1.Type = ConType.ConIn
             myIC1.Direction = ConDir.Right
 
-            Dim myOC1 As New ConnectionPoint
-            myOC1.Position = New Point(x + w, y + h / 2)
+            Dim myOC1 As New Object
+            myOC1.Position = New Object()
             myOC1.Type = ConType.ConOut
             myOC1.Direction = ConDir.Right
 
-            Dim myOC2 As New ConnectionPoint
-            myOC2.Position = New Point(x + w / 2, y + h)
+            Dim myOC2 As New Object
+            myOC2.Position = New Object()
             myOC2.Type = ConType.ConOut
             myOC2.Direction = ConDir.Down
             myOC2.Type = ConType.ConEn
 
             With GraphicObject.InputConnectors
                 If .Count = 1 Then
-                    .Item(0).Position = New Point(x, y + h / 2)
+                    .Item(0).Position = New Object()
                 Else
                     .Add(myIC1)
                 End If
@@ -522,8 +413,8 @@ Namespace Reactors
 
             With GraphicObject.OutputConnectors
                 If .Count = 2 Then
-                    .Item(0).Position = New Point(x + w, y + h / 2)
-                    .Item(1).Position = New Point(x + w / 2, y + h)
+                    .Item(0).Position = New Object()
+                    .Item(1).Position = New Object()
                 Else
                     .Add(myOC1)
                     .Add(myOC2)
@@ -619,7 +510,7 @@ Namespace Reactors
 
             End If
 
-            Dim libpath = DWSIM.Thermodynamics.ReaktoroPropertyPackage.ReaktoroLoader.Initialize()
+            Dim libpath = ""
 
             Using Py.GIL
 

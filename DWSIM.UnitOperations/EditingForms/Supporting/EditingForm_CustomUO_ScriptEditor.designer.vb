@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class EditingForm_CustomUO_ScriptEditor
+Partial Class Object
     Inherits SharedClasses.ObjectEditorForm
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_CustomUO_ScriptEditor))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -61,7 +61,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         Me.ToolStripTextBox1 = New System.Windows.Forms.ToolStripTextBox()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
-        Me.txtScript = New ScintillaNET.Scintilla()
+        Me.txtScript = New Object()
         Me.ToolStrip1.SuspendLayout()
         Me.ToolStrip2.SuspendLayout()
         Me.SuspendLayout()
@@ -159,14 +159,14 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         'btnUndo
         '
         Me.btnUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnUndo.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.turn_left
+        Me.btnUndo.Image = Global.DWSIM.UnitOperations.Nothing.turn_left
         resources.ApplyResources(Me.btnUndo, "btnUndo")
         Me.btnUndo.Name = "btnUndo"
         '
         'btnRedo
         '
         Me.btnRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnRedo.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.turn_right
+        Me.btnRedo.Image = Global.DWSIM.UnitOperations.Nothing.turn_right
         resources.ApplyResources(Me.btnRedo, "btnRedo")
         Me.btnRedo.Name = "btnRedo"
         '
@@ -178,14 +178,14 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         'ToolStripButton2
         '
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.add
+        Me.ToolStripButton2.Image = Global.DWSIM.UnitOperations.Nothing.add
         resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton3
         '
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.delete
+        Me.ToolStripButton3.Image = Global.DWSIM.UnitOperations.Nothing.delete
         resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
@@ -207,7 +207,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         'btnDebug
         '
         Me.btnDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnDebug.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.control_play
+        Me.btnDebug.Image = Global.DWSIM.UnitOperations.Nothing.control_play
         resources.ApplyResources(Me.btnDebug, "btnDebug")
         Me.btnDebug.Name = "btnDebug"
         '
@@ -225,7 +225,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         'APIHelptsbutton
         '
         Me.APIHelptsbutton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.APIHelptsbutton.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.script_code
+        Me.APIHelptsbutton.Image = Global.DWSIM.UnitOperations.Nothing.script_code
         resources.ApplyResources(Me.APIHelptsbutton, "APIHelptsbutton")
         Me.APIHelptsbutton.Name = "APIHelptsbutton"
         '
@@ -289,7 +289,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         'txtScript
         '
         resources.ApplyResources(Me.txtScript, "txtScript")
-        Me.txtScript.Dock = DockStyle.Fill
+        Me.txtScript.Dock = 0
         Me.txtScript.AnnotationVisible = ScintillaNET.Annotation.Standard
         Me.txtScript.AutoCChooseSingle = True
         Me.txtScript.AutoCMaxHeight = 10
@@ -304,7 +304,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         '
         resources.ApplyResources(Me.FolderBrowserDialog1, "FolderBrowserDialog1")
         '
-        'EditingForm_CustomUO_ScriptEditor
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -312,8 +312,8 @@ Partial Class EditingForm_CustomUO_ScriptEditor
         Me.Controls.Add(Me.ToolStrip2)
         Me.Controls.Add(Me.ToolStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "EditingForm_CustomUO_ScriptEditor"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+        Me.Name = "Object"
+'        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.ToolStrip1.ResumeLayout(False)
@@ -345,7 +345,7 @@ Partial Class EditingForm_CustomUO_ScriptEditor
     Public WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
     Public WithEvents btnDebug As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
-    Public WithEvents txtScript As ScintillaNET.Scintilla
+    Public WithEvents txtScript As Object
     Public WithEvents btnHighlightSpaces As System.Windows.Forms.ToolStripButton
     Public WithEvents btnUndo As System.Windows.Forms.ToolStripButton
     Public WithEvents btnRedo As System.Windows.Forms.ToolStripButton

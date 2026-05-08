@@ -23,7 +23,6 @@ Imports GS = GemBox.Spreadsheet
 Imports DWSIM.Thermodynamics
 Imports DWSIM.Thermodynamics.Streams
 Imports DWSIM.SharedClasses
-Imports System.Windows.Forms
 Imports DWSIM.UnitOperations.UnitOperations.Auxiliary
 Imports DWSIM.Interfaces.Enums
 Imports System.IO
@@ -69,9 +68,6 @@ Namespace UnitOperations
             End Try
         End Sub
 
-
-
-        <NonSerialized> <Xml.Serialization.XmlIgnore> Public f As EditingForm_SpreadsheetUO
 
         Protected m_DQ As Nullable(Of Double)
         Protected m_FileName As String = ""
@@ -208,7 +204,7 @@ Namespace UnitOperations
                     Next
 
                     Dim mybook As Excel.Workbook
-                    Dim AppPath = Application.StartupPath
+                    Dim AppPath = Nothing
 
                     Dim tmpfile As String = ""
 
@@ -475,7 +471,7 @@ Namespace UnitOperations
 
                 Dim xcl As GS.ExcelFile = Nothing
 
-                Dim AppPath = Application.StartupPath
+                Dim AppPath = Nothing
 
                 Dim tmpfile As String = ""
 
@@ -596,7 +592,7 @@ Namespace UnitOperations
                             .StartInfo.Arguments = Filename
                             .StartInfo.UseShellExecute = False
                             .Start()
-                            MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
+'                            MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
                         End With
                     Else 'macOS
                         Dim p As New Process()
@@ -605,12 +601,12 @@ Namespace UnitOperations
                             .StartInfo.Arguments = Filename
                             .StartInfo.UseShellExecute = False
                             .Start()
-                            MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
+'                            MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
                         End With
                     End If
                 Else
                     Process.Start(Filename)
-                    MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
+'                    MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
                 End If
 
                 If FileIsEmbedded Then
@@ -797,7 +793,7 @@ Namespace UnitOperations
                         Next
 
                         Dim mybook As Excel.Workbook
-                        Dim AppPath = Application.StartupPath
+                        Dim AppPath = Nothing
                         Dim ParName As String
                         Dim i As Integer
 
@@ -891,7 +887,7 @@ Namespace UnitOperations
 
                     Dim xcl As GS.ExcelFile = Nothing
 
-                    Dim AppPath = Application.StartupPath
+                    Dim AppPath = Nothing
                     Dim ParName As String
                     Dim i As Integer
 
@@ -1072,43 +1068,7 @@ Namespace UnitOperations
             End If
         End Function
 
-        Public Overrides Sub DisplayEditForm()
 
-            If f Is Nothing Then
-                f = New EditingForm_SpreadsheetUO With {.SimObject = Me}
-                f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                f.Tag = "ObjectEditor"
-                Me.FlowSheet.DisplayForm(f)
-            Else
-                If f.IsDisposed Then
-                    f = New EditingForm_SpreadsheetUO With {.SimObject = Me}
-                    f.ShowHint = GlobalSettings.Settings.DefaultEditFormLocation
-                    f.Tag = "ObjectEditor"
-                    Me.FlowSheet.DisplayForm(f)
-                Else
-                    f.Activate()
-                End If
-            End If
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.UIThread(Sub() f.UpdateInfo())
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.table
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.table.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ResMan.GetLocalString("EXLUO_Desc")
@@ -1118,14 +1078,6 @@ Namespace UnitOperations
             Return ResMan.GetLocalString("EXLUO_Name")
         End Function
 
-        Public Overrides Sub CloseEditForm()
-            If f IsNot Nothing Then
-                If Not f.IsDisposed Then
-                    f.Close()
-                    f = Nothing
-                End If
-            End If
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get

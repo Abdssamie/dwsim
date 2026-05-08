@@ -505,7 +505,7 @@ Namespace GraphicObjects
             Return newobj
         End Function
 
-        Public Overridable Sub DisplayControlPanelModeEditor() Implements IGraphicObject.DisplayControlPanelModeEditor
+        Public Overridable Sub DisplayControlPanelModeEditor()
 
             ControlPanelModeEditorDisplayDelegate?.Invoke()
 
@@ -521,7 +521,7 @@ Namespace GraphicObjects
 
         Public Property Extensions As Dictionary(Of String, IGraphicObjectExtension) Implements IGraphicObject.Extensions
 
-        Public Property ControlPanelModeEditorDisplayDelegate As Action Implements IGraphicObject.ControlPanelModeEditorDisplayDelegate
+        Public Property ControlPanelModeEditorDisplayDelegate As Action
 
         Public Property DoubleClickAction As Action(Of Object) Implements IGraphicObject.DoubleClickAction
 
@@ -550,7 +550,7 @@ Namespace GraphicObjects
 
         End Function
 
-        Public Overridable Function GetIconAsBitmap() As System.Drawing.Bitmap Implements IGraphicObject.GetIconAsBitmap
+        Public Overridable Function GetIconAsBitmap() As System.Drawing.Bitmap
 
             If EmbeddedResourceIconName <> "" Then
 

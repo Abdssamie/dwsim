@@ -55,17 +55,7 @@ Namespace UnitOperations
 
         End Function
 
-        Public Overrides Function GetIconBitmap() As Object
 
-            Return My.Resources.fuel_cell
-
-        End Function
-
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.fuel_cell.png")
-
-        End Function
 
         Public Overrides Function CloneXML() As Object
 
@@ -276,23 +266,6 @@ Namespace UnitOperations
 
 
         Public Overrides Sub PopulateEditorPanel(ctner As Object)
-
-
-            Dim container As DynamicLayout = ctner
-
-            Dim su = GetFlowsheet().FlowsheetOptions.SelectedUnitSystem
-            Dim nf = GetFlowsheet().FlowsheetOptions.NumberFormat
-
-            For Each param In InputParameters.Values
-                container.CreateAndAddTextBoxRow(nf, param.Name + " (" + param.Units + ")", param.Value,
-                                                Sub(tb, e)
-                                                    If tb.Text.ToDoubleFromInvariant().IsValidDouble() Then
-                                                        param.Value = tb.Text.ToDoubleFromInvariant()
-                                                    End If
-                                                End Sub)
-                container.CreateAndAddDescriptionRow(param.Description)
-            Next
-
         End Sub
 
         Public Overrides Function GetReport(su As IUnitsOfMeasure, ci As CultureInfo, nf As String) As String

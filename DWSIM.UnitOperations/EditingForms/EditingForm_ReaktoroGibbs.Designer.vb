@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_ReaktoroGibbs
+Partial Class Object
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -22,7 +22,7 @@ Partial Class EditingForm_ReaktoroGibbs
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_ReaktoroGibbs))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -301,7 +301,7 @@ Partial Class EditingForm_ReaktoroGibbs
         '
         Me.chkActive.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkActive.Appearance = System.Windows.Forms.Appearance.Button
-        Me.chkActive.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.bullet_tick
+        Me.chkActive.Image = Global.DWSIM.UnitOperations.Nothing.bullet_tick
         Me.chkActive.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.chkActive.Location = New System.Drawing.Point(390, 43)
         Me.chkActive.Name = "chkActive"
@@ -377,7 +377,7 @@ Partial Class EditingForm_ReaktoroGibbs
         '
         'rtbAnnotations
         '
-        Me.rtbAnnotations.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.rtbAnnotations.Dock = System.Windows.Forms.0
         Me.rtbAnnotations.Location = New System.Drawing.Point(3, 16)
         Me.rtbAnnotations.Name = "rtbAnnotations"
         Me.rtbAnnotations.Rtf = "{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1046{\fonttbl{\f0\fnil Microsoft " &
@@ -403,7 +403,7 @@ Partial Class EditingForm_ReaktoroGibbs
         'tabstrip1
         '
         Me.tabstrip1.Controls.Add(Me.TabPage3)
-        Me.tabstrip1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tabstrip1.Dock = System.Windows.Forms.0
         Me.tabstrip1.Location = New System.Drawing.Point(3, 16)
         Me.tabstrip1.Name = "tabstrip1"
         Me.tabstrip1.SelectedIndex = 0
@@ -426,7 +426,7 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.gridConversions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridConversions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridConversions.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7})
-        Me.gridConversions.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridConversions.Dock = System.Windows.Forms.0
         Me.gridConversions.Location = New System.Drawing.Point(0, 0)
         Me.gridConversions.Name = "gridConversions"
         Me.gridConversions.ReadOnly = True
@@ -471,7 +471,7 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.TabControlParameters.Controls.Add(Me.TabPageElements)
         Me.TabControlParameters.Controls.Add(Me.TabPage1)
         Me.TabControlParameters.Controls.Add(Me.TabPage2)
-        Me.TabControlParameters.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabControlParameters.Dock = System.Windows.Forms.0
         Me.TabControlParameters.Location = New System.Drawing.Point(3, 16)
         Me.TabControlParameters.Name = "TabControlParameters"
         Me.TabControlParameters.SelectedIndex = 0
@@ -542,7 +542,7 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button6.AutoSize = True
         Me.Button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.Button6.Image = Global.DWSIM.UnitOperations.My.Resources.Resources._new
+        Me.Button6.Image = Global.DWSIM.UnitOperations.Nothing._new
         Me.Button6.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Button6.Location = New System.Drawing.Point(341, 84)
         Me.Button6.Name = "Button6"
@@ -556,7 +556,7 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.Button5.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button5.AutoSize = True
         Me.Button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.Button5.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.information
+        Me.Button5.Image = Global.DWSIM.UnitOperations.Nothing.information
         Me.Button5.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.Button5.Location = New System.Drawing.Point(369, 84)
         Me.Button5.Name = "Button5"
@@ -641,7 +641,7 @@ Partial Class EditingForm_ReaktoroGibbs
         '
         Me.btnConfigurePP.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnConfigurePP.AutoSize = True
-        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.My.Resources.Resources.cog
+        Me.btnConfigurePP.BackgroundImage = Global.DWSIM.UnitOperations.Nothing.cog
         Me.btnConfigurePP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.btnConfigurePP.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnConfigurePP.Location = New System.Drawing.Point(369, 152)
@@ -719,7 +719,7 @@ Partial Class EditingForm_ReaktoroGibbs
         'lvComps
         '
         Me.lvComps.CheckBoxes = True
-        Me.lvComps.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lvComps.Dock = System.Windows.Forms.0
         Me.lvComps.HideSelection = False
         Me.lvComps.Location = New System.Drawing.Point(3, 26)
         Me.lvComps.Name = "lvComps"
@@ -730,7 +730,7 @@ Partial Class EditingForm_ReaktoroGibbs
         '
         'Button1
         '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Button1.Dock = System.Windows.Forms.0
         Me.Button1.Location = New System.Drawing.Point(3, 3)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(398, 23)
@@ -753,7 +753,7 @@ Partial Class EditingForm_ReaktoroGibbs
         'lvElements
         '
         Me.lvElements.CheckBoxes = True
-        Me.lvElements.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lvElements.Dock = System.Windows.Forms.0
         Me.lvElements.HideSelection = False
         Me.lvElements.Location = New System.Drawing.Point(3, 26)
         Me.lvElements.Name = "lvElements"
@@ -764,7 +764,7 @@ Partial Class EditingForm_ReaktoroGibbs
         '
         'Button2
         '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Button2.Dock = System.Windows.Forms.0
         Me.Button2.Location = New System.Drawing.Point(3, 3)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(398, 23)
@@ -791,7 +791,7 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.gridCompNames.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridCompNames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridCompNames.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.Column1})
-        Me.gridCompNames.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridCompNames.Dock = System.Windows.Forms.0
         Me.gridCompNames.Location = New System.Drawing.Point(3, 26)
         Me.gridCompNames.Name = "gridCompNames"
         Me.gridCompNames.RowHeadersVisible = False
@@ -813,7 +813,7 @@ Partial Class EditingForm_ReaktoroGibbs
         '
         'Button3
         '
-        Me.Button3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Button3.Dock = System.Windows.Forms.0
         Me.Button3.Location = New System.Drawing.Point(3, 3)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(398, 23)
@@ -839,7 +839,7 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.gridSpeciesMappings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridSpeciesMappings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridSpeciesMappings.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.c1, Me.c2})
-        Me.gridSpeciesMappings.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gridSpeciesMappings.Dock = System.Windows.Forms.0
         Me.gridSpeciesMappings.Location = New System.Drawing.Point(3, 3)
         Me.gridSpeciesMappings.Name = "gridSpeciesMappings"
         Me.gridSpeciesMappings.RowHeadersVisible = False
@@ -899,7 +899,7 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.chkUseEmbeddedImage.Text = "Use Embedded Image Icon"
         Me.chkUseEmbeddedImage.UseVisualStyleBackColor = True
         '
-        'EditingForm_ReaktoroGibbs
+        'Object
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -912,8 +912,8 @@ Partial Class EditingForm_ReaktoroGibbs
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.GroupBox5)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Name = "EditingForm_ReaktoroGibbs"
-        Me.Text = "EditingForm_ReaktoroGibbs"
+        Me.Name = "Object"
+        Me.Text = "Object"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
@@ -940,14 +940,14 @@ Partial Class EditingForm_ReaktoroGibbs
     End Sub
 
     Public WithEvents GroupBox1 As GroupBox
-    Public WithEvents btnCreateAndConnectEnergy As Button
-    Public WithEvents btnDisconnectEnergy As Button
-    Public WithEvents btnCreateAndConnectOutlet1 As Button
+    Public WithEvents btnCreateAndConnectEnergy As Object
+    Public WithEvents btnDisconnectEnergy As Object
+    Public WithEvents btnCreateAndConnectOutlet1 As Object
     Public WithEvents Label14 As Label
-    Public WithEvents btnCreateAndConnectInlet1 As Button
+    Public WithEvents btnCreateAndConnectInlet1 As Object
     Public WithEvents cbEnergy As ComboBox
-    Public WithEvents btnDisconnectOutlet1 As Button
-    Public WithEvents btnDisconnect1 As Button
+    Public WithEvents btnDisconnectOutlet1 As Object
+    Public WithEvents btnDisconnect1 As Object
     Public WithEvents Label7 As Label
     Public WithEvents cbOutlet1 As ComboBox
     Public WithEvents cbInlet1 As ComboBox
@@ -971,7 +971,7 @@ Partial Class EditingForm_ReaktoroGibbs
     Public WithEvents GroupBox2 As GroupBox
     Public WithEvents TabControlParameters As TabControl
     Public WithEvents TabPageParams As TabPage
-    Public WithEvents btnConfigurePP As Button
+    Public WithEvents btnConfigurePP As Object
     Public WithEvents cbPropPack As ComboBox
     Public WithEvents Label9 As Label
     Public WithEvents cbPDrop As ComboBox
@@ -985,9 +985,9 @@ Partial Class EditingForm_ReaktoroGibbs
     Friend WithEvents CheckBox1 As CheckBox
     Public WithEvents Label1 As Label
     Friend WithEvents ToolTipChangeTag As ToolTip
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Button1 As Object
     Public WithEvents lvElements As ListView
-    Friend WithEvents Button2 As Button
+    Friend WithEvents Button2 As Object
     Public WithEvents lvComps As ListView
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents gridSpeciesMappings As DataGridView
@@ -997,16 +997,16 @@ Partial Class EditingForm_ReaktoroGibbs
     Public WithEvents Label2 As Label
     Friend WithEvents TabPage1 As TabPage
     Friend WithEvents gridCompNames As DataGridView
-    Friend WithEvents Button3 As Button
+    Friend WithEvents Button3 As Object
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Public WithEvents GroupBox3 As GroupBox
-    Public WithEvents Button4 As Button
+    Public WithEvents Button4 As Object
     Public WithEvents chkUseEmbeddedImage As CheckBox
-    Public WithEvents Button5 As Button
-    Public WithEvents Button6 As Button
+    Public WithEvents Button5 As Object
+    Public WithEvents Button6 As Object
     Friend WithEvents ToolTip1 As ToolTip
-    Friend WithEvents Button7 As Button
+    Friend WithEvents Button7 As Object
     Public WithEvents tbExternalDB As TextBox
     Friend WithEvents chkUseExternalDatabase As CheckBox
 End Class

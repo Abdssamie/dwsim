@@ -16,11 +16,9 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports ScintillaNET
 Imports System.Reflection
 Imports System.Xml.Linq
 Imports System.Linq
-Imports System.Drawing
 
 ''' <summary>
 ''' scintillaNET Editor extender for code intellisense display
@@ -36,7 +34,7 @@ Public Module scintillaExtender
     ''' <param name="fontsize">Size of the font to be used.</param>
     ''' <param name="viewspaces">Enables or disables whitspace highlighting.</param>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Public Sub SetEditorStyle(scintilla As ScintillaNET.Scintilla, fontname As String, fontsize As Integer, viewspaces As Boolean, capeopen As Boolean)
+    <System.Runtime.CompilerServices.Extension()> Public Sub SetEditorStyle(scintilla As Object, fontname As String, fontsize As Integer, viewspaces As Boolean, capeopen As Boolean)
 
         scintilla.StyleResetDefault()
         scintilla.Styles(Style.[Default]).Font = fontname
@@ -148,9 +146,9 @@ Public Module scintillaExtender
 
             Dim netprops As String = ""
 
-            Dim calculatorassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
-            Dim unitopassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
-            Dim fsolverassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
+            Dim calculatorassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
+            Dim unitopassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
+            Dim fsolverassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
 
             Dim props = calculatorassembly.GetType("DWSIM.Thermodynamics.Streams.MaterialStream").GetProperties()
             For Each p In props
@@ -203,7 +201,7 @@ Public Module scintillaExtender
 
         Else
 
-            Dim capeopenassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("CapeOpen,")).FirstOrDefault
+            Dim capeopenassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("CapeOpen,")).FirstOrDefault
 
             Dim netprops As String = ""
 
@@ -255,7 +253,7 @@ Public Module scintillaExtender
     ''' </summary>
     ''' <param name="scintilla"></param>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Sub SetColumnMargins(scintilla As ScintillaNET.Scintilla)
+    <System.Runtime.CompilerServices.Extension()> Sub SetColumnMargins(scintilla As Object)
 
         Dim maxLineNumberCharLength = scintilla.Lines.Count.ToString().Length
 
@@ -269,7 +267,7 @@ Public Module scintillaExtender
     ''' </summary>
     ''' <param name="scintilla"></param>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Sub ShowAutoComplete(scintilla As ScintillaNET.Scintilla, capeopen As Boolean)
+    <System.Runtime.CompilerServices.Extension()> Sub ShowAutoComplete(scintilla As Object, capeopen As Boolean)
 
         Dim suggestions As String = ""
 
@@ -288,10 +286,10 @@ Public Module scintillaExtender
 
             If Not capeopen Then
 
-                Dim calculatorassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
-                Dim unitopassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
-                Dim fsolverassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
-                Dim interfaceassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Interfaces,")).FirstOrDefault
+                Dim calculatorassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
+                Dim unitopassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
+                Dim fsolverassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
+                Dim interfaceassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.Interfaces,")).FirstOrDefault
 
                 Select Case lastkeyword
                     Case "ms", "ims1", "ims2", "ims3", "ims4", "ims5", "ims6", "oms1", "oms2", "oms3", "oms4", "oms5", "MaterialStream",
@@ -355,7 +353,7 @@ Public Module scintillaExtender
 
             Else
 
-                Dim capeopenassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("CapeOpen,")).FirstOrDefault
+                Dim capeopenassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("CapeOpen,")).FirstOrDefault
 
                 Select Case lastkeyword
                     Case "ims1", "ims2", "ims3", "ims4", "ims5", "ims6", "oms1", "oms2", "oms3", "oms4", "oms5",
@@ -445,7 +443,7 @@ Public Module scintillaExtender
     ''' <param name="scintilla"></param>
     ''' <param name="readers">Jolt's XmlDocCommentReader list or readers, to get and display comments from assembly-generated XML file.</param>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Sub ShowToolTip(scintilla As ScintillaNET.Scintilla, readers As List(Of Jolt.XmlDocCommentReader), capeopen As Boolean)
+    <System.Runtime.CompilerServices.Extension()> Sub ShowToolTip(scintilla As Object, readers As List(Of Jolt.XmlDocCommentReader), capeopen As Boolean)
 
         'parses the last keyword (object) (before the ".") and get suggestions for the autocomplete box from its properties and methods
 
@@ -461,10 +459,10 @@ Public Module scintillaExtender
 
             If Not capeopen Then
 
-                Dim calculatorassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
-                Dim unitopassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
-                Dim fsolverassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
-                Dim interfaceassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("DWSIM.Interfaces,")).FirstOrDefault
+                Dim calculatorassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.Thermodynamics,")).FirstOrDefault
+                Dim unitopassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.UnitOperations,")).FirstOrDefault
+                Dim fsolverassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.FlowsheetSolver,")).FirstOrDefault
+                Dim interfaceassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("DWSIM.Interfaces,")).FirstOrDefault
 
                 Select Case lastobj
                     Case "ims1", "ims2", "ims3", "ims4", "ims5", "ims6", "oms1", "oms2", "oms3", "oms4", "oms5", "MaterialStream"
@@ -490,7 +488,7 @@ Public Module scintillaExtender
 
             Else
 
-                Dim capeopenassembly = My.Application.Info.LoadedAssemblies.Where(Function(x) x.FullName.Contains("CapeOpen,")).FirstOrDefault
+                Dim capeopenassembly = System.AppDomain.CurrentDomain.GetAssemblies().Where(Function(x) x.FullName.Contains("CapeOpen,")).FirstOrDefault
 
                 Select Case lastobj
                     Case "ims1", "ims2", "ims3", "ims4", "ims5", "ims6", "oms1", "oms2", "oms3", "oms4", "oms5",
@@ -532,7 +530,7 @@ Public Module scintillaExtender
     ''' <param name="reader">Jolt's XmlDocCommentReader instance, to get and display comments from assembly-generated XML file.</param>
     ''' <returns>The formatted text to display in the tooltip.</returns>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Private Function FormatHelpTip(scintilla As ScintillaNET.Scintilla, member As MemberInfo, reader As List(Of Jolt.XmlDocCommentReader), capeopen As Boolean) As String
+    <System.Runtime.CompilerServices.Extension()> Private Function FormatHelpTip(scintilla As Object, member As MemberInfo, reader As List(Of Jolt.XmlDocCommentReader), capeopen As Boolean) As String
 
         Select Case member.MemberType
 
@@ -657,7 +655,7 @@ Public Module scintillaExtender
     ''' <param name="scintilla"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Private Function getLastWord(scintilla As ScintillaNET.Scintilla) As String
+    <System.Runtime.CompilerServices.Extension()> Private Function getLastWord(scintilla As Object) As String
 
         Dim word As String = ""
 

@@ -65,9 +65,9 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
             Get
                 If GlobalSettings.Settings.CurrentCulture = "pt-BR" Then
                     If SolidSolution Then
-                        Return "Algoritmo Flash para sistemas Sólido-Líquido (ESL)"
+                        Return "Algoritmo Flash para sistemas SÃ³lido-LÃ­quido (ESL)"
                     Else
-                        Return "Algoritmo Flash para sistemas Sólido-Líquido-Vapor (ESLV)"
+                        Return "Algoritmo Flash para sistemas SÃ³lido-LÃ­quido-Vapor (ESLV)"
                     End If
                 Else
                     If SolidSolution Then

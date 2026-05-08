@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class EditingForm_Pump_Curves
+Partial Class Object
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,7 +23,7 @@ Partial Class EditingForm_Pump_Curves
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EditingForm_Pump_Curves))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Object))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -617,13 +617,13 @@ Partial Class EditingForm_Pump_Curves
         '
         'tsbImport
         '
-        Me.tsbImport.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.arrow_down
+        Me.tsbImport.Image = Global.DWSIM.UnitOperations.Nothing.arrow_down
         resources.ApplyResources(Me.tsbImport, "tsbImport")
         Me.tsbImport.Name = "tsbImport"
         '
         'tsbExport
         '
-        Me.tsbExport.Image = Global.DWSIM.UnitOperations.My.Resources.Resources.arrow_up
+        Me.tsbExport.Image = Global.DWSIM.UnitOperations.Nothing.arrow_up
         resources.ApplyResources(Me.tsbExport, "tsbExport")
         Me.tsbExport.Name = "tsbExport"
         '
@@ -649,7 +649,7 @@ Partial Class EditingForm_Pump_Curves
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
-        'EditingForm_Pump_Curves
+        'Object
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
@@ -657,7 +657,7 @@ Partial Class EditingForm_Pump_Curves
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.Name = "EditingForm_Pump_Curves"
+        Me.Name = "Object"
         Me.ShowInTaskbar = False
         Me.Panel2.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
@@ -742,7 +742,7 @@ Partial Class EditingForm_Pump_Curves
     Public WithEvents ToolStrip1 As ToolStrip
     Friend WithEvents tsbImport As ToolStripButton
     Friend WithEvents tsbExport As ToolStripButton
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel2 As Object
     Friend WithEvents tbDesc As TextBox
     Public WithEvents Label10 As Label
     Friend WithEvents tbName As TextBox

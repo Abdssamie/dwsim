@@ -82,7 +82,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides ReadOnly Property Description As String
             Get
                 If GlobalSettings.Settings.CurrentCulture = "pt-BR" Then
-                    Return "Algoritmo Nested Loops estendido para calcular equilíbrio LLV."
+                    Return "Algoritmo Nested Loops estendido para calcular equilÃ­brio LLV."
                 Else
                     Return "Extended Nested Loops Flash Algorithm for VLLE calculations."
                 End If
@@ -364,7 +364,7 @@ Namespace PropertyPackages.Auxiliary.FlashAlgorithms
 
             IObj?.Paragraphs.Add("<m>\sum y_i=1; \sum x^I_i=1; \sum x^{II}_i=1;</m>")
 
-            IObj?.Paragraphs.Add("and consider Rachford–Rice combinations where any one
+            IObj?.Paragraphs.Add("and consider RachfordÂ–Rice combinations where any one
                                 of the sums is subtracted from another one of the sums. There
                                 are three ways of doing this, but only two are independent. We will form two equations by first subtracting the second sum from the first and second by subtracting the third sum from the
                                 first:")

@@ -67,15 +67,7 @@ Namespace UnitOperations
 
         End Sub
 
-        Public Overrides Function GetIconBitmap() As Object
-            Return My.Resources.square_240px
-        End Function
 
-        Public Overrides Function GetIconBitmapBytes() As Byte()
-
-            Return GetBytesFromResource("DWSIM.UnitOperations.square_240px.png")
-
-        End Function
 
         Public Overrides Function GetDisplayDescription() As String
             Return ""
@@ -85,17 +77,7 @@ Namespace UnitOperations
             Return "Dummy Unit Operation"
         End Function
 
-        Public Overrides Sub CloseEditForm()
 
-        End Sub
-
-        Public Overrides Sub DisplayEditForm()
-
-        End Sub
-
-        Public Overrides Sub UpdateEditForm()
-
-        End Sub
 
         Public Overrides ReadOnly Property MobileCompatible As Boolean
             Get
