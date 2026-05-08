@@ -227,7 +227,7 @@ Namespace UnitOperations
             If GraphicObject.InputConnectors.Count = 0 Then
 
                 Dim port1 As New Object()
-                port1.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + 0.5 * GraphicObject.Width, GraphicObject.Y + GraphicObject.Height)
+                port1.Position = New DWSIM.SharedClasses.Point(GraphicObject.X + 0.5 * GraphicObject.Width, GraphicObject.Y + GraphicObject.Height)
                 port1.ConnectorName = "Inlet Port"
                 port1.Direction = Enums.GraphicObjects.ConDir.Up
 
@@ -235,7 +235,7 @@ Namespace UnitOperations
 
             Else
 
-                GraphicObject.InputConnectors(0).Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + 0.5 * GraphicObject.Width, GraphicObject.Y + GraphicObject.Height)
+                GraphicObject.InputConnectors(0).Position = New DWSIM.SharedClasses.Point(GraphicObject.X + 0.5 * GraphicObject.Width, GraphicObject.Y + GraphicObject.Height)
                 GraphicObject.InputConnectors(0).ConnectorName = "Inlet Port"
                 GraphicObject.InputConnectors(0).Direction = Enums.GraphicObjects.ConDir.Up
 
@@ -247,14 +247,14 @@ Namespace UnitOperations
 
                 port3.IsEnergyConnector = False
                 port3.Type = Interfaces.Enums.GraphicObjects.ConType.ConOut
-                port3.Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.5 * GraphicObject.Height)
+                port3.Position = New DWSIM.SharedClasses.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.5 * GraphicObject.Height)
                 port3.ConnectorName = "Outlet Port"
 
                 GraphicObject.OutputConnectors.Add(port3)
 
             Else
 
-                GraphicObject.OutputConnectors(0).Position = New DWSIM.DrawingTools.Point.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.5 * GraphicObject.Height)
+                GraphicObject.OutputConnectors(0).Position = New DWSIM.SharedClasses.Point(GraphicObject.X + GraphicObject.Width, GraphicObject.Y + 0.5 * GraphicObject.Height)
                 GraphicObject.OutputConnectors(0).ConnectorName = "Outlet Port"
 
             End If
