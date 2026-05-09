@@ -8,12 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="ServiceStack" Version="10.0.6" />
-    <PackageReference Include="ServiceStack.OrmLite.PostgreSQL" Version="10.0.6" />
     <PackageReference Include="ServiceStack.Server" Version="10.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DWSIM.Interfaces\DWSIM.Interfaces.vbproj" />
+    <Reference Include="DWSIM.Automation">
+      <HintPath>..\DWSIM.Automation\bin\Debug\net10.0\DWSIM.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="DWSIM.Interfaces">
+      <HintPath>..\DWSIM.Interfaces\bin\Debug\net10.0\DWSIM.Interfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

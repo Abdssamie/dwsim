@@ -7,7 +7,7 @@ public sealed class JobsHostedService(ILogger<JobsHostedService> logger, IBackgr
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        logger.LogInformation("DWSIM database job runner started.");
+        logger.LogInformation("Database job runner started.");
 
         await jobs.StartAsync(stoppingToken).ConfigureAwait(false);
 
