@@ -1,9 +1,23 @@
 # DWSIM Migration Standards (AI-Focused)
 
+## 0. Backward Compatibility Is Not A Goal
+
+**VERY IMPORTANT: NEVER spend time preserving backward compatibility during this migration.**
+
+This repository is being moved to a clean headless/cloud architecture. Agents must prefer the new architecture over legacy compatibility every time.
+
+- Do not add compatibility shims for old UI, old platform-specific projects, old package layouts, or old runtime assumptions.
+- Do not keep obsolete APIs alive just because existing callers might depend on them.
+- Do not preserve old behavior when it conflicts with headless execution, Linux/macOS support, service architecture, or cloud deployment.
+- Remove legacy code instead of wrapping it when the old code is out of scope.
+- Breaking changes are acceptable and expected when they simplify the migrated engine.
+- If a caller breaks because it depended on legacy UI/platform behavior, update or remove that caller.
+- Do not ask whether backward compatibility is required. It is not.
+
 ## 1. Project Format
 
 - **Standard:** Use modern SDK-style project files (`.csproj`, `.vbproj`).
-- **Target:** Always target `net8.0` for cross-platform compatibility.
+- **Target:** Follow the target framework already used by the project being edited unless the user explicitly asks for a migration.
 - **Naming:** NO platform suffixes (e.g., use `DWSIM.Interfaces.vbproj`, NOT `DWSIM.Interfaces.Linux.vbproj`).
 
 ## 2. UI Decoupling (Pure Headless Mode)

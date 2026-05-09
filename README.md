@@ -1,40 +1,32 @@
-[![GitHub issues](https://img.shields.io/github/issues/DanWBR/dwsim6.svg)](https://github.com/DanWBR/dwsim6/issues)
-[![tickets](https://img.shields.io/badge/view-tickets-blackgray.svg)](https://sourceforge.net/p/dwsim/tickets/)
-[![forums](https://img.shields.io/badge/join-the%20forums-yellowgreen.svg)](https://sourceforge.net/p/dwsim/discussion/?source=navbar)
-[![wiki](https://img.shields.io/badge/visit-website-blackblue.svg)](http://dwsim.inforside.com.br)
-[![donate](https://img.shields.io/badge/make%20a-donation-greenblue.svg)](https://sourceforge.net/p/dwsim/donate/)
+# DWSIM Cloud API
 
-## DWSIM - Open Source Process Simulator
-Copyright 2008-2025 Daniel Wagner and contributors
+A Command-Driven Headless Simulation Engine built on top of DWSIM, exposed via a robust ServiceStack Web API.
 
-DWSIM is a software for modeling, simulating, and optimizing steady-state and dynamic chemical processes.
+## Overview
 
-### License
+This project transforms the standalone DWSIM process simulator into a scalable, cloud-ready service. By wrapping the DWSIM headless engine in a ServiceStack message-based architecture, we provide a reliable "Command-Driven" pattern for simulations. This API enables external systems to instantiate flowsheets, manipulate states via discrete commands, and stream solver logs in real-time.
 
-DWSIM is licensed under the GNU General Public License (GPL) Version 3.
+## Architecture
 
-See COPYING for more information.
+- **Simulation Engine**: DWSIM Automation / Interfaces
+- **API Framework**: ServiceStack (.NET)
+- **API Pattern**: Message-Based / Command-Driven DTOs
+- **Real-Time**: Server-Sent Events (SSE) for streaming solver progress
+- **Clients**: Auto-generated typed clients for C#, TypeScript, Python, etc.
 
-### Supported Operating Systems
+## Structure
 
-- Windows (64-bit x86) with .NET Framework 4.6.2 or newer
-- Linux (64-bit x86) with .NET 8 Runtime or newer
-- macOS 10.7 or newer
+- `DWSIM.WebApi/`: The main ASP.NET Core / ServiceStack host.
+- `DWSIM.Automation/` & `DWSIM.Interfaces/`: The underlying simulation logic from DWSIM.
 
-### Donations
+## Getting Started
 
-- Patreon: https://patreon.com/dwsim
-- GitHub Sponsors: https://github.com/sponsors/DanWBR
-- Buy-me-a-coffee: https://www.buymeacoffee.com/dwsim
-- Bitcoin tips are welcome at bc1qf37y47vfk5wzxqpyh39y7th32x6lja0h0gc383
+To run the Cloud API MVP locally:
 
-### Compiling
+```bash
+cd DWSIM.WebApi
+dotnet build
+dotnet run
+```
 
-- DWSIM can be compiled using Visual Studio 2019 or newer on Windows.
-- To compile everything and run:
-	- Open Visual Studio 2019 or 2022 and clone this repository directly from GitHub
-	- Change the Build target to 'Debug/x64', 'ReleaseLinux/x64', 'ReleaseWinMac/x64' or 'ReleaseWinMac/x86'
-	- Click on the Solution object and restore NuGet packages
-	- Build the solution
-	- Select 'DWSIM' or 'DWSIM.UI.Desktop' as the startup project
-	- Run
+Once running, navigate to the ServiceStack UI to explore the available endpoints, view session states, and test commands via the built-in Locode interface.
