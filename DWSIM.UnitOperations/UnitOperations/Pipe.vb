@@ -2494,6 +2494,8 @@ Namespace UnitOperations
                 End Try
             End If
 
+            Return Nothing
+
         End Function
 
         Public Overrides Function GetDefaultProperties() As String()

@@ -1314,6 +1314,8 @@ Namespace UnitOperations
 
             End If
 
+            Return Nothing
+
         End Function
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As Interfaces.Enums.PropertyType) As String()

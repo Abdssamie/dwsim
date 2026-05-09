@@ -194,7 +194,8 @@ Namespace MathEx.Optimization
 
             fxb = functionbody
 
-            Dim fx(), x(), dx(), dfdx(,), df, fxsum, fxsum0 As Double
+            Dim fx() As Double = Nothing
+            Dim x() As Double, dx() As Double, dfdx(,) As Double, df As Double, fxsum As Double, fxsum0 As Double
             Dim success As Boolean = False
 
             x = vars.Clone
@@ -451,7 +452,8 @@ Namespace MathEx.Optimization
 
             fxb = functionbody
 
-            Dim fx(), x(), dx(), dfdx(,), df, fxsum, fxsum0 As Double
+            Dim fx() As Double = Nothing
+            Dim x() As Double, dx() As Double, dfdx(,) As Double, df As Double, fxsum As Double, fxsum0 As Double
             Dim success As Boolean = False
 
             x = vars.Clone

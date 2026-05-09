@@ -2206,7 +2206,7 @@ Namespace Reactors
                 'external loop: fugacity coefficient calculation/update
                 'internal loop: material balance convergence
 
-                Dim finalx As Double()
+                Dim finalx As Double() = Nothing
 
                 Dim nsolv As New MathOps.MathEx.Optimization.NewtonSolver
                 nsolv.MaxIterations = MaximumInternalIterations

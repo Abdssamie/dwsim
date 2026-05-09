@@ -791,7 +791,7 @@ Namespace DWSIM.Thermodynamics.AdvancedEOS
             '**************************************************************************
             'Constants
 
-            Dim kb, Z, muHC(), muDisp(), NumAss(), muAss(), dens_num, logfi, f() As Double
+            Dim kb As Double, Z As Double, muHC() As Double = Nothing, muDisp() As Double = Nothing, NumAss() As Double = Nothing, muAss() As Double = Nothing, dens_num As Double, logfi As Double, f() As Double
 
             kb = 1.3806504E-23 'Boltzmann K (J/K)
 

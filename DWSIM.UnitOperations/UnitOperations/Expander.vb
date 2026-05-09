@@ -1085,6 +1085,8 @@ Namespace UnitOperations
 
             End If
 
+            Return Nothing
+
         End Function
 
 

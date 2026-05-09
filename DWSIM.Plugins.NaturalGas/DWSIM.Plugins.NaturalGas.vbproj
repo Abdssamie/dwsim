@@ -35,7 +35,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\DWSIM\bin\x64\Debug\plugins\</OutputPath>
     <DocumentationFile>NaturalGas.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
+    <NoWarn>42353,42354,42355;BC42024</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
     <PlatformTarget>x64</PlatformTarget>
@@ -47,7 +47,7 @@
     <Optimize>false</Optimize>
     <OutputPath>..\DWSIM\bin\Release\plugins\</OutputPath>
     <DocumentationFile>NaturalGas.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
+    <NoWarn>42353,42354,42355;BC42024</NoWarn>
     <DebugSymbols>true</DebugSymbols>
     <Prefer32Bit>false</Prefer32Bit>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -58,7 +58,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DocumentationFile>NaturalGas.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
+    <NoWarn>42353,42354,42355;BC42024</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
@@ -71,7 +71,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\DWSIM\bin\x86\Release\plugins\</OutputPath>
     <DocumentationFile>NaturalGas.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
+    <NoWarn>42353,42354,42355;BC42024</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
@@ -85,7 +85,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\DWSIM\bin\x64\Debug\plugins\</OutputPath>
     <DocumentationFile>NaturalGas.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
+    <NoWarn>42353,42354,42355;BC42024</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -96,7 +96,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\DWSIM\bin\Release\plugins\</OutputPath>
     <DocumentationFile>NaturalGas.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
+    <NoWarn>42353,42354,42355;BC42024</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>

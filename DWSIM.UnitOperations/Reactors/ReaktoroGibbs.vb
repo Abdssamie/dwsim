@@ -466,6 +466,8 @@ Namespace Reactors
                 Return su.deltaP
             End If
 
+            Return String.Empty
+
         End Function
 
         Public Overrides Function GetPropertyValue(ByVal prop As String, Optional ByVal su As Interfaces.IUnitsOfMeasure = Nothing) As Object

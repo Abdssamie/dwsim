@@ -758,6 +758,8 @@ Namespace UnitOperations.Auxiliary.SepOps.SolvingMethods
 
             End If
 
+            Return Nothing
+
         End Function
 
         Public Function Solve_Internal(rc As Column, nc As Integer, ns As Integer, maxits As Integer,

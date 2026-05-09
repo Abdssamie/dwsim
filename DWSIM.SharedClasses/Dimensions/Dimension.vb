@@ -69,6 +69,8 @@ Public Class Dimension
                 Return "Volume"
         End Select
 
+        Return String.Empty
+
     End Function
 
     Public Function GetUnitsType() As UnitOfMeasure Implements IDimension.GetUnitsType
@@ -112,6 +114,7 @@ Public Class Dimension
                 Return UnitOfMeasure.volume
         End Select
 
+        Return UnitOfMeasure.none
 
     End Function
 

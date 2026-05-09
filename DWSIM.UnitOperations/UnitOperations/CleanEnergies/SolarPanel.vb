@@ -197,6 +197,8 @@ Namespace UnitOperations
                     Return New String() {"Efficiency", "User-Defined Solar Irradiation", "Panel Area", "Number of Panels"}
             End Select
 
+            Return New String() {}
+
         End Function
 
         Public Overrides Function GetPropertyValue(prop As String, Optional su As IUnitsOfMeasure = Nothing) As Object
@@ -218,6 +220,8 @@ Namespace UnitOperations
                     Return GeneratedPower.ConvertFromSI(su.heatflow)
             End Select
 
+            Return Nothing
+
         End Function
 
         Public Overrides Function GetPropertyUnit(prop As String, Optional su As IUnitsOfMeasure = Nothing) As String
@@ -236,6 +240,8 @@ Namespace UnitOperations
                 Case "Generated Power"
                     Return (su.heatflow)
             End Select
+
+            Return String.Empty
 
         End Function
 

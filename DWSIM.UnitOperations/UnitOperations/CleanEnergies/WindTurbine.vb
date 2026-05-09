@@ -280,6 +280,8 @@ Namespace UnitOperations
                         "User-Defined Air Pressure", "User-Defined Relative Humidity", "Rotor Diameter", "Number of Units"}
             End Select
 
+            Return New String() {}
+
         End Function
 
         Public Overrides Function GetPropertyValue(prop As String, Optional su As IUnitsOfMeasure = Nothing) As Object
@@ -319,6 +321,8 @@ Namespace UnitOperations
                     Return AirDensity.ConvertFromSI(su.density)
             End Select
 
+            Return Nothing
+
         End Function
 
         Public Overrides Function GetPropertyUnit(prop As String, Optional su As IUnitsOfMeasure = Nothing) As String
@@ -357,6 +361,8 @@ Namespace UnitOperations
                 Case "Calculated Air Density"
                     Return (su.density)
             End Select
+
+            Return String.Empty
 
         End Function
 
